@@ -8,21 +8,22 @@ inspecode:
     thresholds: { num-issues: 999 }
 
   checkstyle:
+    config-file: ./src/main/resources/google_checks.xml
     auto-fix: true
     thresholds: { num-issues: 999 }
 
   grep:
-    thresholds: { num-issues: 999 }
+    thresholds: { num-issues: 14 }
 
   infer:
     thresholds: { num-issues: 999 }
 
   jscpd:
-    thresholds: { num-issues: 999 }
+    thresholds: { num-issues: 229 }
 
   misspell:
     auto-fix: true
-    thresholds: { num-issues: 999 }
+    thresholds: { num-issues: 24 }
 
   pmd:
     auto-fix: true
