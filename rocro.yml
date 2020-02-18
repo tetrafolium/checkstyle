@@ -11,23 +11,88 @@ inspecode:
   checkstyle:
   - ignore: [ src/test/ ]
     #auto-fix: true
-    thresholds: { num-issues: 999 }
+    thresholds: { num-issues: 999 }   # too many issues detected: 18923 > 1000
   - ignore: [ src/test/ ]
     config-file: ./src/main/resources/google_checks.xml
     #auto-fix: true
-    thresholds: { num-issues: 999 }
+    thresholds: { num-issues: 999 }   # too many issues detected: 41217 > 1000
+      # 34518 [Indentation]
+      #  1267 [CustomImportOrder]
+      #   816 [RightCurlySame]
+      #   698 [WhitespaceAround]
+      #   583 [LeftCurly]
+      #   387 [RightCurlyAlone]
+      #   265 [EmptyLineSeparator]
+      #   215 [SummaryJavadoc]
+      #   208 [ParenPad]
+      #   189 [OneTopLevelClass]
+      #   175 [MemberName]
+      #   174 [AbbreviationAsWordInName]
+      #   158 [ParameterName]
+      #   148 [MissingJavadocMethod]
+      #   136 [EmptyBlock]
+      #    73 [MultipleVariableDeclarations]
+      #    73 [CommentsIndentation]
+      #    72 [NeedBraces]
+      #    69 [InvalidJavadocPosition]
+      #    66 [GenericWhitespace]
+      #    65 [SingleLineJavadoc]
+      #    65 [AtclauseOrder]
   - ignore: [ src/test/ ]
     config-file: ./src/main/resources/sun_checks.xml
     #auto-fix: true
-    thresholds: { num-issues: 999 }
-  - input:  [ src/test/ ]
+    thresholds: { num-issues: 999 }   # too many issues detected: 18923 > 1000
+      #  6026 [LineLength]
+      #  3825 [FinalParameters]
+      #  1425 [WhitespaceAround]
+      #  1087 [DesignForExtension]
+      #   827 [MagicNumber]
+      #   802 [RightCurly]
+      #   583 [LeftCurly]
+      #   460 [JavadocVariable]
+      #   459 [HiddenField]
+      #   453 [MissingJavadocMethod]
+      #   407 [EmptyBlock]
+      #   386 [VisibilityModifier]
+      #   232 [JavadocStyle]
+      #   208 [ParenPad]
+      #   195 [WhitespaceAfter]
+      #   174 [UnusedImports]
+      #   149 [JavadocPackage]
+      #   140 [NoWhitespaceAfter]
+      #    87 [JavadocMethod]
+      #    73 [MultipleVariableDeclarations]
+      #    72 [NeedBraces]
+  - input:  [ src/test/java/ ]
     #auto-fix: true
     thresholds: { num-issues: 999 }
-  - input:  [ src/test/ ]
+  - input:  [ src/test/java/ ]
     config-file: ./src/main/resources/google_checks.xml
     #auto-fix: true
     thresholds: { num-issues: 999 }
-  - input:  [ src/test/ ]
+  - input:  [ src/test/java/ ]
+    config-file: ./src/main/resources/sun_checks.xml
+    #auto-fix: true
+    thresholds: { num-issues: 999 }
+  - input:  [ src/test/resources/ ]
+    #auto-fix: true
+    thresholds: { num-issues: 999 }
+  - input:  [ src/test/resources/ ]
+    config-file: ./src/main/resources/google_checks.xml
+    #auto-fix: true
+    thresholds: { num-issues: 999 }
+  - input:  [ src/test/resources/ ]
+    config-file: ./src/main/resources/sun_checks.xml
+    #auto-fix: true
+    thresholds: { num-issues: 999 }
+  - input:  [ src/test/resources-noncompilable/ ]
+    #auto-fix: true
+    thresholds: { num-issues: 999 }
+  - input:  [ src/test/resources-noncompilable/ ]
+    config-file: ./src/main/resources/google_checks.xml
+    #auto-fix: true
+    thresholds: { num-issues: 999 }
+  - input:  [ src/test/resources-noncompilable/ ]
     config-file: ./src/main/resources/sun_checks.xml
     #auto-fix: true
     thresholds: { num-issues: 999 }
@@ -53,12 +118,13 @@ inspecode:
   pmd:
   - ignore: [ src/test/ ]
     auto-fix: true
-    thresholds: { num-issues: 999 }
+    thresholds: { num-issues: 999 }   # too many issues detected: 7022 > 1000
   - input:  [ src/test/ ]
     auto-fix: true
-    thresholds: { num-issues: 999 }
+    thresholds: { num-issues: 992 }
 
   uncrustify:
+    machine: { cpu: 1.0 }
     #auto-fix: true
     thresholds: { num-issues: 999 }
 
