@@ -34,4 +34,7 @@ inspecode:
     thresholds: { num-issues: 999 }
 
   unused:
+    ignore:
+      - ./src/test/resources/com/puppycrawl/tools/checkstyle/grammar/InputGrammar.java
+        # includes non UTF-8 byte sequence
     thresholds: { num-issues: 999 }
