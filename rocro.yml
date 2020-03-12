@@ -1,9 +1,19 @@
 inspecode:
 
   pmd:
+  - ignore: [ src/*/java/,
+              src/*/resources* ]
+    thresholds: { num-issues: 999 }
+  - input:  [ src/*/java/ ]
+    ignore: [ src/test/java/ ]
+    thresholds: { num-issues: 999 }
+  - input:  [ src/test/java/ ]
+    ignore: [ src/test/java/com/puppycrawl/tools/checkstyle/checks/ ]
+    thresholds: { num-issues: 999 }
+  - input:  [ src/test/java/com/puppycrawl/tools/checkstyle/checks/ ]
+    thresholds: { num-issues: 999 }
+  - input:  [ src/*/resources* ]
+    ignore: [ src/test/resources/com/puppycrawl/tools/checkstyle/checks/ ]
+    thresholds: { num-issues: 999 }
   - input:  [ src/test/resources/com/puppycrawl/tools/checkstyle/checks/ ]
-    #auto-fix: true
-    thresholds: { num-issues: 823 }
-  - ignore: [ src/test/resources/com/puppycrawl/tools/checkstyle/checks/ ]
-    #auto-fix: true
-    thresholds: { num-issues: 840 }
+    thresholds: { num-issues: 999 }
