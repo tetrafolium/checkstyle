@@ -7,7 +7,8 @@ inspecode:
     thresholds: { num-issues: 688 }
   - input:  [ src/test/ ]
     ignore: [ src/test/java/com/puppycrawl/tools/checkstyle/,
-              src/test/resources/com/ ]
+              src/test/resources/com/,
+              src/test/resources-noncompilable/com/puppycrawl/tools/checkstyle/ ]
     machine: { cpu: 1.0 }
     #auto-fix: true
     thresholds: { num-issues: 999 }
@@ -15,11 +16,11 @@ inspecode:
     ignore: [ src/test/java/com/puppycrawl/tools/checkstyle/checks/ ]
     machine: { cpu: 1.0 }
     #auto-fix: true
-    thresholds: { num-issues: 999 }
+    thresholds: { num-issues: 146 }
   - input:  [ src/test/java/com/puppycrawl/tools/checkstyle/checks/ ]
     machine: { cpu: 1.0 }
     #auto-fix: true
-    thresholds: { num-issues: 999 }
+    thresholds: { num-issues: 184 }
   - input:  [ src/test/resources/com/ ]
     ignore: [ src/test/resources/com/puppycrawl/tools/checkstyle/checks/,
               src/test/resources/com/puppycrawl/tools/checkstyle/grammar/ ]
@@ -31,11 +32,16 @@ inspecode:
     #auto-fix: true
     thresholds: { num-issues: 745 }
   - input:  [ src/test/resources/com/puppycrawl/tools/checkstyle/grammar/ ]
-    ignore: [ src/test/resources/com/puppycrawl/tools/checkstyle/grammar/java8/ ]
+    ignore: [ src/test/resources/com/puppycrawl/tools/checkstyle/grammar/InputEmbeddedNullChar.java ]
     machine: { cpu: 1.0 }
     #auto-fix: true
     thresholds: { num-issues: 999 }
-  - input:  [ src/test/resources/com/puppycrawl/tools/checkstyle/grammar/java8/ ]
+  - input:  [ src/test/resources-noncompilable/com/puppycrawl/tools/checkstyle/ ]
+    ignore: [ src/test/resources-noncompilable/com/puppycrawl/tools/checkstyle/checks/ ]
+    machine: { cpu: 1.0 }
+    #auto-fix: true
+    thresholds: { num-issues: 999 }
+  - input:  [ src/test/resources-noncompilable/com/puppycrawl/tools/checkstyle/checks/ ]
     machine: { cpu: 1.0 }
     #auto-fix: true
     thresholds: { num-issues: 999 }
