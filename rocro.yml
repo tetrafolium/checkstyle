@@ -4,32 +4,20 @@ inspecode:
   - ignore: [ src/test/ ]
     thresholds: { num-issues: 688 }
   - input:  [ src/test/ ]
-    ignore: [ src/test/java/com/puppycrawl/tools/checkstyle/,
-              src/test/resources/com/,
+    ignore: [ src/test/resources/com/,
               src/test/resources-noncompilable/com/puppycrawl/tools/checkstyle/ ]
-    thresholds: { num-issues: 999 }
-  - input:  [ src/test/java/com/puppycrawl/tools/checkstyle/ ]
-    ignore: [ src/test/java/com/puppycrawl/tools/checkstyle/checks/ ]
-    thresholds: { num-issues: 146 }
-  - input:  [ src/test/java/com/puppycrawl/tools/checkstyle/checks/ ]
-    thresholds: { num-issues: 184 }
+    thresholds: { num-issues: 330 }
   - input:  [ src/test/resources/com/ ]
-    ignore: [ src/test/resources/com/puppycrawl/tools/checkstyle/checks/,
-              src/test/resources/com/puppycrawl/tools/checkstyle/grammar/ ]
-    thresholds: { num-issues: 69 }
-  - input:  [ src/test/resources/com/puppycrawl/tools/checkstyle/checks/ ]
-    thresholds: { num-issues: 745 }
+    ignore: [ src/test/resources/com/puppycrawl/tools/checkstyle/grammar/ ]
+    thresholds: { num-issues: 814 }
   - input:  [ src/test/resources/com/puppycrawl/tools/checkstyle/grammar/ ]
       ##### Uncrustify finished with errors.
       # An embedded 0 was found in '{dirpath}/InputEmbeddedNullChar.java' 10:41.
       # The file may be encoded in an unsupported Unicode format.
       # Aborting.
   - input:  [ src/test/resources-noncompilable/com/puppycrawl/tools/checkstyle/ ]
-    ignore: [ src/test/resources-noncompilable/com/puppycrawl/tools/checkstyle/checks/,
-              src/test/resources-noncompilable/com/puppycrawl/tools/checkstyle/javadocpropertiesgenerator/ ]
-    thresholds: { num-issues: 40 }
-  - input:  [ src/test/resources-noncompilable/com/puppycrawl/tools/checkstyle/checks/ ]
-    thresholds: { num-issues: 999 }
+    ignore: [ src/test/resources-noncompilable/com/puppycrawl/tools/checkstyle/javadocpropertiesgenerator/ ]
+    thresholds: { num-issues: 33 }
   - input:  [ src/test/resources-noncompilable/com/puppycrawl/tools/checkstyle/javadocpropertiesgenerator/ ]
       ##### Uncrustify finished with errors.
       # {dirpath}/InputJavadocPropertiesGeneratorParseError.java:
