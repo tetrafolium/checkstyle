@@ -1,30 +1,9 @@
 inspecode:
 
   pmd:
-  - input:  [ src/it/resources* ]
-    #auto-fix: true
-    thresholds: { num-issues: 999 }
-  - input:  [ src/main/resources* ]
-    #auto-fix: true
-    thresholds: { num-issues: 999 }
-  - input:  [ src/site/resources* ]
-    #auto-fix: true
-    thresholds: { num-issues: 999 }
-  - input:  [ src/test/resources* ]
-    ignore: [ src/test/resources/com/puppycrawl/tools/checkstyle/checks/ ]
-    #auto-fix: true
-    thresholds: { num-issues: 999 }
   - input:  [ src/test/resources/com/puppycrawl/tools/checkstyle/checks/ ]
     #auto-fix: true
-    thresholds: { num-issues: 999 }
-  - input:  [ src/test/java/com/puppycrawl/tools/checkstyle/checks/ ]
+    thresholds: { num-issues: 823 }
+  - ignore: [ src/test/resources/com/puppycrawl/tools/checkstyle/checks/ ]
     #auto-fix: true
-    thresholds: { num-issues: 999 }
-  - input:  [ src/test/java/com/puppycrawl/tools/checkstyle/ ]
-    ignore: [ src/test/java/com/puppycrawl/tools/checkstyle/checks/ ]
-    #auto-fix: true
-    thresholds: { num-issues: 999 }
-  - ignore: [ src/*/resources*,
-              src/test/java/com/puppycrawl/tools/checkstyle/ ]
-    #auto-fix: true
-    thresholds: { num-issues: 999 }
+    thresholds: { num-issues: 840 }
