@@ -31,28 +31,36 @@ inspecode:
     thresholds: { num-issues: 24 }
 
   pmd:
-  - ignore: [ src/*/java ]
-    #auto-fix: true
-    thresholds: { num-issues: 999 }
-  - input:  [ src/it/java ]
-    #auto-fix: true
-    thresholds: { num-issues: 999 }
-  - input:  [ src/main/java ]
-    #auto-fix: true
-    thresholds: { num-issues: 999 }
-  - input:  [ src/test/java ]
     #auto-fix: true
     thresholds: { num-issues: 999 }
 
   uncrustify:
   - ignore: [ src/test/ ]
-    machine: { cpu: 1.0 }
-    #auto-fix: true
-    thresholds: { num-issues: 999 }
+    auto-fix: true
+    thresholds: { num-issues: 688 }
   - input:  [ src/test/ ]
-    machine: { cpu: 1.0 }
-    #auto-fix: true
-    thresholds: { num-issues: 999 }
+    ignore: [ src/test/resources/com/,
+              src/test/resources-noncompilable/com/puppycrawl/tools/checkstyle/ ]
+    auto-fix: true
+    thresholds: { num-issues: 330 }
+  - input:  [ src/test/resources/com/ ]
+    ignore: [ src/test/resources/com/puppycrawl/tools/checkstyle/grammar/ ]
+    auto-fix: true
+    thresholds: { num-issues: 814 }
+  - input:  [ src/test/resources/com/puppycrawl/tools/checkstyle/grammar/ ]
+      ##### Uncrustify finished with errors.
+      # An embedded 0 was found in '{dirpath}/InputEmbeddedNullChar.java' 10:41.
+      # The file may be encoded in an unsupported Unicode format.
+      # Aborting.
+  - input:  [ src/test/resources-noncompilable/com/puppycrawl/tools/checkstyle/ ]
+    ignore: [ src/test/resources-noncompilable/com/puppycrawl/tools/checkstyle/javadocpropertiesgenerator/ ]
+    auto-fix: true
+    thresholds: { num-issues: 33 }
+  - input:  [ src/test/resources-noncompilable/com/puppycrawl/tools/checkstyle/javadocpropertiesgenerator/ ]
+      ##### Uncrustify finished with errors.
+      # {dirpath}/InputJavadocPropertiesGeneratorParseError.java:
+      #   flag_parens(22): no match for '{' at [4:62] [CallStack: flag_parens:14, fix_enum_struct_union:3295, do_symbol_check:707, fix_symbols:2155]
+      #   //non-compiled syntax: bad file for testing
 
   unused:
   - ignore: [ src/test/ ]
