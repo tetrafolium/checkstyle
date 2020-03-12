@@ -1,66 +1,18 @@
 inspecode:
 
-  astyle:
-  - ignore: [ src/test/ ]
-    auto-fix: true
-    thresholds: { num-issues: 453 }
-  - input:  [ src/test/ ]
-    auto-fix: true
-    thresholds: { num-issues: 841 }
-
-  checkstyle:
-    config-file: ./src/main/resources/google_checks.xml
-    auto-fix: true
-    thresholds: { num-issues: 999 }
-
-  cpd:
-    options: [ --skip-lexical-errors ]
-    thresholds: { num-issues: 429 }
-
-  grep:
-    thresholds: { num-issues: 14 }
-
-  infer:
-    thresholds: { num-issues: 999 }
-
-  jscpd:
-    thresholds: { num-issues: 229 }
-
-  misspell:
-    auto-fix: true
-    thresholds: { num-issues: 24 }
-
   pmd:
-  - ignore: [ src/*/java ]
+  - ignore: [ src/*/resources* ]
     #auto-fix: true
     thresholds: { num-issues: 999 }
-  - input:  [ src/it/java ]
+  - input:  [ src/it/resources* ]
     #auto-fix: true
     thresholds: { num-issues: 999 }
-  - input:  [ src/main/java ]
+  - input:  [ src/main/resources* ]
     #auto-fix: true
     thresholds: { num-issues: 999 }
-  - input:  [ src/test/java ]
+  - input:  [ src/site/resources* ]
     #auto-fix: true
     thresholds: { num-issues: 999 }
-
-  uncrustify:
-  - ignore: [ src/test/ ]
-    machine: { cpu: 1.0 }
+  - input:  [ src/test/resources* ]
     #auto-fix: true
-    thresholds: { num-issues: 999 }
-  - input:  [ src/test/ ]
-    machine: { cpu: 1.0 }
-    #auto-fix: true
-    thresholds: { num-issues: 999 }
-
-  unused:
-  - ignore: [ src/test/ ]
-    options: [ --single-occurrence, --all-likelihoods ]
-    thresholds: { num-issues: 999 }
-  - input:  [ src/test/ ]
-    ignore:
-      - ./src/test/resources/com/puppycrawl/tools/checkstyle/grammar/InputGrammar.java
-        # includes non UTF-8 byte sequence
-    options: [ --single-occurrence, --all-likelihoods ]
     thresholds: { num-issues: 999 }
