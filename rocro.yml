@@ -1,21 +1,9 @@
 inspecode:
 
   checkstyle:
-  - config-file: config/checkstyle_checks.xml
+  - config-file: src/main/resources/google_checks.xml
     auto-fix: true
     thresholds: { num-issues: 999 }
-  - config-file: config/checkstyle_non_main_files_checks.xml
-    auto-fix: true
-    thresholds: { num-issues: 999 }
-  - config-file: config/checkstyle_non_main_files_suppressions.xml
-    auto-fix: true
-    thresholds: { num-issues: 999 }
-  - config-file: config/checkstyle_resources_checks.xml
-    auto-fix: true
-    thresholds: { num-issues: 999 }
-  - config-file: config/checkstyle_resources_suppressions.xml
-    auto-fix: true
-    thresholds: { num-issues: 999 }
-  - config-file: config/checkstyle_sevntu_checks.xml
+  - config-file: src/main/resources/sun_checks.xml
     auto-fix: true
     thresholds: { num-issues: 999 }
