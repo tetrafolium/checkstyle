@@ -1,9 +1,6 @@
 inspecode:
 
   checkstyle:
-  - config-file: src/main/resources/google_checks.xml
-    auto-fix: true
-    thresholds: { num-issues: 999 }
-  - config-file: src/main/resources/sun_checks.xml
+  - config-file: inspecode-checkstyle.xml
     auto-fix: true
     thresholds: { num-issues: 999 }
