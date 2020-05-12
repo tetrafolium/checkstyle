@@ -1,12 +1,10 @@
 inspecode:
 
   unused:
-  - ignore: [ src/test/ ]
+  - ignore: [ 'src/test/' ]
     options: [ --single-occurrence, --all-likelihoods ]
     thresholds: { num-issues: 999 }
-  - input:  [ src/test/ ]
-    ignore:
-      - ./src/test/resources/com/puppycrawl/tools/checkstyle/grammar/InputGrammar.java
-        # includes non UTF-8 byte sequence
+  - input:  [ 'src/test/' ]
+    ignore: [ '**/InputGrammar.java' ]    # includes non UTF-8 byte sequence
     options: [ --single-occurrence, --all-likelihoods ]
     thresholds: { num-issues: 999 }
