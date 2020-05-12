@@ -11,20 +11,9 @@ inspecode:
   checkstyle:
   - config-file: inspecode-checkstyle.xml
     ignore:
-    ## com.puppycrawl.tools.checkstyle.api.CheckstyleException was thrown while processing files bwlow:
-    - src/test/resources-noncompilable/com/puppycrawl/tools/checkstyle/asttreestringprinter/InputAstTreeStringPrinter.java
-    - src/test/resources-noncompilable/com/puppycrawl/tools/checkstyle/filefilters/beforeexecutionexclusionfilefilter/InputBeforeExecutionExclusionFileFilterIncorrectClass.java
-    - src/test/resources-noncompilable/com/puppycrawl/tools/checkstyle/gui/mainframemodel/InputMainFrameModelIncorrectClass.java
-    - src/test/resources-noncompilable/com/puppycrawl/tools/checkstyle/javadocpropertiesgenerator/InputJavadocPropertiesGeneratorParseError.java
-    - src/test/resources-noncompilable/com/puppycrawl/tools/checkstyle/javaparser/InputJavaParser.java
-    - src/test/resources-noncompilable/com/puppycrawl/tools/checkstyle/main/InputMainIncorrectClass.java
-    - src/test/resources-noncompilable/com/puppycrawl/tools/checkstyle/suppressionsstringprinter/InputSuppressionsStringPrinter.java
-    - src/test/resources/com/puppycrawl/tools/checkstyle/checks/whitespace/nowhitespaceafter/InputNoWhitespaceAfterArrayDeclarations3.java
-    - src/test/resources/com/puppycrawl/tools/checkstyle/grammar/InputRegressionJava8Class2.java
-    - src/test/resources/com/puppycrawl/tools/checkstyle/grammar/java8/InputAnnotations12.java
-    - src/test/resources/com/puppycrawl/tools/checkstyle/grammar/java8/InputAnnotationsOnArray.java
+    - src/test/resources*/
     auto-fix: true
-    thresholds: { num-issues: 999 }   # too many issues detected: 7865 > 1000
+    thresholds: { num-issues: 953 }
 
   cpd:
     options: [ --skip-lexical-errors ]
