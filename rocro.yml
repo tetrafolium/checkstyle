@@ -1,3 +1,2 @@
 inspecode:
-  checkstyle: auto-fix
   pmd: auto-fix
