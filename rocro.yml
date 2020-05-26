@@ -8,4 +8,4 @@ inspecode:
     thresholds: { num-issues: 953 }
   - config-file: inspecode-checkstyle-ParenPad.xml
     auto-fix: true
-    thresholds: { num-issues: 999 }
+    thresholds: { num-issues: 800 }
