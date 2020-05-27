@@ -4,9 +4,9 @@ public class InputIndentationChainedMethods { //indent:0 exp:0
 
     public static void main(String [] args) { //indent:4 exp:4
         MockRDD mockRDD = new MockRDD(); //indent:8 exp:8
-        mockRDD.mapToPair( //indent:8 exp:8
+        mockRDD.mapToPair(//indent:8 exp:8
             null //indent:12 exp:12
-        ).saveAsHadoopFile(  //indent:8 exp:8
+        ).saveAsHadoopFile(//indent:8 exp:8
             null //indent:12 exp:12
         );  //indent:8 exp:8
     }  //indent:4 exp:4

@@ -3,7 +3,7 @@ package com.puppycrawl.tools.checkstyle.checks.whitespace.whitespaceafter;
 @SuppressWarnings({"this", "that"})
 public class InputWhitespaceAfterAround
 {
-    protected InputWhitespaceAfterAround ( int i )
+    protected InputWhitespaceAfterAround (int i)
     {
         this (); //whitespace
         toString ();
@@ -16,8 +16,8 @@ public class InputWhitespaceAfterAround
     public void enhancedFor ()
     {
         int[] i = new int[2];
-        for ( int j: i ) {
-            System.identityHashCode ( j );
+        for (int j: i) {
+            System.identityHashCode (j);
         }
     }
 }

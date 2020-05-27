@@ -49,7 +49,7 @@ class InputWhitespaceAroundBasic
     private void fastExit()
     {
         boolean complicatedStuffNeeded = true;
-        if( !complicatedStuffNeeded) //warn
+        if(!complicatedStuffNeeded) //warn
         {
             return; // should not complain about missing WS after return
         }
@@ -65,7 +65,7 @@ class InputWhitespaceAroundBasic
     */
     private int nonVoid()
     {
-        if ( true )
+        if (true)
         {
             return(2); // //warn
         }
@@ -223,7 +223,7 @@ class SpecialCasesInForLoop
         // bug 895072
     // avoid conflict between ParenPad(space) and NoWhiteSpace before ';'
     int i = 0;
-    for ( ; i < 5; i++ ) {
+    for ( ; i < 5; i++) {
     //   ^ whitespace
     }
         for (int anInt : getSomeInts()) {
@@ -232,7 +232,7 @@ class SpecialCasesInForLoop
     }
 
     int[] getSomeInts() {
-        int i = (int) ( 2 / 3 );
+        int i = (int) (2 / 3);
         return null;
     }
 }

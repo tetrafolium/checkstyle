@@ -18,7 +18,7 @@ while //indent:0 exp:8 warn
 do {} while //indent:0 exp:8 warn
 (test); //indent:0 exp:8 warn
 do {} while //indent:0 exp:8 warn
-( //indent:0 exp:8 warn
+(//indent:0 exp:8 warn
 test //indent:0 exp:8 warn
 ); //indent:0 exp:8 warn
     } //indent:4 exp:4

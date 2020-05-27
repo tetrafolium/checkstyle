@@ -117,7 +117,7 @@ public class InputIndentationValidMethodIndent extends Object { //indent:0 exp:0
                 getInteger("mytest").intValue(), //indent:16 exp:>=12
             11); //indent:12 exp:>=12
 
-        myfunc3( //indent:8 exp:8
+        myfunc3(//indent:8 exp:8
             1, //indent:12 exp:>=12
             2,  //indent:12 exp:>=12
                 3,  //indent:16 exp:>=12
@@ -140,14 +140,14 @@ public class InputIndentationValidMethodIndent extends Object { //indent:0 exp:0
 
 
     void method6() { //indent:4 exp:4
-        System.identityHashCode("methods are: " + Arrays.asList( //indent:8 exp:8
+        System.identityHashCode("methods are: " + Arrays.asList(//indent:8 exp:8
             new String[] {"method"}).toString()); //indent:12 exp:>=12
 
-        System.identityHashCode("methods are: " + Arrays.asList( //indent:8 exp:8
+        System.identityHashCode("methods are: " + Arrays.asList(//indent:8 exp:8
             new String[] {"method"} //indent:12 exp:>=12
         ).toString()); //indent:8 exp:8
 
-        System.identityHashCode("methods are: " + Arrays.asList( //indent:8 exp:8
+        System.identityHashCode("methods are: " + Arrays.asList(//indent:8 exp:8
             new String[] {"method"}).toString() //indent:12 exp:>=12
         ); //indent:8 exp:8
 
@@ -159,22 +159,22 @@ public class InputIndentationValidMethodIndent extends Object { //indent:0 exp:0
             6, 7, 8, 9); //indent:12 exp:>=12
 
         System.identityHashCode("methods are: " +  //indent:8 exp:8
-            Arrays.asList( //indent:12 exp:>=12
+            Arrays.asList(//indent:12 exp:>=12
                 new String[] {"method"}).toString()); //indent:16 exp:>=16
 
         System.identityHashCode("methods are: "  //indent:8 exp:8
-            + Arrays.asList( //indent:12 exp:>=12
+            + Arrays.asList(//indent:12 exp:>=12
                 new String[] {"method"}).toString()); //indent:16 exp:>=16
 
 
-        String blah = (String) System.getProperty( //indent:8 exp:8
+        String blah = (String) System.getProperty(//indent:8 exp:8
             new String("type")); //indent:12 exp:>=12
 
         System.identityHashCode(method1() + "mytext"  //indent:8 exp:8
             + " at indentation level not at correct indentation, "  //indent:12 exp:>=12
             + method1()); //indent:12 exp:>=12
 
-        System.identityHashCode( //indent:8 exp:8
+        System.identityHashCode(//indent:8 exp:8
             method1() + "mytext"  //indent:12 exp:>=12
                 + " at indentation level not at correct indentation, "  //indent:16 exp:>=12
                 + method1()); //indent:16 exp:>=12
@@ -195,7 +195,7 @@ public class InputIndentationValidMethodIndent extends Object { //indent:0 exp:0
     } //indent:4 exp:4
 
     // the following lines have tabs //indent:4 exp:4
-	@SuppressWarnings( //indent:4 exp:4
+	@SuppressWarnings(//indent:4 exp:4
 		value="" //indent:8 exp:8
 	) //indent:4 exp:4
 	public void testStartOfSequence() { //indent:4 exp:4

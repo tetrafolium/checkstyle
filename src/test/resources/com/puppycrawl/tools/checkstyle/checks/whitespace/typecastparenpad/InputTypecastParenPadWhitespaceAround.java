@@ -3,7 +3,7 @@ package com.puppycrawl.tools.checkstyle.checks.whitespace.typecastparenpad;
 @SuppressWarnings({"this", "that"})
 class InputTypecastParenPadWhitespaceAround
 {
-    protected InputTypecastParenPadWhitespaceAround ( int i )
+    protected InputTypecastParenPadWhitespaceAround (int i)
     {
         this (); //whitespace
         toString ();
@@ -16,8 +16,8 @@ class InputTypecastParenPadWhitespaceAround
     public void enhancedFor ()
     {
         int[] i = new int[2];
-        for ( int j: i ) {
-            System.identityHashCode ( j );
+        for (int j: i) {
+            System.identityHashCode (j);
         }
     }
 }

@@ -17,12 +17,12 @@ package com.puppycrawl.tools.checkstyle.checks.indentation.indentation;    //ind
 
 public class InputIndentationChainedMethodWithBracketOnNewLine {           //indent:0 exp:0
 
-  InputIndentationChainedMethodWithBracketOnNewLine indentation(           //indent:2 exp:2
+  InputIndentationChainedMethodWithBracketOnNewLine indentation(//indent:2 exp:2
       Object... args) {                                                    //indent:6 exp:6
     return this;                                                           //indent:4 exp:4
   }                                                                        //indent:2 exp:2
 
-  InputIndentationChainedMethodWithBracketOnNewLine thenReturn(            //indent:2 exp:2
+  InputIndentationChainedMethodWithBracketOnNewLine thenReturn(//indent:2 exp:2
       InnerClass innerClass) {                                             //indent:6 exp:6
     return this;                                                           //indent:4 exp:4
   }                                                                        //indent:2 exp:2
@@ -35,24 +35,24 @@ public class InputIndentationChainedMethodWithBracketOnNewLine {           //ind
     InputIndentationChainedMethodWithBracketOnNewLine i =                  //indent:4 exp:4
         new InputIndentationChainedMethodWithBracketOnNewLine();           //indent:8 exp:8
     i.indentation()                                                        //indent:4 exp:4
-        .indentation(                                                      //indent:8 exp:8
+        .indentation(//indent:8 exp:8
             "a",                                                           //indent:12 exp:12
             "b"                                                            //indent:12 exp:12
         );                                                                 //indent:8 exp:8
 
     i.indentation()                                                        //indent:4 exp:4
-      .indentation(                                                        //indent:6 exp:8 warn
+      .indentation(//indent:6 exp:8 warn
         "a",                                                               //indent:8 exp:10 warn
           "b"                                                              //indent:10 exp:10
       );                                                                   //indent:6 exp:8 warn
     when()                                                                 //indent:4 exp:4
-        .thenReturn(                                                       //indent:8 exp:8
+        .thenReturn(//indent:8 exp:8
             new InnerClass("response", "{\n" +                             //indent:12 exp:12
                                        "  \"query\": \"someValue\"\n" +    //indent:39 exp:39
                                        "}")                                //indent:39 exp:39
         );                                                                 //indent:8 exp:8
     when()                                                                 //indent:4 exp:4
-        .thenReturn(                                                       //indent:8 exp:8
+        .thenReturn(//indent:8 exp:8
             new InnerClass("response", "")                                 //indent:12 exp:12
         );                                                                 //indent:8 exp:8
     String string1 =                                                       //indent:4 exp:4

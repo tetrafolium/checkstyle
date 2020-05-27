@@ -228,7 +228,7 @@ public class InputIndentationValidIfIndent { //indent:0 exp:0
         } //indent:8 exp:8
 
         if //indent:8 exp:8
-        ( //indent:8 exp:12 warn
+        (//indent:8 exp:12 warn
             test //indent:12 exp:12
         ) { //indent:8 exp:8
             System.getProperty("blah"); //indent:12 exp:12

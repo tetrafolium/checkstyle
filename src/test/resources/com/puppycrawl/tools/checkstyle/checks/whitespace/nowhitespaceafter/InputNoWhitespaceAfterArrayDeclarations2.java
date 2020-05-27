@@ -89,7 +89,7 @@ public class InputNoWhitespaceAfterArrayDeclarations2
     Integer someStuff13 = F.create(1,1)[0][0][0];
     Integer someStuff131 = F.create(1,1)  [0][0]   [0];//incorrect 90:43,52
     Object[] someStuff14 = (Object[]) null;
-    Object[] someStuff15 = (Object  []  ) null;//incorrect 92:37
+    Object[] someStuff15 = (Object  []) null;//incorrect 92:37
 
     byte someStuff16 = ((byte[]) someStuff4) [0];//incorrect 94:46
 

@@ -48,7 +48,7 @@ public class InputIndentationValidForIndent { //indent:0 exp:0
             } //indent:12 exp:12
         } //indent:8 exp:8
 
-        for ( //indent:8 exp:8
+        for (//indent:8 exp:8
             int i=0; //indent:12 exp:12
             i<10; //indent:12 exp:12
             i++) //indent:12 exp:12
@@ -78,10 +78,10 @@ public class InputIndentationValidForIndent { //indent:0 exp:0
             System.getProperty("foo"); //indent:12 exp:12
         } //indent:8 exp:8
 
-        for ( final int index : indices ) { //indent:8 exp:8
+        for (final int index : indices) { //indent:8 exp:8
             String.CASE_INSENSITIVE_ORDER.equals(index); //indent:12 exp:12
         } //indent:8 exp:8
-        for ( final int index : indices ) //indent:8 exp:8
+        for (final int index : indices) //indent:8 exp:8
         { //indent:8 exp:8
             String.CASE_INSENSITIVE_ORDER.equals(index); //indent:12 exp:12
         } //indent:8 exp:8

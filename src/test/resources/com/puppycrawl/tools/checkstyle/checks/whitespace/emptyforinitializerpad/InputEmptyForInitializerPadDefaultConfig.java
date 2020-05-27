@@ -14,10 +14,10 @@ class InputEmptyForInitializerPadDefaultConfig
         for (int i = 0; i < 1;i++) {
         }
 
-        for (int i = 0; i < 1;i++ ) {
+        for (int i = 0; i < 1;i++) {
         }
 
-        for (int i = 0; i < 1; i++ ) {
+        for (int i = 0; i < 1; i++) {
         }
 
         for (int i = 0; i < 1;) {
@@ -37,18 +37,18 @@ class InputEmptyForInitializerPadDefaultConfig
 
     void method2()
     {
-        for ( int i = 0; i < 1; i++ ) {
+        for (int i = 0; i < 1; i++) {
         }
 
-        for ( int i = 0; i < 1; ) {
+        for (int i = 0; i < 1; ) {
             i++;
         }
 
         int i = 0;
-        for ( ; i < 1; i++ ) {
+        for ( ; i < 1; i++) {
         }
 
-        for (; i < 2; i++ ) {
+        for (; i < 2; i++) {
         }
 
         for (

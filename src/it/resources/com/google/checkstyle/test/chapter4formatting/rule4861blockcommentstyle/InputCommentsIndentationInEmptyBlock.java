@@ -5,11 +5,11 @@ public class InputCommentsIndentationInEmptyBlock {
     private void foo1() {
         int a = 5, b = 3, v = 6;
         if (a == b
-            && v == b || ( a ==1
+            && v == b || (a ==1
                    /// // warn
                        /* // warn
                         * one fine day ... */
-                               && b == 1)   ) {
+                               && b == 1)) {
             // Cannot clearly detect user intention of explanation target.
         }
     }
@@ -17,8 +17,8 @@ public class InputCommentsIndentationInEmptyBlock {
     private void foo2() {
         int a = 5, b = 3, v = 6;
         if (a == b
-            && v == b || ( a ==1
-            && b == 1)   ) {
+            && v == b || (a ==1
+            && b == 1)) {
 
 
              // comment

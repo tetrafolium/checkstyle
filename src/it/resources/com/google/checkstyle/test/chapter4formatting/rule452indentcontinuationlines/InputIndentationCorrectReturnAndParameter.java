@@ -17,7 +17,7 @@ class InputIndentationCorrectReturnAndParameter { //indent:0 exp:0
         SecondClassLongName("Looooooooooooooo" //indent:8 exp:8
         + "ooooooooooooong").getBoolean(new FooReturnClass(), false)) || //indent:8 exp:8
         conditionFifth(true, new SecondClassLongName(getString(2048, "Looo" //indent:8 exp:8
-        + "ooooooooooooooooooooooooooooooooooooooooooong")).getBoolean( //indent:8 exp:8
+        + "ooooooooooooooooooooooooooooooooooooooooooong")).getBoolean(//indent:8 exp:8
         new FooReturnClass(), true)) || conditionSixth(false, new //indent:8 exp:8
         SecondClassLongName(getString(100000, "Loooooong" //indent:8 exp:8
         + "Fooooooo><"))) || conditionNoArg() //indent:8 exp:8
@@ -75,7 +75,7 @@ class InputIndentationCorrectReturnAndParameter { //indent:0 exp:0
           SecondClassLongName("Looooooooooooooo" //indent:10 exp:10
             + "ooooooooooooong").getBoolean(new FooReturnClass(), false)) || //indent:12 exp:>=10
             conditionFifth(true, new SecondClassLongName(getString(2048, "Looo" //indent:12 exp:>=10
-            + "ooooooooooooooooooooooooooooooooooooooooooong")).getBoolean( //indent:12 exp:>=10
+            + "ooooooooooooooooooooooooooooooooooooooooooong")).getBoolean(//indent:12 exp:>=10
             new FooReturnClass(), true)) || conditionSixth(false, new //indent:12 exp:>=10
               SecondClassLongName(getString(100000, "Loooooong" //indent:14 exp:>=10
               + "Fooooooo><"))) || conditionNoArg() //indent:14 exp:>=10
@@ -98,7 +98,7 @@ class InputIndentationCorrectReturnAndParameter { //indent:0 exp:0
             SecondClassLongName("Looooooooooooooo" //indent:12 exp:12
               + "ooooooooooooong").getBoolean(new FooReturnClass(), false)) || //indent:14 exp:>=12
               conditionFifth(true, new SecondClassLongName(getString(2048, "Lo" //indent:14 exp:>=12
-              + "ooooooooooooooooooooooooooooooooooooooooooong")).getBoolean( //indent:14 exp:>=12
+              + "ooooooooooooooooooooooooooooooooooooooooooong")).getBoolean(//indent:14 exp:>=12
               new FooReturnClass(), true)) || conditionSixth(false, new //indent:14 exp:>=12
                 SecondClassLongName(getString(100000, "Loooooong" //indent:16 exp:>=12
                 + "Fooooooo><"))) || conditionNoArg() //indent:16 exp:>=12

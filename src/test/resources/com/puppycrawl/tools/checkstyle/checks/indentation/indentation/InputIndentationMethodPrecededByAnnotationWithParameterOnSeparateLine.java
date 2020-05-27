@@ -10,7 +10,7 @@ public class InputIndentationMethodPrecededByAnnotationWithParameterOnSeparateLi
   @interface Annotation2 {}; //indent:2 exp:2
 
   @Annotation1(field1 = "foo", field2 = "bar") //indent:2 exp:2
-  public @Annotation2 String method( //indent:2 exp:2
+  public @Annotation2 String method(//indent:2 exp:2
       String param //indent:6 exp:6
   ) { //indent:2 exp:2
     return null; //indent:4 exp:4

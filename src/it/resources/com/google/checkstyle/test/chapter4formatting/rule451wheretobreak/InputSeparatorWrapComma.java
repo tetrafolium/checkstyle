@@ -37,8 +37,8 @@ class badCaseComma {
         int truncationLength = 1;
         CharSequence seq = null;
         Object truncationIndicator = null;
-        return new StringBuilder(maxLength )
-        .append(seq, 0, truncationLength )
+        return new StringBuilder(maxLength)
+        .append(seq, 0, truncationLength)
         .append(truncationIndicator)
         .toString();
     }

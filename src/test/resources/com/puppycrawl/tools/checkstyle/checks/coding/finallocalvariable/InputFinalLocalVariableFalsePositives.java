@@ -1799,7 +1799,7 @@ public class InputFinalLocalVariableFalsePositives {
         int partsLo;
         if (true) {
             partsLo = 1;
-            if ( --partsLo != 0) {
+            if (--partsLo != 0) {
                 return;
             }
             if (true) {

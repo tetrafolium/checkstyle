@@ -98,13 +98,13 @@ public class InputAnonInnerLength
     */
     InputAnonInnerLength()
     {
-        mButton.addMouseListener( new MouseAdapter()
+        mButton.addMouseListener(new MouseAdapter()
             {
-                public void mouseClicked( MouseEvent aEv )
+                public void mouseClicked(MouseEvent aEv)
                 {
                     System.identityHashCode("click");
                 }
-            } );
+            });
     }
 
     /**
@@ -112,12 +112,12 @@ public class InputAnonInnerLength
     */
     public void addInputAnonInner()
     {
-        mButton.addMouseListener( new MouseAdapter()
+        mButton.addMouseListener(new MouseAdapter()
             {
-                public void mouseClicked( MouseEvent aEv )
+                public void mouseClicked(MouseEvent aEv)
                 {
                     System.identityHashCode("click");
                 }
-            } );
+            });
     }
 }

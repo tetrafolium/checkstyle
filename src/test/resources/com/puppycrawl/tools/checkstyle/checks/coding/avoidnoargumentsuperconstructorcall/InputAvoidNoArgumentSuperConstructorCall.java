@@ -14,7 +14,7 @@ public class InputAvoidNoArgumentSuperConstructorCall extends java.util.ArrayLis
     }
 
     public InputAvoidNoArgumentSuperConstructorCall(long a, long b) {
-        super( // violation
+        super(// violation
         );
     }
 

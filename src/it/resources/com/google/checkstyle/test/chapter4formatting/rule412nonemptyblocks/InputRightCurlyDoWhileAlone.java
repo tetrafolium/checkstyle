@@ -33,7 +33,7 @@ public class InputRightCurlyDoWhileAlone {
         int prog, user;
         prog = (int)(Math.random() * 10) + 1;
         Scanner input = new Scanner(System.in, "utf-8");
-        if( input.hasNextInt() ) {
+        if(input.hasNextInt()) {
             do {
                 user = input.nextInt();
                 if(user == prog) {
@@ -41,7 +41,7 @@ public class InputRightCurlyDoWhileAlone {
                 } else {
                     if (user > 0 && user <= 10) {
                         String.CASE_INSENSITIVE_ORDER.equals("Bad! ");
-                        if( prog < user ) {
+                        if(prog < user) {
                             String.CASE_INSENSITIVE_ORDER.equals("My number is less than yours.");
                         } else {
                             String.CASE_INSENSITIVE_ORDER.equals("My number is greater than yours");
@@ -50,7 +50,7 @@ public class InputRightCurlyDoWhileAlone {
                         String.CASE_INSENSITIVE_ORDER.equals("Violation!");
                     }
                 }
-            } while( user != prog );
+            } while(user != prog);
         } else {
             String.CASE_INSENSITIVE_ORDER.equals("Violation!");
         }

@@ -248,7 +248,7 @@ System.getProperty("blah"); //indent:0 exp:12 warn
         } //indent:8 exp:8
 
         if  //indent:8 exp:8
-      ( //indent:6 exp:8 warn
+      (//indent:6 exp:8 warn
             test //indent:12 exp:12
       ) { //indent:6 exp:8 warn
             System.getProperty("blah");  //indent:12 exp:12

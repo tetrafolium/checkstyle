@@ -21,10 +21,10 @@ public class InputIndentationMethodCallLineWrap { //indent:0 exp:0
 
     void foo() { //indent:4 exp:4
         new String() //indent:8 exp:8
-            .substring( //indent:12 exp:12
+            .substring(//indent:12 exp:12
                 0, 100 //indent:16 exp:16
             ) //indent:12 exp:12
-            .substring( //indent:12 exp:12
+            .substring(//indent:12 exp:12
                 0, 50 //indent:16 exp:16
             ); //indent:12 exp:12
     } //indent:4 exp:4
@@ -33,10 +33,10 @@ public class InputIndentationMethodCallLineWrap { //indent:0 exp:0
 
     	void foo() { //indent:8 exp:8
             new String() //indent:12 exp:12
-                .substring( //indent:16 exp:16
+                .substring(//indent:16 exp:16
                     0, 100 //indent:20 exp:20
                 ) //indent:16 exp:16
-                .substring( //indent:16 exp:16
+                .substring(//indent:16 exp:16
                     0, 50 //indent:20 exp:20
                 ); //indent:16 exp:16
         } //indent:8 exp:8
@@ -46,10 +46,10 @@ public class InputIndentationMethodCallLineWrap { //indent:0 exp:0
 
     	void foo() { //indent:8 exp:8
             new String() //indent:12 exp:12
-                .substring( //indent:16 exp:16
+                .substring(//indent:16 exp:16
                     0, 100 //indent:20 exp:20
                 ) //indent:16 exp:16
-                .substring( //indent:16 exp:16
+                .substring(//indent:16 exp:16
                   0, 50 //indent:18 exp:20 warn
               ); //indent:14 exp:16 warn
         } //indent:8 exp:8
@@ -67,11 +67,11 @@ public class InputIndentationMethodCallLineWrap { //indent:0 exp:0
 
     <U> void chainingWithLambda(Function<?, ? extends U> f) { //indent:4 exp:4
         this.<Function<List<?>, Boolean>> //indent:8 exp:8
-            chainingWithLambda( //indent:12 exp:12
+            chainingWithLambda(//indent:12 exp:12
                 x -> //indent:16 exp:16
                     y -> y.contains(0)); //indent:20 exp:20
         this. //indent:8 exp:8
-            chainingWithLambda( //indent:12 exp:12
+            chainingWithLambda(//indent:12 exp:12
             x -> x); //indent:12 exp:16 warn
     } //indent:4 exp:4
 } //indent:0 exp:0

@@ -36,7 +36,7 @@ class WithAnonymousClass { //indent:0 exp:0
   }; //indent:2 exp:2
 
   InputIndentationAnonymousClasses foo() { //indent:2 exp:2
-    return new InputIndentationAnonymousClasses( //indent:4 exp:4
+    return new InputIndentationAnonymousClasses(//indent:4 exp:4
         "Loooooooooooooooong", "SecondLoooooooooong") { //indent:8 exp:>=8
           @Override public boolean foo() { //indent:10 exp:10
             Obj2 obj2Intance = new Obj2("", ""); //indent:12 exp:12

@@ -16,7 +16,7 @@ class InputIndentationCorrectFieldAndParameter { //indent:0 exp:0
       SecondFieldLongNam2("Looooooooooooooo" //indent:6 exp:6
       + "ooooooooooooong").getBoolean(new FooFieldClass(), false)) || //indent:6 exp:6
       conditionFifth(true, new SecondFieldLongNam2(getString(2048, "Looo" //indent:6 exp:6
-      + "ooooooooooooooooooooooooooooooooooooooooooong")).getBoolean( //indent:6 exp:6
+      + "ooooooooooooooooooooooooooooooooooooooooooong")).getBoolean(//indent:6 exp:6
       new FooFieldClass(), true)) || conditionSixth(false, new //indent:6 exp:6
       SecondFieldLongNam2(getString(100000, "Loooooong" //indent:6 exp:6
       + "Fooooooo><"))) || conditionNoArg() //indent:6 exp:6
@@ -74,7 +74,7 @@ class InputIndentationCorrectFieldAndParameter { //indent:0 exp:0
             SecondFieldLongNam2("Looooooooooooooo" //indent:16 exp:>=8
             + "ooooooooooooong").getBoolean(new FooFieldClass(), false)) || //indent:12 exp:>=8
            conditionFifth(true, new SecondFieldLongNam2(getString(2048, "Looo" //indent:11 exp:>=8
-               + "ooooooooooooooooooooooooooooooooooooooooooong")).getBoolean( //indent:15 exp:>=8
+               + "ooooooooooooooooooooooooooooooooooooooooooong")).getBoolean(//indent:15 exp:>=8
             new FooFieldClass(), true)) || conditionSixth(false, new //indent:12 exp:>=8
             SecondFieldLongNam2(getString(100000, "Loooooong" //indent:12 exp:>=8
                 + "Fooooooo><"))) || conditionNoArg() //indent:16 exp:>=8
@@ -91,7 +91,7 @@ class InputIndentationCorrectFieldAndParameter { //indent:0 exp:0
               SecondFieldLongNam2("Looooooooooooooo" //indent:17 exp:>=10
              + "ooooooooooooong").getBoolean(new FooFieldClass(), false)) || //indent:13 exp:>=10
             conditionFifth(true, new SecondFieldLongNam2(getString(2048, "Looo" //indent:12 exp:>=10
-                + "ooooooooooooooooooooooooooooooooooooooooooong")).getBoolean( //indent:16 exp:>=10
+                + "ooooooooooooooooooooooooooooooooooooooooooong")).getBoolean(//indent:16 exp:>=10
              new FooFieldClass(), true)) || conditionSixth(false, new //indent:13 exp:>=8
              SecondFieldLongNam2(getString(100000, "Loooooong" //indent:13 exp:>=10
                  + "Fooooooo><"))) || conditionNoArg() //indent:17 exp:>=10

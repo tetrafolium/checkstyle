@@ -28,9 +28,9 @@ class InputIndentationCorrectWhileDoWhileAndParameter { //indent:0 exp:0
               || conditionThird(2048) || conditionFourth(new //indent:14 exp:>=8
               SecondWhileLongName("Looooooooooooooo" //indent:14 exp:>=8
         + "ooooooooooooong").getBoolean(new FooWhileClass(), false)) || //indent:8 exp:8
-            conditionFifth(true, new SecondWhileLongName( //indent:12 exp:>=8
+            conditionFifth(true, new SecondWhileLongName(//indent:12 exp:>=8
             getString(2048, "Looo" //indent:12 exp:>=8
-        + "ooooooooooooooooooooooooooooooooooooooooooong")).getBoolean( //indent:8 exp:8
+        + "ooooooooooooooooooooooooooooooooooooooooooong")).getBoolean(//indent:8 exp:8
         new FooWhileClass(), true)) || conditionSixth(false, new //indent:8 exp:8
            SecondWhileLongName(getString(100000, "Loooooong" //indent:11 exp:>=8
         + "Fooooooo><"))) || conditionNoArg() //indent:8 exp:8
@@ -48,7 +48,7 @@ class InputIndentationCorrectWhileDoWhileAndParameter { //indent:0 exp:0
            SecondWhileLongName("Looooooooooooooo" //indent:11 exp:>=8
         + "ooooooooooooong").getBoolean(new FooWhileClass(), false)) || //indent:8 exp:8
         conditionFifth(true, new SecondWhileLongName(getString(2048, "Looo" //indent:8 exp:8
-        + "ooooooooooooooooooooooooooooooooooooooooooong")).getBoolean( //indent:8 exp:8
+        + "ooooooooooooooooooooooooooooooooooooooooooong")).getBoolean(//indent:8 exp:8
         new FooWhileClass(), true)) || conditionSixth(false, new //indent:8 exp:8
            SecondWhileLongName(getString(100000, "Loooooong" //indent:11 exp:>=8
         + "Fooooooo><"))) || conditionNoArg() //indent:8 exp:8
@@ -111,7 +111,7 @@ class InputIndentationCorrectWhileDoWhileAndParameter { //indent:0 exp:0
           SecondWhileLongName("Looooooooooooooo" //indent:10 exp:10
             + "ooooooooooooong").getBoolean(new FooWhileClass(), false)) || //indent:12 exp:>=10
             conditionFifth(true, new SecondWhileLongName(getString(2048, "Looo" //indent:12 exp:>=10
-            + "ooooooooooooooooooooooooooooooooooooooooooong")).getBoolean( //indent:12 exp:>=10
+            + "ooooooooooooooooooooooooooooooooooooooooooong")).getBoolean(//indent:12 exp:>=10
             new FooWhileClass(), true)) || conditionSixth(false, new //indent:12 exp:>=10
               SecondWhileLongName(getString(100000, "Loooooong" //indent:14 exp:>=10
               + "Fooooooo><"))) || conditionNoArg() //indent:14 exp:>=10
@@ -129,7 +129,7 @@ class InputIndentationCorrectWhileDoWhileAndParameter { //indent:0 exp:0
           SecondWhileLongName("Looooooooooooooo" //indent:10 exp:10
             + "ooooooooooooong").getBoolean(new FooWhileClass(), false)) || //indent:12 exp:>=10
             conditionFifth(true, new SecondWhileLongName(getString(2048, "Looo" //indent:12 exp:>=10
-            + "ooooooooooooooooooooooooooooooooooooooooooong")).getBoolean( //indent:12 exp:>=10
+            + "ooooooooooooooooooooooooooooooooooooooooooong")).getBoolean(//indent:12 exp:>=10
             new FooWhileClass(), true)) || conditionSixth(false, new //indent:12 exp:>=10
               SecondWhileLongName(getString(100000, "Loooooong" //indent:14 exp:>=10
               + "Fooooooo><"))) || conditionNoArg() //indent:14 exp:>=10
@@ -164,7 +164,7 @@ class InputIndentationCorrectWhileDoWhileAndParameter { //indent:0 exp:0
             SecondWhileLongName("Looooooooooooooo" //indent:12 exp:12
               + "ooooooooooooong").getBoolean(new FooWhileClass(), false)) || //indent:14 exp:>=12
               conditionFifth(true, new SecondWhileLongName(getString(2048, "Lo" //indent:14 exp:>=12
-              + "ooooooooooooooooooooooooooooooooooooooooooong")).getBoolean( //indent:14 exp:>=12
+              + "ooooooooooooooooooooooooooooooooooooooooooong")).getBoolean(//indent:14 exp:>=12
               new FooWhileClass(), true)) || conditionSixth(false, new //indent:14 exp:>=12
                 SecondWhileLongName(getString(100000, "Loooooong" //indent:16 exp:>=12
                 + "Fooooooo><"))) || conditionNoArg() //indent:16 exp:>=12
@@ -183,7 +183,7 @@ class InputIndentationCorrectWhileDoWhileAndParameter { //indent:0 exp:0
             SecondWhileLongName("Looooooooooooooo" //indent:12 exp:12
               + "ooooooooooooong").getBoolean(new FooWhileClass(), false)) || //indent:14 exp:>=12
               conditionFifth(true, new SecondWhileLongName(getString(2048, "Lo" //indent:14 exp:>=12
-              + "ooooooooooooooooooooooooooooooooooooooooooong")).getBoolean( //indent:14 exp:>=12
+              + "ooooooooooooooooooooooooooooooooooooooooooong")).getBoolean(//indent:14 exp:>=12
               new FooWhileClass(), true)) || conditionSixth(false, new //indent:14 exp:>=12
                 SecondWhileLongName(getString(100000, "Loooooong" //indent:16 exp:>=12
                 + "Fooooooo><"))) || conditionNoArg() //indent:16 exp:>=12

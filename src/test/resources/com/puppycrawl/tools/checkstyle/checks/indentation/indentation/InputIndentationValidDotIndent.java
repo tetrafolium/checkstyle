@@ -43,7 +43,7 @@ public class InputIndentationValidDotIndent { //indent:0 exp:0
             BevelBorder(BevelBorder.LOWERED); //indent:12 exp:12
 
 
-        border = new javax.swing.border.BevelBorder( //indent:8 exp:8
+        border = new javax.swing.border.BevelBorder(//indent:8 exp:8
             BevelBorder.LOWERED); //indent:12 exp:12
         border = new javax. //indent:8 exp:8
             swing. //indent:12 exp:12

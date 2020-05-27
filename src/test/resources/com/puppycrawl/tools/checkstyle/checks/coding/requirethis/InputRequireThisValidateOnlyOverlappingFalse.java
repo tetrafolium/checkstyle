@@ -271,7 +271,7 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
         return field1;
     }
 
-    String foo33(String field1 ) {
+    String foo33(String field1) {
         field1 = addSuf2F(field1); // violation (no return, variable 'stringField' will not be saved
         return "New String";
     }

@@ -54,7 +54,7 @@ public class InputRightCurlyAloneOrSingleLine2 {
 
         java.util.List<String> list = new java.util.ArrayList<>();
         list.stream()
-                .filter(e -> {return !e.isEmpty() && !"null".equals(e);} )
+                .filter(e -> {return !e.isEmpty() && !"null".equals(e);})
                 .collect(java.util.stream.Collectors.toList());
     }
 

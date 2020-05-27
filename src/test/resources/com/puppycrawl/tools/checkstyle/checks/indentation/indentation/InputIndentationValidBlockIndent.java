@@ -85,14 +85,14 @@ enum EquivalenceTester { //indent:0 exp:0
         /** //indent:8 exp:8
          * {@inheritDoc} //indent:9 exp:9
          */ //indent:9 exp:9
-        public boolean areEqual( final Object first, final Object second ) { //indent:8 exp:8
+        public boolean areEqual(final Object first, final Object second) { //indent:8 exp:8
             return true; //indent:12 exp:12
         } //indent:8 exp:8
 
         /** //indent:8 exp:8
          * {@inheritDoc} //indent:9 exp:9
          */ //indent:9 exp:9
-        public int hashCode( final Object target ) { //indent:8 exp:8
+        public int hashCode(final Object target) { //indent:8 exp:8
             return 1; //indent:12 exp:12
         } //indent:8 exp:8
     }, //indent:4 exp:4
@@ -105,15 +105,15 @@ enum EquivalenceTester { //indent:0 exp:0
         /** //indent:8 exp:8
          * {@inheritDoc} //indent:9 exp:9
          */ //indent:9 exp:9
-        public boolean areEqual( final Object first, final Object second ) { //indent:8 exp:8
+        public boolean areEqual(final Object first, final Object second) { //indent:8 exp:8
             return first == second; //indent:12 exp:12
         } //indent:8 exp:8
 
         /** //indent:8 exp:8
          * {@inheritDoc} //indent:9 exp:9
          */ //indent:9 exp:9
-        public int hashCode( final Object target ) { //indent:8 exp:8
-            return System.identityHashCode( target ); //indent:12 exp:12
+        public int hashCode(final Object target) { //indent:8 exp:8
+            return System.identityHashCode(target); //indent:12 exp:12
         } //indent:8 exp:8
     }; //indent:4 exp:4
 
@@ -124,7 +124,7 @@ enum EquivalenceTester { //indent:0 exp:0
      * @param second second comparand //indent:5 exp:5
      * @return whether {@code first} and {@code second} are considered equivalent //indent:5 exp:5
      */ //indent:5 exp:5
-    public abstract boolean areEqual( Object first, Object second ); //indent:4 exp:4
+    public abstract boolean areEqual(Object first, Object second); //indent:4 exp:4
 
     /** //indent:4 exp:4
      * Computes a hash code for the given object. //indent:5 exp:5
@@ -132,7 +132,7 @@ enum EquivalenceTester { //indent:0 exp:0
      * @param target object to compute a hash for //indent:5 exp:5
      * @return the computed hash //indent:5 exp:5
      */ //indent:5 exp:5
-    public abstract int hashCode( Object target ); //indent:4 exp:4
+    public abstract int hashCode(Object target); //indent:4 exp:4
 } //indent:0 exp:0
 
 class bug1251988 //indent:0 exp:0

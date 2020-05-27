@@ -9,7 +9,7 @@ public interface InputRedundantModifierClassesInsideOfInterfaces {
 
     // All classes inside interfaces are public static classes, and static modifier is redundant.
     static class C { // violation
-        public static boolean verifyState( A a ) {
+        public static boolean verifyState(A a) {
             return true;
         }
     }

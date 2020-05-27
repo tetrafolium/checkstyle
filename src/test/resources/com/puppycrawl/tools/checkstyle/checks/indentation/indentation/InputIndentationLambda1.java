@@ -86,7 +86,7 @@ public class InputIndentationLambda1 { //indent:0 exp:0
         s -> String.CASE_INSENSITIVE_ORDER //indent:8 exp:8
             .equals(s); //indent:12 exp:12
 
-    Object o1 = new Thread( //indent:4 exp:4
+    Object o1 = new Thread(//indent:4 exp:4
         () -> { //indent:8 exp:8
           x.run(); //indent:10 exp:10
         }); //indent:8 exp:8
@@ -161,7 +161,7 @@ public class InputIndentationLambda1 { //indent:0 exp:0
         .forEach((age, p) -> LOG.info("age %s: %s\n")); //indent:8 exp:8
 
     Collector<Person, StringJoiner, String> personNameCollector = //indent:4 exp:4
-        Collector.of( //indent:8 exp:8
+        Collector.of(//indent:8 exp:8
             () -> new StringJoiner(" | "), //indent:12 exp:12
             (j, p) -> j.add(p.name.toUpperCase(java.util.Locale.getDefault())), //indent:12 exp:12
             (j1, j2) -> j1.merge(j2), //indent:12 exp:12

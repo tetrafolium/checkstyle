@@ -130,7 +130,7 @@ final class InputIndentationValidClassDefIndent6 extends Object { //indent:0 exp
 
     /** The less than or equal operator. */ //indent:4 exp:4
     public static final Operator LT_OR_EQUAL = //indent:4 exp:4
-        new Operator( //indent:8 exp:8
+        new Operator(//indent:8 exp:8
             "<=", //indent:12 exp:>=12
             new OperatorHelper() //indent:12 exp:>=12
             { //indent:12 exp:12

@@ -3,7 +3,7 @@ package com.puppycrawl.tools.checkstyle.checks.whitespace.methodparampad;
 @SuppressWarnings({"this", "that"})
 public class InputMethodParamPadWhitespaceAround
 {
-    protected InputMethodParamPadWhitespaceAround ( int i )
+    protected InputMethodParamPadWhitespaceAround (int i)
     {
         this (); //whitespace
         toString ();
@@ -16,8 +16,8 @@ public class InputMethodParamPadWhitespaceAround
     public void enhancedFor ()
     {
         int[] i = new int[2];
-        for ( int j: i ) {
-            System.identityHashCode ( j );
+        for (int j: i) {
+            System.identityHashCode (j);
         }
     }
 }

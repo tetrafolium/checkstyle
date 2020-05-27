@@ -46,11 +46,11 @@ public class InputCommentsIndentationSurroundingCode
     private void foo3() {
         int a = 5, b = 3, v = 6;
         if (a == b
-            && v == b || ( a ==1
+            && v == b || (a ==1
                            /// violation
                        /* violation
                         * one fine day ... */
-                                    && b == 1)   ) {
+                                    && b == 1)) {
         }
     }
 

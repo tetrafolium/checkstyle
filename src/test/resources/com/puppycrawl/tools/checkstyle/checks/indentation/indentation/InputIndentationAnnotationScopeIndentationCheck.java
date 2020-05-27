@@ -7,7 +7,7 @@ import java.util.Date; //indent:0 exp:0
     @PrimaryKeyJoinColumn(name = "CHANNEL_ID"), //indent:4 exp:4
     @PrimaryKeyJoinColumn(name = "PRESENTER_NAME") //indent:4 exp:4
         }) //indent:8 exp:0 warn
-@AssociationOverrides( { //indent:0 exp:0
+@AssociationOverrides({ //indent:0 exp:0
     @AssociationOverride(name = "id.channel"), //indent:4 exp:4
     @AssociationOverride(name = "id.presenter")}) //indent:4 exp:4
 public class InputIndentationAnnotationScopeIndentationCheck { //indent:0 exp:0

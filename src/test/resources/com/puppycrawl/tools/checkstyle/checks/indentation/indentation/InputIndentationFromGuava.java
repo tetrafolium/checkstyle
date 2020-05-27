@@ -31,7 +31,7 @@ class InputIndentationFromGuava<K, V> extends AbstractMap<K, V> //indent:0 exp:0
      */                                                                             //indent:5 exp:5
 
     STRONG { //indent:4 exp:4
-      <K, V> Object referenceValue( //indent:6 exp:6
+      <K, V> Object referenceValue(//indent:6 exp:6
           Segment<K, V> s, ReferenceEntry<K, V> entry, int value, int weight) { //indent:10 exp:>=10
         return (weight == 1) //indent:8 exp:8
             ? new StrongValueReference<K, V>(value) //indent:12 exp:>=12
@@ -52,7 +52,7 @@ class InputIndentationFromGuava<K, V> extends AbstractMap<K, V> //indent:0 exp:0
     }, //indent:4 exp:4
 
     SOFT { //indent:4 exp:4
-      <K, V> Object referenceValue1( //indent:6 exp:6
+      <K, V> Object referenceValue1(//indent:6 exp:6
           Segment<K, V> s, ReferenceEntry<Integer, Integer> en,int va,int we){ //indent:10 exp:>=10
         return (we == 1) //indent:8 exp:8
             ? new SoftValueReference<K, V>(s.valueReferenceQueue, va, en) //indent:12 exp:>=12
@@ -73,7 +73,7 @@ class InputIndentationFromGuava<K, V> extends AbstractMap<K, V> //indent:0 exp:0
 
     WEAK { //indent:4 exp:4
       @Override //indent:6 exp:6
-      <K, V> Object referenceValue( //indent:6 exp:6
+      <K, V> Object referenceValue(//indent:6 exp:6
           Segment<K, V> seg, ReferenceEntry<K, V> entry, V value, int weight) { //indent:10 exp:>=10
         return (weight == 1) //indent:8 exp:8
             ? new WeakValueReference<K, V>() //indent:12 exp:>=12
@@ -89,7 +89,7 @@ class InputIndentationFromGuava<K, V> extends AbstractMap<K, V> //indent:0 exp:0
     /**                                                                          //indent:4 exp:4
      * Creates a reference for the given value according to this value strength. //indent:5 exp:5
      */                                                                          //indent:5 exp:5
-    abstract <K, V> Object referenceValue( //indent:4 exp:4
+    abstract <K, V> Object referenceValue(//indent:4 exp:4
         Segment<K, V> segment, ReferenceEntry<K, V> entry, V value, int weight); //indent:8 exp:>=8
 
     /**                                                                             //indent:4 exp:4
@@ -105,18 +105,18 @@ class InputIndentationFromGuava<K, V> extends AbstractMap<K, V> //indent:0 exp:0
    */                        //indent:3 exp:3
   enum EntryFactory { //indent:2 exp:2
     STRONG { //indent:4 exp:4
-      <K, V> StrongEntry<K, V> newEntry( //indent:6 exp:6
+      <K, V> StrongEntry<K, V> newEntry(//indent:6 exp:6
           Segment<K, V> s, K k, int h, @XmlElement ReferenceEntry<K, V> next) { //indent:10 exp:>=10
         return new StrongEntry<K, V>(); //indent:8 exp:8
       } //indent:6 exp:6
     }, //indent:4 exp:4
     STRONG_ACCESS { //indent:4 exp:4
-      <K, V> StrongAccessEntry<K, V> newEntry( //indent:6 exp:6
+      <K, V> StrongAccessEntry<K, V> newEntry(//indent:6 exp:6
           Segment<K, V> s, K k, int h, @XmlElement ReferenceEntry<K, V> next) { //indent:10 exp:>=10
         return new StrongAccessEntry<K, V>(k, h, next); //indent:8 exp:8
       } //indent:6 exp:6
 
-      <K, V> ReferenceEntry<K, V> copyEntry( //indent:6 exp:6
+      <K, V> ReferenceEntry<K, V> copyEntry(//indent:6 exp:6
           Segment<K, V> s, ReferenceEntry<K, V> o, ReferenceEntry<K, V> newT) { //indent:10 exp:>=10
         return newT; //indent:8 exp:8
       } //indent:6 exp:6
@@ -124,63 +124,63 @@ class InputIndentationFromGuava<K, V> extends AbstractMap<K, V> //indent:0 exp:0
       } //indent:6 exp:6
      }, //indent:5 exp:5
     STRONG_WRITE { //indent:4 exp:4
-      <K, V> StrongEntry<K, V> newEntry( //indent:6 exp:6
+      <K, V> StrongEntry<K, V> newEntry(//indent:6 exp:6
           Segment<K, V> s, K k, int h, @XmlElement ReferenceEntry<K, V> next) { //indent:10 exp:>=10
         return new StrongEntry<K, V>(); //indent:8 exp:8
       } //indent:6 exp:6
 
-      <K, V> ReferenceEntry<K, V> copyEntry( //indent:6 exp:6
+      <K, V> ReferenceEntry<K, V> copyEntry(//indent:6 exp:6
           Segment<K, V> s, ReferenceEntry<K, V> o, ReferenceEntry<K, V> newN) { //indent:10 exp:>=10
         return newN; //indent:8 exp:8
       } //indent:6 exp:6
     }, //indent:4 exp:4
     STRONG_ACCESS_WRITE { //indent:4 exp:4
-      <K, V> StrongEntry<K, V> newEntry( //indent:6 exp:6
+      <K, V> StrongEntry<K, V> newEntry(//indent:6 exp:6
           Segment<K, V> s, K k, int h, @XmlElement ReferenceEntry<K, V> next) { //indent:10 exp:>=10
         return new StrongEntry<K, V>(); //indent:8 exp:8
       } //indent:6 exp:6
 
-      <K, V> ReferenceEntry<K, V> copyEntry( //indent:6 exp:6
+      <K, V> ReferenceEntry<K, V> copyEntry(//indent:6 exp:6
           Segment<K, V> s, ReferenceEntry<K, V> o, ReferenceEntry<K, V> newN) { //indent:10 exp:>=10
         return newN; //indent:8 exp:8
       } //indent:6 exp:6
     }, //indent:4 exp:4
 
     WEAK { //indent:4 exp:4
-      <K, V> StrongEntry<K, V> newEntry( //indent:6 exp:6
+      <K, V> StrongEntry<K, V> newEntry(//indent:6 exp:6
           Segment<K, V> s, K k, int h, @XmlElement ReferenceEntry<K, V> next) { //indent:10 exp:>=10
         return new StrongEntry<K, V>(); //indent:8 exp:8
       } //indent:6 exp:6
     }, //indent:4 exp:4
     WEAK_ACCESS { //indent:4 exp:4
-      <K, V> StrongEntry<K, V> newEntry( //indent:6 exp:6
+      <K, V> StrongEntry<K, V> newEntry(//indent:6 exp:6
           Segment<K, V> s, K k, int h, @XmlElement ReferenceEntry<K, V> next) { //indent:10 exp:>=10
         return new StrongEntry<K, V>(); //indent:8 exp:8
       } //indent:6 exp:6
 
-      <K, V> ReferenceEntry<K, V> copyEntry( //indent:6 exp:6
+      <K, V> ReferenceEntry<K, V> copyEntry(//indent:6 exp:6
           Segment<K, V> s, ReferenceEntry<K, V> o, ReferenceEntry<K, V> newN) { //indent:10 exp:>=10
         return newN; //indent:8 exp:8
       } //indent:6 exp:6
     }, //indent:4 exp:4
     WEAK_WRITE { //indent:4 exp:4
-      <K, V> StrongEntry<K, V> newEntry( //indent:6 exp:6
+      <K, V> StrongEntry<K, V> newEntry(//indent:6 exp:6
           Segment<K, V> s, K k, int h, @XmlElement ReferenceEntry<K, V> next) { //indent:10 exp:>=10
         return new StrongEntry<K, V>(); //indent:8 exp:8
       } //indent:6 exp:6
 
-      <K, V> ReferenceEntry<K, V> copyEntry( //indent:6 exp:6
+      <K, V> ReferenceEntry<K, V> copyEntry(//indent:6 exp:6
           Segment<K, V> s, ReferenceEntry<K, V> o, ReferenceEntry<K, V> newN) { //indent:10 exp:>=10
         return newN; //indent:8 exp:8
       } //indent:6 exp:6
     }, //indent:4 exp:4
     WEAK_ACCESS_WRITE { //indent:4 exp:4
-      <K, V> StrongEntry<K, V> newEntry( //indent:6 exp:6
+      <K, V> StrongEntry<K, V> newEntry(//indent:6 exp:6
           Segment<K, V> s, K k, int h, @XmlElement ReferenceEntry<K, V> next) { //indent:10 exp:>=10
         return new StrongEntry<K, V>(); //indent:8 exp:8
       } //indent:6 exp:6
 
-      <K, V> ReferenceEntry<K, V> copyEntry( //indent:6 exp:6
+      <K, V> ReferenceEntry<K, V> copyEntry(//indent:6 exp:6
           Segment<K, V> s, ReferenceEntry<K, V> o, ReferenceEntry<K, V> newN) { //indent:10 exp:>=10
         return newN; //indent:8 exp:8
       } //indent:6 exp:6

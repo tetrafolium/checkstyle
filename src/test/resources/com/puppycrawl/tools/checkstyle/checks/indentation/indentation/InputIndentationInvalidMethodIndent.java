@@ -101,32 +101,32 @@ public class InputIndentationInvalidMethodIndent { //indent:0 exp:0
       } //indent:6 exp:8 warn
 
         System.identityHashCode("methods are: " + //indent:8 exp:8
-          Arrays.asList( //indent:10 exp:12 warn
+          Arrays.asList(//indent:10 exp:12 warn
                 new String[] {"method"}).toString()); //indent:16 exp:>=14
 
 
         System.identityHashCode("methods are: " + //indent:8 exp:8
-            Arrays.asList( //indent:12 exp:>=12
+            Arrays.asList(//indent:12 exp:>=12
               new String[] {"method"}).toString()); //indent:14 exp:>=14
 
         System.identityHashCode("methods are: " //indent:8 exp:8
-          + Arrays.asList( //indent:10 exp:12 warn
+          + Arrays.asList(//indent:10 exp:12 warn
                 new String[] {"method"}).toString()); //indent:16 exp:>=14
 
         System.identityHashCode("methods are: " //indent:8 exp:8
-            + Arrays.asList( //indent:12 exp:>=12
+            + Arrays.asList(//indent:12 exp:>=12
               new String[] {"method"}).toString()); //indent:14 exp:>=12
 
 
-        String blah = (String) System.getProperty( //indent:8 exp:8
+        String blah = (String) System.getProperty(//indent:8 exp:8
           new String("type")); //indent:10 exp:12 warn
 
 
-        String blah1 = (String) System.getProperty( //indent:8 exp:8
+        String blah1 = (String) System.getProperty(//indent:8 exp:8
           new String("type") //indent:10 exp:12 warn
       ); //indent:6 exp:8 warn
 
-        System.identityHashCode("methods are: " + Arrays.asList( //indent:8 exp:8
+        System.identityHashCode("methods are: " + Arrays.asList(//indent:8 exp:8
             new String[] {"method"}).toString() //indent:12 exp:>=12
       ); //indent:6 exp:8 warn
     } //indent:4 exp:4

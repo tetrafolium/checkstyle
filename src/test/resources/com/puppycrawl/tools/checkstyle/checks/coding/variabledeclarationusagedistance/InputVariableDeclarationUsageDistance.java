@@ -1041,8 +1041,8 @@ class New {
         }
     }
 
-    private void launch(Integer number ) {
-        String myInt = ( number.toString() + '\0' );
+    private void launch(Integer number) {
+        String myInt = (number.toString() + '\0');
         boolean result = false;
         if (number == 123)
             result = true;

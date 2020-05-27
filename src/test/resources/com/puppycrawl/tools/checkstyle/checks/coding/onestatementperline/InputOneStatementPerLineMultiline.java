@@ -153,7 +153,7 @@ public class InputOneStatementPerLineMultiline {
      * @see <a href="https://github.com/checkstyle/checkstyle/pull/2750#issuecomment-166032327"/>
      */
     private void issue2211pass2() {
-        try( AutoCloseable i = new java.io.StringReader("");
+        try(AutoCloseable i = new java.io.StringReader("");
             AutoCloseable k = new java.io.StringReader("");) {
         } catch (Exception e1) {
         }
