@@ -16,7 +16,9 @@
   <metadata name="org.checkstyle.principle.description"
             value="In our config we should use all Checks that Checkstyle has"/>
 
+  <!--
   <property name="cacheFile" value="${checkstyle.cache.file}"/>
+  -->
 
   <property name="severity" value="error"/>
 
