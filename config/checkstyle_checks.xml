@@ -35,9 +35,11 @@
     <property name="severity" value="ignore"/>
     <property name="acceptOnMatch" value="false"/>
   </module>
+  <!--
   <module name="SuppressionFilter">
     <property name="file" value="${checkstyle.suppressions.file}"/>
   </module>
+  -->
   <!-- Tone down the checking for test code -->
   <module name="SuppressionSingleFilter">
     <property name="checks" value="JavadocPackage"/>
@@ -59,6 +61,7 @@
   </module>
 
   <!-- Headers -->
+  <!--
   <module name="Header">
     <property name="headerFile" value="${checkstyle.header.file}"/>
     <property name="fileExtensions" value="java"/>
@@ -68,6 +71,7 @@
     <property name="headerFile" value="${checkstyle.regexp.header.file}"/>
     <property name="fileExtensions" value="java"/>
   </module>
+  -->
 
   <!-- Javadoc Comments -->
   <module name="JavadocPackage">
@@ -419,9 +423,11 @@
       <property name="offCommentFormat" value="CSOFF\: .*"/>
       <property name="onCommentFormat" value="CSON\: .*"/>
     </module>
+    <!--
     <module name="SuppressionXpathFilter">
       <property name="file" value="${checkstyle.suppressions-xpath.file}"/>
     </module>
+    -->
     <!-- Tone down the checking for test code -->
     <module name="SuppressionXpathSingleFilter">
       <property name="files" value="[\\/]internal[\\/].*[\\/]\w+Util\.java"/>
@@ -480,6 +486,7 @@
       <property name="separateLineBetweenGroups" value="true"/>
     </module>
     <module name="IllegalImport"/>
+    <!--
     <module name="ImportControl">
       <property name="id" value="ImportControlMain"/>
       <property name="file" value="${checkstyle.importcontrol.file}"/>
@@ -490,6 +497,7 @@
       <property name="file" value="${checkstyle.importcontroltest.file}"/>
       <property name="path" value="^.*[\\/]src[\\/]test[\\/].*$"/>
     </module>
+    -->
     <module name="ImportOrder">
       <property name="groups" value="/^java\./,javax,org"/>
       <property name="ordered" value="true"/>
