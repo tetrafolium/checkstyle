@@ -7,6 +7,7 @@ import java.io.InputStream;
 
 public class InputRequireThisEnumInnerClassesAndBugs {
     int i;
+
     void method1() {
         i = 3;
     }
@@ -35,10 +36,12 @@ public class InputRequireThisEnumInnerClassesAndBugs {
         this.<String>method3();
         this.<I>method3();
     }
+
     int I = 0;
-    private class I {}
+    private class I { }
 }
 //  enum
+
 enum MyEnum
 {
     A,
@@ -78,6 +81,7 @@ class Bug2123003 {
 
 class Bug1155921 {
     private static int CONST = 1;
+
     private static int static_method() {
         return 1;
     }
@@ -109,12 +113,13 @@ class Issue257 {
 
 class Issue2240 {
     int i;
+
     void foo() {
         i++;
         i++; int i = 1; i++;
         instanceMethod();
     }
-    void instanceMethod() {};
+    void instanceMethod() { }
 
     class Nested {
         void bar() {
@@ -124,22 +129,23 @@ class Issue2240 {
     }
 }
 
-class Issue2539{
-    void foo(int i) {}
-    static void foo(double i) {}
-    void foo() {}
+class Issue2539 {
+    void foo(int i) { }
+    static void foo(double i) { }
+    void foo() { }
 
     void bar() {
         foo(1);
         foo();
     }
 }
+
 class NestedRechange {
     final String s = "";
 
     NestedRechange() {
         String s = "t";
-        s = s.substring(0);
+        this.s = s.substring(0);
     }
 
     private static class NestedStatic {
@@ -150,6 +156,7 @@ class NestedRechange {
         }
     }
 }
+
 class NestedFrames {
     int a = 0;
     int b = 0;
@@ -173,5 +180,6 @@ class NestedFrames {
         }
         return b + b * b;
     }
+
     final NestedFrames NestedFrames = new NestedFrames();
 }

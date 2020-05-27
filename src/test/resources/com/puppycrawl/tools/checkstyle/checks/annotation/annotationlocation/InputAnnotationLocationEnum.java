@@ -14,11 +14,11 @@ import java.lang.annotation.Target;
  *
  */
 @EnumAnnotation(value = "foo")
-  @EnumAnnotation //warn
+@EnumAnnotation //warn
 @EnumAnnotation("bar") enum InputAnnotationLocationEnum { //warn
 
     @EnumAnnotation(value = "foo")
-      @EnumAnnotation //warn
+    @EnumAnnotation //warn
     @EnumAnnotation("bar") ENUM_VALUE(); //warn
 
     InputAnnotationLocationEnum() {
@@ -28,7 +28,7 @@ import java.lang.annotation.Target;
 
 @Repeatable(EnumAnnotations.class)
 @Target({ElementType.FIELD, ElementType.TYPE})
-@interface EnumAnnotation  {
+@interface EnumAnnotation {
 
     String value() default "";
 

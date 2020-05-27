@@ -66,7 +66,7 @@ strictfp final class InputModifierOrderIt // illegal order of modifiers for clas
         public float PI_PUBLIC = (float) 3.14; // violation
 
         /** redundant 'abstract' modifier (field can not be abstract) */
-//        abstract float PI_ABSTRACT = (float) 3.14;
+        //        abstract float PI_ABSTRACT = (float) 3.14;
 
         /** redundant 'final' modifier */
         final float PI_FINAL = (float) 3.14; // violation
@@ -130,16 +130,18 @@ abstract interface InnerImplementation // violation
 class SafeVarargsUsage {
     @Deprecated
     @SafeVarargs
-    private final void foo(int... k) {}
+    private final void foo(int... k) {
+    }
 
     @Deprecated
     @SafeVarargs
     @SuppressWarnings("")
-    private final void foo1(Object... obj) {}
+    private final void foo1(Object... obj) {
+    }
 }
 
-enum TestEnum {
-    ;
+enum TestEnum { ;
+
 
     public void method() {
     }

@@ -4,6 +4,7 @@ public class InputIllegalTypeAbstractClassNames {
 
     abstract class AbstractClass {
         abstract String getClassInfo();
+
         abstract boolean isPerfectClass();
     }
 
@@ -11,7 +12,8 @@ public class InputIllegalTypeAbstractClassNames {
 
         boolean perfect = true;
 
-        private MyNonAbstractClass() {}
+        private MyNonAbstractClass() {
+        }
 
         @Override
         String getClassInfo() {

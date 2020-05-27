@@ -1,11 +1,13 @@
 package com.puppycrawl.tools.checkstyle.checks.blocks.leftcurly;
 
 public class InputLeftCurlyIgnoreEnums {
-    enum Colors {RED,
+    enum Colors { RED,
         BLUE,
         GREEN;
 
-        @Override public String toString() { return ""; };
+        @Override public String toString() {
+            return "";
+        }
     }
 
     enum Languages {
@@ -17,6 +19,6 @@ public class InputLeftCurlyIgnoreEnums {
     }
 
     void method1(int a) {
-        switch (a) {case 1: ; }
+            switch (a) { case 1: ; }
     }
 }

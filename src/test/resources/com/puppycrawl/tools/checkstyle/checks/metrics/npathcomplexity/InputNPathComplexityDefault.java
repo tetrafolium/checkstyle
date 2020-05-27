@@ -6,7 +6,7 @@ public class InputNPathComplexityDefault {
         //NP(while-statement) = (while-range=1) + (expr=0) + 1 = 2
         while (true) {
             Runnable runnable = new Runnable() {
-               // NP = 2
+                // NP = 2
                 public void run() {
                     // NP(while-statement) = (while-range=1) + (expr=0) + 1 = 2
                     while (true) {
@@ -36,8 +36,10 @@ public class InputNPathComplexityDefault {
         // NP = (if-range=1) + (else-range=2) + 0 = 3
         if (System.currentTimeMillis() == 0) {
         // NP(else-range) = (if-range=1) + (else-range=1) + (expr=0) = 2
-        } else if (System.currentTimeMillis() == 0) {
-        } else {
+        }
+        else if (System.currentTimeMillis() == 0) {
+        }
+        else {
         }
     }
 
@@ -45,10 +47,12 @@ public class InputNPathComplexityDefault {
     public void stupidElseIf() {
         // NP = (if-range=1) + (else-range=3*2) + (expr=0) = 7
         if (System.currentTimeMillis() == 0) {
-        } else {
+        }
+        else {
             // NP = (if-range=1) + (else-range=2) + (expr=0) = 3
             if (System.currentTimeMillis() == 0) {
-            } else {
+            }
+            else {
                 // NP = (if-range=1) + 1 + (expr=0) = 2
                 if (System.currentTimeMillis() == 0) {
                 }
@@ -66,8 +70,10 @@ public class InputNPathComplexityDefault {
         // NP = (if-range=1) + (else-range=2) + 0 = 3
         if (System.currentTimeMillis() == 0) {
         // NP(else-range) = (if-range=1) + (else-range=1) + (expr=0) = 2
-        } else if (System.currentTimeMillis() == 0) {
-        } else {
+        }
+        else if (System.currentTimeMillis() == 0) {
+        }
+        else {
         }
     }
 
@@ -78,8 +84,10 @@ public class InputNPathComplexityDefault {
         // NP = (if-range=1) + (else-range=2) + 0 = 3
         if (System.currentTimeMillis() == 0) {
         // NP(else-range) = (if-range=1) + (else-range=1) + (expr=0) = 2
-        } else if (System.currentTimeMillis() == 0) {
-        } else {
+        }
+        else if (System.currentTimeMillis() == 0) {
+        }
+        else {
         }
     }
 
@@ -90,8 +98,10 @@ public class InputNPathComplexityDefault {
         // NP = (if-range=1) + (else-range=2) + 0 = 3
         if (System.currentTimeMillis() == 0) {
         // NP(else-range) = (if-range=1) + (else-range=1) + (expr=0) = 2
-        } else if (System.currentTimeMillis() == 0) {
-        } else {
+        }
+        else if (System.currentTimeMillis() == 0) {
+        }
+        else {
         }
     }
 
@@ -118,35 +128,41 @@ public class InputNPathComplexityDefault {
         double z = (Integer) ((0.2 == Math.random()) ? (Integer) null + apply(null)
                 : (0.3 == Math.random()) ? (Integer) null : (int) Math
                         .sin(300 * (12 + 30))); // bad (nested in second
-                                                // position)
+        // position)
     }
-    public boolean getSmth() { return true; };
-    public int apply(Object o) { return 0; }
+
+    public boolean getSmth() {
+        return true;
+    }
+
+    public int apply(Object o) {
+        return 0;
+    }
 
     public void inClass(int type, Short s, int color) {
         switch (type) {
         case 3:
-            new Object() {
+                new Object() {
                 public void anonymousMethod() {
                     {
                         switch (s) {
                         case 5:
-                            switch (type) {
-                            default:
-                            }
+                                switch (type) {
+                                    default:
+                                }
                         }
                     }
                 }
             };
-        default:
-            new Object() {
+            default:
+                new Object() {
                 class SwitchClass {
                     {
                         switch (color) {
                         case 5:
-                            switch (type) {
-                            default:
-                            }
+                                switch (type) {
+                                    default:
+                                }
                         }
                     }
                 }

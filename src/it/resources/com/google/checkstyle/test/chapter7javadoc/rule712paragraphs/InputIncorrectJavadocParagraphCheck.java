@@ -25,13 +25,13 @@ class InputIncorrectJavadocParagraphCheck {
      * @see <a href="http://www.gwtproject.org/doc/latest/DevGuideOrganizingProjects.html#DevGuideModules">
      *     Documentation about GWT emulated source</a>
      */
-    boolean emulated() {return false;}
+    boolean emulated() { return false; }
 
-    /**<p>Some Javadoc. //warn
-     * <p> //warn
-     * <p><p> //warn
-     * <p>/^WARN/   Some Javadoc.<p>*/ //warn
-     class InnerInputCorrectJavaDocParagraphCheck {
+     /**<p>Some Javadoc. //warn
+      * <p> //warn
+      * <p><p> //warn
+      * <p>/^WARN/   Some Javadoc.<p>*/ //warn
+    class InnerInputCorrectJavaDocParagraphCheck {
 
         /**
          * Some Javadoc.<p> //warn
@@ -50,7 +50,7 @@ class InputIncorrectJavadocParagraphCheck {
          * @see <a href="http://www.gwtproject.org/doc/latest/DevGuideOrganizingProjects.html#DevGuideModules">
          *     Documentation about GWT emulated source</a>
          */
-        boolean emulated() {return false;}
+        boolean emulated() { return false; }
     }
 
     InnerInputCorrectJavaDocParagraphCheck anon = new InnerInputCorrectJavaDocParagraphCheck() {
@@ -72,6 +72,6 @@ class InputIncorrectJavadocParagraphCheck {
          * @see <a href="http://www.gwtproject.org/doc/latest/DevGuideOrganizingProjects.html#DevGuideModules">
          *     Documentation about <p> GWT emulated source</a> //warn
          */
-        boolean emulated() {return false;}
+        boolean emulated() { return false; }
     };
 }

@@ -4,5 +4,6 @@ public class InputIllegalInstantiationSameClassNameJavaLang
 {
     InputTest obj = new InputTest();
 }
+
 class InputTest {
 }

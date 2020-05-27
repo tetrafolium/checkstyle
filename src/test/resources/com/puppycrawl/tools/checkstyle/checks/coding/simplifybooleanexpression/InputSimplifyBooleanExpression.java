@@ -72,7 +72,8 @@ public class InputSimplifyBooleanExpression
 
         if (asd) {
             return true;
-        } else {
+        }
+        else {
             return dasa;
         }
     }
@@ -80,8 +81,8 @@ public class InputSimplifyBooleanExpression
     boolean b() {
         boolean asd = false;
 
-        if(asd);
-        else;
+        if (asd);
+        else ;
 
         return true;
     }

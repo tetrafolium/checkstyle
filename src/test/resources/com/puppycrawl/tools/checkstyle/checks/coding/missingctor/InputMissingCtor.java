@@ -4,6 +4,7 @@ public class InputMissingCtor
 {
 }
 // we shouldn't flag abstract classes
+
 abstract class AbstractClass {
 }
 

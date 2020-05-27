@@ -71,7 +71,8 @@ class InputJavaDocTagContinuationIndentation implements Serializable
      *     Some javadoc.
      * @param aString Some text.
      */
-    void method2(String aString) throws Exception {}
+    void method2(String aString) throws Exception {
+    }
 
     /**
      * Some text.
@@ -79,7 +80,8 @@ class InputJavaDocTagContinuationIndentation implements Serializable
      * @throws Exception Some text.
      *     Some javadoc.
      */
-    void method3() throws Exception {}
+    void method3() throws Exception {
+    }
 
     /**
      * Some text.
@@ -164,14 +166,16 @@ class InputJavaDocTagContinuationIndentation implements Serializable
          *     Some javadoc.
          * @throws Exception Some text.
          */
-        void method2(String aString) throws Exception {}
+        void method2(String aString) throws Exception {
+        }
 
         /**
          * Some text.
          * @deprecated Some text.
          * @throws Exception Some text.
          */
-        void method3() throws Exception {}
+        void method3() throws Exception {
+        }
 
         /**
          * Some text.
@@ -247,7 +251,8 @@ class InputJavaDocTagContinuationIndentation implements Serializable
          *     Some javadoc.
          * @param aString Some text.
          */
-        void method2(String aString) throws Exception {}
+        void method2(String aString) throws Exception {
+        }
 
         /**
          * Some text.
@@ -255,7 +260,8 @@ class InputJavaDocTagContinuationIndentation implements Serializable
          *     Some javadoc.
          * @throws Exception Some text.
          */
-        void method3() throws Exception {}
+        void method3() throws Exception {
+        }
 
         /**
          * Some text.
@@ -310,7 +316,8 @@ class InputJavaDocTagContinuationIndentation implements Serializable
  *    Some javadoc. // warn
  * @author max
  */
-enum Foo3 {}
+enum Foo3 {
+}
 
 /**
  * Some javadoc.
@@ -322,4 +329,4 @@ enum Foo3 {}
  *   Some javadoc. // warn
  * @author max
  */
-interface FooIn5 {}
+interface FooIn5 { }

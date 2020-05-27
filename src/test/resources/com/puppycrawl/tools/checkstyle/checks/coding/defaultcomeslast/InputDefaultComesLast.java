@@ -8,7 +8,7 @@ public class InputDefaultComesLast
         switch (i) {
         case 1: break;
         case 2: break;
-        default:
+            default:
             // do something :)
         }
 
@@ -21,11 +21,11 @@ public class InputDefaultComesLast
         // VIOLATION!!! default is not the last one.
         switch (i) {
         case 1:
-            break;
-        default: /**default is not last*/
-            break;
+                break;
+            default: /**default is not last*/
+                break;
         case 2:
-            break;
+                break;
         }
 
         switch (i) {

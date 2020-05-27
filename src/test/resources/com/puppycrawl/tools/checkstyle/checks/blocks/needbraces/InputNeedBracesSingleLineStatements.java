@@ -4,6 +4,7 @@ public class InputNeedBracesSingleLineStatements
 {
     private static class SomeClass {
         boolean flag = true;
+
         private static boolean test(boolean k) {
             return k;
         }
@@ -57,7 +58,7 @@ public class InputNeedBracesSingleLineStatements
             break;
         for (;;) break;
         for (int i = 0; i < 10; i++) {
-             this.notify();
+            this.notify();
         }
         for (int i = 0; i < 10; i++)
              this.notify();
@@ -92,7 +93,8 @@ public class InputNeedBracesSingleLineStatements
             throw new RuntimeException();
         if (true) {
             return 1;
-        } else
+        }
+        else
             return 2;
     }
 
@@ -114,10 +116,11 @@ public class InputNeedBracesSingleLineStatements
         for (String s: new String[]{""})
             break;
         for (;;)
-        ;
+            ;
     }
-    private void method(){
-        if(false) {
+
+    private void method() {
+        if (false) {
             switch (0) {
                 case -1:
                     return;
@@ -125,7 +128,7 @@ public class InputNeedBracesSingleLineStatements
                     return;
             }
         }
-        switch(1){
+        switch (1) {
             case 1: return;
             default: throw new RuntimeException("");
         }

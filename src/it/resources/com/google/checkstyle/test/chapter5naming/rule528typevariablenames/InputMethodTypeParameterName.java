@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 class InputMethodTypeParameterName<t>
 {
-    public <TT> void foo() { }
+    public <TT> void foo() {
+    }
 
     <e_e> void foo(int i) { //warn
     }
@@ -13,20 +14,20 @@ class InputMethodTypeParameterName<t>
 class Other2<foo extends Serializable & Cloneable> {
 
     foo getOne() {
-    return null;
+        return null;
     }
 
     <Tfo$o2T extends foo> Tfo$o2T getTwo(Tfo$o2T a) { //warn
-    return null;
+        return null;
     }
 
     <foo_ extends Runnable> foo getShadow() { //warn
-    return null;
+        return null;
     }
 
     static class Junk<$foo> {
         <_abc extends $foo> void getMoreFoo() { //warn
-    }
+        }
     }
 }
 

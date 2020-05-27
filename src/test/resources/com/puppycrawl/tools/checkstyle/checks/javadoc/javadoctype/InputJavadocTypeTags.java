@@ -5,6 +5,7 @@
 package com.puppycrawl.tools.checkstyle.checks.javadoc.javadoctype;
 import java.io.IOException;
 // Tests for Javadoc tags.
+
 class InputJavadocTypeTags1
 {
     // Invalid - should be Javadoc
@@ -37,7 +38,7 @@ class InputJavadocTypeTags1
 
     /** missing throws **/
     void method5()
-        throws Exception
+            throws Exception
     {
     }
 
@@ -46,13 +47,13 @@ class InputJavadocTypeTags1
      * @see need to see tags to avoid shortcut logic
      **/
     void method6()
-        throws Exception
+            throws Exception
     {
     }
 
     /** @throws WrongException problem **/
     void method7()
-        throws Exception, NullPointerException
+            throws Exception, NullPointerException
     {
     }
 
@@ -118,7 +119,7 @@ class InputJavadocTypeTags1
     /** @throws java.io.IOException
      *               just to see if this is also legal **/
     void method14()
-       throws java.io.IOException
+            throws java.io.IOException
     {
     }
 
@@ -148,7 +149,7 @@ class InputJavadocTypeTags1
      * @throws java.io.IOException if B happens
      **/
     void method15()
-       throws java.io.IOException
+            throws java.io.IOException
     {
     }
 
@@ -180,7 +181,7 @@ class InputJavadocTypeTags1
      * @throws IllegalMonitorStateException should be told to remove from throws
      */
     void method17()
-        throws IllegalMonitorStateException
+            throws IllegalMonitorStateException
     {
     }
 
@@ -190,7 +191,7 @@ class InputJavadocTypeTags1
      * @throws java.io.IOException if bad things happen.
      */
     void method18()
-        throws IOException
+            throws IOException
     {
         throw new IOException("to make compiler happy");
     }
@@ -200,7 +201,7 @@ class InputJavadocTypeTags1
      * @throws IOException if bad things happen.
      */
     void method19()
-        throws java.io.IOException
+            throws java.io.IOException
     {
         throw new IOException("to make compiler happy");
     }
@@ -225,7 +226,7 @@ class InputJavadocTypeTags1
      * @exception IOException for another reason
      */
     void method21()
-       throws IOException
+            throws IOException
     {
     }
 
@@ -236,7 +237,7 @@ class InputJavadocTypeTags1
      * @exception java.io.FileNotFoundException for another reasons
      */
     void method22()
-       throws IOException
+            throws IOException
     {
     }
 
@@ -269,7 +270,8 @@ class InputJavadocTypeTags1
 
     /** {@inheritDoc} */
     int method26()
-    { return 0;
+    {
+        return 0;
     }
 
     /**
@@ -277,7 +279,8 @@ class InputJavadocTypeTags1
      * @return something very important.
      */
     int method27(int aParam)
-    { return 0;
+    {
+        return 0;
     }
 
     /**
@@ -285,7 +288,8 @@ class InputJavadocTypeTags1
      * {@inheritDoc}
      */
     int method28(int aParam)
-    { return 0;
+    {
+        return 0;
     }
 
     /**
@@ -345,16 +349,16 @@ public class InputJavadocTypeTags {
     public InputJavadocTypeTags() {
     }
 
-   /**
-    * Sample method.
-    * @param arg1   first argument
-    * @param arg2   second argument
-    * @return java.lang.String      the result string
-    * @throws java.lang.Exception   in case of problem
-    */
+    /**
+     * Sample method.
+     * @param arg1   first argument
+     * @param arg2   second argument
+     * @return java.lang.String      the result string
+     * @throws java.lang.Exception   in case of problem
+     */
     public final String myMethod(final String arg1,
                                  final Object arg2)
-      throws Exception
+            throws Exception
     {
         return null;
     }

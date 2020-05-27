@@ -1,5 +1,6 @@
 package com.google.checkstyle.test.chapter4formatting.rule4822variabledistance;
 import java.util.*;
+
 public class InputVariableDeclarationUsageDistanceCheck {
 
     private static int test1 = 0;
@@ -86,7 +87,7 @@ public class InputVariableDeclarationUsageDistanceCheck {
             }
         }
 
-        String ar[] = { "1", "2" };
+        String ar[] = {"1", "2" };
         for (String st : ar) {
             System.identityHashCode(st);
         }
@@ -117,7 +118,8 @@ public class InputVariableDeclarationUsageDistanceCheck {
                 index++;
                 block++;
             } while (index < 7);
-        } else {
+        }
+        else {
             while (index < 8) {
                 dist += block;
                 index++;
@@ -130,10 +132,10 @@ public class InputVariableDeclarationUsageDistanceCheck {
         boolean res;
         switch (a) {
         case 1:
-            res = true;
-            break;
-        default:
-            res = false;
+                res = true;
+                break;
+            default:
+                res = false;
         }
         return res;
     }
@@ -170,9 +172,11 @@ public class InputVariableDeclarationUsageDistanceCheck {
         boolean result;
         try {
             result = true;
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             result = false;
-        } finally {
+        }
+        finally {
             result = false;
         }
         return result;
@@ -184,10 +188,12 @@ public class InputVariableDeclarationUsageDistanceCheck {
         boolean result;
         try {
             b--;
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             b++;
             result = false; // DECLARATION OF VARIABLE 'result' SHOULD BE HERE (distance = 2)
-        } finally {
+        }
+        finally {
             a++;
         }
     }
@@ -224,7 +230,7 @@ public class InputVariableDeclarationUsageDistanceCheck {
         a.setForward(d1);
         d1.setReverse(a);
         c.setForward(d2); // DECLARATION OF VARIABLE 'c' SHOULD BE HERE (distance = 3)
-                            // DECLARATION OF VARIABLE 'd2' SHOULD BE HERE (distance = 3)
+        // DECLARATION OF VARIABLE 'd2' SHOULD BE HERE (distance = 3)
         d2.setReverse(c);
         Serializable aid = s.save(a);
         Serializable d2id = s.save(d2);
@@ -241,7 +247,8 @@ public class InputVariableDeclarationUsageDistanceCheck {
                     return false;
                 }
             }
-        } else {
+        }
+        else {
             int nodeIndex = model.codePointAt(path);
             if (model.contains("")) {
                 return false;
@@ -263,9 +270,9 @@ public class InputVariableDeclarationUsageDistanceCheck {
         a++;
         for (int index = 0; index < 5; ++index) {
             sel[index] = Integer.parseInt(model.valueOf(a)); // DECLARATION OF VARIABLE 'sel'
-                                                             // SHOULD BE HERE (distance = 2)
-                                                             // DECLARATION OF VARIABLE 'model'
-                                                             // SHOULD BE HERE (distance = 2)
+            // SHOULD BE HERE (distance = 2)
+            // DECLARATION OF VARIABLE 'model'
+            // SHOULD BE HERE (distance = 2)
         }
         return sel;
     }
@@ -289,14 +296,14 @@ public class InputVariableDeclarationUsageDistanceCheck {
         int sw;
         switch (i) {
         case 0:
-            k++;
-            sw = 0; // DECLARATION OF VARIABLE 'sw' SHOULD BE HERE (distance = 2)
-            break;
+                k++;
+                sw = 0; // DECLARATION OF VARIABLE 'sw' SHOULD BE HERE (distance = 2)
+                break;
         case 1:
-            b = false;
-            break;
-        default:
-            b = true;
+                b = false;
+                break;
+            default:
+                b = true;
         }
 
         int wh = 0;
@@ -308,9 +315,11 @@ public class InputVariableDeclarationUsageDistanceCheck {
 
         if (wh > 0) {
             k++;
-        } else if (!b) {
+        }
+        else if (!b) {
             i++;
-        } else {
+        }
+        else {
             i--;
         }
     }
@@ -319,9 +328,11 @@ public class InputVariableDeclarationUsageDistanceCheck {
         int wh = 1, i = 4, k = 0;
         if (i > 0) {
             k++;
-        } else if (wh > 0) {
+        }
+        else if (wh > 0) {
             i++;
-        } else {
+        }
+        else {
             i--;
         }
     }
@@ -333,13 +344,13 @@ public class InputVariableDeclarationUsageDistanceCheck {
         result.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent e) {
             showLogLevelColorChangeDialog(result, logLevel); // DECLARATION OF VARIABLE 'logLevel'
-                                                             // SHOULD BE HERE (distance = 2)
+            // SHOULD BE HERE (distance = 2)
           }
         });
 
         return result;
 
-      }
+    }
 
     public static Color darker(Color color, double fraction) {
         int red = (int) Math.round(color.getRed() * (1.0 - fraction));
@@ -348,12 +359,14 @@ public class InputVariableDeclarationUsageDistanceCheck {
 
         if (red < 0) {
             red = 0;
-        } else if (red > 255) {
+        }
+        else if (red > 255) {
             red = 255;
         }
         if (green < 0) { // DECLARATION OF VARIABLE 'green' SHOULD BE HERE (distance = 2)
             green = 0;
-        } else if (green > 255) {
+        }
+        else if (green > 255) {
             green = 255;
         }
         if (blue < 0) { // DECLARATION OF VARIABLE 'blue' SHOULD BE HERE (distance = 3)
@@ -378,7 +391,7 @@ public class InputVariableDeclarationUsageDistanceCheck {
 
         Timer timer = new Timer("Auth Guard", true);
         timer.schedule(task, intervalMs / 2, intervalMs); // DECLARATION OF VARIABLE 'intervalMs'
-                                                          // SHOULD BE HERE (distance = 2)
+        // SHOULD BE HERE (distance = 2)
     }
 
     public void testForCycle() {
@@ -422,7 +435,7 @@ public class InputVariableDeclarationUsageDistanceCheck {
 
     public void testIssue32_3(MyObject[] objects) {
         Calendar cal = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
-        for(int i=0; i<objects.length; i++) {
+        for (int i = 0; i < objects.length; i++) {
             objects[i].setEnabled(true);
             objects[i].setColor(0x121212);
             objects[i].setUrl("http://google.com");
@@ -436,7 +449,7 @@ public class InputVariableDeclarationUsageDistanceCheck {
         builder.append("flag is ");
         builder.append(flag);
         final String line = "";
-        if(flag) {
+        if (flag) {
             builder.append("line of AST is:");
             builder.append("\n");
             builder.append(String.valueOf(line)); //distance=1
@@ -472,8 +485,7 @@ public class InputVariableDeclarationUsageDistanceCheck {
     }
 
     public void testIssue32_8(Writer w1, Writer w2, Writer w3) {
-        String l1="1";
-
+        String l1 = "1";
 
         w3.write(l1); //distance=3
     }
@@ -623,7 +635,8 @@ public class InputVariableDeclarationUsageDistanceCheck {
 
     }
 
-    private void showLogLevelColorChangeDialog(JMenuItem j, LogLevel l) {   }
+    private void showLogLevelColorChangeDialog(JMenuItem j, LogLevel l) {
+    }
 
     static class Color {
 
@@ -662,7 +675,8 @@ public class InputVariableDeclarationUsageDistanceCheck {
 
     }
 
-    void fireAuthTokenChanged(String s, String s1) {}
+    void fireAuthTokenChanged(String s, String s1) {
+    }
 
     class Timer {
 
@@ -683,7 +697,8 @@ public class InputVariableDeclarationUsageDistanceCheck {
     }
 
     boolean isNull(Option o) {
-        return false;}
+        return false;
+    }
 
     class Writer {
 

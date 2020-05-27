@@ -4,6 +4,7 @@ import java.util.Locale;
  * Input file for the StringLiteralEqualityCheck
  * @author Lars K&uuml;hne
  */
+
 public class InputStringLiteralEquality
 {
     void foo(String name)

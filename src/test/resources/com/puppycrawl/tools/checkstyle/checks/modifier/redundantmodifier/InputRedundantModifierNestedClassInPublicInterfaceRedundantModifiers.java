@@ -8,43 +8,65 @@ public interface InputRedundantModifierNestedClassInPublicInterfaceRedundantModi
     interface PublicInnerInterface {
         interface PublicInnerInnerInterface {
             class PublicInnerClassInNestedPublicInterfaces {
-                public PublicInnerClassInNestedPublicInterfaces() { } // OK in public class
+                public PublicInnerClassInNestedPublicInterfaces() {
+                }
+                // OK in public class
             }
         }
     }
+
     class PublicClassInsideInterface {
         private interface PrivateNestedInterface {
             class ClassInPrivateNestedInterface {
-                public ClassInPrivateNestedInterface() { } // Redundant in not public class
+                public ClassInPrivateNestedInterface() {
+                }
+                // Redundant in not public class
             }
+
             public interface PrivateNestedInterfaceWithPublicModifier {
                 class ClassInPrivateNestedInterface {
-                    public ClassInPrivateNestedInterface() { } // Redundant in non public scope
+                    public ClassInPrivateNestedInterface() {
+                    }
+                    // Redundant in non public scope
                 }
             }
         }
+
         public interface PublicInnerInnerPublicInterface {
             class PublicInnerClassInNestedPublicInterfaces {
-                public PublicInnerClassInNestedPublicInterfaces() { } // OK in public class
+                public PublicInnerClassInNestedPublicInterfaces() {
+                }
+                // OK in public class
             }
         }
+
         protected interface PublicInnerInnerProtectedInterface {
-          class PublicInnerClassInNestedProtectedInterfaces {
-           public PublicInnerClassInNestedProtectedInterfaces() { } // Redundant in non public scope
-          }
+            class PublicInnerClassInNestedProtectedInterfaces {
+                public PublicInnerClassInNestedProtectedInterfaces() {
+                }
+                // Redundant in non public scope
+            }
         }
     }
+
     class PublicNestedClassInInterfaceWithPublicConstructor {
-        public PublicNestedClassInInterfaceWithPublicConstructor() { } // OK in public class
+        public PublicNestedClassInInterfaceWithPublicConstructor() {
+        }
+        // OK in public class
+
         private class PrivateClassInPublicNestedClass {
             public class PublicInPrivateClass {
-                public PublicInPrivateClass() { } // Redundant in non public class
+                public PublicInPrivateClass() {
+                }
+                // Redundant in non public class
             }
         }
     }
+
     final class FinalNestedClassInInterface {
         interface InnerInterface {
-            final class FinalNestedClassInNestedInterface {}
+            final class FinalNestedClassInNestedInterface {
+            }
         }
     }
 }

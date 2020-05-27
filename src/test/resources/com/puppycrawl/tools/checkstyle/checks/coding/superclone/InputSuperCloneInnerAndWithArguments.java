@@ -1,6 +1,7 @@
 package com.puppycrawl.tools.checkstyle.checks.coding.superclone;
+
 public class InputSuperCloneInnerAndWithArguments
-{/* class body */
+{ /* class body */
     public InputSuperCloneInnerAndWithArguments() throws CloneNotSupportedException
     { //constructor body
         super.equals(new String());

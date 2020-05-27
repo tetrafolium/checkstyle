@@ -10,26 +10,35 @@ package com.puppycrawl.tools.checkstyle.checks.blocks.leftcurly;
  **/
 class InputLeftCurlyMethod
 {
-    InputLeftCurlyMethod() {}
+    InputLeftCurlyMethod() {
+    }
+
     InputLeftCurlyMethod(String aOne) {
     }
+
     InputLeftCurlyMethod(int aOne)
     {
     }
 
-    void method1() {}
+    void method1() {
+    }
+
     void method2() {
     }
+
     void method3()
     {
     }
-    void                                                               method4()
+
+    void method4()
     {
     }
+
     void method5(String aOne,
                  String aTwo)
     {
     }
+
     void method6(String aOne,
                  String aTwo) {
     }
@@ -39,19 +48,25 @@ enum InputLeftCurlyMethodEnum
 {
     CONSTANT1("hello")
     {
-        void method1() {}
+        void method1() {
+        }
+
         void method2() {
         }
+
         void method3()
         {
         }
-        void                                                               method4()
+
+        void method4()
         {
         }
+
         void method5(String aOne,
                      String aTwo)
         {
         }
+
         void method6(String aOne,
                      String aTwo) {
         }
@@ -70,19 +85,25 @@ enum InputLeftCurlyMethodEnum
 
     }
 
-    void method1() {}
+    void method1() {
+    }
+
     void method2() {
     }
+
     void method3()
     {
     }
-    void                                                               method4()
+
+    void method4()
     {
     }
+
     void method5(String aOne,
                  String aTwo)
     {
     }
+
     void method6(String aOne,
                  String aTwo) {
     }

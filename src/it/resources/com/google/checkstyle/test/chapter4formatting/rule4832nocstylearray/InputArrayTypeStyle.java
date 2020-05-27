@@ -59,6 +59,7 @@ public class InputArrayTypeStyle
             return null;
         }
     }
+
     int[] array[] = new int [2][2]; //warn
     int array2[][][] = new int[3][3][3]; //warn
 }

@@ -5,10 +5,10 @@ public class InputCommentsIndentationInEmptyBlock {
     private void foo1() {
         int a = 5, b = 3, v = 6;
         if (a == b
-            && v == b || (a ==1
-                   /// // warn
-                       /* // warn
-                        * one fine day ... */
+            && v == b || (a == 1
+                               /// // warn
+                               /* // warn
+                                * one fine day ... */
                                && b == 1)) {
             // Cannot clearly detect user intention of explanation target.
         }
@@ -17,9 +17,8 @@ public class InputCommentsIndentationInEmptyBlock {
     private void foo2() {
         int a = 5, b = 3, v = 6;
         if (a == b
-            && v == b || (a ==1
+            && v == b || (a == 1
             && b == 1)) {
-
 
              // comment
         }
@@ -30,7 +29,7 @@ public class InputCommentsIndentationInEmptyBlock {
         if (a == b
             && v == b || (a == 1
             && b == 1)) {
-// warn
+        // warn
         }
     }
 
@@ -54,7 +53,7 @@ public class InputCommentsIndentationInEmptyBlock {
     private static void foo5() { // trailing
         if (true) // trailing comment
         {
-// warn
+        // warn
         }
         if (true) { // trailing comment
 
@@ -67,15 +66,17 @@ public class InputCommentsIndentationInEmptyBlock {
     public void foo6() {
         try {
 
-        } catch (Exception e) {
-// warn
+        }
+        catch (Exception e) {
+        // warn
         }
     }
 
     public void foo7() {
         try {
 
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             // OOOO: handle exception here
         }
     }

@@ -1,15 +1,17 @@
 package com.puppycrawl.tools.checkstyle.checks.coding.equalsavoidnull;
 import java.util.Map;
+
 public class InputEqualsAvoidNull {
 
     public boolean equals(Object o) {
-    return false;
+        return false;
     }
     // another comment
     /**
      * methods that should get flagged
      * @return
      */
+
     public void flagForEquals() {
 
         Object o = new Object();
@@ -194,9 +196,9 @@ public class InputEqualsAvoidNull {
 
 class InputEqualsAvoidNullOutter {
     public class InputEqualsAvoidNullInner {
-            public boolean equals(Object o) {
-                return true;
-            }
+        public boolean equals(Object o) {
+            return true;
+        }
     }
 }
 
@@ -290,6 +292,7 @@ class NewTest {
         Nested.nestedInstanceVar.equals(""); // confusing constructions. But could be improved.
         Nested.nestedClassVar.equals("");
     }
+
     static {
         final String s = "";
         s.equals("");
@@ -303,6 +306,7 @@ class NewTest {
             }
         }
     }
+
     void foo(String param) {
         try {
             param.equals("");
@@ -310,9 +314,10 @@ class NewTest {
                 String s = "";
                 s.equals("");
             } while (param.equals(""));
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             while (param.equals("")) {
-                for (String s = ""; s.equals(""); ){
+                for (String s = ""; s.equals(""); ) {
                     if (s.equals("")) {
                         synchronized (this) {
                             switch (s) {
@@ -331,6 +336,7 @@ class NewTest {
     static class Nested {
         static String nestedClassVar;
         String nestedInstanceVar;
+
         public void method() {
             classVar.equals("");
             NewTest.classVar.equals("");
@@ -348,6 +354,7 @@ class NewTest {
             }
         }
     }
+
     enum EmbeddedEnum {
         A(129),
         B(283),
@@ -358,7 +365,7 @@ class NewTest {
             }
         };
 
-        Map.Entry<String,Long> enumInstance;
+        Map.Entry<String, Long> enumInstance;
 
         EmbeddedEnum(int i) {
             enumInstance.equals("");
@@ -368,14 +375,21 @@ class NewTest {
             enumStatic.equals("");
             enumStatic.equals(null);
         }
+
         static String enumStatic;
     }
 
-    private String foo() {return "";}
-    private Object foo(int i) {return i;}
+    private String foo() {
+        return "";
+    }
+
+    private Object foo(int i) {
+        return i;
+    }
 
     Object o2 = new Object();
     Object o3 = new Object();
+
     private void bar() {
         foo().equals(""); // methods are not checked
         foo(0).equals("");
@@ -383,21 +397,24 @@ class NewTest {
         Object o1 = new Object(); o1.equals("");
         o2.equals(""); String o2 = "";
         o3.equals("");
-String o3 = "";
+        String o3 = "";
     }
 }
+
 class Anonymous {
     public static void main(String[] args) {
         Runnable anonym = new Runnable() {
             String nullableStr = null;
             public void run() {
                 nullableStr.equals("Null");
-            };
+            }
         };
         Object nullableStr = new Object();
         nullableStr.equals("");
     }
-    {}
+
+    {
+    }
 }
 
 enum TestEnum {

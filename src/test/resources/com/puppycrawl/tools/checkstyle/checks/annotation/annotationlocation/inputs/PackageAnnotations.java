@@ -17,8 +17,8 @@ import java.lang.annotation.Target;
 
 @Repeatable(PackageAnnotations.class)
 @Target(ElementType.PACKAGE)
-@interface PackageAnnotation  {
+@interface PackageAnnotation {
 
-    String value() default  "";
+    String value() default "";
 
 }

@@ -8,11 +8,14 @@ class InputAbbreviationAsWordInTypeNameCheck {
 
     boolean supportsIpv6OnIos;
 
-    void XmlHttpRequest() {}
+    void XmlHttpRequest() {
+    }
 
-    void YouTubeImporter() {}
+    void YouTubeImporter() {
+    }
 
-    void YoutubeImporter() {}
+    void YoutubeImporter() {
+    }
 
     class InnerGood {
 
@@ -22,15 +25,18 @@ class InputAbbreviationAsWordInTypeNameCheck {
 
         boolean supportsIpv6OnIos;
 
-        void XmlHttpRequest() {}
+        void XmlHttpRequest() {
+        }
 
-        void YouTubeImporter() {}
+        void YouTubeImporter() {
+        }
 
-        void YoutubeImporter() {}
+        void YoutubeImporter() {
+        }
     }
 
-        InputAbbreviationAsWordInTypeNameCheck anonymousGood
-            = new InputAbbreviationAsWordInTypeNameCheck() {
+    InputAbbreviationAsWordInTypeNameCheck anonymousGood =
+            new InputAbbreviationAsWordInTypeNameCheck() {
 
             int newCustomerId;
 
@@ -38,11 +44,14 @@ class InputAbbreviationAsWordInTypeNameCheck {
 
             boolean supportsIpv6OnIos;
 
-            void XmlHttpRequest() {}
+            void XmlHttpRequest() {
+            }
 
-            void YouTubeImporter() {}
+            void YouTubeImporter() {
+            }
 
-            void YoutubeImporter() {}
+            void YoutubeImporter() {
+            }
     };
 }
 
@@ -52,7 +61,9 @@ class AbbreviationsIncorrect {
 
     boolean supportsIPv6OnIOS; //warn
 
-    void XMLHTTPRequest() {} //warn
+    void XMLHTTPRequest() {
+    }
+    //warn
 
     class InnerBad {
 
@@ -60,16 +71,20 @@ class AbbreviationsIncorrect {
 
         boolean supportsIPv6OnIOS; //warn
 
-        void XMLHTTPRequest() {} //warn
+        void XMLHTTPRequest() {
+        }
+        //warn
     }
 
-        InputAbbreviationAsWordInTypeNameCheck anonymousBad
-            = new InputAbbreviationAsWordInTypeNameCheck() {
+    InputAbbreviationAsWordInTypeNameCheck anonymousBad =
+            new InputAbbreviationAsWordInTypeNameCheck() {
 
             int newCustomerID;
 
             boolean supportsIPv6OnIOS; //warn
 
-            void XMLHTTPRequest() {} //warn
+            void XMLHTTPRequest() {
+            }
+            //warn
     };
 }

@@ -5,6 +5,7 @@ import java.util.*;
 import com.puppycrawl.tools.checkstyle.checks.coding.illegaltype.InputIllegalTypeGregorianCalendar;
 import com.puppycrawl.tools.checkstyle.checks.coding.illegaltype.InputIllegalTypeGregorianCalendar.SubCalendar;
 //configuration: "illegalClassNames": List, GregorianCalendar, java.io.File, SubCalendar, ArrayList
+
 public class InputIllegalTypeSameFileName
 {
     InputIllegalTypeGregorianCalendar cal = AnObject.getInstance(); //WARNING
@@ -24,6 +25,7 @@ public class InputIllegalTypeSameFileName
         List l; //WARNING
         java.io.File file = null; //WARNING
     }
+
     java.util.List<Integer> list = new ArrayList<>(); //WARNING
     private ArrayList<String> values;
     private Boolean d; //WARNING

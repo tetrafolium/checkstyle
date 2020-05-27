@@ -75,6 +75,7 @@ class AnonymousIC
             {
                 return 0;
             }
+
             public boolean equals(String aString)
             {
                 return false;

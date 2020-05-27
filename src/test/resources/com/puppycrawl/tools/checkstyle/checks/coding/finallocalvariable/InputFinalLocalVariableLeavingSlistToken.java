@@ -31,14 +31,16 @@ public class InputFinalLocalVariableLeavingSlistToken {
             a = 1;
 
             try {
-            } catch (Exception e) {
-            } finally {
+            }
+            catch (Exception e) {
+            }
+            finally {
             }
 
             if (true) {
             }
 
-            Stream.of(1).forEach(integer -> {});
+            Stream.of(1).forEach(integer -> { });
 
             synchronized (InputFinalLocalVariableLeavingSlistToken.class) {
             }
@@ -48,10 +50,9 @@ public class InputFinalLocalVariableLeavingSlistToken {
             while (Math.random() > 0) {
             }
             do {
-            }
-            while (Math.random() > 0);
+            } while (Math.random() > 0);
 
-            {}
+            { }
 
             a = 2;
         }

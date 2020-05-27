@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
  *
  */
 @InterfaceAnnotation(value = "foo")
-  @InterfaceAnnotation //warn
+@InterfaceAnnotation //warn
 @InterfaceAnnotation("bar") interface InputAnnotationLocationInterface { //warn
 
     @InterfaceAnnotation(value = "foo")
@@ -30,7 +30,7 @@ import java.lang.annotation.Target;
 
 @Repeatable(InterfaceAnnotations.class)
 @Target({ElementType.METHOD, ElementType.PARAMETER, ElementType.TYPE})
-@interface InterfaceAnnotation  {
+@interface InterfaceAnnotation {
 
     String value() default "";
 

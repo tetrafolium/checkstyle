@@ -4,16 +4,17 @@ import java.io.Serializable;
 
 public class InputClassTypeParameterName<t>
 {
-    public <TT> void foo() { }
+    public <TT> void foo() {
+    }
 
     <e_e> void foo(int i) {
     }
 }
 
-class Other <foo extends Serializable & Cloneable> {
+class Other<foo extends Serializable & Cloneable> {
 
     foo getOne() {
-        return null;//comment
+        return null; //comment
     }
 
     <Tfo$o2T extends foo> /*comment*/Tfo$o2T getTwo(Tfo$o2T a) {
@@ -24,13 +25,13 @@ class Other <foo extends Serializable & Cloneable> {
         return null;
     }
 
-    static class Junk <foo> {
+    static class Junk<foo> {
         <_fo extends foo> void getMoreFoo() {
         }
     }
 }
 
-class MoreOther <T extends Cloneable> {
+class MoreOther<T extends Cloneable> {
 
     <E extends T> void getMore() {
         new Other() {
@@ -38,10 +39,10 @@ class MoreOther <T extends Cloneable> {
             }
         };
 
-//        Other o = new Other() {
-//            <EE> void getMoreFoo() {
-//            }
-//        };
+        //        Other o = new Other() {
+        //            <EE> void getMoreFoo() {
+        //            }
+        //        };
     }
 }
 

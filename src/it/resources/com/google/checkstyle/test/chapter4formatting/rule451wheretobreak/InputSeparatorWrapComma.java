@@ -12,6 +12,7 @@ public class InputSeparatorWrapComma {
         foo(i,
                 s); //ok
     }
+
     public static void foo(int i, String s)
     {
 
@@ -25,12 +26,13 @@ class badCaseComma {
         int i = 0;
 
         String s = "ffffooooString";
-        boolean b = s.
-            isEmpty();
+        boolean b = s
+            . isEmpty();
         foo(i
-,s); //warn
+            , s); //warn
         int[] j;
     }
+
     public static String foo(int i, String s)
     {
         String maxLength = "123";

@@ -6,7 +6,7 @@ public class InputCheckerClearDetailAstLazyLoadCache {
     /*
      * Javadoc comment
      */
-    static void foo() {
+        static void foo() {
         return;
     }
 }

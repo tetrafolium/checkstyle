@@ -13,6 +13,9 @@ public class InputRightCurlyNameForOneLiners {
     public static void main(String[] args) {
         boolean after = false;
         try {
-        } finally { after = true; }
+        }
+        finally {
+            after = true;
+        }
     }
 }

@@ -17,7 +17,7 @@ public class InputSummaryJavadocPeriodAtEnd {
     /**
      * @return 1.
      */
-    public int foo2(){
+    public int foo2() {
         return 1;
     }
 
@@ -31,20 +31,22 @@ public class InputSummaryJavadocPeriodAtEnd {
     /**
      *  A {@code Foo.  Foo}
      */
-    public void foo(){
+    public void foo() {
 
     }
     /**
      * This is test
      * Valid or invalid.
      */
-    public void foo4(){
+
+    public void foo4() {
 
     }
     /**
      * <p>This is valid java doc.</p>
      */
-    public void foo5(){
+
+    public void foo5() {
 
     }
 

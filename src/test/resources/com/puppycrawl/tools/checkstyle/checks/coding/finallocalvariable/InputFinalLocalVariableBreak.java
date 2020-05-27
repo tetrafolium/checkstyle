@@ -10,31 +10,31 @@ public class InputFinalLocalVariableBreak {
 
         switch (a) {
         case 0:
-            e = new Exception();
-            break;
-        case 1:
-            if (b == 0) {
                 e = new Exception();
                 break;
-            }
+        case 1:
+                if (b == 0) {
+                    e = new Exception();
+                    break;
+                }
 
-            if (b == 1) {
-                e = new Exception();
-            }
-            else {
-                e = new Exception();
-            }
-            break;
+                if (b == 1) {
+                    e = new Exception();
+                }
+                else {
+                    e = new Exception();
+                }
+                break;
         case 2:
-            if (b == 0) {
-                return;
-            }
+                if (b == 0) {
+                    return;
+                }
 
-            e = new Exception();
-            break;
-        default:
-            e = new Exception();
-            break;
+                e = new Exception();
+                break;
+            default:
+                e = new Exception();
+                break;
         }
 
         throw e;
@@ -44,7 +44,8 @@ public class InputFinalLocalVariableBreak {
         int a;
         if (true) {
             a = 1;
-        } else {
+        }
+        else {
             a = 2;
             if (a == 3) {
                 return a;

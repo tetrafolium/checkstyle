@@ -4,6 +4,6 @@ import java.util.Comparator;
 public interface InputModifierOrderDefaultMethods extends Comparator<Integer> {
     @Override
     default int compare(Integer a, Integer b) {
-     return 0;
+        return 0;
     }
-  }
+}

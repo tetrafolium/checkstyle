@@ -39,7 +39,7 @@ class InputHiddenFieldReorder
 
     public class Inner
     {
-//        private int innerHidden = 0;
+        //        private int innerHidden = 0;
 
         public Inner()
         {
@@ -73,15 +73,17 @@ class InputHiddenFieldReorder
         }
 
         {
-            int innerHidden = 0;//shadows inner field
+            int innerHidden = 0; //shadows inner field
             int hidden = 0; //shadows outer field
         }
+
         private int innerHidden = 0;
     }
 
     {
-        int hidden = 0;//shadows field
+        int hidden = 0; //shadows field
     }
+
     private int hidden = 0;
 }
 

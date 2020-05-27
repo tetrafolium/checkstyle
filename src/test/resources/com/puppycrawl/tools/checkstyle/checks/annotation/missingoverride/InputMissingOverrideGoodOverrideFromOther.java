@@ -4,9 +4,11 @@ import java.io.Serializable;
 
 public class InputMissingOverrideGoodOverrideFromOther implements IFoo
 {
-    public void doFoo() { }
+    public void doFoo() {
+    }
 
-    public void doFoo2() { }
+    public void doFoo2() {
+    }
 
 }
 
@@ -33,7 +35,8 @@ class MoreJunk extends InputMissingOverrideGoodOverrideFromOther {
      * {@inheritDoc}
      */
     @Override
-    public void doFoo2() { }
+    public void doFoo2() {
+    }
 
     class EvenMoreJunk extends MoreJunk implements Serializable {
 
@@ -48,7 +51,8 @@ class MoreJunk extends InputMissingOverrideGoodOverrideFromOther {
          * {@inheritDoc}
          */
         @Override
-        public void doFoo2() { }
+        public void doFoo2() {
+        }
     }
 
     class EvenMoreMoreJunk extends MoreJunk implements Serializable {
@@ -64,7 +68,8 @@ class MoreJunk extends InputMissingOverrideGoodOverrideFromOther {
          * {@inheritDoc}
          */
         @java.lang.Override
-        public void doFoo2() { }
+        public void doFoo2() {
+        }
     }
 }
 

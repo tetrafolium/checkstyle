@@ -9,7 +9,7 @@ public class InputWhitespaceAroundGenerics
 }
 
 //No whitespace after commas
-class BadCommas<A,B,C extends Map<A,String>> //warn
+class BadCommas<A, B, C extends Map<A, String>> //warn
 {
     private java.util.Hashtable<Integer, D> p = //warn
         new java.util.Hashtable<Integer, D>(); //warn
@@ -33,5 +33,6 @@ class Wildcard
 // we need these interfaces for generics
 interface D {
 }
+
 interface E {
 }

@@ -5,6 +5,7 @@ package com.puppycrawl.tools.checkstyle.checks.blocks.leftcurly;
   * option = EOL
   *
   */
+
 public class InputLeftCurlyEolSwitch {
 
     public void doStuff() {
@@ -14,7 +15,7 @@ public class InputLeftCurlyEolSwitch {
             { // warn
                 break;
             }
-            case (1+0):
+            case (1 + 0):
             { // warn
                 break;
             }
@@ -28,14 +29,14 @@ public class InputLeftCurlyEolSwitch {
             case 3:
             case 4:
                 x++;
-                { // OK, standalone block
-                }
+            { // OK, standalone block
+            }
                 break;
             case 5: {
-                }
+            }
                 break;
             case (5
-                +1):
+                + 1):
             { // warn
                 break;
             }

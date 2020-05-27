@@ -4,8 +4,7 @@ import java.awt.Button;
 import java.awt.Frame;
 import java.awt.Dialog;
 import java.awt.event.ActionEvent;
-import static java.awt.Button.ABORT
-;
+import static java.awt.Button.ABORT;
 import javax.swing.JComponent;
 import javax.swing.JTable;
 import java.io.File;

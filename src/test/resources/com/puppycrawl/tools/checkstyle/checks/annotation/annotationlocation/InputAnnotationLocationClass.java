@@ -14,11 +14,11 @@ import java.lang.annotation.Target;
  *
  */
 @ClassAnnotation(value = "foo")
-  @ClassAnnotation //warn
+@ClassAnnotation //warn
 @ClassAnnotation("bar") class InputAnnotationLocationClass { //warn
 
     @ClassAnnotation(value = "foo")
-      @ClassAnnotation //warn
+    @ClassAnnotation //warn
     @ClassAnnotation("bar") Object field; //warn
 
     @ClassAnnotation(value = "foo")

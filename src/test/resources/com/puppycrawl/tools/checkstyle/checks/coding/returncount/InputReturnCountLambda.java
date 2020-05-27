@@ -45,7 +45,8 @@ public class InputReturnCountLambda {
                 }
             ).start();
             return number;
-        } else {
+        }
+        else {
             return Optional.of(hashCode()).orElseGet(() -> {
                 if (number > 0) return number;
                 else return 0;

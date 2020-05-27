@@ -4,7 +4,7 @@ public class InputNeedBracesConditional
 {
     public void method() {
         if (false)
-            while(true)
+            while (true)
             {
 
             }
@@ -12,50 +12,52 @@ public class InputNeedBracesConditional
         if (true)
             do {
                 int a = 1;
-            }
-            while(true);
+            } while (true);
 
         if (true)
-            for(;;){
-             assert true;}
+            for (;;) {
+             assert true;
+            }
 
-        if (true){
+        if (true) {
 
-        }else {
+        }
+        else {
 
         }
 
-        switch(1) {
+        switch (1) {
             case 1: {
                 break;
             }
         }
 
-        switch(1) {
-        case 1:  System.lineSeparator();
-        case 2: { break;}
+        switch (1) {
+        case 1: System.lineSeparator();
+        case 2: {
+                break; }
 
         case 3: {
-            break;}
+                break; }
 
         case 4:
-            break;
+                break;
 
-        case 5:  System.lineSeparator();
+        case 5: System.lineSeparator();
             break;
         }
 
-        switch(1) {
+        switch (1) {
             default:
             {
 
             }
         }
 
-        switch(1) {
-        default:
-         break;
-    }
+        switch (1) {
+            default:
+                break;
+        }
 
     }
 }

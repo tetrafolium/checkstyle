@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 
 public class InputLambda9 {
 
-	private static final Logger LOG = Logger.getLogger(InputLambda9.class.getName());
+        private static final Logger LOG = Logger.getLogger(InputLambda9.class.getName());
 
 	public static void testVoidLambda(TestOfVoidLambdas test) {
 		LOG.info("Method called");

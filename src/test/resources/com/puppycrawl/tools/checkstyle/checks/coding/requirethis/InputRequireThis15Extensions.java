@@ -15,7 +15,9 @@ public class InputRequireThis15Extensions
 enum Enum2
 {
     A, B, C;
-    Enum2() {}
+    Enum2() {
+    }
+
     public String toString() {
         return ""; //some custom implementation
     }

@@ -33,9 +33,9 @@ class InputRightCurlyLeft
                 switch (a)
                 {
                 case 0:
-                    break;
-                default:
-                    break;
+                        break;
+                    default:
+                        break;
                 }
             }
             catch (Exception e)
@@ -57,7 +57,7 @@ class InputRightCurlyLeft
         }
 
         this.wait(666
-                 ); // Bizarre, but legal
+        ); // Bizarre, but legal
 
         for (int k = 0; k < 1; k++)
         {
@@ -83,18 +83,22 @@ class InputRightCurlyLeft
     {
         HELLO,
         GOODBYE
-    }; //violation
+    } //violation
 
     void method2()
     {
         boolean flag = true;
         if (flag) {
             System.identityHashCode("heh");
-            flag = !flag; } String.CASE_INSENSITIVE_ORDER.
-              equals("Xe-xe");
+            flag = !flag;
+        }
+        String.CASE_INSENSITIVE_ORDER
+              .equals("Xe-xe");
         // it is ok to have rcurly on the same line as previous
         // statement if lcurly on the same line.
-        if (flag) { String.CASE_INSENSITIVE_ORDER.equals("it is ok."); }
+        if (flag) {
+            String.CASE_INSENSITIVE_ORDER.equals("it is ok.");
+        }
     }
 }
 
@@ -104,11 +108,13 @@ class InputRightCurlyLeft
  */
 class FooCtor
 {
-        int i;
-        public FooCtor()
+    int i;
+
+    public FooCtor()
     {
-                i = 1;
-    }}
+        i = 1;
+    }
+}
 
 /**
 * Test input for closing brace if that brace terminates
@@ -116,10 +122,11 @@ class FooCtor
 */
 class FooMethod
 {
-        public void fooMethod()
+    public void fooMethod()
     {
-                int i = 1;
-    }}
+        int i = 1;
+    }
+}
 
 /**
 * Test input for closing brace if that brace terminates
@@ -127,13 +134,14 @@ class FooMethod
 */
 class FooInner
 {
-        class InnerFoo
+    class InnerFoo
     {
-                public void fooInnerMethod ()
+        public void fooInnerMethod()
         {
 
-                }
-    }}
+        }
+    }
+}
 
 /**
  * False positive
@@ -141,24 +149,32 @@ class FooInner
  */
 class Absent_CustomFieldSerializer3 {
 
-    public static void serialize() {} //empty body - violation
+    public static void serialize() {
+    }
+    //empty body - violation
 }
 
 class Absent_CustomFieldSerializer4
 {
-    public Absent_CustomFieldSerializer4() {} //empty body - violation
+    public Absent_CustomFieldSerializer4() {
+    }
+    //empty body - violation
 }
 
-class EmptyClass2 {} //empty body - violation
+class EmptyClass2 {
+}
+//empty body - violation
 
-interface EmptyInterface3 {}
+interface EmptyInterface3 { }
 
 class ClassWithStaticInitializers
 {
     static {
     }
+
     static
-    {}
+    {
+    }
 
     static class Inner
     {
@@ -170,12 +186,16 @@ class ClassWithStaticInitializers
     public void emptyBlocks() {
         try {
             // comment
-        } catch (RuntimeException e) { // violation except for SAME
+        }
+        catch (RuntimeException e) { // violation except for SAME
             new Object();
-        } catch (Exception e) { // violation except for SAME
+        }
+        catch (Exception e) { // violation except for SAME
             // comment
-        } catch (Throwable e) { // violation except for SAME
-        } finally { // violation except for SAME
+        }
+        catch (Throwable e) { // violation except for SAME
+        }
+        finally { // violation except for SAME
             // comment
         }
 
@@ -185,14 +205,19 @@ class ClassWithStaticInitializers
 
     public void codeAfterLastRightCurly() {
         while (new Object().equals(new Object())) {
-        }; // violation
-        for (int i = 0; i < 1; i++) { new Object(); }; // violation
+        }
+        ; // violation
+        for (int i = 0; i < 1; i++) {
+            new Object();
+        }
+            ; // violation
     }
 
-    static final java.util.concurrent.ThreadFactory threadFactory
-            = new java.util.concurrent.ThreadFactory() {
+    static final java.util.concurrent.ThreadFactory threadFactory =
+            new java.util.concurrent.ThreadFactory() {
         @Override
         public Thread newThread(final Runnable r) {
             return new Thread(r);
-        }}; // violation
+        }
+        }; // violation
 }

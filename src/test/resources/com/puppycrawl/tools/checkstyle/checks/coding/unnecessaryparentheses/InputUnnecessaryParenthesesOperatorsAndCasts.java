@@ -1,15 +1,16 @@
 package com.puppycrawl.tools.checkstyle.checks.coding.unnecessaryparentheses;
+
 public class InputUnnecessaryParenthesesOperatorsAndCasts {
     int f1() {
         int x = 0;
-        for (int i = (0+1); ((i) < (6+6)); i += (1+0)) {
+        for (int i = (0 + 1); ((i) < (6 + 6)); i += (1 + 0)) {
             x += (i + 100);
             (x) += (i + 100/**comment test*/);
             x = (x + i + 100);
             (x) = (x + i + 100);
         }
 
-        for (int i = (0+1); (i) < ((6+6)); i += (1+0)) {
+        for (int i = (0 + 1); (i) < ((6 + 6)); i += (1 + 0)) {
             System.identityHashCode("hi");
         }
 
@@ -70,7 +71,7 @@ public class InputUnnecessaryParenthesesOperatorsAndCasts {
         }
 
         do {
-            print((y+=100));
+            print((y += 100));
         } while (y < (4000));
     }
 
@@ -95,8 +96,8 @@ public class InputUnnecessaryParenthesesOperatorsAndCasts {
         return 0;
     }
 
-    static class TypeParameterized<T> {}
-    static class TypeA extends TypeParameterized<String> {}
-    static class TypeB extends TypeA {}
-    static class TypeC extends TypeA {}
+    static class TypeParameterized<T> { }
+    static class TypeA extends TypeParameterized<String> { }
+    static class TypeB extends TypeA { }
+    static class TypeC extends TypeA { }
 }

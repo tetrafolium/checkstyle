@@ -19,7 +19,7 @@ class InputRequireThisAllowLocalVars {
     public int getS1() {
         String s1 = null;
         s1 = "bar"; // No violation
-        s1 = s1;    // Violation. "this" required here to resolve any confusion due to overlapping.
+        this.s1 = s1;    // Violation. "this" required here to resolve any confusion due to overlapping.
         return 1;
     }
 
@@ -32,7 +32,7 @@ class InputRequireThisAllowLocalVars {
 
     String getS2() {
         String s2 = null;
-        s2+=s2; // Violation. "this" required here to resolve any confusion due to overlapping.
+        this.s2 += s2; // Violation. "this" required here to resolve any confusion due to overlapping.
         return "return";
     }
 
@@ -43,7 +43,7 @@ class InputRequireThisAllowLocalVars {
 
     String getS2(int a) {
         String s2 = " ";
-        s2 += s2;  // Violation. "this" required here to resolve any confusion due to overlapping.
+        this.s2 += s2;  // Violation. "this" required here to resolve any confusion due to overlapping.
         return s1; // Violation. Requires "this".
     }
 }

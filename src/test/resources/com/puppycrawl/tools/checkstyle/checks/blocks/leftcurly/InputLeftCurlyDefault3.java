@@ -33,9 +33,9 @@ class InputLeftCurlyDefault3
                 switch (a)
                 {
                 case 0:
-                    break;
-                default:
-                    break;
+                        break;
+                    default:
+                        break;
                 }
             }
             catch (Exception e)
@@ -57,7 +57,7 @@ class InputLeftCurlyDefault3
         }
 
         this.wait(666
-                 ); // Bizarre, but legal
+        ); // Bizarre, but legal
 
         for (int k = 0; k < 1; k++)
         {
@@ -83,18 +83,22 @@ class InputLeftCurlyDefault3
     {
         HELLO,
         GOODBYE
-    };
+    }
 
     void method2()
     {
         boolean flag = true;
         if (flag) {
             System.identityHashCode("heh");
-            flag = !flag; } String.CASE_INSENSITIVE_ORDER.
-              equals("Xe-xe");
+            flag = !flag;
+        }
+        String.CASE_INSENSITIVE_ORDER
+              .equals("Xe-xe");
         // it is ok to have rcurly on the same line as previous
         // statement if lcurly on the same line.
-        if (flag) { String.CASE_INSENSITIVE_ORDER.equals("it is ok."); }
+        if (flag) {
+            String.CASE_INSENSITIVE_ORDER.equals("it is ok.");
+        }
     }
 }
 
@@ -104,11 +108,13 @@ class InputLeftCurlyDefault3
  */
 class FooCtor
 {
-        int i;
-        public FooCtor()
+    int i;
+
+    public FooCtor()
     {
-                i = 1;
-    }}
+        i = 1;
+    }
+}
 
 /**
 * Test input for closing brace if that brace terminates
@@ -116,10 +122,11 @@ class FooCtor
 */
 class FooMethod
 {
-        public void fooMethod()
+    public void fooMethod()
     {
-                int i = 1;
-    }}
+        int i = 1;
+    }
+}
 
 /**
 * Test input for closing brace if that brace terminates
@@ -127,13 +134,14 @@ class FooMethod
 */
 class FooInner
 {
-        class InnerFoo
+    class InnerFoo
     {
-                public void fooInnerMethod ()
+        public void fooInnerMethod()
         {
 
-                }
-    }}
+        }
+    }
+}
 
 /**
  * False positive
@@ -141,24 +149,30 @@ class FooInner
  */
 class Absent_CustomFieldSerializer3 {
 
-    public static void serialize() {} // Expected nothing but was "'}' should be alone on a line."
+    public static void serialize() {
+    }
+    // Expected nothing but was "'}' should be alone on a line."
 }
 
 class Absent_CustomFieldSerializer4
 {
-    public Absent_CustomFieldSerializer4() {}
+    public Absent_CustomFieldSerializer4() {
+    }
 }
 
-class EmptyClass2 {}
+class EmptyClass2 {
+}
 
-interface EmptyInterface3 {}
+interface EmptyInterface3 { }
 
 class ClassWithStaticInitializers
 {
     static {
     }
+
     static
-    {}
+    {
+    }
 
     static class Inner
     {

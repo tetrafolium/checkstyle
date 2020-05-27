@@ -20,7 +20,7 @@ import java.lang.*; // OK
 
 public class InputUnusedImportsFromJavaLang {
     private static final String SOMETHING = "a string";
-    private static final double PI =  Math.PI;
+    private static final double PI = Math.PI;
 
     private Class clazz = this.getClass();
     private Exception ex = new RuntimeException();

@@ -6,6 +6,6 @@ public class InputWhitespaceAroundDoWhile {
         int k = 0;
         do {
             ++k;
-        } while(k < n);
+        } while (k < n);
     }
 }

@@ -2,9 +2,7 @@
 // Test case file for checkstyle.
 // Created: 2001
 ////////////////////////////////////////////////////////////////////////////////
-package com . puppycrawl
-    .tools.
-    checkstyle.checks.javadoc.javadoctype;
+package com.puppycrawl.tools.checkstyle.checks.javadoc.javadoctype;
 
 /**
  * Class for testing javadoc issues.
@@ -30,7 +28,7 @@ class InputJavadocTypeWhitespace
     void bug806243()
     {
         Object o = new InputJavadocTypeWhitespace() {
-            private int j ;
+            private int j;
         };
     }
 }
@@ -42,7 +40,7 @@ class InputJavadocTypeWhitespace
  */
 interface IFoo
 {
-    void foo() ;
+    void foo();
 }
 
 /**

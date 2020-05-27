@@ -5,7 +5,8 @@ public class SuppressionXpathRegressionNPathComplexityOne {
         while (true) {
             if (1 > 0) {
 
-            } else {
+            }
+            else {
 
             }
         }

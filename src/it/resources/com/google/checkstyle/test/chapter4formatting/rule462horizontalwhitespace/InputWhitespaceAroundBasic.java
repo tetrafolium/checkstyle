@@ -7,9 +7,9 @@ package com.google.checkstyle.test.chapter4formatting.rule462horizontalwhitespac
 class InputWhitespaceAroundBasic
 {
     /** warn **/
-    private int mVar1= 1; // warn
+    private int mVar1 = 1; // warn
     /** warn **/
-    private int mVar2 =1; // warn
+    private int mVar2 = 1; // warn
     /** Should be ok **/
     private int mVar3 = 1;
 
@@ -17,22 +17,22 @@ class InputWhitespaceAroundBasic
     void method1()
     {
         final int a = 1;
-        int b= 1; // warn
-        b= 1; // warn
-        b +=1; // warn
-        b -=- 1 + (+ b); // warn
+        int b = 1; // warn
+        b = 1; // warn
+        b += 1; // warn
+        b -= -1 + (+b); // warn
         b = b++ + b--; // ok
-        b = ++ b - -- b; // ok
+        b = ++b - --b; // ok
     }
 
     /** method **/
     void method2()
     {
-        synchronized(this) { //warn
+        synchronized (this) { //warn
         }
-        try {//warn
+        try { //warn
         }
-        catch (RuntimeException e) {//warn
+        catch (RuntimeException e) { //warn
         }
     }
 
@@ -49,7 +49,7 @@ class InputWhitespaceAroundBasic
     private void fastExit()
     {
         boolean complicatedStuffNeeded = true;
-        if(!complicatedStuffNeeded) //warn
+        if (!complicatedStuffNeeded) //warn
         {
             return; // should not complain about missing WS after return
         }
@@ -67,7 +67,7 @@ class InputWhitespaceAroundBasic
     {
         if (true)
         {
-            return(2); // //warn
+            return (2); // //warn
         }
         else
         {
@@ -79,7 +79,7 @@ class InputWhitespaceAroundBasic
     private void testCasts()
     {
         Object o = (Object) new Object(); // ok
-        o = (Object)o; // ok
+        o = (Object) o; // ok
         o = (Object) o; // ok
         o = (Object)
             o; // ok
@@ -89,45 +89,45 @@ class InputWhitespaceAroundBasic
     private void testQuestions()
     {
 
-        boolean b = (1 ==2) ? false : true; //warn
+        boolean b = (1 == 2) ? false : true; //warn
     }
 
     /** star test **/
     private void starTest()
     {
-        int x = 2 * 3* 4; //warn
+        int x = 2 * 3 * 4; //warn
     }
 
     /** boolean test **/
     private void boolTest()
     {
         boolean a = true;
-        boolean x = ! a;
-        int z = ~1 + ~ 2;
+        boolean x = !a;
+        int z = ~1 + ~2;
     }
 
     /** division test **/
     private void divTest()
     {
         int a = 4 % 2;
-        int b = 4% 2;//warn
-        int c = 4 %2;//warn
-        int d = 4% 2;//warn
+        int b = 4 % 2; //warn
+        int c = 4 % 2; //warn
+        int d = 4 % 2; //warn
         int e = 4 / 2;
-        int f = 4/ 2;//warn
-        int g = 4 /2;//warn
+        int f = 4 / 2; //warn
+        int g = 4 / 2; //warn
 
     }
 
     /** @return dot test **/
-    private java .lang.  String dotTest()
+    private java.lang.String dotTest()
     {
         Object o = new java.lang.Object();
-        o.
-            toString();
+        o
+            . toString();
         o
             .toString();
-        o . toString();
+        o.toString();
         return o.toString();
     }
 
@@ -144,10 +144,10 @@ class InputWhitespaceAroundBasic
         assert "OK".equals(null) ? false : true : "Whups";
 
         // missing WS around assert
-        assert(true);//warn
+        assert (true); //warn
 
         // missing WS around colon
-        assert true: "Whups";//warn
+        assert true : "Whups"; //warn
     }
 
     /** another check */
@@ -218,14 +218,14 @@ class SpecialCasesInForLoop
         // avoid conflict between WhiteSpaceAfter ';' and ParenPad(nospace)
         for (int i = 0; i++ < 5;) {
         //                  ^ no whitespace
-    }
+        }
 
-        // bug 895072
+    // bug 895072
     // avoid conflict between ParenPad(space) and NoWhiteSpace before ';'
-    int i = 0;
-    for ( ; i < 5; i++) {
+        int i = 0;
+        for (; i < 5; i++) {
     //   ^ whitespace
-    }
+        }
         for (int anInt : getSomeInts()) {
             //Should be ignored
         }
@@ -244,17 +244,17 @@ class NewGoogleOperators
 {
     NewGoogleOperators()
     {
-       Runnable l;
+        Runnable l;
 
-       l = ()-> { }; //warn
-       l = () ->{ }; //warn
-       l = () -> { }; //ok
-       l = () -> {}; //ok
+        l = () -> { }; //warn
+        l = () -> { }; //warn
+        l = () -> { }; //ok
+        l = () -> { }; //ok
 
-       java.util.Arrays.sort(null, String :: compareToIgnoreCase);
-       java.util.Arrays.sort(null, String::compareToIgnoreCase);
+        java.util.Arrays.sort(null, String::compareToIgnoreCase);
+        java.util.Arrays.sort(null, String::compareToIgnoreCase);
 
-       new Object().toString();
-       new Object() . toString();
+        new Object().toString();
+        new Object().toString();
     }
 }

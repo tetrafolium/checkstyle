@@ -42,15 +42,15 @@ class InputMissingJavadocTypeInner
     {
     }
 
-     public static void main()
-     {
+    public static void main()
+    {
         Inter m = new Inter()
         {
             private static final int CDS = 1;
 
             private int ABC;
         };
-     }
+    }
 
     /** annotation field incorrectly named. */
     @interface InnerAnnotation

@@ -10,7 +10,8 @@ public class InputEmptyCatchBlockNoViolations
     private void foo6() {
         try {
             throw new IOException();
-        } catch (IOException expected) { // This is expected
+        }
+        catch (IOException expected) { // This is expected
             int k = 0;
         }
     }
@@ -18,9 +19,9 @@ public class InputEmptyCatchBlockNoViolations
     public void testTryCatch()
     {
         try {
-            int y=0;
-            int u=8;
-            int e=u-y;
+            int y = 0;
+            int u = 8;
+            int e = u - y;
             return;
         }
         catch (Exception e) {
@@ -36,36 +37,38 @@ public class InputEmptyCatchBlockNoViolations
     public void testTryCatch3()
     {
         try {
-            int y=0;
-            int u=8;
-            int e=u-y;
+            int y = 0;
+            int u = 8;
+            int e = u - y;
         }
         catch (IllegalArgumentException e) {
             System.identityHashCode(e); //some comment
             return;
         }
         catch (IllegalStateException ex) {
-                System.identityHashCode(ex);
-                return;
+            System.identityHashCode(ex);
+            return;
         }
     }
 
     public void testTryCatch4()
     {
-        int y=0;
-        int u=8;
+        int y = 0;
+        int u = 8;
         try {
-            int e=u-y;
+            int e = u - y;
         }
         catch (IllegalArgumentException e) {
             System.identityHashCode(e);
             return;
         }
     }
+
     public void setFormats() {
         try {
             int k = 4;
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Object k = null;
             if (k != null)
                 k = "ss";

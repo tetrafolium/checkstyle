@@ -14,6 +14,7 @@ public class InputLeftCurlyCoverageIncrease {
         String CB = "CONST b";
 
         public void ma();
+
         void mb();
     }
 
@@ -23,6 +24,7 @@ public class InputLeftCurlyCoverageIncrease {
         String CB = "CONST b";
 
         public void ma();
+
         void mb();
     }
 
@@ -32,6 +34,7 @@ public class InputLeftCurlyCoverageIncrease {
         String CB = "CONST b";
 
         public void ma();
+
         void mb();
     }
 
@@ -41,21 +44,23 @@ public class InputLeftCurlyCoverageIncrease {
         String CB = "CONST b";
 
         public void ma();
+
         void mb();
     }
 
     private
-    class
- MyClass1
-  {
+        class
+        MyClass1
+    {
     }
+
     class
     MyClass2 {
     }
 
     private
-    interface
-    MyInterface1 {
+        interface
+        MyInterface1 {
     }
 
     interface
@@ -63,8 +68,8 @@ public class InputLeftCurlyCoverageIncrease {
     }
 
     protected
-    enum
-    MyEnum {
+        enum
+        MyEnum {
     }
 
     private

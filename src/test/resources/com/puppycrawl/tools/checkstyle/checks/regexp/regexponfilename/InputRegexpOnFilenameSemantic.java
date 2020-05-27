@@ -68,9 +68,12 @@ class InputRegexpOnFilenameSemantic
         catch (UnsupportedOperationException handledException) {
             System.out.println(handledException.getMessage());
         }
-        catch (SecurityException ex) { /* hello */ }
-        catch (StringIndexOutOfBoundsException ex) {}
-        catch (IllegalArgumentException ex) { }
+        catch (SecurityException ex) { /* hello */
+        }
+        catch (StringIndexOutOfBoundsException ex) {
+        }
+        catch (IllegalArgumentException ex) {
+        }
 
         try {
         }
@@ -91,7 +94,7 @@ class InputRegexpOnFilenameSemantic
     }
 
     /** test **/
-    private static final long IGNORE = 666l + 666L;
+    private static final long IGNORE = 666L + 666L;
 
 
 
@@ -203,7 +206,7 @@ class InputRegexpOnFilenameSemantic
     }
 
     synchronized void foo() {
-        synchronized (this) {} // not OK
+        synchronized (this) { } // not OK
         synchronized (Class.class) { // OK
             synchronized (new Object()) {
                 // not OK if checking statements
@@ -214,7 +217,8 @@ class InputRegexpOnFilenameSemantic
 
     static {
 
-    int a = 0;}
+        int a = 0;
+    }
 
     static {
 

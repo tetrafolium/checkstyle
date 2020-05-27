@@ -15,16 +15,35 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class InputRegressionJava8Class1 {
-    static class Inner1 { static class Inner2<V> { public void m() {} } }
-    static class Inner3<T> { public void m() {} }
+    static class Inner1 { static class Inner2<V> { public void m() {
+            }
+        }
+    }
 
-    public void m() {}
-    public static void sm() {}
-    void m1() throws @Nullable Exception {}
-    public static <T> void m2(T @Nullable [] array) {}
-    public void m3() throws NullPointerException, @Nullable ArrayIndexOutOfBoundsException {}
-    public void m4(InputRegressionJava8Class1 this) {}
-    public void m5(@Nullable InputRegressionJava8Class1 this) {}
+    static class Inner3<T> { public void m() {
+        }
+    }
+
+    public void m() {
+    }
+
+    public static void sm() {
+    }
+
+    void m1() throws @Nullable Exception {
+    }
+
+    public static <T> void m2(T @Nullable [] array) {
+    }
+
+    public void m3() throws NullPointerException, @Nullable ArrayIndexOutOfBoundsException {
+    }
+
+    public void m4(InputRegressionJava8Class1 this) {
+    }
+
+    public void m5(@Nullable InputRegressionJava8Class1 this) {
+    }
 
     {
         List<String> vlist = new ArrayList<String>();
@@ -52,20 +71,24 @@ public class InputRegressionJava8Class1 {
 
         // lambda
         Runnable r1 = () -> m();
-        Runnable r2 = () -> { m(); } ;
-        Collections.sort(vlist, (l,  r) -> l == r ? 0 : 1);
+        Runnable r2 = () -> {
+            m(); };
+        Collections.sort(vlist, (l, r) -> l == r ? 0 : 1);
         Predicate<?> t = (b) ? null : object -> o.equals(object);
         Double mPi = Math.PI;
     }
 
-    static final Comparator<?> f = (Comparator<?>) (dateTime1, dateTime2) -> { return 0; };
+    static final Comparator<?> f = (Comparator<?>) (dateTime1, dateTime2) -> {
+        return 0; };
 
     private class Inner {
-        public Inner(InputRegressionJava8Class1 InputRegressionJava8Class1.this) {}
+        public Inner(InputRegressionJava8Class1 InputRegressionJava8Class1.this) {
+        }
     }
-}
-;
-class InputRegressionJava8TypeParam <@Nullable T> {
+} ;
+
+
+class InputRegressionJava8TypeParam<@Nullable T> {
 }
 @Retention(RetentionPolicy.CLASS)
 @Target({ ElementType.TYPE_USE })

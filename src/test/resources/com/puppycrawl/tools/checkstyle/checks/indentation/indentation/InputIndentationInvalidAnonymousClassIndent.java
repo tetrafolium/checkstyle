@@ -23,9 +23,12 @@ public class InputIndentationInvalidAnonymousClassIndent { //indent:0 exp:0
             public Thread newThread(Runnable runnable) { //indent:12 exp:12
                 if (hashCode() == 0) { //indent:16 exp:16
                     return new Thread(); //indent:20 exp:20
-                } else { //indent:16 exp:16
+                }
+                else { //indent:16 exp:16
                     return new Thread(); //indent:20 exp:20
-                }}}); //indent:16 exp:16
+                }
+                }
+                }); //indent:16 exp:16
         return; //indent:8 exp:8
     } //indent:4 exp:4
 } //indent:0 exp:0

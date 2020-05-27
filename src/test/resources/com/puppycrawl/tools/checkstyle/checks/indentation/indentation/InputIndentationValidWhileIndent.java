@@ -41,11 +41,11 @@ public class InputIndentationValidWhileIndent { //indent:0 exp:0
             System.getProperty("foo"); //indent:12 exp:12
         } //indent:8 exp:8
 
-        while (test)  { //indent:8 exp:8
+        while (test) { //indent:8 exp:8
             System.getProperty("foo"); //indent:12 exp:12
         } //indent:8 exp:8
 
-        while (test)  { //indent:8 exp:8
+        while (test) { //indent:8 exp:8
             System.getProperty("foo"); //indent:12 exp:12
             System.getProperty("foo"); //indent:12 exp:12
         } //indent:8 exp:8
@@ -56,7 +56,7 @@ public class InputIndentationValidWhileIndent { //indent:0 exp:0
             System.getProperty("foo"); //indent:12 exp:12
         } //indent:8 exp:8
 
-        while (test)  { //indent:8 exp:8
+        while (test) { //indent:8 exp:8
             if (test) { //indent:12 exp:12
                 System.getProperty("foo"); //indent:16 exp:16
             } //indent:12 exp:12

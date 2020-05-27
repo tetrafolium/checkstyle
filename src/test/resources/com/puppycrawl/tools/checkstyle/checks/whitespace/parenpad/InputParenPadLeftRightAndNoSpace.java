@@ -6,13 +6,13 @@ import java.io.Writer;
 
 public class InputParenPadLeftRightAndNoSpace
 {
-    class ParenPadNoSpace  {
+    class ParenPadNoSpace {
         ParenPadNoSpace() {
             this(0);
         }
 
         ParenPadNoSpace(int i) {
-            super();
+            
         }
 
         @SuppressWarnings("")
@@ -21,7 +21,8 @@ public class InputParenPadLeftRightAndNoSpace
                 do {
                     writer.append("a");
                 } while (status);
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 while (status) {
                     for (int i = 0; i < (long) (2 * (4 / 2)); i++) {
                         if (i > 2) {
@@ -46,7 +47,7 @@ public class InputParenPadLeftRightAndNoSpace
         }
 
         ParenPadSpaceLeft(int i) {
-            super();
+            
         }
 
         @SuppressWarnings("")
@@ -55,7 +56,8 @@ public class InputParenPadLeftRightAndNoSpace
                 do {
                     writer.append("a");
                 } while (status);
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 while (status) {
                     for (int i = 0; i < (long) (2 * (4 / 2)); i++) {
                         if (i > 2) {
@@ -80,7 +82,7 @@ public class InputParenPadLeftRightAndNoSpace
         }
 
         ParenPadSpaceRight(int i) {
-            super();
+            
         }
 
         @SuppressWarnings("")
@@ -89,7 +91,8 @@ public class InputParenPadLeftRightAndNoSpace
                 do {
                     writer.append("a");
                 } while (status);
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 while (status) {
                     for (int i = 0; i < (long) (2 * (4 / 2)); i++) {
                         if (i > 2) {
@@ -111,9 +114,10 @@ public class InputParenPadLeftRightAndNoSpace
     String foo() {
         return ((Object
                 ) bar((1 > 2) ?
-                        ((3 < 4)? false : true) :
+                        ((3 < 4) ? false : true) :
                         ((1 == 1) ? false : true))).toString();
     }
+
     @MyAnnotation
     public boolean bar(boolean a) {
         assert (true);
@@ -135,30 +139,30 @@ enum MyEnum {
     public void myMethod() {
         String s = "test";
         Object o = s;
-        ((String)o).length();
-        ((String)o).length();
+        ((String) o).length();
+        ((String) o).length();
     }
 
     public void crisRon() {
         Object leo = "messi";
         Object ibra = leo;
-        ((String)leo).compareTo((String)ibra);
+        ((String) leo).compareTo((String) ibra);
         Math.random();
     }
 
     public void intStringConv() {
         Object a = 5;
         Object b = "string";
-        int w = Integer.parseInt((String)a);
-        int x = Integer.parseInt((String)a);
-        double y = Double.parseDouble((String)a);
-        float z = Float.parseFloat((String)a);
-        String d = ((String)b);
+        int w = Integer.parseInt((String) a);
+        int x = Integer.parseInt((String) a);
+        double y = Double.parseDouble((String) a);
+        float z = Float.parseFloat((String) a);
+        String d = ((String) b);
     }
 
     public int something(Object o) {
         if (o == null || !(o instanceof Float)) {
-        	return -1;
+                return -1;
         }
         return Integer.valueOf(22).compareTo((Integer) o);
     }
@@ -183,7 +187,7 @@ enum MyEnum {
 
     public String testing() {
         return (this.exam != null)
-                ? ((Enum)this.exam).name()
+                ? ((Enum) this.exam).name()
                 : null;
     }
 
@@ -204,7 +208,8 @@ enum MyEnum {
         arrlist.add(45);
         try {
             (arrlist).remove(2);
-        } catch (IndexOutOfBoundsException x) {
+        }
+        catch (IndexOutOfBoundsException x) {
             x.getMessage();
         }
         org.junit.Assert.assertThat("123", org.hamcrest.CoreMatchers.is("123"));
@@ -212,9 +217,10 @@ enum MyEnum {
                 0, org.hamcrest.CoreMatchers.is(1));
     }
 }
+
 enum MyEnum2 {
     SOME_CONSTANT() {
         int i = (int) (2 * (4 / 2
-));
-    };
+        ));
+    }
 }

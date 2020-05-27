@@ -17,7 +17,7 @@ public class InputIllegalTokenText
         final String r1 = "\u0008"; //ok
         final String r2 = "\u0009"; //warn
         final String r3 = "\u000csssdfsd"; //warn
-        final String r4  = "\u1111sdfsd\444"; // ok
+        final String r4 = "\u1111sdfsd\444"; // ok
 
         final char r5 = '\012'; //warn
         final char r6 = '\u0022'; //warn
@@ -68,7 +68,7 @@ public class InputIllegalTokenText
             final String r1 = "\u0008"; //ok
             final String r2 = "\u0009"; //warn
             final String r3 = "\u000csssdfsd"; //warn
-            final String r4  = "\u1111sdfsd\444"; //ok
+            final String r4 = "\u1111sdfsd\444"; //ok
 
             final char r5 = '\012'; //warn
             final char r6 = '\u0022'; //warn
@@ -112,13 +112,13 @@ public class InputIllegalTokenText
             String r8 = "\\134"; // warn
         }
 
-        Inner anoInner = new Inner(){
+        Inner anoInner = new Inner() {
             public String wrongEscapeSequences()
             {
                 final String r1 = "\u0008"; //ok
                 final String r2 = "\u0009"; //warn
                 final String r3 = "\u000csssdfsd"; //warn
-                final String r4  = "\u1111sdfsd\444"; //ok
+                final String r4 = "\u1111sdfsd\444"; //ok
 
                 final char r5 = '\012'; //warn
                 final char r6 = '\u0022'; //warn

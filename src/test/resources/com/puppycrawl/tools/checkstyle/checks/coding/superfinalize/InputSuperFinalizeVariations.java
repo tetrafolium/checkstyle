@@ -1,4 +1,5 @@
 package com.puppycrawl.tools.checkstyle.checks.coding.superfinalize;
+
 public class InputSuperFinalizeVariations
 {
     public InputSuperFinalizeVariations() throws Throwable

@@ -9,7 +9,8 @@ class InputNoFinalizeExtend {
     protected void finalize() throws Throwable { //warn
         try {
             doStuff();
-        } finally {
+        }
+        finally {
             super.finalize();
         }
     }
@@ -45,7 +46,8 @@ class PublicFinalizer {
     public void finalize() throws Throwable { //warn
         try {
             doStuff();
-        } finally {
+        }
+        finally {
             super.finalize();
         }
     }
@@ -69,7 +71,8 @@ class StaticFinalizer {
     protected void finalize() { //warn
         try {
             doStuff();
-        } finally {
+        }
+        finally {
 
         }
     }
@@ -79,7 +82,8 @@ class StaticFinalizer {
         protected void finalize() { //warn
             try {
                 doStuff();
-            } finally {
+            }
+            finally {
 
             }
         }
@@ -100,7 +104,7 @@ class WithoutFinalize {
     }
 }
 
-class WithoutMethods {}
+class WithoutMethods { }
 
 class WithAnonymousClass {
 
@@ -119,7 +123,8 @@ class WithAnonymousClass {
             protected void finalize() { //warn
                 try {
                     doStuff();
-                } finally {
+                }
+                finally {
 
                 }
             }

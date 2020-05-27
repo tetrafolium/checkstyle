@@ -8,7 +8,7 @@ package com.puppycrawl.tools.checkstyle.checks.javadoc.javadoctype;
  * @author Nobody
  * @version 1.0
  */
-public class InputJavadocTypeTypeParamsTags<A,B1,C456 extends Comparable>
+public class InputJavadocTypeTypeParamsTags<A, B1, C456 extends Comparable>
 {
     /**
      * Some explanation.
@@ -44,7 +44,7 @@ public class InputJavadocTypeTypeParamsTags<A,B1,C456 extends Comparable>
      * @param <C> extra parameter
      */
 
-    public static class InnerClass<A,B>
+    public static class InnerClass<A, B>
     {
     }
 
@@ -58,4 +58,5 @@ public class InputJavadocTypeTypeParamsTags<A,B1,C456 extends Comparable>
 }
 
 /** @param x */
-class Test {}
+class Test {
+}

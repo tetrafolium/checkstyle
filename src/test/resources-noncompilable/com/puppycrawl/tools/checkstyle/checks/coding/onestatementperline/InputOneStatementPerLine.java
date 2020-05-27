@@ -11,8 +11,8 @@ package com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline;
  * which are not on the same line are legal.
  */
 import java.awt.event.ActionEvent;
-import java.lang.annotation.Annotation;
-; // non-compilable by eclipse
+import java.lang.annotation.Annotation; ;
+// non-compilable by eclipse
 import java.lang.String;
 import java.lang.Integer;
 import java.util.LinkedList;
@@ -29,28 +29,30 @@ public class InputOneStatementPerLine {
      * may be considered as two empty statements on the same line
      * and rises violation.
      */
-    ;; //warn
+; //warn
     static {
-        new JCheckBox().addActionListener((final ActionEvent e) -> {good();});
+        new JCheckBox().addActionListener((final ActionEvent e) -> { good(); });
         List<Integer> ints = new LinkedList<Integer>();
-        ints.stream().map(t -> { return t * 2;}).filter(t -> { return false;});
-        ints.stream().map(t -> { int m = t * 2; return m; }); //warn
-        ints.stream().map(t -> { int m = t * 2; return m; }); int i = 3; //warn
+        ints.stream().map(t -> { return t * 2; }).filter(t -> { return false; });
+        ints.stream().map(t -> {
+            int m = t * 2; return m; }); //warn
+        ints.stream().map(t -> {
+            int m = t * 2; return m; }); int i = 3; //warn
         ints.stream().map(t -> t * 2); int k = 4; //warn
         ints.stream().map(t -> t * 2);
         List<Integer> ints2 = new LinkedList<Integer>();
-        ints.stream().map(t -> { return ints2.stream().map(w -> { return w * 2; });});
-        ints.stream().map(t -> { return ints2.stream().map(w -> { int m=w; return m; });}); //warn
+        ints.stream().map(t -> { return ints2.stream().map(w -> { return w * 2; }); });
+        ints.stream().map(t -> { return ints2.stream().map(w -> { int m = w; return m; }); }); //warn
         ints.stream().map(t -> {
             return ints2.stream().map(
-                    w -> {
-                        int m = w * 2;
-                        return m;
-                    });
+                w -> {
+                    int m = w * 2;
+                    return m;
+                });
         });
         ints.stream().map(t -> {
             int l = 0;
-            for (int j = 0;j < 10;j++) {
+            for (int j = 0; j < 10; j++) {
                 l = j + l;
             }
             return l;

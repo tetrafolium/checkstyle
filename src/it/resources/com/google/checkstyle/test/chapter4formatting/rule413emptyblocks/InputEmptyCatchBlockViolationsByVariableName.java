@@ -7,7 +7,8 @@ public class InputEmptyCatchBlockViolationsByVariableName
     private void foo() {
         try {
             throw new RuntimeException();
-        } catch (Exception expected) //ok
+        }
+        catch (Exception expected) //ok
         {
 
         }
@@ -16,15 +17,18 @@ public class InputEmptyCatchBlockViolationsByVariableName
     private void foo1() {
         try {
             throw new RuntimeException();
-        } catch (Exception e) //warn
-        {}
+        }
+        catch (Exception e) //warn
+        {
+        }
 
     }
 
     private void foo2() {
         try {
             throw new IOException();
-        } catch (IOException | NullPointerException | ArithmeticException expected) //ok
+        }
+        catch (IOException | NullPointerException | ArithmeticException expected) //ok
         {
         }
     }
@@ -32,7 +36,8 @@ public class InputEmptyCatchBlockViolationsByVariableName
     private void foo3() { // comment
         try {
             throw new IOException();
-        } catch (IOException | NullPointerException | ArithmeticException e) //warn
+        }
+        catch (IOException | NullPointerException | ArithmeticException e) //warn
         {
         }
     }
@@ -40,7 +45,8 @@ public class InputEmptyCatchBlockViolationsByVariableName
     private void foo4() {
         try {
             throw new IOException();
-        } catch (IOException | NullPointerException | ArithmeticException expected) //ok
+        }
+        catch (IOException | NullPointerException | ArithmeticException expected) //ok
         {
         }
     }
@@ -48,14 +54,17 @@ public class InputEmptyCatchBlockViolationsByVariableName
     private void foo5() {
         try {
             throw new IOException();
-        } catch (IOException | NullPointerException | ArithmeticException e) //warn
+        }
+        catch (IOException | NullPointerException | ArithmeticException e) //warn
         {
         }
     }
+
     private void some() {
         try {
             throw new IOException();
-        } catch (IOException e) //warn
+        }
+        catch (IOException e) //warn
         {
 
         }

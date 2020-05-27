@@ -10,17 +10,21 @@ public class InputJavadocMethod_01 {
     public void doStuff1() throws TestException1 {
         try {
             doStuff2();
-        } catch (final TestException2 e) { }
+        }
+        catch (final TestException2 e) {
+        }
         throw new InputJavadocMethod_01().new TestException1("");
     }
     /** Do 2.
      * @throws TestException2 when problem occurs.
      */
+
     private static void doStuff2() throws TestException2 {
         throw new TestException2("");
     }
     /** Exception 1.
      */
+
     class TestException1 extends Exception {
         /** Exception 1.
          * @param messg message
@@ -31,6 +35,7 @@ public class InputJavadocMethod_01 {
     }
     /** Exception 2.
      */
+
     public static class TestException2 extends Exception {
         /** Exception 2.
          * @param messg message

@@ -24,26 +24,28 @@ public class InputCheckUtilTest<V, C> {
             return false;
         }
         InputCheckUtilTest<V, C> that = (InputCheckUtilTest<V, C>) o;
-        return Objects.equal(field, that.field) &&
-                Objects.equal(array, that.array);
+        return Objects.equal(field, that.field)
+                && Objects.equal(array, that.array);
     }
 
     public void doSomething(int value) {
         if (field.isEmpty()) {
             field.put(String.valueOf(value), value << 1);
-        } else {
-            if(!field.containsKey(String.valueOf(value))){
+        }
+        else {
+            if (!field.containsKey(String.valueOf(value))) {
                 field.put(String.valueOf(value), value << 1);
             }
         }
 
-        if(!field.containsKey(String.valueOf(value))){
+        if (!field.containsKey(String.valueOf(value))) {
             field.put(String.valueOf(value), value << 1);
-        } else if (value == 10) {
+        }
+        else if (value == 10) {
             array[9] = -1;
         }
 
-        if(field.size() < 10){
+        if (field.size() < 10) {
             array[9] = field.getOrDefault(String.valueOf(value), -1);
         }
 
@@ -59,12 +61,14 @@ public class InputCheckUtilTest<V, C> {
 
     public int [] setArray(int... array) {
         this.array = array;
-        if(array.length > 0){
+        if (array.length > 0) {
             return this.array;
-        } else {
+        }
+        else {
             return new int[4];
         }
     }
 
-    public void testReceiver(InputCheckUtilTest<V, C>this, int variable) {}
+    public void testReceiver(InputCheckUtilTest<V, C> this, int variable) {
+    }
 }

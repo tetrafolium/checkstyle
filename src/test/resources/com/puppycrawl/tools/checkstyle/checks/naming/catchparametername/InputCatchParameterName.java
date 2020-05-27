@@ -3,47 +3,61 @@ package com.puppycrawl.tools.checkstyle.checks.naming.catchparametername;
 public class InputCatchParameterName {
     {
         try {
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
         }
         try {
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
         }
         try {
-        } catch (Error | Exception err) {
+        }
+        catch (Error | Exception err) {
         }
         try {
-        } catch (Exception exception) {
+        }
+        catch (Exception exception) {
         }
         try {
-        } catch (Exception exception1) {
+        }
+        catch (Exception exception1) {
         }
         try {
-        } catch (Exception noWorries) {
+        }
+        catch (Exception noWorries) {
         }
         try {
-        } catch (Throwable t) {
+        }
+        catch (Throwable t) {
         }
         try {
             throw new InterruptedException("interruptedException");
-        } catch (InterruptedException ie) { // violation with default config
+        }
+        catch (InterruptedException ie) { // violation with default config
         }
         try {
-        } catch (Exception iException) { // violation with default config
+        }
+        catch (Exception iException) { // violation with default config
         }
         try {
-        } catch (Exception ok) {
+        }
+        catch (Exception ok) {
             // appropriate to take no action here
         }
         try {
-        } catch (Exception e1) {
+        }
+        catch (Exception e1) {
             try {
-            } catch (Exception e2) {
+            }
+            catch (Exception e2) {
             }
         }
         try {
-        } catch (Throwable t1) {
+        }
+        catch (Throwable t1) {
             try {
-            } catch (Throwable t2) {
+            }
+            catch (Throwable t2) {
             }
         }
     }

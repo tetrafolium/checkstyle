@@ -14,7 +14,8 @@ class InputOuterTypeFilename3 //ok
 enum Enum2 //ok
 {
     A, B, C;
-    Enum2() {}
+    Enum2() { }
+
     public String toString() {
         return ""; //some custom implementation
     }

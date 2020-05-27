@@ -14,9 +14,7 @@ class InputLeftCurlyBraces
 
         do {
             testDoWhile();
-        }
-        while (condition());
-
+        } while (condition());
 
         do testDoWhile(); while (condition());
     }
@@ -29,8 +27,7 @@ class InputLeftCurlyBraces
             testWhile();
         }
 
-
-        while(condition());
+        while (condition());
         while (condition())
             testWhile();
         while (condition())
@@ -46,8 +43,7 @@ class InputLeftCurlyBraces
             testFor();
         }
 
-
-        for(int i = 1;i < 5;i++);
+        for (int i = 1; i < 5; i++);
         for (int i = 1; i < 5; i++)
             testFor();
         for (int i = 1; i < 5;
@@ -69,7 +65,6 @@ class InputLeftCurlyBraces
         else {
             testIf();
         }
-
 
         if (condition());
         if (condition())
@@ -96,36 +91,39 @@ class InputLeftCurlyBraces
     void whitespaceAfterSemi()
     { //warn
 
-        int i = 1;int j = 2;
-
+        int i = 1; int j = 2;
 
         for (;;) {
         }
     }
 
     /** Empty constructor block. **/
-    public InputLeftCurlyBraces() {}
+    public InputLeftCurlyBraces() {
+    }
 
     /** Empty method block. **/
-    public void emptyImplementation() {}
+    public void emptyImplementation() {
+    }
 }
 
 class EnumContainerLeft {
-    private enum Suit { CLUBS, HEARTS, SPADES, DIAMONDS } // ok
+    private enum Suit { CLUBS, HEARTS, SPADES, DIAMONDS
+    }
+    // ok
 }
 
 class WithArraysLeft { // ok
     String[] s = {""}; // ok
     String[] empty = {}; // ok
-    String[] s1 = { // ok
+    String[] s1 = {// ok
         "foo", "foo",
     };
     String[] s2 =
-        { // ok
+        {// ok
             "foo", "foo",
         };
     String[] s3 =
-        { // ok
+        {// ok
             "foo",
             "foo",
         };

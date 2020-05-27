@@ -41,21 +41,37 @@ strictfp abstract class InputModifierOrder //warn
     {
     }
 
-    @MyAnnotation2 public static final synchronized strictfp void fooMethod() {}; //ok
+    @MyAnnotation2 public static final synchronized strictfp void fooMethod() {
+    }
+    //ok
 
-    strictfp protected final @MyAnnotation2 static synchronized void fooMethod1() {}; //warn
+    strictfp protected final @MyAnnotation2 static synchronized void fooMethod1() {
+    }
+    //warn
 
-    synchronized @MyAnnotation2 strictfp private final static void fooMethod2() {}; //warn
+    synchronized @MyAnnotation2 strictfp private final static void fooMethod2() {
+    }
+    //warn
 
-    @MyAnnotation2 static synchronized final strictfp protected void fooMethod3() {}; //warn
+    @MyAnnotation2 static synchronized final strictfp protected void fooMethod3() {
+    }
+    //warn
 
-    @MyAnnotation2 strictfp static final synchronized private void fooMethod4() {}; //warn
+    @MyAnnotation2 strictfp static final synchronized private void fooMethod4() {
+    }
+    //warn
 
-    synchronized final strictfp @MyAnnotation2 static public void fooMethod5() {}; //warn
+    synchronized final strictfp @MyAnnotation2 static public void fooMethod5() {
+    }
+    //warn
 
-    @MyAnnotation2 static synchronized strictfp private final void fooMethod6() {}; //warn
+    @MyAnnotation2 static synchronized strictfp private final void fooMethod6() {
+    }
+    //warn
 
-    final strictfp synchronized static protected @MyAnnotation2 void fooMethod7() {}; //warn
+    final strictfp synchronized static protected @MyAnnotation2 void fooMethod7() {
+    }
+    //warn
 
     @MyAnnotation2 abstract protected void fooMet(); //warn
 
@@ -77,6 +93,7 @@ strictfp abstract class InputModifierOrder //warn
         /** all OK */
         float PI_OK = (float) 3.14;
     }
+
     final private void method() // warn
     {
     }
@@ -198,21 +215,37 @@ class WithInner
 
         volatile public int whatImReading; //warn
 
-        @MyAnnotation2 public final synchronized strictfp void fooMethod() {}; //ok
+        @MyAnnotation2 public final synchronized strictfp void fooMethod() {
+        }
+        //ok
 
-        strictfp protected final @MyAnnotation2 synchronized void fooMethod1() {}; //warn
+        strictfp protected final @MyAnnotation2 synchronized void fooMethod1() {
+        }
+        //warn
 
-        synchronized @MyAnnotation2 strictfp private final void fooMethod2() {}; //warn
+        synchronized @MyAnnotation2 strictfp private final void fooMethod2() {
+        }
+        //warn
 
-        @MyAnnotation2 synchronized final strictfp protected void fooMethod3() {}; //warn
+        @MyAnnotation2 synchronized final strictfp protected void fooMethod3() {
+        }
+        //warn
 
-        @MyAnnotation2 strictfp final synchronized private void fooMethod4() {}; //warn
+        @MyAnnotation2 strictfp final synchronized private void fooMethod4() {
+        }
+        //warn
 
-        synchronized final strictfp @MyAnnotation2 public void fooMethod5() {}; //warn
+        synchronized final strictfp @MyAnnotation2 public void fooMethod5() {
+        }
+        //warn
 
-        @MyAnnotation2 synchronized strictfp private final void fooMethod6() {}; //warn
+        @MyAnnotation2 synchronized strictfp private final void fooMethod6() {
+        }
+        //warn
 
-        final strictfp synchronized protected @MyAnnotation2 void fooMethod7() {}; //warn
+        final strictfp synchronized protected @MyAnnotation2 void fooMethod7() {
+        }
+        //warn
 
         @MyAnnotation2 abstract protected void fooMet(); //warn
 
@@ -240,7 +273,11 @@ class WithInner
 /** Illegal order of modifiers for interface methods */
 interface InputModifierOrderInterface
 {
-    default strictfp void a() { }  //ok
+    default strictfp void a() {
+    }
+    //ok
 
-    strictfp default void b() { }  //warn
+    strictfp default void b() {
+    }
+    //warn
 }

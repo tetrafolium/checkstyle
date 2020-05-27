@@ -22,7 +22,7 @@ public class InputDeclarationOrderVariableAccess {
         }
     };
 
-    InputDeclarationOrderVariableAccess() {}
+    InputDeclarationOrderVariableAccess() { }
 
     public void readFrom(InputStream in) throws IOException {
     }

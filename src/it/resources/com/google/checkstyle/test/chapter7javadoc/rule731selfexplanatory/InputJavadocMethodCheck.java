@@ -39,7 +39,8 @@ public class InputJavadocMethodCheck extends OverrideClass
     /**
      * Some javadoc.
      */
-    void foo4() {}
+    void foo4() {
+    }
 
     //without comments
 
@@ -67,10 +68,6 @@ public class InputJavadocMethodCheck extends OverrideClass
     }
 
     void foo82() {
-
-
-
-
 
     }
 
@@ -105,4 +102,5 @@ class OverrideClass {
                 + "ooo";
     }
 }
-@interface MyAnnotation {}
+@interface MyAnnotation {
+}

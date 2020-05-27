@@ -26,11 +26,11 @@ public interface InputClassMemberImpliedModifierOnInterface {
     }
 
     static enum StaticEnum {
-        RED, GREEN, BLUE;
+        RED, GREEN, BLUE
     }
 
     enum SimpleEnum {
-        RED, GREEN, BLUE;
+        RED, GREEN, BLUE
     }
 
     static interface StaticInterface {
@@ -45,11 +45,11 @@ public interface InputClassMemberImpliedModifierOnInterface {
             RED, GREEN, BLUE;
 
             static enum StaticInnerEnum {
-                RED, GREEN, BLUE;
+                RED, GREEN, BLUE
             }
 
             enum SimpleInnerEnum {  // violation
-                RED, GREEN, BLUE;
+                RED, GREEN, BLUE
             }
 
             static interface StaticInnerInterface {
@@ -63,11 +63,11 @@ public interface InputClassMemberImpliedModifierOnInterface {
             RED, GREEN, BLUE;
 
             static enum StaticInnerEnum {
-                RED, GREEN, BLUE;
+                RED, GREEN, BLUE
             }
 
             enum SimpleInnerEnum {  // violation
-                RED, GREEN, BLUE;
+                RED, GREEN, BLUE
             }
 
             static interface StaticInnerInterface {

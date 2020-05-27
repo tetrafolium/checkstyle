@@ -18,16 +18,17 @@ class InputUpperEll
     }
 
     private void processUpperEll(long aLong) {
-        long bad = (4+5*7^66L/7+890) //warn
+        long bad = (4 + 5 * 7 ^ 66L / 7 + 890) //warn
                 & (88L + 78 * 4); //warn
-        long good = (4+5*7^66L/7+890) & (88L + 78 * 4); //ok
+        long good = (4 + 5 * 7 ^ 66L / 7 + 890) & (88L + 78 * 4); //ok
         long[] array = {
             66L, //warn
             66L, //ok
         };
     }
 
-    private void processUpperEll(String s, long l) {}
+    private void processUpperEll(String s, long l) {
+    }
 
     class Inner {
         /** test **/
@@ -47,14 +48,15 @@ class InputUpperEll
 
         private void processUpperEll(long aLong)
         {
-            long bad = (4+5*7^66L/7+890) //warn
+            long bad = (4 + 5 * 7 ^ 66L / 7 + 890) //warn
                     & (88L + 78 * 4); //warn
-            long good = (4+5*7^66L/7+890) & (88L + 78 * 4); //ok
+            long good = (4 + 5 * 7 ^ 66L / 7 + 890) & (88L + 78 * 4); //ok
         }
+
         private void processUpperEll(String s, long l) {
             long[] array = {
-                    66L, //warn
-                    66L, //ok
+                66L, //warn
+                66L, //ok
                 };
         }
 
@@ -77,28 +79,30 @@ class InputUpperEll
                 }
 
                 private void processUpperEll(long aLong) {
-                    long bad = (4+5*7^66L/7+890) //warn
+                    long bad = (4 + 5 * 7 ^ 66L / 7 + 890) //warn
                             & (88L + 78 * 4); //warn
-                    long good = (4+5*7^66L/7+890) & (88L + 78 * 4); //ok
+                    long good = (4 + 5 * 7 ^ 66L / 7 + 890) & (88L + 78 * 4); //ok
                     long[] array = {
                         66L, //warn
                         66L, //ok
                     };
                 }
 
-                private void processUpperEll(String s, long aLong) {}
+                private void processUpperEll(String s, long aLong) {
+                }
             };
         }
     }
 
-    class Foo {}
+    class Foo {
+    }
 
     interface Long {
         public static final long IGNORE = 666L + 666L; //warn
         public static final String notWarn = "666l"; //ok
-        long bad = (4+5*7^66L/7+890) //warn
+        long bad = (4 + 5 * 7 ^ 66L / 7 + 890) //warn
                 & (88L + 78 * 4); //warn
-        long good = (4+5*7^66L/7+890) & (88L + 78 * 4); //ok
+        long good = (4 + 5 * 7 ^ 66L / 7 + 890) & (88L + 78 * 4); //ok
     }
 }
 

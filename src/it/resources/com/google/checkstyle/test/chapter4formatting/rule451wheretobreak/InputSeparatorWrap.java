@@ -12,6 +12,7 @@ public class InputSeparatorWrap {
         foo(i,
                 s); //ok
     }
+
     public static void foo(int i, String s)
     {
 
@@ -25,12 +26,13 @@ class badCase {
         int i = 0;
 
         String s = "ffffooooString";
-        /*warn*/boolean b = s.
-            isEmpty();
-        foo(i
-,s);
+        /*warn*/boolean b = s
+            .isEmpty();
+        foo(i,
+            s);
         int[] j;
     }
+
     public static String foo(int i, String s)
     {
         String maxLength = "123";

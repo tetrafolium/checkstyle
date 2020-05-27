@@ -56,6 +56,7 @@ public class InputSuppressWarningsCompact
         @SuppressWarnings({"unchecked"})
         @Deprecated
         int b = 1;
+
         void doFoo(String s, @SuppressWarnings({"unchecked"})String y) {
 
         }

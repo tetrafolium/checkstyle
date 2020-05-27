@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.Collections;
+
 class InputGenericWhitespace implements Comparable<InputGenericWhitespace>, Serializable
 {
     void meth()
@@ -36,6 +37,7 @@ class InputGenericWhitespace implements Comparable<InputGenericWhitespace>, Seri
         Class<?>[] parameterClasses = new Class<?>[0];
         return null;
     }
+
     public int getConstructor(Class<?>... parameterTypes)
     {
         Collections.<Object>emptySet();
@@ -57,9 +59,9 @@ class InputGenericWhitespace implements Comparable<InputGenericWhitespace>, Seri
     public static class IntEnumValueType<E extends Enum<E> & IntEnum> {
     }
 
-    public static class IntEnumValueType2<E extends Enum<E>& IntEnum> { // warn
+    public static class IntEnumValueType2<E extends Enum<E> & IntEnum> { // warn
     }
 
-    public static class IntEnumValueType3<E extends Enum<E>& IntEnum> { // warn
+    public static class IntEnumValueType3<E extends Enum<E> & IntEnum> { // warn
     }
 }

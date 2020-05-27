@@ -7,10 +7,10 @@ public interface InputDefaultComesLastDefaultMethodsInInterface {
     String toJson(String document);
 
     default String toJson(Object one) {
-      return toJson(one, one, one);
+        return toJson(one, one, one);
     }
 
     default String toJson(Object one, Object two) {
-      return toJson(one, one, two);
+        return toJson(one, one, two);
     }
-  }
+}

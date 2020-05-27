@@ -4,6 +4,6 @@ import java.util.*;
 
 public class SuppressionXpathRegressionAvoidDoubleBraceInitialization {
     List list = new ArrayList<Object>() { //warn
-        {}
+        { }
     };
 }

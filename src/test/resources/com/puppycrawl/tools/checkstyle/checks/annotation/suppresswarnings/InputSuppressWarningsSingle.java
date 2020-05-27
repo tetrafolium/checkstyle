@@ -56,6 +56,7 @@ public class InputSuppressWarningsSingle
         @SuppressWarnings("unchecked")
         @Deprecated
         int b = 1;
+
         void doFoo(String s, @SuppressWarnings("unchecked")String y) {
 
         }
@@ -79,8 +80,8 @@ public class InputSuppressWarningsSingle
 
         }
 
-        @java.lang.SuppressWarnings((false) ? "unchecked" :
-                ("" == "") ? (false) ? (true) ? "" : "foo" : "    " : "unused")
+        @java.lang.SuppressWarnings((false) ? "unchecked"
+                : ("" == "") ? (false) ? (true) ? "" : "foo" : "    " : "unused")
         public void seriously() {
 
         }

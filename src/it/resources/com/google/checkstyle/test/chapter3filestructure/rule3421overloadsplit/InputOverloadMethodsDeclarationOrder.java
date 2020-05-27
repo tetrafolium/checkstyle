@@ -61,8 +61,11 @@ class InputOverloadMethodsDeclarationOrder
 interface Fooable
 {
     public abstract void foo(int i);
+
     public abstract void foo(String s);
+
     public abstract void noFoo();
+
     public abstract void foo(String s, Boolean b, int i); //warn
 }
 

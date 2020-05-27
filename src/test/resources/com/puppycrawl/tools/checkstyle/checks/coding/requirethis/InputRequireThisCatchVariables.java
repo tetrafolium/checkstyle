@@ -35,6 +35,6 @@ public class InputRequireThisCatchVariables extends Thread {
         }
     }
 
-    private static void exceptional(Throwable ex) {}
-    private static void debug(String message, Throwable err) {}
+    private static void exceptional(Throwable ex) { }
+    private static void debug(String message, Throwable err) { }
 }

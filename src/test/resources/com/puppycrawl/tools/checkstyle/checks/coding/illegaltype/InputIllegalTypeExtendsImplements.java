@@ -23,7 +23,7 @@ public abstract class InputIllegalTypeExtendsImplements {
         implements Cloneable, // OK
             Serializable, // warn
             Comparator, // OK
-            Comparable<Foo< // warn
+            Comparable<Foo<// warn
                 ? extends Boolean>> { // warn
     }
 
@@ -43,7 +43,7 @@ public abstract class InputIllegalTypeExtendsImplements {
         implements Cloneable, // OK
             Serializable, // OK
             Comparator, // OK
-            Comparable<Foo< // OK
+            Comparable<Foo<// OK
                 ? extends Boolean>> { // OK
     }
 

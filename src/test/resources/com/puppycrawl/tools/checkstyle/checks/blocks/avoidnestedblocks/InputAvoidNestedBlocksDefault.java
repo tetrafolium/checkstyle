@@ -40,24 +40,24 @@ class InputAvoidNestedBlocksDefault
                 x = 3;
                 break;
             case 1:
-                // Not OK, SLIST is not complete case body
-                {
-                    x = 1;
-                }
+            // Not OK, SLIST is not complete case body
+            {
+                x = 1;
+            }
                 break;
             case 2:
-                // OK if allowInSwitchCase is true, SLIST is complete case body
-                {
-                    x = 1;
-                    break;
-                }
+            // OK if allowInSwitchCase is true, SLIST is complete case body
+            {
+                x = 1;
+                break;
+            }
             case 3: // test fallthrough
             default:
                 // Not OK, SLIST is not complete case body
                 System.identityHashCode("Hello");
-                {
-                    x = 2;
-                }
+            {
+                x = 2;
+            }
         }
     }
 }

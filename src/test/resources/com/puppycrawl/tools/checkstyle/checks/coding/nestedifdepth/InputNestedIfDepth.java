@@ -1,4 +1,5 @@
 package com.puppycrawl.tools.checkstyle.checks.coding.nestedifdepth;
+
 public class InputNestedIfDepth
 {
     void foo() {
@@ -24,17 +25,21 @@ public class InputNestedIfDepth
     void fooWithElse() {
         // nesting == 0
         if (true) {
-        } else {
+        }
+        else {
         }
 
         // nesting == 1
         if (true) {
             if (true) {
-            } else {
             }
-        } else {
+            else {
+            }
+        }
+        else {
             if (false) {
-            } else {
+            }
+            else {
             }
         }
 
@@ -42,21 +47,28 @@ public class InputNestedIfDepth
         if (true) {
             if (true) {
                 if (true) {
-                } else {
                 }
-            } else {
-                if (false) {
-                } else {
+                else {
                 }
             }
-        } else {
+            else {
+                if (false) {
+                }
+                else {
+                }
+            }
+        }
+        else {
             if (true) {
                 if (true) {
-                } else {
                 }
-            } else {
+                else {
+                }
+            }
+            else {
                 if (false) {
-                } else {
+                }
+                else {
                 }
             }
         }

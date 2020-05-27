@@ -14,8 +14,8 @@ class InputOperatorWrap
 {
     void test()
     {
-        int x = 1 +
-            2 -
+        int x = 1
+            + 2 -
             3
             -
             4;
@@ -23,32 +23,32 @@ class InputOperatorWrap
         boolean y = true
             &&
             false;
-        y = true &&
-            false;
+        y = true
+            && false;
         y = false
             && true;
         Arrays.sort(null, String
-                    ::
-                    compareToIgnoreCase);
-        Arrays.sort(null, String::
-                    compareToIgnoreCase);
+
+                    :: compareToIgnoreCase);
+        Arrays.sort(null, String
+                    :: compareToIgnoreCase);
         Arrays.sort(null, String
                     ::compareToIgnoreCase);
     }
 
     void testAssignment()
     {
-        int x
-            = 0; //violation when checking assignment operators with EOL wrap option
+        int x =
+            0; //violation when checking assignment operators with EOL wrap option
         int y =
             0;
     }
 
     <
-        T extends Comparable &
-        java.io.Serializable
-    >
-    void testGenerics1()
+        T extends Comparable
+        & java.io.Serializable
+        >
+        void testGenerics1()
     {
         Comparable
             <
@@ -58,8 +58,8 @@ class InputOperatorWrap
     }
 }
 
-class badCase2<T extends Foo &
-    Bar> {
+class badCase2<T extends Foo
+    & Bar> {
 }
 
 class goodCase<T extends Foo & Bar> {
@@ -67,16 +67,16 @@ class goodCase<T extends Foo & Bar> {
 
 class Switch {
     public void test(int i, int j) {
-        switch(j) {
+        switch (j) {
         case 7:
-            return;
+                return;
         }
-        switch(i) {
+        switch (i) {
         case 1:
-            break;
-        default:
+                break;
+            default:
             ;
         }
-        for (int k : new int[]{1,2,3}) {}
+        for (int k : new int[]{1, 2, 3}) { }
     }
 }

@@ -6,7 +6,7 @@ public class InputCyclomaticComplexity {
         //NP(while-statement) = (while-range=1) + (expr=0) + 1 = 2
         while (true) {
             Runnable runnable = new Runnable() {
-               // NP = 2
+                // NP = 2
                 public void run() {
                     // NP(while-statement) = (while-range=1) + (expr=0) + 1 = 2
                     while (true) {
@@ -36,8 +36,10 @@ public class InputCyclomaticComplexity {
         // NP = (if-range=1) + (else-range=2) + 0 = 3
         if (System.currentTimeMillis() == 0) {
         // NP(else-range) = (if-range=1) + (else-range=1) + (expr=0) = 2
-        } else if (System.currentTimeMillis() == 0) {
-        } else {
+        }
+        else if (System.currentTimeMillis() == 0) {
+        }
+        else {
         }
     }
 
@@ -45,10 +47,12 @@ public class InputCyclomaticComplexity {
     public void stupidElseIf() {
         // NP = (if-range=1) + (else-range=3*2) + (expr=0) = 7
         if (System.currentTimeMillis() == 0) {
-        } else {
+        }
+        else {
             // NP = (if-range=1) + (else-range=2) + (expr=0) = 3
             if (System.currentTimeMillis() == 0) {
-            } else {
+            }
+            else {
                 // NP = (if-range=1) + 1 + (expr=0) = 2
                 if (System.currentTimeMillis() == 0) {
                 }
@@ -66,8 +70,10 @@ public class InputCyclomaticComplexity {
         // NP = (if-range=1) + (else-range=2) + 0 = 3
         if (System.currentTimeMillis() == 0) {
         // NP(else-range) = (if-range=1) + (else-range=1) + (expr=0) = 2
-        } else if (System.currentTimeMillis() == 0) {
-        } else {
+        }
+        else if (System.currentTimeMillis() == 0) {
+        }
+        else {
         }
     }
 
@@ -78,8 +84,10 @@ public class InputCyclomaticComplexity {
         // NP = (if-range=1) + (else-range=2) + 0 = 3
         if (System.currentTimeMillis() == 0) {
         // NP(else-range) = (if-range=1) + (else-range=1) + (expr=0) = 2
-        } else if (System.currentTimeMillis() == 0) {
-        } else {
+        }
+        else if (System.currentTimeMillis() == 0) {
+        }
+        else {
         }
     }
 
@@ -90,8 +98,10 @@ public class InputCyclomaticComplexity {
         // NP = (if-range=1) + (else-range=2) + 0 = 3
         if (System.currentTimeMillis() == 0) {
         // NP(else-range) = (if-range=1) + (else-range=1) + (expr=0) = 2
-        } else if (System.currentTimeMillis() == 0) {
-        } else {
+        }
+        else if (System.currentTimeMillis() == 0) {
+        }
+        else {
         }
     }
 

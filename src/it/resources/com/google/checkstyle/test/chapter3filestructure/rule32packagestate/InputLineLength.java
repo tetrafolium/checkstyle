@@ -1,5 +1,6 @@
 package com.google.checkstyle.test.chapter3filestructure.rule32packagestate; // ok
 import java.io.*;
+
 final class InputLineLength
 {
     // Long line ---------------------------------------------------------------------------------------- //warn
@@ -31,12 +32,14 @@ final class InputLineLength
     /**
      * Very long url: https://github.com/checkstyle/checkstyle/blob/master/src/main/java/com/puppycrawl/tools/checkstyle/checks/AvoidEscapedUnicodeCharactersCheck.java
      */
-    public void fooMethod() {}
+    public void fooMethod() {
+    }
 
     /**
      * Long url without wrapping: http://ftp.dlink.ru/pub/D-Link_Solutions/D-Link_Solutions_for_Business.pdf
      */
-    public void fooMethodLongFtp() {}
+    public void fooMethodLongFtp() {
+    }
 
     public void fooLongStringUrl() {
         String url = "https://github.com/checkstyle/checkstyle/blob/master/src/main/java/com/puppycrawl/tools/checkstyle/checks/AvoidEscapedUnicodeCharactersCheck.java"; //ok
@@ -45,7 +48,7 @@ final class InputLineLength
                 + "https://github.com/checkstyle/checkstyle/blob/master/src/main/java/com/puppycrawl/tools/checkstyle/checks/AvoidEscapedUnicodeCharactersCheck.java" //ok
                 + "+ long fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo00000000000o line"); //warn
         processUrl("Some long foooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo line"); //warn
-        String[] soooooooooooooooooooooooooooooooooooolongfooooooooooooooooooooooooooooooooooooooooooo = { //warn
+        String[] soooooooooooooooooooooooooooooooooooolongfooooooooooooooooooooooooooooooooooooooooooo = {//warn
             "http://github.com/checkstyle/checkstyle/blob/master/src/main/java/com/puppycrawl/tools/checkstyle/checks/AvoidEscapedUnicodeCharactersCheck.java", //ok
             "Some long foooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo line", //warn
         };
@@ -67,11 +70,13 @@ final class InputLineLength
      *
      * @param url
      */
-    public void processUrl(String url) {}
+    public void processUrl(String url) {
+    }
 
     /**
      *
      * @param urls
      */
-    public void processUrl(String[] urls){}
+    public void processUrl(String[] urls) {
+    }
 }

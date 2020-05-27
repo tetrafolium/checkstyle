@@ -13,10 +13,10 @@ import java.io.Serializable;
  */
 class InputAtclauseOrderIncorrect implements Serializable
 {
-        /**
-     * The client's first name.
-     * @serial
-     */
+    /**
+ * The client's first name.
+ * @serial
+ */
     private String fFirstName;
 
     /**
@@ -61,14 +61,16 @@ class InputAtclauseOrderIncorrect implements Serializable
      * @throws Exception Some text.
      * @param aString Some text. //warn
      */
-    void method2(String aString) throws Exception {}
+    void method2(String aString) throws Exception {
+    }
 
     /**
      * Some text.
      * @deprecated Some text.
      * @throws Exception Some text. //warn
      */
-    void method3() throws Exception {}
+    void method3() throws Exception {
+    }
 
     /**
      * Some text.
@@ -145,14 +147,16 @@ class InputAtclauseOrderIncorrect implements Serializable
          * @param aString Some text. //warn
          * @throws Exception Some text.
          */
-        void method2(String aString) throws Exception {}
+        void method2(String aString) throws Exception {
+        }
 
         /**
          * Some text.
          * @deprecated Some text.
          * @throws Exception Some text. //warn
          */
-        void method3() throws Exception {}
+        void method3() throws Exception {
+        }
 
         /**
          * Some text.
@@ -222,14 +226,16 @@ class InputAtclauseOrderIncorrect implements Serializable
          * @throws Exception Some text.
          * @param aString Some text. //warn
          */
-        void method2(String aString) throws Exception {}
+        void method2(String aString) throws Exception {
+        }
 
         /**
          * Some text.
          * @deprecated Some text.
          * @throws Exception Some text. //warn
          */
-        void method3() throws Exception {}
+        void method3() throws Exception {
+        }
 
         /**
          * Some text.
@@ -277,7 +283,8 @@ class InputAtclauseOrderIncorrect implements Serializable
  * @see Some javadoc. //warn
  * @author max //warn
  */
-enum Foo4 {}
+enum Foo4 {
+}
 
 /**
  * Some javadoc.

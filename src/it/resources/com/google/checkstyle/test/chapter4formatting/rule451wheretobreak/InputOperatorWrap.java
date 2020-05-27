@@ -23,9 +23,9 @@ class InputOperatorWrap
             && true;
         /* Note: The three tests below will be used when issue #3381 is closed */
         Arrays.sort(null, String
-                    ::
-                    compareToIgnoreCase);
-        Arrays.sort(null, String::  /*(warn)*/
+
+                    :: compareToIgnoreCase);
+        Arrays.sort(null, String::/*(warn)*/
                     compareToIgnoreCase);
         Arrays.sort(null, String
                     ::compareToIgnoreCase);
@@ -33,17 +33,17 @@ class InputOperatorWrap
 
     void testAssignment()
     {
-        int x
-            = 0;
+        int x =
+            0;
         int y =
             0;
     }
 
     <
-    T extends Comparable
+        T extends Comparable
         & java.io.Serializable
-    >
-    void testGenerics1()
+        >
+        void testGenerics1()
     {
         Comparable
             <
@@ -79,7 +79,7 @@ class InputOperatorWrap
                 > 10)
         {
 
-        } else {}
+        } else { }
 
         /*warn*/ while (init < 10
                 || !flag) {
@@ -89,7 +89,7 @@ class InputOperatorWrap
 
     class Inner {
         void testGenerics1
-        ()
+            ()
         {
             Comparable
                 <
@@ -124,7 +124,7 @@ class InputOperatorWrap
                     > 10)
             {
 
-            } else {}
+            } else { }
 
             /*warn*/ while (init < 10
                     || !flag) {
@@ -134,9 +134,9 @@ class InputOperatorWrap
     }
 
     Inner anon = new Inner
-            (){
+    () {
         void testGenerics1
-        ()
+            ()
         {
             Comparable
                 <
@@ -170,7 +170,7 @@ class InputOperatorWrap
                     > 10)
             {
 
-            } else {}
+            } else { }
 
             /*warn*/ while (init < 10
                     || !flag) {
@@ -182,8 +182,8 @@ class InputOperatorWrap
 
 class AsInput {
     int abc = 0;
-    String string
-        = "string";
+    String string =
+        "string";
     double PI = // ok
             3.1415;
 }
@@ -212,48 +212,48 @@ class AssignClass {
         int j = 0;
         i +=
                 1;
-        j
-             += 2;
+        j +=
+             2;
         i -=
                 1;
-        j
-             -= 2;
+        j -=
+             2;
         i /=
                 1;
-        j
-             /= 2;
+        j /=
+             2;
         i *=
                 1;
-        j
-             *= 2;
+        j *=
+             2;
         i %=
                 1;
-        j
-             %= 2;
+        j %=
+             2;
         i ^=
                 1;
-        j
-             ^= 2;
+        j ^=
+             2;
         i |=
                 1;
-        j
-             |= 2;
+        j |=
+             2;
         i &=
                 1;
-        j
-             &= 2;
+        j &=
+             2;
         i >>=
                 1;
-        j
-            >>= 2;
+        j >>=
+            2;
         i >>>=
                 1;
-        j
-            >>>= 2;
+        j >>>=
+            2;
         i <<=
                 1;
-        j
-            <<= 2;
+        j <<=
+            2;
     }
 
     class InnerClass {
@@ -262,48 +262,48 @@ class AssignClass {
             int j = 0;
             i +=
                     1;
-            j
-                 += 2;
+            j +=
+                 2;
             i -=
                     1;
-            j
-                 -= 2;
+            j -=
+                 2;
             i /=
                     1;
-            j
-                 /= 2;
+            j /=
+                 2;
             i *=
                     1;
-            j
-                 *= 2;
+            j *=
+                 2;
             i %=
                     1;
-            j
-                 %= 2;
+            j %=
+                 2;
             i ^=
                     1;
-            j
-                 ^= 2;
+            j ^=
+                 2;
             i |=
                     1;
-            j
-                 |= 2;
+            j |=
+                 2;
             i &=
                     1;
-            j
-                 &= 2;
+            j &=
+                 2;
             i >>=
                     1;
-            j
-                >>= 2;
+            j >>=
+                2;
             i >>>=
                     1;
-            j
-                >>>= 2;
+            j >>>=
+                2;
             i <<=
                     1;
-            j
-                <<= 2;
+            j <<=
+                2;
         }
     }
 
@@ -313,48 +313,48 @@ class AssignClass {
             int j = 0;
             i +=
                     1;
-            j
-                 += 2;
+            j +=
+                 2;
             i -=
                     1;
-            j
-                 -= 2;
+            j -=
+                 2;
             i /=
                     1;
-            j
-                 /= 2;
+            j /=
+                 2;
             i *=
                     1;
-            j
-                 *= 2;
+            j *=
+                 2;
             i %=
                     1;
-            j
-                 %= 2;
+            j %=
+                 2;
             i ^=
                     1;
-            j
-                 ^= 2;
+            j ^=
+                 2;
             i |=
                     1;
-            j
-                 |= 2;
+            j |=
+                 2;
             i &=
                     1;
-            j
-                 &= 2;
+            j &=
+                 2;
             i >>=
                     1;
-            j
-                >>= 2;
+            j >>=
+                2;
             i >>>=
                     1;
-            j
-                >>>= 2;
+            j >>>=
+                2;
             i <<=
                     1;
-            j
-                <<= 2;
+            j <<=
+                2;
         }
     };
 }

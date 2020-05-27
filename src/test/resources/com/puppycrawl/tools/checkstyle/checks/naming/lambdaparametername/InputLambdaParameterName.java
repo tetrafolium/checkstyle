@@ -14,12 +14,12 @@ public class InputLambdaParameterName {
     BiFunction<String, String, String> badNamedParameterInBiFunction = (first, s) -> first + s;
 
     Function<String, Integer> goodNamedParameterWithoutParenthesis =
-            notTrimmedString -> notTrimmedString.trim().length();
+        notTrimmedString -> notTrimmedString.trim().length();
 
     Function<String, Integer> goodNamedParameterWithParenthesis =
-            (notTrimmedString) -> notTrimmedString.trim().length();
+        (notTrimmedString) -> notTrimmedString.trim().length();
 
     BiFunction<String, String, Integer> goodNamedParameters =
-            (first, second) -> (first + second).length();
+        (first, second) -> (first + second).length();
 
 }

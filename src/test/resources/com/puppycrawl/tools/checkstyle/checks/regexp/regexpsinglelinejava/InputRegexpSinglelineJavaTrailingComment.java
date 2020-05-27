@@ -5,6 +5,7 @@ public class InputRegexpSinglelineJavaTrailingComment {
     // it fine to have comment w/o any statement
     /* good c-style comment. */
     int j; /* bad c-style comment. */
+
     void method1() { /* some c-style multi-line
                         comment*/
         Runnable r = (new Runnable() {
@@ -26,5 +27,5 @@ public class InputRegexpSinglelineJavaTrailingComment {
     /**
      * comment with trailing space
      */
-    final static public String NAME="Some Name"; // NOI18N
+    final static public String NAME = "Some Name"; // NOI18N
 }

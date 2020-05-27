@@ -7,7 +7,8 @@ public class InputEmptyCatchBlockViolationsByComment
     private void foo() {
         try {
             throw new RuntimeException();
-        } catch (Exception expected) //ok
+        }
+        catch (Exception expected) //ok
         {
             //Expected
         }
@@ -16,15 +17,18 @@ public class InputEmptyCatchBlockViolationsByComment
     private void foo1() {
         try {
             throw new RuntimeException();
-        } catch (Exception e) //warn
-        {}
+        }
+        catch (Exception e) //warn
+        {
+        }
 
     }
 
     private void foo2() {
         try {
             throw new IOException();
-        } catch (IOException | NullPointerException | ArithmeticException ignore) //warn
+        }
+        catch (IOException | NullPointerException | ArithmeticException ignore) //warn
         {
         }
     }
@@ -32,47 +36,56 @@ public class InputEmptyCatchBlockViolationsByComment
     private void foo3() { // comment
         try {
             throw new IOException();
-        } catch (IOException | NullPointerException | ArithmeticException e) { //This is expected
+        }
+        catch (IOException | NullPointerException | ArithmeticException e) { //This is expected
         }
     }
 
     private void foo4() {
         try {
             throw new IOException();
-        } catch (IOException | NullPointerException | ArithmeticException e) { /* This is expected*/
+        }
+        catch (IOException | NullPointerException | ArithmeticException e) { /* This is expected*/
         }
     }
 
     private void foo5() {
         try {
             throw new IOException();
-        } catch (IOException | NullPointerException | ArithmeticException e) { // Some singleline comment
+        }
+        catch (IOException | NullPointerException | ArithmeticException e) { // Some singleline comment
         }
     }
+
     private void some() {
         try {
             throw new IOException();
-        } catch (IOException e) //ok
+        }
+        catch (IOException e) //ok
         {
             /* ololo
              * blalba
              */
         }
     }
+
     private void some1() {
         try {
             throw new IOException();
-        } catch (IOException e) //ok
+        }
+        catch (IOException e) //ok
         {
             /* lalala
              * This is expected
              */
         }
     }
+
     private void some2() {
         try {
             throw new IOException();
-        } catch (IOException e) //ok
+        }
+        catch (IOException e) //ok
         {
             /*
              * This is expected
@@ -80,28 +93,34 @@ public class InputEmptyCatchBlockViolationsByComment
              */
         }
     }
+
     private void some3() {
         try {
             throw new IOException();
-        } catch (IOException e) //ok
+        }
+        catch (IOException e) //ok
         {
             // some comment
             //This is expected
         }
     }
+
     private void some4() {
         try {
             throw new IOException();
-        } catch (IOException e) //ok
+        }
+        catch (IOException e) //ok
         {
             //This is expected
             // some comment
         }
     }
+
     private void some5() {
         try {
             throw new IOException();
-        } catch (IOException e) //ok
+        }
+        catch (IOException e) //ok
         {
             /* some comment */
             //This is expected

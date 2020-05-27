@@ -39,7 +39,7 @@ public class InputMissingJavadocMethodCheck extends OverrideClass
     /**
      * Some javadoc.
      */
-    void foo4() {}
+    void foo4() { }
 
     //without comments
 
@@ -67,10 +67,6 @@ public class InputMissingJavadocMethodCheck extends OverrideClass
     }
 
     void foo82() {
-
-
-
-
 
     }
 

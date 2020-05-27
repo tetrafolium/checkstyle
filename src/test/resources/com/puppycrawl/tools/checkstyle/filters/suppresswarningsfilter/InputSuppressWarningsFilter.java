@@ -14,9 +14,14 @@ class InputSuppressWarningsFilter
 {
     // AST coverage
     @SuppressWarnings("foo") interface I { }
-    @SuppressWarnings("foo") enum E { }
-    @SuppressWarnings("foo") InputSuppressWarningsFilter() { }
-    @SuppressWarnings("foo") @interface A { }
+
+    @SuppressWarnings("foo") enum E {
+    }
+
+    @SuppressWarnings("foo") InputSuppressWarningsFilter() {
+    }
+    @SuppressWarnings("foo") @interface A {
+    }
 
     // include a non-checkstyle suppression; suppression on same line
     @SuppressWarnings("unused") private int I; // should fail MemberNameCheck
@@ -25,7 +30,7 @@ class InputSuppressWarningsFilter
     private int K; // should fail MemberNameCheck
 
     // DO NOT REFORMAT: L and X should be on the same line
-    @SuppressWarnings(value="membername")
+    @SuppressWarnings(value = "membername")
     private int L; private int X; // L should NOT fail, X should
 
     // test "checkstyle:" prefix
@@ -60,12 +65,13 @@ class InputSuppressWarningsFilter
 
     enum AnEnum {
         @SuppressWarnings("rawtypes")
-        ELEMENT;
+        ELEMENT
     }
-    private static final String UNUSED="UnusedDeclaration";
+
+    private static final String UNUSED = "UnusedDeclaration";
 
     @SuppressWarnings(UNUSED)
-    public void annotationUsingStringConstantValue(){
+    public void annotationUsingStringConstantValue() {
     }
 
     @SuppressWarnings("checkstyle:uncommentedmain")

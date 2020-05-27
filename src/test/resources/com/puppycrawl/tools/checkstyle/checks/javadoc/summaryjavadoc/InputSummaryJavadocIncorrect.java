@@ -9,34 +9,34 @@ class InputSummaryJavadocIncorrect {
     /**
      * As of JDK 1.1, replaced by {@link #setBounds(int,int,int,int)}
      */
-    void foo3() {}
+    void foo3() { }
 
     /**
      * @throws Exception if a problem occurs
      */
-    void foo4() throws Exception {}
+    void foo4() throws Exception { }
 
     /** An especially short bit of Javadoc. */
-    void foo5() {}
+    void foo5() { }
 
     /**
      * An especially short bit of Javadoc.
      */
-    void foo6() {}
+    void foo6() { }
 
     /**
      * Some Javadoc.
      */
     public static final byte NUL = 0;
 
-    /**
-     * <a href="mailto:vlad@htmlbook.ru"/>
-     */
-     class InnerInputCorrectJavaDocParagraphCheck {
+     /**
+      * <a href="mailto:vlad@htmlbook.ru"/>
+      */
+    class InnerInputCorrectJavaDocParagraphCheck {
 
-         /**
-          * foooo@foooo
-          */
+        /**
+         * foooo@foooo
+         */
         public static final byte NUL = 0;
 
         /**
@@ -48,41 +48,41 @@ class InputSummaryJavadocIncorrect {
          * This method
          * returns some javadoc. Some javadoc.
          */
-        boolean emulated() {return false;}
+        boolean emulated() { return false; }
 
         /**
          * <a href="mailto:vlad@htmlbook.ru"/>
          */
-        void foo2() {}
+        void foo2() { }
 
         /**
          * @return the
          * customer ID some javadoc.
          */
-        int geId() {return 666;}
+        int geId() { return 666; }
 
         /**
          * As of JDK 1.1, replaced by {@link #setBounds(int,int,int,int)}.
          */
-        void foo3() {}
+        void foo3() { }
 
         /**
          * @throws Exception if a problem occurs
          */
-        void foo4() throws Exception {}
+        void foo4() throws Exception { }
 
         /** An especially short bit of Javadoc. */
-        void foo5() {}
+        void foo5() { }
 
         /**
          * An especially short bit of Javadoc.
          */
-        void foo6() {}
+        void foo6() { }
     }
 
-     /**
-      * A {@code InnerInputCorrectJavaDocParagraphCheck} is a simple code.
-      */
+    /**
+     * A {@code InnerInputCorrectJavaDocParagraphCheck} is a simple code.
+     */
     InnerInputCorrectJavaDocParagraphCheck anon = new InnerInputCorrectJavaDocParagraphCheck() {
 
         /**
@@ -93,50 +93,50 @@ class InputSummaryJavadocIncorrect {
         /**
          * Some Javadoc.
          */
-        void emulated(String s) {}
+        void emulated(String s) { }
 
         /**
          * As of JDK 1.1, replaced by {@link #setBounds(int,int,int,int)}.
          */
-        void foo3() {}
+        void foo3() { }
 
         /**
          * @throws Exception if a problem occurs
          */
-        void foo4() throws Exception {}
+        void foo4() throws Exception { }
 
         /** An especially short bit of Javadoc. */
-        void foo5() {}
+        void foo5() { }
 
         /**
          * An especially short bit of Javadoc.
          */
-        void foo6() {}
+        void foo6() { }
 
          /**
           * mm{@inheritDoc}
           */
-         void foo7() {}
+         void foo7() { }
 
          /**
           * {@link #setBounds(int,int,int,int)}
           */
-         void foo8() {}
+         void foo8() { }
 
          /**
           *
           */
-         void foo10() {}
+         void foo10() { }
     };
 
     /**
      * M m m m {@inheritDoc}
      */
-    void foo7() {}
+    void foo7() { }
 
     /** */
-    <T> T foo8(T t) {return null;}
+    <T> T foo8(T t) { return null; }
 
     /** */
-    String[] foo9() {return null;}
+    String[] foo9() { return null; }
 }

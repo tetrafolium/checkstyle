@@ -7,122 +7,131 @@ public class InputNoFinalizerFallThrough
             switch (i) {
             case 0: // no problem
             case 1:
-                i++;
-                break;
+                    i++;
+                    break;
             case 2:
-                i++;
+                    i++;
             case 3: //fall through!!!
-                i++;
-                break;
+                    i++;
+                    break;
             case 4:
-                return;
+                    return;
             case 5:
-                throw new RuntimeException("");
-            case 6:
-                continue;
-            case 7: {
-                break;
-            }
-            case 8: {
-                return;
-            }
-            case 9: {
-                throw new RuntimeException("");
-            }
-            case 10: {
-                continue;
-            }
-            case 11: {
-                i++;
-            }
-            case 12: //fall through!!!
-                if (false)
-                    break;
-                else
-                    break;
-            case 13:
-                if (true) {
-                    return;
-                }
-            case 14:
-                if (true) {
-                    return;
-                } else {
-                    //do nothing
-                }
-            case 15: //fall through!!!
-                do {
-                    System.identityHashCode("something");
-                    return;
-                } while(true);
-            case 16:
-                for (int j1 = 0; j1 < 10; j1++) {
-                    String.valueOf("something");
-                    return;
-                }
-            case 17:
-                while (true)
                     throw new RuntimeException("");
+            case 6:
+                    continue;
+            case 7: {
+                    break;
+                }
+            case 8: {
+                    return;
+                }
+            case 9: {
+                    throw new RuntimeException("");
+                }
+            case 10: {
+                    continue;
+                }
+            case 11: {
+                    i++;
+                }
+            case 12: //fall through!!!
+                    if (false)
+                        break;
+                    else
+                        break;
+            case 13:
+                    if (true) {
+                        return;
+                    }
+            case 14:
+                    if (true) {
+                        return;
+                }
+                else {
+                    //do nothing
+                    }
+            case 15: //fall through!!!
+                    do {
+                        System.identityHashCode("something");
+                        return;
+                    } while (true);
+            case 16:
+                    for (int j1 = 0; j1 < 10; j1++) {
+                        String.valueOf("something");
+                        return;
+                    }
+            case 17:
+                    while (true)
+                        throw new RuntimeException("");
             case 18:
-                while(cond) {
-                    break;
-                }
+                    while (cond) {
+                        break;
+                    }
             case 19: //fall through!!!
-                try {
-                    i++;
-                    break;
-                } catch (RuntimeException e) {
-                    break;
-                } catch (Error e) {
-                    return;
+                    try {
+                        i++;
+                        break;
                 }
+                catch (RuntimeException e) {
+                        break;
+                }
+                catch (Error e) {
+                        return;
+                    }
             case 20:
-                try {
-                    i++;
-                    break;
-                } catch (RuntimeException e) {
-                } catch (Error e) {
-                    return;
+                    try {
+                        i++;
+                        break;
                 }
+                catch (RuntimeException e) {
+                }
+                catch (Error e) {
+                        return;
+                    }
             case 21: //fall through!!!
-                try {
-                    i++;
-                } catch (RuntimeException e) {
-                    i--;
-                } finally {
-                    break;
+                    try {
+                        i++;
                 }
+                catch (RuntimeException e) {
+                        i--;
+                }
+                finally {
+                        break;
+                    }
             case 22:
-                try {
-                    i++;
-                    break;
-                } catch (RuntimeException e) {
-                    i--;
-                    break;
-                } finally {
-                    i++;
+                    try {
+                        i++;
+                        break;
                 }
+                catch (RuntimeException e) {
+                        i--;
+                        break;
+                }
+                finally {
+                        i++;
+                    }
             case 23:
-                switch (j) {
+                    switch (j) {
                 case 1:
-                    continue;
+                            continue;
                 case 2:
-                    return;
-                default:
-                    return;
-                }
+                            return;
+                        default:
+                            return;
+                    }
             case 24:
-                switch (j) {
+                    switch (j) {
                 case 1:
-                    continue;
+                            continue;
                 case 2:
-                    break;
-                default:
-                    return;
-                }
-            default: //fall through!!!
+                            break;
+                        default:
+                            return;
+                    }
+                default: //fall through!!!
                 // this is the last label
-                i++;
+                    i++;
             }
         }
     }
@@ -131,279 +140,288 @@ public class InputNoFinalizerFallThrough
 
     /* Like above, but all fall throughs with relief comment */
     void methodFallThru(int i, int j, boolean cond) {
-      while (true) {
-          switch (i) {
+        while (true) {
+            switch (i) {
           case -1: // FALLTHRU
 
           case 0: // no problem
           case 1:
-              i++;
-              break;
+                    i++;
+                    break;
           case 2:
-              i++;
+                    i++;
               // fallthru
           case 3:
-              i++;
-              break;
+                    i++;
+                    break;
           case 4:
-              return;
+                    return;
           case 5:
-              throw new RuntimeException("");
+                    throw new RuntimeException("");
           case 6:
-              continue;
+                    continue;
           case 7: {
-              break;
-          }
+                    break;
+                }
           case 8: {
-              return;
-          }
+                    return;
+                }
           case 9: {
-              throw new RuntimeException("");
-          }
+                    throw new RuntimeException("");
+                }
           case 10: {
-              continue;
-          }
+                    continue;
+                }
           case 11: {
-              i++;
-          }
+                    i++;
+                }
           // fallthru
           case 12:
-              if (false)
-                  break;
-              else
-                  break;
+                    if (false)
+                        break;
+                    else
+                        break;
           case 13:
-              if (true) {
-                  return;
-              }
+                    if (true) {
+                        return;
+                    }
           case 14:
-              if (true) {
-                  return;
-              } else {
-                  //do nothing
+                    if (true) {
+                        return;
               }
+              else {
+                  //do nothing
+                    }
               // fallthru
           case 15:
-              do {
-                  System.identityHashCode("something");
-                  return;
-              } while(true);
+                    do {
+                        System.identityHashCode("something");
+                        return;
+                    } while (true);
           case 16:
-              for (int j1 = 0; j1 < 10; j1++) {
-                  String.valueOf("something");
-                  return;
-              }
+                    for (int j1 = 0; j1 < 10; j1++) {
+                        String.valueOf("something");
+                        return;
+                    }
           case 17:
-              while (cond)
-                  throw new RuntimeException("");
+                    while (cond)
+                        throw new RuntimeException("");
           case 18:
-              while(cond) {
-                  break;
-              }
+                    while (cond) {
+                        break;
+                    }
               // fallthru
           case 19:
-              try {
-                  i++;
-                  break;
-              } catch (RuntimeException e) {
-                  break;
-              } catch (Error e) {
-                  return;
+                    try {
+                        i++;
+                        break;
               }
+              catch (RuntimeException e) {
+                        break;
+              }
+              catch (Error e) {
+                        return;
+                    }
           case 20:
-              try {
-                  i++;
-                  break;
-              } catch (RuntimeException e) {
-              } catch (Error e) {
-                  return;
+                    try {
+                        i++;
+                        break;
               }
+              catch (RuntimeException e) {
+              }
+              catch (Error e) {
+                        return;
+                    }
               // fallthru
           case 21:
-              try {
-                  i++;
-              } catch (RuntimeException e) {
-                  i--;
-              } finally {
-                  break;
+                    try {
+                        i++;
               }
+              catch (RuntimeException e) {
+                        i--;
+              }
+              finally {
+                        break;
+                    }
           case 22:
-              try {
-                  i++;
-                  break;
-              } catch (RuntimeException e) {
-                  i--;
-                  break;
-              } finally {
-                  i++;
+                    try {
+                        i++;
+                        break;
               }
+              catch (RuntimeException e) {
+                        i--;
+                        break;
+              }
+              finally {
+                        i++;
+                    }
 
           case 23:
-              switch (j) {
+                    switch (j) {
               case 1:
-                  continue;
+                            continue;
               case 2:
-                  return;
-              default:
-                  return;
-              }
+                            return;
+                        default:
+                            return;
+                    }
           case 24:
-              i++;
-          /* fallthru */ case 25:
-              i++;
-              break;
+                    i++;
+                /* fallthru */ case 25:
+                    i++;
+                    break;
 
           case 26:
-              switch (j) {
+                    switch (j) {
               case 1:
-                  continue;
+                            continue;
               case 2:
-                  break;
-              default:
-                  return;
-              }
+                            break;
+                        default:
+                            return;
+                    }
               // fallthru
-          default:
+                default:
               // this is the last label
-              i++;
+                    i++;
           // fallthru
-         }
-      }
-   }
+            }
+        }
+    }
 
    /* Test relief comment. */
-   void methodFallThruCC(int i, int j, boolean cond) {
-      while (true) {
-          switch (i){
+    void methodFallThruCC(int i, int j, boolean cond) {
+        while (true) {
+            switch (i) {
           case 0:
-              i++; // fallthru
+                    i++; // fallthru
 
           case 1:
-              i++;
+                    i++;
           // fallthru
           case 2: {
-              i++;
-          }
+                    i++;
+                }
           // fallthru
           case 3:
-              i++;
-          /* fallthru */case 4:
-                break;
+                    i++;
+                /* fallthru */case 4:
+                    break;
           case 5:
-              i++;
+                    i++;
           // fallthru
-          }
-      }
-   }
+            }
+        }
+    }
 
    /* Like above, but C-style comments. */
-   void methodFallThruC(int i, int j, boolean cond) {
-      while (true) {
-          switch (i){
+    void methodFallThruC(int i, int j, boolean cond) {
+        while (true) {
+            switch (i) {
           case 0:
-              i++; /* fallthru */
+                    i++; /* fallthru */
 
           case 1:
-              i++;
+                    i++;
           /* fallthru */
           case 2:
-              i++;
-          /* fallthru */case 3:
-                break;
+                    i++;
+                /* fallthru */case 3:
+                    break;
           case 4:
-              i++;
+                    i++;
           /* fallthru */
-          }
-      }
-   }
+            }
+        }
+    }
 
    /* Like above, but C-style comments with no spaces. */
-   void methodFallThruC2(int i, int j, boolean cond) {
-      while (true) {
-          switch (i){
+    void methodFallThruC2(int i, int j, boolean cond) {
+        while (true) {
+            switch (i) {
           case 0:
-              i++; /*fallthru*/
+                    i++; /*fallthru*/
 
           case 1:
-              i++;
+                    i++;
           /*fallthru*/
           case 2:
-              i++;
-          /*fallthru*/case 3:
-                break;
+                    i++;
+                /*fallthru*/case 3:
+                    break;
           case 4:
-              i++;
+                    i++;
           /*fallthru*/
-          }
-      }
-   }
+            }
+        }
+    }
 
    /* C-style comments with other default fallthru-comment. */
-   void methodFallThruCOtherWords(int i, int j, boolean cond) {
-      while (true) {
-          switch (i){
+    void methodFallThruCOtherWords(int i, int j, boolean cond) {
+        while (true) {
+            switch (i) {
           case 0:
-              i++; /* falls through */
+                    i++; /* falls through */
 
           case 1:
-              i++;
+                    i++;
           /* falls through */
           case 2:
-              i++;
-          /* falls through */case 3:
-                break;
+                    i++;
+                /* falls through */case 3:
+                    break;
           case 4:
-              i++;
+                    i++;
           /* falls through */
-          }
-      }
-   }
+            }
+        }
+    }
 
    /* C-style comments with custom fallthru-comment. */
-   void methodFallThruCCustomWords(int i, int j, boolean cond) {
-      while (true) {
-          switch (i){
+    void methodFallThruCCustomWords(int i, int j, boolean cond) {
+        while (true) {
+            switch (i) {
           case 0:
-              i++; /* Continue with next case */
+                    i++; /* Continue with next case */
 
           case 1:
-              i++;
+                    i++;
           /* Continue with next case */
           case 2:
-              i++;
-          /* Continue with next case */case 3:
-                break;
+                    i++;
+                /* Continue with next case */case 3:
+                    break;
           case 4:
-              i++;
+                    i++;
           /* Continue with next case */
-          }
-      }
-   }
+            }
+        }
+    }
 
-   void methodFallThruLastCaseGroup(int i, int j, boolean cond) {
-       while (true) {
-           switch (i){
+    void methodFallThruLastCaseGroup(int i, int j, boolean cond) {
+        while (true) {
+            switch (i) {
            case 0:
-               i++; // fallthru
-           }
-           switch (i){
+                    i++; // fallthru
+            }
+            switch (i) {
            case 0:
-               i++;
+                    i++;
                // fallthru
-           }
-           switch (i){
+            }
+            switch (i) {
            case 0:
-               i++;
+                    i++;
            /* fallthru */ }
-       }
+        }
     }
 
     void method1472228(int i) {
-        switch(i) {
+        switch (i) {
         case 2:
             // do nothing
-            break;
-        default:
+                break;
+            default:
         }
     }
 
@@ -418,34 +436,34 @@ public class InputNoFinalizerFallThrough
     }
 
     void nextedSwitches2() {
-        switch(hashCode()) {
+        switch (hashCode()) {
         case 1:
-            switch(hashCode()){}
+                switch (hashCode()) { }
         case 2:
-            System.lineSeparator();
-            break;
+                System.lineSeparator();
+                break;
         }
     }
 
     void ifWithoutBreak() {
-        switch(hashCode()) {
+        switch (hashCode()) {
         case 1:
-            if (true) {
-                System.lineSeparator();
-            }
+                if (true) {
+                    System.lineSeparator();
+                }
         case 2:
-            System.lineSeparator();
-            break;
+                System.lineSeparator();
+                break;
         }
     }
 
     void noCommentAtTheEnd() {
-        switch(hashCode()) {
+        switch (hashCode()) {
         case 1: System.lineSeparator();
 
         case 2:
-            System.lineSeparator();
-            break;
+                System.lineSeparator();
+                break;
         }
     }
 

@@ -18,13 +18,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 package com.puppycrawl.tools.checkstyle.checks.blocks.emptycatchblock;
 import java.io.IOException;
+
 public class InputEmptyCatchBlockDefault
 {
 
     private void foo() {
         try {
             throw new RuntimeException();
-        } catch (Exception expected) {
+        }
+        catch (Exception expected) {
             //Expected
         }
     }
@@ -32,42 +34,49 @@ public class InputEmptyCatchBlockDefault
     private void foo1() {
         try {
             throw new RuntimeException();
-        } catch (Exception e) {}
+        }
+        catch (Exception e) {
+        }
 
     }
 
     private void foo2() {
         try {
             throw new IOException();
-        } catch (IOException | NullPointerException | ArithmeticException ignore) {
+        }
+        catch (IOException | NullPointerException | ArithmeticException ignore) {
         }
     }
 
     private void foo3() { // comment
         try {
             throw new IOException();
-        } catch (IOException | NullPointerException | ArithmeticException e) { //This is expected
+        }
+        catch (IOException | NullPointerException | ArithmeticException e) { //This is expected
         }
     }
 
     private void foo4() {
         try {
             throw new IOException();
-        } catch (IOException | NullPointerException | ArithmeticException e) { /* This is expected*/
+        }
+        catch (IOException | NullPointerException | ArithmeticException e) { /* This is expected*/
         }
     }
 
     private void foo5() {
         try {
             throw new IOException();
-        } catch (IOException | NullPointerException | ArithmeticException e) { // Some singleline comment
+        }
+        catch (IOException | NullPointerException | ArithmeticException e) { // Some singleline comment
         }
     }
 
     private void foo6() {
         try {
             throw new IOException();
-        } catch (IOException expected) { // This is expected
+        }
+        catch (IOException expected) { // This is expected
             int k = 0;
         }
     }
@@ -75,9 +84,9 @@ public class InputEmptyCatchBlockDefault
     public void testTryCatch()
     {
         try {
-            int y=0;
-            int u=8;
-            int e=u-y;
+            int y = 0;
+            int u = 8;
+            int e = u - y;
             return;
         }
         catch (Exception e) {
@@ -107,36 +116,38 @@ public class InputEmptyCatchBlockDefault
     public void testTryCatch3()
     {
         try {
-            int y=0;
-            int u=8;
-            int e=u-y;
+            int y = 0;
+            int u = 8;
+            int e = u - y;
         }
         catch (IllegalArgumentException e) {
             System.identityHashCode(e); //some comment
             return;
         }
         catch (IllegalStateException ex) {
-                System.identityHashCode(ex);
-                return;
+            System.identityHashCode(ex);
+            return;
         }
     }
 
     public void testTryCatch4()
     {
-        int y=0;
-        int u=8;
+        int y = 0;
+        int u = 8;
         try {
-            int e=u-y;
+            int e = u - y;
         }
         catch (IllegalArgumentException e) {
             System.identityHashCode(e);
             return;
         }
     }
+
     public void setFormats() {
         try {
             int k = 4;
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Object k = null;
             if (k != null)
                 k = "ss";
@@ -145,22 +156,27 @@ public class InputEmptyCatchBlockDefault
             }
         }
     }
+
     public void setFormats1() {
         try {
             int k = 4;
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Object k = null;
             if (k != null) {
                 k = "ss";
-            } else {
+            }
+            else {
                 return;
             }
         }
     }
+
     public void setFormats2() {
         try {
             int k = 4;
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Object k = null;
             if (k != null) {
                 k = "ss";
@@ -168,10 +184,12 @@ public class InputEmptyCatchBlockDefault
             }
         }
     }
+
     public void setFormats3() {
         try {
             int k = 4;
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Object k = null;
             if (k != null) {
                 k = "ss";
@@ -183,51 +201,62 @@ public class InputEmptyCatchBlockDefault
     private void some() {
         try {
             throw new IOException();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             /* ololo
              * blalba
              */
         }
     }
+
     private void some1() {
         try {
             throw new IOException();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             /* lalala
              * This is expected
              */
         }
     }
+
     private void some2() {
         try {
             throw new IOException();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             /*
              * This is expected
              * lalala
              */
         }
     }
+
     private void some3() {
         try {
             throw new IOException();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             // some comment
             //This is expected
         }
     }
+
     private void some4() {
         try {
             throw new IOException();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             //This is expected
             // some comment
         }
     }
+
     private void some5() {
         try {
             throw new IOException();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             /* some comment */
             //This is expected
         }
@@ -236,7 +265,8 @@ public class InputEmptyCatchBlockDefault
     private void emptyMultilineComment() {
         try {
             throw new IOException();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             /*
 */
         }

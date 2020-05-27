@@ -5,20 +5,25 @@
 package com.puppycrawl.tools.checkstyle.checks.modifier.redundantmodifier;
 
 public class InputRedundantModifierPublicModifierInNotPublicClass {
-    public InputRedundantModifierPublicModifierInNotPublicClass() { }
-    protected class ProtectedClass {
-        public ProtectedClass() {}
+    public InputRedundantModifierPublicModifierInNotPublicClass() {
     }
+
+    protected class ProtectedClass {
+        public ProtectedClass() { }
+    }
+
     public class PublicInnerClass {
-        public PublicInnerClass() { } // OK for class accessible from public scope
+        public PublicInnerClass() {
+        }
+        // OK for class accessible from public scope
     }
 }
 
 class PackagePrivateClass {
-    public PackagePrivateClass() {} // violation expected
+    public PackagePrivateClass() { } // violation expected
 }
 
 class PackagePrivateClassWithNotRedundantConstructor {
-    PackagePrivateClassWithNotRedundantConstructor() {}
+    PackagePrivateClassWithNotRedundantConstructor() { }
 
 }

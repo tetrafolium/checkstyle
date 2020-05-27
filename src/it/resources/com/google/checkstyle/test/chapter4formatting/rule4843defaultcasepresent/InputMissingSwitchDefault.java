@@ -6,7 +6,7 @@ public class InputMissingSwitchDefault {
         switch (i) {
         case 1: i++; break;
         case 2: i--; break;
-        default: return;
+            default: return;
         }
         switch (i) { // warn
         }
@@ -31,7 +31,7 @@ class bad_test {
             switch (i) { // warn
             case 1: i++; break;
             case 2: i--; break;
-        }
+            }
             Foo foo = new Foo() {
                 public void foo() {
                     int i = 1;

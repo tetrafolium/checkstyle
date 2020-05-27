@@ -6,7 +6,7 @@ public class InputMissingSwitchDefault {
         switch (i) {
         case 1: i++; break;
         case 2: i--; break;
-        default: return;
+            default: return;
         }
     }
 }

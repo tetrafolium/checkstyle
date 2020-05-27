@@ -16,7 +16,7 @@ class InputMethodParamPad
         boolean y = true
             &&
             false;
-         y = true
+        y = true
             && false;
         y = false
             && true;
@@ -24,17 +24,17 @@ class InputMethodParamPad
 
     void testAssignment()
     {
-        int x
-            = 0;
+        int x =
+            0;
         int y =
             0;
     }
 
     <
-     T extends Comparable
+        T extends Comparable
         & java.io.Serializable
-    >
-    void testGenerics1()
+        >
+        void testGenerics1()
     {
         Comparable
             <
@@ -54,25 +54,27 @@ class InputMethodParamPad
                     ? 1 : 2;
         }
 
-         if (init
+        if (init
                 != 9)
         {
 
         }
 
-         while (init
+        while (init
                 == 10)
         {
 
         }
 
-         if (init
+        if (init
                 > 10)
         {
 
-        } else {}
+        }
+        else {
+        }
 
-         while (init < 10
+        while (init < 10
                 || !flag) {
 
         }
@@ -80,7 +82,7 @@ class InputMethodParamPad
 
     class Inner {
         void testGenerics1
-        () //warn
+            () //warn
         {
             Comparable
                 <
@@ -99,25 +101,27 @@ class InputMethodParamPad
                         ? 1 : 2;
             }
 
-             if (init
+            if (init
                     != 9)
             {
 
             }
 
-             while (init
+            while (init
                     == 10)
             {
 
             }
 
-             if (init
+            if (init
                     > 10)
             {
 
-            } else {}
+            }
+            else {
+            }
 
-             while (init < 10
+            while (init < 10
                     || !flag) {
 
             }
@@ -125,9 +129,9 @@ class InputMethodParamPad
     }
 
     Inner anon = new Inner
-            (){  //warn
+    () {  //warn
         void testGenerics1
-        () //warn
+            () //warn
         {
             Comparable
                 <
@@ -145,25 +149,27 @@ class InputMethodParamPad
                         ? 1 : 2;
             }
 
-             if (init
+            if (init
                     != 9)
             {
 
             }
 
-             while (init
+            while (init
                     == 10)
             {
 
             }
 
-             if (init
+            if (init
                     > 10)
             {
 
-            } else {}
+            }
+            else {
+            }
 
-             while (init < 10
+            while (init < 10
                     || !flag) {
 
             }
@@ -173,8 +179,8 @@ class InputMethodParamPad
 
 class AsInput1 {
     int abc = 0;
-    String string
-        = "string";
+    String string =
+        "string";
     double PI = // ok
             3.1415;
 }
@@ -203,48 +209,48 @@ class AssignClass3 {
         int j = 0;
         i +=
                 1;
-        j
-             += 2;
+        j +=
+             2;
         i -=
                 1;
-        j
-             -= 2;
+        j -=
+             2;
         i /=
                 1;
-        j
-             /= 2;
+        j /=
+             2;
         i *=
                 1;
-        j
-             *= 2;
+        j *=
+             2;
         i %=
                 1;
-        j
-             %= 2;
+        j %=
+             2;
         i ^=
                 1;
-        j
-             ^= 2;
+        j ^=
+             2;
         i |=
                 1;
-        j
-             |= 2;
+        j |=
+             2;
         i &=
                 1;
-        j
-             &= 2;
+        j &=
+             2;
         i >>=
                 1;
-        j
-            >>= 2;
+        j >>=
+            2;
         i >>>=
                 1;
-        j
-            >>>= 2;
+        j >>>=
+            2;
         i <<=
                 1;
-        j
-            <<= 2;
+        j <<=
+            2;
     }
 
     class InnerClass {
@@ -253,48 +259,48 @@ class AssignClass3 {
             int j = 0;
             i +=
                     1;
-            j
-                 += 2;
+            j +=
+                 2;
             i -=
                     1;
-            j
-                 -= 2;
+            j -=
+                 2;
             i /=
                     1;
-            j
-                 /= 2;
+            j /=
+                 2;
             i *=
                     1;
-            j
-                 *= 2;
+            j *=
+                 2;
             i %=
                     1;
-            j
-                 %= 2;
+            j %=
+                 2;
             i ^=
                     1;
-            j
-                 ^= 2;
+            j ^=
+                 2;
             i |=
                     1;
-            j
-                 |= 2;
+            j |=
+                 2;
             i &=
                     1;
-            j
-                 &= 2;
+            j &=
+                 2;
             i >>=
                     1;
-            j
-                >>= 2;
+            j >>=
+                2;
             i >>>=
                     1;
-            j
-                >>>= 2;
+            j >>>=
+                2;
             i <<=
                     1;
-            j
-                <<= 2;
+            j <<=
+                2;
         }
     }
 
@@ -304,48 +310,48 @@ class AssignClass3 {
             int j = 0;
             i +=
                     1;
-            j
-                 += 2;
+            j +=
+                 2;
             i -=
                     1;
-            j
-                 -= 2;
+            j -=
+                 2;
             i /=
                     1;
-            j
-                 /= 2;
+            j /=
+                 2;
             i *=
                     1;
-            j
-                 *= 2;
+            j *=
+                 2;
             i %=
                     1;
-            j
-                 %= 2;
+            j %=
+                 2;
             i ^=
                     1;
-            j
-                 ^= 2;
+            j ^=
+                 2;
             i |=
                     1;
-            j
-                 |= 2;
+            j |=
+                 2;
             i &=
                     1;
-            j
-                 &= 2;
+            j &=
+                 2;
             i >>=
                     1;
-            j
-                >>= 2;
+            j >>=
+                2;
             i >>>=
                     1;
-            j
-                >>>= 2;
+            j >>>=
+                2;
             i <<=
                     1;
-            j
-                <<= 2;
+            j <<=
+                2;
         }
     };
 

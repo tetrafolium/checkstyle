@@ -12,7 +12,7 @@ enum InputWriteTag2 {
     /**
      * @incomplete This enum constant needs more code...
      */
-    FOO;
+    FOO
 }
 
 /**

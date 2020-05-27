@@ -4,7 +4,8 @@ public class InputDescendantTokenReturnFromCatch {
     public void foo() {
         try {
             System.currentTimeMillis();
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             return;
         }
     }
@@ -12,7 +13,8 @@ public class InputDescendantTokenReturnFromCatch {
     public void bar() {
         try {
             System.currentTimeMillis();
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             if (System.currentTimeMillis() == 0) {
                 return; // return from if statement
             }

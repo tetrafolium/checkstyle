@@ -3,29 +3,30 @@ package com.puppycrawl.tools.checkstyle.checks.whitespace.whitespacearound;
 @SuppressWarnings({"this", "that"})
 public class InputWhitespaceAround
 {
-    protected InputWhitespaceAround (int i)
+    protected InputWhitespaceAround(int i)
     {
         this (); //whitespace
-        toString ();
-    }
-    protected InputWhitespaceAround ()
-    {
-        super ();
+        toString();
     }
 
-    public void enhancedFor ()
+    protected InputWhitespaceAround()
+    {
+        
+    }
+
+    public void enhancedFor()
     {
         int[] i = new int[2];
         for (int j: i) {
-            System.identityHashCode (j);
+            System.identityHashCode(j);
         }
     }
 }
 
 @interface CronExpression {
-	Class<?>[] groups() default {};
+        Class<?>[] groups() default {};
 }
 
 @interface CronExpression1 {
-	Class<?>[] groups() default { }; // extra space
+        Class<?>[] groups() default { }; // extra space
 }

@@ -17,14 +17,14 @@ public class InputMultipleStringLiterals
     }
 
     @SuppressWarnings("unchecked")
-    void method2(){}
+    void method2() { }
 
     @SuppressWarnings("unchecked")
-    void method3(){}
+    void method3() { }
 
     @SuppressWarnings("unchecked")
-    void method4(){}
+    void method4() { }
 
     @SuppressWarnings("unchecked")
-    void method5(){}
+    void method5() { }
 }

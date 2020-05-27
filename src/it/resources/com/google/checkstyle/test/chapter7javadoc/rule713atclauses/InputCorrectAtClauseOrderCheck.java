@@ -62,14 +62,16 @@ class InputCorrectAtClauseOrderCheck implements Serializable
      * @param aString Some text.
      * @throws Exception Some text.
      */
-    void method2(String aString) throws Exception {}
+    void method2(String aString) throws Exception {
+    }
 
     /**
      * Some text.
      * @throws Exception Some text.
      * @deprecated Some text.
      */
-    void method3() throws Exception {}
+    void method3() throws Exception {
+    }
 
     /**
      * Some text.
@@ -144,14 +146,16 @@ class InputCorrectAtClauseOrderCheck implements Serializable
          * @param aString Some text.
          * @throws Exception Some text.
          */
-        void method2(String aString) throws Exception {}
+        void method2(String aString) throws Exception {
+        }
 
         /**
          * Some text.
          * @throws Exception Some text.
          * @deprecated Some text.
          */
-        void method3() throws Exception {}
+        void method3() throws Exception {
+        }
 
         /**
          * Some text.
@@ -222,14 +226,16 @@ class InputCorrectAtClauseOrderCheck implements Serializable
          * @throws Exception Some text.
          * @serialData Some javadoc.
          */
-        void method2(String aString) throws Exception {}
+        void method2(String aString) throws Exception {
+        }
 
         /**
          * Some text.
          * @throws Exception Some text.
          * @deprecated Some text.
          */
-        void method3() throws Exception {}
+        void method3() throws Exception {
+        }
 
         /**
          * Some text.
@@ -277,7 +283,8 @@ class InputCorrectAtClauseOrderCheck implements Serializable
  * @since Some javadoc.
  * @deprecated Some javadoc.
  */
-enum Foo {}
+enum Foo {
+}
 
 /**
  * Some javadoc.
@@ -288,4 +295,4 @@ enum Foo {}
  * @since Some javadoc.
  * @deprecated Some javadoc.
  */
-interface FooIn {}
+interface FooIn { }

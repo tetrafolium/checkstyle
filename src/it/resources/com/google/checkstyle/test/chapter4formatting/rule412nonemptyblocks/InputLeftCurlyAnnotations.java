@@ -9,6 +9,7 @@ import java.util.List;
 class InputLeftCurlyAnnotations
 { //warn
     private static final int X = 10;
+
     @Override
     public boolean equals(Object other)
     { //warn
@@ -34,6 +35,7 @@ class InputLeftCurlyAnnotations
 @TestClassAnnotation
 class InputLeftCurlyAnnotations2 {
     private static final int X = 10;
+
     @Override
     public boolean equals(Object other) {
         return false;

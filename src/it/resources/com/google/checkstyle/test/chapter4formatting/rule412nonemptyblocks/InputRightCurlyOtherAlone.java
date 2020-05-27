@@ -14,27 +14,28 @@ class InputRightCurlyOtherAlone
                 if (x > 0)
                 {
                     break;
-                } else if (x < 0) {  //ok
+                }
+                else if (x < 0) {  //ok
 
                     ;
                 } //ok - for alone config
                 else
                 {
                     break;
-                }//ok
+                } //ok
                 switch (a)
                 {
                 case 0:
-                    break;
-                default:
-                    break;
+                        break;
+                    default:
+                        break;
                 } //ok
             } //ok - for alone config
             catch (Exception e)
             {
                 break;
-            }//ok
-        }//ok
+            } //ok
+        } //ok
 
         synchronized (this)
         {
@@ -42,45 +43,44 @@ class InputRightCurlyOtherAlone
             {
                 x = 2;
             } while (x == 2); //ok
-        }//ok
+        } //ok
 
         this.wait(666
-                 ); // Bizarre, but legal
+        ); // Bizarre, but legal
 
         for (int k = 0; k < 1; k++)
         {
             String innerBlockVariable = "";
-        }//ok
-
+        } //ok
 
         if (System.currentTimeMillis() > 1000)
             return 1;
         else
             return 2;
-    }//ok
+    } //ok
 
 
     static
     {
         int x = 1;
-    }//ok
+    } //ok
 
     public enum GreetingsEnum
     {
         HELLO,
         GOODBYE
-    }; //warn
+    } //warn
 
     void method2()
     {
         boolean flag = true;
         if (flag) {
             System.identityHashCode("heh");
-            flag = !flag; } System. //ok for alone config
+        flag = !flag; } System.//ok for alone config
               identityHashCode("Xe-xe");
 
-
-        if (flag) { System.identityHashCode("some foo"); }
+        if (flag) {
+            System.identityHashCode("some foo"); }
     } //ok
 } //ok
 
@@ -91,10 +91,12 @@ class InputRightCurlyOtherAlone
 class FooCtorAlone
 {
     int i;
+
     public FooCtorAlone()
     {
         i = 1;
-    }} //warn
+    }
+    } //warn
 
 /**
 * Test input for closing brace if that brace terminates
@@ -105,7 +107,8 @@ class FooMethodAlone
     public void fooMethod()
     {
         int i = 1;
-    }} //warn
+    }
+    } //warn
 
 /**
 * Test input for closing brace if that brace terminates
@@ -119,10 +122,13 @@ class FooInnerAlone
         {
 
         }
-    }} //warn
+    }
+    } //warn
 
 class EnumContainerAlone {
-    private enum Suit { CLUBS, HEARTS, SPADES, DIAMONDS } // warn
+    private enum Suit { CLUBS, HEARTS, SPADES, DIAMONDS
+    }
+    // warn
 }
 
 class WithArraysAlone {
@@ -133,24 +139,26 @@ class WithArraysAlone {
     }; // ok
     String[] s2 =
         {
-            "foo", "foo",
+        "foo", "foo",
         }; // ok
     String[] s3 =
         {
-            "foo",
-            "foo",
+        "foo",
+        "foo",
         }; // ok
     String[] s4 =
         {"foo", "foo"}; // ok
 }
 
 class Interface {
-    public @interface TestAnnotation {} //warn
+    public @interface TestAnnotation { } //warn
 
-    public @interface TestAnnotation1 { String someValue(); } //warn
+    public @interface TestAnnotation1 { String someValue();
+    }
+    //warn
 
     public @interface TestAnnotation2 {
-        String someValue();} //warn
+        String someValue(); } //warn
 
     public @interface TestAnnotation3 {
         String someValue();
@@ -160,16 +168,16 @@ class Interface {
     } //ok
 }
 
-enum TestEnum {} //warn
+enum TestEnum { } //warn
 
-enum TestEnum1 { SOME_VALUE; } //warn
+enum TestEnum1 { SOME_VALUE } //warn
 
 enum TestEnum2 {
-    SOME_VALUE;} //warn
+    SOME_VALUE } //warn
 
 enum TestEnum3 {
-    SOME_VALUE;
+    SOME_VALUE
 }
 
-enum TestEnum4 { SOME_VALUE;
+enum TestEnum4 { SOME_VALUE
 }

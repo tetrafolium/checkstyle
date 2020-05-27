@@ -1,16 +1,17 @@
 package com.google.checkstyle.test.chapter4formatting.rule462horizontalwhitespace;
 import java.util.Vector;
 /** Test input for MethodDefPadCheck */
+
 public class InputMethodParamPad
 {
     public InputMethodParamPad()
     {
-        super();
+        
     }
 
     public InputMethodParamPad(int aParam) // warn
     {
-        super(); // warn
+         // warn
     }
 
     public void method()
@@ -39,19 +40,19 @@ public class InputMethodParamPad
     {
         this.method();
         this.method(); // warn
-        this.
-            method();
+        this
+            .method();
 
         InputMethodParamPad p = new InputMethodParamPad();
         p.method();
         p.method(); // warn
-        p.
-            method();
+        p
+            .method();
 
         java.lang.Integer.parseInt("0");
         java.lang.Integer.parseInt("0"); // warn
-        java.lang.Integer.
-            parseInt("0");
+        java.lang.Integer
+            .parseInt("0");
     }
 
     public void newArray()

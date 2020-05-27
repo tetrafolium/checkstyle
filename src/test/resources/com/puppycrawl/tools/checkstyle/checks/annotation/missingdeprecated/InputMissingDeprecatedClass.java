@@ -9,6 +9,7 @@ import java.lang.annotation.Inherited;
  *stuff
  *stuff
  */
+
 public class InputMissingDeprecatedClass
 {
 

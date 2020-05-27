@@ -15,7 +15,9 @@ public class InputOuterTypeFilename15Extensions
 enum Enum1
 {
     A, B, C;
-    Enum1() {}
+    Enum1() {
+    }
+
     public String toString() {
         return ""; //some custom implementation
     }

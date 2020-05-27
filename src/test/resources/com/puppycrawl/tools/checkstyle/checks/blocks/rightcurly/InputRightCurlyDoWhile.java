@@ -31,27 +31,31 @@ public class InputRightCurlyDoWhile {
 
     public void foo4() {
         int prog, user;
-        prog = (int)(Math.random() * 10) + 1;
+        prog = (int) (Math.random() * 10) + 1;
         Scanner input = new Scanner(System.in, "utf-8");
-        if(input.hasNextInt()) {
+        if (input.hasNextInt()) {
             do {
                 user = input.nextInt();
-                if(user == prog) {
+                if (user == prog) {
                     String.CASE_INSENSITIVE_ORDER.equals("Good!");
-                } else {
+                }
+                else {
                     if (user > 0 && user <= 10) {
                         String.CASE_INSENSITIVE_ORDER.equals("Bad! ");
-                        if(prog < user) {
+                        if (prog < user) {
                             String.CASE_INSENSITIVE_ORDER.equals("My number is less than yours.");
-                        } else {
+                        }
+                        else {
                             String.CASE_INSENSITIVE_ORDER.equals("My number is greater than yours");
                         }
-                    } else {
+                    }
+                    else {
                         String.CASE_INSENSITIVE_ORDER.equals("Error!");
                     }
                 }
-            } while(user != prog);
-        } else {
+            } while (user != prog);
+        }
+        else {
             String.CASE_INSENSITIVE_ORDER.equals("Error!");
         }
         String.CASE_INSENSITIVE_ORDER.equals("Goodbye!");
@@ -64,7 +68,7 @@ public class InputRightCurlyDoWhile {
     }
 
     public void foo6() {
-        do {} // violation
+        do { } // violation
         while (true);
     }
 
@@ -88,7 +92,7 @@ public class InputRightCurlyDoWhile {
     }
 
     public void foo9() {
-        do {} while (true);
+        do { } while (true);
     }
 
     public void foo10() {

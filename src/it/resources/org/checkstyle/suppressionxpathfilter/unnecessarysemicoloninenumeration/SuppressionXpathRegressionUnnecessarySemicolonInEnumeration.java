@@ -8,5 +8,5 @@ enum Good {
 }
 
 enum Bad {
-    Third; //warn
+    Third //warn
 }

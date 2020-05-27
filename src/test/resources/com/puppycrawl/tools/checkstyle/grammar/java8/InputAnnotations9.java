@@ -5,7 +5,7 @@ import java.util.List;
 
 
 public class InputAnnotations9 {
-	public static <T> void methodName(Object str) {
+        public static <T> void methodName(Object str) {
 		List<@Immutable ? extends Comparable<T>> unchangeable;
 	}
 

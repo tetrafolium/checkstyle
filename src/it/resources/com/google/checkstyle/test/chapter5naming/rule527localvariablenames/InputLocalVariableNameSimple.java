@@ -16,7 +16,7 @@ final class InputLocalVariableNameSimple
 
     protected int mNumCreated2 = 0;
 
-    private int[] mInts = new int[] {1,2, 3,
+    private int[] mInts = new int[] {1, 2, 3,
                                      4};
 
     /** test local variables */

@@ -32,7 +32,7 @@ public class InputMissingDeprecatedGood
         /**
          * @deprecated bleh
          */
-        @Bleh2(bleh=2)
+        @Bleh2(bleh = 2)
         @Deprecated
         Metallica
     }

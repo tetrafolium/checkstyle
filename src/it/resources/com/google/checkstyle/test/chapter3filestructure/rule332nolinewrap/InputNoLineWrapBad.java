@@ -1,13 +1,13 @@
-package com.google.checkstyle.test. //warn
+package com.google.checkstyle.test.//warn
               chapter3filestructure.rule332nolinewrap;
 
 import com.puppycrawl.tools.checkstyle.checks.design.FinalClassCheck; //ok
 
-import javax.accessibility. //warn
+import javax.accessibility.//warn
     AccessibleAttributeSequence;
 import java.util.concurrent.atomic.AtomicIntegerFieldUpdater; //ok
 
-import static java.math. //warn
+import static java.math.//warn
         BigInteger.ONE;
 
 public class
@@ -21,9 +21,9 @@ public class
 }
 
 enum
-    FooFoo {
+FooFoo {
 }
 
 interface
-    InterFoo {}
+InterFoo { }
 

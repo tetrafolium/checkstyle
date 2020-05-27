@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 public class InputInterfaceTypeParameterName<t>
 {
-    public <TT> void foo() { }
+    public <TT> void foo() {
+    }
 
     <e_e> void foo(int i) {
     }
@@ -13,7 +14,7 @@ public class InputInterfaceTypeParameterName<t>
 class OtherClass<foo extends Serializable & Cloneable> {
 
     foo getOne() {
-        return null;//comment
+        return null; //comment
     }
 
     <Tfo$o2T extends foo> /*comment*/Tfo$o2T getTwo(Tfo$o2T a) {
@@ -38,10 +39,10 @@ class MoreOtherClass<T extends Cloneable> {
             }
         };
 
-//        Other o = new Other() {
-//            <EE> void getMoreFoo() {
-//            }
-//        };
+        //        Other o = new Other() {
+        //            <EE> void getMoreFoo() {
+        //            }
+        //        };
     }
 }
 

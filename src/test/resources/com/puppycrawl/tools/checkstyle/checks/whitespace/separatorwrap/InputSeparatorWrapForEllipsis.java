@@ -7,8 +7,8 @@ class InputSeparatorWrapForEllipsis {
 
     }
 
-    public void testMethodWithBadWrapping(String
-            ...parameters) {
+    public void testMethodWithBadWrapping(String...
+        parameters) {
 
     }
 

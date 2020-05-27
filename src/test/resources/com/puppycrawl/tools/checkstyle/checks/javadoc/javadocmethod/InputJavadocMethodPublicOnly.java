@@ -18,14 +18,16 @@ public class InputJavadocMethodPublicOnly // ignore - need javadoc
             private InnerInnerClass()
             {
                 final Runnable r = new Runnable() {
-                        public void run() {};
+                        public void run() {
+                        }
                     };
             }
 
             void method2() // ignore - when not relaxed about Javadoc
             {
                 final Runnable r = new Runnable() {
-                        public void run() {};
+                        public void run() {
+                        }
                     };
             }
         }

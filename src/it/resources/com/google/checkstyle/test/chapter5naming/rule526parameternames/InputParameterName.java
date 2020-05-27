@@ -31,34 +31,42 @@ enum MyEnum1
 
     public void doEnum(int aaaL,
             long llll_llll, //warn
-            boolean bB) {} //warn
+            boolean bB) {
+    }
+    //warn
 }
 
 /** Test public vs private method parameter naming check. */
 class InputParameterNameSimplePub
 {
     /** Valid: public and more than one char Long */
-    public void a(int par, int parA) {}
+    public void a(int par, int parA) {
+    }
 
     /** Invalid: public and one char long */
-    public void b(int p) {}
+    public void b(int p) {
+    }
 
     /** Valid: private and one char long. */
-    private void c(int p) {}
+    private void c(int p) {
+    }
 
     /** Holder for inner anonymous classes */
     private void d(int param) {
         new Object() {
             /** Invalid: public and one char long. */
-            public void e(int p) { }
+            public void e(int p) {
+            }
         };
     }
 
     /** Invalid: public constructor and one char long */
-    public InputParameterNameSimplePub(int p) { }
+    public InputParameterNameSimplePub(int p) {
+    }
 
     /** Valid: private constructor and one char long */
-    private InputParameterNameSimplePub(float p) { }
+    private InputParameterNameSimplePub(float p) {
+    }
 
     void toManyArgs(
         int $arg1, //warn
@@ -71,5 +79,6 @@ class InputParameterNameSimplePub
         int aArg8, //warn
         int aar_g) //warn
 
-    {}
+    {
+    }
 }

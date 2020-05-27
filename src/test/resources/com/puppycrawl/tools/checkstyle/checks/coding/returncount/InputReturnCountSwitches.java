@@ -1,5 +1,6 @@
 package com.puppycrawl.tools.checkstyle.checks.coding.returncount;
 /* комментарий на русском */
+
 public class InputReturnCountSwitches
 {
     public boolean equals(Object obj) {
@@ -62,5 +63,6 @@ public class InputReturnCountSwitches
 
 class Test {
 
-    public Test() {}
+    public Test() {
+    }
 }

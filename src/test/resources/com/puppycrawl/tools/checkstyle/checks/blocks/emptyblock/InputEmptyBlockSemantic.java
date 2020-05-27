@@ -49,7 +49,7 @@ class InputEmptyBlockSemantic
     }
 
     /** test **/
-    private static final long IGNORE = 666l + 666L;
+    private static final long IGNORE = 666L + 666L;
 
     public class EqualsVsHashCode1
     {
@@ -68,7 +68,7 @@ class InputEmptyBlockSemantic
     }
 
     synchronized void foo() {
-        synchronized (this) {} // not OK
+        synchronized (this) { } // not OK
         synchronized (Class.class) { // OK
             synchronized (new Object()) {
                 // not OK if checking statements
@@ -79,7 +79,8 @@ class InputEmptyBlockSemantic
 
     static {
 
-    int a = 0;}
+        int a = 0;
+    }
 
     static {
 

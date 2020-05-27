@@ -1,4 +1,5 @@
 package com.google.checkstyle.test.chapter3filestructure.rule341onetoplevel;
+
 public class InputOneTopLevelClassBasic
 {
     public InputOneTopLevelClassBasic() throws CloneNotSupportedException
@@ -70,7 +71,7 @@ class MyClassWithGenericSuperMethod //warn
      * @return a cloned Object?
      */
     public static Object clone(Object o) {
-    return null;
+        return null;
     }
 }
 
@@ -83,6 +84,6 @@ class AnotherClass { //warn
      * @return a cloned type?
      */
     public <T> T clone(T t) {
-    return null;
+        return null;
     }
 }

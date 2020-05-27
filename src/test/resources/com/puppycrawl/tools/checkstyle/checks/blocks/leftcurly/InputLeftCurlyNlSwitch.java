@@ -5,6 +5,7 @@ package com.puppycrawl.tools.checkstyle.checks.blocks.leftcurly;
   * option = NL
   *
   */
+
 public class InputLeftCurlyNlSwitch
 {
 
@@ -33,19 +34,19 @@ public class InputLeftCurlyNlSwitch
             case 3:
             case 4:
                 x++; { // OK, standalone block
-                }
+            }
                 break;
             case 5:
-                {
-                    x++;
-                }
+            {
+                x++;
+            }
                 x++;
                 break;
         }
         switch (x)
         {
             case 0
-            :{ // warn
+                : { // warn
                 break;
             }
             default:

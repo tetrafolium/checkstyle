@@ -8,6 +8,6 @@
  *
  */
 @PackageAnnotation(value = "foo")
-  @PackageAnnotation //warn
+@PackageAnnotation //warn
 @PackageAnnotation("bar") package com.puppycrawl.tools.checkstyle.checks.annotation.annotationlocation.inputs; //warn
 

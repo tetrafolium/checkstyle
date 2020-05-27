@@ -17,7 +17,7 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
     private int intField;
 
     public InputRequireThisValidateOnlyOverlappingFalse(String field1) {
-        field1 = field1; // violation
+        this.field1 = field1; // violation
         fieldFinal1 = 0; // violation
         fieldFinal2 = 0; // violation
         fieldFinal3 = new BitSet(); // violation
@@ -40,7 +40,7 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
     public InputRequireThisValidateOnlyOverlappingFalse(String name, long id) {
         fieldFinal1 = 0; // violation
         long field1 = 0L;
-        field1 = field1; // violation
+        this.field1 = field1; // violation
         this.fieldFinal2 = 1L;
         fieldFinal3 = new BitSet(); // violation
     }
@@ -52,7 +52,7 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
         try {
             fieldFinal1 = 2L;
         }
-        catch (Exception ex) {}
+        catch (Exception ex) { }
         this.fieldFinal1 = fieldFinal1;
     }
 
@@ -77,7 +77,7 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
 
     void foo3() {
         String field1 = "values";
-        field1 = field1; // violation
+        this.field1 = field1; // violation
     }
 
     void foo4(String methodParam) {
@@ -111,16 +111,16 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
     }
 
     static void foo7(String fieldStatic) {
-//        this.fieldStatic = fieldStatic; <- fieldStatic cannot be referenced from a static context
+        //        this.fieldStatic = fieldStatic; <- fieldStatic cannot be referenced from a static context
         fieldStatic = fieldStatic;
     }
 
     void foo8(Long field1) {
-        field1 += field1; // violation
+        this.field1 += field1; // violation
     }
 
     void foo9(Long fieldFinal1) {
-//        this.fieldFinal1 += fieldFinal1; <- cannot assign value to a final variable
+        //        this.fieldFinal1 += fieldFinal1; <- cannot assign value to a final variable
         fieldFinal1 += fieldFinal1;
     }
 
@@ -129,38 +129,39 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
     }
 
     void method2() {
-        method1() ; // violation
+        method1(); // violation
     }
 
     void method3() {
         staticFoo();
         staticTwoArgs("message", "arg");
         staticTwoArgs("message", 1);
-        this.method1() ;
+        this.method1();
     }
 
-    static void staticFoo() { }
+    static void staticFoo() {
+    }
 
     static void foo10() {
         staticFoo();
         staticTwoArgs("message", "arg");
     }
 
-//    void staticFoo() {} -> compile time error. Already defined in the scope.
+    //    void staticFoo() {} -> compile time error. Already defined in the scope.
 
-    static void staticTwoArgs(String message1, String argument) {}
+    static void staticTwoArgs(String message1, String argument) { }
 
-    void staticTwoArgs(String message1, int argument) {}
+    void staticTwoArgs(String message1, int argument) { }
 
     static void foo16() {
         long fieldFinal1 = 5L;
-// this.fieldFinal1 = fieldFinal1; // compile time error: cannot be referenced from a static context
+        // this.fieldFinal1 = fieldFinal1; // compile time error: cannot be referenced from a static context
         fieldFinal1 = 11L;
     }
 
     static void foo17() {
         String fieldStatic = "";
-// this.fieldStatic = fieldStatic; // compile time error: cannot be referenced from a static context
+        // this.fieldStatic = fieldStatic; // compile time error: cannot be referenced from a static context
         fieldStatic = "Hello, World!";
     }
 
@@ -169,7 +170,7 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
         fieldFinal2 = 0L; // violation
         fieldFinal3 = new BitSet(); // violation
         long field1 = 1L;
-        field1 = field1; // violation
+        this.field1 = field1; // violation
     }
 
     InputRequireThisValidateOnlyOverlappingFalse(boolean flag, String name) {
@@ -177,7 +178,7 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
         fieldFinal2 = 0L; // violation
         fieldFinal3 = new BitSet(); // violation
         long field1 = 1L;
-        field1 = field1; // violation
+        this.field1 = field1; // violation
         return;
     }
 
@@ -202,7 +203,7 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
 
     void foo22() {
         long fieldFinal1 = 1L;
-//        this.fieldFinal1 = fieldFinal1; <- cannot assign value to a final variable
+        //        this.fieldFinal1 = fieldFinal1; <- cannot assign value to a final variable
         fieldFinal1 = fieldFinal1;
     }
 
@@ -225,7 +226,7 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
                     field1 = new String(); // No violation. Local var allowed
                 }
                 else {
-                    field1 += field1; // violation
+                    this.field1 += field1; // violation
                 }
             }
         }
@@ -235,7 +236,7 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
     }
 
     void foo26(String field1) {
-        field1 = field1.replace('/', '*'); // violation
+        this.field1 = field1.replace('/', '*'); // violation
     }
 
     void foo27() {
@@ -250,16 +251,16 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
 
     void foo28() {
         boolean booleanField = true;
-        booleanField = !booleanField; // violation
+        this.booleanField = !booleanField; // violation
     }
 
     static void foo29(String field1) {
-//this.field1 = true ? "field1" : field1; /compile error: cannot be referenced from a static context
+        //this.field1 = true ? "field1" : field1; /compile error: cannot be referenced from a static context
         field1 = true ? "field1" : field1;
     }
 
     void foo30(String field1) {
-        field1 = true ? "field1" : field1; // violation
+        this.field1 = true ? "field1" : field1; // violation
     }
 
     void foo31(String field1) {
@@ -272,7 +273,7 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
     }
 
     String foo33(String field1) {
-        field1 = addSuf2F(field1); // violation (no return, variable 'stringField' will not be saved
+        this.field1 = addSuf2F(field1); // violation (no return, variable 'stringField' will not be saved
         return "New String";
     }
 
@@ -298,32 +299,32 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
     }
 
     String foo37(String field1) {
-        field1 += "suffix"; // violation
+        this.field1 += "suffix"; // violation
         return "New string";
     }
 
     static void foo38() {
-//        this.fieldStatic = ""; <-- compile time error: cannot be referenced from a static context
+        //        this.fieldStatic = ""; <-- compile time error: cannot be referenced from a static context
         fieldStatic = "";
     }
 
     static void foo39() {
         boolean booleanField = true;
-// this.booleanField = !booleanField; compile time error: cannot be referenced from a static context
+        // this.booleanField = !booleanField; compile time error: cannot be referenced from a static context
         booleanField = !booleanField;
     }
 
     static void foo40() {
         try {
             boolean booleanField = true;
-//this.booleanField = !booleanField; <-- compile error: cannot be referenced from a static context
+            //this.booleanField = !booleanField; <-- compile error: cannot be referenced from a static context
             booleanField = !booleanField;
         }
-        catch (Exception e) {}
+        catch (Exception e) { }
     }
 
     static {
-//        this.fieldStatic = ""; <-- compile time error: cannot be referenced from a static context
+        //        this.fieldStatic = ""; <-- compile time error: cannot be referenced from a static context
         fieldStatic = "";
     }
 
@@ -332,23 +333,23 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
 //        it will lead to compile time error in constructor block: variable migh have been
 //        already assigned
 
-//        fieldFinal1 = 1;
+    //        fieldFinal1 = 1;
     }
 
     {
         String field1 = "";
-        field1 = field1; // violation
+        this.field1 = field1; // violation
     }
 
     static {
         fieldStatic = "";
         String field1 = "";
-//        this.field1 = field1; <-- compile time error: cannot be referenced from a static context
+        //        this.field1 = field1; <-- compile time error: cannot be referenced from a static context
         field1 = field1;
     }
 
     void foo41(long fieldFinal1) {
-//        this.fieldFinal1 = 1L; <- cannot assign value to a final variable
+        //        this.fieldFinal1 = 1L; <- cannot assign value to a final variable
         fieldFinal1 = fieldFinal1;
     }
 
@@ -463,10 +464,12 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
         fieldStatic += fieldStatic;
     }
 
-    void foo56(boolean booleanField) { booleanField = this.booleanField; }
+    void foo56(boolean booleanField) {
+        booleanField = this.booleanField; }
 
-    boolean foo57(boolean booleanField) { booleanField = !booleanField;  return booleanField; }
+    boolean foo57(boolean booleanField) { booleanField = !booleanField; return booleanField; }
 }
+
 class Issue6264 {
     private final String hashCode;
 
@@ -478,6 +481,7 @@ class Issue6264 {
         hashCode();
     }
 }
+
 class Issue7306 {
     List<String> add = new ArrayList<>();
     List<String> singletonList = new ArrayList<>();
