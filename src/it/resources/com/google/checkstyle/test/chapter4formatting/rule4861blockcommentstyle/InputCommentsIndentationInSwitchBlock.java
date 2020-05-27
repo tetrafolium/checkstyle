@@ -127,7 +127,7 @@ public class InputCommentsIndentationInSwitchBlock {
             // middle
             + ""
         // end
-        ;
+;
     }
 
     public void foo2() {

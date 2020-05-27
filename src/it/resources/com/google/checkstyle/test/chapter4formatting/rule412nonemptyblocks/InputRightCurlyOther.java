@@ -115,7 +115,7 @@ class FooInner
 {
     class InnerFoo
     {
-        public void fooInnerMethod ()
+        public void fooInnerMethod()
         {
 
         }

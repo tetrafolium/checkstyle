@@ -17,7 +17,7 @@ public class InputAvoidEscapedUnicodeCharacters {
         String fakeUnicode = "asd\tsasd";
         String fakeUnicode2 = "\\u23\\u123i\\u";
         String content = "";
-        /*byte order mark ok*/return "\ufeff" + content ;
+        /*byte order mark ok*/return "\ufeff" + content;
     }
 
     public Object fooChar()
