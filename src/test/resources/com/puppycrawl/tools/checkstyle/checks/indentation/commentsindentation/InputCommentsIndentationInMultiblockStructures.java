@@ -2,26 +2,25 @@ package com.puppycrawl.tools.checkstyle.checks.indentation.commentsindentation;
 
 public class InputCommentsIndentationInMultiblockStructures {
     void foo() {
-        if (true) {
+        {
             assert true;
         // comment for else
-        } else {}
+        }
 
-        if (true) {
+        {
             assert true;
         // violation
         }
-        else {}
 
-        if (true) {
+        {
             assert true;
                 // violation
-        } else {}
+        }
 
-        if (true) {
+        {
             assert true;
 // violation
-        } else {}
+        }
 
         try {
             assert true;
@@ -47,44 +46,44 @@ public class InputCommentsIndentationInMultiblockStructures {
         try {
             assert true;
         // comment for finally
-        } finally {}
+        } 
 
         try {
             assert true;
         // violation
         }
-        finally {}
+        
 
         try {
             assert true;
 // violation
-        } finally {}
+        } 
 
         try {
             assert true;
                 // violation
-        } finally {}
+        } 
 
         try {} catch (Exception ex) {
             assert true;
         // comment for finally
-        } finally {}
+        } 
 
         try {} catch (Exception ex) {
             assert true;
         // violation
         }
-        finally {}
+        
 
         try {} catch (Exception ex) {
             assert true;
 // violation
-        } finally {}
+        } 
 
         try {} catch (Exception ex) {
             assert true;
                 // violation
-        } finally {}
+        } 
 
         try {} catch (ClassCastException ex) {
             assert true;
@@ -107,25 +106,24 @@ public class InputCommentsIndentationInMultiblockStructures {
                 // violation
         } catch (Exception ex) {}
 
-        do {
+        {
             assert true;
         // comment for while
-        } while (false);
+        }
 
-        do {
+        {
             assert true;
         // violation
         }
-        while (false);
 
-        do {
+        {
             assert true;
                 // violation
-        } while (false);
+        }
 
-        do {
+        {
             assert true;
 // violation
-        } while (false);
+        }
     }
 }

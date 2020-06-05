@@ -10,7 +10,7 @@ public enum InputEqualsAvoidNullMisc {
 }
 class Receiver {
     public void foo4(Receiver this, String s) {
-        s.equals("abc");
+        "abc".equals(s);
     }
 
     private class Inner {

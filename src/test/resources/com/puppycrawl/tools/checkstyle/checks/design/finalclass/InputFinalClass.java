@@ -57,7 +57,7 @@ return a - b;
     }
 };
 
-    private String _name;
+    
     private Operation(String name)
     {
 this._name = name;
@@ -93,7 +93,7 @@ return a - b;
     }
 };
 
-    private String _name;
+    
     private Operation2(String name)
     {
 this._name = name;

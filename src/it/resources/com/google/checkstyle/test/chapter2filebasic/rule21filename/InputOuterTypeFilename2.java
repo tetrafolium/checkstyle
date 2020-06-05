@@ -21,7 +21,7 @@ public class InputOuterTypeFilename2 //ok
 
     public void methodWithLiterals()
     {
-        final String ref = "<a href=\"";
-        final String refCase = "<A hReF=\"";
+        
+        
     }
 }

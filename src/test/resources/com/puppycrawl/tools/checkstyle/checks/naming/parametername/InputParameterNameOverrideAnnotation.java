@@ -20,8 +20,8 @@ public class InputParameterNameOverrideAnnotation {
 
     int foo5(int abc) {return 1;} // No NPE here!
 
-    private int field;
-    private java.util.Set<String> packageNames;
+    
+    
 
     InputParameterNameOverrideAnnotation() {} // No NPE here!
 

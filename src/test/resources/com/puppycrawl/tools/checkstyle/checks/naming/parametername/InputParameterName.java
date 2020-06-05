@@ -4,7 +4,6 @@
 // Ignore violation
 ////////////////////////////////////////////////////////////////////////////////
 package com.puppycrawl.tools.checkstyle.checks.naming.parametername;
-import java.io.*;
 /**
  * Contains simple mistakes:
  * - Long lines
@@ -27,20 +26,19 @@ final class InputParameterName
     public static final int MAX_ROWS = 2;
 
     /** Invalid format **/
-    private static int badStatic = 2;
+    
     /** Valid format **/
-    private static int sNumCreated = 0;
+    
 
     /** Invalid format **/
-    private int badMember = 2;
+    
     /** Valid format **/
-    private int mNumCreated1 = 0;
+    
     /** Valid format **/
     protected int mNumCreated2 = 0;
 
     /** commas are wrong **/
-    private int[] mInts = new int[] {1,2, 3,
-                                     4};
+    
 
     //
     // Accessor tests
@@ -115,21 +113,21 @@ final class InputParameterName
     private void localVariables()
     {
         // normal decl
-        int abc = 0;
-        int ABC = 0;
+        
+        
 
         // final decls
-        final int cde = 0;
-        final int CDE = 0;
+        
+        
 
         // decl in for loop init statement
         for (int k = 0; k < 1; k++)
         {
-            String innerBlockVariable = "";
+            
         }
         for (int I = 0; I < 1; I++)
         {
-            String InnerBlockVariable = "";
+            
         }
     }
 
@@ -139,7 +137,7 @@ final class InputParameterName
     }
 
     /** test illegal constant **/
-    private static final int BAD__NAME = 3;
+    
 
     // A very, very long line that is OK because it matches the regexp "^.*is OK.*regexp.*$"
     // long line that has a tab ->        <- and would be OK if tab counted as 1 char
@@ -150,12 +148,12 @@ final class InputParameterName
     {
         // with tab-width 8 all statements below start at the same column,
         // with different combinations of ' ' and '\t' before the statement
-                int tab0 =1;
-                int tab1 =1;
-                 int tab2 =1;
-                int tab3 =1;
-                    int tab4 =1;
-                  int tab5 =1;
+                
+                
+                 
+                
+                    
+                  
     }
 
     // MEMME:
@@ -204,10 +202,7 @@ class InputParameterName2
     public void doSomething()
     {
         //"O" should be named "o"
-        for (Object O : new java.util.ArrayList())
-        {
-
-        }
+        
     }
 }
 

@@ -8,7 +8,13 @@ import java.io.IOException;
 class InputJavadocVariableTags1
 {
     // Invalid - should be Javadoc
-    private int mMissingJavadoc;
+        
+
+    /** handle where variable declaration over several lines **/
+        
+
+    /** getting code coverage up **/
+    static final int serialVersionUID = 666;
 
     // Invalid - should be Javadoc
     void method1()
@@ -125,19 +131,10 @@ class InputJavadocVariableTags1
 
 
     // Test static initialiser
-    static
-    {
-        int x = 1; // should not require any javadoc
-    }
+    
 
     // test initialiser
-    {
-        int z = 2; // should not require any javadoc
-    }
-
-    /** handle where variable declaration over several lines **/
-    private static final int
-        ON_SECOND_LINE = 2;
+    
 
 
     /**
@@ -157,9 +154,6 @@ class InputJavadocVariableTags1
     {
         return super.toString();
     }
-
-    /** getting code coverage up **/
-    static final int serialVersionUID = 666;
 
     //**********************************************************************/
     // Method Name: method16

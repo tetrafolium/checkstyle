@@ -25,8 +25,7 @@ class badCase {
         int i = 0;
 
         String s = "ffffooooString";
-        /*warn*/boolean b = s.
-            isEmpty();
+        /*warn*/
         foo(i
                 ,s);
         int[] j;

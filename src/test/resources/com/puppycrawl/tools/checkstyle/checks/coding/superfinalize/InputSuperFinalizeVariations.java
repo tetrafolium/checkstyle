@@ -7,7 +7,7 @@ public class InputSuperFinalizeVariations
         super.finalize();
     }
 
-    public void finalize() /**comment test*/throws Throwable
+    protected void finalize() /**comment test*/throws Throwable
     {
         super.finalize();
     }
@@ -24,18 +24,16 @@ public class InputSuperFinalizeVariations
 
 class NoSuperFinalize
 {
-    public void finalize()
-    {
-    }
+    
 }
 
 class InnerFinalize
 {
-    public void finalize()
+    protected void finalize()
     {
         class Inner
         {
-            public void finalize() throws Throwable
+            protected void finalize() throws Throwable
             {
                 super.finalize();
             }
@@ -53,7 +51,7 @@ class MyClassWithGenericSuperMethod1
 }
 
 class TestNative {
-    public native void finalize();
+    protected native void finalize();
 }
 
 class OneMore {

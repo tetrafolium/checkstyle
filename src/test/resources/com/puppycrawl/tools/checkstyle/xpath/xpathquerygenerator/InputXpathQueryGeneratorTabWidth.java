@@ -13,7 +13,7 @@ public class InputXpathQueryGeneratorTabWidth {
 				return 1;
 			}
 
-			private String endLineTab = "qwe";
+			
 
 
 }

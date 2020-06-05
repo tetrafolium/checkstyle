@@ -21,7 +21,6 @@ package com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline;
 /**
  * Two import statements on the same line are illegal.
  */
-import java.io.EOFException; import java.io.BufferedReader;
 
 /**
  * This Class contains no logic, but serves as test-input for the unit tests for the
@@ -29,7 +28,38 @@ import java.io.EOFException; import java.io.BufferedReader;
  * @author Alexander Jesse
  * @see com.puppycrawl.tools.checkstyle.checks.coding.OneStatementPerLineCheck
  */
-public class InputOneStatementPerLineSingleLine {
+public class InputOneStatementPerLineSingleLine {  
+
+  /**
+   * Dummy variable to work on.
+   */
+  private int two = 0;  
+
+  /**
+   * Two declaration statements on the same line are illegal.
+   */
+  int a;
+int b;  
+
+  /**
+   * Two declaration statements which are not on the same line
+   * are legal.
+   */
+  int c;  
+  int d;  
+
+  /**
+   * Two assignment (declaration) statements on the same line are illegal.
+   */
+  int e = 1;
+int f = 2;  
+
+  /**
+   * Two assignment (declaration) statements on the different lines
+   * are legal.
+   */
+  int g = 1;  
+  int h = 2;
   /**
    * Dummy innerclass to test the behaviour in the case of a smalltalk-style
    * statements (<code>myObject.firstMethod().secondMethod().thirdMethod()</code>).
@@ -52,12 +82,7 @@ public class InputOneStatementPerLineSingleLine {
   /**
    * Dummy variable to work on.
    */
-  private int one = 0;
-
-  /**
-   * Dummy variable to work on.
-   */
-  private int two = 0;
+  
 
   /**
    * Simple legal method
@@ -152,44 +177,20 @@ public class InputOneStatementPerLineSingleLine {
   }
 
   /**
-   * Two declaration statements on the same line are illegal.
-   */
-  int a; int b;
-
-  /**
-   * Two declaration statements which are not on the same line
-   * are legal.
-   */
-  int c;
-  int d;
-
-  /**
-   * Two assignment (declaration) statements on the same line are illegal.
-   */
-  int e = 1; int f = 2;
-
-  /**
-   * Two assignment (declaration) statements on the different lines
-   * are legal.
-   */
-  int g = 1;
-  int h = 2;
-
-  /**
    * This method contains two increment statements
    * and two object creation statements on the same line.
    */
   private void foo() {
     //This is two assignment (declaration)
     //statements on different lines
-    int var1 = 1;
-    int var2 = 2;
+    
+    
 
     //Two increment statements on the same line are illegal.
     var1++; var2++;
 
     //Two object creation statements on the same line are illegal.
-    Object obj1 = new Object(); Object obj2 = new Object();
+     
   }
 
   /**
@@ -209,20 +210,24 @@ public class InputOneStatementPerLineSingleLine {
     /**
      *  One statement inside for block is legal.
      */
-    for (int i = 0; i < 10; i++) one = 5;
+    for (int i = 0; i < 10; i++) {
+        one = 5;
+    }
 
     /**
      *  One statement inside for block where
      *  increment expression is empty is legal.
      */
-    for (int i = 0; i < 10;) one = 5;
+    for (int i = 0; i < 10;) {
+        one = 5;
+    }
 
     /**
      *  One statement inside for block where
      *  increment and conditional expressions are empty
      *  (forever loop) is legal
      */
-    for (int i = 0;;) one = 5;
+    
   }
 
   public void foo4() {

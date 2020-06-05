@@ -1,7 +1,9 @@
 package com.puppycrawl.tools.checkstyle.checks.blocks.needbraces;
 
 public class InputNeedBracesSingleLineStatements
-{
+{    
+
+    int[] sourceLocators;
     private static class SomeClass {
         boolean flag = true;
         private static boolean test(boolean k) {
@@ -10,23 +12,23 @@ public class InputNeedBracesSingleLineStatements
     }
 
     private int foo() {
-        if (SomeClass.test(true) == true) return 4; //No warning if 'mAllowSingleLineIf' is true
+        if (SomeClass.test(true)) return 4; //No warning if 'mAllowSingleLineIf' is true
         return 0;
     }
 
     private int foo1() {
-        if (SomeClass.test(true)) return 4; int k = 3; //No warning if 'mAllowSingleLineIf' is true
+        if (SomeClass.test(true)) return 4;  //No warning if 'mAllowSingleLineIf' is true
         return 0;
     }
 
     private int foo2() {
-        if (SomeClass.test(true) == true) //Warning, not single-line if-statement
+        if (SomeClass.test(true)) //Warning, not single-line if-statement
             return 4;
         return 0;
     }
 
     private int foo3() {
-        if (SomeClass.test(true) == true) if (true) return 4; //Warning, complex block
+        if (SomeClass.test(true)) return 4; //Warning, complex block
         return 0;
     }
 
@@ -43,9 +45,12 @@ public class InputNeedBracesSingleLineStatements
         while (o != null) {
             this.notify();
         }
-        while (o != null)
+        while (o != null) {
             this.notify();
-        while (o != null) this.notify();
+        }
+        while (o != null) {
+            this.notify();
+        }
         do {
             this.notify();
         } while (o != null);
@@ -53,15 +58,19 @@ public class InputNeedBracesSingleLineStatements
         do
             this.notify();
         while (o != null);
-        for (;;)
+        for (;;) {
             break;
-        for (;;) break;
+        }
+        for (;;) {
+            break;
+        }
         for (int i = 0; i < 10; i++) {
              this.notify();
         }
-        for (int i = 0; i < 10; i++)
-             this.notify();
-        for (int i = 0; ; ) this.notify();
+        for (int i = 0; i < 10; i++) {
+            this.notify();
+        }
+        
     }
 
     private int getSmth(int num)
@@ -84,47 +93,40 @@ public class InputNeedBracesSingleLineStatements
     private void testElse(int k) {
         if (k == 4) System.identityHashCode("yes");
         else System.identityHashCode("no");
-        for (;;);
+        for (;;) {
+            ;
+        }
     }
 
     private int testMissingWarnings() {
-        if (true)
-            throw new RuntimeException();
-        if (true) {
+        throw new RuntimeException();
+        {
             return 1;
-        } else
-            return 2;
+        }
     }
 
     void enhancedForLoop(int[] array) {
-        for (int value: array) return;
+        
     }
-
-    int[] sourceLocators;
 
     private class StateInfo {
         public boolean isInitial() {
-            for (int locator: sourceLocators) if (locator != 0) return false;
+            for (int locator: sourceLocators) {
+                if (locator != 0) return false;
+            }
             return true;
         }
     }
 
     private void forEachLoop() {
-        for (String s: new String[]{""}) break;
-        for (String s: new String[]{""})
-            break;
-        for (;;)
-        ;
+        
+        
+        for (;;) {
+            ;
+        }
     }
     private void method(){
-        if(false) {
-            switch (0) {
-                case -1:
-                    return;
-                default:
-                    return;
-            }
-        }
+        
         switch(1){
             case 1: return;
             default: throw new RuntimeException("");

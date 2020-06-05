@@ -19,8 +19,6 @@
 
 package com.puppycrawl.tools.checkstyle.checks.whitespace.emptylineseparator;
 
-import java.math.BigDecimal;
-import static java.lang.Math.abs;
 
 public class InputEmptyLineSeparatorImports {
 }

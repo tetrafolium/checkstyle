@@ -12,7 +12,14 @@ public class InputNoWhitespaceAfterArrayDeclarations
     char[] c = {}; //Correct
     short sh[] = {}; //Correct
     long[] l = {}; //Correct
-    byte b[] = {}; //Correct
+    byte b[] = {};    
+    String aOptions[][];    
+//Correct
+    int [][][] abc;    
+//Incorrect
+    int cba [][][];    
+    int ar [] = new int [] {1, 2};    
+    int aa = new int[]{1}[0];///Correct
     int get() [] { //Incorrect
         return a;}
     int [] receive() { return a; } //Incorrect
@@ -24,9 +31,7 @@ public class InputNoWhitespaceAfterArrayDeclarations
                 "s"
         };
     }
-    String aOptions[][]; //Correct
-    int [][][] abc; //Incorrect
-    int cba [][][]; //Incorrect
+//Incorrect
     private String[][][] getSeveralLines() { //Correct
         return new String [][][] { //Incorrect
                 new String [][] { //Incorrect
@@ -36,14 +41,14 @@ public class InputNoWhitespaceAfterArrayDeclarations
                 }
         };
     }
-    int ar [] = new int [] {1, 2}; //Incorrect (2 warnings)
+//Incorrect (2 warnings)
     private int [][][] getMultiArray() { //Incorrect
         return null;
     }
     private long getLongMultiArray(int someParam, String value) [][][] { //Incorrect
         return null;
     }
-    int aa = new int[]{1}[0];//Correct
+/Correct
     int bb = new int[]{1} [0];//Incorrect
     int aaa = new int[][]{{1},{2}}[0][0];//Correct
     int bbb = new int [][]{{1},{2}}[0][0];//Incorrect

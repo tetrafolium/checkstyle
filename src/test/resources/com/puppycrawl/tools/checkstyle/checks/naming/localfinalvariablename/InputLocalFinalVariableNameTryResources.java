@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.PropertyResourceBundle;
 import java.util.zip.ZipFile;
 
 /**
@@ -32,18 +31,14 @@ public class InputLocalFinalVariableNameTryResources {
         final String fileName = "Test";
         try (BufferedReader br = new BufferedReader(new InputStreamReader(
                 new FileInputStream(fileName), StandardCharsets.UTF_8))) {
-        } finally {
-
-        }
+        } 
     }
 
     void method3() throws Exception {
         final String fileName = "Test";
         try (final BufferedReader BR = new BufferedReader(new InputStreamReader(
                 new FileInputStream(fileName), StandardCharsets.UTF_8))) {
-        } finally {
-
-        }
+        } 
     }
 
     void method4() throws Exception {
@@ -51,9 +46,7 @@ public class InputLocalFinalVariableNameTryResources {
         try (BufferedReader BR = new BufferedReader(new InputStreamReader(
                 new FileInputStream(fileName), StandardCharsets.UTF_8));
              ZipFile zf = new ZipFile(fileName)) {
-        } finally {
-
-        }
+        } 
     }
 
     void method5() throws Exception {
@@ -61,9 +54,7 @@ public class InputLocalFinalVariableNameTryResources {
         try (BufferedReader BR = new BufferedReader(new InputStreamReader(
                 new FileInputStream(fileName), StandardCharsets.UTF_8));
              ZipFile ZF = new ZipFile(fileName)) {
-        } finally {
-
-        }
+        } 
     }
 
     void method6() throws Exception {
@@ -71,8 +62,8 @@ public class InputLocalFinalVariableNameTryResources {
         try (FileInputStream fis8859_1 = new FileInputStream(new File(srcDir, "Bug.properties"));
              FileInputStream fisUTF8 = new FileInputStream(new File(srcDir, "Bug_Utf8.properties"));
              InputStreamReader isrutf8 = new InputStreamReader(fisUTF8, "UTF-8")) {
-            PropertyResourceBundle bundleUtf8 = new PropertyResourceBundle(isrutf8);
-            PropertyResourceBundle bundle = new PropertyResourceBundle(fis8859_1);
+            
+            
             String[] arrayUtf8 = {"1", "2", "3"};
             String[] array = {"key1", "key2"};
             if (!Arrays.equals(arrayUtf8, array)) {

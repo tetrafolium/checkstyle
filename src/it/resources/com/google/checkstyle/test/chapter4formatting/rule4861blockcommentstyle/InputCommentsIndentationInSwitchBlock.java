@@ -24,47 +24,29 @@ public class InputCommentsIndentationInSwitchBlock {
                 foo1();
                    // warn
             case "6":
-                int k = 7;
+                
                 // fall through
             case "7":
-                if (true) {}
+                
                    // warn
             case "8":
                 break;
             case "9":
                 foo1();
                 // fall through
-            case "10": {
-                if (true) {}
-                // fall through
-            }
-            case "11": {
-            // fall through
-            }
-            case "28": {
-                // fall through
-            }
-            case "12": {
-      // warn
-                int i;
-            }
-            case "13": {
-                       // some comment in empty case block
-            }
-            case "14": {
-        // warn
-            }
+            case "10": 
+            case "11": 
+            case "28": 
+            case "12": 
+            case "13": 
+            case "14": 
             case "15": {
                 foo1();
                       // warn
             }
-            case "16": {
-                int a;
-            }
+            case "16": 
             // fall through
-            case "17": {
-                int a;
-            }
+            case "17": 
               // warn
                 case "18": { System.lineSeparator();
                 }   // trailing comment
@@ -80,13 +62,13 @@ public class InputCommentsIndentationInSwitchBlock {
     }
 
     private static void foo1() {
-        if (true) {
+        {
             switch(1) {
                 case 0:
 
                 case 1:
                         // warn
-                    int b = 10;
+                    
                 default:
                  // comment
             }
@@ -115,19 +97,13 @@ public class InputCommentsIndentationInSwitchBlock {
             case 2:
                 i--;
                 // no break here
-            case 3: { }
+            case 3: 
             // fall through
 
 
         }
 
-        String breaks = ""
-        // warn
-            + "</table>"
-            // middle
-            + ""
-        // end
-        ;
+        
     }
 
     public void foo2() {
@@ -153,7 +129,7 @@ public class InputCommentsIndentationInSwitchBlock {
         int a = 1;
         switch (a) {
             case 1:
-                int b;
+                
                   // warn
             default:
         }
@@ -163,7 +139,7 @@ public class InputCommentsIndentationInSwitchBlock {
         int a = 1;
         switch (a) {
             case 1:
-                int b;
+                
             // comment
             default:
         }
@@ -173,7 +149,7 @@ public class InputCommentsIndentationInSwitchBlock {
         int a = 1;
         switch (a) {
             case 1:
-                int b;
+                
                 // comment
             default:
         }
@@ -199,7 +175,7 @@ public class InputCommentsIndentationInSwitchBlock {
             case 4:
     // warn
             case 5:
-                s.toString().toString().toString();
+                s;
                       // warn
                     // warn
                  // warn
@@ -223,7 +199,7 @@ public class InputCommentsIndentationInSwitchBlock {
             case 3:
                 // comment
                 // comment
-                s.toString().toString().toString();
+                s;
                 // comment
             case 4:
       // warn

@@ -48,7 +48,7 @@ class InputIndentationMembers { //indent:0 exp:0
 
     InputIndentationMembers anonymousClass = //indent:4 exp:4
         new InputIndentationMembers() { //indent:8 exp:8
-          boolean secondFlag = conditionSecond(10000000000.0, new //indent:10 exp:10
+          boolean secondFlag = conditionSecond(10_000_000_000.0, new //indent:10 exp:10
               SecondFieldClassWithVeryVeryVeryLongName("Looooooooooooo" //indent:14 exp:14
                 + "oooooooooooong").getString(new InputIndentationMembers(), //indent:16 exp:>=14
                    new SecondFieldClassWithVeryVeryVeryLongName("looooooong"). //indent:19 exp:>=14
@@ -84,12 +84,13 @@ class SecondFieldClassWithVeryVeryVeryLongName { //indent:0 exp:0
 abstract class WithAnnotations { //indent:0 exp:0
   @GwtIncompatible("Non-UTF-8" //indent:2 exp:2
        + "Charset") //indent:7 exp:7
-  public static final int FOO_CONSTANT = 111; //indent:2 exp:2
-
-  private void foo34() {} //indent:2 exp:2
+  public static final int FOO_CONSTANT = 111;   //indent:2 exp:2
   final Map<String, String> //indent:2 exp:2
       comeMapWithLongName = new HashMap //indent:6 exp:6
-      <String, String>(); //indent:6 exp:6
+      <String, String>(); //indent:2 exp:2
+
+  private void foo34() {}
+//indent:6 exp:6
 
   @MyAnnotation //indent:2 exp:2
   byte[] getBytesInternal() { //indent:2 exp:2

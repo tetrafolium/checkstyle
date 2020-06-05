@@ -1,43 +1,43 @@
 package com.puppycrawl.tools.checkstyle.checks.blocks.rightcurly;
 
-public class InputRightCurlyAloneOrSingleline {
+public class InputRightCurlyAloneOrSingleline {    
+
+    private int var1;    
+    private int var2;
 
     public boolean equals(Object other) { boolean flag = true; return flag; }
 
     public int hashCode()
     {
-        int a = 10;
+        
         return 1;
     }
 
     private void foo()
-    { int var1 = 5; var2 = 6; }
+    {  var2 = 6; }
 
     private void foo1() { return; }
 
     private String foo2() { return toString();
     }
 
-    private void foo3() { ; return; }
-
-    private int var1;
-    private int var2;
+    private void foo3() {  return; }
     public InputRightCurlyAloneOrSingleline() { this.var1 = 1; }
     public InputRightCurlyAloneOrSingleline(int v1, int v2) { this.var1 = v1; this.var2 = v2; }
 
-    private void foo4() { ;; }
+    private void foo4() {  }
 
-    private void foo5() { ; }
+    private void foo5() {  }
 
     private void foo6() {  }
 
     private void foo12() {
-        try { int i = 5; int b = 10; }
+        try {   }
         catch (Exception e) { }
     }
 
     private void foo13() {
-        for (int i = 0; i < 10; i++) { int a = 5; int b = 6; }
+        for (int i = 0; i < 10; i++) {   }
 
         do
         {
@@ -46,9 +46,9 @@ public class InputRightCurlyAloneOrSingleline {
         while (var2 == 2);
     }
 
-    static { int a; int b; }
+    
 
-    { int c; int d;}
+    
 
     private void foo14() {
         if (var1 > 0) {
@@ -59,21 +59,17 @@ public class InputRightCurlyAloneOrSingleline {
     private void foo15() {
         class A { int a; } var1++; //violation
         class B {  }
-        if(true) {
-
-        }
-        else;
+        
     }
 
     private void foo16() {
-        if (true) { return; } else { } //violation
-        if (false) {
-        }
+        { return; } //violation
+        
     }
 
-    void f17() { int var1 = 5; var2 = 6; } private void f18() {int var1 = 5; var2 = 6; } //violation
+    void f17() {  var2 = 6; } private void f18() { var2 = 6; } //violation
 
-    private void foo19() {int var1 = 5;
+    private void foo19() {
         var2 = 6;} //violation
 
     private String foo20() {
@@ -90,9 +86,9 @@ public class InputRightCurlyAloneOrSingleline {
     }
 
     void foo22() {
-        long startTime = System.nanoTime();
+        
         try {
-            int a = 5;
+            
             toString();
         } catch (Exception e) { //violation
             throw new RuntimeException(e);
@@ -100,38 +96,20 @@ public class InputRightCurlyAloneOrSingleline {
     }
 
     void doDoubleBraceInitialization() {
-        java.util.Map<String, String> map = new java.util.LinkedHashMap<String, String>() {{
-            put("Hello", "World");
-            put("first", "second");
-            put("polygene", "lubricants");
-            put("alpha", "betical");
-        }}; //NO violation
+         //NO violation
 
-        Thread t = new Thread() {@Override public void run() {super.run();}};
-        new Object() { @Override protected void finalize() { "".toString(); }  { int a = 5; }};
-        new Object() { @Override protected void finalize() { "".toString(); }  int b = 10; };
-        new Object() { protected void finalize() { hashCode(); }  { int c = 5; } int d = 8; };
+        
+        new Object() { @Override protected void finalize() { "".toString(); }  };
+        new Object() {                                                                                 int b = 10; @Override protected void finalize() { "".toString(); }
+};
+        new Object() {                                                                                  int d = 8; protected void finalize() { hashCode(); }  
+};
 
-        java.util.Map<String, String> map2 = new java.util.LinkedHashMap<String, String>() {{
-            put("Hello", "World");
-            put("first", "second");
-            put("polygene", "lubricants");
-            put("alpha", "betical");}  //violation
-        };
+        
 
-        java.util.Map<String, String> map3 = new java.util.LinkedHashMap<String, String>() {{
-            put("Hello", "World");
-            put("first", "second");
-            put("polygene", "lubricants");
-            put("alpha", "betical");}}; //violation
+         //violation
 
-        java.util.Map<String, String> map4 = new java.util.LinkedHashMap<String, String>() {{
-            put("Hello", "World");
-            put("first", "second");
-            put("polygene", "lubricants");
-            put("alpha", "betical");
-        }
-        };
+        
 
         foo23(new java.util.HashSet<String>() {{
             add("XZ13s");
@@ -161,7 +139,7 @@ public class InputRightCurlyAloneOrSingleline {
             System.identityHashCode("Hello, world!");}} //violation
 
     void foo27() {
-        for (int i = 0; i < 10; i++) {for (int j = 0; j < 15; j++) {int a;}}} //violation
+        for (int i = 0; i < 10; i++) {for (int j = 0; j < 15; j++) {}}} //violation
 
     private java.util.ArrayList<Integer> foo28(int delta) {
         return new java.util.ArrayList<Integer>() {
@@ -173,12 +151,12 @@ public class InputRightCurlyAloneOrSingleline {
         boolean flag = true;
         if (flag) {
             System.identityHashCode("heh");
-            flag = !flag; } String.CASE_INSENSITIVE_ORDER. //violation
-            equals("Xe-xe");
+            flag = !flag; } "Xe-xe".equals(String.CASE_INSENSITIVE_ORDER. //violation
+            equals);
     }
 
     void foo30() {
-        if (true) {
+        {
             getClass();} // violation
 
         for (int i = 0; i == 0; i++) {
@@ -196,18 +174,16 @@ public class InputRightCurlyAloneOrSingleline {
         } catch (Exception e) { // violation
             // comment
         } catch (Throwable e) { // violation
-        } finally { // violation
-            // comment
-        }
+        } 
 
-        do {
-        } while (true); // violation
+        while (true) {
+        } // violation
     }
 
     public void codeAfterLastRightCurly() {
         while (new Object().equals(new Object())) {
-        }; // violation
-        for (int i = 0; i < 1; i++) { new Object(); }; // violation
+        } // violation
+        for (int i = 0; i < 1; i++) { new Object(); } // violation
     }
 
     public @interface TestAnnotation {}

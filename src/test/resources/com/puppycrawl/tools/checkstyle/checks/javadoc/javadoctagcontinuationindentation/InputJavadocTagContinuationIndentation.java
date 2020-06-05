@@ -21,21 +21,21 @@ class InputJavadocTagContinuationIndentation implements Serializable
      * @serial Some javadoc.
      *     Some javadoc.
      */
-    private String fFirstName;
+    
 
     /**
      * The client's first name.
      * @serial
      *     Some javadoc.
      */
-    private String sSecondName;
+    
 
     /**
      * The client's first name.
      * @serialField
      *     Some javadoc.
      */
-    private String tThirdName;
+    
 
     /**
      * Some text.

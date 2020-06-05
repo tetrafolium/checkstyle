@@ -3,7 +3,6 @@ package com.puppycrawl.tools.checkstyle.grammar.java8;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
 import java.util.List;
-import java.util.function.Supplier;
 
 
 public class InputMethodReferences7 {
@@ -27,9 +26,9 @@ public class InputMethodReferences7 {
     }
 
     public void main(String[] args) {
-        MyFunctionalInterface fi = new InputMethodReferences7()::<Integer, String, Long> m;
+        
         LambdaInt li = LambdaImpl::<@TA Object, @TB Object> new;
-        Supplier s = Bar::<String> m;
+        
         li = li::<@TA Object, @TB Object> m;
         s = Bar::<List<String>> m;
         s = Bar::<List<List<?>>> m;

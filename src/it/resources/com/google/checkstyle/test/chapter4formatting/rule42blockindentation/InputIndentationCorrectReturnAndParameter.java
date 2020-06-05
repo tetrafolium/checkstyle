@@ -8,7 +8,7 @@ class InputIndentationCorrectReturnAndParameter { //indent:0 exp:0
 
   boolean fooMethodWithIf() { //indent:2 exp:2
 
-    return conditionSecond(10000000000.0, new //indent:4 exp:4
+    return conditionSecond(10_000_000_000.0, new //indent:4 exp:4
         SecondClassLongNam4("Looooooooooooo" //indent:8 exp:8
         + "oooooooooooong").getString(new FooReturnClass(), //indent:8 exp:8
         new SecondClassLongNam4("loooooooooong"). //indent:8 exp:8
@@ -66,7 +66,7 @@ class InputIndentationCorrectReturnAndParameter { //indent:0 exp:0
     } //indent:4 exp:4
 
     boolean fooReturn() { //indent:4 exp:4
-      return conditionSecond(10000000000.0, new //indent:6 exp:6
+      return conditionSecond(10_000_000_000.0, new //indent:6 exp:6
           SecondClassLongNam4("Looooooooooooo" //indent:10 exp:10
           + "oooooooooooong").getString(new FooReturnClass(), //indent:10 exp:10
           new SecondClassLongNam4("loooooooooong"). //indent:10 exp:10
@@ -89,7 +89,7 @@ class InputIndentationCorrectReturnAndParameter { //indent:0 exp:0
           int intIntIntVeryLongNameForIntVariable, boolean //indent:10 exp:10
               fooooooooobooleanBooleanVeryLongName) { //indent:14 exp:>=10
 
-        return conditionSecond(10000000000.0, new //indent:8 exp:8
+        return conditionSecond(10_000_000_000.0, new //indent:8 exp:8
             SecondClassLongNam4("Looooooooooooo" //indent:12 exp:12
             + "oooooooooooong").getString(new FooReturnClass(), //indent:12 exp:12
             new SecondClassLongNam4("loooooooooong"). //indent:12 exp:12

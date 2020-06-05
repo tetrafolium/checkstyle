@@ -12,14 +12,14 @@ class InputRequireThisAllowLocalVars {
 
     InputRequireThisAllowLocalVars() {
         s1 = "bar1"; // Violation. Requires "this".
-        String s2;
+        
         s2 = "bar2"; // No violation. Local var allowed.
     }
 
     public int getS1() {
-        String s1 = null;
+        
         s1 = "bar"; // No violation
-        s1 = s1;    // Violation. "this" required here to resolve any confusion due to overlapping.
+            // Violation. "this" required here to resolve any confusion due to overlapping.
         return 1;
     }
 

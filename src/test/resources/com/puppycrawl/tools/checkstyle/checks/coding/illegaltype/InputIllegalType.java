@@ -3,11 +3,11 @@ import java.util.HashMap;
 import java.util.TreeSet;
 //configuration: default
 public class InputIllegalType implements InputIllegalTypeSuper {
-    private AbstractClass a = null; //WARNING
-    private NotAnAbstractClass b = null; /*another comment*/
+     //WARNING
+     /*another comment*/
 
-    private com.puppycrawl.tools.checkstyle.checks.coding.illegaltype.InputIllegalType.AbstractClass c = null; //WARNING
-    private com.puppycrawl.tools.checkstyle.checks.coding.illegaltype.InputIllegalType.NotAnAbstractClass d = null;
+     //WARNING
+    
 
     private abstract class AbstractClass {/*one more comment*/}
 

@@ -3,4 +3,3 @@ package com.puppycrawl.tools.checkstyle.checks.whitespace.emptylineseparator.pac
 
 //that import is for doing check of PACKAGE_DEF,
 //because EmptyLineSeparatorCheck doesn't check last token
-import java.lang.System;

@@ -6,12 +6,8 @@ public class InputNoWhitespaceBeforeEmptyForLoop {
         for (; ; ) { // ok
             break;
         }
-        for (int x = 0; ; ) { // ok
-            break;
-        }
-        for (int x = 0 ; ; ) { // warning
-            break;
-        }
+        
+        
         for (int x = 0; x < 10; ) { // ok
             break;
         }

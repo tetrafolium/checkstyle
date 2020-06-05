@@ -8,9 +8,7 @@
 		/*31*/String /*32*/line /*33*/= /*34*/"/*I'm NOT comment*/blabla"/*35*/;/*36*/
 		/*37*/String/*38*/./*  39  */CASE_INSENSITIVE_ORDER/*40*/./*41*/equals/*42*/(/*43*/line/*44*/)/*45*/;/*46*/
 		Integer[] array = null;
-		/*50*/for/*51*/ (/*52*/Integer/*53*/ i/*54*/:/*55*/ array/*56*/)/*57*/ {/*58*/
-		    /*59*/
-		}/*60*/
+		/*50*//*60*/
 		return line;
 	}/*47*/
 }/*48*/

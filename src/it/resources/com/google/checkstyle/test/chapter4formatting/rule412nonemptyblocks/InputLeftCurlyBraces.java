@@ -30,12 +30,16 @@ class InputLeftCurlyBraces
         }
 
 
-        while(condition());
-        while (condition())
+        while(condition()) {
+            ;
+        }
+        while (condition()) {
             testWhile();
-        while (condition())
+        }
+        while (condition()) {
             if (condition())
                 testWhile();
+        }
     }
 
     /** Test for loops **/
@@ -47,13 +51,17 @@ class InputLeftCurlyBraces
         }
 
 
-        for(int i = 1;i < 5;i++);
-        for (int i = 1; i < 5; i++)
+        for(int i = 1;i < 5;i++) {
+            ;
+        }
+        for (int i = 1; i < 5; i++) {
             testFor();
+        }
         for (int i = 1; i < 5;
-             i++)
+             i++) {
             if (i > 2)
                 testFor();
+        }
     }
 
     /** Test if constructs **/
@@ -71,8 +79,7 @@ class InputLeftCurlyBraces
         }
 
 
-        if (condition());
-        if (condition())
+        if (condition() && condition())
             testIf();
         if (condition())
             testIf();
@@ -88,15 +95,14 @@ class InputLeftCurlyBraces
         }
         else
             testIf();
-        if (condition())
-            if (condition())
-                testIf();
+        if (condition() && condition())
+            testIf();
     }
 
     void whitespaceAfterSemi()
     { //warn
 
-        int i = 1;int j = 2;
+        
 
 
         for (;;) {

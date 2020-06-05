@@ -2,4 +2,3 @@
 @Deprecated
 package com.puppycrawl.tools.checkstyle.checks.whitespace.emptylineseparator.packageinfo.test1;
 
-import java.lang.Deprecated;

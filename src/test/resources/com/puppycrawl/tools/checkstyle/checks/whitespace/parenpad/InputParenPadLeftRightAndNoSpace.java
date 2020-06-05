@@ -5,7 +5,9 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 public class InputParenPadLeftRightAndNoSpace
-{
+{    
+
+    boolean fooo = this.bar(true && false && true);
     class ParenPadNoSpace  {
         ParenPadNoSpace() {
             this(0);
@@ -28,7 +30,7 @@ public class InputParenPadLeftRightAndNoSpace
                             synchronized (this) {
                                 switch (i) {
                                     case 3:
-                                    case (4):
+                                    case 4:
                                     case 5:
                                         break;
                                 }
@@ -62,7 +64,7 @@ public class InputParenPadLeftRightAndNoSpace
                             synchronized ( this) {
                                 switch ( i) {
                                     case 3:
-                                    case ( 4):
+                                    case 4:
                                     case 5:
                                         break;
                                 }
@@ -96,7 +98,7 @@ public class InputParenPadLeftRightAndNoSpace
                             synchronized (this ) {
                                 switch (i ) {
                                     case 3:
-                                    case (4 ):
+                                    case 4:
                                     case 5:
                                         break;
                                 }
@@ -110,17 +112,15 @@ public class InputParenPadLeftRightAndNoSpace
 
     String foo() {
         return ( (Object
-                ) bar( ( 1 > 2 ) ?
-                        ( ( 3 < 4 )? false : true ) :
-                        ( ( 1 == 1 ) ? false : true) ) ).toString();
+                ) bar( 1 > 2 ?
+                        3 < 4? false : true :
+                        ( 1 == 1 ) ? false : true ) ).toString();
     }
     @MyAnnotation
     public boolean bar(boolean a) {
-        assert ( true );
+        assert true;
         return true;
     }
-
-    boolean fooo = this.bar(( true && false ) && true);
 }
 @interface MyAnnotation {
     String someField( ) default "Hello world";
@@ -147,13 +147,13 @@ enum MyEnum {
     }
 
     public void intStringConv() {
-        Object a = 5;
-        Object b = "string";
-        int w = Integer.parseInt((String)a);
-        int x = Integer.parseInt( (String)a);
-        double y = Double.parseDouble((String)a );
-        float z = Float.parseFloat( (String)a );
-        String d = ((String)b);
+        
+        
+        
+        
+        
+        
+        
     }
 
     public int something( Object o ) {
@@ -164,8 +164,8 @@ enum MyEnum {
     }
 
     private void launch(Integer number ) {
-        String myInt = ( number.toString() + '\0' );
-        boolean result = false;
+        
+        
         if (number == 123)
             result = true;
     }

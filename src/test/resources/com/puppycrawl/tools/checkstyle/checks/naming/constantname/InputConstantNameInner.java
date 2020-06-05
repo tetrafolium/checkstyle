@@ -9,7 +9,12 @@ package com.puppycrawl.tools.checkstyle.checks.naming.constantname;
  * @author Oliver Burn
  **/
 class InputConstantNameInner
-{
+{    
+
+    /** demonstrate bug in handling static final **/
+    protected static Object sWeird = new Object();    
+    /** demonstrate bug in handling static final **/
+    static Object sWeird2 = new Object();
     // Ignore - two violations
     class InnerInner2
     {
@@ -37,11 +42,6 @@ class InputConstantNameInner
         }
     }
 
-    /** demonstrate bug in handling static final **/
-    protected static Object sWeird = new Object();
-    /** demonstrate bug in handling static final **/
-    static Object sWeird2 = new Object();
-
     /** demonstrate bug in local final variable */
     public interface Inter
     {
@@ -49,12 +49,7 @@ class InputConstantNameInner
 
      public static void main()
      {
-        Inter m = new Inter()
-        {
-            private static final int CDS = 1;
-
-            private int ABC;
-        };
+        
      }
 
     /** annotation field incorrectly named. */

@@ -6,6 +6,6 @@ import java.io.IOException;
 public class SuppressionXpathRegressionRightCurlyTwo {
     public void fooMethod() throws IOException {
         try (BufferedReader br1 = new BufferedReader(null)) {
-            ; } //warn
+             } //warn
     }
 }

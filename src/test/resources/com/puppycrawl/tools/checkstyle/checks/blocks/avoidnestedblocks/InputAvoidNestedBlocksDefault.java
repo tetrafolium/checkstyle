@@ -10,19 +10,14 @@ package com.puppycrawl.tools.checkstyle.checks.blocks.avoidnestedblocks;
  **/
 class InputAvoidNestedBlocksDefault
 {
-    static
-    { // OK
-    }
+    
 
     public void method()
     {
         int x = 0;
 
         // if (condition that is not important anymore)
-        { // nested block, should be marked
-            int z = 1;
-            int y = z;
-        }
+        
 
         if (x == 1)
         { // OK

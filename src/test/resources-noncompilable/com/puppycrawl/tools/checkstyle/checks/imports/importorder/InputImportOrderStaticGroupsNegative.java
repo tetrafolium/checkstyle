@@ -11,11 +11,7 @@ package com.puppycrawl.tools.checkstyle.checks.imports.importorder;
  * useContainerOrderingForStatic = false
  *
  */
-import com.google.common.collect.Lists;
 
-import static org.junit.Assert.fail; // violation: wrong order
-import static java.lang.String.format;
-import static org.infinispan.test.TestingUtil.extract; // violation: wrong order
 
 public class InputImportOrderStaticGroupsNegative {
 }

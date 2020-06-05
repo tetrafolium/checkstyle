@@ -34,8 +34,7 @@ public class InputFallThrough
             try (final Resource resource = new Resource()) {
                 return;
             }
-            finally {
-            }
+            
         case 6:
             try (final Resource resource = new Resource()) {
             }
@@ -50,8 +49,7 @@ public class InputFallThrough
         case 8:
             try (final Resource resource = new Resource()) {
             }
-            finally {
-            }
+            
             // fallthru
         case 9:
             try (final Resource resource = new Resource()) {

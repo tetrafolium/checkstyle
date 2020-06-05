@@ -11,14 +11,9 @@ package com.puppycrawl.tools.checkstyle.checks.coding.onestatementperline;
  * which are not on the same line are legal.
  */
 import java.awt.event.ActionEvent;
-import java.lang.annotation.Annotation;
-; // non-compilable by eclipse
-import java.lang.String;
-import java.lang.Integer;
+ // non-compilable by eclipse
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.stream.Collectors;
 
 import javax.swing.JCheckBox;
 
@@ -35,8 +30,8 @@ public class InputOneStatementPerLine {
         List<Integer> ints = new LinkedList<Integer>();
         ints.stream().map( t -> { return t * 2;} ).filter( t -> { return false;});
         ints.stream().map( t -> { int m = t * 2; return m; } ); //warn
-        ints.stream().map( t -> { int m = t * 2; return m; } ); int i = 3; //warn
-        ints.stream().map( t -> t * 2); int k = 4; //warn
+        ints.stream().map( t -> { int m = t * 2; return m; } );  //warn
+        ints.stream().map( t -> t * 2);  //warn
         ints.stream().map( t -> t * 2);
         List<Integer> ints2 = new LinkedList<Integer>();
         ints.stream().map( t -> { return ints2.stream().map(w -> { return w * 2; });});

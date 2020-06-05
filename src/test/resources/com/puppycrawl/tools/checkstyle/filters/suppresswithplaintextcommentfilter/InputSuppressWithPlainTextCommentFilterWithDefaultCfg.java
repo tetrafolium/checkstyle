@@ -7,6 +7,6 @@ public class InputSuppressWithPlainTextCommentFilterWithDefaultCfg {
     // CHECKSTYLE:ON
     //	has tab here
 
-	private int a; // CHECKSTYLE:OFF
+	 // CHECKSTYLE:OFF
     // CHECKSTYLE:ON
 }

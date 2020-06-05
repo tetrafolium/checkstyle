@@ -20,7 +20,7 @@ class InputIndentationCorrectWhileDoWhileAndParameter { //indent:0 exp:0
                getInteger(new FooWhileClass(), "Loooooooooooooooooog"), //indent:15 exp:>=8
          new InnerClassFoo())); //indent:9 exp:>=8
 
-    while (conditionSecond(10000000000.0, new //indent:4 exp:4
+    while (conditionSecond(10_000_000_000.0, new //indent:4 exp:4
          SecondWhileLongName("Looooooooooooo" //indent:9 exp:>=8
         + "oooooooooooong").getString(new FooWhileClass(), //indent:8 exp:8
            new SecondWhileLongName("loooooooooong"). //indent:11 exp:>=8
@@ -39,7 +39,7 @@ class InputIndentationCorrectWhileDoWhileAndParameter { //indent:0 exp:0
 
     do { //indent:4 exp:4
 
-    } while (conditionSecond(10000000000.0, new //indent:4 exp:4
+    } while (conditionSecond(10_000_000_000.0, new //indent:4 exp:4
           SecondWhileLongName("Looooooooooooo" //indent:10 exp:>=8
           + "oooooooooooong").getString(new FooWhileClass(), //indent:10 exp:>=8
         new SecondWhileLongName("loooooooooong"). //indent:8 exp:8
@@ -102,7 +102,7 @@ class InputIndentationCorrectWhileDoWhileAndParameter { //indent:0 exp:0
               getInteger(new FooWhileClass(), "Loooooooooooooooooog"), //indent:14 exp:>=10
               new InnerClassFoo())); //indent:14 exp:>=10
 
-      while (conditionSecond(10000000000.0, new //indent:6 exp:6
+      while (conditionSecond(10_000_000_000.0, new //indent:6 exp:6
           SecondWhileLongName("Looooooooooooo" //indent:10 exp:10
           + "oooooooooooong").getString(new FooWhileClass(), //indent:10 exp:10
           new SecondWhileLongName("loooooooooong"). //indent:10 exp:10
@@ -120,7 +120,7 @@ class InputIndentationCorrectWhileDoWhileAndParameter { //indent:0 exp:0
 
       do { //indent:6 exp:6
         /* Do smth*/ //indent:8 exp:8
-      } while (conditionSecond(10000000000.0, new //indent:6 exp:6
+      } while (conditionSecond(10_000_000_000.0, new //indent:6 exp:6
           SecondWhileLongName("Looooooooooooo" //indent:10 exp:10
           + "oooooooooooong").getString(new FooWhileClass(), //indent:10 exp:10
           new SecondWhileLongName("loooooooooong"). //indent:10 exp:10
@@ -155,7 +155,7 @@ class InputIndentationCorrectWhileDoWhileAndParameter { //indent:0 exp:0
                 getInteger(new FooWhileClass(), "Loooooooooooooooooog"), //indent:16 exp:>=12
                    new InnerClassFoo())); //indent:19 exp:>=12
 
-        while (conditionSecond(10000000000.0, new //indent:8 exp:8
+        while (conditionSecond(10_000_000_000.0, new //indent:8 exp:8
             SecondWhileLongName("Looooooooooooo" //indent:12 exp:12
             + "oooooooooooong").getString(new FooWhileClass(), //indent:12 exp:12
             new SecondWhileLongName("loooooooooong"). //indent:12 exp:12
@@ -174,7 +174,7 @@ class InputIndentationCorrectWhileDoWhileAndParameter { //indent:0 exp:0
 
         do { //indent:8 exp:8
           /* Do smth*/ //indent:10 exp:10
-        } while (conditionSecond(10000000000.0, new //indent:8 exp:8
+        } while (conditionSecond(10_000_000_000.0, new //indent:8 exp:8
             SecondWhileLongName("Looooooooooooo" //indent:12 exp:12
             + "oooooooooooong").getString(new FooWhileClass(), //indent:12 exp:12
             new SecondWhileLongName("loooooooooong"). //indent:12 exp:12

@@ -47,7 +47,7 @@ class WithEmptyAnonymous
 {
 	private void foo()
 	{
-		MyClass c = new MyClass() {};
+		
 	}
 }
 

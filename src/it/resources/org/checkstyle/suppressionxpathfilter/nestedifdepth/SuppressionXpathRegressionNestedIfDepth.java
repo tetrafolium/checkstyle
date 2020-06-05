@@ -5,12 +5,8 @@ public class SuppressionXpathRegressionNestedIfDepth {
         int a = 1;
         int b = 2;
         int c = 3;
-        if (a > b) {
-            if (c > b) {
-                if (c > a) { //warn
+        if (a > b && c > b && c > a) { //warn
 
-                }
-            }
         }
     }
 }

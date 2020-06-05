@@ -7,7 +7,7 @@ public class InputSuperCloneInnerAndWithArguments
         super.clone();
     }
 
-    public Object clone() throws CloneNotSupportedException
+    public InputSuperCloneInnerAndWithArguments clone() throws CloneNotSupportedException
     {
         return super.clone();
     }
@@ -24,7 +24,7 @@ public class InputSuperCloneInnerAndWithArguments
 
 class NoSuperClone
 {
-    public Object clone()
+    public NoSuperClone clone()
     {
         return null;
     }
@@ -32,11 +32,11 @@ class NoSuperClone
 
 class InnerClone
 {
-    public Object clone()
+    public InnerClone clone()
     {
         class Inner
         {
-            public Object clone() throws CloneNotSupportedException
+            public Inner clone() throws CloneNotSupportedException
             {
                 return super.clone();
             }
@@ -95,5 +95,5 @@ class AnotherClass {
 }
 
 class NativeTest {
-    public native Object clone();
+    public native NativeTest clone();
 }

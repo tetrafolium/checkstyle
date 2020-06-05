@@ -2,7 +2,7 @@ package com.puppycrawl.tools.checkstyle.checks.design.innertypelast;
 
 public class InputInnerTypeLastClassRootClass2
 {
-    private int mFoo = 0;
+    
 }
 
 enum InputInnerTypeLastClassRootClass2a
@@ -18,7 +18,7 @@ enum InputInnerTypeLastClassRootClass2a
     private int mFoo = 0;
 
     class AsyncProcess {
-        private final int startLogErrorsCnt = 0;
+        
         protected final int maxTotalConcurrentTasks = 0;
     }
 }

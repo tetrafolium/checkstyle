@@ -1,6 +1,5 @@
 package com.puppycrawl.tools.checkstyle.checks.design.visibilitymodifier;
 
-import java.io.*;
 import java.util.*;
 
 class InputVisibilityModifiersNullModifiers {

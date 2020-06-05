@@ -13,13 +13,13 @@ public class InputEqualsAvoidNull {
     public void flagForEquals() {
 
         Object o = new Object();
-        String s = "pizza";
+        
 
-        o.equals("hot pizza")/*comment test*/;
+        "hot pizza".equals(o)/*comment test*/;
 
         o.equals(s = "cold pizza");
 
-        o.equals(((s = "cold pizza")));
+        o.equals(s = "cold pizza");
 
         o.equals("cheese" + "ham" + "sauce");
 
@@ -34,11 +34,11 @@ public class InputEqualsAvoidNull {
     public void flagForEqualsIgnoreCase() {
         String s = "pizza";
 
-        s.equalsIgnoreCase("hot pizza");
+        "hot pizza".equalsIgnoreCase(s);
 
         s.equalsIgnoreCase(s = "cold pizza");
 
-        s.equalsIgnoreCase(((s = "cold pizza")));
+        s.equalsIgnoreCase(s = "cold pizza");
 
         s.equalsIgnoreCase("cheese" + "ham" + "sauce");
 
@@ -54,11 +54,11 @@ public class InputEqualsAvoidNull {
         Object o = new Object();
         String s = "pizza";
 
-        o.equals("hot pizza");
+        "hot pizza".equals(o);
 
         o.equals(s = "cold pizza");
 
-        o.equals(((s = "cold pizza")));
+        o.equals(s = "cold pizza");
 
         o.equals("cheese" + "ham" + "sauce");
 
@@ -66,11 +66,11 @@ public class InputEqualsAvoidNull {
 
         o.equals((("cheese" + "ham")) + "sauce");
 
-        s.equalsIgnoreCase("hot pizza");
+        "hot pizza".equalsIgnoreCase(s);
 
         s.equalsIgnoreCase(s = "cold pizza");
 
-        s.equalsIgnoreCase(((s = "cold pizza")));
+        s.equalsIgnoreCase(s = "cold pizza");
 
         s.equalsIgnoreCase("cheese" + "ham" + "sauce");
 
@@ -217,14 +217,14 @@ class MyString {
         return true;
     }
 
-    private String pizza;
+    
 
     public void main() {
         MyString myString = new MyString();
         myString.equals();
-        myString.equals("what");
+        "what".equals(myString);
         myString.equalsIgnoreCase();
-        myString.equalsIgnoreCase("what");
+        "what".equalsIgnoreCase(myString);
         myString.equals(this.pizza = "cold pizza");
     }
 }
@@ -232,32 +232,36 @@ class MyString {
 class NewTest {
     static String classVar;
     String instanceVar;
-    NewTest testObj = new NewTest("");
+    NewTest testObj = new NewTest("");        
+        static String enumStatic;    
+
+    Object o2 = new Object();    
+    Object o3 = new Object();
 
     NewTest(String param) {
-        param.equals("");
+        "".equals(param);
     }
 
     public void method(String param) {
         final String localVar = "";
 
-        localVar.equals("");
-        param.equals("");
+        "".equals(localVar);
+        "".equals(param);
 
-        classVar.equals("");
-        instanceVar.equals("");
-        NewTest.classVar.equals("");
+        "".equals(classVar);
+        "".equals(instanceVar);
+        "".equals(NewTest.classVar);
         this.classVar.equals("");
         this.instanceVar.equals("");
 
         NewTest testObj = new NewTest("");
         this.testObj.instanceVar.equals(""); // not violated, too confusing
-        testObj.classVar.equals(""); // not violated
+        "".equals(testObj.classVar); // not violated
 
         for (Nested instanceVar = new Nested(); instanceVar != null; ) {
             instanceVar.equals(1);
-            if (instanceVar.equals("")) {
-                instanceVar.equals("");
+            if ("".equals(instanceVar)) {
+                "".equals(instanceVar);
             }
         }
 
@@ -265,60 +269,60 @@ class NewTest {
             String instanceVarInner;
 
             public void main() {
-                classVar.equals("");
-                instanceVar.equals("");
-                NewTest.classVar.equals("");
+                "".equals(classVar);
+                "".equals(instanceVar);
+                "".equals(NewTest.classVar);
 
-                instanceVarInner.equals("");
+                "".equals(instanceVarInner);
                 this.instanceVarInner.equals("");
-                localVar.equals("");
+                "".equals(localVar);
 
                 NewTest testObj = new NewTest("");
-                testObj.instanceVar.equals(""); // not violated
-                testObj.classVar.equals(""); // not violated
+                "".equals(testObj.instanceVar); // not violated
+                "".equals(testObj.classVar); // not violated
 
                 Inner testInnerObj = new Inner();
-                testInnerObj.instanceVarInner.equals(""); // not violated
+                "".equals(testInnerObj.instanceVarInner); // not violated
             }
         }
 
         Inner testInnerObj = new Inner();
-        testInnerObj.instanceVarInner.equals(""); // not violated
+        "".equals(testInnerObj.instanceVarInner); // not violated
 
-        Nested.nestedClassVar.equals(""); // not violated, because the equals call is not
+        "".equals(Nested.nestedClassVar); // not violated, because the equals call is not
         Nested Nested = new Nested(); // embedded in class Nested, what can lead to really
-        Nested.nestedInstanceVar.equals(""); // confusing constructions. But could be improved.
-        Nested.nestedClassVar.equals("");
+        "".equals(Nested.nestedInstanceVar); // confusing constructions. But could be improved.
+        "".equals(Nested.nestedClassVar);
     }
     static {
         final String s = "";
-        s.equals("");
+        "".equals(s);
         {
             final String x = "";
             class A {
                 void foo() {
-                    s.equals("");
-                    x.equals("");
+                    "".equals(s);
+                    "".equals(x);
                 }
             }
         }
     }
     void foo(String param) {
         try {
-            param.equals("");
+            "".equals(param);
             do {
                 String s = "";
-                s.equals("");
-            } while (param.equals(""));
+                "".equals(s);
+            } while ("".equals(param));
         } catch (Exception e) {
-            while (param.equals("")) {
-                for (String s = ""; s.equals(""); ){
-                    if (s.equals("")) {
+            while ("".equals(param)) {
+                for (String s = ""; "".equals(s); ){
+                    if ("".equals(s)) {
                         synchronized (this) {
                             switch (s) {
-                                case "1": String str = ""; str.equals("");
-                                case "2": s.equals(""); str = ""; str.equals("");
-                                case "3": param.equals("");
+                                case "1": String str = ""; "".equals(str);
+                                case "2": "".equals(s); str = ""; "".equals(str);
+                                case "3": "".equals(param);
                                     break;
                             }
                         }
@@ -332,18 +336,18 @@ class NewTest {
         static String nestedClassVar;
         String nestedInstanceVar;
         public void method() {
-            classVar.equals("");
-            NewTest.classVar.equals("");
+            "".equals(classVar);
+            "".equals(NewTest.classVar);
             this.nestedInstanceVar.equals("");
-            nestedClassVar.equals("");
-            nestedInstanceVar.equals("");
+            "".equals(nestedClassVar);
+            "".equals(nestedInstanceVar);
 
             class Inner {
                 public void method() {
-                    classVar.equals("");
-                    NewTest.classVar.equals("");
-                    nestedClassVar.equals("");
-                    nestedInstanceVar.equals("");
+                    "".equals(classVar);
+                    "".equals(NewTest.classVar);
+                    "".equals(nestedClassVar);
+                    "".equals(nestedInstanceVar);
                 }
             }
         }
@@ -354,50 +358,41 @@ class NewTest {
         C(1212) {
             String constDefVar;
             public void doSomething() {
-                constDefVar.equals("");
+                "".equals(constDefVar);
             }
         };
 
         Map.Entry<String,Long> enumInstance;
 
         EmbeddedEnum(int i) {
-            enumInstance.equals("");
+            "".equals(enumInstance);
         }
 
         public static void doSomethingStatic() {
-            enumStatic.equals("");
-            enumStatic.equals(null);
+            "".equals(enumStatic);
+            (enumStatic == null);
         }
-        static String enumStatic;
     }
 
     private String foo() {return "";}
     private Object foo(int i) {return i;}
-
-    Object o2 = new Object();
-    Object o3 = new Object();
     private void bar() {
         foo().equals(""); // methods are not checked
         foo(0).equals("");
         this.foo().equals("");
-        Object o1 = new Object(); o1.equals("");
-        o2.equals(""); String o2 = "";
-        o3.equals("");
-String o3 = "";
+        Object o1 = new Object(); "".equals(o1);
+        "".equals(o2); String o2 = "";
+        "".equals(o3);
+
     }
 }
 class Anonymous {
     public static void main(String[] args) {
-        Runnable anonym = new Runnable() {
-            String nullableStr = null;
-            public void run() {
-                nullableStr.equals("Null");
-            };
-        };
+        
         Object nullableStr = new Object();
-        nullableStr.equals("");
+        "".equals(nullableStr);
     }
-    {}
+    
 }
 
 enum TestEnum {

@@ -1,6 +1,5 @@
 package com.puppycrawl.tools.checkstyle.checks.indentation.indentation; //indent:0 exp:0
 
-import java.lang.Thread; //indent:0 exp:0
 
 public class InputIndentationStrictCondition { //indent:0 exp:0
     void method(Thread foo) { //indent:4 exp:4

@@ -62,7 +62,7 @@ public class InputNPathComplexityDefault {
     // NP = 3
     public InputNPathComplexityDefault()
     {
-        int i = 1;
+        
         // NP = (if-range=1) + (else-range=2) + 0 = 3
         if (System.currentTimeMillis() == 0) {
         // NP(else-range) = (if-range=1) + (else-range=1) + (expr=0) = 2
@@ -74,7 +74,7 @@ public class InputNPathComplexityDefault {
     // STATIC_INIT
     // NP = 3
     static {
-        int i = 1;
+        
         // NP = (if-range=1) + (else-range=2) + 0 = 3
         if (System.currentTimeMillis() == 0) {
         // NP(else-range) = (if-range=1) + (else-range=1) + (expr=0) = 2
@@ -86,7 +86,7 @@ public class InputNPathComplexityDefault {
     // INSTANCE_INIT
     // NP = 3
     {
-        int i = 1;
+        
         // NP = (if-range=1) + (else-range=2) + 0 = 3
         if (System.currentTimeMillis() == 0) {
         // NP(else-range) = (if-range=1) + (else-range=1) + (expr=0) = 2
@@ -111,13 +111,9 @@ public class InputNPathComplexityDefault {
     }
 
     public void InputNestedTernaryCheck() {
-        double x = (getSmth() || Math.random() == 5) ? null : (int) Math
-                .cos(400 * (10 + 40)); // good
-        double y = (0.2 == Math.random()) ? (0.3 == Math.random()) ? null : (int) Math
-                .cos(400 * (10 + 40)) : 6; // bad (nested in first position)
-        double z = (Integer) ((0.2 == Math.random()) ? (Integer) null + apply(null)
-                : (0.3 == Math.random()) ? (Integer) null : (int) Math
-                        .sin(300 * (12 + 30))); // bad (nested in second
+         // good
+         // bad (nested in first position)
+         // bad (nested in second
                                                 // position)
     }
     public boolean getSmth() { return true; };

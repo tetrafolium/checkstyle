@@ -11,7 +11,7 @@ package com.puppycrawl.tools.checkstyle.checks.blocks.rightcurly;
  */
 public class InputRightCurlyNameForOneLiners {
     public static void main(String[] args) {
-        boolean after = false;
+        
         try {
         } finally { after = true; }
     }

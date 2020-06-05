@@ -16,7 +16,7 @@ public class InputMissingJavadocMethodSetterGetter
 
     public void setNumber1()
     {
-        mNumber = mNumber;
+        
     }
 
     public void setNumber2(int number)

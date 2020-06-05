@@ -14,7 +14,7 @@ public class InputLeftCurlyEolSwitch {
             { // warn
                 break;
             }
-            case (1+0):
+            case 1+0:
             { // warn
                 break;
             }
@@ -28,14 +28,12 @@ public class InputLeftCurlyEolSwitch {
             case 3:
             case 4:
                 x++;
-                { // OK, standalone block
-                }
+                
                 break;
-            case 5: {
-                }
+            case 5: 
                 break;
-            case (5
-                +1):
+            case 5
+                +1:
             { // warn
                 break;
             }

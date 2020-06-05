@@ -42,14 +42,8 @@ public class InputFinalLocalVariableBreak {
 
     int foo2() {
         int a;
-        if (true) {
+        {
             a = 1;
-        } else {
-            a = 2;
-            if (a == 3) {
-                return a;
-            }
-            a = 4;
         }
         return a;
     }

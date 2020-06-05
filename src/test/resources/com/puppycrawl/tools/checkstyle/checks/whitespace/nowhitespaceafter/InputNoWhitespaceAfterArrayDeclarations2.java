@@ -2,11 +2,11 @@ package com.puppycrawl.tools.checkstyle.checks.whitespace.nowhitespaceafter;
 
 import java.util.List;
 
-import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 public class InputNoWhitespaceAfterArrayDeclarations2
-{
+{    
 
+    Object someStuff4 = boolean [].class;/
     public class A {
         public int[][] create(int i, int j) {
             return new int[3] [3];//incorrect, 12:31
@@ -63,8 +63,7 @@ public class InputNoWhitespaceAfterArrayDeclarations2
             return null;
         }
     }
-
-    Object someStuff4 = boolean [].class;//incorrect, 67:33
+/incorrect, 67:33
     String[][] someStuff5 = new String[4][9];
     String[][] someStuff6 = (java.lang.String  []  []) someStuff5;//incorrect, 69:48,52
     String[][] someStuff7 = (String [][]) someStuff5;//incorrect, 70:37

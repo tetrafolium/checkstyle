@@ -2,8 +2,6 @@
 
 import java.util.List;
 import java.util.List;
-import java.util.Arrays;
-import java.lang.String;
 import static java.lang.Math.PI;
 
 public class InputRedundantImport_UnnamedPackage

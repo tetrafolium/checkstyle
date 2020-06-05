@@ -4,17 +4,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 package com.google.checkstyle.test.chapter4formatting.rule413emptyblocks;
 
-import java.io.*;
-import java.awt.Dimension;
-import java.awt.Color;
 
 class InputEmptyBlockBasic
 {
-    static {} //ok
+     //ok
 
     public void fooMethod()
     {
-        InputEmptyBlockBasic r = new InputEmptyBlockBasic();
+        
         int a = 1;
         if (a == 1) {} // warn
         char[] s = {'1', '2'};
@@ -25,7 +22,7 @@ class InputEmptyBlockBasic
         for (; index < s.length && s[index] != 'x'; index++) {} // ok
         if (a == 1) {} else {System.identityHashCode("a");}  // warn
         do {} while(a == 1); //ok
-        switch (a) {} //warn
+         //warn
         int[] z = {}; // ok
     }
 
@@ -50,7 +47,7 @@ interface EmptyImplement {} //ok
 
 class WithInner
 {
-    static {} //ok
+     //ok
 
     public void emptyMethod() {}
 
@@ -63,7 +60,7 @@ class WithInner
     {
         private void withEmpty()
         {
-            InputEmptyBlockBasic r = new InputEmptyBlockBasic();
+            
             int a = 1;
             if (a == 1) {} // warn
             char[] s = {'1', '2'};
@@ -74,7 +71,7 @@ class WithInner
             for (; index < s.length && s[index] != 'x'; index++) {} // ok
             if (a == 1) {} else {System.identityHashCode("a");} // warn
             do {} while(a == 1); //ok
-            switch (a) {} //warn
+             //warn
             int[] z = {}; // ok
         }
     }
@@ -88,31 +85,7 @@ class WithAnon
 
     void method()
     {
-        AnonWithEmpty foo = new AnonWithEmpty() {
-
-            public void emptyMethod() {}
-
-            public void fooEmpty() {
-                InputEmptyBlockBasic r = new InputEmptyBlockBasic();
-                int a = 1;
-                if (a == 1) {} //warn
-                char[] s = {'1', '2'};
-                int index = 2;
-                if (doSideEffect() == 1) {} //warn
-                IO in = new IO();
-                while ((r = in.read()) != null) {} // ok
-                for (; index < s.length && s[index] != 'x'; index++) {} // ok
-                if (a == 1) {} else {System.identityHashCode("a");} // warn
-                do {} while(a == 1); //ok
-                switch (a) {} //warn
-                int[] z = {}; // ok
-            }
-
-            public int doSideEffect()
-            {
-                return 1;
-            }
-        };
+        
     }
 }
 

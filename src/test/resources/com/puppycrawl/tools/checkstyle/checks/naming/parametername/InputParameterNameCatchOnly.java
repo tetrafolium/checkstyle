@@ -8,7 +8,7 @@ public class InputParameterNameCatchOnly {
         if (System.currentTimeMillis() > 1000)
             return 1;
 
-        int test = 0;
+        
 
         try
         {

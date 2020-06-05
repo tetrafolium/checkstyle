@@ -18,39 +18,22 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 package com.puppycrawl.tools.checkstyle.checks.whitespace.emptylineseparator; //no violation: trailing comment
-import java.io.Serializable;
-import java.util.ArrayList; /*no violation: trailing comment*/
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Callable;
-import java.util.Collections;
 /* no violation: block comment after token*/
 
-import com.puppycrawl.tools.checkstyle.checks.whitespace.emptylineseparator.InputEmptyLineSeparator;
 //no violation: single line comment after token
 
-import javax.swing.AbstractAction; /* no violation: no trailing comment
-*/
 
-import org.apache.commons.beanutils.locale.converters.ByteLocaleConverter;
-import org.apache.commons.beanutils.BasicDynaBean;
 class InputEmptyLineSeparator
 {
     public static final double FOO_PI = 3.1415;
-    private boolean flag = true;
-    static {
-        //empty static initializer
-    }
+    
+    
     // no blank line - fail
-    {
-        //empty instance initializer
-    }
+    
 
     // one blank line - ok
-    {
-        //empty instance initializer
-    }
+    
     // no blank line - fail
     /**
      *
@@ -64,13 +47,13 @@ class InputEmptyLineSeparator
     //separator blank line
     public int compareTo(Object aObject)
     {
-        int number = 0;
+        
         return 0;
     }
 
     public int compareTo2(Object aObject) // empty line - ok
     {
-        int number = 0;
+        
         return 0;
     }
     /**
@@ -117,11 +100,9 @@ class InputEmptyLineSeparator
 
         public static final double FOO_PI_INNER = 3.1415;
 
-        private boolean flagInner = true;
+        
 
-        {
-            //empty instance initializer
-        }
+        
 
         private InnerClass()
         {
@@ -132,21 +113,21 @@ class InputEmptyLineSeparator
 
     class SecondInnerClass {
 
-        private int intVariable;
+        
     }
 }
 
 class Class2{
     public int compareTo(InputEmptyLineSeparator aObject) //ok
     {
-        int number = 0;
+        
         return 0;
     }
 
     Class2 anon = new Class2(){
         public int compareTo(InputEmptyLineSeparator aObject) //ok
         {
-            int number = 0;
+            
             return 0;
         }
     };

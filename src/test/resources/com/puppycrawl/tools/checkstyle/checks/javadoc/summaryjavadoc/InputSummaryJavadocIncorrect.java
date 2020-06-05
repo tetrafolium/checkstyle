@@ -4,7 +4,12 @@ package com.puppycrawl.tools.checkstyle.checks.javadoc.summaryjavadoc;
  * A {@code Foo. Foo}
  * is a simple Javadoc. Some javadoc.
  */
-class InputSummaryJavadocIncorrect {
+class InputSummaryJavadocIncorrect {    
+
+    /**
+     * Some Javadoc.
+     */
+    public static final byte NUL = 0;
 
     /**
      * As of JDK 1.1, replaced by {@link #setBounds(int,int,int,int)}
@@ -23,11 +28,6 @@ class InputSummaryJavadocIncorrect {
      * An especially short bit of Javadoc.
      */
     void foo6() {}
-
-    /**
-     * Some Javadoc.
-     */
-    public static final byte NUL = 0;
 
     /**
      * <a href="mailto:vlad@htmlbook.ru"/>

@@ -1,7 +1,6 @@
 package /** violation */ com.puppycrawl.tools.checkstyle.checks.javadoc.invalidjavadocposition;
 
 /** violation */
-import java.lang.String;
 
 /** violation */
 /** valid */
@@ -12,7 +11,7 @@ class InputInvalidJavadocPosition {
 /* ignore */
 class InputInvalidJavadocPosition2 {
     /** violation */
-    static { /* ignore */ }
+    
 
     /** violation */
     /** valid */
@@ -41,7 +40,7 @@ class InputInvalidJavadocPosition2 {
     void method22(/** violation */) {}
     void method23() /** violation */ {}
     void method24() { /** violation */ }
-    void method25() { /** violation */ int variable; }
+    void method25() { /** violation */  }
 }
 @Deprecated
 /** violation */
@@ -53,9 +52,9 @@ class /** violation */ InputInvalidJavadocPosition5 {}
 class InputInvalidJavadocPosition6 /** violation */ {}
 class InputInvalidJavadocPosition7 {
     void method() {
-        /** violation */ int variable1;
-        /** violation */ final int variable2;
-        /** violation */ @Deprecated int variable3;
+        /** violation */ 
+        /** violation */ 
+        /** violation */ 
     }
 }
 /** violation */

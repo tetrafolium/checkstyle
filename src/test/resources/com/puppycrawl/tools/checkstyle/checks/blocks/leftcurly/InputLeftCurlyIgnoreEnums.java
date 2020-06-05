@@ -17,6 +17,6 @@ public class InputLeftCurlyIgnoreEnums {
     }
 
     void method1(int a) {
-        switch (a) {case 1: ; }
+        switch (a) {case 1:  }
     }
 }

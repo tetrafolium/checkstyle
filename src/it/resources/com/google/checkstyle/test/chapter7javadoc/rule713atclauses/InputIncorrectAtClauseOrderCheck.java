@@ -17,19 +17,19 @@ class InputIncorrectAtClauseOrderCheck implements Serializable
      * The client's first name.
      * @serial
      */
-    private String fFirstName;
+    
 
     /**
      * The client's first name.
      * @serial
      */
-    private String sSecondName;
+    
 
     /**
      * The client's first name.
      * @serialField
      */
-    private String tThirdName;
+    
 
     /**
      * Some text.

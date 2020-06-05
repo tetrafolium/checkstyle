@@ -7,63 +7,29 @@ import java.util.*;
 public class InputCommentsIndentationSurroundingCode
 {
     private void foo1() {
-        if (true) {
-            // here initialize some variables
-            int k = 0; // trailing comment
-              // violation
-            int b = 10;
-            // sss
-        }
+        
     }
 
     private void foo2() {
-        if (true) {
-            /* some */
-            int k = 0;
-                /* violation */
-            int b = 10;
-                /* violation
-                 * */
-            double d; /* trailing comment */
-                /* violation
-             *
-                */
-            boolean bb;
-            /***/
-            /* my comment*/
-            /*
-             *
-             *
-             *  some
-             */
-            /*
-             * comment
-             */
-            boolean x;
-        }
+        
     }
 
     private void foo3() {
         int a = 5, b = 3, v = 6;
         if (a == b
-            && v == b || ( a ==1
+            && v == b || a ==1
                            /// violation
                        /* violation
                         * one fine day ... */
-                                    && b == 1)   ) {
+                                    && b == 1   ) {
         }
     }
 
     private static void com() {
-        /* here's my weird trailing comment */ boolean b = true;
+        /* here's my weird trailing comment */ 
     }
 
-    private static final String[][] mergeMatrix = {
-        // This example of trailing block comments was found in PMD sources.
-        /* TOP */{ "", },
-        /* ALWAYS */{ "", "", },
-       /* NEVER */{ "NEVER", "UNKNOWN", "NEVER", },
-       /* UNKNOWN */{ "UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN" }, };
+    
 
     private void foo4() {
         if (!Arrays.equals(new String[]{""}, new String[]{""})
@@ -78,7 +44,7 @@ public class InputCommentsIndentationSurroundingCode
 
     public void foid5() {
         String s = "";
-        s.toString().toString().toString();
+        s;
         // comment
     }
 
@@ -88,7 +54,7 @@ public class InputCommentsIndentationSurroundingCode
               // block
               // ...
               // violation
-        String someStr = new String();
+        
     }
 
     public void foo7() {
@@ -97,16 +63,16 @@ public class InputCommentsIndentationSurroundingCode
              // block
              // violation
         // comment
-        String someStr = new String();
+        
     }
 
     public void foo8() {
-        String s = new String(); // comment
+         // comment
                                  // ...
                                  // block
                                  // ...
                                  // violation
-        String someStr = new String();
+        
     }
 
 
@@ -117,7 +83,7 @@ public class InputCommentsIndentationSurroundingCode
     public void foo10()
         throws Exception {
 
-        final String pattern = "^foo$";
+        
 
         final String[] expected = {
             "7:13: " + foo9("", "", ""),

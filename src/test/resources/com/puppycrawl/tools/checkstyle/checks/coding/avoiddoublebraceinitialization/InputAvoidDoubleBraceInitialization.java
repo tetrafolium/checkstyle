@@ -1,6 +1,5 @@
 package com.puppycrawl.tools.checkstyle.checks.coding.avoiddoublebraceinitialization;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /*
@@ -8,11 +7,7 @@ import java.util.ArrayList;
  */
 public class InputAvoidDoubleBraceInitialization {
     void m() {
-        ArrayList<?> list = new ArrayList<Object>() { // violation
-            {
-                add(null);
-            }
-        };
+        
         list = new ArrayList<Object>() { // violation
             {
                 add(null);
@@ -58,14 +53,12 @@ public class InputAvoidDoubleBraceInitialization {
         list = new ArrayList<Object>() {
             ;
             ;
-            {}
+            
             ;
             ;
             ;
         };
-        Object obj = new Serializable() {  // violation
-            {}
-        };
+        
         new ArrayList<Object>() {{ // violation
                 add("1");
                 add("2");
@@ -95,15 +88,14 @@ public class InputAvoidDoubleBraceInitialization {
         };
     }
 
-    {
-    }
+    
 
     enum AA {
         ;
-        {}
+        
     }
 
     class Inner {
-        {}
+        
     }
 }

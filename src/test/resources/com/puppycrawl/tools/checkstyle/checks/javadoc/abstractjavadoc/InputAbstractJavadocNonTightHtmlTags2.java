@@ -33,7 +33,7 @@ public class InputAbstractJavadocNonTightHtmlTags2 {
      * <p> <a href="www.something.com"/> Nested paragraph with `singletonTag` </p>
      * <li> Outer tag <li> Inner tag nested </li> not nested </li>
      */
-    private int field5;
+    
 
     /**
      * <body> body <p> paragraph <li> list </li> </p> </body>

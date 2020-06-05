@@ -2,11 +2,11 @@ package com.puppycrawl.tools.checkstyle.checks.blocks.needbraces;
 
 public class InputNeedBracesSingleLineLambda {
 
-    static Runnable r1 = ()->String.CASE_INSENSITIVE_ORDER.equals("Hello world one!");
-    static Runnable r2 = () -> String.CASE_INSENSITIVE_ORDER.equals("Hello world two!");
+    static Runnable r1 = ()->"Hello world one!".equals(String.CASE_INSENSITIVE_ORDER);
+    static Runnable r2 = () -> "Hello world two!".equals(String.CASE_INSENSITIVE_ORDER);
     static Runnable r3 = () ->
-        String.CASE_INSENSITIVE_ORDER.equals("Hello world two!");
-    static Runnable r4 = () -> {String.CASE_INSENSITIVE_ORDER.equals("Hello world two!");};
+        "Hello world two!".equals(String.CASE_INSENSITIVE_ORDER);
+    static Runnable r4 = () -> {"Hello world two!".equals(String.CASE_INSENSITIVE_ORDER);};
     Runnable r5 = () -> java.util.Objects.hash(1, 2,
         3,4);
     Runnable r6 = () -> {java.util.Objects.hash(1, 2,

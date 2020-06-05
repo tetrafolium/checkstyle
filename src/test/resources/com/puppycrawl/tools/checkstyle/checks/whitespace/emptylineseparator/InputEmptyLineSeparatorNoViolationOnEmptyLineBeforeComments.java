@@ -1,36 +1,24 @@
 package com.puppycrawl.tools.checkstyle.checks.whitespace.emptylineseparator;
 
-import java.lang.Object; // no violation
 
-import java.lang.Class; // no violation
 
 // no violation
-import java.lang.Long;
 
 /*
  * no violation
  */
-import java.lang.Double;
 
 /*
  * no violation
  */
 /* no violation */
-import java.lang.Object;
 
 // .
 // no violation
-import java.lang.Boolean;
 // no violation
-import java.lang.Byte;
 
 // no violation
 /* no violation */
-import java.lang.Short;
-import java.lang.Number;
-import java.lang.Runnable;
-import java.lang.Thread;
-import java.lang.StringBuilder;
 
 public class InputEmptyLineSeparatorNoViolationOnEmptyLineBeforeComments {
 
@@ -206,9 +194,7 @@ public class InputEmptyLineSeparatorNoViolationOnEmptyLineBeforeComments {
      * violation
      */
     public static class Class9 {
-        {
-            // no violation
-        }
+        
     }
 
     // no violation
@@ -341,22 +327,12 @@ public class InputEmptyLineSeparatorNoViolationOnEmptyLineBeforeComments {
     }
 
     /* no violation */
-    {
-
-        /*
-         * no
-         * violation
-         */
-
-
-    }
+    
 
     /* no violation */
 
     // violation
-    {
-        int i = 1;
-    }
+    
 
     // no violation
     // .

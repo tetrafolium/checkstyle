@@ -65,9 +65,9 @@ class PrivateScope {
     }
 
     public void l() {
-        FuncIfc l1 = (int lexp)->{};
+        
 
-        FuncIfc l2 = (limp)->{};
+        
     }
 }
 

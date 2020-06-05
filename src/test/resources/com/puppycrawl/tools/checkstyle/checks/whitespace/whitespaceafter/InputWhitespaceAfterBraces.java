@@ -34,12 +34,16 @@ class InputWhitespaceAfterBraces
         }
 
         // Invalid
-        while(condition());
-        while (condition())
+        while(condition()) {
+            ;
+        }
+        while (condition()) {
             testWhile();
-        while (condition())
+        }
+        while (condition()) {
             if (condition())
                 testWhile();
+        }
     }
 
     /** Test for loops **/
@@ -51,13 +55,17 @@ class InputWhitespaceAfterBraces
         }
 
         // Invalid
-        for(int i = 1;i < 5;i++);
-        for (int i = 1; i < 5; i++)
+        for(int i = 1;i < 5;i++) {
+            ;
+        }
+        for (int i = 1; i < 5; i++) {
             testFor();
+        }
         for (int i = 1; i < 5;
-             i++)
+             i++) {
             if (i > 2)
                 testFor();
+        }
     }
 
     /** Test if constructs **/
@@ -75,8 +83,7 @@ class InputWhitespaceAfterBraces
         }
 
         // Invalid
-        if (condition());
-        if (condition())
+        if (condition() && condition())
             testIf();
         if (condition())
             testIf();
@@ -92,15 +99,14 @@ class InputWhitespaceAfterBraces
         }
         else
             testIf();
-        if (condition())
-            if (condition())
-                testIf();
+        if (condition() && condition())
+            testIf();
     }
 
     void whitespaceAfterSemi()
     {
         //reject
-        int i = 1;int j = 2;
+        
 
         //accept
         for (;;) {

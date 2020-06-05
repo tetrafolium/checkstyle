@@ -22,7 +22,7 @@ public class InputIndentationUseTwoSpaces { //indent:0 exp:0
     if (test) //indent:4 exp:4
     { //indent:4 exp:4
       while ( //indent:6 exp:6
-        test == false) { //indent:8 exp:8
+        !(test)) { //indent:8 exp:8
         System.exit(2); //indent:8 exp:8
       } //indent:6 exp:6
     } //indent:4 exp:4

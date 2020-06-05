@@ -32,13 +32,8 @@ public class InputIndentationLambda2 { //indent:0 exp:0
     } //indent:4 exp:4
 
     public void makeTwoParams() { //indent:4 exp:4
-        TwoParams t0 = new TwoParams( //indent:8 exp:8
-                (x) -> print(x * 1), //indent:16 exp:16
-                (x) -> print(x * 2) //indent:16 exp:16
-        ); //indent:8 exp:8
+         //indent:8 exp:8
 
-        TwoParams t1 = new TwoParams( //indent:8 exp:8
-                (x) -> print(x * 1), //indent:16 exp:16
-                (x) -> print(x * 2)); //indent:16 exp:16
+         //indent:16 exp:16
     } //indent:4 exp:4
 } //indent:0 exp:0

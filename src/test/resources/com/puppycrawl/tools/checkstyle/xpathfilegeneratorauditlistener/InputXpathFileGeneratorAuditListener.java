@@ -2,7 +2,7 @@ package com.puppycrawl.tools.checkstyle.xpathfilegeneratorauditlistener;
 
 public class InputXpathFileGeneratorAuditListener {
 
-    private boolean isValid = true;
+    
 
     public String sayHello(String name) {
         return "Hello, " + name;

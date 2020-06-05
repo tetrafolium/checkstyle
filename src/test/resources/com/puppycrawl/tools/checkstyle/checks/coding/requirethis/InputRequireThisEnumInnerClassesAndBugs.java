@@ -1,12 +1,12 @@
 package com.puppycrawl.tools.checkstyle.checks.coding.requirethis;
 
-import java.awt.Toolkit;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 public class InputRequireThisEnumInnerClassesAndBugs {
-    int i;
+    int i;    
+    int I = 0;
     void method1() {
         i = 3;
     }
@@ -35,7 +35,6 @@ public class InputRequireThisEnumInnerClassesAndBugs {
         this.<String>method3();
         this.<I>method3();
     }
-    int I = 0;
     private class I {}
 }
 //  enum
@@ -58,17 +57,14 @@ enum MyEnum
 }
 
 class Bug2123003 {
-    @Rock(band = "GnR")
-    private String band;
+    
 
     class Inner {
-        @Rock(band = {"GnR"})
-        private String band;
+        
     }
 
     class Inner2 {
-        @Rock(band = {"Tool"})
-        private String band;
+        
     }
     /*     \m/(>.<)\m/     */
     @interface Rock {
@@ -111,7 +107,7 @@ class Issue2240 {
     int i;
     void foo() {
         i++;
-        i++; int i = 1; i++;
+        i++;  i++;
         instanceMethod();
     }
     void instanceMethod() {};
@@ -152,17 +148,14 @@ class NestedRechange {
 }
 class NestedFrames {
     int a = 0;
-    int b = 0;
+    int b = 0;    
+    final NestedFrames NestedFrames = new NestedFrames();
 
     public int oneReturnInMethod2() {
         for (int i = 0; i < 10; i++) {
             int a = 1;
-            if (a != 2 && true) {
-                if (true | false) {
-                    if (a - a != 0) {
-                        a += 1;
-                    }
-                }
+            if (a != 2 && true && true | false && a - a != 0) {
+                a += 1;
             }
         }
         return a + a * a;
@@ -173,5 +166,4 @@ class NestedFrames {
         }
         return b + b * b;
     }
-    final NestedFrames NestedFrames = new NestedFrames();
 }

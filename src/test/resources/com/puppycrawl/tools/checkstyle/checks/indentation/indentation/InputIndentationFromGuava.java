@@ -120,8 +120,7 @@ class InputIndentationFromGuava<K, V> extends AbstractMap<K, V> //indent:0 exp:0
           Segment<K, V> s, ReferenceEntry<K, V> o, ReferenceEntry<K, V> newT) { //indent:10 exp:>=10
         return newT; //indent:8 exp:8
       } //indent:6 exp:6
-      {; //indent:6 exp:6
-      } //indent:6 exp:6
+       //indent:6 exp:6
      }, //indent:5 exp:5
     STRONG_WRITE { //indent:4 exp:4
       <K, V> StrongEntry<K, V> newEntry( //indent:6 exp:6

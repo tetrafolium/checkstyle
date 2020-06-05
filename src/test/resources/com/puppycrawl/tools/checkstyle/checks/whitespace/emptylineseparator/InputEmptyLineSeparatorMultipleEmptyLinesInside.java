@@ -27,23 +27,15 @@ public abstract class InputEmptyLineSeparatorMultipleEmptyLinesInside
 
     }
 
-    private int counter;
+    
 
-    private Object obj = null;
+    
 
     abstract int generateSrc(String s);
 
-    static {
-        // empty lines below should cause a violation
+    
 
-
-    }
-
-    {
-        // empty lines below should cause a violation
-
-
-    }
+    
 
     private static void foo() {
 

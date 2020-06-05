@@ -2,31 +2,19 @@ package com.puppycrawl.tools.checkstyle.checks.blocks.rightcurly;
 
 public class InputRightCurlyAlone {
 
-    private int a;
-    private static int b;
+    
+    
     {  a = 2; }  //violation
     static { b = 3; }  //violation
 
     void method1() {
-        Thread t = new Thread() {@Override public void run() {
-            int a; int b;} //violation
-        };
+        
     }
 
     void method2(java.util.HashSet<String> set) {
-        java.util.Map<String, String> map1 = new java.util.LinkedHashMap<String, String>() {{
-            put("Hello", "World");
-            put("first", "second");
-            put("polygene", "lubricants");
-            put("alpha", "betical");}  //violation
-        };
+        
 
-        java.util.Map<String, String> map2 = new java.util.LinkedHashMap<String, String>() {{
-            put("Hello", "World");
-            put("first", "second");
-            put("polygene", "lubricants");
-            put("alpha", "betical");
-        }}; //NO violation
+         //NO violation
     }
 
     void method3() {
@@ -48,7 +36,7 @@ public class InputRightCurlyAlone {
 
         do {a--;} while (a > 3);  //violation
 
-        for (int i = 1; i < 10; i++) { byte b = 10; }  //violation
+        for (int i = 1; i < 10; i++) {  }  //violation
 
         if (a < 2) { --a; } else if (a > 3) { a++; } //2 violations
 
@@ -59,12 +47,7 @@ public class InputRightCurlyAlone {
     }
 
     void method6(int a) {
-        java.util.Map<String, String> map3 = new java.util.LinkedHashMap<String, String>() {{
-            put("Hello", "World");
-            put("first", "second");
-            put("polygene", "lubricants");
-        }{}; // violation
-        };
+        
     }
 
     public @interface TestAnnotation {} //violation

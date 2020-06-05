@@ -1,6 +1,5 @@
 package com.puppycrawl.tools.checkstyle.checks.annotation.annotationonsameline;
 
-import java.util.List;
 
 @Ann
 @Ann2 interface TestInterface {
@@ -18,8 +17,7 @@ public @Ann
     @Ann2 private Integer x = new @Ann
             @Ann2 Integer(0);
 
-    private List<@Ann
-            @Ann2 Integer> integerList;
+    
 
     @Ann
     @Ann2 enum TestEnum {

@@ -24,7 +24,7 @@ class InputLeftCurlyDefault3
                     break;
                 }
                 else if (x < 0) {
-                    ;
+                    
                 }
                 else
                 {
@@ -61,7 +61,7 @@ class InputLeftCurlyDefault3
 
         for (int k = 0; k < 1; k++)
         {
-            String innerBlockVariable = "";
+            
         }
 
         // test input for bug reported by Joe Comuzzi
@@ -72,10 +72,7 @@ class InputLeftCurlyDefault3
     }
 
     // Test static initialiser
-    static
-    {
-        int x = 1; // should not require any javadoc
-    }
+    
 
 
 
@@ -90,11 +87,10 @@ class InputLeftCurlyDefault3
         boolean flag = true;
         if (flag) {
             System.identityHashCode("heh");
-            flag = !flag; } String.CASE_INSENSITIVE_ORDER.
-              equals("Xe-xe");
+            flag = !flag; } "Xe-xe".equals(String.CASE_INSENSITIVE_ORDER);
         // it is ok to have rcurly on the same line as previous
         // statement if lcurly on the same line.
-        if (flag) { String.CASE_INSENSITIVE_ORDER.equals("it is ok."); }
+        if (flag) { "it is ok.".equals(String.CASE_INSENSITIVE_ORDER); }
     }
 }
 
@@ -118,7 +114,7 @@ class FooMethod
 {
         public void fooMethod()
     {
-                int i = 1;
+                
     }}
 
 /**
@@ -155,16 +151,12 @@ interface EmptyInterface3 {}
 
 class ClassWithStaticInitializers
 {
-    static {
-    }
-    static
-    {}
+    
+    
 
     static class Inner
     {
-        static {
-            int i = 1;
-        }
+        
     }
 
 }

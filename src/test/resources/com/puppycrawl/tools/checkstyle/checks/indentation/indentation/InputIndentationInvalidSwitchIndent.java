@@ -85,15 +85,10 @@ public class InputIndentationInvalidSwitchIndent { //indent:0 exp:0
             } //indent:12 exp:12
         } //indent:8 exp:8
 
-        switch (s) { //indent:8 exp:8
-      } //indent:6 exp:8 warn
+         //indent:6 exp:8 warn
 
-        switch (s) //indent:8 exp:8
-      { //indent:6 exp:8 warn
-          } //indent:10 exp:8 warn
-        switch (s) //indent:8 exp:8
-          { //indent:10 exp:8 warn
-      } //indent:6 exp:8 warn
+         //indent:10 exp:8 warn
+         //indent:6 exp:8 warn
 
         switch (s) { //indent:8 exp:8
 	    case 1: //indent:8 exp:12 warn

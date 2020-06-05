@@ -1,6 +1,5 @@
 package com.puppycrawl.tools.checkstyle.checks.javadoc.abstractjavadoc;
 
-import java.io.ObjectStreamField;
 import java.io.Serializable;
 
 /**
@@ -21,19 +20,19 @@ public class InputAbstractJavadocNoWsBeforeDescriptionInJavadocTags implements S
      * Parse Error from ANTLR.
      * @serialField Fieldname-fieldtype-fielddescription
      */
-    private static ObjectStreamField objectStreamField1;
+    
 
     /**
      * Parse Error from ANTLR.
      * @serialField Fieldname fieldtype-fielddescription
      */
-    private static ObjectStreamField objectStreamField2;
+    
 
     /**
      * @serialField Fieldname -fieldtype -fielddescription <!-- No
      * error -->
      */
-    private static ObjectStreamField objectStreamField3;
+    
 
     /**
      * Parse Error from ANTLR.

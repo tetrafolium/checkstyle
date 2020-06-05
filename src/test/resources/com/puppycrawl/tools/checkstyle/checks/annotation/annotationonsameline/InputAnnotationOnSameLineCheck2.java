@@ -3,15 +3,12 @@ package com.puppycrawl.tools.checkstyle.checks.annotation.annotationonsameline;
 import static java.lang.annotation.ElementType.*;
 
 import java.lang.annotation.Target;
-import java.util.List;
-import java.util.ArrayList;
 
 public class InputAnnotationOnSameLineCheck2 {
 
-    @Ann
-    private List<String> names = new ArrayList<>();
+    
 
-    @Ann private List<String> names2 = new ArrayList<>();
+    
 
     @SuppressWarnings("deprecation")
     @Ann Integer x;

@@ -55,11 +55,9 @@ public class InputIndentationChainedMethodWithBracketOnNewLine {           //ind
         .thenReturn(                                                       //indent:8 exp:8
             new InnerClass("response", "")                                 //indent:12 exp:12
         );                                                                 //indent:8 exp:8
-    String string1 =                                                       //indent:4 exp:4
-        foo("fooooooooooooooo", 0, false);                                 //indent:8 exp:>=8
-    String string2 =                                                       //indent:4 exp:4
-     foo("fooooooooooooooo", 0, false);                                 //indent:5 exp:>=8 warn
-    when().indentation(new String("foo"),                                  //indent:4 exp:4
+                                     //indent:8 exp:>=8
+                                     //indent:5 exp:>=8 warn
+    when().indentation("foo",                                  //indent:4 exp:4
                        "bar");                                             //indent:23 exp:>=8
     when().                                                                //indent:4 exp:4
         indentation("a","b");                                              //indent:8 exp:8
@@ -71,16 +69,14 @@ public class InputIndentationChainedMethodWithBracketOnNewLine {           //ind
   static String foo (String aStr,                                          //indent:2 exp:2
         int aNnum, boolean aFlag) {                                        //indent:8 exp:>=6
 
+    //indent:13 exp:>=8
+    
+    //indent:14 exp:>=10
     if (true && true &&                                                    //indent:4 exp:4
-             true && true) {                                               //indent:13 exp:>=8
-
-      String string2 = foo("fooooooo"                                      //indent:6 exp:6
-              + "oooooooo", 0, false);                                     //indent:14 exp:>=10
-      if (false &&                                                         //indent:6 exp:6
+             true && true && false &&                                                         //indent:6 exp:6
               false && false) {                                            //indent:14 exp:>=10
 
-    }                                                                      //indent:4 exp:6 warn
-    }                                                                      //indent:4 exp:4
+  }                                                                      //indent:4 exp:4
   return "string";                                                         //indent:2 exp:4 warn
   }                                                                        //indent:2 exp:2
 

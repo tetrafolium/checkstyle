@@ -150,22 +150,22 @@ class VVVVVV {
 	/**Javadoc*/ //noise
 	int/**nope*/ a/**nope*/;
 	/**Javadoc*/ //noise
-	private/**nope*/ int/**nope*/ b/**nope*/;
+	
 	/**Javadoc*/ //noise
-	private/**nope*/ final/**nope*/ int/**nope*/ c/**nope*/=1;
+	
 	/**Javadoc*/ //noise
-	private/**nope*/ static/**nope*/ final/**nope*/ int/**nope*/ d/**nope*/=1;
+	
 }
 
 class NNNNNN {
 	/**Javadoc*/ //noise
 	int/**nope*/ a/**nope*/=/**nope*/1/**nope*/;
 	/**Javadoc*/ //noise
-	private/**nope*/ int/**nope*/ b/**nope*/=/**nope*/1/**nope*/;
+	
 	/**Javadoc*/ //noise
-	private/**nope*/ final/**nope*/ int/**nope*/ c/**nope*/=/**nope*/1/**nope*/;
+	
 	/**Javadoc*/ //noise
-	private/**nope*/ static/**nope*/ final/**nope*/ int/**nope*/ d/**nope*/=/**nope*/1/**nope*/;
+	
 }
 
 
@@ -173,31 +173,31 @@ class XXXXXX {
 	/**Javadoc*/ //noise
 	Object/**nope*/ a/**nope*/ =/**nope*/ new/**nope*/ Object/**nope*/(/**nope*/)/**nope*/{/**nope*/}/**nope*/;
 	/**Javadoc*/ //noise
-	private/**nope*/ Object/**nope*/ b/**nope*/ =/**nope*/ new/**nope*/ Object/**nope*/(/**nope*/)/**nope*/{/**nope*/}/**nope*/;
+	
 	/**Javadoc*/ //noise
-	private/**nope*/ final/**nope*/ Object/**nope*/ c/**nope*/ =/**nope*/ new/**nope*/ Object/**nope*/(/**nope*/)/**nope*/{/**nope*/}/**nope*/;
+	
 	/**Javadoc*/ //noise
-	private/**nope*/ static/**nope*/ final/**nope*/ Object/**nope*/ d/**nope*/ =/**nope*/ new/**nope*/ Object/**nope*/(/**nope*/)/**nope*/{/**nope*/}/**nope*/;
+	
 }
 
 class ZZZZZZ {
 	/**Javadoc*/ //noise
 	@Component2/**nope*/ Object/**nope*/ a/**nope*/ =/**nope*/ new/**nope*/ Object/**nope*/(/**nope*/)/**nope*/{/**nope*/}/**nope*/;
 	/**Javadoc*/ //noise
-	@Component2/**nope*/ private/**nope*/ Object/**nope*/ b/**nope*/ =/**nope*/ new/**nope*/ Object/**nope*/(/**nope*/)/**nope*/{/**nope*/}/**nope*/;
+	
 	/**Javadoc*/ //noise
-	@Component2/**nope*/ private/**nope*/ final/**nope*/ Object/**nope*/ c/**nope*/ =/**nope*/ new/**nope*/ Object/**nope*/(/**nope*/)/**nope*/{/**nope*/}/**nope*/;
+	
 	/**Javadoc*/ //noise
-	@Component2/**nope*/ private/**nope*/ static/**nope*/ final/**nope*/ Object/**nope*/ d/**nope*/ =/**nope*/ new/**nope*/ Object/**nope*/(/**nope*/)/**nope*/{/**nope*/}/**nope*/;
+	
 }
 
 class YYYYYY {
 	/*noise*/ /**Javadoc*/ //noise
-	private/**nope*/ @Component2/**nope*/ Object/**nope*/ b/**nope*/ =/**nope*/ new/**nope*/ Object/**nope*/(/**nope*/)/**nope*/{/**nope*/}/**nope*/;
+	
 	/**Javadoc*/ //noise
-	private/**nope*/ @Component2/**nope*/ final/**nope*/ Object/**nope*/ c/**nope*/ =/**nope*/ new/**nope*/ Object/**nope*/(/**nope*/)/**nope*/{/**nope*/}/**nope*/;
+	
 	/**Javadoc*/ //noise
-	private/**nope*/ @Component2/**nope*/ static/**nope*/ final/**nope*/ Object/**nope*/ d/**nope*/ =/**nope*/ new/**nope*/ Object/**nope*/(/**nope*/)/**nope*/{/**nope*/}/**nope*/;
+	
 }
 
 /////////////////

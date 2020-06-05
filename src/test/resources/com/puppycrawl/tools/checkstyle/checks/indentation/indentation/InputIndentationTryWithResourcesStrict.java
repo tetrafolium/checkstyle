@@ -177,8 +177,7 @@ newBufferedWriter(filePath, charset); //indent:0 exp:12 warn
                 } //indent:16 exp:16
             })) //indent:12 exp:12
         { //indent:8 exp:8
-            for (Path p : ds) //indent:12 exp:12
-                ; //indent:16 exp:16
+             //indent:16 exp:16
         } //indent:8 exp:8
     } //indent:4 exp:4
 } //indent:0 exp:0

@@ -69,7 +69,7 @@ public class InputSuppressWarningsSingle
 
         }
 
-        @SuppressWarnings((false) ? (true) ? "   " : "unused" : "unchecked")
+        @SuppressWarnings((false) ? true ? "   " : "unused" : "unchecked")
         public void aCond1() {
 
         }
@@ -80,7 +80,7 @@ public class InputSuppressWarningsSingle
         }
 
         @java.lang.SuppressWarnings((false) ? "unchecked" :
-                ("" == "") ? (false) ? (true) ? "" : "foo" : "    " : "unused")
+                ("".equals("")) ? false ? true ? "" : "foo" : "    " : "unused")
         public void seriously() {
 
         }

@@ -16,9 +16,7 @@ package com.puppycrawl.tools.checkstyle.checks.indentation.indentation; //indent
  */                                                                           //indent:1 exp:1
 public class InputIndentationValidArrayInitDefaultIndent { //indent:0 exp:0
 
-    private static char[] sHexChars = { //indent:4 exp:4
-        '0', '1', '2', '3', '4', '5', '6', '7', //indent:8 exp:8
-        '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' }; //indent:8 exp:8
+     //indent:8 exp:8
 
     int[] array = new int[] {1, 2, 3}; //indent:4 exp:4
 

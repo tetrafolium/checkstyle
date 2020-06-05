@@ -4,7 +4,12 @@ package com.google.checkstyle.test.chapter7javadoc.rule72thesummaryfragment;
  * A {@code Foo. Foo}
  * is a simple Javadoc. Some javadoc.
  */
-class InputIncorrectSummaryJavaDocCheck {
+class InputIncorrectSummaryJavaDocCheck {    
+
+    /**
+     * Some Javadoc.
+     */
+    public static final byte NUL = 0;
 
     /**
      * As of JDK 1.1, replaced by {@link #setBounds(int,int,int,int)}
@@ -23,11 +28,6 @@ class InputIncorrectSummaryJavaDocCheck {
      * An especially short bit of Javadoc.
      */
     void foo6() {}
-
-    /**
-     * Some Javadoc.
-     */
-    public static final byte NUL = 0;
 
 /*warn*//**
      * <a href="mailto:vlad@htmlbook.ru"/>

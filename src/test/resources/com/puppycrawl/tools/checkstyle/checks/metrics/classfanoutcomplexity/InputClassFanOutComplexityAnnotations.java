@@ -8,7 +8,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 /* This input file is intended to be used on strict configuration: max=0 */
 public class InputClassFanOutComplexityAnnotations { // violation
 
-    private int tokenType = TokenTypes.EXPR;
+    
 
     public void foo1(@TypeAnnotation char a) {}
 
@@ -49,7 +49,7 @@ public class InputClassFanOutComplexityAnnotations { // violation
         @MyAnnotation
         @SuppressWarnings(value = warningsType)
         public String innerClass3Method() {
-            return new Integer(5).toString();
+            return Integer.valueOf(5).toString();
         }
 
     }
@@ -58,7 +58,7 @@ public class InputClassFanOutComplexityAnnotations { // violation
 
 class OuterClass { // violation
 
-    private static final String name = "1";
+    
 
     private static final String value = "4";
 

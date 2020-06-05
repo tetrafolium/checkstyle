@@ -15,28 +15,28 @@ public class InputEqualsAvoidNullNested {
                 c = in.read();
                 if (c == '/') {
                     String nm = in.toString();
-                    if (nm.equalsIgnoreCase("applet") ||
-                            nm.equalsIgnoreCase("object") ||
-                            nm.equalsIgnoreCase("embed")) {
+                    if ("applet".equalsIgnoreCase(nm) ||
+                            "object".equalsIgnoreCase(nm) ||
+                            "embed".equalsIgnoreCase(nm)) {
                         break;
                     }
                 }
                 else {
                     String nm = scanIdentifier(in);
-                    if (nm.equalsIgnoreCase("param")) {
-                        ;
+                    if ("param".equalsIgnoreCase(nm)) {
+                        
                     }
-                    else if (nm.equalsIgnoreCase("applet")) {
-                        ;
+                    else if ("applet".equalsIgnoreCase(nm)) {
+                        
                     }
-                    else if (nm.equalsIgnoreCase("object")) {
-                        ;
+                    else if ("object".equalsIgnoreCase(nm)) {
+                        
                     }
-                    else if (nm.equalsIgnoreCase("embed")) {
-                        ;
+                    else if ("embed".equalsIgnoreCase(nm)) {
+                        
                     }
-                    else if (nm.equalsIgnoreCase("app")) {
-                        ;
+                    else if ("app".equalsIgnoreCase(nm)) {
+                        
                     }
                 }
             }

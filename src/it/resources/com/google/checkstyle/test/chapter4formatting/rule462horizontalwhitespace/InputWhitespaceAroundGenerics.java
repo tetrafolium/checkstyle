@@ -11,8 +11,7 @@ public class InputWhitespaceAroundGenerics
 //No whitespace after commas
 class BadCommas < A,B,C extends Map < A,String > > //warn
 {
-    private java.util.Hashtable < Integer, D > p = //warn
-        new java.util.Hashtable < Integer, D > (); //warn
+     //warn
 }
 
 class Wildcard

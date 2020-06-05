@@ -19,7 +19,7 @@ import javax.swing.JButton; //indent:0 exp:0
  *                                                                            //indent:1 exp:1
  * @author  jrichard                                                          //indent:1 exp:1
  */                                                                           //indent:1 exp:1
-  public class InputIndentationInvalidClassDefIndent extends Object { //indent:2 exp:0 warn
+  public class InputIndentationInvalidClassDefIndent  { //indent:2 exp:0 warn
 
 
 } //indent:0 exp:0
@@ -61,13 +61,13 @@ final class InputIndentationValidClassDefIndent44 //indent:0 exp:0
 
 } //indent:0 exp:0
 
-  final class InputIndentationValidClassDefIndent55 extends Object  //indent:2 exp:0 warn
+  final class InputIndentationValidClassDefIndent55   //indent:2 exp:0 warn
   { //indent:2 exp:0 warn
 
 } //indent:0 exp:0
 
 
-final class InputIndentationValidClassDefIndent5b extends Object  //indent:0 exp:0
+final class InputIndentationValidClassDefIndent5b   //indent:0 exp:0
 { //indent:0 exp:0
 
   } //indent:2 exp:0 warn
@@ -81,7 +81,7 @@ class InputIndentationInvalidClassDefIndentc2 //indent:0 exp:0
 
 
 
-final class InputIndentationValidClassDefIndent66 extends Object { //indent:0 exp:0
+final class InputIndentationValidClassDefIndent66  { //indent:0 exp:0
 
   class foo { } //indent:2 exp:4 warn
 
@@ -155,16 +155,11 @@ final class InputIndentationValidClassDefIndent66 extends Object { //indent:0 ex
 
         new JButton().addActionListener(new ActionListener() { //indent:8 exp:8
             public void actionPerformed(ActionEvent e) { //indent:12 exp:12
-                int i = 2; //indent:16 exp:16
+                 //indent:16 exp:16
             } //indent:12 exp:12
         }); //indent:8 exp:8,12
 
-        Object o = new ActionListener()  //indent:8 exp:8
-        { //indent:8 exp:8,12
-            public void actionPerformed(ActionEvent e) { //indent:12 exp:12
-
-            } //indent:12 exp:12
-        }; //indent:8 exp:8,12
+         //indent:8 exp:8,12
 
         myfunc2(10, 10, 10, //indent:8 exp:8
             myfunc3(11, 11, //indent:12 exp:>=12

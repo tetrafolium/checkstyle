@@ -7,7 +7,7 @@ public class InputOneTopLevelClass
     // violation: public before package
     public static final int FOO = 3;
 
-    private static final int FOO3 = 3;
+    
 
     // violation: public before package and private
     public static final int FOO4 = 3;
@@ -24,14 +24,21 @@ public class InputOneTopLevelClass
 
     // violation: statics should be before instance members
     // violation: publics before private
-    public static final int MAX_ITER_VARS = 3;
+    public static final int MAX_ITER_VARS = 3;    
+
+    // violation: member variables should be before methods or ctors
+    private int mFoo = 0;
 
     private class InnerClass
     {
         private static final int INNER_FOO = 2;
 
         // violation: public before private
-        public static final int INNER_FOO2 = 2;
+        public static final int INNER_FOO2 = 2;        
+
+        // violation: member variables should be before methods or ctors
+        // violation: public before private
+        public static final int INNER_FOO3 = 2;
 
         public InnerClass()
         {
@@ -39,10 +46,6 @@ public class InputOneTopLevelClass
             foo += INNER_FOO2;
             foo += INNER_FOO3;
         }
-
-        // violation: member variables should be before methods or ctors
-        // violation: public before private
-        public static final int INNER_FOO3 = 2;
     }
 
     public int getFoo1()
@@ -75,7 +78,4 @@ public class InputOneTopLevelClass
     {
         return 14;
     }
-
-    // violation: member variables should be before methods or ctors
-    private int mFoo = 0;
 }

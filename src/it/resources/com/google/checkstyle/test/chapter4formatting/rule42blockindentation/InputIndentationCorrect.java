@@ -1,7 +1,5 @@
 package com.google.checkstyle.test.chapter4formatting.rule42blockindentation; //indent:0 exp:0
 
-import java.util.Map; //indent:0 exp:0
-import java.util.ArrayList;//indent:0 exp:0
 
 public abstract class InputIndentationCorrect { //indent:0 exp:0
 
@@ -22,9 +20,7 @@ public abstract class InputIndentationCorrect { //indent:0 exp:0
 
   private static abstract class RangesMatcher { //indent:2 exp:2
 
-    private static final String ZEROES = "0\u0660\u06f0" //indent:4 exp:4
-        + "\u0c66\u0ce6" //indent:8 exp:8
-        + "\u1c40\u1c50"; //indent:8 exp:8
+     //indent:8 exp:8
 
     public static final InputIndentationCorrect JAVA_LETTER_OR_DIGIT = //indent:4 exp:4
         new InputIndentationCorrect() { //indent:8 exp:8
@@ -85,9 +81,7 @@ public abstract class InputIndentationCorrect { //indent:0 exp:0
   } //indent:2 exp:2
 
   public boolean veryLongLongLongCondition() { //indent:2 exp:2
-    if (veryLongLongLongCondition2()) { //indent:4 exp:4
-      return true; //indent:6 exp:6
-    } //indent:4 exp:4
+    return veryLongLongLongCondition2(); //indent:4 exp:4
     return false; //indent:4 exp:4
   } //indent:2 exp:2
 
@@ -104,10 +98,6 @@ public abstract class InputIndentationCorrect { //indent:0 exp:0
   } //indent:2 exp:2
 
   public void doSmth() { //indent:2 exp:2
-    for (int h //indent:4 exp:4
-          : c) { //indent:10 exp:>=8
-      someFooMethod("longString", "veryLongString", //indent:6 exp:6
-          "superVeryExtraLongString"); //indent:10 exp:10
-    } //indent:4 exp:4
+     //indent:4 exp:4
   } //indent:2 exp:2
 } //indent:0 exp:0

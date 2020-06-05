@@ -7,18 +7,7 @@ public class InputAnnotationUseStyleNoTrailingComma
   public void foo() {
 
       /** Suppress warnings */
-      @SuppressWarnings({"common","foo"})
-      Object o = new Object() {
-
-          @SuppressWarnings(value={"common"})
-          public String toString() {
-
-              @SuppressWarnings(value={"leo","herbie"})
-              final String pooches = "leo.herbie";
-
-              return pooches;
-          }
-      };
+      
   }
 
   @Test2(value={"foo"}, more={"bar"})

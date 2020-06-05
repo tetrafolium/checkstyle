@@ -4,9 +4,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package com.puppycrawl.tools.checkstyle.checks.blocks.emptyblock;
 
-import java.io.*; // star import for instantiation tests
-import java.awt.Dimension; // explicit import for instantiation tests
-import java.awt.Color;
 
 class InputEmptyBlockSemantic2
 {
@@ -20,7 +17,7 @@ class InputEmptyBlockSemantic2
                 while ((a = index - 1) != 0) {} // is OK
                 for (; index < s.length && s[index] != 'x'; index++) {} // is OK
                 if (a == 1) {} else {System.identityHashCode("a");} // is not OK
-                switch (a) {} //warn
+                 //warn
                 switch (a) { //ok
         case 1:
             a = 2;

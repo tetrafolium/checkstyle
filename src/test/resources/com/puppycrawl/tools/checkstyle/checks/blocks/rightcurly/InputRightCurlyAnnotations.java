@@ -1,8 +1,11 @@
 package com.puppycrawl.tools.checkstyle.checks.blocks.rightcurly;
 
 class InputRightCurlyAnnotations
-{
+{     //violation
 
+    private int var1;    
+
+    private int var2; 
     @Deprecated
     @Override
     public boolean equals(Object other) { boolean flag = true; return flag; } //violation
@@ -35,22 +38,20 @@ class InputRightCurlyAnnotations
     private String foo6() { return toString();
     }
 
-    private String foo7() { String s = toString(); return s.toString(); } //violation
+    private String foo7() { String s = toString(); return s; } //violation
 
-    private void foo8() { ; return; } //violation
+    private void foo8() {  return; }
 
-    private int var1; private int v1;
-    private int var2; private int v2;
     @SuppressWarnings("unused")
     public InputRightCurlyAnnotations() { this.var1 = 1; } //violation
     @SuppressWarnings("unused")
     public InputRightCurlyAnnotations(int v1, int v2) {this.var1 = v1; this.var2 = v2; } //violation
 
     @SuppressWarnings("unused")
-    private void foo9() { ;; } //violation
+    private void foo9() {  } //violation
 
     @SuppressWarnings("unused")
-    private void foo10() { ; } //violation
+    private void foo10() {  } //violation
 
     @SuppressWarnings("unused")
     private void foo11() {  } //empty block - violation
@@ -73,13 +74,13 @@ class InputRightCurlyAnnotations
         while (var2 == 2);
     }
 
-    static { int a; int b; } //violation
+     //violation
 
-    static { int a; } //violation
+     //violation
 
-    { int c; int d;} //violation
+     //violation
 
-    { int c; } //violation
+     //violation
 
     @Deprecated
     private void foo14() {
@@ -92,25 +93,21 @@ class InputRightCurlyAnnotations
     private void foo15() {
         class A { int a; } var1++; //violation
         class B {  } //empty block - violation
-        if(true) {
-
-        }
-        else;
+        
     }
 
     @Deprecated
     private void foo16() {
-        if (true) { return; } else { } //violation
-        if (false) {
-        }
+        { return; } //violation
+        
 
-        if (true) { return; } else { } //violation
+        { return; } //violation
     }
 
     @Deprecated
-    void foo17() { int v1 = 5; v2 = 6; } @Deprecated void foo18() {int v1 = 5; v2 = 6; } //violation
+    void foo17() {  v2 = 6; } @Deprecated void foo18() { v2 = 6; } //violation
 
-    private void foo19() {int var1 = 5;
+    private void foo19() {
         var2 = 6;} //violation
 
     @SuppressWarnings("Hello, world!")
@@ -129,9 +126,9 @@ class InputRightCurlyAnnotations
 
     @SuppressWarnings("All")
     void foo22() {
-        long startTime = System.nanoTime();
+        
         try {
-            int a = 5;
+            
             toString();
         } catch (Exception e) { //violation
             throw new RuntimeException(e);
@@ -140,38 +137,20 @@ class InputRightCurlyAnnotations
 
     @SuppressWarnings("")
     void doDoubleBraceInitialization() {
-        java.util.Map<String, String> map = new java.util.LinkedHashMap<String, String>() {{
-            put("Hello", "World");
-            put("first", "second");
-            put("polygene", "lubricants");
-            put("alpha", "betical");
-        }}; //NO violation
+         //NO violation
 
-        Thread t = new Thread() {@Override public void run() {super.run();}}; //violation
-        new Object() { public int hashCode() { return 1; }  { int a = 5; }}; //violation
-        new Object() { public int hashCode() { return 1; }  int b = 10; }; //violation
-        new Object() { public int hashCode() { return 1; }  { int c = 5; } int d = 8; }; //violation
+         //violation
+        new Object() { public int hashCode() { return 1; }  }; //violation
+        new Object() {                                                              int b = 10; public int hashCode() { return 1; }
+}; //violation
+        new Object() {                                                                            int d = 8; public int hashCode() { return 1; }  
+}; //violation
 
-        java.util.Map<String, String> map2 = new java.util.LinkedHashMap<String, String>() {{
-            put("Hello", "World");
-            put("first", "second");
-            put("polygene", "lubricants");
-            put("alpha", "betical");}  //violation
-        };
+        
 
-        java.util.Map<String, String> map3 = new java.util.LinkedHashMap<String, String>() {{
-            put("Hello", "World");
-            put("first", "second");
-            put("polygene", "lubricants");
-            put("alpha", "betical");}};  //violation
+          //violation
 
-        java.util.Map<String, String> map4 = new java.util.LinkedHashMap<String, String>() {{
-            put("Hello", "World");
-            put("first", "second");
-            put("polygene", "lubricants");
-            put("alpha", "betical");
-            }
-        };
+        
 
         foo23(new java.util.HashSet<String>() {{
             add("XZ13s");
@@ -201,7 +180,7 @@ class InputRightCurlyAnnotations
             System.identityHashCode("Hello, world!");}} //violation
 
     void foo27() {
-        for (int i = 0; i < 10; i++) {for (int j = 0; j < 15; j++) {int a;}}} //violation
+        for (int i = 0; i < 10; i++) {for (int j = 0; j < 15; j++) {}}} //violation
 
     private java.util.ArrayList<Integer> foo28(int delta) {
         return new java.util.ArrayList<Integer>() {
@@ -213,8 +192,8 @@ class InputRightCurlyAnnotations
         boolean flag = true;
         if (flag) {
             System.identityHashCode("heh");
-            flag = !flag; } String.CASE_INSENSITIVE_ORDER. //violation
-            equals("Xe-xe");
+            flag = !flag; } "Xe-xe".equals(String.CASE_INSENSITIVE_ORDER. //violation
+            equals);
     }
 
     public void testMethod() {}; //violation

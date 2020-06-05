@@ -2,17 +2,17 @@ package com.puppycrawl.tools.checkstyle.checks.coding.superclone;
 
 
 interface InputSuperClonePlainAndSubclasses {
-    void clone();
+    InputSuperClonePlainAndSubclasses clone();
 }
 
 class A {
-  public Object clone() { // violation
+  public A clone() { // violation
       return null;
   }
 }
 
 class B{
-  public Object clone() throws CloneNotSupportedException {
+  public B clone() throws CloneNotSupportedException {
       super.clone();
       return null;
   }
@@ -25,7 +25,7 @@ class C extends B {
     Object asd = null;
     super.clone(asd,asd);
     super.clone();
-    Runnable a = () -> super.clone(null, null);
+    
   }
 
   void method2() {
@@ -40,7 +40,7 @@ class C extends B {
 
 class D extends B {
 
-  public Object clone() throws CloneNotSupportedException { // violation
+  public D clone() throws CloneNotSupportedException { // violation
     super.clone(null, null);
     return null;
   }

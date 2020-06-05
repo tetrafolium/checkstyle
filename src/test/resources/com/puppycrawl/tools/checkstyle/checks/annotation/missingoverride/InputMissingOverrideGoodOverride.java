@@ -5,16 +5,7 @@ public class InputMissingOverrideGoodOverride
     Runnable r = new Runnable() {
 
         public void run() {
-            Throwable t = new Throwable() {
-
-                /**
-                 * {@inheritDoc}
-                 */
-                @Override
-                public String toString() {
-                    return "junk";
-                }
-            };
+            
         }
     };
 
@@ -22,16 +13,7 @@ public class InputMissingOverrideGoodOverride
         doFoo(new Runnable() {
 
             public void run() {
-                Throwable t = new Throwable() {
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public String toString() {
-                        return "junk";
-                    }
-                };
+                
             }
         });
     }
@@ -40,16 +22,7 @@ public class InputMissingOverrideGoodOverride
         doFoo(new Runnable() {
 
             public void run() {
-                Throwable t = new Throwable() {
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @java.lang.Override
-                    public String toString() {
-                        return "junk";
-                    }
-                };
+                
             }
         });
     }

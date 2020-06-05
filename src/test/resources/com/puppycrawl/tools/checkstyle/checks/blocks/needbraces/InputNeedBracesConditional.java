@@ -3,27 +3,16 @@ package com.puppycrawl.tools.checkstyle.checks.blocks.needbraces;
 public class InputNeedBracesConditional
 {
     public void method() {
-        if (false)
-            while(true)
-            {
+        
 
+        while (true) {
+                
             }
 
-        if (true)
-            do {
-                int a = 1;
-            }
-            while(true);
-
-        if (true)
-            for(;;){
+        for(;;){
              assert true;}
 
-        if (true){
-
-        }else {
-
-        }
+        
 
         switch(1) {
             case 1: {
@@ -47,9 +36,7 @@ public class InputNeedBracesConditional
 
         switch(1) {
             default:
-            {
-
-            }
+            
         }
 
         switch(1) {

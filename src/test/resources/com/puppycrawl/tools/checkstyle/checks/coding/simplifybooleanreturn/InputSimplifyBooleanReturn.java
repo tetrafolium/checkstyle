@@ -17,7 +17,7 @@ public class InputSimplifyBooleanReturn
         boolean even = System.currentTimeMillis() % 2 == 0;
 
         // can be simplified to "if (even)"
-        if (even == true) {
+        if (even) {
             return false;
         }
         else {
@@ -30,39 +30,29 @@ public class InputSimplifyBooleanReturn
     {
         boolean even = System.currentTimeMillis() % 2 == 0;
         // can be simplified to "return !even"
-        if (!even)
-            return true;
-        else
-            return false;
+        return !even;
     }
 
     public static boolean giveMeTrue()
     {
-        boolean tt = isOddMillis() || true;
-        boolean ff = isOddMillis() && false;
-        return !false || (true != false);
+        
+        
+        return !false || (!(false));
     }
 
     public void tryToProvokeNPE()
     {
-        if (true) {
-        }
-        else {
+        {
         }
 
-        if (true) {
-            return;
-        }
-        else {
+        {
             return;
         }
     }
 
     public boolean ifNoElse()
     {
-        if (isOddMillis()) {
-            return true;
-        }
+        return isOddMillis();
         return false;
     }
 
@@ -91,8 +81,8 @@ public class InputSimplifyBooleanReturn
     boolean b() {
         boolean asd = false;
 
-        if(asd);
-        else;
+        if(asd)
+        else
 
         return true;
     }

@@ -1,7 +1,5 @@
 package  com.puppycrawl.   tools.checkstyle.checks.whitespace.singlespaceseparator;
 
-import java.util.List;
-import  java.util.Vector;
 
 public class      InputSingleSpaceSeparatorErrors  {
     int             number; //violation
@@ -15,17 +13,15 @@ i  =2;
 }
 
     private  void foo  (int     i) {
-        if (i  > 10)  {
-            if  (bar(  )) {
-                i  ++;
-                foo  (i);
-            }
+        if (i  > 10 && bar(  )) {
+            i  ++;
+            foo  (i);
         }
     }
 
     private boolean  bar(  ) {
-        List  <Double  > list  = new Vector<  >();
-        int a	= 0;  // Multiple whitespaces before comment
-		int b = 1; // Multiple tabs as indentation are ok.
+        
+          // Multiple whitespaces before comment
+		 // Multiple tabs as indentation are ok.
         return  Math.random() <  0.5;
     }  }

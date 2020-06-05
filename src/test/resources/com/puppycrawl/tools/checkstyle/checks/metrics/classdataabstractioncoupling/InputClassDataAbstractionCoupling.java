@@ -3,7 +3,14 @@ package com.puppycrawl.tools.checkstyle.checks.metrics.classdataabstractioncoupl
 import javax.naming.NamingException;
 import java.util.*;
 
-public class InputClassDataAbstractionCoupling {
+public class InputClassDataAbstractionCoupling {    
+
+    public Set _set = /*block comment*/new HashSet();    
+    public Map _map = new HashMap();    
+    public String _string = "";    
+    public int[] _intArray = new int[0];    
+    public InnerClass _innerClass = new InnerClass();    
+    public AnotherInnerClass _anotherInnerClass = new AnotherInnerClass();
     private class InnerClass { //singleline comment
         public List _list = new ArrayList();
     }
@@ -11,13 +18,6 @@ public class InputClassDataAbstractionCoupling {
     private class AnotherInnerClass {
         public String _string = "";
     }
-
-    public Set _set = /*block comment*/new HashSet();
-    public Map _map = new HashMap();
-    public String _string = "";
-    public int[] _intArray = new int[0];
-    public InnerClass _innerClass = new InnerClass();
-    public AnotherInnerClass _anotherInnerClass = new AnotherInnerClass();
 
     public void foo() throws NamingException {
     }

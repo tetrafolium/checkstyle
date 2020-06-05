@@ -2,7 +2,7 @@ package com.google.checkstyle.test.chapter4formatting.rule487modifiers;
 
 strictfp abstract class InputModifierOrder //warn
 {
-    transient private String dontSaveMe; //warn
+     //warn
 
     volatile public int whatImReading; //warn
 
@@ -63,19 +63,19 @@ strictfp abstract class InputModifierOrder //warn
 
     /** holder for redundant 'public' modifier check. */
     public static interface InputRedundantPublicModifier
-    {
+    {        
+
+        public float PI_PUBLIC = (float) 3.14;        
+
+        final float PI_FINAL = (float) 3.14;        
+
+        /** all OK */
+        float PI_OK = (float) 3.14;
         public void a();
 
         void b();
 
         abstract void c();
-
-        public float PI_PUBLIC = (float) 3.14;
-
-        final float PI_FINAL = (float) 3.14;
-
-        /** all OK */
-        float PI_OK = (float) 3.14;
     }
     final private void method() // warn
     {
@@ -134,7 +134,7 @@ class WithInner
      */
     class Inner
     {
-        transient private String dontSaveMe; //warn
+         //warn
 
         volatile public int whatImReading; //warn
 
@@ -194,7 +194,7 @@ class WithInner
      */
     abstract class AbsInner
     {
-        transient private String dontSaveMe; //warn
+         //warn
 
         volatile public int whatImReading; //warn
 

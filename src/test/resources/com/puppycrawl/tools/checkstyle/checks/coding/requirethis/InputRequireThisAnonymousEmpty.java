@@ -2,27 +2,14 @@ package com.puppycrawl.tools.checkstyle.checks.coding.requirethis;
 
 public class InputRequireThisAnonymousEmpty {
 
-    private int bar;
+    
 
     interface AnonWithEmpty {
         public void fooEmpty();
     }
 
     void method() {
-        AnonWithEmpty foo = new AnonWithEmpty() {
-
-            public void emptyMethod() {
-            }
-
-            @Override
-            public void fooEmpty() {
-                int a = doSideEffect();
-            }
-
-            public int doSideEffect() {
-                return bar;
-            }
-        };
+        
 
         new AnonWithEmpty() {
             int anonMember = 0;

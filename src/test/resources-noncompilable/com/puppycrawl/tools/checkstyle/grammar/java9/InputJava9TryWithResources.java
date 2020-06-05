@@ -13,10 +13,10 @@ public class InputJava9TryWithResources
 
     public static void main(String[] args) throws Exception {
         MyResource resource = new MyResource();
-        try (resource) { } finally { }
+        try (resource) { } 
 
         final MyResource resource1 = new MyResource();
         final MyResource resource2 = new MyResource();
-        try (resource1;resource2) { } finally { }
+        try (resource1;resource2) { } 
     }
 }

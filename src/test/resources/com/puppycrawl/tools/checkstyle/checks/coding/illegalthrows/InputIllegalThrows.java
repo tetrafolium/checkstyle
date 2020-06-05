@@ -15,7 +15,5 @@ public class InputIllegalThrows {
     {
     }
 
-    public void finalize() throws Throwable {
-
-    }
+    
 }

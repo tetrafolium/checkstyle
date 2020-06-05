@@ -29,7 +29,7 @@ public class InputFallThrough2 {
                 System.identityHashCode(var2);
                 break;
             case 3:
-                if (true) {
+                {
                     return;
                 }
             case 4:
@@ -40,7 +40,7 @@ public class InputFallThrough2 {
                 if (var2 == 1) {
 
                 }
-                else if (true) {
+                else {
                     return;
                 }
             case 6:
@@ -54,7 +54,7 @@ public class InputFallThrough2 {
                 if (var2 ==1) {
                     break;
                 }
-                else if (true) {
+                else {
                     return;
                 }
             case 8:
@@ -69,24 +69,23 @@ public class InputFallThrough2 {
                     System.identityHashCode("0xCAFED00D");
                 }
                 else {
-                    String.CASE_INSENSITIVE_ORDER.equals("0x4B1D");
+                    "0x4B1D".equals(String.CASE_INSENSITIVE_ORDER);
                 }
                 break;
             case 10:
                 int var3 = 0xDEADBEEF;
                 switch (var3) {
                     case 0xCAFEBABE:
-                        String.CASE_INSENSITIVE_ORDER.equals("0x1CEB00DA");
+                        "0x1CEB00DA".equals(String.CASE_INSENSITIVE_ORDER);
                     default:
-                        String.CASE_INSENSITIVE_ORDER.equals("");
+                        "".equals(String.CASE_INSENSITIVE_ORDER);
                 }
-                if(true) {
+                {
                     break;
                 }
             case 11:
-                if(false) {break;}
+                
             case 12:
-                if(true);
                 break;
             default:
                 break;

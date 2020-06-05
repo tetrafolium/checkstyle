@@ -8,15 +8,7 @@ public class InputMissingOverrideBadAnnotation
          * {@inheritDoc}
          */
         public void run() {
-            Throwable t = new Throwable() {
-
-                /**
-                 * {@inheritDoc}
-                 */
-                public String toString() {
-                    return "junk";
-                }
-            };
+            
         }
     };
 
@@ -27,15 +19,7 @@ public class InputMissingOverrideBadAnnotation
              * {@inheritDoc}
              */
             public void run() {
-                Throwable t = new Throwable() {
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    public String toString() {
-                        return "junk";
-                    }
-                };
+                
             }
         });
     }

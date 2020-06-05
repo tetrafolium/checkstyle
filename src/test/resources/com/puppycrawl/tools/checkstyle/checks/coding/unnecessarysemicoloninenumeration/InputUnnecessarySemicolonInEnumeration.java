@@ -56,7 +56,7 @@ public class InputUnnecessarySemicolonInEnumeration{
     }
     enum NoEnums2 {
         ;
-        {}
+        
     }
     enum EmptyEnum {
     }
@@ -66,11 +66,11 @@ public class InputUnnecessarySemicolonInEnumeration{
     }
     enum CommaNormal {
         A,B,;
-        {}
+        
     }
     enum ParenNormal {
         A,B();
-        static {}
+        
     }
     enum SemiNextLine {
         A,

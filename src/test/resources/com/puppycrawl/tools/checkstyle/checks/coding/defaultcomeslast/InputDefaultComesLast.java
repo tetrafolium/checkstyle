@@ -22,15 +22,15 @@ public class InputDefaultComesLast
         switch (i) {
         case 1:
             break;
-        default: /**default is not last*/
-            break;
         case 2:
             break;
-        }
+        default: /**default is not last*/
+            break;
+       }
 
         switch (i) {
-        case 1: break; default: break; case 2: break;
-        }
+        case 1: break; case 2: break;
+ default: break;       }
 
         switch (i) {
             case 1:
@@ -111,11 +111,11 @@ public class InputDefaultComesLast
         }
 
         switch (i) {
-            default: //violation
-                break;
             case 1:
                 break;
-        }
+            default: //violation
+                break;
+       }
 
         switch (i) {
             case 1:

@@ -18,9 +18,7 @@ class InputNoFinalizeExtend {
 // negates effect of superclass finalizer
 class EmptyFinalizer {
 
-    protected void finalize() throws Throwable { //warn
-        // empty finalize ()
-    }
+    
 }
 
 // fails to call superclass finalize method
@@ -42,7 +40,7 @@ class PublicFinalizer {
         // This method do some stuff
     }
 
-    public void finalize() throws Throwable { //warn
+    protected void finalize() throws Throwable { //warn
         try {
             doStuff();
         } finally {
@@ -69,9 +67,7 @@ class StaticFinalizer {
     protected void finalize() { //warn
         try {
             doStuff();
-        } finally {
-
-        }
+        } 
     }
 
     class InnerFinalizer {
@@ -79,9 +75,7 @@ class StaticFinalizer {
         protected void finalize() { //warn
             try {
                 doStuff();
-            } finally {
-
-            }
+            } 
         }
     }
 }
@@ -119,9 +113,7 @@ class WithAnonymousClass {
             protected void finalize() { //warn
                 try {
                     doStuff();
-                } finally {
-
-                }
+                } 
             }
         };
         b.hit();
@@ -133,5 +125,5 @@ class WithAnonymousClass {
 }
 
 interface WithFinalizer {
-    void finalize(); //warn
+    protected void finalize(); //warn
 }

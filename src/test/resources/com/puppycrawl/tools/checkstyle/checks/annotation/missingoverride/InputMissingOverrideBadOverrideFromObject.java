@@ -27,9 +27,7 @@ public class InputMissingOverrideBadOverrideFromObject
         /**
          * {@inheritDoc}
          */
-        protected void finalize() throws Throwable
-        {
-        }
+        
     }
 }
 

@@ -8,16 +8,16 @@ public class InputAbstractJavadocJavadocTagsWithoutArgs implements Serializable{
     private static final long serialVersionUID = 7556448691029650757L;
 
     /**@see*/
-    private static int field2;
+    
 
     /**@since*/
-    private static String field3;
+    
 
     /**@version*/
-    private static Object field4;
+    
 
     /**serialField*/
-    private static Object field5;
+    
 
     /**@exception*/
     public static void method1() {

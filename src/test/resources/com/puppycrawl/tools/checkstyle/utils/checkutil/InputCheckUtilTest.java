@@ -66,5 +66,6 @@ public class InputCheckUtilTest<V, C> {
         }
     }
 
+    @Test
     public void testReceiver(InputCheckUtilTest<V, C>this, int variable) {}
 }

@@ -5,18 +5,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 package com.puppycrawl.tools.checkstyle.checks.naming.localvariablename;
 
-import java.util.HashMap;
-import java.util.Map;
 
 class InputLocalVariableNameOneCharInitVarName
 {
         public void fooMethod()
         {
                 for(int i = 1; i <10; i++) {
-                        int j = 1;
+                        
                 }
         for(int K = 1; K < 10; K++) {
-            int A = 1;
+            
         }
                 int i = 0;
 
@@ -38,13 +36,9 @@ class InputLocalVariableNameOneCharInitVarName
                         //come code
                 }
 
-                Map<String, String> map = new HashMap<String, String>();
+                
 
-                for (Map.Entry<String, String> e : map.entrySet()) {
-                        String a = "";
-                }
-                for (Map.Entry<String, String> E : map.entrySet()) {
-                        String B = "";
-                }
+                
+                
         }
 }

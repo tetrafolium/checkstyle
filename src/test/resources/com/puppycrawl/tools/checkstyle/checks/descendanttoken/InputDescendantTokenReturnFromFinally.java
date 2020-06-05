@@ -19,9 +19,8 @@ public class InputDescendantTokenReturnFromFinally {
         }
     }
     public void thisNull() {
-        boolean result = (this == null) || (null == this);
-        boolean result2 = (this != null) && (null != this);
-        boolean result3 = (this.getClass().getName()
-            == String.valueOf(null == System.getProperty("abc")));
+        
+        
+        
     }
 }

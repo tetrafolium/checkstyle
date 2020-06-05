@@ -9,7 +9,7 @@ public class InputFinalLocalVariableAssignedMultipleTimes {
 
     void foo1() {
         final boolean some_condition = true;
-        int i;
+        
         if (some_condition) {
             i = 1;
         }
@@ -18,7 +18,7 @@ public class InputFinalLocalVariableAssignedMultipleTimes {
 
     void foo2() {
         final boolean some_condition = true;
-        int i;
+        
         if (some_condition) {
             i = 1;
         }
@@ -46,28 +46,21 @@ public class InputFinalLocalVariableAssignedMultipleTimes {
 
     void foo4() {
         final boolean some_condition = true;
-        int i; // violation
+         // violation
         if (some_condition) {
-            if (true) {
-            }
-            else {
-            }
+            
             i = 1;
         }
         else {
             i = 2;
         }
-        if (true) {
-
-        }
-        else {
-        }
+        
 
     }
 
     void foo5() {
         final boolean some_condition = true;
-        int i;
+        
 
         {
             i = 2;
@@ -80,7 +73,7 @@ public class InputFinalLocalVariableAssignedMultipleTimes {
 
     void foo6() {
         final boolean some_condition = true;
-        int i;
+        
 
         {
             i = 2;
@@ -96,7 +89,7 @@ public class InputFinalLocalVariableAssignedMultipleTimes {
 
     void foo7() {
         final boolean some_condition = true;
-        int i;
+        
         if (some_condition) {
             i = 1;
         }
@@ -108,7 +101,7 @@ public class InputFinalLocalVariableAssignedMultipleTimes {
 
     void foo8() {
         final boolean some_condition = true;
-        final int i;
+        
         if (some_condition) {
             i = 1;
         }
@@ -144,7 +137,7 @@ public class InputFinalLocalVariableAssignedMultipleTimes {
             case 2:
                 s1 = "C++";
                 s2 = "Pascal";
-                ;
+                
                 break;
             case 3:
                 s1 = "Basic";
@@ -207,14 +200,14 @@ public class InputFinalLocalVariableAssignedMultipleTimes {
                 String m; // violation
                 if (o instanceof String) {
                     m = (String) o;
-                    isSyntheticMethod = m.equals("");
+                    isSyntheticMethod = "".equals(m);
                     kind = 1;
                     className = this.getClass().getName();
                 }
                 else if (o instanceof String) {
                     m = "";
                     // Don't
-                    isSyntheticMethod = m.equals("");
+                    isSyntheticMethod = "".equals(m);
                     className = this.getClass().getName();
                     kind = 2;
                     if ("<init>".equals(m.toLowerCase(Locale.getDefault()))) {
@@ -228,7 +221,7 @@ public class InputFinalLocalVariableAssignedMultipleTimes {
                     throw new IllegalStateException("impossible");
                 }
 
-                if (!m.equals("") && !"<init>".equals(m.toLowerCase(Locale.getDefault()))) {
+                if (!"".equals(m) && !"<init>".equals(m.toLowerCase(Locale.getDefault()))) {
                     final String c = "className";
                     // get inherited annotation
                     String inheritedAnnotations = new String();
@@ -240,7 +233,7 @@ public class InputFinalLocalVariableAssignedMultipleTimes {
                         }
                     }
                     for (int i = 5; i < 10; i++) {
-                        n = new String("");
+                        n = "";
                         if (n != null) {
                             inheritedAnnotations += "";
                         }
@@ -268,7 +261,7 @@ public class InputFinalLocalVariableAssignedMultipleTimes {
                     if (inheritedAnnotations == null) {
                         return null;
                     }
-                    if (inheritedAnnotations.equals("")) {
+                    if ("".equals(inheritedAnnotations)) {
                         String.CASE_INSENSITIVE_ORDER.equals("l" + " defines " + m);
                     }
                 } // if not static
@@ -348,7 +341,7 @@ public class InputFinalLocalVariableAssignedMultipleTimes {
         }
         catch (Exception e) {
             String.CASE_INSENSITIVE_ORDER.equals(e);
-            ;
+            
             return null;
         }
 
@@ -387,7 +380,7 @@ public class InputFinalLocalVariableAssignedMultipleTimes {
     // Taken from Guava
     public static int foo13(int p, int q, int mode) {
         String.CASE_INSENSITIVE_ORDER.equals(mode);
-        ;
+        
         if (q == 0) {
             throw new ArithmeticException("/ by zero"); // for GWT
         }
@@ -431,7 +424,7 @@ public class InputFinalLocalVariableAssignedMultipleTimes {
                 // subtracting two nonnegative ints can't overflow
                 // cmpRemToHalfDivisor has the same sign as compare(abs(rem), abs(q) / 2).
                 if (cmpRemToHalfDivisor == 0) { // exactly on the half mark
-                    increment = (mode == 1) || (mode == 2 & (div & 1) != 0);
+                    increment = mode == 1 || mode == 2 & (div & 1) != 0;
                 }
                 else {
                     increment = cmpRemToHalfDivisor > 0; // closer to the UP value

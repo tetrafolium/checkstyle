@@ -9,10 +9,7 @@ class InputOuterTypeNumberSimple2
     public void doSomething()
     {
         //"O" should be named "o"
-        for (Object O : new java.util.ArrayList())
-        {
-
-        }
+        
     }
 }
 

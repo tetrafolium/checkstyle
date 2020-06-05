@@ -1,8 +1,5 @@
 package com.google.checkstyle.test.chapter5naming.rule527localvariablenames;
 
-import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
 
 class InputLocalVariableNameOneCharVarName
 {
@@ -32,11 +29,9 @@ class InputLocalVariableNameOneCharVarName
             //some code
         }
 
-        Map<String, String> map = new HashMap<String, String>();
+        
 
-        for (Map.Entry<String, String> e : map.entrySet()) { //ok
-            //some code
-        }
+        
 
         for (int a = 0, b[] = { 1 }, c[][] = { { 1 }, { 2 } }; a < 10; a++) { //ok
               // something

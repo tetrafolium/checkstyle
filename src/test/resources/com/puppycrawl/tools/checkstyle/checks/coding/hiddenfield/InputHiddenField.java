@@ -11,11 +11,11 @@ package com.puppycrawl.tools.checkstyle.checks.coding.hiddenfield;
  **/
 class InputHiddenField
 {
-    private int hidden = 0;
+    
 
     public InputHiddenField()
     {
-        int hidden = 0; //shadows field
+         //shadows field
     }
 
     public InputHiddenField(int hidden) //parameter shadows field
@@ -24,7 +24,7 @@ class InputHiddenField
 
     public void shadow()
     {
-        int hidden = 0; //shadows field
+         //shadows field
     }
 
     public void shadowFor()
@@ -43,7 +43,7 @@ class InputHiddenField
 
         public Inner()
         {
-            int innerHidden = 0; //shadows field
+             //shadows field
         }
 
         public Inner(int innerHidden) //shadows field
@@ -52,8 +52,8 @@ class InputHiddenField
 
         private void innerShadow()
         {
-            int innerHidden = 0; //shadows inner field
-            int hidden = 0; //shadows outer field
+             //shadows inner field
+             //shadows outer field
         }
 
         private void innerShadowFor()
@@ -72,15 +72,10 @@ class InputHiddenField
         {
         }
 
-        {
-            int innerHidden = 0;//shadows inner field
-            int hidden = 0; //shadows outer field
-        }
+        
     }
 
-    {
-        int hidden = 0;//shadows field
-    }
+    
 }
 
 interface NothingHidden
@@ -94,7 +89,7 @@ interface NothingHidden
 /** tests ignoring the parameter of a property setter method */
 class PropertySetter
 {
-    private int prop;
+    
 
     /** setter */
     public void setProp(int prop)
@@ -118,7 +113,7 @@ class PropertySetter
 /** tests a non-void method */
 class PropertySetter2
 {
-    private int prop;
+    
 
     /** violation - not a void method */
     public int setProp(int prop)
@@ -131,47 +126,38 @@ class PropertySetter2
 /** tests for static fields */
 class StaticFields
 {
-    private static int hidden;
+    
 
     public static void staticMethod()
     {
-        int hidden;
+        
     }
 
     public void method()
     {
-        int hidden;
+        
     }
 
-    static
-    {
-        int hidden;
-    }
+    
 
-    {
-        int hidden;
-    }
+    
 }
 
 /** tests static methods & initializers */
 class StaticMethods
 {
-    private int notHidden;
+    
 
     public static void method()
     {
         // local variables of static methods don't hide instance fields.
-        int notHidden;
+        
     }
 
-    static
-    {
-        // local variables of static initializers don't hide instance fields.
-        int notHidden;
-    }
+    
 
-    private int x;
-    private static int y;
+    
+    
     static class Inner {
         void useX(int x) {
             x++;
@@ -197,7 +183,7 @@ enum HiddenEnum
         public void doSomething()
         {
             //Should be flagged as hiding enum constant member
-            int hidden = 0;
+            
         }
     };
 
@@ -214,13 +200,13 @@ enum HiddenEnum
     public void doSomething()
     {
         //Should be flagged as hiding static member
-        int hidden = 0;
+        
     }
 
     public static void doSomethingStatic()
     {
         //Should be flagged as hiding static member
-        int hiddenStatic = 0;
+        
     }
 }
 
@@ -231,7 +217,7 @@ abstract class InputHiddenFieldBug1084512 {
 }
 
 class Bug3370946 {
-    private int xAxis;
+    
 
     public void setxAxis(int xAxis) {
         this.xAxis = xAxis;
@@ -241,7 +227,7 @@ class Bug3370946 {
 /** tests chain-setter */
 class PropertySetter3
 {
-    private int prop;
+    
 
     /**
      * if setterCanReturnItsClass == false then
@@ -296,7 +282,7 @@ class OneLetterField
 class DuplicateFieldFromPreviousClass
 {
     public void method() {
-        int i = 0;
+        
     }
 }
 class NestedEnum {

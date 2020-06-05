@@ -7,7 +7,7 @@ public class InputOneTopLevelClassBasic
         super.clone();
     }
 
-    public Object clone() throws CloneNotSupportedException
+    public InputOneTopLevelClassBasic clone() throws CloneNotSupportedException
     {
         return super.clone();
     }
@@ -24,7 +24,7 @@ public class InputOneTopLevelClassBasic
 
 class NoSuperClone //warn
 {
-    public Object clone()
+    public NoSuperClone clone()
     {
         return null;
     }
@@ -32,11 +32,11 @@ class NoSuperClone //warn
 
 class InnerClone //warn
 {
-    public Object clone()
+    public InnerClone clone()
     {
         class Inner
         {
-            public Object clone() throws CloneNotSupportedException
+            public Inner clone() throws CloneNotSupportedException
             {
                 return super.clone();
             }

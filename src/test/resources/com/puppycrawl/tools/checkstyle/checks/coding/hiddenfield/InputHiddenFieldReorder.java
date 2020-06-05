@@ -15,7 +15,7 @@ class InputHiddenFieldReorder
 
     public InputHiddenFieldReorder()
     {
-        int hidden = 0; //shadows field
+         //shadows field
     }
 
     public InputHiddenFieldReorder(int hidden) //parameter shadows field
@@ -24,7 +24,7 @@ class InputHiddenFieldReorder
 
     public void shadow()
     {
-        int hidden = 0; //shadows field
+         //shadows field
     }
 
     public void shadowFor()
@@ -38,12 +38,13 @@ class InputHiddenFieldReorder
     }
 
     public class Inner
-    {
+    {        
+        private int innerHidden = 0;
 //        private int innerHidden = 0;
 
         public Inner()
         {
-            int innerHidden = 0; //shadows field
+             //shadows field
         }
 
         public Inner(int innerHidden) //shadows field
@@ -52,8 +53,8 @@ class InputHiddenFieldReorder
 
         private void innerShadow()
         {
-            int innerHidden = 0; //shadows inner field
-            int hidden = 0; //shadows outer field
+             //shadows inner field
+             //shadows outer field
         }
 
         private void innerShadowFor()
@@ -72,17 +73,11 @@ class InputHiddenFieldReorder
         {
         }
 
-        {
-            int innerHidden = 0;//shadows inner field
-            int hidden = 0; //shadows outer field
-        }
-        private int innerHidden = 0;
+        
     }
 
-    {
-        int hidden = 0;//shadows field
-    }
-    private int hidden = 0;
+    
+    
 }
 
 interface NothingHiddenReorder
@@ -98,18 +93,18 @@ enum HiddenEnum1
     A(129),
     B(283),
     C(1212)
-    {
-        public void doSomething()
-        {
-            //Should be flagged as hiding enum constant member
-            int hidden = 0;
-        }
+    {        
 
         /**
          * Should not be flagged as violation as we don't check
          * hidden class level fields
          */
         int hidden;
+        public void doSomething()
+        {
+            //Should be flagged as hiding enum constant member
+            
+        }
     };
 
     /**
@@ -122,13 +117,13 @@ enum HiddenEnum1
     public void doSomething()
     {
         //Should be flagged as hiding static member
-        int hidden = 0;
+        
     }
 
     public static void doSomethingStatic()
     {
         //Should be flagged as hiding static member
-        int hiddenStatic = 0;
+        
     }
 
     int hidden;

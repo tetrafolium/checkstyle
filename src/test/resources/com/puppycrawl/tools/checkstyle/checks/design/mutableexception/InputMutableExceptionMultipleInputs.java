@@ -3,7 +3,7 @@ package com.puppycrawl.tools.checkstyle.checks.design.mutableexception;
 public class InputMutableExceptionMultipleInputs {
 
     public class BarError extends Throwable {
-        private int errorCode;
+        
     }
 
     class CustomMutableException extends java.lang.Exception {
@@ -11,5 +11,5 @@ public class InputMutableExceptionMultipleInputs {
         final int errorCount = 6;
     }
 
-    private String variable;
+    
 }

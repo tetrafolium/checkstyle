@@ -66,7 +66,16 @@ public class InputOneStatementPerLineMultiline {
      * are illegal.
      */
     int var6 = 5; int var7 = 6,
-        var8 = 5; //violation
+        var8 = 5;    
+
+    /**
+     * While theoretically being distributed over three lines, this is a sample
+     * of 2 statements on one line.
+     */
+    int var9 = 1,
+        var10 = 5
+            ;
+int var11 = 2; //violation
 
     /**
      * Two statements on the same line
@@ -80,47 +89,27 @@ public class InputOneStatementPerLineMultiline {
 
         ); //violation
     }
-
-    /**
-     * While theoretically being distributed over three lines, this is a sample
-     * of 2 statements on one line.
-     */
-    int var9 = 1,
-        var10 = 5
-            ; int var11 = 2; //violation
+//violation
 
     /**
      * Multiline for loop statement is legal.
      */
     private void foo2() {
-        for (int n = 0,
-             k = 1;
-             n < 5; n++,
-                 k--) {
-
-        }
+        
     }
 
     /**
      * Multiline for loop statement is legal.
      */
     private void foo3() {
-        for(int n = 0,
-            k = 1
-            ; n<5
-            ;
-            n++, k--) {}
+        
     }
 
     /**
      * One statement inside multiline for loop block is legal.
      */
     private void foo4() {
-        for(int n = 0,
-            k = 1
-            ; n<5
-            ; ) { int a = 5,
-        b = 2;}
+        
     }
 
     /**
@@ -128,11 +117,7 @@ public class InputOneStatementPerLineMultiline {
      * inside multiline for loop block are illegal.
      */
     private void foo5() {
-        for(int n = 0,
-            k = 1
-            ; n<5
-            ;
-            n++, k--) { var1++; var2++; } //violation
+         //violation
     }
 
     /**

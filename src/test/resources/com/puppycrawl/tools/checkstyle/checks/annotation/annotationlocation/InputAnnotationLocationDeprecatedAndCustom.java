@@ -9,10 +9,8 @@ public class InputAnnotationLocationDeprecatedAndCustom {
     {
         @Deprecated // <--method, separate line
         public void test(@MyAnnotation String s) { // <--parameter, same line
-            @MyAnnotation // <--variable, separate line
-            Integer i;
-            for (@MyAnnotation char c : s.toCharArray()) { // <--variable in for each, same line
-            }
+            
+            
         }
     }
 
@@ -33,7 +31,7 @@ public class InputAnnotationLocationDeprecatedAndCustom {
         }
 
         public void foo3() {
-            MathOperation c = (@MyAnnotation int a, @MyAnnotation int b) -> a + b;
+            
         }
 
         public void foo4(@MyAnnotation int a, @MyAnnotation int b) {}

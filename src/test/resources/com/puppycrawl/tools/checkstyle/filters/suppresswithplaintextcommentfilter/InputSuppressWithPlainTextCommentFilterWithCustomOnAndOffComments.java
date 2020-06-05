@@ -8,7 +8,7 @@ public class InputSuppressWithPlainTextCommentFilterWithCustomOnAndOffComments {
     //	has tab here
 
 
-    /* cs-off **/ private int	b; /* cs-on **/
+    /* cs-off **/  /* cs-on **/
 
-    private 	int c;
+    
 }

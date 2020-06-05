@@ -6,18 +6,20 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
 
     private static String fieldStatic = "fieldStatic";
 
-    private final long fieldFinal1;
-    private final long fieldFinal2;
-    private final BitSet fieldFinal3;
+    
+    
+    
 
     private String field1;
-    private String field2;
-    private String field3 = "some string";
+    
+    
     private boolean booleanField;
-    private int intField;
+    private int intField;    
+
+    private String action;
 
     public InputRequireThisValidateOnlyOverlappingFalse(String field1) {
-        field1 = field1; // violation
+         // violation
         fieldFinal1 = 0; // violation
         fieldFinal2 = 0; // violation
         fieldFinal3 = new BitSet(); // violation
@@ -39,8 +41,8 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
 
     public InputRequireThisValidateOnlyOverlappingFalse(String name, long id) {
         fieldFinal1 = 0; // violation
-        long field1 = 0L;
-        field1 = field1; // violation
+        
+         // violation
         this.fieldFinal2 = 1L;
         fieldFinal3 = new BitSet(); // violation
     }
@@ -60,24 +62,24 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
         fieldFinal1 = 1L; // violation
         fieldFinal2 = 0L; // violation
         fieldFinal3 = new BitSet();
-        if (true) {
+        {
             fieldFinal3 = (BitSet) fieldFinal3.clone();
         }
         this.fieldFinal3 = fieldFinal3;
     }
 
     void foo1(String methodParam) {
-        methodParam = methodParam;
+        
     }
 
     void foo2() {
-        String localVar = "values";
-        localVar = localVar;
+        
+        
     }
 
     void foo3() {
-        String field1 = "values";
-        field1 = field1; // violation
+        
+         // violation
     }
 
     void foo4(String methodParam) {
@@ -112,7 +114,7 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
 
     static void foo7(String fieldStatic) {
 //        this.fieldStatic = fieldStatic; <- fieldStatic cannot be referenced from a static context
-        fieldStatic = fieldStatic;
+        
     }
 
     void foo8(Long field1) {
@@ -153,13 +155,13 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
     void staticTwoArgs(String message1, int argument) {}
 
     static void foo16() {
-        long fieldFinal1 = 5L;
+        
 // this.fieldFinal1 = fieldFinal1; // compile time error: cannot be referenced from a static context
         fieldFinal1 = 11L;
     }
 
     static void foo17() {
-        String fieldStatic = "";
+        
 // this.fieldStatic = fieldStatic; // compile time error: cannot be referenced from a static context
         fieldStatic = "Hello, World!";
     }
@@ -168,16 +170,16 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
         fieldFinal1 = 0L; // violation
         fieldFinal2 = 0L; // violation
         fieldFinal3 = new BitSet(); // violation
-        long field1 = 1L;
-        field1 = field1; // violation
+        
+         // violation
     }
 
     InputRequireThisValidateOnlyOverlappingFalse(boolean flag, String name) {
         fieldFinal1 = 0L; // violation
         fieldFinal2 = 0L; // violation
         fieldFinal3 = new BitSet(); // violation
-        long field1 = 1L;
-        field1 = field1; // violation
+        
+         // violation
         return;
     }
 
@@ -201,9 +203,9 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
     }
 
     void foo22() {
-        long fieldFinal1 = 1L;
+        
 //        this.fieldFinal1 = fieldFinal1; <- cannot assign value to a final variable
-        fieldFinal1 = fieldFinal1;
+        
     }
 
     void foo23() {
@@ -211,7 +213,7 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
     }
 
     void foo24() {
-        String field1 = "Hello";
+        
         field1 = "Java"; // No violation. Local var allowed
         this.booleanField = true;
         this.booleanField = booleanField;
@@ -219,13 +221,10 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
 
     void foo25() {
         try {
-            if (true) {
-                String field1 = "Hello, World!";
-                if (true) {
+            {
+                
+                {
                     field1 = new String(); // No violation. Local var allowed
-                }
-                else {
-                    field1 += field1; // violation
                 }
             }
         }
@@ -288,7 +287,7 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
 
     String foo35() {
         String field1 = "values";
-        field1 = field1;
+        
         return field1;
     }
 
@@ -327,29 +326,20 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
         fieldStatic = "";
     }
 
-    {
-//        if we assign variable to a final variable in initialization block,
-//        it will lead to compile time error in constructor block: variable migh have been
-//        already assigned
+    
 
-//        fieldFinal1 = 1;
-    }
-
-    {
-        String field1 = "";
-        field1 = field1; // violation
-    }
+    
 
     static {
         fieldStatic = "";
-        String field1 = "";
+        
 //        this.field1 = field1; <-- compile time error: cannot be referenced from a static context
-        field1 = field1;
+        
     }
 
     void foo41(long fieldFinal1) {
 //        this.fieldFinal1 = 1L; <- cannot assign value to a final variable
-        fieldFinal1 = fieldFinal1;
+        
     }
 
     void foo42(String fieldStatic) {
@@ -357,14 +347,12 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
     }
 
     void foo43(String fieldStatic) {
-        fieldStatic = fieldStatic;
+        
     }
 
     void foo44(String fieldStatic) {
         fieldStatic = this.fieldStatic;
     }
-
-    private String action;
 
     public String getAction() {
         return this.action;
@@ -372,13 +360,8 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
 
     public String foo45() {
         String action = getAction(); // violation (Method call to 'getaction' needs "this.".)
-        if (true) {
+        {
             return processAction("action"); //violation(Method call to 'processAction' need "this.")
-        }
-        else if (action.endsWith("/")) {
-            if (action.startsWith("/")) {
-                action = "" + action;
-            }
         }
         action = "action"; // No violation. Local var allowed
         return processAction(action); // violation (Method call to 'processAction' needs "this.".)
@@ -440,7 +423,7 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
     }
 
     void foo50(String fieldStatic) {
-        fieldStatic = fieldStatic;
+        
     }
 
     void foo51(String methodParam) {
@@ -468,7 +451,7 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
     boolean foo57(boolean booleanField) { booleanField = !booleanField;  return booleanField; }
 }
 class Issue6264 {
-    private final String hashCode;
+    
 
     Issue6264() {
         this.hashCode = new String();
