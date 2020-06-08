@@ -4,9 +4,7 @@ public class InputFinalLocalVariableMultiCatch {
     public void demo() throws Throwable {
         try {
             // do nothing
-        } catch (final NumberFormatException ex) {
-            // do nothing
-        } catch (IllegalStateException | NullPointerException ex) {
+        } catch (NumberFormatException | IllegalStateException | NullPointerException ex) {
             // do nothing
         }
     }

@@ -1,6 +1,5 @@
 package com.puppycrawl.tools.checkstyle.checks.header.header;
 
-import java.awt.*;
 
 /**
  * Some doc.

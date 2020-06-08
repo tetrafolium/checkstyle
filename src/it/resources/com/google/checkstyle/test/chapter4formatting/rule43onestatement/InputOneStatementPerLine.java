@@ -3,7 +3,6 @@ package com.google.checkstyle.test.chapter4formatting.rule43onestatement;
 /**
  * Two import statements on the same line are illegal.
  */
-import java.io.EOFException; import java.io.BufferedReader; //warn
 
 public class InputOneStatementPerLine {
 
@@ -15,7 +14,42 @@ public class InputOneStatementPerLine {
   /**
    * Dummy variable to work on.
    */
-  private int two = 0;
+    
+
+  /**
+   * Two declaration statements on the same line are illegal.
+   */
+  int a;
+int b;  
+//warn
+
+  /**
+   * Two declaration statements which are not on the same line
+   * are legal.
+   */
+  int c;  
+  int d;  
+
+  /**
+   * Two assignment (declaration) statements on the same line are illegal.
+   */
+  int e = 1;
+int f = 2;  
+//warn
+
+  /**
+   * Two assignment (declaration) statements on the different lines
+   * are legal.
+   */
+  int g = 1;  
+  int h = 2;  
+
+  /**
+   * One multiline  assignment (declaration) statement
+   * is legal.
+   */
+  int i = 1, j = 2,
+      k = 5;
 
   /**
    * Simple legal method.
@@ -38,9 +72,7 @@ public class InputOneStatementPerLine {
    * Within the for-header there are 3 Statements, but this is legal.
    */
   public void doLegalForLoop() {
-    for (int i = 0, j = 0, k = 1; i < 20; i++) { //it's ok.
-      one = i;
-    }
+    
   }
 
   /**
@@ -56,7 +88,7 @@ public class InputOneStatementPerLine {
     } else {
         one--;
     } //warn
-    int n = 10;
+    
 
     doLegal(); doLegal(); //warn
     while (one == 1) {
@@ -106,7 +138,7 @@ public class InputOneStatementPerLine {
         } else {
             one--;
         } //warn
-        int n = 10;
+        
 
         doLegal(); doLegal(); //warn
         while (one == 1) {
@@ -116,44 +148,13 @@ public class InputOneStatementPerLine {
   }
 
   /**
-   * Two declaration statements on the same line are illegal.
-   */
-  int a; int b; //warn
-
-  /**
-   * Two declaration statements which are not on the same line
-   * are legal.
-   */
-  int c;
-  int d;
-
-  /**
-   * Two assignment (declaration) statements on the same line are illegal.
-   */
-  int e = 1; int f = 2; //warn
-
-  /**
-   * Two assignment (declaration) statements on the different lines
-   * are legal.
-   */
-  int g = 1;
-  int h = 2;
-
-  /**
    * This method contains
    * two object creation statements on the same line.
    */
   private void foo() {
     //Two object creation statements on the same line are illegal.
-    Object obj1 = new Object(); Object obj2 = new Object(); //warn
+      //warn
   }
-
-  /**
-   * One multiline  assignment (declaration) statement
-   * is legal.
-   */
-  int i = 1, j = 2,
-      k = 5;
 
   /**
    * One multiline  assignment (declaration) statement
@@ -231,12 +232,7 @@ public class InputOneStatementPerLine {
    * Multiline for loop statement is legal.
    */
   private void foo3() {
-    for (int n = 0,
-         k = 1;
-         n < 5; n++,
-             k--) {
-
-    }
+    
   }
 
   /**
@@ -264,20 +260,24 @@ public class InputOneStatementPerLine {
     /**
      * One statement inside for block is legal
      */
-    for (int i = 0; i < 10; i++) one = 5; //legal
+    for (int i = 0; i < 10; i++) {
+        one = 5;
+    } //legal
 
     /**
      * One statement inside for block where
      * increment expression is empty is legal
      */
-    for (int i = 0; i < 10;) one = 5; //legal
+    for (int i = 0; i < 10;) {
+        one = 5;
+    } //legal
 
     /**
      * One statement inside for block where
      * increment and conditional expressions are empty
      * (forever loop) is legal
      */
-    for (int i = 0;;) one = 5; //legal
+     //legal
   }
 
   public void foo5() {
@@ -299,12 +299,7 @@ public class InputOneStatementPerLine {
    * One statement inside multiline for loop is legal.
    */
   private void foo7() {
-    for (int n = 0,
-            k = 1
-; n < 5
-;
-            n++, k--) {
-                var1++; } //legal
+     //legal
     }
 
   /**
@@ -312,11 +307,6 @@ public class InputOneStatementPerLine {
    * inside multiline for loop are illegal.
    */
   private void foo8() {
-    for (int n = 0,
-            k = 1
-; n < 5
-;
-            n++, k--) {
-                var1++; var2++; } //warn
+     //warn
     }
 }

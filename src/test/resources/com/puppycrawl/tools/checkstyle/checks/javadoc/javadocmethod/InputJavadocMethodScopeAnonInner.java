@@ -22,12 +22,7 @@ public class InputJavadocMethodScopeAnonInner
     /**
        anon inner in member variable initialization.
     */
-    private Runnable mRunnable = new Runnable() {
-        public void run() // should not have to be documented, class is anon.
-        {
-            System.identityHashCode("running");
-        }
-    };
+    
 
     /**
        anon inner in constructor.

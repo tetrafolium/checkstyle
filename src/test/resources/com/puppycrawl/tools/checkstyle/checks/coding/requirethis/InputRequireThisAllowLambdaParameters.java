@@ -2,7 +2,7 @@ package com.puppycrawl.tools.checkstyle.checks.coding.requirethis;
 
 import java.util.function.Consumer;
 public class InputRequireThisAllowLambdaParameters {
-    private String s1 = "foo1";
+    
     int x = -1;
     int y = -2;
 

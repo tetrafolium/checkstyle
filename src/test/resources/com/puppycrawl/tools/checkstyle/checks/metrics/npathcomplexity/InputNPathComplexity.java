@@ -4,13 +4,13 @@ public class InputNPathComplexity {
     //NP = 5
     void testIfWithExpression() {
         // NP = (if-range=1) + 1 + (expr=3) = 5
-        if (true && true || (true || true)) { }
+        if (true && true || true || true) { }
     }
 
     //NP = 5
     void testIfElseWithExpression() {
         // NP = (if-range=1) + (else-range=1) + (expr=3) = 5
-        if (true && true || (true || true)) { } else { }
+        if (true && true || true || true) { } else { }
     }
 
     //NP = 4
@@ -68,16 +68,16 @@ public class InputNPathComplexity {
         switch (a) {
         case 1:
             // NP(case-range) = (if-range=1) + 1 + (expr=0) = 2
-            if (true) { }
+            
             break;
         case 2:
             // NP(case-range) = (if-range=1) + (else-range=1) + (expr=3) = 5
-            if (true && true || (true || true)) { } else { }
+            if (true && true || true || true) { } else { }
             // NP(case-range) = (if-range=1) + 1 + (expr=0) = 2
-            if (true) { }
+            
         case 3:
             // NP(case-range) = (if-range=1) + 1 + (expr=0) = 2
-            if (true) { }
+            
             break;
         default:
             break;
@@ -97,7 +97,7 @@ public class InputNPathComplexity {
         // NP = (if-range=3) + (else-range=4) + (expr=1) = 8
         if (true && true) {
             // NP(if-range) = 3
-            return true && true || (true && true);
+            return true && true || true && true;
         } else {
             // NP(else-range) = (expr(1)=0) + (expr(2)=1) + (expr(3)=1) + 2 = 4
             return true ? true && true : true || true;
@@ -108,13 +108,21 @@ public class InputNPathComplexity {
     //         * (for-statement[3]=4) * (for-statement[4]=5) = 120
     void testForCyclesComplex() {
         // NP(for-statement) = (for-range=1) + (expr(1)=0) + (expr(2)=0) + (expr(3)=0) + 1 = 2
-        for (int i = 0; i < 10; i++);
+        for (int i = 0; i < 10; i++) {
+            ;
+        }
         // NP(for-statement) = (for-range=1) + (expr(1)=0) + (expr(2)=1) + (expr(3)=0) + 1 = 3
-        for (int i = 0; i < 10 && true; i++);
+        for (int i = 0; i < 10 && true; i++) {
+            ;
+        }
         // NP(for-statement) = (for-range=1) + (expr(1)=2) + (expr(2)=0) + (expr(3)=0) + 1 = 4
-        for (int i = true ? 0 : 0; i < 10; i++);
+        for (int i = true ? 0 : 0; i < 10; i++) {
+            ;
+        }
         // NP(for-statement) = (for-range=1) + (expr(1)=0) + (expr(2)=1+2) + (expr(3)=0) + 1 = 5
-        for (int i = 0; true ? i < 10 : true || true; i++);
+        for (int i = 0; true ? i < 10 : true || true; i++) {
+            ;
+        }
     }
 
     // NP = (while-statement[1]=2) * (while-statement[2]=3) = 6
@@ -138,15 +146,15 @@ public class InputNPathComplexity {
         do {
             // NP(do-range) = (do-range=1) + (expr=1) + 1 = 3
             do { } while (a < 10 || true);
-        } while (true ? a > 10 : (a < 10 || true));
+        } while (true ? a > 10 : a < 10 || true);
     }
 
     // NP = (question-statement[1]=5) * (question-statement[2]=7) = 35
     void testComplexTernaryOperator() {
         // NP(question-statement) = (expr(1)=0) + (expr(2)=2) + (expr(3)=1+2) + 2 = 7
-        boolean a = true ? (true ? true : true) : (false ? (true || false) : true);
+        
         // NP(question-statement) = (expr(1)=0) + (expr(2)=2) + (expr(3)=1) + 2 = 5;
-        boolean b = true ? (true ? true : true) : true || true;
+        
     }
 
     // NP = (if-expression[1]=5) * (if-expression[2]=5) = 25
@@ -155,13 +163,12 @@ public class InputNPathComplexity {
         if (
            true ? true : true
                 ) {
-                    boolean a = true ? true
-                        : true;
+                    
         }
         // NP(if-expression) = (if-range=2) + 1 + (expr=2) = 5
         if (
                 true ? true : true) {
-                    boolean b = true ? true : true;
+                    
              }
     }
 

@@ -1,7 +1,5 @@
 package com.google.checkstyle.test.chapter4formatting.rule451wheretobreak;
 
-import java.util.HashMap;
-import java.util.Map;
 
 class InputMethodParamPad
 {
@@ -13,9 +11,7 @@ class InputMethodParamPad
             -
             4;
         x = x + 2;
-        boolean y = true
-            &&
-            false;
+        
          y = true
             && false;
         y = false
@@ -24,10 +20,8 @@ class InputMethodParamPad
 
     void testAssignment()
     {
-        int x
-            = 0;
-        int y =
-            0;
+        
+        
     }
 
     <
@@ -36,23 +30,14 @@ class InputMethodParamPad
     >
     void testGenerics1()
     {
-        Comparable
-            <
-            String
-            >
-            c = new String();
-        Map<String, String> map = new HashMap<String, String>();
+        
+        
 
         boolean flag = false;
 
         int init = 9;
 
-        /*ok*/ for (Map.Entry<String, String> entry
-            : map.entrySet())
-        {
-            int i = flag == true
-                    ? 1 : 2;
-        }
+        /*ok*/ 
 
          if (init
                 != 9)
@@ -82,22 +67,13 @@ class InputMethodParamPad
         void testGenerics1
         () //warn
         {
-            Comparable
-                <
-                String
-                >
-                c = new String();
-            Map<String, String> map = new HashMap<String, String>();
+            
+            
             boolean flag = false;
 
             int init = 9;
 
-            /*ok*/ for (Map.Entry<String, String> entry
-                : map.entrySet())
-            {
-                int i = flag == true
-                        ? 1 : 2;
-            }
+            /*ok*/ 
 
              if (init
                     != 9)
@@ -129,21 +105,12 @@ class InputMethodParamPad
         void testGenerics1
         () //warn
         {
-            Comparable
-                <
-                String
-                >
-                c = new String();
-            Map<String, String> map = new HashMap<String, String>();
+            
+            
             boolean flag = false;
             int init = 9;
 
-            /*ok*/ for (Map.Entry<String, String> entry
-                : map.entrySet())
-            {
-                int i = flag == true
-                        ? 1 : 2;
-            }
+            /*ok*/ 
 
              if (init
                     != 9)
@@ -181,18 +148,10 @@ class AsInput1 {
 
 class Ternary2 {
     void foo() {
-        boolean flag = true;
-        int i = flag == true
-                ? 1
-                : 2;
-        int i2 = flag == true
-                ?
-                1
-                :
-                2;
-        int i3 = flag == true
-                ? 1
-                : 2;
+        
+        
+        
+        
 
     }
 }

@@ -16,9 +16,7 @@ package com.puppycrawl.tools.checkstyle.checks.indentation.indentation; //indent
  */                                                                           //indent:1 exp:1
 public class InputIndentationValidArrayInitIndent { //indent:0 exp:0
 
-    private static char[] sHexChars = {//indent:4 exp:4
-            '0', '1', '2', '3', '4', '5', '6', '7', //indent:12 exp:12
-            '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' }; //indent:12 exp:12
+     //indent:12 exp:12
 
     int[] array = new int[] {1, 2, 3}; //indent:4 exp:4
 
@@ -112,10 +110,7 @@ public class InputIndentationValidArrayInitIndent { //indent:0 exp:0
         func1(new int[] {//indent:8 exp:8
                 1, 2, 3 //indent:16 exp:16
         }); //indent:8 exp:8
-        for (String veryLongVariableName: new String[] //indent:8 exp:8
-        {"this is text", "this is text"}) { //indent:8 exp:8
-            if (hashCode() == 0) break; //indent:12 exp:12
-        } //indent:8 exp:8
+         //indent:8 exp:8
     } //indent:4 exp:4
 
 } //indent:0 exp:0

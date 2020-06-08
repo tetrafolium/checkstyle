@@ -1,7 +1,7 @@
 package com.puppycrawl.tools.checkstyle.checks.javadoc.javadocmethod;
 
 public class InputJavadocMethodConstructor {
-    private int field;
+    
     public InputJavadocMethodConstructor() { }
     public InputJavadocMethodConstructor(final Runnable p1) {
         this.field = 0; }

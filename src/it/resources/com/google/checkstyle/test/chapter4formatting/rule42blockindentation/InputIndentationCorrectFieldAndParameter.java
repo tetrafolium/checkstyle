@@ -7,7 +7,7 @@ class InputIndentationCorrectFieldAndParameter { //indent:0 exp:0
       getInteger(new FooFieldClass(), "Loooooooooooooooooog"), //indent:6 exp:6
       new InnerClassFoo()); //indent:6 exp:6
 
-  boolean secondFlag = conditionSecond(10000000000.0, new //indent:2 exp:2
+  boolean secondFlag = conditionSecond(10_000_000_000.0, new //indent:2 exp:2
       SecondFieldLongNam2("Looooooooooooo" //indent:6 exp:6
       + "oooooooooooong").getString(new FooFieldClass(), //indent:6 exp:6
       new SecondFieldLongNam2("loooooooooong").//indent:6 exp:6
@@ -65,7 +65,7 @@ class InputIndentationCorrectFieldAndParameter { //indent:0 exp:0
             getInteger(new FooFieldClass(), "Loooooooooooooooooog"), //indent:12 exp:>=8
              new InnerClassFoo()); //indent:13 exp:>=8
 
-    boolean secondFlag = conditionSecond(10000000000.0, new //indent:4 exp:4
+    boolean secondFlag = conditionSecond(10_000_000_000.0, new //indent:4 exp:4
         SecondFieldLongNam2("Looooooooooooo" //indent:8 exp:8
            + "oooooooooooong").getString(new FooFieldClass(), //indent:11 exp:>=8
           new SecondFieldLongNam2("loooooooooong").//indent:10 exp:>=8
@@ -82,7 +82,7 @@ class InputIndentationCorrectFieldAndParameter { //indent:0 exp:0
           conditionNoArg() || conditionNoArg(); //indent:10 exp:>=8
 
     FooFieldClass anonymousClass = new FooFieldClass() { //indent:4 exp:4
-      boolean secondFlag = conditionSecond(10000000000.0, new //indent:6 exp:6
+      boolean secondFlag = conditionSecond(10_000_000_000.0, new //indent:6 exp:6
           SecondFieldLongNam2("Looooooooooooo" //indent:10 exp:10
             + "oooooooooooong").getString(new FooFieldClass(), //indent:12 exp:>=10
                new SecondFieldLongNam2("loooooooooong").//indent:15 exp:>=10

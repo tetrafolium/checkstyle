@@ -2,15 +2,12 @@ package com.puppycrawl.tools.checkstyle.checks.coding.declarationorder;
 
 import java.io.InputStream;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 
 public class InputDeclarationOrderVariableAccess {
 
-    public static final String TYPE = new String("significant_terms");
+    public static final String TYPE = "significant_terms";
 
-    private static final Map<String, String> BUCKETS_MAP = Collections.emptyMap();
+    
 
     public static final InputDeclarationOrderVariableAccess.Stream STREAM =
             new InputDeclarationOrderVariableAccess.Stream() {

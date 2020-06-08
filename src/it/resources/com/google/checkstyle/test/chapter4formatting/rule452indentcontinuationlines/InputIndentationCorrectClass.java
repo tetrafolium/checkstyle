@@ -25,15 +25,9 @@ public class InputIndentationCorrectClass  //indent:0 exp:0
 
   @Override  //indent:2 exp:2
   public void run() {  //indent:2 exp:2
-    SecondClassWithLongLongLongLongName anon =  //indent:4 exp:4
-          new SecondClassWithLongLongLongLongName() {  //indent:10 exp:>=8
+      //indent:4 exp:4
 
-    };  //indent:4 exp:4
-
-    SecondClassWithLongLongLongLongName anon2 = new  //indent:4 exp:4
-          SecondClassWithLongLongLongLongName() {  //indent:10 exp:>=8
-
-    };  //indent:4 exp:4
+      //indent:4 exp:4
   }  //indent:2 exp:2
 } //indent:0 exp:0
 

@@ -3,24 +3,26 @@ package com.sun.checkstyle.test.chapter6declarations.rule61numberperline;
 public class InputMultipleVariableDeclarations
 {
     int i, j; //warn
-    int i1; int j1; //warn
-
-    void method1() {
-        String str, str1; //warn
-        java.lang.Object obj; Object obj1; //warn
-    }
+    int i1; int j1;    
     // second definition is wrapped
     // line of VARIABLE_DEF is not the same as first line of the definition
-    java.lang.String string; java.lang.String //warn
-        strings[];
+    java.lang.String string;
+java.lang.String //warn
+        strings[];    
     //both definitions is wrapped
     java.lang.//warn
-        String string1; java.lang.String
+        String string1;
+java.lang.String
             strings1[];
+//warn
+
+    void method1() {
+         //warn
+          //warn
+    }
 
     void method2() {
-        for (int i = 0, j = 0; i < 10; i++, j--) { //ok
-        }
+        
 
         for (int i = 0; i < 4; i++) {
 
@@ -29,24 +31,26 @@ public class InputMultipleVariableDeclarations
 
     class Inner {
         int i, j; //warn
-        int i1; int j1; //warn
-
-        void method1() {
-            String str, str1; //warn
-            java.lang.Object obj; Object obj1; //warn
-        }
+        int i1; int j1;        
         // second definition is wrapped
         // line of VARIABLE_DEF is not the same as first line of the definition
-        java.lang.String string; java.lang.String //warn
-            strings[];
+        java.lang.String string;
+java.lang.String //warn
+            strings[];        
         //both definitions is wrapped
         java.lang.//warn
-            String string1; java.lang.String
+            String string1;
+java.lang.String
                 strings1[];
+//warn
+
+        void method1() {
+             //warn
+              //warn
+        }
 
         void method2() {
-            for (int i = 0, j = 0; i < 10; i++, j--) { //ok
-            }
+            
 
             for (int i = 0; i < 4; i++) {
 
@@ -58,8 +62,8 @@ public class InputMultipleVariableDeclarations
             int i1; int j1; //warn
 
             void method1() {
-                String str, str1; //warn
-                java.lang.Object obj; Object obj1; //warn
+                 //warn
+                  //warn
             }
             // second definition is wrapped
             // line of VARIABLE_DEF is not the same as first line of the definition
@@ -71,8 +75,7 @@ public class InputMultipleVariableDeclarations
                     strings1[];
 
             void method2() {
-                for (int i = 0, j = 0; i < 10; i++, j--) { //ok
-                }
+                
 
                 for (int i = 0; i < 4; i++) {
 

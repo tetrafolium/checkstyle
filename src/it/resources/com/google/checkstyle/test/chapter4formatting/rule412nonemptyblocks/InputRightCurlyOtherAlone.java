@@ -16,7 +16,7 @@ class InputRightCurlyOtherAlone
                     break;
                 } else if (x < 0) {  //ok
 
-                    ;
+                    
                 } //ok - for alone config
                 else
                 {
@@ -49,7 +49,7 @@ class InputRightCurlyOtherAlone
 
         for (int k = 0; k < 1; k++)
         {
-            String innerBlockVariable = "";
+            
         } //ok
 
 
@@ -60,10 +60,7 @@ class InputRightCurlyOtherAlone
     } //ok
 
 
-    static
-    {
-        int x = 1;
-    } //ok
+     //ok
 
     public enum GreetingsEnum
     {
@@ -105,7 +102,7 @@ class FooMethodAlone
 {
     public void fooMethod()
     {
-        int i = 1;
+        
     }} //warn
 
 /**

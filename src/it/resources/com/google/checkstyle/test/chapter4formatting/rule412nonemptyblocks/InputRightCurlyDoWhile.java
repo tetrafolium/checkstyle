@@ -9,8 +9,8 @@ import java.util.Scanner;
 public class InputRightCurlyDoWhile {
 
     public void foo1() {
-        do {
-        } while (true);
+        while (true) {
+        }
     }
 
     public void foo2() {
@@ -37,57 +37,48 @@ public class InputRightCurlyDoWhile {
             do {
                 user = input.nextInt();
                 if (user == prog) {
-                    String.CASE_INSENSITIVE_ORDER.equals("Good!");
+                    "Good!".equals(String.CASE_INSENSITIVE_ORDER);
                 } else {
                     if (user > 0 && user <= 10) {
-                        String.CASE_INSENSITIVE_ORDER.equals("Bad! ");
+                        "Bad! ".equals(String.CASE_INSENSITIVE_ORDER);
                         if (prog < user) {
-                            String.CASE_INSENSITIVE_ORDER.equals("My number is less than yours.");
+                            "My number is less than yours.".equals(String.CASE_INSENSITIVE_ORDER);
                         } else {
-                            String.CASE_INSENSITIVE_ORDER.equals("My number is greater than yours");
+                            "My number is greater than yours".equals(String.CASE_INSENSITIVE_ORDER);
                         }
                     } else {
-                        String.CASE_INSENSITIVE_ORDER.equals("Violation!");
+                        "Violation!".equals(String.CASE_INSENSITIVE_ORDER);
                     }
                 }
             } while (user != prog);
         } else {
-            String.CASE_INSENSITIVE_ORDER.equals("Violation!");
+            "Violation!".equals(String.CASE_INSENSITIVE_ORDER);
         }
-        String.CASE_INSENSITIVE_ORDER.equals("Goodbye!");
+        "Goodbye!".equals(String.CASE_INSENSITIVE_ORDER);
     }
 
     public void foo5() {
-        do {
-        } // warn
-        while (true);
+        while (true) {
+        }
     }
 
     public void foo6() {
-        do { } // warn
-        while (true);
+        while (true) { }
     }
 
     public void foo7() {
-        do
-        {
+        while (true) {
 
-        } while (true);
+        }
     }
 
     public void foo8() {
-        do
+        while (true) {
 
-        {
-
-        } // warn
-
-        while
-
-            (true);
+        }
     }
 
     public void foo9() {
-        do { } while (true);
+        while (true) { }
     }
 }

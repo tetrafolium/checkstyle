@@ -4,9 +4,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package com.google.checkstyle.test.chapter4formatting.rule413emptyblocks;
 
-import java.io.*;
-import java.awt.Dimension;
-import java.awt.Color;
 
 class InputEmptyBlock {
     boolean flag;
@@ -17,7 +14,7 @@ class InputEmptyBlock {
                doSm();
            }
         } catch (Exception e) { /* ignore */ } //ok
-        finally { /* ignore */ } //ok
+         //ok
     }
 
     void foo2() {
@@ -25,7 +22,7 @@ class InputEmptyBlock {
            if (!flag) {
                doSm();
            }
-        } catch (Exception e) { } finally { } //warn
+        } catch (Exception e) { }  //warn
     }
 
     class Inner {
@@ -37,7 +34,7 @@ class InputEmptyBlock {
                    doSm();
                }
             } catch (Exception e) { /* ignore */ } //ok
-            finally { /* ignore */ } //ok
+             //ok
         }
 
         void foo2() {
@@ -45,7 +42,7 @@ class InputEmptyBlock {
                if (!flag) {
                    doSm();
                }
-            } catch (Exception e) { } finally { } //warn
+            } catch (Exception e) { }  //warn
         }
     }
 
@@ -58,7 +55,7 @@ class InputEmptyBlock {
                    doSm();
                }
             } catch (Exception e) { /* ignore */ } //ok
-            finally { /* ignore */ } //ok
+             //ok
         }
 
         void foo2() {
@@ -66,7 +63,7 @@ class InputEmptyBlock {
                if (!flag) {
                    doSm();
                }
-            } catch (Exception e) { } finally { } //warn
+            } catch (Exception e) { }  //warn
         }
     };
 }

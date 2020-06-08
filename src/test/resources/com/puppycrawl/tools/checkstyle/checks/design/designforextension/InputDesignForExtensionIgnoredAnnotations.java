@@ -19,8 +19,8 @@ public class InputDesignForExtensionIgnoredAnnotations {
 
     @Deprecated
     public void testFoo() throws Exception {
-        final int a = 5;
-        final int b = 6;
+        
+        
     }
 
     @Deprecated
@@ -51,7 +51,7 @@ public class InputDesignForExtensionIgnoredAnnotations {
     public class B {
         /** Test foo*/
         public void testFoo() {
-            final int a = 6;
+            
         }
     }
 
@@ -151,7 +151,7 @@ public class InputDesignForExtensionIgnoredAnnotations {
     public void foo21() {
         return; }
 
-    private int age;
+    
 
     @Inject // violation
     public void setAge(final int age) {

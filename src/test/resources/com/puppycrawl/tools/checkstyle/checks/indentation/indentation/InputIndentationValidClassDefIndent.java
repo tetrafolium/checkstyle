@@ -53,12 +53,12 @@ class InputIndentationValidClassDefIndent4a //indent:0 exp:>=4 warn
 
 } //indent:0 exp:0
 
-final class InputIndentationValidClassDefIndent5 extends Object  //indent:0 exp:0
+final class InputIndentationValidClassDefIndent5   //indent:0 exp:0
 { //indent:0 exp:0
 
 } //indent:0 exp:0
 
-final class InputIndentationValidClassDefIndent6 extends Object { //indent:0 exp:0
+final class InputIndentationValidClassDefIndent6  { //indent:0 exp:0
 
     class foo { } //indent:4 exp:4
 
@@ -104,16 +104,11 @@ final class InputIndentationValidClassDefIndent6 extends Object { //indent:0 exp
 
         new JButton().addActionListener(new ActionListener() { //indent:8 exp:8
             public void actionPerformed(final ActionEvent e) { //indent:12 exp:12
-                int i = 2; //indent:16 exp:16
+                 //indent:16 exp:16
             } //indent:12 exp:12
         }); //indent:8 exp:8
 
-        Object o = new ActionListener()  //indent:8 exp:8
-        { //indent:8 exp:8
-            public void actionPerformed(final ActionEvent e) { //indent:12 exp:12
-
-            } //indent:12 exp:12
-        }; //indent:8 exp:8
+         //indent:8 exp:8
 
         myfunc2(10, 10, 10, //indent:8 exp:8
             myfunc3(11, 11, //indent:12 exp:>=12
@@ -137,12 +132,12 @@ final class InputIndentationValidClassDefIndent6 extends Object { //indent:0 exp
             { //indent:12 exp:12
                 public boolean compare(final int value1, final int value2) //indent:16 exp:16
                 { //indent:16 exp:16
-                    return (value1 <= value2); //indent:20 exp:20
+                    return value1 <= value2; //indent:20 exp:20
                 } //indent:16 exp:16
 
                 public boolean co(final Comparable<Object> ob1, final Comparable<Object> ob2) //indent:16 exp:16
                 { //indent:16 exp:16
-                    return (ob1.compareTo(ob2) <= 0); //indent:20 exp:20
+                    return ob1.compareTo(ob2) <= 0; //indent:20 exp:20
                 } //indent:16 exp:16
             }); //indent:12 exp:12
 } //indent:0 exp:0

@@ -20,9 +20,7 @@ class InputOperatorWrap
             -
             4;
         x = x + 2;
-        boolean y = true
-            &&
-            false;
+        
         y = true
             && false;
         y = false
@@ -38,10 +36,8 @@ class InputOperatorWrap
 
     void testAssignment()
     {
-        int x
-            = 0; //violation when checking assignment operators with EOL wrap option
-        int y =
-            0;
+         //violation when checking assignment operators with EOL wrap option
+        
     }
 
     <
@@ -50,11 +46,7 @@ class InputOperatorWrap
     >
     void testGenerics1()
     {
-        Comparable
-            <
-            String
-            >
-            c = new String();
+        
     }
 }
 
@@ -75,8 +67,8 @@ class Switch {
         case 1:
             break;
         default:
-            ;
+            
         }
-        for (int k : new int[]{1, 2, 3}) { }
+        
     }
 }

@@ -151,22 +151,22 @@ class AAAAAA {
 	/**Javadoc*/
 	int/**nope*/ a/**nope*/;
 	/**Javadoc*/
-	private/**nope*/ int/**nope*/ b/**nope*/;
+	
 	/**Javadoc*/
-	private/**nope*/ final/**nope*/ int/**nope*/ c/**nope*/ = 1;
+	
 	/**Javadoc*/
-	private/**nope*/ static/**nope*/ final/**nope*/ int/**nope*/ d/**nope*/ = 1;
+	
 }
 
 class BBBBBB {
 	/**Javadoc*/
 	int/**nope*/ a/**nope*/ = /**nope*/1/**nope*/;
 	/**Javadoc*/
-	private/**nope*/ int/**nope*/ b/**nope*/ = /**nope*/1/**nope*/;
+	
 	/**Javadoc*/
-	private/**nope*/ final/**nope*/ int/**nope*/ c/**nope*/ = /**nope*/1/**nope*/;
+	
 	/**Javadoc*/
-	private/**nope*/ static/**nope*/ final/**nope*/ int/**nope*/ d/**nope*/ = /**nope*/1/**nope*/;
+	
 }
 
 
@@ -174,31 +174,31 @@ class CCCCCC {
 	/**Javadoc*/
 	Object/**nope*/ a/**nope*/ = /**nope*/ new/**nope*/ Object/**nope*/(/**nope*/)/**nope*/ { /**nope*/ } /**nope*/;
 	/**Javadoc*/
-	private/**nope*/ Object/**nope*/ b/**nope*/ = /**nope*/ new/**nope*/ Object/**nope*/(/**nope*/)/**nope*/ { /**nope*/ } /**nope*/;
+	
 	/**Javadoc*/
-	private/**nope*/ final/**nope*/ Object/**nope*/ c/**nope*/ = /**nope*/ new/**nope*/ Object/**nope*/(/**nope*/)/**nope*/ { /**nope*/ } /**nope*/;
+	
 	/**Javadoc*/
-	private/**nope*/ static/**nope*/ final/**nope*/ Object/**nope*/ d/**nope*/ = /**nope*/ new/**nope*/ Object/**nope*/(/**nope*/)/**nope*/ { /**nope*/ } /**nope*/;
+	
 }
 
 class DDDDDD {
 	/**Javadoc*/
 	@Component/**nope*/ Object/**nope*/ a/**nope*/ = /**nope*/ new/**nope*/ Object/**nope*/(/**nope*/)/**nope*/ { /**nope*/ } /**nope*/;
 	/**Javadoc*/
-	@Component/**nope*/ private/**nope*/ Object/**nope*/ b/**nope*/ = /**nope*/ new/**nope*/ Object/**nope*/(/**nope*/)/**nope*/ { /**nope*/ } /**nope*/;
+	
 	/**Javadoc*/
-	@Component/**nope*/ private/**nope*/ final/**nope*/ Object/**nope*/ c/**nope*/ = /**nope*/ new/**nope*/ Object/**nope*/(/**nope*/)/**nope*/ { /**nope*/ } /**nope*/;
+	
 	/**Javadoc*/
-	@Component/**nope*/ private/**nope*/ static/**nope*/ final/**nope*/ Object/**nope*/ d/**nope*/ = /**nope*/ new/**nope*/ Object/**nope*/(/**nope*/)/**nope*/ { /**nope*/ } /**nope*/;
+	
 }
 
 class EEEEEE {
 	/**Javadoc*/
-	private/**nope*/ @Component/**nope*/ Object/**nope*/ b/**nope*/ = /**nope*/ new/**nope*/ Object/**nope*/(/**nope*/)/**nope*/ { /**nope*/ } /**nope*/;
+	
 	/**Javadoc*/
-	private/**nope*/ @Component/**nope*/ final/**nope*/ Object/**nope*/ c/**nope*/ = /**nope*/ new/**nope*/ Object/**nope*/(/**nope*/)/**nope*/ { /**nope*/ } /**nope*/;
+	
 	/**Javadoc*/
-	private/**nope*/ @Component/**nope*/ static/**nope*/ final/**nope*/ Object/**nope*/ d/**nope*/ = /**nope*/ new/**nope*/ Object/**nope*/(/**nope*/)/**nope*/ { /**nope*/ } /**nope*/;
+	
 }
 
 /////////////////

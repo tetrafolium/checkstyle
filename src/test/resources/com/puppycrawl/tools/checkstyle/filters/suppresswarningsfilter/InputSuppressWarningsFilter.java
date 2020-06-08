@@ -11,27 +11,26 @@ package com.puppycrawl.tools.checkstyle.filters.suppresswarningsfilter;
  **/
 @SuppressWarnings("foo") // coverage: no following AST
 class InputSuppressWarningsFilter
-{
+{    
+
+    // include a non-checkstyle suppression; suppression on same line
+    @SuppressWarnings("unused") private int I;    
+    private static final String UNUSED = "UnusedDeclaration";
     // AST coverage
     @SuppressWarnings("foo") interface I { }
     @SuppressWarnings("foo") enum E { }
     @SuppressWarnings("foo") InputSuppressWarningsFilter() { }
     @SuppressWarnings("foo") @interface A { }
-
-    // include a non-checkstyle suppression; suppression on same line
-    @SuppressWarnings("unused") private int I; // should fail MemberNameCheck
-    @SuppressWarnings({"membername"})
-    private int J; // should NOT fail MemberNameCheck
-    private int K; // should fail MemberNameCheck
+// should fail MemberNameCheck
+     // should NOT fail MemberNameCheck
+     // should fail MemberNameCheck
 
     // DO NOT REFORMAT: L and X should be on the same line
-    @SuppressWarnings(value = "membername")
-    private int L; private int X; // L should NOT fail, X should
+      // L should NOT fail, X should
 
     // test "checkstyle:" prefix
-    @SuppressWarnings("checkstyle:ConstantName")
-    private static final int m = 0; // should NOT fail ConstantNameCheck
-    private static final int n = 0; // should fail ConstantNameCheck
+     // should NOT fail ConstantNameCheck
+     // should fail ConstantNameCheck
 
     // test explicit warning alias
     @SuppressWarnings("paramnum")
@@ -60,7 +59,6 @@ class InputSuppressWarningsFilter
         @SuppressWarnings("rawtypes")
         ELEMENT;
     }
-    private static final String UNUSED = "UnusedDeclaration";
 
     @SuppressWarnings(UNUSED)
     public void annotationUsingStringConstantValue() {

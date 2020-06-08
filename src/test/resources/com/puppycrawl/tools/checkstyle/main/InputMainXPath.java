@@ -2,11 +2,11 @@ package com.puppycrawl.tools.checkstyle.main;
 
 public class InputMainXPath {
     void methodOne() {
-        int a = 10;
+        
     }
 
     void method(final int param) {
-        int a = 10;
+        
     }
 }
 class Two {

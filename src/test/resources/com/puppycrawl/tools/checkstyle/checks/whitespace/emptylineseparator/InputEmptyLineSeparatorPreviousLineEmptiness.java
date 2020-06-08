@@ -3,7 +3,7 @@ package com.puppycrawl.tools.checkstyle.checks.whitespace.emptylineseparator;
 public class InputEmptyLineSeparatorPreviousLineEmptiness {
     private static final int MULTIPLICATOR;
 
-    private int base;
+    
 
     static {
         MULTIPLICATOR = 5;

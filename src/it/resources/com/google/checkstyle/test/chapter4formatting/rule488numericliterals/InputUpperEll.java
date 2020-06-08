@@ -3,9 +3,9 @@ package com.google.checkstyle.test.chapter4formatting.rule488numericliterals;
 class InputUpperEll
 {
     /** test **/
-    private final long IGNORE = 666L + 666L; //warn
+     //warn
 
-    private String notWarn = "666l"; //ok
+     //ok
 
     private long foo()
     {
@@ -18,9 +18,8 @@ class InputUpperEll
     }
 
     private void processUpperEll(final long aLong) {
-        long bad = (4 + 5 * 7 ^ 66L / 7 + 890) //warn
-                & (88L + 78 * 4); //warn
-        long good = (4 + 5 * 7 ^ 66L / 7 + 890) & (88L + 78 * 4); //ok
+         //warn
+         //ok
         long[] array = {
             66L, //warn
             66L, //ok
@@ -31,9 +30,9 @@ class InputUpperEll
 
     class Inner {
         /** test **/
-        private static final long IGNORE = 666L + 666L; //warn
+         //warn
 
-        private static final String notWarn = "666l"; //ok
+         //ok
 
         private long foo()
         {
@@ -47,9 +46,8 @@ class InputUpperEll
 
         private void processUpperEll(final long aLong)
         {
-            long bad = (4 + 5 * 7 ^ 66L / 7 + 890) //warn
-                    & (88L + 78 * 4); //warn
-            long good = (4 + 5 * 7 ^ 66L / 7 + 890) & (88L + 78 * 4); //ok
+             //warn
+             //ok
         }
         private void processUpperEll(final String s, final long l) {
             long[] array = {
@@ -60,34 +58,7 @@ class InputUpperEll
 
         void fooMethod()
         {
-            Foo foo = new Foo() {
-                /** test **/
-                private final long IGNORE = 666L + 666L; //warn
-
-                private String notWarn = "666l"; //ok
-
-                private long foo()
-                {
-                    processUpperEll(66L); //warn
-                    processUpperEll(66L); //ok
-                    processUpperEll("s", 66L); //warn
-                    processUpperEll("s", 66L); //ok
-
-                    return 666L + 666L; //warn
-                }
-
-                private void processUpperEll(final long aLong) {
-                    long bad = (4 + 5 * 7 ^ 66L / 7 + 890) //warn
-                            & (88L + 78 * 4); //warn
-                    long good = (4 + 5 * 7 ^ 66L / 7 + 890) & (88L + 78 * 4); //ok
-                    long[] array = {
-                        66L, //warn
-                        66L, //ok
-                    };
-                }
-
-                private void processUpperEll(final String s, final long aLong) { }
-            };
+            
         }
     }
 

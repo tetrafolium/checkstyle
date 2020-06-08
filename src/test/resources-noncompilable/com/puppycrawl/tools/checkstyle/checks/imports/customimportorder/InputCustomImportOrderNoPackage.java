@@ -1,17 +1,11 @@
 //non-compiled with javac: contains no package for testing
-import java.io.*;
 
 
-import java.util.*; //warn
-
-import java.util.HashMap; //warn
-import java.util.LinkedList;
-// comments between imports
-
-import javax.net.ServerSocketFactory; //warn
 
 // comments between imports
-import javax.net.SocketFactory; //warn
+
+
+// comments between imports
 
 class InputCustomImportOrderNoPackage {
 

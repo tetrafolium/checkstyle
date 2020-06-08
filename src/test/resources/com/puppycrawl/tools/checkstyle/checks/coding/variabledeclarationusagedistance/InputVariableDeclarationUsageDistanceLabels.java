@@ -2,7 +2,7 @@ package com.puppycrawl.tools.checkstyle.checks.coding.variabledeclarationusagedi
 
 public class InputVariableDeclarationUsageDistanceLabels {
     public void method() {
-        boolean eol = false;
+        
 
         nothing();
         nothing();

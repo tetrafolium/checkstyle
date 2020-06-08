@@ -17,30 +17,16 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 ////////////////////////////////////////////////////////////////////////////////
 package com.google.checkstyle.test.chapter3filestructure.rule3sourcefile; //warn
-import java.io.Serializable; //warn
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Callable;
-import java.util.Collections;
-import com.puppycrawl.tools.checkstyle.Checker;
-import com.puppycrawl.tools.checkstyle.ConfigurationLoader;
 
-import javax.swing.AbstractAction;
 
-import org.apache.commons.beanutils.locale.converters.ByteLocaleConverter;
 class InputEmptyLineSeparator //warn
 {
     public static final double FOO_PI = 3.1415;
-    private boolean flag = true;
-    static {  //warn
-        //empty static initializer
-    }
+    
+    
 
-    {
-        //empty instance initializer
-    }
+    
 
     /**
      *
@@ -54,7 +40,7 @@ class InputEmptyLineSeparator //warn
 
     public int compareTo(final InputEmptyLineSeparator aObject)
     {
-        int number = 0;
+        
         return 0;
     }
     /**
@@ -78,10 +64,8 @@ class InputEmptyLineSeparator //warn
     class InnerClass {
 
         public static final double FOO_PI_INNER = 3.1415;
-        private boolean flagInner = true;
-        { //warn
-            //empty instance initializer
-        }
+        
+        
 
         private InnerClass()
         {
@@ -100,7 +84,7 @@ class InputEmptyLineSeparator //warn
     class InnerClass3 { //ok
         public int compareTo(final InputEmptyLineSeparator aObject) //ok
         {
-            int number = 0;
+            
             return 0;
         }
 
@@ -113,13 +97,13 @@ class Class1 { //ok
 class Class2 { //warn
     public int compareTo(final InputEmptyLineSeparator aObject) //ok
     {
-        int number = 0;
+        
         return 0;
     }
     Class2 anon = new Class2() { //warn
         public int compareTo(final InputEmptyLineSeparator aObject) //ok
         {
-            int number = 0;
+            
             return 0;
         }
     };

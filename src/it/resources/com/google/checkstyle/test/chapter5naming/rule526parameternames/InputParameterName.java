@@ -1,6 +1,5 @@
 package com.google.checkstyle.test.chapter5naming.rule526parameternames;
 
-import java.io.*;
 
 class InputParameterName
 {
@@ -9,10 +8,7 @@ class InputParameterName
     public void doSomething(final int aaa, final int abn, final String aaA,
             final boolean bB) //warn
     {
-        for (Object O : new java.util.ArrayList())
-        {
-
-        }
+        
     }
 }
 

@@ -1,9 +1,5 @@
 package com.puppycrawl.tools.checkstyle.checks.blocks.leftcurly;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Target;
-import java.util.ArrayList;
-import java.util.List;
 
 class InputLeftCurlyLineBreakAfter
 {
@@ -20,7 +16,7 @@ class InputLeftCurlyLineBreakAfter
                 {
                     break;
                 } else if (x < 0) {
-                    ;
+                    
                 } else {
                     break;
                 }
@@ -47,14 +43,13 @@ class InputLeftCurlyLineBreakAfter
         }
 
         for (int k = 0; k < 1; k++) {
-            String innerBlockVariable = ""; }
+             }
 
         for (int k = 0; k < 1; k++) { }
                 return a;
     }
 
-    static {
-        int x = 1; }
+    
 
     void method2()
     {

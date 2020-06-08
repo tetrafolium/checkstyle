@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.function.Consumer;
 
 /**
  * This test-input is intended to be checked using following configuration:
@@ -15,14 +14,14 @@ import java.util.function.Consumer;
  */
 public abstract class InputIllegalTypeGenerics {
 
-    private Set<Boolean> privateSet; // OK
-    private java.util.List<Map<Boolean, Foo>> privateList; // OK
+     // OK
+     // OK
     public Set<Boolean> set; // warn
     public java.util.List<Map<Boolean, Foo>> list; // warn
 
     private void methodCall() {
         Bounded.<Boolean>foo(); // warn
-        final Consumer<Foo> consumer = Foo<Boolean>::foo; // warn
+         // warn
     }
 
     public <T extends Boolean, U extends Serializable> void typeParameter(final T a) { } // warn

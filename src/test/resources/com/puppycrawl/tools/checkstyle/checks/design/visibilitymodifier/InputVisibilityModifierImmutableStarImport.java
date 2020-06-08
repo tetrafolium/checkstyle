@@ -1,7 +1,5 @@
 package com.puppycrawl.tools.checkstyle.checks.design.visibilitymodifier;
 
-import com.puppycrawl.tools.checkstyle.checks.design.visibilitymodifier.InputVisibilityModifierImmutable;
-import com.puppycrawl.tools.checkstyle.checks.design.visibilitymodifier.inputs.InetSocketAddress.*;
 
 public final class InputVisibilityModifierImmutableStarImport
 {

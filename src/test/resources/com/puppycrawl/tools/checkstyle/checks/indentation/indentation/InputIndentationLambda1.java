@@ -4,8 +4,6 @@ package com.puppycrawl.tools.checkstyle.checks.indentation.indentation; //indent
 import java.util.ArrayList; //indent:0 exp:0
 import java.util.List; //indent:0 exp:0
 import java.util.Map; //indent:0 exp:0
-import java.util.StringJoiner; //indent:0 exp:0
-import java.util.stream.Collector; //indent:0 exp:0
 import java.util.stream.Collectors; //indent:0 exp:0
 import java.util.stream.IntStream; //indent:0 exp:0
 import java.util.stream.Stream; //indent:0 exp:0
@@ -25,82 +23,45 @@ public class InputIndentationLambda1 { //indent:0 exp:0
   } //indent:2 exp:2
 
   void function1(final Runnable x) { //indent:2 exp:2
-    Runnable r1 = () -> { //indent:4 exp:4
-      x.run(); //indent:6 exp:6
-    }; //indent:4 exp:4
+     //indent:4 exp:4
 
-    Runnable r2 = () -> {
-        x.run(); }; //indent:4 exp:4
+     //indent:4 exp:4
 
-    Runnable r3 = () -> //indent:4 exp:4
-        x.run(); //indent:8 exp:8
+     //indent:8 exp:8
 
-    Runnable r4 = () -> x.run(); //indent:4 exp:4
+     //indent:4 exp:4
 
-    Printer r5 = s -> LOG.info(s); //indent:4 exp:4
+     //indent:4 exp:4
 
-    Printer r6 = s -> String.CASE_INSENSITIVE_ORDER //indent:4 exp:4
-        .equals(s); //indent:8 exp:8
+     //indent:8 exp:8
 
-    Runnable r7 = () //indent:4 exp:4
-        -> //indent:8 exp:8
-     { //indent:5 exp:4 warn
-     }; //indent:5 exp:4 warn
+     //indent:5 exp:4 warn
 
-    Runnable r8 = //indent:4 exp:4
-         () //indent:9 exp:8 warn
-           -> //indent:11 exp:12 warn
-         { }; //indent:9 exp:8 warn
+     //indent:9 exp:8 warn
 
-    Runnable r9 = //indent:4 exp:4
-        () //indent:8 exp:8
-            -> //indent:12 exp:12
-        { }; //indent:8 exp:8
+     //indent:8 exp:8
 
-    Object o = new Thread(() -> { //indent:4 exp:4
-      x.run(); //indent:6 exp:6
-    }); //indent:4 exp:4
+     //indent:4 exp:4
 
-    Runnable r01 = () -> { //indent:4 exp:4
-       x.run(); //indent:7 exp:6 warn
-     }; //indent:5 exp:4 warn
+     //indent:5 exp:4 warn
 
-    Runnable r11 = //indent:4 exp:4
-        () -> { //indent:8 exp:8
-          x.run(); //indent:10 exp:10
-        }; //indent:8 exp:8
+     //indent:8 exp:8
 
-    Runnable r21 = //indent:4 exp:4
-        () -> {
-            x.run(); }; //indent:8 exp:8
+     //indent:8 exp:8
 
-    Runnable r31 = //indent:4 exp:4
-        () -> x //indent:8 exp:8
-            .run(); //indent:12 exp:12
+     //indent:12 exp:12
 
-    Runnable r41 = //indent:4 exp:4
-        () -> x.run(); //indent:8 exp:8
+     //indent:8 exp:8
 
-    Printer r51 = //indent:4 exp:4
-        s -> LOG.info(s); //indent:8 exp:8
+     //indent:8 exp:8
 
-    Printer r61 = //indent:4 exp:4
-        s -> String.CASE_INSENSITIVE_ORDER //indent:8 exp:8
-            .equals(s); //indent:12 exp:12
+     //indent:12 exp:12
 
-    Object o1 = new Thread(//indent:4 exp:4
-        () -> { //indent:8 exp:8
-          x.run(); //indent:10 exp:10
-        }); //indent:8 exp:8
+     //indent:8 exp:8
 
-    Object o2 = new Thread(() -> { //indent:4 exp:4
-      x.run(); //indent:6 exp:6
-    }).toString(); //indent:4 exp:4
+     //indent:4 exp:4
 
-    SomeInterface i1 = (LongTypeName //indent:4 exp:4
-        arg) -> { //indent:8 exp:8
-      LOG.info(arg.toString()); //indent:6 exp:6
-    }; //indent:4 exp:4
+     //indent:4 exp:4
 
     Printer[] manyRunnable = new Printer[]{//indent:4 exp:4
         s -> LOG.info(s), //indent:8 exp:6,8
@@ -163,12 +124,7 @@ public class InputIndentationLambda1 { //indent:0 exp:0
     personsByAge //indent:4 exp:4
         .forEach((age, p) -> LOG.info("age %s: %s\n")); //indent:8 exp:8
 
-    Collector<Person, StringJoiner, String> personNameCollector = //indent:4 exp:4
-        Collector.of(//indent:8 exp:8
-            () -> new StringJoiner(" | "), //indent:12 exp:12
-            (j, p) -> j.add(p.name.toUpperCase(java.util.Locale.getDefault())), //indent:12 exp:12
-            (j1, j2) -> j1.merge(j2), //indent:12 exp:12
-            StringJoiner::toString); //indent:12 exp:12
+     //indent:12 exp:12
 
     List<Foo> foos = new ArrayList<>(); //indent:4 exp:4
 
@@ -179,7 +135,7 @@ public class InputIndentationLambda1 { //indent:0 exp:0
 
     Stream.of("d2", "a2", "b1", "b3", "c") //indent:4 exp:4
         .filter(s -> { //indent:8 exp:8
-         LOG.info(("filter: " + s)); //indent:9 exp:10 warn
+         LOG.info("filter: " + s); //indent:9 exp:10 warn
            return s.startsWith("a"); //indent:11 exp:10 warn
         }) //indent:8 exp:8
         .map(s -> { //indent:8 exp:8
@@ -211,19 +167,10 @@ public class InputIndentationLambda1 { //indent:0 exp:0
   } //indent:2 exp:2
 
   void function2(final Runnable x) { //indent:2 exp:2
-    Runnable r0 = r2r(() -> { //indent:4 exp:4
-      int i = 1; //indent:6 exp:6
-    }); //indent:4 exp:4
+     //indent:4 exp:4
 
-    Runnable r1 = r2r(() -> { //indent:4 exp:4
-          int i = 1; //indent:10 exp:10
-        } //indent:8 exp:8
-    ); //indent:4 exp:4
+     //indent:4 exp:4
 
-    Runnable r2 = r2r(r2r(() -> { //indent:4 exp:4
-              int i = 1; //indent:14 exp:14
-            } //indent:12 exp:12
-        ) //indent:8 exp:8
-    ); //indent:4 exp:4
+     //indent:4 exp:4
   } //indent:2 exp:2
 } //indent:0 exp:0

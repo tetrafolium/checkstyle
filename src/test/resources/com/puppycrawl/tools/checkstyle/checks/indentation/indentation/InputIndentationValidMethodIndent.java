@@ -16,36 +16,33 @@ import java.util.Arrays; //indent:0 exp:0
  *                                                                            //indent:1 exp:1
  * @author  jrichard                                                          //indent:1 exp:1
  */                                                                           //indent:1 exp:1
-public class InputIndentationValidMethodIndent extends Object { //indent:0 exp:0
+public class InputIndentationValidMethodIndent  { //indent:0 exp:0
 
     // ctor with rcurly on same line //indent:4 exp:4
     public InputIndentationValidMethodIndent() { //indent:4 exp:4
     } //indent:4 exp:4
 
     private InputIndentationValidMethodIndent(final boolean test) { //indent:4 exp:4
-        boolean test2 = true; //indent:8 exp:>=8
+         //indent:8 exp:>=8
 
-        int i = 4 +  //indent:8 exp:8
-            4; //indent:12 exp:>=12
+         //indent:12 exp:>=12
     } //indent:4 exp:4
 
 
     private InputIndentationValidMethodIndent(final boolean test, //indent:4 exp:4
         final boolean test2) { //indent:8 exp:>=8
-        boolean test3 = true; //indent:8 exp:>=8
+         //indent:8 exp:>=8
 
-        int i = 4 +  //indent:8 exp:8
-            4; //indent:12 exp:>=12
+         //indent:12 exp:>=12
     } //indent:4 exp:4
 
 
     private InputIndentationValidMethodIndent(final boolean test, //indent:4 exp:4
         final boolean test2, final boolean test3)  //indent:8 exp:>=8
     { //indent:4 exp:4
-        boolean test4 = true; //indent:8 exp:8
+         //indent:8 exp:8
 
-        int i = 4 +  //indent:8 exp:8
-            4; //indent:12 exp:>=12
+         //indent:12 exp:>=12
     } //indent:4 exp:4
 
     // ctor with rcurly on next line //indent:4 exp:4
@@ -167,8 +164,7 @@ public class InputIndentationValidMethodIndent extends Object { //indent:0 exp:0
                 new String[] {"method"}).toString()); //indent:16 exp:>=16
 
 
-        String blah = (String) System.getProperty(//indent:8 exp:8
-            new String("type")); //indent:12 exp:>=12
+         //indent:12 exp:>=12
 
         System.identityHashCode(method1() + "mytext"  //indent:8 exp:8
             + " at indentation level not at correct indentation, "  //indent:12 exp:>=12

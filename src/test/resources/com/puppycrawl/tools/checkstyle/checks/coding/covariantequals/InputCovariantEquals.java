@@ -88,7 +88,7 @@ class AnonymousIC
 
     public void method()
     {
-        Double d = new Double(1);
+        
     }
 }
 

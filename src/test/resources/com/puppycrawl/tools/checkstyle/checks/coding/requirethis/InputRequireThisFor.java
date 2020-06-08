@@ -1,10 +1,8 @@
 package com.puppycrawl.tools.checkstyle.checks.coding.requirethis;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class InputRequireThisFor {
-    private String name;
+    
     int bottom;
 
     public void method1() {
@@ -15,9 +13,8 @@ public class InputRequireThisFor {
     }
 
     public void method2() {
-        for (String name : new String[]{}) {
-        }
+        
 
-        Path jarfile = Paths.get(name + ".jar");
+        
     }
 }

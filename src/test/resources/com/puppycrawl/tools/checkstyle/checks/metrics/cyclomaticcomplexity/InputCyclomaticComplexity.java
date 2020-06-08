@@ -62,7 +62,7 @@ public class InputCyclomaticComplexity {
     // NP = 3
     public InputCyclomaticComplexity()
     {
-        int i = 1;
+        
         // NP = (if-range=1) + (else-range=2) + 0 = 3
         if (System.currentTimeMillis() == 0) {
         // NP(else-range) = (if-range=1) + (else-range=1) + (expr=0) = 2
@@ -74,7 +74,7 @@ public class InputCyclomaticComplexity {
     // STATIC_INIT
     // NP = 3
     static {
-        int i = 1;
+        
         // NP = (if-range=1) + (else-range=2) + 0 = 3
         if (System.currentTimeMillis() == 0) {
         // NP(else-range) = (if-range=1) + (else-range=1) + (expr=0) = 2
@@ -86,7 +86,7 @@ public class InputCyclomaticComplexity {
     // INSTANCE_INIT
     // NP = 3
     {
-        int i = 1;
+        
         // NP = (if-range=1) + (else-range=2) + 0 = 3
         if (System.currentTimeMillis() == 0) {
         // NP(else-range) = (if-range=1) + (else-range=1) + (expr=0) = 2

@@ -36,19 +36,15 @@ public class InputIndentationValidTryIndent { //indent:0 exp:0
         try { //indent:8 exp:8
         } catch (Throwable t) { //indent:8 exp:8
             System.identityHashCode("err"); //indent:12 exp:12
-        } finally { //indent:8 exp:8
-        } //indent:8 exp:8
+        }  //indent:8 exp:8
 
         try { //indent:8 exp:8
-        } catch (Exception t) { //indent:8 exp:8
-            System.identityHashCode("err"); //indent:12 exp:12
-        } catch (Throwable t) { //indent:8 exp:8
+        } catch (Exception | Throwable t) { //indent:8 exp:8
             System.identityHashCode("err"); //indent:12 exp:12
         } //indent:8 exp:8
 
         try { //indent:8 exp:8
-        } catch (Exception t) { //indent:8 exp:8
-        } catch (Throwable t) { //indent:8 exp:8
+        } catch (Exception | Throwable t) { //indent:8 exp:8
         } //indent:8 exp:8
 
 
@@ -62,8 +58,7 @@ public class InputIndentationValidTryIndent { //indent:0 exp:0
         catch (Throwable t) { //indent:8 exp:8
             System.identityHashCode("err"); //indent:12 exp:12
         }  //indent:8 exp:8
-        finally { //indent:8 exp:8
-        } //indent:8 exp:8
+         //indent:8 exp:8
 
         try  //indent:8 exp:8
         { //indent:8 exp:8
@@ -78,9 +73,7 @@ public class InputIndentationValidTryIndent { //indent:0 exp:0
         { //indent:8 exp:8
             System.identityHashCode("err"); //indent:12 exp:12
         } //indent:8 exp:8
-        finally  //indent:8 exp:8
-        { //indent:8 exp:8
-        } //indent:8 exp:8
+         //indent:8 exp:8
 
         try  //indent:8 exp:8
         { //indent:8 exp:8

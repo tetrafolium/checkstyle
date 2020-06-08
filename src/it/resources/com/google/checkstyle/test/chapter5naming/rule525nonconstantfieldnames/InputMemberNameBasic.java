@@ -5,17 +5,17 @@ public class InputMemberNameBasic
     public int mPublic; //warn
     protected int mProtected; //warn
     int mPackage; //warn
-    private int mPrivate; //warn
+     //warn
 
     public int _public; //warn
     protected int prot_ected; //warn
     int package_; //warn
-    private int priva$te; //warn
+     //warn
 
     public int ppublic; //ok
     protected int pprotected; //ok
     int ppackage; //ok
-    private int pprivate; //ok
+     //ok
 
     int ABC = 0; //warn
     final int C_D_E = 0; //warn

@@ -1,6 +1,5 @@
 package com.puppycrawl.tools.checkstyle.checks.whitespace.nowhitespacebefore;
 
-import java.util.function.Supplier;
 
 public class InputNoWhitespaceBeforeMethodRef {
     public static class SomeClass {
@@ -14,8 +13,8 @@ public class InputNoWhitespaceBeforeMethodRef {
   }
 
   public <V> void methodName(final V value) {
-    Supplier<?> t = Nested2<V>::new; //violation
-    Supplier<SomeClass.Nested<V>> passes = SomeClass.Nested ::new; //violation
-    Supplier<SomeClass.Nested<V>> fails = SomeClass.Nested<V>::new;
+     //violation
+     //violation
+    
   }
 }

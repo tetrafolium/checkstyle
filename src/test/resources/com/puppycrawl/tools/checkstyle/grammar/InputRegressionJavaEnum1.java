@@ -1,9 +1,9 @@
 package com.puppycrawl.tools.checkstyle.grammar;
 
 public enum InputRegressionJavaEnum1 {
-    E1(), E2 {
-        class anonymous { }
+    E1(), E2 {        
         private static final int f = 1;
+        class anonymous { }
 
         @Override
         public void override() { };
@@ -12,7 +12,7 @@ public enum InputRegressionJavaEnum1 {
             throw new Exception(); };
         public native void m3() throws Exception;
 
-        { ; }
+        
     }
 ;
 

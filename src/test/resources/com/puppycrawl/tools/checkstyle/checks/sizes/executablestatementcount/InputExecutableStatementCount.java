@@ -1,6 +1,10 @@
 package com.puppycrawl.tools.checkstyle.checks.sizes.executablestatementcount;
 
-public class InputExecutableStatementCount {
+public class InputExecutableStatementCount {    
+
+    static Runnable r1 = () -> {
+        String.valueOf("Hello world one!");
+    };
     public void foo() {
         while (true) {
             Runnable runnable = new Runnable() {
@@ -47,7 +51,7 @@ public class InputExecutableStatementCount {
 
     public InputExecutableStatementCount()
     {
-        int i = 1;
+        
         if (System.currentTimeMillis() == 0) {
         } else if (System.currentTimeMillis() == 0) {
         } else {
@@ -56,7 +60,7 @@ public class InputExecutableStatementCount {
 
     // STATIC_INIT
     static {
-        int i = 1;
+        
         if (System.currentTimeMillis() == 0) {
         } else if (System.currentTimeMillis() == 0) {
         } else {
@@ -65,7 +69,7 @@ public class InputExecutableStatementCount {
 
     // INSTANCE_INIT
     {
-        int i = 1;
+        
         if (System.currentTimeMillis() == 0) {
         } else if (System.currentTimeMillis() == 0) {
         } else {
@@ -86,8 +90,4 @@ public class InputExecutableStatementCount {
 
     /** Empty constructor */
     public InputExecutableStatementCount(final String someString) { }
-
-    static Runnable r1 = () -> {
-        String.valueOf("Hello world one!");
-    };
 }

@@ -1,7 +1,6 @@
 package /** warn */ com.google.checkstyle.test.chapter7javadoc.rule734nonrequiredjavadoc;
 
 /** warn */
-import java.lang.String;
 
 /** warn */
 /** valid */
@@ -12,7 +11,7 @@ class InputInvalidJavadocPosition {
 /* ignore */
 class InputInvalidJavadocPosition2 {
     /** warn */
-    static { /* ignore */ }
+    
 
     /** warn */
     /** valid */
@@ -41,7 +40,7 @@ class InputInvalidJavadocPosition2 {
     void method22(/** warn */) {}
     void method23() /** warn */ {}
     void method24() { /** warn */ }
-    void method25() { /** warn */ int variable; }
+    void method25() { /** warn */  }
 }
 @Deprecated
 /** warn */

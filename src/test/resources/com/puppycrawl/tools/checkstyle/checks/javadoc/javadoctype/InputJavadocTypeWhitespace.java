@@ -20,18 +20,13 @@ class InputJavadocTypeWhitespace
             }
         });
 
-        final Runnable r = new Runnable() {
-            public void run() {
-            }
-        };
+        
     }
 
     /** bug 806243 (NoWhitespaceBeforeCheck violation for anonymous inner class) */
     void bug806243()
     {
-        Object o = new InputJavadocTypeWhitespace() {
-            private int j;
-        };
+        
     }
 }
 

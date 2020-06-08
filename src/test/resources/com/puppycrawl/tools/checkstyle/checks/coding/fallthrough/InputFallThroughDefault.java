@@ -42,33 +42,29 @@ public class InputFallThroughDefault
                 i++;
             }
             case 12: //fall through!!!
-                if (false)
-                    break;
-                else
-                    break;
+                break;
             case 13:
-                if (true) {
+                {
                     return;
                 }
             case 14:
-                if (true) {
+                {
                     return;
-                } else {
-                    //do nothing
                 }
             case 15: //fall through!!!
-                do {
+                while (true) {
                     System.identityHashCode("something");
                     return;
-                } while (true);
+                }
             case 16:
                 for (int j1 = 0; j1 < 10; j1++) {
                     String.valueOf("something");
                     return;
                 }
             case 17:
-                while (true)
+                while (true) {
                     throw new RuntimeException("");
+                }
             case 18:
                 while (cond) {
                     break;
@@ -174,34 +170,30 @@ public class InputFallThroughDefault
           }
           // fallthru
           case 12:
-              if (false)
-                  break;
-              else
-                  break;
+              break;
           case 13:
-              if (true) {
+              {
                   return;
               }
           case 14:
-              if (true) {
+              {
                   return;
-              } else {
-                  //do nothing
               }
               // fallthru
           case 15:
-              do {
+              while (true) {
                   System.identityHashCode("something");
                   return;
-              } while (true);
+              }
           case 16:
               for (int j1 = 0; j1 < 10; j1++) {
                   String.valueOf("something");
                   return;
               }
           case 17:
-              while (cond)
+              while (cond) {
                   throw new RuntimeException("");
+              }
           case 18:
               while (cond) {
                   break;
@@ -426,7 +418,7 @@ public class InputFallThroughDefault
     void nextedSwitches2() {
         switch (hashCode()) {
         case 1:
-            switch (hashCode()) { }
+            
         case 2:
             System.lineSeparator();
             break;
@@ -436,7 +428,7 @@ public class InputFallThroughDefault
     void ifWithoutBreak() {
         switch (hashCode()) {
         case 1:
-            if (true) {
+            {
                 System.lineSeparator();
             }
         case 2:
@@ -463,18 +455,13 @@ public class InputFallThroughDefault
                }
            case 2:
                // synchronized nested in if
-               if (true) {
-                   synchronized (this) {
-                       break;
-                   }
-               } else {
+               {
                    synchronized (this) {
                        break;
                    }
                }
            case 3:
-               synchronized (this) {
-               }
+               
                // fallthru
            default:
                break;

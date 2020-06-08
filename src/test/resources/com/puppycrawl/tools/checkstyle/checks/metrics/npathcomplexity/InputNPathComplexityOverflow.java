@@ -13,22 +13,21 @@ public class InputNPathComplexityOverflow {
     public void provokeNpathIntegerOverflow()
     {
         // NP = (if-range=8) + 1 + (expr=0) = 9
-        if (true) {
+        {
             // NP = (if-range=7) + 1 + (expr=0) = 8
-            if (true) {
+            {
                 // NP = (if-range=6) + 1 + (expr=0) = 7
-                if (true) {
+                {
                     // NP = (if-range=5) + 1 + (expr=0) = 6
-                    if (true) {
+                    {
                         // NP = (if-range=4) + 1 + (expr=0) = 5
-                        if (true) {
+                        {
                             // NP = (if-range=3) + 1 + (expr=0) = 4
-                            if (true) {
+                            {
                                 // NP = (if-range=2) + 1 + (expr=0) = 3
-                                if (true) {
+                                {
                                     // NP = (if-range=1) + 1 + (expr=0) = 2
-                                    if (true) {
-                                    }
+                                    
                                 }
                             }
                         }
@@ -37,22 +36,21 @@ public class InputNPathComplexityOverflow {
             }
         }
         // NP = (if-range=8) + 1 + (expr=0) = 9
-        if (true) {
+        {
             // NP = (if-range=7) + 1 + (expr=0) = 8
-            if (true) {
+            {
                 // NP = (if-range=6) + 1 + (expr=0) = 7
-                if (true) {
+                {
                     // NP = (if-range=5) + 1 + (expr=0) = 6
-                    if (true) {
+                    {
                         // NP = (if-range=4) + 1 + (expr=0) = 5
-                        if (true) {
+                        {
                             // NP = (if-range=3) + 1 + (expr=0) = 4
-                            if (true) {
+                            {
                                 // NP = (if-range=2) + 1 + (expr=0) = 3
-                                if (true) {
+                                {
                                     // NP = (if-range=1) + 1 + (expr=0) = 2
-                                    if (true) {
-                                    }
+                                    
                                 }
                             }
                         }
@@ -61,22 +59,21 @@ public class InputNPathComplexityOverflow {
             }
         }
         // NP = (if-range=8) + 1 + (expr=0) = 9
-        if (true) {
+        {
             // NP = (if-range=7) + 1 + (expr=0) = 8
-            if (true) {
+            {
                 // NP = (if-range=6) + 1 + (expr=0) = 7
-                if (true) {
+                {
                     // NP = (if-range=5) + 1 + (expr=0) = 6
-                    if (true) {
+                    {
                         // NP = (if-range=4) + 1 + (expr=0) = 5
-                        if (true) {
+                        {
                             // NP = (if-range=3) + 1 + (expr=0) = 4
-                            if (true) {
+                            {
                                 // NP = (if-range=2) + 1 + (expr=0) = 3
-                                if (true) {
+                                {
                                     // NP = (if-range=1) + 1 + (expr=0) = 2
-                                    if (true) {
-                                    }
+                                    
                                 }
                             }
                         }
@@ -85,22 +82,21 @@ public class InputNPathComplexityOverflow {
             }
         }
         // NP = (if-range=8) + 1 + (expr=0) = 9
-        if (true) {
+        {
             // NP = (if-range=7) + 1 + (expr=0) = 8
-            if (true) {
+            {
                 // NP = (if-range=6) + 1 + (expr=0) = 7
-                if (true) {
+                {
                     // NP = (if-range=5) + 1 + (expr=0) = 6
-                    if (true) {
+                    {
                         // NP = (if-range=4) + 1 + (expr=0) = 5
-                        if (true) {
+                        {
                             // NP = (if-range=3) + 1 + (expr=0) = 4
-                            if (true) {
+                            {
                                 // NP = (if-range=2) + 1 + (expr=0) = 3
-                                if (true) {
+                                {
                                     // NP = (if-range=1) + 1 + (expr=0) = 2
-                                    if (true) {
-                                    }
+                                    
                                 }
                             }
                         }
@@ -109,22 +105,21 @@ public class InputNPathComplexityOverflow {
             }
         }
         // NP = (if-range=8) + 1 + (expr=0) = 9
-        if (true) {
+        {
             // NP = (if-range=7) + 1 + (expr=0) = 8
-            if (true) {
+            {
                 // NP = (if-range=6) + 1 + (expr=0) = 7
-                if (true) {
+                {
                     // NP = (if-range=5) + 1 + (expr=0) = 6
-                    if (true) {
+                    {
                         // NP = (if-range=4) + 1 + (expr=0) = 5
-                        if (true) {
+                        {
                             // NP = (if-range=3) + 1 + (expr=0) = 4
-                            if (true) {
+                            {
                                 // NP = (if-range=2) + 1 + (expr=0) = 3
-                                if (true) {
+                                {
                                     // NP = (if-range=1) + 1 + (expr=0) = 2
-                                    if (true) {
-                                    }
+                                    
                                 }
                             }
                         }
@@ -133,22 +128,21 @@ public class InputNPathComplexityOverflow {
             }
         }
         // NP = (if-range=8) + 1 + (expr=0) = 9
-        if (true) {
+        {
             // NP = (if-range=7) + 1 + (expr=0) = 8
-            if (true) {
+            {
                 // NP = (if-range=6) + 1 + (expr=0) = 7
-                if (true) {
+                {
                     // NP = (if-range=5) + 1 + (expr=0) = 6
-                    if (true) {
+                    {
                         // NP = (if-range=4) + 1 + (expr=0) = 5
-                        if (true) {
+                        {
                             // NP = (if-range=3) + 1 + (expr=0) = 4
-                            if (true) {
+                            {
                                 // NP = (if-range=2) + 1 + (expr=0) = 3
-                                if (true) {
+                                {
                                     // NP = (if-range=1) + 1 + (expr=0) = 2
-                                    if (true) {
-                                    }
+                                    
                                 }
                             }
                         }
@@ -157,22 +151,21 @@ public class InputNPathComplexityOverflow {
             }
         }
         // NP = (if-range=8) + 1 + (expr=0) = 9
-        if (true) {
+        {
             // NP = (if-range=7) + 1 + (expr=0) = 8
-            if (true) {
+            {
                 // NP = (if-range=6) + 1 + (expr=0) = 7
-                if (true) {
+                {
                     // NP = (if-range=5) + 1 + (expr=0) = 6
-                    if (true) {
+                    {
                         // NP = (if-range=4) + 1 + (expr=0) = 5
-                        if (true) {
+                        {
                             // NP = (if-range=3) + 1 + (expr=0) = 4
-                            if (true) {
+                            {
                                 // NP = (if-range=2) + 1 + (expr=0) = 3
-                                if (true) {
+                                {
                                     // NP = (if-range=1) + 1 + (expr=0) = 2
-                                    if (true) {
-                                    }
+                                    
                                 }
                             }
                         }
@@ -181,22 +174,21 @@ public class InputNPathComplexityOverflow {
             }
         }
         // NP = (if-range=8) + 1 + (expr=0) = 9
-        if (true) {
+        {
             // NP = (if-range=7) + 1 + (expr=0) = 8
-            if (true) {
+            {
                 // NP = (if-range=6) + 1 + (expr=0) = 7
-                if (true) {
+                {
                     // NP = (if-range=5) + 1 + (expr=0) = 6
-                    if (true) {
+                    {
                         // NP = (if-range=4) + 1 + (expr=0) = 5
-                        if (true) {
+                        {
                             // NP = (if-range=3) + 1 + (expr=0) = 4
-                            if (true) {
+                            {
                                 // NP = (if-range=2) + 1 + (expr=0) = 3
-                                if (true) {
+                                {
                                     // NP = (if-range=1) + 1 + (expr=0) = 2
-                                    if (true) {
-                                    }
+                                    
                                 }
                             }
                         }
@@ -205,22 +197,21 @@ public class InputNPathComplexityOverflow {
             }
         }
         // NP = (if-range=8) + 1 + (expr=0) = 9
-        if (true) {
+        {
             // NP = (if-range=7) + 1 + (expr=0) = 8
-            if (true) {
+            {
                 // NP = (if-range=6) + 1 + (expr=0) = 7
-                if (true) {
+                {
                     // NP = (if-range=5) + 1 + (expr=0) = 6
-                    if (true) {
+                    {
                         // NP = (if-range=4) + 1 + (expr=0) = 5
-                        if (true) {
+                        {
                             // NP = (if-range=3) + 1 + (expr=0) = 4
-                            if (true) {
+                            {
                                 // NP = (if-range=2) + 1 + (expr=0) = 3
-                                if (true) {
+                                {
                                     // NP = (if-range=1) + 1 + (expr=0) = 2
-                                    if (true) {
-                                    }
+                                    
                                 }
                             }
                         }
@@ -229,22 +220,21 @@ public class InputNPathComplexityOverflow {
             }
         }
         // NP = (if-range=8) + 1 + (expr=0) = 9
-        if (true) {
+        {
             // NP = (if-range=7) + 1 + (expr=0) = 8
-            if (true) {
+            {
                 // NP = (if-range=6) + 1 + (expr=0) = 7
-                if (true) {
+                {
                     // NP = (if-range=5) + 1 + (expr=0) = 6
-                    if (true) {
+                    {
                         // NP = (if-range=4) + 1 + (expr=0) = 5
-                        if (true) {
+                        {
                             // NP = (if-range=3) + 1 + (expr=0) = 4
-                            if (true) {
+                            {
                                 // NP = (if-range=2) + 1 + (expr=0) = 3
-                                if (true) {
+                                {
                                     // NP = (if-range=1) + 1 + (expr=0) = 2
-                                    if (true) {
-                                    }
+                                    
                                 }
                             }
                         }

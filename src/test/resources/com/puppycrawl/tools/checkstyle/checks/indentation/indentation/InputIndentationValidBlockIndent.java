@@ -25,9 +25,8 @@ public class InputIndentationValidBlockIndent { //indent:0 exp:0
 
     public void method1() { //indent:4 exp:4
 
-        { } //indent:8 exp:8
-        { //indent:8 exp:8
-        } //indent:8 exp:8
+         //indent:8 exp:8
+         //indent:8 exp:8
         { //indent:8 exp:8
             int var = 3; //indent:12 exp:12
 
@@ -35,7 +34,7 @@ public class InputIndentationValidBlockIndent { //indent:0 exp:0
         } //indent:8 exp:8
 
 
-        {  int var = 5; } //indent:8 exp:8
+         //indent:8 exp:8
 
         { //indent:8 exp:8
             int var = 3; //indent:12 exp:12
@@ -51,29 +50,19 @@ public class InputIndentationValidBlockIndent { //indent:0 exp:0
 
     } //indent:4 exp:4
 
-    static {
-        int var = 4; } //indent:4 exp:4
+     //indent:4 exp:4
 
 
-    static { //indent:4 exp:4
-        int var = 4;  //indent:8 exp:8
-    } //indent:4 exp:4
+     //indent:4 exp:4
 
-    static  //indent:4 exp:4
-    { //indent:4 exp:4
-        int var = 4;  //indent:8 exp:8
-    } //indent:4 exp:4
+     //indent:4 exp:4
 
-    { int var = 4; } //indent:4 exp:4
+     //indent:4 exp:4
 
 
-    { //indent:4 exp:4
-        int var = 4;  //indent:8 exp:8
-    } //indent:4 exp:4
+     //indent:4 exp:4
 
-    { //indent:4 exp:4
-        int var = 4;  //indent:8 exp:8
-    } //indent:4 exp:4
+     //indent:4 exp:4
 
 
 } //indent:0 exp:0
@@ -186,7 +175,7 @@ class AnonymousClassWithInitializer { //indent:0 exp:0
 
 class OneLineCode { //indent:0 exp:0
     void block() { //indent:4 exp:4
-        { if (true) return; }  //indent:8 exp:8
+        { return; }  //indent:8 exp:8
     } //indent:4 exp:4
     void lambda() { //indent:4 exp:4
         Stream.of(false).map(x -> {

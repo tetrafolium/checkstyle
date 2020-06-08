@@ -21,17 +21,10 @@ public class InputNeedBracesCaseDefaultNoSingleLine {
         default: Math.random(); // violation
         }
         switch (val){
-        case 1: {}
+        case 1: 
         default:
         }
-        if(false) {
-            switch (1) {
-                case 1: return "1"; // violation
-                default: return "2"; // violation
-                case 0: {return "2";}
-                case 2: {break;}
-            }
-        }
+        
         switch (val) {
         case 0: {
             return "zero";

@@ -1,6 +1,5 @@
 package com.puppycrawl.tools.checkstyle.checks.coding.innerassignment;
 
-import java.util.function.Supplier;
 
 
 public class InputInnerAssignmentLambdaExpressions {
@@ -14,6 +13,6 @@ public class InputInnerAssignmentLambdaExpressions {
     private void setAction() {
         MyButton button = new MyButton();
         button.setOnAction(e -> {
-            boolean pressed = true; });  //No violation here
+             });  //No violation here
     }
 }

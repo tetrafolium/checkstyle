@@ -4,9 +4,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package com.puppycrawl.tools.checkstyle.checks.finalparameters;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import java.awt.event.ActionEvent;
 
 /**
  * Test case for detecting missing final parameters.
@@ -85,25 +82,9 @@ class InputFinalParameters
     /** methods in anonymous inner classes */
     void holder()
     {
-        Action a = new AbstractAction()
-            {
-                public void actionPerformed(final ActionEvent e)
-                {
-                }
-                void somethingElse(final @MyAnnotation3 ActionEvent e)
-                {
-                }
-            };
+        
 
-        Action b = new AbstractAction()
-            {
-                public void actionPerformed(final ActionEvent e)
-                {
-                }
-                void somethingElse(@MyAnnotation3 final ActionEvent e)
-                {
-                }
-            };
+        
     }
 
     /** methods with complicated types of the parameters. */
@@ -120,7 +101,7 @@ class InputFinalParameters
     void method1()
     {
         try {
-            String.CASE_INSENSITIVE_ORDER.equals("");
+            "".equals(String.CASE_INSENSITIVE_ORDER);
         } catch (java.lang.NullPointerException npe) {
             npe.getMessage();
         } catch (@MyAnnotation3 final ClassCastException e) {
@@ -145,22 +126,10 @@ class Foo
     /* Some for-each clauses */
     public void Bar()
     {
-        for (String s : someExpression())
-        {
-
-        }
-        for (final String s : someExpression())
-        {
-
-        }
-        for (@MyAnnotation3 String s : someExpression())
-        {
-
-        }
-        for (@MyAnnotation3 final String s : someExpression())
-        {
-
-        }
+        
+        
+        
+        
     }
 
     private String[] someExpression()

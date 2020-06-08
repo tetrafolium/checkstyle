@@ -68,16 +68,16 @@ public class InputEmptyCatchBlockDefaultLF
         try {
             throw new IOException();
         } catch (IOException expected) { // This is expected
-            int k = 0;
+            
         }
     }
 
     public void testTryCatch()
     {
         try {
-            int y = 0;
-            int u = 8;
-            int e = u - y;
+            
+            
+            
             return;
         } catch (Exception e) {
             System.identityHashCode(e);
@@ -95,32 +95,27 @@ public class InputEmptyCatchBlockDefaultLF
             //This is expected
             /* This is expected */
             /**This is expected */
-        } finally
-        {
-        }
+        } 
     }
 
     public void testTryCatch3()
     {
         try {
-            int y = 0;
-            int u = 8;
-            int e = u - y;
-        } catch (IllegalArgumentException e) {
+            
+            
+            
+        } catch (IllegalArgumentException | IllegalStateException e) {
             System.identityHashCode(e); //some comment
             return;
-        } catch (IllegalStateException ex) {
-                System.identityHashCode(ex);
-                return;
         }
     }
 
     public void testTryCatch4()
     {
-        int y = 0;
-        int u = 8;
+        
+        
         try {
-            int e = u - y;
+            
         } catch (IllegalArgumentException e) {
             System.identityHashCode(e);
             return;
@@ -128,7 +123,7 @@ public class InputEmptyCatchBlockDefaultLF
     }
     public void setFormats() {
         try {
-            int k = 4;
+            
         } catch (Exception e) {
             Object k = null;
             if (k != null)
@@ -140,7 +135,7 @@ public class InputEmptyCatchBlockDefaultLF
     }
     public void setFormats1() {
         try {
-            int k = 4;
+            
         } catch (Exception e) {
             Object k = null;
             if (k != null) {
@@ -152,7 +147,7 @@ public class InputEmptyCatchBlockDefaultLF
     }
     public void setFormats2() {
         try {
-            int k = 4;
+            
         } catch (Exception e) {
             Object k = null;
             if (k != null) {
@@ -163,7 +158,7 @@ public class InputEmptyCatchBlockDefaultLF
     }
     public void setFormats3() {
         try {
-            int k = 4;
+            
         } catch (Exception e) {
             Object k = null;
             if (k != null) {

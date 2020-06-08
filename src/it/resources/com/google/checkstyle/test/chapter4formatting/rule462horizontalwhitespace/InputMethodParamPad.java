@@ -1,5 +1,4 @@
 package com.google.checkstyle.test.chapter4formatting.rule462horizontalwhitespace;
-import java.util.Vector;
 /** Test input for MethodDefPadCheck */
 public class InputMethodParamPad
 {
@@ -25,7 +24,7 @@ public class InputMethodParamPad
         method(final double aParam)
     {
         // invoke constructor
-        InputMethodParamPad pad = new InputMethodParamPad();
+        
         pad = new InputMethodParamPad(); // warn
         pad = new
             InputMethodParamPad();
@@ -57,7 +56,7 @@ public class InputMethodParamPad
     public void newArray()
     {
         int[] a = new int[]{0, 1};
-        java.util.Vector<String> v = new java.util.Vector<String>();
-        java.util.Vector<String> v1 = new Vector<String>();
+        
+        
     }
 }

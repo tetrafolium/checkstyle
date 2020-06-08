@@ -1,6 +1,5 @@
 package com.puppycrawl.tools.checkstyle.checks.coding.returncount;
 
-import java.lang.Integer;
 import java.util.Optional;
 import java.util.concurrent.Callable;
 import java.util.function.Supplier;

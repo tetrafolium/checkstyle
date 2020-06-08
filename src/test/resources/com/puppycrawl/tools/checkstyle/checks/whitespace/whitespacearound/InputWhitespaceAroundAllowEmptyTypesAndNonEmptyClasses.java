@@ -5,21 +5,21 @@ import java.util.function.Supplier;
 
 public class InputWhitespaceAroundAllowEmptyTypesAndNonEmptyClasses {
 
-    private Object object;
+                                    int b;
 
     class SomeClass {
         int a = 5;
     }
 
     public class CheckstyleTest {
-        private static final int SOMETHING = 1;
+        
     }
 
     class MyClass { int a; }
 
     class SomeTestClass { int a; }
 
-    class TestClass { int a; } int b;
+    class TestClass { int a; }
 
     class Table { }
 
@@ -29,6 +29,6 @@ public class InputWhitespaceAroundAllowEmptyTypesAndNonEmptyClasses {
         foo2(); } }
 
     public void foo2() {
-        do { } while (true);
+        while (true) { }
     }
 }

@@ -33,8 +33,8 @@ public abstract class InputIndentationFromGuava2<K extends Comparable<?>, V> { /
     if (lowerIndex >= upperIndex) { //indent:4 exp:4
       return null; //indent:6 exp:6
     } //indent:4 exp:4
-    final int off = lowerIndex; //indent:4 exp:4
-    final int len = upperIndex - lowerIndex; //indent:4 exp:4
+     //indent:4 exp:4
+     //indent:4 exp:4
     InputIndentationFromGuava2<K, V> outer = null; //indent:4 exp:4
     return outer; //indent:4 exp:4
   } //indent:2 exp:2
@@ -43,10 +43,10 @@ public abstract class InputIndentationFromGuava2<K extends Comparable<?>, V> { /
     K key = null; //indent:4 exp:4
     int len = 0; //indent:4 exp:4
     checkElementIndex(index, len); //indent:4 exp:4
-    int off; //indent:4 exp:4
+     //indent:4 exp:4
     RangeMap<K, V> ranges = null; //indent:4 exp:4
     if (index == 0 || index == len - 1) { //indent:4 exp:4
-      Object range; //indent:6 exp:6
+       //indent:6 exp:6
       return ranges.get(key); //indent:6 exp:6
     } else { //indent:4 exp:4
       return ranges.get(key); //indent:6 exp:6

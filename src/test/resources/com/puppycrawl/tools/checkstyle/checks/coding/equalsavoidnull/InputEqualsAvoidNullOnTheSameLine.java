@@ -4,18 +4,18 @@ public class InputEqualsAvoidNullOnTheSameLine {
 
     static {
         String b = "onion";
-        String a = b; a.equals("ONION");
+        String a = b; "ONION".equals(a);
     }
 
-    private String a = "";
+    
     private A b = null;
 
     public void shouldWarn() {
-        a.equals(""); A a = b;
+        "".equals(a); A a = b;
     }
 
     public void shouldNotWarn() {
-        A a = b; a.equals("");
+        A a = b; "".equals(a);
     }
 
     class A { }

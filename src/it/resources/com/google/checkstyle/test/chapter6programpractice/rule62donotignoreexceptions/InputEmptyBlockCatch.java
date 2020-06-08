@@ -4,9 +4,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 package com.google.checkstyle.test.chapter6programpractice.rule62donotignoreexceptions;
 
-import java.io.*;
-import java.awt.Dimension;
-import java.awt.Color;
 
 class InputEmptyBlockCatch {
     boolean flag;
@@ -17,7 +14,7 @@ class InputEmptyBlockCatch {
                doSm();
            }
         } catch (Exception e) { /* ignore */ } //ok
-        finally { /* ignore */ } //ok
+         //ok
     }
 
     void foo2() {
@@ -25,7 +22,7 @@ class InputEmptyBlockCatch {
            if (!flag) {
                doSm();
            }
-        } catch (Exception e) { } finally { } //warn
+        } catch (Exception e) { }  //warn
     }
 
     class Inner {
@@ -37,7 +34,7 @@ class InputEmptyBlockCatch {
                    doSm();
                }
             } catch (Exception e) { /* ignore */ } //ok
-            finally { /* ignore */ } //ok
+             //ok
         }
 
         void foo2() {
@@ -45,7 +42,7 @@ class InputEmptyBlockCatch {
                if (!flag) {
                    doSm();
                }
-            } catch (Exception e) { } finally { } //warn
+            } catch (Exception e) { }  //warn
         }
     }
 
@@ -58,7 +55,7 @@ class InputEmptyBlockCatch {
                    doSm();
                }
             } catch (Exception e) { /* ignore */ } //ok
-            finally { /* ignore */ } //ok
+             //ok
         }
 
         void foo2() {
@@ -66,7 +63,7 @@ class InputEmptyBlockCatch {
                if (!flag) {
                    doSm();
                }
-            } catch (Exception e) { } finally { } //warn
+            } catch (Exception e) { }  //warn
         }
     };
 

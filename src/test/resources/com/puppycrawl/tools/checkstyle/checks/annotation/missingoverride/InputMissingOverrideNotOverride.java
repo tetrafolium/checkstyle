@@ -1,7 +1,12 @@
 package com.puppycrawl.tools.checkstyle.checks.annotation.missingoverride;
 
 public class InputMissingOverrideNotOverride
-{
+{    
+
+    /**
+     * {@inheritDoc}
+     */
+    public String junk = "";
     /**
      * {@inheritDoc}
      */
@@ -15,11 +20,6 @@ public class InputMissingOverrideNotOverride
     public static void eh() {
 
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public String junk = "";
 
     void dodoo() {}
 }

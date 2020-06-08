@@ -1,7 +1,7 @@
 package com.puppycrawl.tools.checkstyle.checks.javadoc.missingjavadocmethod;
 
 public class InputMissingJavadocMethodConstructor {
-    private int field;
+    
     public InputMissingJavadocMethodConstructor() { }
     public InputMissingJavadocMethodConstructor(final Runnable p1) {
         this.field = 0; }

@@ -25,8 +25,7 @@ class badCaseComma {
         int i = 0;
 
         String s = "ffffooooString";
-        boolean b = s.
-            isEmpty();
+        
         foo(i
 , s); //warn
         int[] j;

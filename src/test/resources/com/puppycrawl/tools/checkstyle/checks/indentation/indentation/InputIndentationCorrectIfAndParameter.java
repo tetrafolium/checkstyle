@@ -27,7 +27,7 @@ class InputIndentationCorrectIfAndParameter { //indent:0 exp:0
         getInteger(new InputIndentationCorrectIfAndParameter(), "Looooog"), //indent:8 exp:8
         new InnerClassFoo())) { } //indent:8 exp:8
 
-    if (conditionSecond(10000000000.0, new //indent:4 exp:4
+    if (conditionSecond(10_000_000_000.0, new //indent:4 exp:4
         SecondClassLongNam7("Looooooooooooo" //indent:8 exp:8
         + "oooooooooooong").getString(new InputIndentationCorrectIfAndParameter(), //indent:8 exp:8
         new SecondClassLongNam7("loooooooooong").//indent:8 exp:8
@@ -83,7 +83,7 @@ class InputIndentationCorrectIfAndParameter { //indent:0 exp:0
               getInteger(new InputIndentationCorrectIfAndParameter(), "Log"), //indent:14 exp:>=10
               new InnerClassFoo())) { } //indent:14 exp:>=10
 
-      if (conditionSecond(10000000000.0, new //indent:6 exp:6
+      if (conditionSecond(10_000_000_000.0, new //indent:6 exp:6
           SecondClassLongNam7("Looooooooooooo" //indent:10 exp:10
           + "ooooooong").getString(new InputIndentationCorrectIfAndParameter(), //indent:10 exp:10
           new SecondClassLongNam7("loooooooooong").//indent:10 exp:10
@@ -111,7 +111,7 @@ class InputIndentationCorrectIfAndParameter { //indent:0 exp:0
                 getInteger(new InputIndentationCorrectIfAndParameter(), "Lg"), //indent:16 exp:>=12
                    new InnerClassFoo())) { } //indent:19 exp:>=12
 
-        if (conditionSecond(10000000000.0, new //indent:8 exp:8
+        if (conditionSecond(10_000_000_000.0, new //indent:8 exp:8
             SecondClassLongNam7("Looooooooooooo" //indent:12 exp:12
             + "oooooong").getString(new InputIndentationCorrectIfAndParameter(), //indent:12 exp:12
             new SecondClassLongNam7("loooooooooong").//indent:12 exp:12

@@ -23,10 +23,13 @@ public class InputIndentationValidForIndent { //indent:0 exp:0
 
     private void method1(final int[] indices) //indent:4 exp:4
     { //indent:4 exp:4
-        for (int i = 0; i < 10; i++) //indent:8 exp:8
-            System.getProperty("foo"); //indent:12 exp:12
+        for (int i = 0; i < 10; i++) {  //indent:8 exp:8
+            System.getProperty("foo");
+        } //indent:12 exp:12
 
-        for (int i = 0; i < 10; i++) System.getProperty("foo"); //indent:8 exp:8
+        for (int i = 0; i < 10; i++) {
+            System.getProperty("foo");
+        } //indent:8 exp:8
 
         for (int i = 0; i < 10; i++) { //indent:8 exp:8
         } //indent:8 exp:8

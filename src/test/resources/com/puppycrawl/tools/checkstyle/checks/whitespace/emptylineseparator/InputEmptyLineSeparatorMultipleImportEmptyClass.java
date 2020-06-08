@@ -1,7 +1,4 @@
-package com.puppycrawl.tools.checkstyle.checks.whitespace.emptylineseparator; import java.util.List;
-
-import java.util.Calendar;
-import java.util.Date;
+package com.puppycrawl.tools.checkstyle.checks.whitespace.emptylineseparator; 
 
 public class InputEmptyLineSeparatorMultipleImportEmptyClass
 {

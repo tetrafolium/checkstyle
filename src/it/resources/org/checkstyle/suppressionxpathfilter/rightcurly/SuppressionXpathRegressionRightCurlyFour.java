@@ -6,7 +6,7 @@ public class SuppressionXpathRegressionRightCurlyFour {
             System.identityHashCode("heh");
             flag = !flag;
         }
-        String.CASE_INSENSITIVE_ORDER.//warn
-                equals("Xe-xe");
+        "Xe-xe".equals(String.CASE_INSENSITIVE_ORDER.//warn
+                equals);
     }
 }

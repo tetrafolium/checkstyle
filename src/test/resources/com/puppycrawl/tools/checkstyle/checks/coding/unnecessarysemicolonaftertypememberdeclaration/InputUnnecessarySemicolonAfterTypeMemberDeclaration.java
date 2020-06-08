@@ -3,12 +3,13 @@ package com.puppycrawl.tools.checkstyle.checks.coding.unnecessarysemicolonaftert
 /**
  * Config = default
  */
-public class InputUnnecessarySemicolonAfterTypeMemberDeclaration {
-; //violation
+public class InputUnnecessarySemicolonAfterTypeMemberDeclaration {     // violation
 
-    { /*init block*/ }; // violation
+    int field;;; //violation
 
-    static { }; // violation
+    ; // violation
+
+    ; // violation
 
     InputUnnecessarySemicolonAfterTypeMemberDeclaration() { }; // violation
 
@@ -20,28 +21,27 @@ public class InputUnnecessarySemicolonAfterTypeMemberDeclaration {
 
     enum aa1 { }; // violation
 
-    @interface anno { }; // violation
-
-    int field;; //violation
+    @interface anno { };
+ //violation
 
     enum c {
         B, C;; // violation
     }
 
     void ignoreEmptyStatements() {
-        int a = 10;;
+        
     }
-};
+}
 enum e {
 ;
     int enumField;
-};
+}
 @interface an {
 ; //violation
-};
+}
 interface i {
 ; //violation
-};
+}
 @interface annotation {
     String value();; // violation
 }

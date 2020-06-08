@@ -10,7 +10,7 @@ public class InputBooleanExpressionComplexity {
         if (_a && _b || _c ^ _d) {
         }
 
-        if (((_a && (_b & _c)) || (_c ^ _d))) {
+        if (_a && (_b & _c) || _c ^ _d) {
         }
 
         if (_a && _b && _c) {
@@ -31,12 +31,12 @@ public class InputBooleanExpressionComplexity {
             public void method2() {
             }
         };
-        return (((_a && (_b & _c)) || (_c ^ _d) || (_a && _d)));
+        return _a && (_b & _c) || _c ^ _d || _a && _d;
     }
 
     public boolean bitwise()
     {
-        return (((_a & (_b & _c)) | (_c ^ _d) | (_a & _d)));
+        return (_a & (_b & _c)) | (_c ^ _d) | (_a & _d);
     }
 
     public void notIgnoredMethodParameters()

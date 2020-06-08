@@ -48,16 +48,16 @@ public class InputVisibilityModifierAnnotated {
     public String unannotatedPublic;
     String unannotatedPackage;
     protected String unannotatedProtected;
-    private String unannotatedPrivate;
+        
+
+    @ClassRule
+    public static TemporaryFolder publicJUnitClassRule = new TemporaryFolder();    
+
+    @org.junit.ClassRule
+    public static TemporaryFolder fqPublicJUnitClassRule = new TemporaryFolder();
 
     @Retention(value = RetentionPolicy.RUNTIME)
     @Target(value = {ElementType.FIELD})
     public @interface CustomAnnotation {
     }
-
-    @ClassRule
-    public static TemporaryFolder publicJUnitClassRule = new TemporaryFolder();
-
-    @org.junit.ClassRule
-    public static TemporaryFolder fqPublicJUnitClassRule = new TemporaryFolder();
 }

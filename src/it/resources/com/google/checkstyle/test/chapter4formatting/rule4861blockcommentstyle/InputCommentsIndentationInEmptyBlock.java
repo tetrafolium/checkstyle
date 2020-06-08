@@ -5,11 +5,11 @@ public class InputCommentsIndentationInEmptyBlock {
     private void foo1() {
         int a = 5, b = 3, v = 6;
         if (a == b
-            && v == b || (a == 1
+            && v == b || a == 1
                    /// // warn
                        /* // warn
                         * one fine day ... */
-                               && b == 1)) {
+                               && b == 1) {
             // Cannot clearly detect user intention of explanation target.
         }
     }
@@ -17,8 +17,8 @@ public class InputCommentsIndentationInEmptyBlock {
     private void foo2() {
         int a = 5, b = 3, v = 6;
         if (a == b
-            && v == b || (a == 1
-            && b == 1)) {
+            && v == b || a == 1
+            && b == 1) {
 
 
              // comment
@@ -28,8 +28,8 @@ public class InputCommentsIndentationInEmptyBlock {
     private void foo3() {
         int a = 5, b = 3, v = 6;
         if (a == b
-            && v == b || (a == 1
-            && b == 1)) {
+            && v == b || a == 1
+            && b == 1) {
 // warn
         }
     }
@@ -41,9 +41,7 @@ public class InputCommentsIndentationInEmptyBlock {
         {
             // some comment
         }
-        if (true) { // trailing comment
-
-        }
+        
         /**
          *
          */
@@ -56,9 +54,7 @@ public class InputCommentsIndentationInEmptyBlock {
         {
 // warn
         }
-        if (true) { // trailing comment
-
-        }
+        
         /**
          *
          */
@@ -80,7 +76,7 @@ public class InputCommentsIndentationInEmptyBlock {
         }
     }
 
-    private static class MyClass extends Object {
+    private static class MyClass  {
            // no members
     }
 }

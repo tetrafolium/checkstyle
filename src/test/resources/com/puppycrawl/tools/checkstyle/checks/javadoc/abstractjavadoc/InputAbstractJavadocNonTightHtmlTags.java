@@ -33,7 +33,7 @@ public class InputAbstractJavadocNonTightHtmlTags {
      * <p> <a href="www.something.com"/> Nested paragraph with `singletonTag` </p>
      * <li> Outer tag <li> Inner tag nested </li> not nested </li>
      */
-    private int field5;
+    
 
     /**
      * <th> !isNonTight </th>
@@ -46,7 +46,7 @@ public class InputAbstractJavadocNonTightHtmlTags {
      * <head> head with <img src="~/singletonElement.jpg" alt="" width="100" height="150">
      * singletonElement </head>
      */
-    private int field6;
+    
 
     /**
      * <body> body <p> paragraph <li> list </li> </p> </body>

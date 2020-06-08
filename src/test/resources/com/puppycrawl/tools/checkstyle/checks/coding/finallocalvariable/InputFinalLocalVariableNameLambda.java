@@ -20,17 +20,15 @@ public class InputFinalLocalVariableNameLambda {
     }
 
     private void addTotalValueOfOrder(final AugmentedOrder order) {
-    final BigDecimal totalValueOfOrder = order
-            .reduce(BigDecimal.ZERO,
-                    (t, u) -> t.add(u.getAmount()));
+    
  }
 }
-interface Operation {
-    public Object apply();
+interface Operation {    
 
     public static final Operation OPERATION = () -> {
         Object result;
         result = null;
         return result;
     };
+    public Object apply();
 }

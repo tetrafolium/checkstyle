@@ -118,13 +118,10 @@ public class InputIndentationInvalidMethodIndent { //indent:0 exp:0
               new String[] {"method"}).toString()); //indent:14 exp:>=12
 
 
-        String blah = (String) System.getProperty(//indent:8 exp:8
-          new String("type")); //indent:10 exp:12 warn
+         //indent:10 exp:12 warn
 
 
-        String blah1 = (String) System.getProperty(//indent:8 exp:8
-          new String("type") //indent:10 exp:12 warn
-      ); //indent:6 exp:8 warn
+         //indent:6 exp:8 warn
 
         System.identityHashCode("methods are: " + Arrays.asList(//indent:8 exp:8
             new String[] {"method"}).toString() //indent:12 exp:>=12

@@ -31,18 +31,7 @@ public class InputReturnCountSwitches
         if (i == 1) {
             return;
         }
-        Object obj = new Object() {
-                void method1(final int i) {
-                    switch (i) {
-                    case 1: return;
-                    case 2: return;
-                    case 3: return;
-                    case 4: return;
-                    case 5: return;
-                    }
-                    return;
-                }
-            };
+        
         return;
     }
 

@@ -4,7 +4,6 @@
 // Ignore violation
 ////////////////////////////////////////////////////////////////////////////////
 package com.puppycrawl.tools.checkstyle.checks.design.visibilitymodifier;
-import java.io.*;
 /**
  * Contains simple mistakes:
  * - Long lines
@@ -21,20 +20,19 @@ final class InputVisibilityModifierSimple
     public static final int MAX_ROWS = 2;
 
     /** Invalid format **/
-    private static int badStatic = 2;
+    
     /** Valid format **/
-    private static int sNumCreated = 0;
+    
 
     /** Invalid format **/
-    private int badMember = 2;
+    
     /** Valid format **/
-    private int mNumCreated1 = 0;
+    
     /** Valid format **/
     protected int mNumCreated2 = 0;
 
     /** commas are wrong **/
-    private int[] mInts = new int[] {1, 2, 3,
-                                     4};
+    
 
     //
     // Accessor tests
@@ -69,26 +67,26 @@ final class InputVisibilityModifierSimple
     private void localVariables()
     {
         // normal decl
-        int abc = 0;
-        int ABC = 0;
+        
+        
 
         // final decls
-        final int cde = 0;
-        final int CDE = 0;
+        
+        
 
         // decl in for loop init statement
         for (int k = 0; k < 1; k++)
         {
-            String innerBlockVariable = "";
+            
         }
         for (int I = 0; I < 1; I++)
         {
-            String InnerBlockVariable = "";
+            
         }
     }
 
     /** test illegal constant **/
-    private static final int BAD__NAME = 3;
+    
 }
 
 /** Test class for variable naming in for each clauses. */
@@ -98,10 +96,7 @@ class InputVisibilityModifierSimple2
     public void doSomething()
     {
         //"O" should be named "o"
-        for (Object O : new java.util.ArrayList())
-        {
-
-        }
+        
     }
 }
 

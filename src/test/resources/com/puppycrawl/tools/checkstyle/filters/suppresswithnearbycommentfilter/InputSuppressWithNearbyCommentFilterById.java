@@ -2,16 +2,16 @@ package com.puppycrawl.tools.checkstyle.filters.suppresswithnearbycommentfilter;
 
 public class InputSuppressWithNearbyCommentFilterById {
 
-    private int A1; // @cs-: ignore (reason)
+     // @cs-: ignore (reason)
 
-    private static final int abc = 5; // @cs-: violation (No NPE here)
+     // @cs-: violation (No NPE here)
 
     int line_length = 100; // Suppression @cs-: ignore (reason)
 
-    private long ID = 1; // Suppression @cs-:
+     // Suppression @cs-:
     /*
-        Suppression @cs-: ignore (reason)*/private long ID3 = 1;
+        Suppression @cs-: ignore (reason)*/
 
-    private int DEF = 4; // @cs-: ignore (allow DEF)
-    private int XYZ = 3; // @cs-: ignore (allow xyz)
+     // @cs-: ignore (allow DEF)
+     // @cs-: ignore (allow xyz)
 }

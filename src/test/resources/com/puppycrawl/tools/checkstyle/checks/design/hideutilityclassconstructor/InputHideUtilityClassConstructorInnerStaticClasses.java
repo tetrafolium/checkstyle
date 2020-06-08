@@ -1,7 +1,7 @@
 package com.puppycrawl.tools.checkstyle.checks.design.hideutilityclassconstructor;
 
 public class InputHideUtilityClassConstructorInnerStaticClasses {
-    private static int value = 0;
+    
     public static void foo(final int val) {
         value = val; }
 

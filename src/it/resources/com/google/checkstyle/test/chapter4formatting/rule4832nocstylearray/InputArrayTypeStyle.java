@@ -5,8 +5,11 @@ package com.google.checkstyle.test.chapter4formatting.rule4832nocstylearray;
  **/
 public class InputArrayTypeStyle
 {
-    private int[] javaStyle = new int[0];
-    private int cStyle[] = new int[0]; //warn
+    
+        
+    int[] array[] = new int [2][2];    
+//warn
+    int array2[][][] = new int[3][3][3]; //warn
 
     public static void mainJava(final String[] aJavaStyle) //ok
     {
@@ -15,9 +18,9 @@ public class InputArrayTypeStyle
     public static void mainC(final String aCStyle[]) //warn
     {
         final int[] blah = new int[0]; //ok
-        final boolean isOK1 = aCStyle instanceof String[]; //ok
-        final boolean isOK2 = aCStyle instanceof java.lang.String[]; //ok
-        final boolean isOK3 = blah instanceof int[]; //ok
+         //ok
+         //ok
+         //ok
         int[] array[] = new int [2][2]; //warn
         int array2[][][] = new int[3][3][3]; //warn
     }
@@ -59,6 +62,5 @@ public class InputArrayTypeStyle
             return null;
         }
     }
-    int[] array[] = new int [2][2]; //warn
-    int array2[][][] = new int[3][3][3]; //warn
+//warn
 }

@@ -7,7 +7,7 @@ public class InputOneTopLevelClassClone
         super.clone();
     }
 
-    public Object clone() throws CloneNotSupportedException
+    public InputOneTopLevelClassClone clone() throws CloneNotSupportedException
     {
         return super.clone();
     }
@@ -46,5 +46,5 @@ class AnotherClass {
 }
 
 class NativeTest {
-    public native Object clone();
+    public native NativeTest clone();
 }

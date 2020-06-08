@@ -1,12 +1,11 @@
 package com.puppycrawl.tools.checkstyle.checks.coding.finallocalvariable;
 
-import java.util.ArrayList;
 
 public class InputFinalLocalVariableAssignedInsideAndOutsideSwitch {
 
     private static void foo1(final int[][] m, final int x, final int y,
                                 final int d, final int[] regionSizes) {
-        final int a = m[y][x] & 1;
+        
         int b;
         switch (d) {
             case 1:
@@ -27,8 +26,8 @@ public class InputFinalLocalVariableAssignedInsideAndOutsideSwitch {
 
     private static void foo2(final int[][] m, final int x, final int y,
                                 final int d, final int[] regionSizes) {
-        final int a = m[y][x] & 1;
-        int b; // violation
+        
+         // violation
         switch (d) {
             case 1:
                 break;
@@ -46,7 +45,7 @@ public class InputFinalLocalVariableAssignedInsideAndOutsideSwitch {
 
     private static void foo3(final int[][] m, final int x, final int y,
                                  final int d, final int[] regionSizes) {
-        final int a = m[y][x] & 1;
+        
         int b;
         switch (d) {
             case 1:

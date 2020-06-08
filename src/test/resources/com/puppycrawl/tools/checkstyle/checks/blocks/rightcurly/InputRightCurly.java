@@ -21,4 +21,4 @@ class InputRightCurly
         }
 
     }
-class UniqEmptyClass {private int a;}
+class UniqEmptyClass {}

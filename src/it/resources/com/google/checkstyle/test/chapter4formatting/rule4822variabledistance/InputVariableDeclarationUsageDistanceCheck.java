@@ -6,14 +6,14 @@ public class InputVariableDeclarationUsageDistanceCheck {
 
     static {
         int b = 0;
-        int d = 0;
+        
         {
             d = ++b;
         }
     }
 
     static {
-        int c = 0;
+        
         int a = 3;
         int b = 2;
         {
@@ -27,15 +27,15 @@ public class InputVariableDeclarationUsageDistanceCheck {
     }
 
     static {
-        int a = -1;
+        
         int b = 2;
         b++;
-        int c = --b;
+        
         a = b; // DECLARATION OF VARIABLE 'a' SHOULD BE HERE (distance = 2)
     }
 
     public InputVariableDeclarationUsageDistanceCheck(final int test1) {
-        int temp = -1;
+        
         this.test1 = test1;
         temp = test1; // DECLARATION OF VARIABLE 'temp' SHOULD BE HERE (distance = 2)
     }
@@ -45,7 +45,7 @@ public class InputVariableDeclarationUsageDistanceCheck {
         new InputVariableDeclarationUsageDistanceCheck(2);
         String.valueOf(temp); // DECLARATION OF VARIABLE 'temp' SHOULD BE HERE (distance = 2)
         boolean result = false;
-        String str = "";
+        
         if (test1 > 1) {
             str = "123";
             result = true;
@@ -54,7 +54,7 @@ public class InputVariableDeclarationUsageDistanceCheck {
     }
 
     public void testMethod2() {
-        int count;
+        
         int a = 3;
         int b = 2;
         {
@@ -68,7 +68,7 @@ public class InputVariableDeclarationUsageDistanceCheck {
     }
 
     public void testMethod3() {
-        int count; //warn
+         //warn
         int a = 3;
         int b = 3;
         a = a + b;
@@ -96,9 +96,8 @@ public class InputVariableDeclarationUsageDistanceCheck {
         int arg = 7;
         boolean b = true;
         boolean bb = false;
-        if (b)
-            if (!bb)
-                b = false;
+        if (b && !bb)
+            b = false;
         testMethod4(arg); // DECLARATION OF VARIABLE 'arg' SHOULD BE HERE (distance = 2)
     }
 
@@ -139,10 +138,10 @@ public class InputVariableDeclarationUsageDistanceCheck {
     }
 
     public void testMethod8() {
-        int b = 0;
-        int c = 0;
-        int m = 0;
-        int n = 0;
+        
+        
+        
+        
         {
             c++;
             b++;
@@ -155,7 +154,7 @@ public class InputVariableDeclarationUsageDistanceCheck {
     }
 
     public void testMethod9() {
-        boolean result = false;
+        
         boolean b1 = true;
         boolean b2 = false;
         if (b1) {
@@ -179,9 +178,9 @@ public class InputVariableDeclarationUsageDistanceCheck {
     }
 
     public void testMethod11() {
-        int a = 0;
-        int b = 10;
-        boolean result;
+        
+        
+        
         try {
             b--;
         } catch (Exception e) {
@@ -193,25 +192,23 @@ public class InputVariableDeclarationUsageDistanceCheck {
     }
 
     public void testMethod12() {
-        boolean result = false;
+        
         boolean b3 = true;
         boolean b1 = true;
         boolean b2 = false;
-        if (b1) {
-            if (b3) {
-                if (!b2) {
-                    result = true;
-                }
+        if (b1 && b3) {
+            if (!b2) {
                 result = true;
             }
+            result = true;
         }
     }
 
     public void testMethod13() {
-        int i = 9;
-        int j = 6;
-        int g = i + 8;
-        int k = j + 10;
+        
+        
+        
+        
     }
 
     public void testMethod14() {
@@ -226,33 +223,28 @@ public class InputVariableDeclarationUsageDistanceCheck {
         c.setForward(d2); // DECLARATION OF VARIABLE 'c' SHOULD BE HERE (distance = 3)
                             // DECLARATION OF VARIABLE 'd2' SHOULD BE HERE (distance = 3)
         d2.setReverse(c);
-        Serializable aid = s.save(a);
-        Serializable d2id = s.save(d2);
+        
+        
         t.commit(); // DECLARATION OF VARIABLE 't' SHOULD BE HERE (distance = 5)
         s.close();
     }
 
     public boolean isCheckBoxEnabled(final int path) {
         String model = "";
-        if (true) {
+        {
             for (int index = 0; index < path; ++index) {
-                int nodeIndex = model.codePointAt(path);
+                
                 if (model.contains("")) {
                     return false;
                 }
-            }
-        } else {
-            int nodeIndex = model.codePointAt(path);
-            if (model.contains("")) {
-                return false;
             }
         }
         return true;
     }
 
     public Object readObject(final String in) throws Exception {
-        String startDay = new String("");
-        String endDay = new String("");
+        String startDay = "";
+        String endDay = "";
         return new String(startDay + endDay);
     }
 
@@ -272,7 +264,7 @@ public class InputVariableDeclarationUsageDistanceCheck {
 
     public void testMethod15() {
         String confDebug = "";
-        if (!confDebug.equals("") && !confDebug.equals("null")) {
+        if (!"".equals(confDebug) && !"null".equals(confDebug)) {
             LogLog.warn("The \"" + "\" attribute is deprecated.");
             LogLog.warn("Use the \"" + "\" attribute instead.");
             LogLog.setInternalDebugging(confDebug, true);
@@ -286,7 +278,7 @@ public class InputVariableDeclarationUsageDistanceCheck {
             k++;
         }
 
-        int sw;
+        
         switch (i) {
         case 0:
             k++;
@@ -316,7 +308,7 @@ public class InputVariableDeclarationUsageDistanceCheck {
     }
 
     public void testMethod16() {
-        int wh = 1, i = 4, k = 0;
+        
         if (i > 0) {
             k++;
         } else if (wh > 0) {
@@ -446,12 +438,12 @@ public class InputVariableDeclarationUsageDistanceCheck {
     }
 
     public void testIssue32_5() {
-        Option a = null;
-        Option b = null;
-        Option c = null;
-        boolean isCNull = isNull(c); // distance=1
-        boolean isBNull = isNull(b); // distance=1
-        boolean isANull = isNull(a); // distance=1
+        
+        
+        
+         // distance=1
+         // distance=1
+         // distance=1
     }
 
     public void testIssue32_6() {

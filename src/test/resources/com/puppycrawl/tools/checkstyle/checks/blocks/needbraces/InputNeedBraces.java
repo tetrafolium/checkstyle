@@ -38,12 +38,16 @@ class InputNeedBraces
         }
 
         // Invalid
-        while(condition());
-        while (condition())
+        while(condition()) {
+            ;
+        }
+        while (condition()) {
             testWhile();
-        while (condition())
+        }
+        while (condition()) {
             if (condition())
                 testWhile();
+        }
     }
 
     /** Test for loops **/
@@ -55,13 +59,17 @@ class InputNeedBraces
         }
 
         // Invalid
-        for(int i = 1;i < 5;i++);
-        for (int i = 1; i < 5; i++)
+        for(int i = 1;i < 5;i++) {
+            ;
+        }
+        for (int i = 1; i < 5; i++) {
             testFor();
+        }
         for (int i = 1; i < 5;
-             i++)
+             i++) {
             if (i > 2)
                 testFor();
+        }
     }
 
     /** Test if constructs **/
@@ -79,8 +87,7 @@ class InputNeedBraces
         }
 
         // Invalid
-        if (condition());
-        if (condition())
+        if (condition() && condition())
             testIf();
         if (condition())
             testIf();
@@ -96,9 +103,8 @@ class InputNeedBraces
         }
         else
             testIf();
-        if (condition())
-            if (condition())
-                testIf();
+        if (condition() && condition())
+            testIf();
 
         if (condition())
             while (condition()) testWhile();
@@ -107,13 +113,13 @@ class InputNeedBraces
         if (condition())
             for (int i = 0; i < 1; i++) testFor();
         int a = 0;
-        switch (a) {default: {}}
+        switch (a) {default: }
     }
 
     void whitespaceAfterSemi()
     {
         //reject
-        int i = 1;int j = 2;
+        
 
         //accept
         for (;;) {

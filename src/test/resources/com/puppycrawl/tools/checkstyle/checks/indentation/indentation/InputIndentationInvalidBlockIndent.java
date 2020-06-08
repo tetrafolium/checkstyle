@@ -22,18 +22,14 @@ public class InputIndentationInvalidBlockIndent { //indent:0 exp:0
 
     public void method1() { //indent:4 exp:4
 
-        { } //indent:8 exp:8
-       { } //indent:7 exp:8 warn
-         { } //indent:9 exp:8 warn
+         //indent:8 exp:8
+        //indent:7 exp:8 warn
+          //indent:9 exp:8 warn
 
-         { //indent:9 exp:8 warn
-       } //indent:7 exp:8 warn
+          //indent:7 exp:8 warn
 
-      { //indent:6 exp:8 warn
-
-      } //indent:6 exp:8 warn
-      { //indent:6 exp:8 warn
-        } //indent:8 exp:8
+       //indent:6 exp:8 warn
+       //indent:8 exp:8
 
          { //indent:9 exp:8 warn
              int var = 3; //indent:13 exp:12 warn
@@ -49,7 +45,7 @@ public class InputIndentationInvalidBlockIndent { //indent:0 exp:0
       } //indent:6 exp:8 warn
 
 
-      {  int var = 5; } //indent:6 exp:8 warn
+       //indent:6 exp:8 warn
 
         { //indent:8 exp:8
           int var = 3; //indent:10 exp:12 warn
@@ -92,64 +88,35 @@ public class InputIndentationInvalidBlockIndent { //indent:0 exp:0
 //  static init at beginning of line is broken for now //indent:0 exp:0
 
 
-  static {
-      int var = 4; } //indent:2 exp:4 warn
-      static {
-          int var = 4; } //indent:6 exp:4 warn
+   //indent:2 exp:4 warn
+       //indent:6 exp:4 warn
 
 
-    static { //indent:4 exp:4
-       int var = 4;  //indent:7 exp:8 warn
-    } //indent:4 exp:4
+     //indent:4 exp:4
 
-      static { //indent:6 exp:4 warn
-        int var = 4;  //indent:8 exp:8
-  } //indent:2 exp:4 warn
+       //indent:2 exp:4 warn
 
-  static { //indent:2 exp:4 warn
-        int var = 4;  //indent:8 exp:8
-      } //indent:6 exp:4 warn
+   //indent:6 exp:4 warn
 
-  static  //indent:2 exp:4 warn
-    { //indent:4 exp:4
-      int var = 4;  //indent:6 exp:8 warn
-    } //indent:4 exp:4
-    static  //indent:4 exp:4
-  { //indent:2 exp:4 warn
-      int var = 4;  //indent:6 exp:8 warn
-      } //indent:6 exp:4 warn
+   //indent:4 exp:4
+     //indent:6 exp:4 warn
 
 
-    static  //indent:4 exp:4
-    { //indent:4 exp:4
-      int var = 4;  //indent:6 exp:8 warn
-    } //indent:4 exp:4
+     //indent:4 exp:4
 
-    static  //indent:4 exp:4
-    { //indent:4 exp:4
-    int var = 4;  //indent:4 exp:8 warn
-  } //indent:2 exp:4 warn
+     //indent:2 exp:4 warn
 
-    static  //indent:4 exp:4
-    { //indent:4 exp:4
-        int var = 4;  //indent:8 exp:8
-      } //indent:6 exp:4 warn
+     //indent:6 exp:4 warn
 
 
-  { int var = 4; } //indent:2 exp:4 warn
-      { int var = 4; } //indent:6 exp:4 warn
+   //indent:2 exp:4 warn
+       //indent:6 exp:4 warn
 
 
-  { //indent:2 exp:4 warn
-        int var = 4;  //indent:8 exp:8
-      } //indent:6 exp:4 warn
+   //indent:6 exp:4 warn
 
-      { //indent:6 exp:4 warn
-        int var = 4;  //indent:8 exp:8
-  } //indent:2 exp:4 warn
+       //indent:2 exp:4 warn
 
-    { //indent:4 exp:4
-      int var = 4;  //indent:6 exp:8 warn
-    } //indent:4 exp:4
+     //indent:4 exp:4
 
 } //indent:0 exp:0

@@ -23,7 +23,7 @@ class InputRightCurlyLeft
                 {
                     break;
                 } else if (x < 0) {
-                    ;
+                    
                 } else
                 {
                     break;
@@ -57,7 +57,7 @@ class InputRightCurlyLeft
 
         for (int k = 0; k < 1; k++)
         {
-            String innerBlockVariable = "";
+            
         }
 
         // test input for bug reported by Joe Comuzzi
@@ -68,10 +68,7 @@ class InputRightCurlyLeft
     }
 
     // Test static initialiser
-    static
-    {
-        int x = 1; // should not require any javadoc
-    }
+    
 
 
 
@@ -88,12 +85,11 @@ class InputRightCurlyLeft
             System.identityHashCode("heh");
             flag = !flag;
         }
-        String.CASE_INSENSITIVE_ORDER.
-              equals("Xe-xe");
+        "Xe-xe".equals(String.CASE_INSENSITIVE_ORDER);
         // it is ok to have rcurly on the same line as previous
         // statement if lcurly on the same line.
         if (flag) {
-            String.CASE_INSENSITIVE_ORDER.equals("it is ok.");
+            "it is ok.".equals(String.CASE_INSENSITIVE_ORDER);
         }
     }
 }
@@ -118,7 +114,7 @@ class FooMethod
 {
         public void fooMethod()
     {
-                int i = 1;
+                
     }}
 
 /**
@@ -155,16 +151,12 @@ interface EmptyInterface3 { }
 
 class ClassWithStaticInitializers
 {
-    static {
-    }
-    static
-    { }
+    
+    
 
     static class Inner
     {
-        static {
-            int i = 1;
-        }
+        
     }
 
     public void emptyBlocks() {
@@ -175,19 +167,17 @@ class ClassWithStaticInitializers
         } catch (Exception e) { // violation except for SAME
             // comment
         } catch (Throwable e) { // violation except for SAME
-        } finally { // violation except for SAME
-            // comment
-        }
+        } 
 
-        do {
-        } while (true); // violation except for SAME
+        while (true) {
+        } // violation except for SAME
     }
 
     public void codeAfterLastRightCurly() {
         while (new Object().equals(new Object())) {
-        }; // violation
+        } // violation
         for (int i = 0; i < 1; i++) {
-            new Object(); }; // violation
+            new Object(); } // violation
     }
 
     static final java.util.concurrent.ThreadFactory threadFactory

@@ -16,8 +16,7 @@ public final class InputRequireThisStatic {
     static {
         try (BufferedReader instFld2 = new BufferedReader(new InputStreamReader(null, "utf-8"))) {
             instFld2.readLine();
-        } catch (FileNotFoundException e) {
-        } catch (IOException e) {
+        } catch (FileNotFoundException | IOException e) {
         }
     }
 
@@ -26,7 +25,7 @@ public final class InputRequireThisStatic {
     }
 
     void foo50(final String staticField1) {
-        staticField1 = staticField1;
+        
     }
 
     void foo52(final String staticField1) {

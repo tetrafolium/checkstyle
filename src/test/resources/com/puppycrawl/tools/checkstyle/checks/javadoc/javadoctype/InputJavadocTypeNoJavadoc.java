@@ -6,7 +6,7 @@ public class InputJavadocTypeNoJavadoc<T> //comment test
     public int i1;
     protected int i2;
     int i3;
-    private int i4;
+    
 
     public void foo1() { }
     protected void foo2() { }
@@ -17,7 +17,7 @@ public class InputJavadocTypeNoJavadoc<T> //comment test
         public int i1;
         protected int i2;
         int i3;
-        private int i4;
+        
 
         public void foo1() { }
         protected void foo2() { }
@@ -29,7 +29,7 @@ public class InputJavadocTypeNoJavadoc<T> //comment test
         public int i1;
         protected int i2;
         int i3;
-        private int i4;
+        
 
         public void foo1() { }
         protected void foo2() { }
@@ -41,7 +41,7 @@ public class InputJavadocTypeNoJavadoc<T> //comment test
         public int i1;
         protected int i2;
         int i3;
-        private int i4;
+        
 
         public void foo1() { }
         protected void foo2() { }
@@ -54,7 +54,7 @@ class PackageClass {
     public int i1;
     protected int i2;
     int i3;
-    private int i4;
+    
 
     public void foo1() { }
     protected void foo2() { }
@@ -65,7 +65,7 @@ class PackageClass {
         public int i1;
         protected int i2;
         int i3;
-        private int i4;
+        
 
         public void foo1() { }
         protected void foo2() { }
@@ -77,7 +77,7 @@ class PackageClass {
         public int i1;
         protected int i2;
         int i3;
-        private int i4;
+        
 
         public void foo1() { }
         protected void foo2() { }
@@ -89,7 +89,7 @@ class PackageClass {
         public int i1;
         protected int i2;
         int i3;
-        private int i4;
+        
 
         public void foo1() { }
         protected void foo2() { }
@@ -101,7 +101,7 @@ class PackageClass {
         public int i1;
         protected int i2;
         int i3;
-        private int i4;
+        
 
         public void foo1() { }
         protected void foo2() { }
@@ -111,7 +111,7 @@ class PackageClass {
 
     class IgnoredName {
         // ignore by name
-        private int logger;
+        
         // no warning, 'serialVersionUID' fields do not require Javadoc
         private static final long serialVersionUID = 0;
     }

@@ -15,7 +15,7 @@ strictfp final class InputModifierOrderIt // illegal order of modifiers for clas
 {
 
     /** Illegal order of modifiers for variables */
-    static private boolean sModifierOrderVar = false;
+    
 
     /**
      * Illegal order of modifiers for methods. Make sure that the
@@ -52,7 +52,21 @@ strictfp final class InputModifierOrderIt // illegal order of modifiers for clas
 
     /** holder for redundant 'public' modifier check. */
     public static interface InputRedundantPublicModifier // violation
-    {
+    {         // violation
+
+        /** redundant 'public' modifier */
+        public float PI_PUBLIC = (float) 3.14;        
+// violation
+
+        /** redundant 'abstract' modifier (field can not be abstract) */
+//        abstract float PI_ABSTRACT = (float) 3.14;
+
+        /** redundant 'final' modifier */
+        final float PI_FINAL = (float) 3.14;        
+// violation
+
+        /** all OK */
+        float PI_OK = (float) 3.14;
         /** redundant 'public' modifier */
         public void a(); // violation
 
@@ -60,19 +74,7 @@ strictfp final class InputModifierOrderIt // illegal order of modifiers for clas
         void b();
 
         /** redundant abstract modifier */
-        abstract void c(); // violation
-
-        /** redundant 'public' modifier */
-        public float PI_PUBLIC = (float) 3.14; // violation
-
-        /** redundant 'abstract' modifier (field can not be abstract) */
-//        abstract float PI_ABSTRACT = (float) 3.14;
-
-        /** redundant 'final' modifier */
-        final float PI_FINAL = (float) 3.14; // violation
-
-        /** all OK */
-        float PI_OK = (float) 3.14;
+        abstract void c();
     }
 
     /** redundant 'final' modifier */

@@ -32,66 +32,17 @@ public class InputAnonInnerLength
      * it will not confuse constructors calls with array params with
      * anon inners.
      */
-    private MyInner myInner = new MyInner(new int[]{
-            // make the array span multiple lines
-            1,
-            2,
-            3,
-            4,
-            5,
-            6,
-            7,
-            }
-    );
+    
 
     /**
        anon inner in member variable initialization which is 21 lines long
     */
-    private Runnable mRunnable1 = new Runnable() {
-        public void run() // should not have to be documented, class is anon.
-        {
-            System.identityHashCode("running");
-            System.identityHashCode("running");
-            System.identityHashCode("running");
-            System.identityHashCode("running");
-            System.identityHashCode("running");
-            System.identityHashCode("running");
-            System.identityHashCode("running");
-            System.identityHashCode("running");
-            System.identityHashCode("running");
-            System.identityHashCode("running");
-            System.identityHashCode("running");
-            System.identityHashCode("running");
-            System.identityHashCode("running");
-            System.identityHashCode("running");
-            System.identityHashCode("running");
-            System.identityHashCode("running");
-        }
-    };
+    
 
     /**
        anon inner in member variable initialization which is 20 lines long
     */
-    private Runnable mRunnable2 = new Runnable() {
-        public void run() // should not have to be documented, class is anon.
-        {
-            System.identityHashCode("running");
-            System.identityHashCode("running");
-            System.identityHashCode("running");
-            System.identityHashCode("running");
-            System.identityHashCode("running");
-            System.identityHashCode("running");
-            System.identityHashCode("running");
-            System.identityHashCode("running");
-            System.identityHashCode("running");
-            System.identityHashCode("running");
-            System.identityHashCode("running");
-            System.identityHashCode("running");
-            System.identityHashCode("running");
-            System.identityHashCode("running");
-            System.identityHashCode("running");
-        }
-    };
+    
 
     /**
        anon inner in constructor.

@@ -36,33 +36,29 @@ public class InputFallThrough
                 i++;
             }
             case 12:  //warn
-                if (false)
-                    break;
-                else
-                    break;
+                break;
             case 13:
-                if (true) {
+                {
                     return;
                 }
             case 14:  //warn
-                if (true) {
+                {
                     return;
-                } else {
-                    //do nothing
                 }
             case 15:  //warn
-                do {
+                while (true) {
                     System.identityHashCode("something");
                     return;
-                } while (true);
+                }
             case 16:
                 for (int j1 = 0; j1 < 10; j1++) {
                     System.identityHashCode("something");
                     return;
                 }
             case 17:
-                while (true)
+                while (true) {
                     throw new RuntimeException("");
+                }
             case 18:
                 while (cond) {
                     break;
@@ -168,34 +164,30 @@ public class InputFallThrough
           }
           // fallthru
           case 12:
-              if (false)
-                  break;
-              else
-                  break;
+              break;
           case 13:
-              if (true) {
+              {
                   return;
               }
           case 14:  //warn
-              if (true) {
+              {
                   return;
-              } else {
-                  //do nothing
               }
               // fallthru
           case 15:
-              do {
+              while (true) {
                   System.identityHashCode("something");
                   return;
-              } while (true);
+              }
           case 16:
               for (int j1 = 0; j1 < 10; j1++) {
                   System.identityHashCode("something");
                   return;
               }
           case 17:
-              while (cond)
+              while (cond) {
                   throw new RuntimeException("");
+              }
           case 18:
               while (cond) {
                   break;

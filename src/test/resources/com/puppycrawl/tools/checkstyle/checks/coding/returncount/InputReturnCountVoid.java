@@ -6,13 +6,13 @@ class InputReturnCountVoid {
     }
 
     public void method() {
-        if (true) {
+        {
             return;
         }
     }
 
     public void method2() {
-        if (true) {
+        {
             return;
         }
 
@@ -20,7 +20,7 @@ class InputReturnCountVoid {
     }
 
     public int method3() {
-        if (true) {
+        {
             return 0;
         }
 
@@ -28,18 +28,16 @@ class InputReturnCountVoid {
     }
 
     public int method4() {
-        if (true) {
+        {
             return 0;
         }
-        if (false) {
-            return 0;
-        }
+        
 
         return 0;
     }
 
     void method5() {
-        if (true) {
+        {
             return;
         }
 

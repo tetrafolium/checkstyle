@@ -16,8 +16,7 @@ public class InputMethodLengthComments {
         final DetailClass openingBrace = ast.find(Tokens.ZERO);
 
         if (openingBrace != null) {
-            final DetailClass closingBrace =
-                    openingBrace.find(Tokens.ONE);
+            
         }
 
     }

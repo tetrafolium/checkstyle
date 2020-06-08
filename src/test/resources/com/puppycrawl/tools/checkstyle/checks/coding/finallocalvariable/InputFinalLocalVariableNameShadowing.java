@@ -14,10 +14,10 @@ class InputFinalLocalVariableNameShadowing {
 
 class Foo2 {
     public void foo() {
-        int x;
+        
         class Bar {
             void bar() {
-                int x = 1;
+                
                 x++;
                 x++;
             }

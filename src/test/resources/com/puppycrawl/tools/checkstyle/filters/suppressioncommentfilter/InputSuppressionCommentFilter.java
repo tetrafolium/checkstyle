@@ -10,37 +10,37 @@ package com.puppycrawl.tools.checkstyle.filters.suppressioncommentfilter;
  **/
 class InputSuppressionCommentFilter
 {
-    private int I;
+    
 
     /* CHECKSTYLE:OFF */
-    private int J;
+    
     /* CHECKSTYLE:ON */
 
-    private int K;
+    
 
     //CSOFF: MemberNameCheck|ConstantNameCheck
-    private int L;
-    private static final int m = 0;
+    
+    
     /*
      * CSON: MemberNameCheck|ConstantNameCheck
      */
-    private int M2; //CSOFF: ConstantNameCheck
-    private static final int n = 0;
+     //CSOFF: ConstantNameCheck
+    
     //CSON: ConstantNameCheck
 
     //CS_OFF
-    private int P;
+    
     //CS_ON
 
-    private int Q;
+    
 
     //CS_OFF: ConstantNameCheck
-    private int R;
-    private static final int s = 0;
+    
+    
     //CS_ON
 
     //CHECKSTYLE:OFF
-    private int T;
+    
     //CHECKSTYLE:ON
 
     //UNUSED OFF: aInt
@@ -74,9 +74,7 @@ class InputSuppressionCommentFilter
 
         try {
             //IllegalCatchCheck OFF: Exception
-        } catch (RuntimeException ex) {
-        } catch (Exception ex) {
-            //IllegalCatchCheck ON: Exception
+        } catch (RuntimeException | Exception ex) {
         }
     }
 

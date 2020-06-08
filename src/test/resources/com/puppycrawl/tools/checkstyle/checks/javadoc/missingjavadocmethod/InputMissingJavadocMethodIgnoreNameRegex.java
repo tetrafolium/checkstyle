@@ -11,9 +11,9 @@ public class InputMissingJavadocMethodIgnoreNameRegex
     }
 
     private void foo2() {
-        int x = 0;
-        int k = x >> 2;
-        String s = String.valueOf(k);
-        boolean b = false;
+        
+        
+        
+        
     }
 }

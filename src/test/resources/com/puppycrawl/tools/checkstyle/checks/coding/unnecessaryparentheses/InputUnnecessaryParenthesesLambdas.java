@@ -7,15 +7,13 @@ import java.util.function.Function;
 
 public class InputUnnecessaryParenthesesLambdas {
     int foo(final int y) {
-        MathOperation case1 = (x) -> x + x;
-        MathOperation case2 = (x) -> {
-            return x + x; };
-        MathOperation case3 = (int x) -> x + x;
-        MathOperation case4 = x -> x + x;
-        MathOperation2 case5 = (a, b) -> a + b;
-        MathOperation2 case6 = (int a, int b) -> a + b;
-        MathOperation2 case7 = (int a, int b) -> {
-            return a + b; };
+        
+        
+        
+        
+        
+        
+        
         Objects.requireNonNull(null, () -> "message");
         call((x) -> x + x);
         new HashSet<Integer>().stream().filter((filter) -> filter > 0);

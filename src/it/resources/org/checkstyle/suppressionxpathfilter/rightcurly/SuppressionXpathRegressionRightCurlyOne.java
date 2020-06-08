@@ -7,7 +7,7 @@ public class SuppressionXpathRegressionRightCurlyOne {
             return;
         } //warn
         else if (x < 0) {
-            ;
+            
         }
     }
 }

@@ -5,8 +5,9 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 public class InputParenPad
-{
-    class ParenPadNoSpace  {
+{    
+
+    boolean fooo = this.bar(true && false && true);     class ParenPadNoSpace  {
         ParenPadNoSpace() {
             this(0);
         }
@@ -28,7 +29,7 @@ public class InputParenPad
                             synchronized (this) {
                                 switch (i) {
                                     case 3:
-                                    case (4):
+                                    case 4:
                                     case 5:
                                         break;
                                 }
@@ -62,7 +63,7 @@ public class InputParenPad
                             synchronized (this) { // warning
                                 switch (i) { // warning
                                     case 3:
-                                    case (4): // warning
+                                    case 4: // warning
                                     case 5:
                                         break;
                                 }
@@ -96,7 +97,7 @@ public class InputParenPad
                             synchronized (this) { // warning
                                 switch (i) { // warning
                                     case 3:
-                                    case (4): // warning
+                                    case 4: // warning
                                     case 5:
                                         break;
                                 }
@@ -110,17 +111,16 @@ public class InputParenPad
 
     String foo() {
         return ((Object // warning
-                ) bar((1 > 2) ? // warning
-                        ((3 < 4) ? false : true) : // warning
-                        ((1 == 1) ? false : true))).toString(); // warning
+                ) bar(1 > 2 ? // warning
+                        3 < 4 ? false : true : // warning
+                        (1 == 1) ? false : true)).toString(); // warning
     }
     @MyAnnotation
     public boolean bar(final boolean a) {
-        assert (true); // warning
+        assert true; // warning
         return true;
     }
-
-    boolean fooo = this.bar((true && false) && true); // warning
+// warning
 }
 @interface MyAnnotation {
     String someField() default "Hello world"; // warning
@@ -147,13 +147,13 @@ enum MyEnum {
     }
 
     public void intStringConv() {
-        Object a = 5;
-        Object b = "string";
-        int w = Integer.parseInt((String) a);
-        int x = Integer.parseInt((String) a); // warning
-        double y = Double.parseDouble((String) a); // warning
-        float z = Float.parseFloat((String) a); // warning
-        String d = ((String) b);
+        
+        
+        
+         // warning
+         // warning
+         // warning
+        
     }
 
     public int something(final Object o) { // warning
@@ -164,8 +164,8 @@ enum MyEnum {
     }
 
     private void launch(final Integer number) { // warning
-        String myInt = (number.toString() + '\0'); // warning
-        boolean result = false;
+         // warning
+        
         if (number == 123)
             result = true;
     }

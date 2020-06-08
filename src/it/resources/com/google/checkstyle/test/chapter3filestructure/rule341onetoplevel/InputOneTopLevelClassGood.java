@@ -7,7 +7,7 @@ public class InputOneTopLevelClassGood //ok
         super.clone();
     }
 
-    public Object clone() throws CloneNotSupportedException
+    public InputOneTopLevelClassGood clone() throws CloneNotSupportedException
     {
         return super.clone();
     }

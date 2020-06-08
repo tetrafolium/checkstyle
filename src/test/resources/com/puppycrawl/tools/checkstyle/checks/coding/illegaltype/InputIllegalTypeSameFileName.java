@@ -1,15 +1,14 @@
 package com.puppycrawl.tools.checkstyle.checks.coding.illegaltype;
 import java.util.ArrayList;
-import java.awt.List;
 import java.util.*;
-import com.puppycrawl.tools.checkstyle.checks.coding.illegaltype.InputIllegalTypeGregorianCalendar;
 import com.puppycrawl.tools.checkstyle.checks.coding.illegaltype.InputIllegalTypeGregorianCalendar.SubCalendar;
 //configuration: "illegalClassNames": List, GregorianCalendar, java.io.File, SubCalendar, ArrayList
 public class InputIllegalTypeSameFileName
 {
     InputIllegalTypeGregorianCalendar cal = AnObject.getInstance(); //WARNING
     java.util.Date date = null;
-    SubCalendar subCalendar = null; //WARNING
+    SubCalendar subCalendar = null;    
+    java.util.List<Integer> list = new ArrayList<>(); //WARNING
 
     private static class AnObject extends InputIllegalTypeGregorianCalendar {
 
@@ -21,12 +20,12 @@ public class InputIllegalTypeSameFileName
     }
 
     private void foo() {
-        List l; //WARNING
-        java.io.File file = null; //WARNING
+         //WARNING
+         //WARNING
     }
-    java.util.List<Integer> list = new ArrayList<>(); //WARNING
-    private ArrayList<String> values;
-    private Boolean d; //WARNING
-    private Boolean[] d1;
-    private Boolean[][] d2;
+//WARNING
+    
+     //WARNING
+    
+    
 }

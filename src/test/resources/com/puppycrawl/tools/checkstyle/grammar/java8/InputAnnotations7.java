@@ -6,7 +6,7 @@ import java.lang.annotation.Target;
 public class InputAnnotations7 {
 
         public static void main(final String[] args) {
-                Object object = new @Interned Object();
+                
 
         }
 

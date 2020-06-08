@@ -14,8 +14,8 @@ public class InputLeftCurlyNlowSwitch {
             { // warn
                 break;
             }
-            case (1
-                + 0):
+            case 1
+                + 0:
             { // OK, wrapped line
                 break;
             }
@@ -30,8 +30,7 @@ public class InputLeftCurlyNlowSwitch {
             case 3:
             case 4:
                 x++;
-                { // OK, standalone block
-                }
+                
                 break;
             case 5: {
                     x++;

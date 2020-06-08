@@ -38,9 +38,6 @@ class MoreOther3<T extends Cloneable> {
         }
     };
 
-        Other2 o = new Other2() {
-            <EE> void getMoreFoo() { //warn
-            }
-        };
+        
     }
 }

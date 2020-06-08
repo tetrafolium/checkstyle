@@ -1,18 +1,13 @@
 package com.puppycrawl.tools.checkstyle.grammar;
 
-import static java.lang.String.valueOf;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
-import javax.xml.*;
 
 public class InputRegressionJavaClass1 {
     //comments
@@ -27,7 +22,7 @@ public class InputRegressionJavaClass1 {
     // fields
     // modifiers
     public int f1;
-    private int f2;
+    
     protected int f3;
     int f4;
     static int f5;
@@ -37,7 +32,7 @@ public class InputRegressionJavaClass1 {
     Object f9;
 
     // constructors
-    static { }
+    
     public InputRegressionJavaClass1() {
         f6 = 0; }
     public InputRegressionJavaClass1(final int i) {
@@ -106,7 +101,7 @@ public class InputRegressionJavaClass1 {
     public void m59(final @Deprecated List l) { }
 
     // extra
-    { }
+    
 ;
 
     // instructions
@@ -115,30 +110,30 @@ public class InputRegressionJavaClass1 {
         boolean b = Math.random() > 0;
 
         // variables and types
-        byte vbyte;
+        
         boolean vboolean;
-        char vchar;
-        short vshort;
+        
+        
         int vint;
-        long vlong;
-        float vfloat;
-        double vdouble;
+        
+        
+        
         int[] varray;
         int varray2[];
-        boolean test1 = true;
+        
 
         // types
-        String vstring;
-        List<String> vlist;
-        Map<String, String[]> vmap;
+        
+        
+        
         int[] test2 = {};
-        List<char[]> test3;
-        Class<?> test4;
-        List<? extends InputRegressionJavaClass1> test5;
-        List<? extends List<Object>> test6;
-        List<? extends List<List<Object>>> test7;
-        List<? extends int[]> test8;
-        List<? super InputRegressionJavaClass1> test9;
+        
+        
+        
+        
+        
+        
+        
 
         // literals
         vboolean = true;
@@ -189,8 +184,8 @@ public class InputRegressionJavaClass1 {
         vlong = 0L;
         vlong = 1L;
         vlong = 0b1L;
-        vlong = 1234567890L;
-        vlong = 1234567890L;
+        vlong = 1_234_567_890L;
+        vlong = 1_234_567_890L;
         vlong = 0x0L;
         vlong = 0xABCDEFL;
         vlong = 0XABCDEFL;
@@ -280,10 +275,10 @@ public class InputRegressionJavaClass1 {
         varray = new int[5];
         vlist = new ArrayList<String>();
         vmap = new HashMap<String, String[]>();
-        Object anonymous = new InputRegressionJavaClass1() { };
+        
 
         // statements
-        ;
+        
         this.f1 = 0;
 
         // labels
@@ -291,29 +286,31 @@ public class InputRegressionJavaClass1 {
 
         // blocks
         { }
-        if (true) ;
-        if (true) { }
-        if (true) { } else ;
-        if (true) { } else { }
+        
+        
         if (b) {
-            for (;;) ;
+            for (;;) {
+                ;
+            }
         }
         if (b) {
             for (;;) { }
         }
         for (int i = 0; i < 1; i++) { }
         for (int i = 0, j = 0; i < 1; i++, j += 2) { }
-        for (int value: new int[]{}) ;
-        for (String s : new String[]{}) ;
-        for (final String s : new String[]{}) ;
+        
+        
+        
         if (b) {
-            while (true) ;
+            while (true) {
+                ;
+            }
         }
         if (b) {
             while (true) { }
         }
-        do { } while (false);
-        synchronized (f9) { }
+        
+        
 
         switch (0) {
             case 1:
@@ -329,9 +326,8 @@ public class InputRegressionJavaClass1 {
                 throw new ArrayIndexOutOfBoundsException();
             }
             throw new Exception();
-        } catch (IOException | ArrayIndexOutOfBoundsException e) {
-        } catch (Exception e) {
-        } finally { }
+        } catch (IOException | ArrayIndexOutOfBoundsException | Exception e) {
+        } 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(null, "utf-8"))) { }
         try (BufferedReader br1 = new BufferedReader(new InputStreamReader(null, "utf-8"));
                 BufferedReader br2 = new BufferedReader(new InputStreamReader(null, "utf-8"));) { }
@@ -341,8 +337,10 @@ public class InputRegressionJavaClass1 {
         test4 = List[].class;
         test4 = boolean[].class;
         varray[0] = 0;
-        for (String[] s : new String[][]{{}}) ;
-        for (Map.Entry<String, String[]> e : vmap.entrySet()) { }
+        for (String[] s : new String[][]{{}}) {
+            ;
+        }
+        
 
         // others
         for (;;) {
@@ -358,17 +356,19 @@ public class InputRegressionJavaClass1 {
             test_label3: for (;;) {
                 continue test_label3; }
                 }
-        if (false) return;
-        if (false) throw new Exception();
-        assert (false);
+        
+        
+        assert false;
         assert true : "false";
         f9 = (Object) f9;
-        f9.equals(((vstring = "")));
-        for (int i = 0; ((i) < (6 + 6)); i++) ;
-        if ((b & b)) { }
+        f9.equals(vstring = "");
+        for (int i = 0; (i) < (6 + 6); i++) {
+            ;
+        }
+        if (b & b) { }
 
         // ast error handling
-        vint = vboolean ? (vint = 1) : (vint = 0);
+        vint = vboolean ? vint = 1 : (vint = 0);
         varray[vint] = Integer.parseInt("0");
     }
 

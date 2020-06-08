@@ -93,8 +93,7 @@ public class InputIndentationValidSwitchIndent { //indent:0 exp:0
                 break; //indent:16 exp:16
         }         //indent:8 exp:8
 
-        switch (s) { //indent:8 exp:8
-        } //indent:8 exp:8
+         //indent:8 exp:8
 
 
         switch (s) { //indent:8 exp:8

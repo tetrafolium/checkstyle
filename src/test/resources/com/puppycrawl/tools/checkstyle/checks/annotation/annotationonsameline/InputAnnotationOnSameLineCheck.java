@@ -4,7 +4,13 @@ public class InputAnnotationOnSameLineCheck {
 
     @Annotation int x;
 
-    int y;
+    int y;    
+
+    @Annotation2 @Annotation
+    public int field;    
+
+    public
+    @Annotation int field2;
 
     @Annotation
     @SomeClass.Annotation
@@ -12,12 +18,6 @@ public class InputAnnotationOnSameLineCheck {
     public int getX() {
         return (int) x;
     }
-
-    @Annotation2 @Annotation
-    public int field;
-
-    public
-    @Annotation int field2;
 }
 
 class SomeClass {

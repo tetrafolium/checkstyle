@@ -7,60 +7,74 @@ public class InputNeedBracesNoBodyLoops {
 
     {
         value = 0;
-        while(incrementValue() < 5);;
+        while(incrementValue() < 5) {
+            ;
+        }
     }
 
     public void foo() {
-        while(incrementValue() < 5);
+        while(incrementValue() < 5) {
+            ;
+        }
     }
 
     public void foo2() {
-        for(int i = 0; i < 10; incrementValue());
-        for(int i = 0; incrementValue() < 8; i++);
+        for(int i = 0; i < 10; incrementValue()) {
+            ;
+        }
+        
     }
 
     public void foo3() {
         while(incrementValue()
-            < 5);
+            < 5) {
+            ;
+        }
     }
 
     public void foo4() {
-        while(incrementValue() < 5)
+        while(incrementValue() < 5) {
             ;
+        }
     }
 
     public void foo5() {
         while(incrementValue()
-            < 5)
+            < 5) {
             ;
+        }
     }
 
     public void foo6() {
         while(
             incrementValue() < 5
-            );
+            ) {
+            ;
+        }
     }
 
     public void foo7() {
         while(
-            incrementValue() < 5);
+            incrementValue() < 5) {
+            ;
+        }
     }
 
     public void foo8() {
-        for(int i = 0; incrementValue() < 8; i++);
+        
     }
 
     public void foo9() {
-        for(int i = 0;
-            incrementValue() < 8;
-            i++);
+        
     }
 
     public void foo10() {
         for(
             int i = 0;
             incrementValue() < 8;
-            i++);
+            i++) {
+            ;
+        }
     }
 
     public void foo11() {
@@ -69,14 +83,13 @@ public class InputNeedBracesNoBodyLoops {
             int i = 0;
             incrementValue() < 8;
             i++
-            )
+            ) {
             ;
+        }
     }
 
     public void foo12() {
-        for (int i = 0; incrementValue() < 8; i++) {
-            int a = 5;
-        }
+        
     }
 
     public void foo14() {
@@ -86,26 +99,32 @@ public class InputNeedBracesNoBodyLoops {
     }
 
     public void foo15() {
-        while (true);
+        while (true) {
+            ;
+        }
     }
 
     public void foo16() {
-        for (;;);
+        for (;;) {
+            ;
+        }
     }
 
     public void foo17() {
-        if(true);
+        if(true)
     }
 
     public void foo18() {
-        if(true) {
+        {
             int a;
         }
     }
 
     @Override
     public String toString(){
-        while(fco.removeAssignedRole(this));
+        while(fco.removeAssignedRole(this)) {
+            ;
+        }
         return "";
     }
 

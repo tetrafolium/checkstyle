@@ -1,8 +1,6 @@
 package com.puppycrawl.tools.checkstyle.checks.coding.hiddenfield;
 
-import java.lang.Integer;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -14,7 +12,50 @@ public class InputHiddenFieldLambdas {
      * hides a field 'value' on line 14.
      */
     List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);
-    Integer value = new Integer(1);
+    Integer value = Integer.valueOf(1);    
+
+    /**
+     * Example 6: lambda parameter 'id' on line 70
+     * hides a field 'id' on line 68.
+     */
+    static long id = 1;    
+
+    /**
+     * Example 7: lambda parameter 'age' on line 84
+     * does not hide a field 'age' on line 82,
+     * because field 'age' can not be referenced from a static context.
+     */
+    int age = 21;    
+
+    /**
+     * Example 8: lambda parameter 'note' on line 98
+     * hides a field 'note' on line 95.
+     */
+    static String note = new String();    
+
+    /**
+     * Example 9: lambda parameter 'letter' on line 109
+     * does not hide a field 'letter' on line 106, because
+     * field 'letter' can not be referenced from a static context.
+     */
+    String letter = "a";    
+
+    /**
+     * Example 10: typed parameters - two hide fields
+     */
+    String stringValue = "248.3";    
+    int intValue = 2;    
+
+    /**
+     * Example 11: typed parameters - one hide field
+     */
+    Double doubleValue = 8.5;    
+
+    /**
+     * Example 11: untyped parameters - two hide fields
+     */
+    String firstString = "Hello,";    
+    String secondString = " World!";
     {
         numbers.forEach((Integer value) -> String.valueOf(value)); // 1 violation
     }
@@ -63,12 +104,6 @@ public class InputHiddenFieldLambdas {
             else return false;
         });
     }
-
-    /**
-     * Example 6: lambda parameter 'id' on line 70
-     * hides a field 'id' on line 68.
-     */
-    static long id = 1;
     Optional<Object> foo2(int i) {
         return Optional.of(5).map(id -> { // violation
             if (id == 1) return true;
@@ -76,13 +111,6 @@ public class InputHiddenFieldLambdas {
             else return false;
         });
     }
-
-    /**
-     * Example 7: lambda parameter 'age' on line 84
-     * does not hide a field 'age' on line 82,
-     * because field 'age' can not be referenced from a static context.
-     */
-    int age = 21;
     static Optional<Object> foo3(int i) {
         return Optional.of(5).map(age -> {
             if (age == 1) return true;
@@ -90,23 +118,10 @@ public class InputHiddenFieldLambdas {
             else return false;
         });
     }
-
-    /**
-     * Example 8: lambda parameter 'note' on line 98
-     * hides a field 'note' on line 95.
-     */
-    static String note = new String();
     private void foo4() {
         List<String> acceptableNotes = Arrays.asList("C", "D", "E", "F", "G", "A", "B");
         acceptableNotes.forEach(note -> String.valueOf(note)); // 1 violation
     }
-
-    /**
-     * Example 9: lambda parameter 'letter' on line 109
-     * does not hide a field 'letter' on line 106, because
-     * field 'letter' can not be referenced from a static context.
-     */
-    String letter = new String("a");
     private static void foo5() {
         List<String> acceptableAlphabet = Arrays.asList("a", "b", "c");
         acceptableAlphabet.forEach(letter -> String.valueOf(letter));
@@ -116,35 +131,18 @@ public class InputHiddenFieldLambdas {
     interface Function <A, B> {
         public B apply (A a, B b);
     }
-
-    /**
-     * Example 10: typed parameters - two hide fields
-     */
-    String stringValue = "248.3";
-    int intValue = 2;
     {
         Function <String, Integer> m = (String stringValue, Integer intValue) -> { // 2 violations
             return Integer.parseInt(stringValue) + intValue;
         };
         String.valueOf(m.apply ("22.4", 2));
     }
-
-    /**
-     * Example 11: typed parameters - one hide field
-     */
-    Double doubleValue = 8.5;
     {
         Function <Integer, Double> a =(Integer integerValue, Double doubleValue) -> { // 1 violation
             return  integerValue + doubleValue;
         };
         String.valueOf(a.apply(2, 2.2));
     }
-
-    /**
-     * Example 11: untyped parameters - two hide fields
-     */
-    String firstString = "Hello,";
-    String secondString = " World!";
     {
         Function <String, String> stringConcat = (firstString, secondString) -> { // 2 violations
             return firstString + secondString;
@@ -161,9 +159,7 @@ public class InputHiddenFieldLambdas {
      * Example 11: untyped parameters - one hide field
      */
     Integer first = 1;
-    {
-        Function<Integer, Character> turnToZ = (first, second) -> 'z'; // 1 violation
-    }
+    
 
     @FunctionalInterface
     public interface Foo {
@@ -173,9 +169,7 @@ public class InputHiddenFieldLambdas {
     /**
      * Example 12: case when no parameters are given
      */
-    {
-        Foo foo = () -> "";
-    }
+    
     @FunctionalInterface
     interface FunctionWithOneParameter<One> {
         public One apply(One one);
@@ -188,7 +182,7 @@ public class InputHiddenFieldLambdas {
     List<Double> simpleNumbers = Arrays.asList(1.0, 2.0, 3.0, 4.0, 5.0, 6.0);
     {
         simpleNumbers.forEach(digit -> {
-            FunctionWithOneParameter<Double> strangeAdder = (mPi -> mPi+= digit); // 1 violation
+             // 1 violation
         });
     }
 
@@ -202,14 +196,7 @@ public class InputHiddenFieldLambdas {
      */
     List<Double> justSomeList;
     Map<String, Object> justSomeMap;
-    {
-        FunctionWithComplexGenerics<List<Double>, Map<String, Object>> someWierdFunc =
-            (List<Double> justSomeList, Map<String, Object> justSomeMap) -> { // 2 violations
-                String.valueOf(justSomeList);
-                String.valueOf(justSomeMap);
-                return new HashMap<>();
-            };
-    }
+    
 
     /**
      * Example 15: lambda stored in field (with typed parameter)
@@ -228,7 +215,7 @@ public class InputHiddenFieldLambdas {
         return someObject.toString();
     };
 
-    private final String l = "";
+    
     private interface NestedInterface {
         void print(String l);
     }

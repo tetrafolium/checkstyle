@@ -8,17 +8,17 @@ public class InputStringLiteralEquality
 {
     void foo(final String name)
     {
-        if (name == "Lars")
+        if ("Lars".equals(name))
         {
             // flagged, should use equals
         }
 
-        if ("Oleg" == name)
+        if ("Oleg".equals(name))
         {
             // flagged, should use equals
         }
 
-        if ("Oliver" == "Oliver")
+        if ("Oliver".equals("Oliver"))
         {
             // doesn't make much sense because this can be evaluated
             // to true at compile time, but is flagged anyway

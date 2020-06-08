@@ -5,8 +5,6 @@
 package com.puppycrawl.tools.checkstyle.checks.coding.illegalinstantiation;
 
 import java.io.*; // star import for instantiation tests
-import java.awt.Dimension; // explicit import for instantiation tests
-import java.awt.Color;
 
 /**
  * Test case for detecting simple semantic violations.
@@ -15,33 +13,31 @@ import java.awt.Color;
 class InputIllegalInstantiationSemantic
 {
     /* Boolean instantiation in a static initializer */
-    static {
-        Boolean x = new Boolean(true);
-    }
+    
 
     /* Boolean instantiation in a non-static initializer */
     {
-        Boolean x = new Boolean(true);
+        
         Boolean[] y = new Boolean[]{Boolean.TRUE, Boolean.FALSE};
     }
 
     /** fully qualified Boolean instantiation in a method. **/
     Boolean getBoolean()
     {
-        return new java.lang.Boolean(true);
+        return Boolean.TRUE;
     }
 
     void otherInstantiations()
     {
         // instantiation of classes in the same package
-        Object o1 = new InputBraces();
-        Object o2 = new InputModifier();
+        
+        
         // classes in another package with .* import
-        ByteArrayOutputStream s = new ByteArrayOutputStream();
-        File f = new File("/tmp");
+        
+        
         // classes in another package with explicit import
-        Dimension dim = new Dimension();
-        Color col = new Color(0, 0, 0);
+        
+        
     }
 
     public class EqualsVsHashCode1
@@ -101,13 +97,11 @@ class InputIllegalInstantiationSemantic
     public void triggerEmptyBlockWithoutBlock()
     {
         // an if statement without a block to increase test coverage
-        if (true)
-            return;
+        return;
     }
 
     // empty instance initializer
-    {
-    }
+    
 
     public class EqualsVsHashCode5
     {

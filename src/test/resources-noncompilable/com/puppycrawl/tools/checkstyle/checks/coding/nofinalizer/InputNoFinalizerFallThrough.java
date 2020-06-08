@@ -30,8 +30,7 @@ public class InputNoFinalizerFallThrough {
         case 5:
             try (final Resource resource = new Resource()) {
                 return;
-            } finally {
-            }
+            } 
         case 6:
             try (final Resource resource = new Resource()) {
             } catch (Exception ex) {
@@ -44,8 +43,7 @@ public class InputNoFinalizerFallThrough {
             // fallthru
         case 8:
             try (final Resource resource = new Resource()) {
-            } finally {
-            }
+            } 
             // fallthru
         case 9:
             try (final Resource resource = new Resource()) {

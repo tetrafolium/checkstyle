@@ -16,7 +16,7 @@ class InputRightCurlyOther
                     break;
                 } else if (x < 0) {  //ok
 
-                    ;
+                    
                 } //warn
                 else
                 {
@@ -49,7 +49,7 @@ class InputRightCurlyOther
 
         for (int k = 0; k < 1; k++)
         {
-            String innerBlockVariable = "";
+            
         } //ok
 
 
@@ -60,10 +60,7 @@ class InputRightCurlyOther
     } //ok
 
 
-    static
-    {
-        int x = 1;
-    } //ok
+     //ok
 
     public enum GreetingsEnum
     {
@@ -108,7 +105,7 @@ class FooMethod
 {
     public void fooMethod()
     {
-        int i = 1;
+        
     }} //ok
 
 /**

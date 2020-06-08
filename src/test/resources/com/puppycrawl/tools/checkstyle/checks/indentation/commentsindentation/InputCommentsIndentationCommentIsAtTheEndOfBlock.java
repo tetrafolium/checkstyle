@@ -33,7 +33,7 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
      /////////////////////////////// violation (a single line border to separate a group of methods)
 
     public void foo7() {
-        int a = 0;
+        
 // violation
     }
 
@@ -42,8 +42,9 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
     public void foo8() { }
 
     public class TestClass {
+        @Test
         public void test() {
-            int a = 0;
+            
                // violation
         }
           // violation
@@ -60,7 +61,7 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
 
     public void foo11() {
         String
-            .valueOf(new Integer(0))
+            .valueOf(Integer.valueOf(0))
             .trim()
             .length();
         // comment
@@ -68,21 +69,21 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
 
     public void foo12() {
         String
-            .valueOf(new Integer(0))
+            .valueOf(Integer.valueOf(0))
             .trim()
             .length();
                   // violation
     }
 
     public void foo13() {
-        String.valueOf(new Integer(0))
+        String.valueOf(Integer.valueOf(0))
                 .trim()
                 .length();
         // comment
     }
 
     public void foo14() {
-        String.valueOf(new Integer(0))
+        String.valueOf(Integer.valueOf(0))
             .trim()
             .length();
                                // violation
@@ -90,19 +91,19 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
 
     public void foo15() {
         String
-              .valueOf(new Integer(0));
+              .valueOf(Integer.valueOf(0));
         // comment
     }
 
     public void foo16() {
         String
-            .valueOf(new Integer(0));
+            .valueOf(Integer.valueOf(0));
                      // violation
     }
 
     public void foo17() {
         String
-            .valueOf(new Integer(0))
+            .valueOf(Integer.valueOf(0))
             .trim()
             // comment
             .length();
@@ -110,7 +111,7 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
 
     public void foo18() {
         String
-            .valueOf(new Integer(0))
+            .valueOf(Integer.valueOf(0))
             .trim()
                              // violation
             .length();
@@ -145,9 +146,7 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
         for (int i = 0; i < 5; i++) {
         org.junit.Assert.assertEquals(expected.get(i), array[i]);
         }
-        String s = String.format(java.util.Locale.ENGLISH, "The array element "
-               + "immediately following the end of the collection should be nulled",
-            array[1]);
+        
         // the above example was taken from hibernate-orm and was modified a bit
     }
 
@@ -158,9 +157,7 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
         for (int i = 0; i < 5; i++) {
             org.junit.Assert.assertEquals(expected.get(i), array[i]);
         }
-        String s = String.format(java.util.Locale.ENGLISH, "The array element "
-                + "immediately following the end of the collection should be nulled",
-            array[1]);
+        
                                  // violation
     }
 
@@ -195,14 +192,14 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
     }
 
     public String foo28() {
-        int a = 5;
+        
         return String.format(java.util.Locale.ENGLISH, "%d",
             1);
         // comment
     }
 
     public String foo29() {
-        int a = 5;
+        
         return String.format(java.util.Locale.ENGLISH, "%d",
             1);
                           // violation
@@ -210,21 +207,17 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
 
     public void foo30() {
         // comment
-        int a = 5;
+        
 //              violation
     }
 
     public void foo31() {
-        String s = new String("A"
-            + "B"
-            + "C");
+        
         // comment
     }
 
     public void foo32() {
-        String s = new String("A"
-            + "B"
-            + "C");
+        
             // violation
     }
 
@@ -272,13 +265,13 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
     }
 
     public void foo40() throws Exception {
-        int a = 88;
+        
         throw new Exception("", new Exception());
          // violation
     }
 
     public void foo41() throws Exception {
-        int a = 88;
+        
         throw new Exception("", new Exception());
         // comment
     }
@@ -286,7 +279,7 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
     public void foo42() {
         int a = 5;
         if (a == 5) {
-            int b;
+            
             // comment
         } else if (a == 6) {
 
@@ -295,7 +288,7 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
 
     public void foo43() {
         try {
-            int a;
+            
             // comment
         } catch (Exception e) {
 
@@ -303,14 +296,14 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
     }
 
     public void foo44() {
-        int ar = 5;
+        
         // comment
         ar = 6;
         // comment
     }
 
     public void foo45() {
-        int ar = 5;
+        
         // comment
         ar = 6;
          // violation
@@ -323,14 +316,14 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
     }
 
     public void foo47() {
-        int a = 5;
+        
         // comment
         // block
         // comment
     }
 
     public void foo48() {
-        int a = 5;
+        
 // comment
 // block
 // violation
@@ -421,10 +414,8 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
     }
 
     void foo62() {
-        if (true) {
-            String.CASE_INSENSITIVE_ORDER.equals("");
-          } else {
-
+        {
+            "".equals(String.CASE_INSENSITIVE_ORDER);
           }
         /*
          comment
@@ -436,7 +427,7 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
 
     void foo63() {
         try {
-            String.CASE_INSENSITIVE_ORDER.equals("");
+            "".equals(String.CASE_INSENSITIVE_ORDER);
           } catch (Exception e) {
 
           }
@@ -456,15 +447,13 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
     }
 
     void foo65() {
-        int i = 1
-            + 1
-            + 1;
+        
         // comment
         // comment
     }
 
     void foo66()  {
-        if (true) {
+        {
             getClass();
         }
 
@@ -498,9 +487,9 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
     }
 
     void foo70()  {
-        do {
+        while (true) {
             getClass();
-        } while (true);
+        }
 
           /* violation */
     }
@@ -517,7 +506,7 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
     }
 
     void foo72() {
-        int u = 1;
+        
 
 /* comment */
 // violation
@@ -562,8 +551,8 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
     }
 
     void InputCommentsIndentationCommentIsAtTheEndOfBlock(final String s) {
-        assert (s == null
-                || s != null);
+        assert s == null
+                || s != null;
          // comment
          //comment
     }

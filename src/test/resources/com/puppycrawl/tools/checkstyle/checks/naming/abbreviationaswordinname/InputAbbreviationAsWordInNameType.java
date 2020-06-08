@@ -36,8 +36,8 @@ abstract class AbstractClassName3 {
 abstract class Class3Factory {
     class WellNamedFACTORY {
         public void marazmaticMETHODName() {
-                int marazmaticVARIABLEName = 2;
-                int MARAZMATICVariableName = 1;
+                
+                
         }
     }
 }
@@ -57,8 +57,8 @@ interface BadNameForInterface
 abstract class NonAAAAbstractClassName2 {
         public int serialNUMBER = 6;
         public final int s1erialNUMBER = 6;
-        private static int s2erialNUMBER = 6;
-        private static final int s3erialNUMBER = 6;
+        
+        
 }
 
 interface Interface1 {

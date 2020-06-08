@@ -15,10 +15,16 @@ package com.puppycrawl.tools.checkstyle.checks.javadoc.javadocstyle;
 public class InputJavadocStyle
 {
    // This is OK. We don't flag missing javadoc.  That's left for other checks.
-   private String first;
+   
 
    /** This Javadoc is missing an ending period */
-   private String second;
+       
+
+    /** Description of field: {@value}. */
+    public static final int dummy = 4911;    
+
+    /** Set of all class field names.*/
+    public String field;
 
    /**
     * We don't want {@link com.puppycrawl.tools.checkstyle.checks.JavadocStyleCheck}
@@ -199,9 +205,6 @@ public class InputJavadocStyle
     { // should report unended first sentence (check line number of the error)
     }
 
-    /** Description of field: {@value}. */
-    public static final int dummy = 4911;
-
     /**
      */
     public void method16()
@@ -224,7 +227,7 @@ public class InputJavadocStyle
 
     /**
      */
-    private static int ASDF = 0;
+    
     // should report empty javadoc
 
     /** @see java.lang.Object */
@@ -366,7 +369,7 @@ public class InputJavadocStyle
             /**
              * It pretends to be Javadoc without dot, but it's just comment in method
              */
-            final int i = 0;
+            
         }
 
         /**
@@ -424,9 +427,6 @@ public class InputJavadocStyle
          */
         public int test(final String s) {
             return 0; }
-
-    /** Set of all class field names.*/
-    public String field;
 
     /**
      * <p>Test.</p>

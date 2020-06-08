@@ -1,7 +1,6 @@
 package com.google.checkstyle.test.chapter4formatting.rule462horizontalwhitespace;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,10 +10,10 @@ class InputGenericWhitespace implements Comparable<InputGenericWhitespace>, Seri
 {
     void meth()
     {
-        List<Integer> x = new ArrayList<Integer>();
-        List<List<Integer>> y = new ArrayList<List<Integer>>();
-        List<Integer> a = new ArrayList<Integer>(); // warn
-        List<List<Integer>> b = new ArrayList<List<Integer>>(); // warn
+        
+        
+         // warn
+         // warn
     }
 
     public int compareTo(final InputGenericWhitespace aObject)

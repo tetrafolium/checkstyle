@@ -1,6 +1,8 @@
 package com.puppycrawl.tools.checkstyle.checks.coding.illegaltype;
 
-public class InputIllegalTypeAbstractClassNames {
+public class InputIllegalTypeAbstractClassNames {    
+
+    AbstractClass a = new MyNonAbstractClass();
 
     abstract class AbstractClass {
         abstract String getClassInfo();
@@ -23,8 +25,6 @@ public class InputIllegalTypeAbstractClassNames {
             return perfect;
         }
     }
-
-    AbstractClass a = new MyNonAbstractClass();
 
     public String getInnerClassInfo(final AbstractClass clazz) {
         return clazz.getClassInfo();

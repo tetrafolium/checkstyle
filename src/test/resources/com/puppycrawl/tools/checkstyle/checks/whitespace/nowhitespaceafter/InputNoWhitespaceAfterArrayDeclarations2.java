@@ -2,11 +2,34 @@ package com.puppycrawl.tools.checkstyle.checks.whitespace.nowhitespaceafter;
 
 import java.util.List;
 
-import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 public class InputNoWhitespaceAfterArrayDeclarations2
-{
+{    
 
+    Object someStuff4 = boolean [].class;    
+//incorrect, 67:33
+    String[][] someStuff5 = new String[4][9];    
+    String[][] someStuff6 = (java.lang.String  []  []) someStuff5;    
+//incorrect, 69:48,52
+    String[][] someStuff7 = (String [][]) someStuff5;    
+//incorrect, 70:37
+
+    //this is legal until allowLineBreaks is set to false
+    int someStuff8
+    [];    
+
+    //this is legal until allowLineBreaks is set to false
+    int[]
+    someStuff81;    
+
+
+    Integer someStuff9[][][] = (Integer [][][]) F.create(1, 2);    
+//incorrect 81:41
+
+    //type arguments
+    List<char[]> someStuff10;    
+//correct
+    List<char [][]> someStuff11; 
     public class A {
         public int[][] create(final int i, final int j) {
             return new int[3] [3]; //incorrect, 12:31
@@ -63,26 +86,7 @@ public class InputNoWhitespaceAfterArrayDeclarations2
             return null;
         }
     }
-
-    Object someStuff4 = boolean [].class; //incorrect, 67:33
-    String[][] someStuff5 = new String[4][9];
-    String[][] someStuff6 = (java.lang.String  []  []) someStuff5; //incorrect, 69:48,52
-    String[][] someStuff7 = (String [][]) someStuff5; //incorrect, 70:37
-
-    //this is legal until allowLineBreaks is set to false
-    int someStuff8
-    [];
-
-    //this is legal until allowLineBreaks is set to false
-    int[]
-    someStuff81;
-
-
-    Integer someStuff9[][][] = (Integer [][][]) F.create(1, 2); //incorrect 81:41
-
-    //type arguments
-    List<char[]> someStuff10; //correct
-    List<char [][]> someStuff11; //incorrect 85:15
+//incorrect 85:15
     List<InputNoWhitespaceAfterArrayDeclarations2.A []> someStuff12; //incorrect 86:53
     void foo(final List<? extends String[]> bar, final Comparable<? super Object []> baz) { } //incorrect 87:70
 

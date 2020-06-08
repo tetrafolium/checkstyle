@@ -26,7 +26,7 @@ public final class InputIndentationTryResourcesNotStrict { //indent:0 exp:0
             (//indent:12 exp:>=8
 final BufferedWriter writer = Files.newBufferedWriter(filePath, charset); //indent:0 exp:12 warn
             ) { //indent:12 exp:>=8
-            ; //indent:12 exp:12
+             //indent:12 exp:12
         } //indent:8 exp:8
         try (//indent:8 exp:8
             BufferedWriter writer = Files.//indent:12 exp:12
@@ -158,15 +158,15 @@ newBufferedWriter(filePath, charset); //indent:0 exp:>=12 warn
               BufferedWriter writer4 = writ; //indent:14 exp:>=12
                BufferedWriter writer5 = writ) { //indent:15 exp:>=12
         } catch (MalformedInputException e) { //indent:8 exp:8
-            ; //indent:12 exp:12
+             //indent:12 exp:12
         } //indent:8 exp:8
         try (BufferedWriter writer = Files //indent:8 exp:8
         .newBufferedWriter(filePath, charset)) { //indent:8 exp:>=12 warn
-            ; //indent:12 exp:12
+             //indent:12 exp:12
         } //indent:8 exp:8
         try (BufferedWriter writer = Files //indent:8 exp:8
              .newBufferedWriter(filePath, charset)) { //indent:13 exp:>=12
-            ; //indent:12 exp:12
+             //indent:12 exp:12
         } //indent:8 exp:8
         try (DirectoryStream<Path> ds = Files.newDirectoryStream(filePath, //indent:8 exp:8
            new DirectoryStream.Filter<Path>() { //indent:11 exp:>=12 warn
@@ -176,8 +176,7 @@ newBufferedWriter(filePath, charset); //indent:0 exp:>=12 warn
                 } //indent:16 exp:16
             })) //indent:12 exp:12
         { //indent:8 exp:8
-            for (Path p : ds) //indent:12 exp:12
-                ; //indent:16 exp:16
+             //indent:16 exp:16
         } //indent:8 exp:8
     } //indent:4 exp:4
 } //indent:0 exp:0

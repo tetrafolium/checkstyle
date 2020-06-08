@@ -3,7 +3,7 @@ package org.checkstyle.suppressionxpathfilter.leftcurly;
 public class SuppressionXpathRegressionLeftCurlyThree {
     public void sample(final boolean flag) {
         if (flag) {
-            String.CASE_INSENSITIVE_ORDER.equals("it is ok.");
+            "it is ok.".equals(String.CASE_INSENSITIVE_ORDER);
         } //warn
     }
 }
