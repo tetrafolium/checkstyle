@@ -172,8 +172,7 @@ public class GenericWhitespaceCheckTest
         try {
             genericWhitespaceCheckObj.visitToken(ast);
             fail("exception expected");
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertEquals("Unknown type interface[0x-1]", ex.getMessage(),
                     "Invalid exception message");
         }

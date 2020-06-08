@@ -56,11 +56,11 @@ public abstract class AbstractIndentationTestSupport extends AbstractGoogleModul
             Pattern.compile("//indent:\\d+ exp:>=(\\d+)( warn)?");
 
     @Override
-    protected Integer[] getLinesWithWarn(String fileName) throws IOException {
+    protected Integer[] getLinesWithWarn(final String fileName) throws IOException {
         return getLinesWithWarnAndCheckComments(fileName, TAB_WIDTH);
     }
 
-    private static Integer[] getLinesWithWarnAndCheckComments(String aFileName,
+    private static Integer[] getLinesWithWarnAndCheckComments(final String aFileName,
             final int tabWidth)
                     throws IOException {
         final List<Integer> result = new ArrayList<>();
@@ -94,8 +94,7 @@ public abstract class AbstractIndentationTestSupport extends AbstractGoogleModul
                                         aFileName,
                                         lineNumber));
                     }
-                }
-                else if (NONEMPTY_LINE_REGEX.matcher(line).matches()) {
+                } else if (NONEMPTY_LINE_REGEX.matcher(line).matches()) {
                     throw new IllegalStateException(String.format(Locale.ROOT,
                                     "File \"%1$s\" has no indentation comment or its format "
                                                     + "malformed. Error on line: %2$d(%3$s)",
@@ -109,17 +108,17 @@ public abstract class AbstractIndentationTestSupport extends AbstractGoogleModul
         return result.toArray(new Integer[0]);
     }
 
-    private static int getIndentFromComment(String comment) {
+    private static int getIndentFromComment(final String comment) {
         final Matcher match = GET_INDENT_FROM_COMMENT_REGEX.matcher(comment);
         match.matches();
         return Integer.parseInt(match.group(1));
     }
 
-    private static boolean isWarnComment(String comment) {
+    private static boolean isWarnComment(final String comment) {
         return comment.endsWith(" warn");
     }
 
-    private static boolean isCommentConsistent(String comment) {
+    private static boolean isCommentConsistent(final String comment) {
         final int indentInComment = getIndentFromComment(comment);
         final boolean isWarnComment = isWarnComment(comment);
 
@@ -147,8 +146,8 @@ public abstract class AbstractIndentationTestSupport extends AbstractGoogleModul
         return result;
     }
 
-    private static boolean isNonStrictCommentConsistent(String comment,
-            int indentInComment, boolean isWarnComment) {
+    private static boolean isNonStrictCommentConsistent(final String comment,
+            final int indentInComment, final boolean isWarnComment) {
         final Matcher nonStrictLevelMatch = NON_STRICT_LEVEL_COMMENT_REGEX.matcher(comment);
         nonStrictLevelMatch.matches();
         final int expectedMinimalIndent = Integer.parseInt(nonStrictLevelMatch.group(1));
@@ -157,8 +156,8 @@ public abstract class AbstractIndentationTestSupport extends AbstractGoogleModul
                 || indentInComment < expectedMinimalIndent && isWarnComment;
     }
 
-    private static boolean isSingleLevelCommentConsistent(String comment,
-            int indentInComment, boolean isWarnComment) {
+    private static boolean isSingleLevelCommentConsistent(final String comment,
+            final int indentInComment, final boolean isWarnComment) {
         final Matcher singleLevelMatch = SINGLE_LEVEL_COMMENT_REGEX.matcher(comment);
         singleLevelMatch.matches();
         final int expectedLevel = Integer.parseInt(singleLevelMatch.group(1));
@@ -167,8 +166,8 @@ public abstract class AbstractIndentationTestSupport extends AbstractGoogleModul
                 || expectedLevel != indentInComment && isWarnComment;
     }
 
-    private static boolean isMultiLevelCommentConsistent(String comment,
-            int indentInComment, boolean isWarnComment) {
+    private static boolean isMultiLevelCommentConsistent(final String comment,
+            final int indentInComment, final boolean isWarnComment) {
         final Matcher multilevelMatch = MULTILEVEL_COMMENT_REGEX.matcher(comment);
         multilevelMatch.matches();
         final String[] levels = multilevelMatch.group(1).split(",");
@@ -180,18 +179,16 @@ public abstract class AbstractIndentationTestSupport extends AbstractGoogleModul
                 || !containsActualLevel && isWarnComment;
     }
 
-    private static CommentType getCommentType(String comment) {
+    private static CommentType getCommentType(final String comment) {
         CommentType result = CommentType.UNKNOWN;
         final Matcher multilevelMatch = MULTILEVEL_COMMENT_REGEX.matcher(comment);
         if (multilevelMatch.matches()) {
             result = CommentType.MULTILEVEL;
-        }
-        else {
+        } else {
             final Matcher singleLevelMatch = SINGLE_LEVEL_COMMENT_REGEX.matcher(comment);
             if (singleLevelMatch.matches()) {
                 result = CommentType.SINGLE_LEVEL;
-            }
-            else {
+            } else {
                 final Matcher nonStrictLevelMatch = NON_STRICT_LEVEL_COMMENT_REGEX.matcher(comment);
                 if (nonStrictLevelMatch.matches()) {
                     result = CommentType.NON_STRICT_LEVEL;
@@ -201,7 +198,7 @@ public abstract class AbstractIndentationTestSupport extends AbstractGoogleModul
         return result;
     }
 
-    private static int getLineStart(String line, final int tabWidth) {
+    private static int getLineStart(final String line, final int tabWidth) {
         int lineStart = 0;
         for (int index = 0; index < line.length(); ++index) {
             if (!Character.isWhitespace(line.charAt(index))) {

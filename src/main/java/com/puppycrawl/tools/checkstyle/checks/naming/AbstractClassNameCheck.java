@@ -105,7 +105,7 @@ public final class AbstractClassNameCheck extends AbstractCheck {
      * classes that match the name.
      * @param value new value
      */
-    public void setIgnoreModifier(boolean value) {
+    public void setIgnoreModifier(final boolean value) {
         ignoreModifier = value;
     }
 
@@ -114,7 +114,7 @@ public final class AbstractClassNameCheck extends AbstractCheck {
      * using the check to identify that match name and do not have the {@code abstract} modifier.
      * @param value new value.
      */
-    public void setIgnoreName(boolean value) {
+    public void setIgnoreName(final boolean value) {
         ignoreName = value;
     }
 
@@ -122,7 +122,7 @@ public final class AbstractClassNameCheck extends AbstractCheck {
      * Setter to specify valid identifiers.
      * @param pattern the new pattern
      */
-    public void setFormat(Pattern pattern) {
+    public void setFormat(final Pattern pattern) {
         format = pattern;
     }
 
@@ -142,7 +142,7 @@ public final class AbstractClassNameCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         visitClassDef(ast);
     }
 
@@ -150,7 +150,7 @@ public final class AbstractClassNameCheck extends AbstractCheck {
      * Checks class definition.
      * @param ast class definition for check.
      */
-    private void visitClassDef(DetailAST ast) {
+    private void visitClassDef(final DetailAST ast) {
         final String className =
             ast.findFirstToken(TokenTypes.IDENT).getText();
         if (isAbstract(ast)) {
@@ -158,8 +158,7 @@ public final class AbstractClassNameCheck extends AbstractCheck {
             if (!ignoreName && !isMatchingClassName(className)) {
                 log(ast, MSG_ILLEGAL_ABSTRACT_CLASS_NAME, className, format.pattern());
             }
-        }
-        else if (!ignoreModifier && isMatchingClassName(className)) {
+        } else if (!ignoreModifier && isMatchingClassName(className)) {
             log(ast, MSG_NO_ABSTRACT_CLASS_MODIFIER, className);
         }
     }
@@ -169,7 +168,7 @@ public final class AbstractClassNameCheck extends AbstractCheck {
      * @param ast class definition for check.
      * @return true if a given class declared as abstract.
      */
-    private static boolean isAbstract(DetailAST ast) {
+    private static boolean isAbstract(final DetailAST ast) {
         final DetailAST abstractAST = ast.findFirstToken(TokenTypes.MODIFIERS)
             .findFirstToken(TokenTypes.ABSTRACT);
 
@@ -181,7 +180,7 @@ public final class AbstractClassNameCheck extends AbstractCheck {
      * @param className class name for check.
      * @return true if class name matches format of abstract class names.
      */
-    private boolean isMatchingClassName(String className) {
+    private boolean isMatchingClassName(final String className) {
         return format.matcher(className).find();
     }
 

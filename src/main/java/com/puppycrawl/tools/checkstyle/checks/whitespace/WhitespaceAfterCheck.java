@@ -115,15 +115,14 @@ public class WhitespaceAfterCheck
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         if (ast.getType() == TokenTypes.TYPECAST) {
             final DetailAST targetAST = ast.findFirstToken(TokenTypes.RPAREN);
             final String line = getLine(targetAST.getLineNo() - 1);
             if (!isFollowedByWhitespace(targetAST, line)) {
                 log(targetAST, MSG_WS_TYPECAST);
             }
-        }
-        else {
+        } else {
             final String line = getLine(ast.getLineNo() - 1);
             if (!isFollowedByWhitespace(ast, line)) {
                 final Object[] message = {ast.getText()};
@@ -138,7 +137,7 @@ public class WhitespaceAfterCheck
      * @param line The line associated with the ast token.
      * @return true if ast token is followed by a whitespace.
      */
-    private static boolean isFollowedByWhitespace(DetailAST targetAST, String line) {
+    private static boolean isFollowedByWhitespace(final DetailAST targetAST, final String line) {
         final int after =
             targetAST.getColumnNo() + targetAST.getText().length();
         boolean followedByWhitespace = true;

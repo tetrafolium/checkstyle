@@ -9,20 +9,20 @@ public class InputAvoidNoArgumentSuperConstructorCall extends java.util.ArrayLis
         super(); // violation
     }
 
-    public InputAvoidNoArgumentSuperConstructorCall(int a, long b) {
+    public InputAvoidNoArgumentSuperConstructorCall(final int a, final long b) {
         super(/**/); // violation
     }
 
-    public InputAvoidNoArgumentSuperConstructorCall(long a, long b) {
-        super( // violation
+    public InputAvoidNoArgumentSuperConstructorCall(final long a, final long b) {
+        super(// violation
         );
     }
 
-    public InputAvoidNoArgumentSuperConstructorCall(int a) {
+    public InputAvoidNoArgumentSuperConstructorCall(final int a) {
         super(10);
     }
 
-    public InputAvoidNoArgumentSuperConstructorCall(int a, int b) {
+    public InputAvoidNoArgumentSuperConstructorCall(final int a, final int b) {
         super(a);
     }
 }
@@ -42,7 +42,7 @@ class Outer {
 }
 
 class Derived extends Outer.InnerNonStatic {
-    public Derived(Outer s) {
+    public Derived(final Outer s) {
         s.super(); // Not a redundant call
     }
     public Derived() {

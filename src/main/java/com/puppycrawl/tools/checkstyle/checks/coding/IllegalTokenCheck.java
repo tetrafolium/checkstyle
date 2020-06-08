@@ -95,7 +95,7 @@ public class IllegalTokenCheck
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         log(
             ast,
             MSG_KEY,
@@ -108,7 +108,7 @@ public class IllegalTokenCheck
      * @param ast node to be represented as string
      * @return string representation of AST node
      */
-    private static String convertToString(DetailAST ast) {
+    private static String convertToString(final DetailAST ast) {
         final String tokenText;
         switch (ast.getType()) {
             case TokenTypes.LABELED_STAT:

@@ -1,7 +1,7 @@
 package com.google.checkstyle.test.chapter4formatting.rule42blockindentation; //indent:0 exp:0
 
 import java.util.Map; //indent:0 exp:0
-import java.util.ArrayList;//indent:0 exp:0
+import java.util.ArrayList; //indent:0 exp:0
 
 public abstract class InputIndentationCorrect { //indent:0 exp:0
 
@@ -28,7 +28,7 @@ public abstract class InputIndentationCorrect { //indent:0 exp:0
 
     public static final InputIndentationCorrect JAVA_LETTER_OR_DIGIT = //indent:4 exp:4
         new InputIndentationCorrect() { //indent:8 exp:8
-          @Override public boolean matches(char c) { //indent:10 exp:10
+          @Override public boolean matches(final char c) { //indent:10 exp:10
             return Character.isLetterOrDigit(c); //indent:12 exp:12
           } //indent:10 exp:10
         }; //indent:8 exp:8
@@ -36,30 +36,30 @@ public abstract class InputIndentationCorrect { //indent:0 exp:0
     /** Matches no characters. */ //indent:4 exp:4
     public static final InputFastMatcher NONE = //indent:4 exp:4
             new InputFastMatcher() { //indent:12 exp:>=8
-      @Override public boolean matches(char c) { //indent:6 exp:6
+      @Override public boolean matches(final char c) { //indent:6 exp:6
         return false; //indent:8 exp:8
       } //indent:6 exp:6
 
-      @Override public String replaceFrom(CharSequence seq, CharSequence repl) { //indent:6 exp:6
+      @Override public String replaceFrom(final CharSequence seq, final CharSequence repl) { //indent:6 exp:6
         checkNotNull(repl); //indent:8 exp:8
         return seq.toString(); //indent:8 exp:8
       } //indent:6 exp:6
 
-      private void checkNotNull(CharSequence replacement) {} //indent:6 exp:6
+      private void checkNotNull(final CharSequence replacement) { } //indent:6 exp:6
 
-      @Override public String collapseFrom(CharSequence sequence, //indent:6 exp:6
-          char replacement) { //indent:10 exp:10
+      @Override public String collapseFrom(final CharSequence sequence, //indent:6 exp:6
+          final char replacement) { //indent:10 exp:10
         return sequence.toString(); //indent:8 exp:8
       } //indent:6 exp:6
 
       @Override //indent:6 exp:6
-      public String trimTrailingFrom(CharSequence sequence) { //indent:6 exp:6
+      public String trimTrailingFrom(final CharSequence sequence) { //indent:6 exp:6
         return sequence.toString(); //indent:8 exp:8
       } //indent:6 exp:6
     }; //indent:4 exp:4
   } //indent:2 exp:2
 
-  public boolean matches(char c) { //indent:2 exp:2
+  public boolean matches(final char c) { //indent:2 exp:2
     return false; //indent:4 exp:4
   } //indent:2 exp:2
 
@@ -95,8 +95,8 @@ public abstract class InputIndentationCorrect { //indent:0 exp:0
     return false; //indent:4 exp:4
   } //indent:2 exp:2
 
-  public void someFooMethod(String longString, //indent:2 exp:2
-      String superLongString, String exraSuperLongString) {} //indent:6 exp:6
+  public void someFooMethod(final String longString, //indent:2 exp:2
+      final String superLongString, final String exraSuperLongString) { } //indent:6 exp:6
 
   public void fooThrowMethod() //indent:2 exp:2
           throws Exception { //indent:10 exp:>=6

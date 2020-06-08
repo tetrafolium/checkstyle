@@ -16,7 +16,7 @@ public class InputCheckUtilTest<V, C> {
     static final double VAR_2 = 5.0;
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -24,26 +24,26 @@ public class InputCheckUtilTest<V, C> {
             return false;
         }
         InputCheckUtilTest<V, C> that = (InputCheckUtilTest<V, C>) o;
-        return Objects.equal(field, that.field) &&
-                Objects.equal(array, that.array);
+        return Objects.equal(field, that.field)
+                && Objects.equal(array, that.array);
     }
 
-    public void doSomething(int value) {
+    public void doSomething(final int value) {
         if (field.isEmpty()) {
             field.put(String.valueOf(value), value << 1);
         } else {
-            if(!field.containsKey(String.valueOf(value))){
+            if (!field.containsKey(String.valueOf(value))) {
                 field.put(String.valueOf(value), value << 1);
             }
         }
 
-        if(!field.containsKey(String.valueOf(value))){
+        if (!field.containsKey(String.valueOf(value))) {
             field.put(String.valueOf(value), value << 1);
         } else if (value == 10) {
             array[9] = -1;
         }
 
-        if(field.size() < 10){
+        if (field.size() < 10) {
             array[9] = field.getOrDefault(String.valueOf(value), -1);
         }
 
@@ -53,18 +53,18 @@ public class InputCheckUtilTest<V, C> {
         return new HashMap<>(field);
     }
 
-    public void setField(Map<String, Integer> field) {
+    public void setField(final Map<String, Integer> field) {
         this.field = field;
     }
 
-    public int [] setArray(int... array) {
+    public int [] setArray(final int... array) {
         this.array = array;
-        if(array.length > 0){
+        if (array.length > 0) {
             return this.array;
         } else {
             return new int[4];
         }
     }
 
-    public void testReceiver(InputCheckUtilTest<V, C>this, int variable) {}
+    public void testReceiver(InputCheckUtilTest<V, C> this, final int variable) { }
 }

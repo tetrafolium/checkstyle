@@ -97,7 +97,7 @@ public class InputNPathComplexityDefault {
 
     /** Inner */
     // NP = 0
-    public InputNPathComplexityDefault(int aParam)
+    public InputNPathComplexityDefault(final int aParam)
     {
         Runnable runnable = new Runnable() {
             // NP = 2
@@ -120,10 +120,12 @@ public class InputNPathComplexityDefault {
                         .sin(300 * (12 + 30))); // bad (nested in second
                                                 // position)
     }
-    public boolean getSmth() { return true; };
-    public int apply(Object o) { return 0; }
+    public boolean getSmth() {
+        return true; };
+    public int apply(final Object o) {
+        return 0; }
 
-    public void inClass(int type, Short s, int color) {
+    public void inClass(final int type, final Short s, final int color) {
         switch (type) {
         case 3:
             new Object() {

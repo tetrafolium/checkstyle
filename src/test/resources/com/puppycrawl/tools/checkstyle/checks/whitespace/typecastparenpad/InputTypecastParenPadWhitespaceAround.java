@@ -3,29 +3,29 @@ package com.puppycrawl.tools.checkstyle.checks.whitespace.typecastparenpad;
 @SuppressWarnings({"this", "that"})
 class InputTypecastParenPadWhitespaceAround
 {
-    protected InputTypecastParenPadWhitespaceAround ( int i )
+    protected InputTypecastParenPadWhitespaceAround(final int i)
     {
         this (); //whitespace
-        toString ();
+        toString();
     }
-    protected InputTypecastParenPadWhitespaceAround ()
+    protected InputTypecastParenPadWhitespaceAround()
     {
-        super ();
+        super();
     }
 
-    public void enhancedFor ()
+    public void enhancedFor()
     {
         int[] i = new int[2];
-        for ( int j: i ) {
-            System.identityHashCode ( j );
+        for (int j: i) {
+            System.identityHashCode(j);
         }
     }
 }
 
 @interface CronExpression_TypecastParenPad {
-	Class<?>[] groups() default {};
+        Class<?>[] groups() default {};
 }
 
 @interface CronExpression1_TypecastParenPad {
-	Class<?>[] groups() default { }; // extra space
+        Class<?>[] groups() default { }; // extra space
 }

@@ -30,7 +30,7 @@ public class PrimordialHandler extends AbstractExpressionHandler {
      *
      * @param indentCheck   the indentation check
      */
-    public PrimordialHandler(IndentationCheck indentCheck) {
+    public PrimordialHandler(final IndentationCheck indentCheck) {
         super(indentCheck, null, null, null);
     }
 
@@ -40,7 +40,7 @@ public class PrimordialHandler extends AbstractExpressionHandler {
     }
 
     @Override
-    public IndentLevel getSuggestedChildIndent(AbstractExpressionHandler child) {
+    public IndentLevel getSuggestedChildIndent(final AbstractExpressionHandler child) {
         return getIndentImpl();
     }
 

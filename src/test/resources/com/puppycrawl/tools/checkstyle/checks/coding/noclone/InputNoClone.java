@@ -1,6 +1,6 @@
 package com.puppycrawl.tools.checkstyle.checks.coding.noclone;
 public class InputNoClone
-{/* class body */
+{ /* class body */
     public InputNoClone() throws CloneNotSupportedException
     { //constructor body
         super.equals(new String());
@@ -66,7 +66,7 @@ class CloneWithTypeArgumentsAndNoSuper<T>
 //Check that super keyword isn't snagged here
 class MyClassWithGenericSuperMethod
 {
-    void someMethod(java.util.List<? super java.util.Map<Object, Object>> l)
+    void someMethod(final java.util.List<? super java.util.Map<Object, Object>> l)
     {
 
     }
@@ -76,7 +76,7 @@ class MyClassWithGenericSuperMethod
      * @param o some object
      * @return a cloned Object?
      */
-    public static Object clone(Object o) {
+    public static Object clone(final Object o) {
         return null;
     }
 }
@@ -89,7 +89,7 @@ class AnotherClass {
      * @param <T> a type
      * @return a cloned type?
      */
-    public <T> T clone(T t) {
+    public <T> T clone(final T t) {
         return null;
     }
 }

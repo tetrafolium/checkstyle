@@ -17,7 +17,7 @@ public class InputEmptyLineSeparatorPreviousLineEmptiness {
         base = 33;
     }
 
-    public InputEmptyLineSeparatorPreviousLineEmptiness(int base) {
+    public InputEmptyLineSeparatorPreviousLineEmptiness(final int base) {
 
 
         this.base = base;
@@ -26,7 +26,7 @@ public class InputEmptyLineSeparatorPreviousLineEmptiness {
     public InputEmptyLineSeparatorPreviousLineEmptiness() {
     }
 
-    public static int increment(int value) {
+    public static int increment(final int value) {
 
 
         return value * MULTIPLICATOR + 1;

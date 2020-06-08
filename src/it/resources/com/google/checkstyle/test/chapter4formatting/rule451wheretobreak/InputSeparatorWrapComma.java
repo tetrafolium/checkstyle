@@ -12,7 +12,7 @@ public class InputSeparatorWrapComma {
         foo(i,
                 s); //ok
     }
-    public static void foo(int i, String s)
+    public static void foo(final int i, final String s)
     {
 
     }
@@ -20,7 +20,7 @@ public class InputSeparatorWrapComma {
 
 class badCaseComma {
 
-    public void goodCase(int... aFoo)
+    public void goodCase(final int... aFoo)
     {
         int i = 0;
 
@@ -28,17 +28,17 @@ class badCaseComma {
         boolean b = s.
             isEmpty();
         foo(i
-                ,s); //warn
+, s); //warn
         int[] j;
     }
-    public static String foo(int i, String s)
+    public static String foo(final int i, final String s)
     {
         String maxLength = "123";
         int truncationLength = 1;
         CharSequence seq = null;
         Object truncationIndicator = null;
-        return new StringBuilder(maxLength )
-        .append(seq, 0, truncationLength )
+        return new StringBuilder(maxLength)
+        .append(seq, 0, truncationLength)
         .append(truncationIndicator)
         .toString();
     }

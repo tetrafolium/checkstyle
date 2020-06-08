@@ -32,7 +32,8 @@ class InputAbstractJavadocCorrectParagraph {
      * @see <a href="http://www.gwtproject.org/doc/latest/DevGuideOrganizingProjects.html#DevGuideModules">
      *     Documentation about GWT emulated source</a>
      */
-    boolean emulated() {return false;}
+    boolean emulated() {
+        return false; }
 
     /**
      * Some Javadoc.
@@ -45,7 +46,8 @@ class InputAbstractJavadocCorrectParagraph {
      * Test
      * </pre>
      */
-    boolean test() {return false;}
+    boolean test() {
+        return false; }
 
     /**
      * Some Javadoc.
@@ -74,12 +76,13 @@ class InputAbstractJavadocCorrectParagraph {
          * @see <a href="http://www.gwtproject.org/doc/latest/DevGuideOrganizingProjects.html#DevGuideModules">
          *     Documentation about GWT emulated source</a>
          */
-        boolean emulated() {return false;}
+        boolean emulated() {
+            return false; }
     }
 
     InnerInputCorrectJavaDocParagraphCheck anon = new InnerInputCorrectJavaDocParagraphCheck() {
 
-    	/**
+        /**
          * Some Javadoc.
          *
          * <p>Some Javadoc.
@@ -100,7 +103,8 @@ class InputAbstractJavadocCorrectParagraph {
          * @see <a href="http://www.gwtproject.org/doc/latest/DevGuideOrganizingProjects.html#DevGuideModules">
          *     Documentation about GWT emulated source</a>
          */
-        boolean emulated() {return false;}
+        boolean emulated() {
+            return false; }
     };
 }
 
@@ -109,4 +113,4 @@ class InputAbstractJavadocCorrectParagraph {
  *
  *  It's fine, because this is plain comment.
  */
-class ClassWithPlainComment {}
+class ClassWithPlainComment { }

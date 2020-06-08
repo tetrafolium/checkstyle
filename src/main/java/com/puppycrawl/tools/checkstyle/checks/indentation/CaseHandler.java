@@ -44,8 +44,8 @@ public class CaseHandler extends AbstractExpressionHandler {
      * @param expr          the abstract syntax tree
      * @param parent        the parent handler
      */
-    public CaseHandler(IndentationCheck indentCheck,
-        DetailAST expr, AbstractExpressionHandler parent) {
+    public CaseHandler(final IndentationCheck indentCheck,
+        final DetailAST expr, final AbstractExpressionHandler parent) {
         super(indentCheck, "case", expr, parent);
     }
 
@@ -63,7 +63,7 @@ public class CaseHandler extends AbstractExpressionHandler {
     }
 
     @Override
-    public IndentLevel getSuggestedChildIndent(AbstractExpressionHandler child) {
+    public IndentLevel getSuggestedChildIndent(final AbstractExpressionHandler child) {
         return getIndent();
     }
 

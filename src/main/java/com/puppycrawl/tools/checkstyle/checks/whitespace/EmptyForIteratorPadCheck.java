@@ -87,7 +87,7 @@ public class EmptyForIteratorPadCheck
      * @param optionStr string to decode option from
      * @throws IllegalArgumentException if unable to decode
      */
-    public void setOption(String optionStr) {
+    public void setOption(final String optionStr) {
         option = PadOption.valueOf(optionStr.trim().toUpperCase(Locale.ENGLISH));
     }
 
@@ -107,7 +107,7 @@ public class EmptyForIteratorPadCheck
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         if (!ast.hasChildren()) {
             // empty for iterator. test pad after semi.
             final DetailAST semi = ast.getPreviousSibling();
@@ -118,8 +118,7 @@ public class EmptyForIteratorPadCheck
                 if (option == PadOption.NOSPACE
                     && Character.isWhitespace(line.charAt(after))) {
                     log(ast, MSG_WS_FOLLOWED, SEMICOLON);
-                }
-                else if (option == PadOption.SPACE
+                } else if (option == PadOption.SPACE
                          && !Character.isWhitespace(line.charAt(after))) {
                     log(ast, MSG_WS_NOT_FOLLOWED, SEMICOLON);
                 }

@@ -54,7 +54,7 @@ public abstract class AbstractNode implements NodeInfo {
      *
      * @param treeInfo {@code TreeInfo} object
      */
-    protected AbstractNode(TreeInfo treeInfo) {
+    protected AbstractNode(final TreeInfo treeInfo) {
         this.treeInfo = treeInfo;
     }
 
@@ -82,7 +82,7 @@ public abstract class AbstractNode implements NodeInfo {
      * Add new child node to children list.
      * @param node child node
      */
-    protected void addChild(AbstractNode node) {
+    protected void addChild(final AbstractNode node) {
         children.add(node);
     }
 
@@ -92,7 +92,7 @@ public abstract class AbstractNode implements NodeInfo {
      * @return {@code TreeInfo}
      */
     @Override
-    public boolean isSameNodeInfo(NodeInfo nodeInfo) {
+    public boolean isSameNodeInfo(final NodeInfo nodeInfo) {
         return this == nodeInfo;
     }
 
@@ -130,7 +130,7 @@ public abstract class AbstractNode implements NodeInfo {
      * @return {@code AxisIterator} object
      */
     @Override
-    public AxisIterator iterateAxis(byte axisNumber, NodeTest nodeTest) {
+    public AxisIterator iterateAxis(final byte axisNumber, final NodeTest nodeTest) {
         AxisIterator axisIterator = iterateAxis(axisNumber);
         if (nodeTest != null) {
             axisIterator = new Navigator.AxisFilter(axisIterator, nodeTest);
@@ -144,7 +144,7 @@ public abstract class AbstractNode implements NodeInfo {
      * @return number representing order of current object to specified one
      */
     @Override
-    public int compareOrder(NodeInfo nodeInfo) {
+    public int compareOrder(final NodeInfo nodeInfo) {
         return getLocalPart().compareTo(nodeInfo.getLocalPart());
     }
 
@@ -174,7 +174,7 @@ public abstract class AbstractNode implements NodeInfo {
      * @return namespace array
      */
     @Override
-    public final NamespaceBinding[] getDeclaredNamespaces(NamespaceBinding[] namespaceBindings) {
+    public final NamespaceBinding[] getDeclaredNamespaces(final NamespaceBinding[] namespaceBindings) {
         throw createUnsupportedOperationException();
     }
 
@@ -234,7 +234,7 @@ public abstract class AbstractNode implements NodeInfo {
      * @param systemId system id
      */
     @Override
-    public final void setSystemId(String systemId) {
+    public final void setSystemId(final String systemId) {
         throw createUnsupportedOperationException();
     }
 
@@ -344,7 +344,7 @@ public abstract class AbstractNode implements NodeInfo {
      * @param fastStringBuffer fastStringBuffer
      */
     @Override
-    public final void generateId(FastStringBuffer fastStringBuffer) {
+    public final void generateId(final FastStringBuffer fastStringBuffer) {
         throw createUnsupportedOperationException();
     }
 
@@ -356,7 +356,7 @@ public abstract class AbstractNode implements NodeInfo {
      * @param location location
      */
     @Override
-    public final void copy(Receiver receiver, int index, Location location) {
+    public final void copy(final Receiver receiver, final int index, final Location location) {
         throw createUnsupportedOperationException();
     }
 

@@ -7,7 +7,8 @@ public class SuppressionXpathRegressionFallThroughOne {
             case 0: break;
             case 1: if (1 == 0) {
                 break;
-            };
+            }
+            ;
             case 2: break; //warn
         }
     }

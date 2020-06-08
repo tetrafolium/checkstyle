@@ -2,7 +2,7 @@ package com.puppycrawl.tools.checkstyle.checks.coding.returncount;
 /* комментарий на русском */
 public class InputReturnCountSwitches
 {
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         int i = 1;
         switch (i) {
         case 1: return true;
@@ -15,7 +15,7 @@ public class InputReturnCountSwitches
         return false;
     }
 
-    void foo(int i) {
+    void foo(final int i) {
         switch (i) {
         case 1: return;
         case 2: return;
@@ -27,12 +27,12 @@ public class InputReturnCountSwitches
         return;
     }
 
-    void foo1(int i) {
+    void foo1(final int i) {
         if (i == 1) {
             return;
         }
         Object obj = new Object() {
-                void method1(int i) {
+                void method1(final int i) {
                     switch (i) {
                     case 1: return;
                     case 2: return;
@@ -62,5 +62,5 @@ public class InputReturnCountSwitches
 
 class Test {
 
-    public Test() {}
+    public Test() { }
 }

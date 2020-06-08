@@ -33,7 +33,7 @@ public class InputJavadocMethod_1379666 {
          * Some comment.
          * @param s string.
          */
-        BadStringFormat(String s) {
+        BadStringFormat(final String s) {
             super(s);
         }
     }

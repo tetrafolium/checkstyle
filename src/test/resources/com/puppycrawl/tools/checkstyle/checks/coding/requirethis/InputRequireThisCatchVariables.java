@@ -3,7 +3,7 @@ package com.puppycrawl.tools.checkstyle.checks.coding.requirethis;
 public class InputRequireThisCatchVariables extends Thread {
     private Throwable ex;
 
-    public InputRequireThisCatchVariables(Throwable ex) {
+    public InputRequireThisCatchVariables(final Throwable ex) {
         this.ex = ex;
     }
 
@@ -12,29 +12,24 @@ public class InputRequireThisCatchVariables extends Thread {
         if (this.ex != null) {
             try {
                 exceptional(this.ex);
-            }
-            catch (RuntimeException ex) {
+            } catch (RuntimeException ex) {
                 if (ex == this.ex) {
                     debug("Expected exception thrown", ex);
-                }
-                else {
+                } else {
                     ex.printStackTrace();
                 }
-            }
-            catch (Error err) {
+            } catch (Error err) {
                 if (err == this.ex) {
                     debug("Expected exception thrown", err);
-                }
-                else {
+                } else {
                     ex.printStackTrace();
                 }
-            }
-            catch (Throwable ex) {
+            } catch (Throwable ex) {
                 ex.printStackTrace();
             }
         }
     }
 
-    private static void exceptional(Throwable ex) {}
-    private static void debug(String message, Throwable err) {}
+    private static void exceptional(final Throwable ex) { }
+    private static void debug(final String message, final Throwable err) { }
 }

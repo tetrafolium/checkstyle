@@ -119,7 +119,7 @@ public class RegexpSinglelineJavaCheck extends AbstractCheck {
     }
 
     @Override
-    public void beginTree(DetailAST rootAST) {
+    public void beginTree(final DetailAST rootAST) {
         MatchSuppressor suppressor = null;
         if (ignoreComments) {
             suppressor = new CommentSuppressor(getFileContents());
@@ -144,7 +144,7 @@ public class RegexpSinglelineJavaCheck extends AbstractCheck {
      *
      * @param format the format of the regular expression to match.
      */
-    public void setFormat(String format) {
+    public void setFormat(final String format) {
         this.format = format;
     }
 
@@ -154,7 +154,7 @@ public class RegexpSinglelineJavaCheck extends AbstractCheck {
      *
      * @param message the message to report for a match.
      */
-    public void setMessage(String message) {
+    public void setMessage(final String message) {
         this.message = message;
     }
 
@@ -163,7 +163,7 @@ public class RegexpSinglelineJavaCheck extends AbstractCheck {
      *
      * @param minimum the minimum number of matches required in each file.
      */
-    public void setMinimum(int minimum) {
+    public void setMinimum(final int minimum) {
         this.minimum = minimum;
     }
 
@@ -172,7 +172,7 @@ public class RegexpSinglelineJavaCheck extends AbstractCheck {
      *
      * @param maximum the maximum number of matches required in each file.
      */
-    public void setMaximum(int maximum) {
+    public void setMaximum(final int maximum) {
         this.maximum = maximum;
     }
 
@@ -181,7 +181,7 @@ public class RegexpSinglelineJavaCheck extends AbstractCheck {
      *
      * @param ignoreCase whether to ignore case when searching.
      */
-    public void setIgnoreCase(boolean ignoreCase) {
+    public void setIgnoreCase(final boolean ignoreCase) {
         this.ignoreCase = ignoreCase;
     }
 
@@ -190,7 +190,7 @@ public class RegexpSinglelineJavaCheck extends AbstractCheck {
      *
      * @param ignore whether to ignore text in comments when searching.
      */
-    public void setIgnoreComments(boolean ignore) {
+    public void setIgnoreComments(final boolean ignore) {
         ignoreComments = ignore;
     }
 

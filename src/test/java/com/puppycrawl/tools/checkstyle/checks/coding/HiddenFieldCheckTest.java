@@ -436,7 +436,7 @@ public class HiddenFieldCheckTest
     private static class CheckIfStatefulFieldCleared implements Predicate<Object> {
 
         @Override
-        public boolean test(Object frame) {
+        public boolean test(final Object frame) {
             boolean result = frame != null;
 
             // verify object is cleared
@@ -451,8 +451,7 @@ public class HiddenFieldCheckTest
                                     .get(frame) != null) {
                         result = false;
                     }
-                }
-                catch (NoSuchFieldException | IllegalArgumentException
+                } catch (NoSuchFieldException | IllegalArgumentException
                         | IllegalAccessException ex) {
                     throw new IllegalStateException(ex);
                 }

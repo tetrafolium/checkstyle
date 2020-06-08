@@ -17,7 +17,7 @@ public class InputEmptyCatchBlockViolationsByVariableName
         try {
             throw new RuntimeException();
         } catch (Exception e) //warn
-        {}
+        { }
 
     }
 

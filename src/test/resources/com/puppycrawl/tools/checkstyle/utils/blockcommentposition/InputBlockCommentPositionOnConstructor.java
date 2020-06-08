@@ -5,14 +5,14 @@ public class InputBlockCommentPositionOnConstructor {
     /**
      * I'm a javadoc
      */
-    public InputBlockCommentPositionOnConstructor(){
+    public InputBlockCommentPositionOnConstructor() {
 
     }
 
     /**
      * I'm a javadoc
      */
-    InputBlockCommentPositionOnConstructor(int a){
+    InputBlockCommentPositionOnConstructor(final int a) {
 
     }
 
@@ -20,7 +20,7 @@ public class InputBlockCommentPositionOnConstructor {
      * I'm a javadoc
      */
     @Deprecated
-    public InputBlockCommentPositionOnConstructor(String s){
+    public InputBlockCommentPositionOnConstructor(final String s) {
 
     }
 

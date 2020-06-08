@@ -11,7 +11,7 @@ package com.puppycrawl.tools.checkstyle.checks.uncommentedmain;
 public class InputUncommentedMain
 {
     // uncommented main
-    public static void main(String[] args)
+    public static void main(final String[] args)
     {
         System.identityHashCode("InputUncommentedMain.main()");
     }
@@ -20,7 +20,7 @@ public class InputUncommentedMain
 class Main1
 {
     // uncommented main in class Main
-    public static void main(String[] args)
+    public static void main(final String[] args)
     {
         System.identityHashCode("Main.main()");
     }
@@ -29,7 +29,7 @@ class Main1
 class UncommentedMainTest1
 {
     // one more uncommented main
-    public static void main(java.lang.String[] args)
+    public static void main(final java.lang.String[] args)
     {
         System.identityHashCode("test1.main()");
     }
@@ -38,7 +38,7 @@ class UncommentedMainTest1
 class UncommentedMainTest2
 {
     // wrong arg type
-    public static void main(int args)
+    public static void main(final int args)
     {
         System.identityHashCode("test2.main()");
     }
@@ -47,7 +47,7 @@ class UncommentedMainTest2
 class UncommentedMainTest3
 {
     // no-public main
-    static void main(String[] args)
+    static void main(final String[] args)
     {
         System.identityHashCode("test3.main()");
     }
@@ -56,7 +56,7 @@ class UncommentedMainTest3
 class UncommentedMainTest4
 {
     // non-static main
-    public void main(String[] args)
+    public void main(final String[] args)
     {
         System.identityHashCode("test4.main()");
     }
@@ -65,7 +65,7 @@ class UncommentedMainTest4
 class UncommentedMainTest5
 {
     // wrong return type
-    public static int main(String[] args)
+    public static int main(final String[] args)
     {
         System.identityHashCode("test5.main()");
         return 1;
@@ -75,7 +75,7 @@ class UncommentedMainTest5
 class UncommentedMainTest6
 {
     // too many params
-    public static void main(String[] args, int param)
+    public static void main(final String[] args, final int param)
     {
         System.identityHashCode("test6.main()");
     }
@@ -93,7 +93,7 @@ class UncommentedMainTest7
 class UncommentedMainTest8
 {
 
-    public static void main(String... args)
+    public static void main(final String... args)
     {
         System.identityHashCode("test8.main()");
     }
@@ -102,7 +102,7 @@ class UncommentedMainTest8
 class UncommentedMainTest9
 {
 
-    public static void main(String args)
+    public static void main(final String args)
     {
         System.identityHashCode("test9.main()");
     }

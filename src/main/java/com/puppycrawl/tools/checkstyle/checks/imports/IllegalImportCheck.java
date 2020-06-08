@@ -315,7 +315,7 @@ public class IllegalImportCheck
      * @param from array of illegal packages
      * @noinspection WeakerAccess
      */
-    public final void setIllegalPkgs(String... from) {
+    public final void setIllegalPkgs(final String... from) {
         illegalPkgs = from.clone();
         illegalPkgsRegexps.clear();
         for (String illegalPkg : illegalPkgs) {
@@ -331,7 +331,7 @@ public class IllegalImportCheck
      *
      * @param from array of illegal classes
      */
-    public void setIllegalClasses(String... from) {
+    public void setIllegalClasses(final String... from) {
         illegalClasses = from.clone();
         for (String illegalClass : illegalClasses) {
             illegalClassesRegexps.add(CommonUtil.createPattern(illegalClass));
@@ -344,7 +344,7 @@ public class IllegalImportCheck
      *
      * @param regexp a {@code Boolean} value
      */
-    public void setRegexp(boolean regexp) {
+    public void setRegexp(final boolean regexp) {
         this.regexp = regexp;
     }
 
@@ -364,12 +364,11 @@ public class IllegalImportCheck
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         final FullIdent imp;
         if (ast.getType() == TokenTypes.IMPORT) {
             imp = FullIdent.createFullIdentBelow(ast);
-        }
-        else {
+        } else {
             imp = FullIdent.createFullIdent(
                 ast.getFirstChild().getNextSibling());
         }
@@ -387,7 +386,7 @@ public class IllegalImportCheck
      * @return if {@code importText} matches one of the regular expressions
      *         for illegal packages or illegal class names
      */
-    private boolean isIllegalImportByRegularExpressions(String importText) {
+    private boolean isIllegalImportByRegularExpressions(final String importText) {
         boolean result = false;
         for (Pattern pattern : illegalPkgsRegexps) {
             if (pattern.matcher(importText).matches()) {
@@ -411,7 +410,7 @@ public class IllegalImportCheck
      * @param importText the argument of the import keyword
      * @return if {@code importText} contains an illegal package prefix or equals illegal class name
      */
-    private boolean isIllegalImportByPackagesAndClassNames(String importText) {
+    private boolean isIllegalImportByPackagesAndClassNames(final String importText) {
         boolean result = false;
         for (String element : illegalPkgs) {
             if (importText.startsWith(element + ".")) {
@@ -435,12 +434,11 @@ public class IllegalImportCheck
      * @param importText the argument of the import keyword
      * @return if {@code importText} is illegal import
      */
-    private boolean isIllegalImport(String importText) {
+    private boolean isIllegalImport(final String importText) {
         final boolean result;
         if (regexp) {
             result = isIllegalImportByRegularExpressions(importText);
-        }
-        else {
+        } else {
             result = isIllegalImportByPackagesAndClassNames(importText);
         }
         return result;

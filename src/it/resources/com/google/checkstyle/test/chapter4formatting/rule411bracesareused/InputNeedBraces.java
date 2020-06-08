@@ -38,7 +38,7 @@ class InputNeedBraces
         }
 
         // Invalid
-        while(condition()); //warn
+        while (condition()); //warn
         while (condition()) //warn
             testWhile();
         while (condition()) //warn
@@ -55,7 +55,7 @@ class InputNeedBraces
         }
 
         // Invalid
-        for(int i = 1;i < 5;i++); //warn
+        for (int i = 1; i < 5; i++); //warn
         for (int i = 1; i < 5; i++) //warn
             testFor();
         for (int i = 1; i < 5; //warn
@@ -70,11 +70,9 @@ class InputNeedBraces
         // Valid
         if (condition()) {
             testIf();
-        }
-        else if (condition()) {
+        } else if (condition()) {
             testIf();
-        }
-        else {
+        } else {
             testIf();
         }
 
@@ -93,8 +91,7 @@ class InputNeedBraces
         }
         if (condition()) {
             testIf();
-        }
-        else //warn
+        } else //warn
             testIf();
         if (condition()) //warn
             if (condition()) //warn
@@ -104,7 +101,7 @@ class InputNeedBraces
     void whitespaceAfterSemi()
     {
         //reject
-        int i = 1;int j = 2;
+        int i = 1; int j = 2;
 
         //accept
         for (;;) {
@@ -112,10 +109,10 @@ class InputNeedBraces
     }
 
     /** Empty constructor block. **/
-    public InputNeedBraces() {}
+    public InputNeedBraces() { }
 
     /** Empty method block. **/
-    public void emptyImplementation() {}
+    public void emptyImplementation() { }
 }
 
 class EmptyBlocks {
@@ -123,30 +120,30 @@ class EmptyBlocks {
     int[] a = {1, 2, 3, 4, };
 
     void foo() {
-        while(flag); //warn
-        while(flag) {}
-        while(flag) {/*foo*/}
-        do; //warn
-        while(flag);
-        do {}
-        while(flag);
-        do {/*foo*/}
-        while(flag);
-        if(flag); //warn
-        if(flag){}
-        if(flag) {/*foo*/}
-        if(flag); //warn
-        else; //warn
-        if(flag){}
-        else {}
-        if(flag){/*foo*/}
-        else {/*foo*/}
-        for(int i = 0; i < 10; i++); //warn
-        for(int i = 0; i < 10; i++) {}
-        for(int i = 0; i < 10; i++) {/*foo*/}
-        for(int b : a); //warn
-        for(int b : a) {}
-        for(int b : a) {/*foo*/}
+        while (flag); //warn
+        while (flag) { }
+        while (flag) { /*foo*/ }
+        do ; //warn
+        while (flag);
+        do { }
+        while (flag);
+        do { /*foo*/ }
+        while (flag);
+        if (flag); //warn
+        if (flag) { }
+        if (flag) { /*foo*/ }
+        if (flag); //warn
+        else ; //warn
+        if (flag) { }
+        else { }
+        if (flag) { /*foo*/ }
+        else { /*foo*/ }
+        for (int i = 0; i < 10; i++); //warn
+        for (int i = 0; i < 10; i++) { }
+        for (int i = 0; i < 10; i++) { /*foo*/ }
+        for (int b : a); //warn
+        for (int b : a) { }
+        for (int b : a) { /*foo*/ }
     }
 
     class InnerEmptyBlocks {
@@ -154,30 +151,30 @@ class EmptyBlocks {
         int[] a = {1, 2, 3, 4, };
 
         void foo() {
-            while(flag); //warn
-            while(flag) {}
-            while(flag) {/*foo*/}
-            do; //warn
-            while(flag);
-            do {}
-            while(flag);
-            do {/*foo*/}
-            while(flag);
-            if(flag); //warn
-            if(flag){}
-            if(flag) {/*foo*/}
-            if(flag); //warn
-            else; //warn
-            if(flag){}
-            else {}
-            if(flag){/*foo*/}
-            else {/*foo*/}
-            for(int i = 0; i < 10; i++); //warn
-            for(int i = 0; i < 10; i++) {}
-            for(int i = 0; i < 10; i++) {/*foo*/}
-            for(int b : a); //warn
-            for(int b : a) {}
-            for(int b : a) {/*foo*/}
+            while (flag); //warn
+            while (flag) { }
+            while (flag) { /*foo*/ }
+            do ; //warn
+            while (flag);
+            do { }
+            while (flag);
+            do { /*foo*/ }
+            while (flag);
+            if (flag); //warn
+            if (flag) { }
+            if (flag) { /*foo*/ }
+            if (flag); //warn
+            else ; //warn
+            if (flag) { }
+            else { }
+            if (flag) { /*foo*/ }
+            else { /*foo*/ }
+            for (int i = 0; i < 10; i++); //warn
+            for (int i = 0; i < 10; i++) { }
+            for (int i = 0; i < 10; i++) { /*foo*/ }
+            for (int b : a); //warn
+            for (int b : a) { }
+            for (int b : a) { /*foo*/ }
         }
     }
 
@@ -186,30 +183,30 @@ class EmptyBlocks {
         int[] a = {1, 2, 3, 4, };
 
         void foo() {
-            while(flag); //warn
-            while(flag) {}
-            while(flag) {/*foo*/}
-            do; //warn
-            while(flag);
-            do {}
-            while(flag);
-            do {/*foo*/}
-            while(flag);
-            if(flag); //warn
-            if(flag){}
-            if(flag) {/*foo*/}
-            if(flag); //warn
-            else; //warn
-            if(flag){}
-            else {}
-            if(flag){/*foo*/}
-            else {/*foo*/}
-            for(int i = 0; i < 10; i++); //warn
-            for(int i = 0; i < 10; i++) {}
-            for(int i = 0; i < 10; i++) {/*foo*/}
-            for(int b : a); //warn
-            for(int b : a) {}
-            for(int b : a) {/*foo*/}
+            while (flag); //warn
+            while (flag) { }
+            while (flag) { /*foo*/ }
+            do ; //warn
+            while (flag);
+            do { }
+            while (flag);
+            do { /*foo*/ }
+            while (flag);
+            if (flag); //warn
+            if (flag) { }
+            if (flag) { /*foo*/ }
+            if (flag); //warn
+            else ; //warn
+            if (flag) { }
+            else { }
+            if (flag) { /*foo*/ }
+            else { /*foo*/ }
+            for (int i = 0; i < 10; i++); //warn
+            for (int i = 0; i < 10; i++) { }
+            for (int i = 0; i < 10; i++) { /*foo*/ }
+            for (int b : a); //warn
+            for (int b : a) { }
+            for (int b : a) { /*foo*/ }
         }
     };
 }

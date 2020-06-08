@@ -335,7 +335,7 @@ public class IndentationCheck extends AbstractCheck {
      *
      * @param value user's value of forceStrictCondition.
      */
-    public void setForceStrictCondition(boolean value) {
+    public void setForceStrictCondition(final boolean value) {
         forceStrictCondition = value;
     }
 
@@ -344,7 +344,7 @@ public class IndentationCheck extends AbstractCheck {
      *
      * @param basicOffset   the number of tabs or spaces to indent
      */
-    public void setBasicOffset(int basicOffset) {
+    public void setBasicOffset(final int basicOffset) {
         this.basicOffset = basicOffset;
     }
 
@@ -362,7 +362,7 @@ public class IndentationCheck extends AbstractCheck {
      *
      * @param adjustmentAmount   the brace offset
      */
-    public void setBraceAdjustment(int adjustmentAmount) {
+    public void setBraceAdjustment(final int adjustmentAmount) {
         braceAdjustment = adjustmentAmount;
     }
 
@@ -380,7 +380,7 @@ public class IndentationCheck extends AbstractCheck {
      *
      * @param amount   the case indentation level
      */
-    public void setCaseIndent(int amount) {
+    public void setCaseIndent(final int amount) {
         caseIndent = amount;
     }
 
@@ -398,7 +398,7 @@ public class IndentationCheck extends AbstractCheck {
      *
      * @param throwsIndent the throws indentation level
      */
-    public void setThrowsIndent(int throwsIndent) {
+    public void setThrowsIndent(final int throwsIndent) {
         this.throwsIndent = throwsIndent;
     }
 
@@ -416,7 +416,7 @@ public class IndentationCheck extends AbstractCheck {
      *
      * @param arrayInitIndent the array initialisation indentation level
      */
-    public void setArrayInitIndent(int arrayInitIndent) {
+    public void setArrayInitIndent(final int arrayInitIndent) {
         this.arrayInitIndent = arrayInitIndent;
     }
 
@@ -443,7 +443,7 @@ public class IndentationCheck extends AbstractCheck {
      *
      * @param lineWrappingIndentation the line-wrapping indentation level
      */
-    public void setLineWrappingIndentation(int lineWrappingIndentation) {
+    public void setLineWrappingIndentation(final int lineWrappingIndentation) {
         this.lineWrappingIndentation = lineWrappingIndentation;
     }
 
@@ -456,7 +456,7 @@ public class IndentationCheck extends AbstractCheck {
      *
      * @see java.text.MessageFormat
      */
-    public void indentationLog(int line, String key, Object... args) {
+    public void indentationLog(final int line, final String key, final Object... args) {
         if (!incorrectIndentationLines.contains(line)) {
             incorrectIndentationLines.add(line);
             log(line, key, args);
@@ -488,7 +488,7 @@ public class IndentationCheck extends AbstractCheck {
     }
 
     @Override
-    public void beginTree(DetailAST ast) {
+    public void beginTree(final DetailAST ast) {
         handlerFactory.clearCreatedHandlers();
         handlers.clear();
         final PrimordialHandler primordialHandler = new PrimordialHandler(this);
@@ -498,7 +498,7 @@ public class IndentationCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         final AbstractExpressionHandler handler = handlerFactory.getHandler(this, ast,
             handlers.peek());
         handlers.push(handler);
@@ -506,7 +506,7 @@ public class IndentationCheck extends AbstractCheck {
     }
 
     @Override
-    public void leaveToken(DetailAST ast) {
+    public void leaveToken(final DetailAST ast) {
         handlers.pop();
     }
 

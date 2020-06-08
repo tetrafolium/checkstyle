@@ -13,33 +13,28 @@ public class InputNoFinalizerFallThrough {
         case 2:
             try (final Resource resource = new Resource()) {
                 return;
-            }
-            finally {
+            } finally {
                 return;
             }
         case 3:
             try (final Resource resource = new Resource()) {
                 return;
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 return;
             }
         case 4:
             try (final Resource resource = new Resource()) {
-            }
-            finally {
+            } finally {
                 return;
             }
         case 5:
             try (final Resource resource = new Resource()) {
                 return;
-            }
-            finally {
+            } finally {
             }
         case 6:
             try (final Resource resource = new Resource()) {
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 return;
             }
             // fallthru
@@ -49,21 +44,18 @@ public class InputNoFinalizerFallThrough {
             // fallthru
         case 8:
             try (final Resource resource = new Resource()) {
-            }
-            finally {
+            } finally {
             }
             // fallthru
         case 9:
             try (final Resource resource = new Resource()) {
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
             }
             // fallthru
         case 10:
             try (final Resource resource = new Resource()) {
                 return;
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
             }
             // fallthru
         default:

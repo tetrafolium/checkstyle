@@ -4,14 +4,14 @@ public class InputBlockCommentPositionOnMethod {
     /**
      * I'm a javadoc
      */
-    int method(){
+    int method() {
         return 0;
     }
 
     /**
      * I'm a javadoc
      */
-    public int method1(){
+    public int method1() {
         return 0;
     }
 
@@ -19,28 +19,28 @@ public class InputBlockCommentPositionOnMethod {
      * I'm a javadoc
      */
     @Deprecated
-    int method2(){
+    int method2() {
         return 0;
     }
 
     /**
      * I'm a javadoc
      */
-    java.lang.String method3(){
+    java.lang.String method3() {
         return null;
     }
 
     /**
      * I'm a javadoc
      */
-    <T> T method4(T t){
+    <T> T method4(final T t) {
         return null;
     }
 
     /**
      * I'm a javadoc
      */
-    String[] method5(){
+    String[] method5() {
         return null;
     }
 }

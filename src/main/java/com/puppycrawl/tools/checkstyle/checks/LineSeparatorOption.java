@@ -54,7 +54,7 @@ public enum LineSeparatorOption {
      * Creates a new {@code LineSeparatorOption} instance.
      * @param sep the line separator, e.g. "\r\n"
      */
-    LineSeparatorOption(String sep) {
+    LineSeparatorOption(final String sep) {
         lineSeparator = sep.getBytes(StandardCharsets.US_ASCII);
     }
 
@@ -64,14 +64,13 @@ public enum LineSeparatorOption {
      * @return if bytes is equal to the byte representation
      *     of this line separator
      */
-    public boolean matches(byte... bytes) {
+    public boolean matches(final byte... bytes) {
         final boolean result;
         if (this == LF_CR_CRLF) {
             // this silently assumes LF and CR are of length 1
             // CRLF always matches LF, so CRLF isn't tested
             result = LF.matches(bytes) || CR.matches(bytes);
-        }
-        else {
+        } else {
             result = Arrays.equals(bytes, lineSeparator);
         }
         return result;

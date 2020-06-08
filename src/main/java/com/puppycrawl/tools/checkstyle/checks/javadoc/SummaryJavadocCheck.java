@@ -165,7 +165,7 @@ public class SummaryJavadocCheck extends AbstractJavadocCheck {
      *
      * @param pattern a pattern.
      */
-    public void setForbiddenSummaryFragments(Pattern pattern) {
+    public void setForbiddenSummaryFragments(final Pattern pattern) {
         forbiddenSummaryFragments = pattern;
     }
 
@@ -174,7 +174,7 @@ public class SummaryJavadocCheck extends AbstractJavadocCheck {
      *
      * @param period period's value.
      */
-    public void setPeriod(String period) {
+    public void setPeriod(final String period) {
         this.period = period;
     }
 
@@ -191,13 +191,12 @@ public class SummaryJavadocCheck extends AbstractJavadocCheck {
     }
 
     @Override
-    public void visitJavadocToken(DetailNode ast) {
+    public void visitJavadocToken(final DetailNode ast) {
         if (!startsWithInheritDoc(ast)) {
             final String summaryDoc = getSummarySentence(ast);
             if (summaryDoc.isEmpty()) {
                 log(ast.getLineNumber(), MSG_SUMMARY_JAVADOC_MISSING);
-            }
-            else if (!period.isEmpty()) {
+            } else if (!period.isEmpty()) {
                 final String firstSentence = getFirstSentence(ast);
                 final int endOfSentence = firstSentence.lastIndexOf(period);
                 if (!summaryDoc.contains(period)) {
@@ -216,7 +215,7 @@ public class SummaryJavadocCheck extends AbstractJavadocCheck {
      * @param root The root node to examine.
      * @return {@code true} if the javadoc starts with an {&#64;inheritDoc}.
      */
-    private static boolean startsWithInheritDoc(DetailNode root) {
+    private static boolean startsWithInheritDoc(final DetailNode root) {
         boolean found = false;
         final DetailNode[] children = root.getChildren();
 
@@ -225,8 +224,7 @@ public class SummaryJavadocCheck extends AbstractJavadocCheck {
             if (child.getType() == JavadocTokenTypes.JAVADOC_INLINE_TAG
                     && child.getChildren()[1].getType() == JavadocTokenTypes.INHERIT_DOC_LITERAL) {
                 found = true;
-            }
-            else if (child.getType() != JavadocTokenTypes.LEADING_ASTERISK
+            } else if (child.getType() != JavadocTokenTypes.LEADING_ASTERISK
                     && !CommonUtil.isBlank(child.getText())) {
                 break;
             }
@@ -240,19 +238,17 @@ public class SummaryJavadocCheck extends AbstractJavadocCheck {
      * @param ast Javadoc root node.
      * @return violation string
      */
-    private static String getSummarySentence(DetailNode ast) {
+    private static String getSummarySentence(final DetailNode ast) {
         boolean flag = true;
         final StringBuilder result = new StringBuilder(256);
         for (DetailNode child : ast.getChildren()) {
             if (ALLOWED_TYPES.contains(child.getType())) {
                 result.append(child.getText());
-            }
-            else if (child.getType() == JavadocTokenTypes.HTML_ELEMENT
+            } else if (child.getType() == JavadocTokenTypes.HTML_ELEMENT
                     && CommonUtil.isBlank(result.toString().trim())) {
                 result.append(getStringInsideTag(result.toString(),
                         child.getChildren()[0].getChildren()[0]));
-            }
-            else if (child.getType() == JavadocTokenTypes.JAVADOC_TAG) {
+            } else if (child.getType() == JavadocTokenTypes.JAVADOC_TAG) {
                 flag = false;
             }
             if (!flag) {
@@ -268,7 +264,7 @@ public class SummaryJavadocCheck extends AbstractJavadocCheck {
      * @param detailNode javadoc tag node
      * @return java doc tag content appended in result
      */
-    private static String getStringInsideTag(String result, DetailNode detailNode) {
+    private static String getStringInsideTag(final String result, final DetailNode detailNode) {
         final StringBuilder contents = new StringBuilder(result);
         DetailNode tempNode = detailNode;
         while (tempNode != null) {
@@ -285,15 +281,14 @@ public class SummaryJavadocCheck extends AbstractJavadocCheck {
      * @param ast Javadoc root node.
      * @return first sentence.
      */
-    private static String getFirstSentence(DetailNode ast) {
+    private static String getFirstSentence(final DetailNode ast) {
         final StringBuilder result = new StringBuilder(256);
         final String periodSuffix = PERIOD + ' ';
         for (DetailNode child : ast.getChildren()) {
             final String text;
             if (child.getChildren().length == 0) {
                 text = child.getText();
-            }
-            else {
+            } else {
                 text = getFirstSentence(child);
             }
 
@@ -312,7 +307,7 @@ public class SummaryJavadocCheck extends AbstractJavadocCheck {
      * @param firstSentence String with first sentence.
      * @return true, if first sentence contains forbidden summary fragment.
      */
-    private boolean containsForbiddenFragment(String firstSentence) {
+    private boolean containsForbiddenFragment(final String firstSentence) {
         final String javadocText = JAVADOC_MULTILINE_TO_SINGLELINE_PATTERN
                 .matcher(firstSentence).replaceAll(" ").trim();
         return forbiddenSummaryFragments.matcher(trimExcessWhitespaces(javadocText)).find();
@@ -323,7 +318,7 @@ public class SummaryJavadocCheck extends AbstractJavadocCheck {
      * @param text The text to transform.
      * @return The finalized form of the text.
      */
-    private static String trimExcessWhitespaces(String text) {
+    private static String trimExcessWhitespaces(final String text) {
         final StringBuilder result = new StringBuilder(100);
         boolean previousWhitespace = true;
 
@@ -336,8 +331,7 @@ public class SummaryJavadocCheck extends AbstractJavadocCheck {
 
                 previousWhitespace = true;
                 print = ' ';
-            }
-            else {
+            } else {
                 previousWhitespace = false;
                 print = letter;
             }

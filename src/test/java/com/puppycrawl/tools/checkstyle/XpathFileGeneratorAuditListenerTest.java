@@ -139,8 +139,7 @@ public class XpathFileGeneratorAuditListenerTest {
         try {
             logger.addException(ev, null);
             fail("Exception is excepted");
-        }
-        catch (UnsupportedOperationException ex) {
+        } catch (UnsupportedOperationException ex) {
             assertEquals("Operation is not supported",
                     ex.getMessage(), "Invalid exception message");
         }
@@ -252,8 +251,8 @@ public class XpathFileGeneratorAuditListenerTest {
         assertEquals(0, outStream.getCloseCount(), "Invalid close count");
     }
 
-    private AuditEvent createAuditEvent(String fileName, int lineNumber, int columnNumber,
-                                        Class<?> sourceClass) {
+    private AuditEvent createAuditEvent(final String fileName, final int lineNumber, final int columnNumber,
+                                        final Class<?> sourceClass) {
         final LocalizedMessage message =
                 new LocalizedMessage(lineNumber, columnNumber, "messages.properties", null,
                         null, null, sourceClass, null);
@@ -262,22 +261,22 @@ public class XpathFileGeneratorAuditListenerTest {
                 getPath(fileName), message);
     }
 
-    private AuditEvent createAuditEvent(String fileName, LocalizedMessage message) {
+    private AuditEvent createAuditEvent(final String fileName, final LocalizedMessage message) {
         return new AuditEvent(this,
                 getPath(fileName), message);
     }
 
-    private static LocalizedMessage createLocalizedMessage(int lineNumber,
-                                                                   int columnNumber, int tokenType,
-                                                                   String moduleId,
-                                                                   Class<?> sourceClass) {
+    private static LocalizedMessage createLocalizedMessage(final int lineNumber,
+                                                                   final int columnNumber, final int tokenType,
+                                                                   final String moduleId,
+                                                                   final Class<?> sourceClass) {
         return new LocalizedMessage(lineNumber, columnNumber, tokenType,
                 "messages.properties", null, null,
                 SeverityLevel.ERROR, moduleId, sourceClass, null);
     }
 
-    private static TreeWalkerAuditEvent createTreeWalkerAuditEvent(String fileName,
-                                                                   LocalizedMessage message)
+    private static TreeWalkerAuditEvent createTreeWalkerAuditEvent(final String fileName,
+                                                                   final LocalizedMessage message)
             throws Exception {
         final File file = new File(getPath(fileName));
         final FileText fileText = new FileText(
@@ -290,12 +289,12 @@ public class XpathFileGeneratorAuditListenerTest {
                 message, rootAst);
     }
 
-    private static String getPath(String filename) {
+    private static String getPath(final String filename) {
         return "src/test/resources/com/puppycrawl/tools/checkstyle/xpathfilegeneratorauditlistener/"
                 + filename;
     }
 
-    private static void verifyOutput(String expected, AuditEvent... events) {
+    private static void verifyOutput(final String expected, final AuditEvent... events) {
         final TestByteArrayOutputStream out = new TestByteArrayOutputStream();
 
         final XpathFileGeneratorAuditListener listener =

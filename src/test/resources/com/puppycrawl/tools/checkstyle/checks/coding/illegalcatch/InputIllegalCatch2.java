@@ -4,16 +4,16 @@ public class InputIllegalCatch2 {
     public void foo() throws OneMoreException {
         try {
                 foo1();
-        } catch (RuntimeException | SQLException e) {}
+        } catch (RuntimeException | SQLException e) { }
         try {
                 foo1();
-        } catch (RuntimeException | SQLException | OneMoreException e) {}
+        } catch (RuntimeException | SQLException | OneMoreException e) { }
         try {
                 foo1();
-        } catch (OneMoreException | RuntimeException | SQLException e) {}
+        } catch (OneMoreException | RuntimeException | SQLException e) { }
         try {
                 foo1();
-        } catch (OneMoreException | SQLException | RuntimeException e) {}
+        } catch (OneMoreException | SQLException | RuntimeException e) { }
 
     }
 

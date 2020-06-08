@@ -12,4 +12,4 @@ import com.puppycrawl.tools.*;
 
 import antlr.*;
 
-class InputCustomImportOrderSingleLine {}
+class InputCustomImportOrderSingleLine { }

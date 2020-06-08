@@ -131,7 +131,7 @@ public class ConstantNameCheck
     }
 
     @Override
-    protected final boolean mustCheckName(DetailAST ast) {
+    protected final boolean mustCheckName(final DetailAST ast) {
         boolean returnValue = false;
 
         final DetailAST modifiersAST =

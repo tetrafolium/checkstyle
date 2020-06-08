@@ -16,15 +16,15 @@ package com.puppycrawl.tools.checkstyle.checks.indentation.indentation; //indent
  */                                                                           //indent:1 exp:1
 public class InputIndentationUseTabs { //indent:0 exp:0
 
-	/** Creates a new instance of InputIndentationUseTabs */ //indent:4 exp:4
-	public InputIndentationUseTabs() { //indent:4 exp:4
-		boolean test = true; //indent:8 exp:8
-		if (test) //indent:8 exp:8
-		{ //indent:8 exp:8
-			while ( //indent:12 exp:12
-				test == false) { //indent:16 exp:16
-				System.exit(2); //indent:16 exp:16
-			} //indent:12 exp:12
+        /** Creates a new instance of InputIndentationUseTabs */ //indent:4 exp:4
+        public InputIndentationUseTabs() { //indent:4 exp:4
+                boolean test = true; //indent:8 exp:8
+                if (test) //indent:8 exp:8
+                { //indent:8 exp:8
+                        while (//indent:12 exp:12
+                                test == false) { //indent:16 exp:16
+                                System.exit(2); //indent:16 exp:16
+                        } //indent:12 exp:12
 		} //indent:8 exp:8
 		 System.exit(3); //indent:9 exp:8 warn
 	} //indent:4 exp:4

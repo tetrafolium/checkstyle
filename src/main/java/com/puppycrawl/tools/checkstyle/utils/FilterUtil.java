@@ -39,12 +39,11 @@ public final class FilterUtil {
      * @param fileName name of the suppressions file.
      * @return true if suppression file exists, otherwise false
      */
-    public static boolean isFileExists(String fileName) {
+    public static boolean isFileExists(final String fileName) {
         boolean suppressionSourceExists;
         try (InputStream stream = CommonUtil.getUriByFilename(fileName).toURL().openStream()) {
             suppressionSourceExists = true;
-        }
-        catch (CheckstyleException | IOException ignored) {
+        } catch (CheckstyleException | IOException ignored) {
             suppressionSourceExists = false;
         }
         return suppressionSourceExists;

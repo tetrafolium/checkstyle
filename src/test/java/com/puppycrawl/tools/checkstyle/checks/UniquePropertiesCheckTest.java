@@ -167,13 +167,12 @@ public class UniquePropertiesCheckTest extends AbstractModuleTestSupport {
      * @param file to be opened
      * @return localized detail message of {@link NoSuchFileException}
      */
-    private static String getFileNotFoundDetail(File file) {
+    private static String getFileNotFoundDetail(final File file) {
         // Create exception to know detail message we should wait in
         // LocalisedMessage
         try (InputStream stream = Files.newInputStream(file.toPath())) {
             throw new IllegalStateException("File " + file.getPath() + " should not exist");
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             return ex.getLocalizedMessage();
         }
     }

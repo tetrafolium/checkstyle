@@ -113,8 +113,7 @@ public class TreeWalkerTest extends AbstractModuleTestSupport {
             final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
             verify(checkConfig, getPath("InputTreeWalker.java"), expected);
             fail("CheckstyleException is expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             final String errorMsg = ex.getMessage();
             final Pattern expected = Pattern.compile(Pattern.quote("cannot initialize module"
                     + " com.puppycrawl.tools.checkstyle.TreeWalker - Token ")
@@ -146,8 +145,7 @@ public class TreeWalkerTest extends AbstractModuleTestSupport {
             verify(createChecker(checkConfig, ModuleCreationOption.IN_TREEWALKER),
                     File.createTempFile("junit", null, temporaryFolder).getPath(), expected);
             fail("CheckstyleException is expected");
-        }
-        catch (CheckstyleException exception) {
+        } catch (CheckstyleException exception) {
             assertTrue(exception.getMessage().contains("TreeWalker is not allowed as a parent of"),
                     "Error message is unexpected");
         }
@@ -164,8 +162,7 @@ public class TreeWalkerTest extends AbstractModuleTestSupport {
         try {
             treeWalker.setupChild(config);
             fail("Exception is expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             assertEquals("TreeWalker is not allowed as a parent of java.lang.String Please review "
                     + "'Parent Module' section for this Check in web documentation if "
                     + "Check is standard.", ex.getMessage(), "Error message is not expected");
@@ -195,8 +192,7 @@ public class TreeWalkerTest extends AbstractModuleTestSupport {
             final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
             verify(checkConfig, pathToEmptyFile, expected);
             fail("Exception is expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             assertTrue(ex.getMessage().contains("isCommentNodesRequired"),
                     "Error message is unexpected");
         }
@@ -220,8 +216,7 @@ public class TreeWalkerTest extends AbstractModuleTestSupport {
         try {
             treeWalker.processFiltered(file, fileText);
             fail("Exception expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             assertEquals("MismatchedTokenException occurred while parsing file input.java.",
                 ex.getMessage(), "Invalid exception message");
         }
@@ -268,8 +263,7 @@ public class TreeWalkerTest extends AbstractModuleTestSupport {
         try {
             treeWalker.processFiltered(file, fileText);
             fail("Exception is expected");
-        }
-        catch (CheckstyleException exception) {
+        } catch (CheckstyleException exception) {
             assertTrue(exception.getMessage().contains("occurred while parsing file"),
                     "Error message is unexpected");
         }
@@ -291,8 +285,7 @@ public class TreeWalkerTest extends AbstractModuleTestSupport {
         try {
             treeWalker.processFiltered(file, fileText);
             fail("Exception is expected");
-        }
-        catch (CheckstyleException exception) {
+        } catch (CheckstyleException exception) {
             assertTrue(exception.getMessage().contains(
                     "TokenStreamRecognitionException occurred while parsing file"),
                     "Error message is unexpected");
@@ -344,8 +337,7 @@ public class TreeWalkerTest extends AbstractModuleTestSupport {
         try {
             treeWalker.processFiltered(file, fileText);
             fail("file is not compilable, exception is expected");
-        }
-        catch (CheckstyleException exception) {
+        } catch (CheckstyleException exception) {
             final String message =
                     "TokenStreamRecognitionException occurred while parsing file";
             assertTrue(exception.getMessage().contains(message),

@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 public class InputIllegalInstantiation
 {
 
-    public static void main(String[] args)
+    public static void main(final String[] args)
     {
 
         Supplier<InputMethodReferencesTest2> supplier = InputMethodReferencesTest2::new;

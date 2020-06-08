@@ -124,8 +124,7 @@ public class XpathFilterElementTest extends AbstractModuleTestSupport {
             final Object test = new XpathFilterElement(
                     ".*", "e[l", ".*", "moduleId", "query");
             fail("Exception is expected but got " + test);
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertTrue(ex.getMessage().contains("Failed to initialise regular expression"),
                     "Message should be: Failed to initialise regular expression");
         }
@@ -138,8 +137,7 @@ public class XpathFilterElementTest extends AbstractModuleTestSupport {
             final Object test = new XpathFilterElement("InputXpathFilterElementSuppressByXpath",
                     "Test", null, null, xpath);
             fail("Exception is expected but got " + test);
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertTrue(ex.getMessage().contains("Unexpected xpath query"),
                     "Message should be: Unexpected xpath query");
         }
@@ -293,8 +291,7 @@ public class XpathFilterElementTest extends AbstractModuleTestSupport {
         try {
             filter.accept(ev);
             fail("Exception is expected");
-        }
-        catch (IllegalStateException ex) {
+        } catch (IllegalStateException ex) {
             assertTrue(ex.getMessage().contains("Cannot initialize context and evaluate query"),
                     "Exception message does not match expected one");
         }
@@ -313,7 +310,7 @@ public class XpathFilterElementTest extends AbstractModuleTestSupport {
         assertEquals(EqualsVerifierReport.SUCCESS, ev, "Error: " + ev.getMessage());
     }
 
-    private TreeWalkerAuditEvent getEvent(int line, int column, int tokenType)
+    private TreeWalkerAuditEvent getEvent(final int line, final int column, final int tokenType)
             throws Exception {
         final LocalizedMessage message =
                 new LocalizedMessage(line, column, tokenType, "", "", null, null, null,

@@ -159,8 +159,7 @@ public class NewlineAtEndOfFileCheckTest
         try {
             createChecker(checkConfig);
             fail("exception expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             assertEquals("cannot initialize module com.puppycrawl.tools.checkstyle."
                             + "checks.NewlineAtEndOfFileCheck - "
                             + "Cannot set property 'lineSeparator' to 'ct'",
@@ -229,8 +228,7 @@ public class NewlineAtEndOfFileCheckTest
             Whitebox.invokeMethod(new NewlineAtEndOfFileCheck(), "endsWithNewline", file,
                 LineSeparatorOption.LF);
             fail("Exception is expected");
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             assertEquals("Unable to read 1 bytes, got 0", ex.getMessage(),
                     "Error message is unexpected");
         }
@@ -238,13 +236,13 @@ public class NewlineAtEndOfFileCheckTest
 
     private static class ReadZeroRandomAccessFile extends RandomAccessFile {
 
-        /* package */ ReadZeroRandomAccessFile(String name, String mode)
+        /* package */ ReadZeroRandomAccessFile(final String name, final String mode)
                 throws FileNotFoundException {
             super(name, mode);
         }
 
         @Override
-        public int read(byte[] bytes) {
+        public int read(final byte[] bytes) {
             return 0;
         }
     }

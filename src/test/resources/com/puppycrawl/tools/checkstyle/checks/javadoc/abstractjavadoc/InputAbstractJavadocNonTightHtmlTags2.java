@@ -40,17 +40,20 @@ public class InputAbstractJavadocNonTightHtmlTags2 {
      *
      * @return <li> <li> outer list isn't nested in parse tree </li> </li>
      */
-    int getField1() {return field1;}
+    int getField1() {
+        return field1; }
 
     /***/
-    int getField2() {return field2;} //method with empty javadoc
+    int getField2() {
+        return field2; } //method with empty javadoc
 
     /**
      * <p>This is a setter method.
      * And paraTag shall be nested in parse tree </p>
      * @param field2 <p> setter
      */
-    void setField2(int field2) {this.field2 = field2;}
+    void setField2(final int field2) {
+        this.field2 = field2; }
 
     /**
      * <p> paragraph with a <br>singletonElement. <hr> And it contains another one. </p>
@@ -59,19 +62,22 @@ public class InputAbstractJavadocNonTightHtmlTags2 {
      * @return <tr> tr with <base href="www.something.com"> singletonElement </tr>
      *     <tr> nonTight </th>
      */
-    private int getField3() {return field3;}
+    private int getField3() {
+        return field3; }
 
     /**
      * @param field3 <td> td with singletonElement <br/> </td>
      */
-    private void setField3(int field3) { this.field3 = field3;}
+    private void setField3(final int field3) {
+        this.field3 = field3; }
 
     /**
      * <html> <bR> <Br> <BR> <Br/> <BR/> <bR/> </html>
      * <option> <INPut/> </option>
      * @return <tbody> <input/> <br> </tbody>
      */
-    private int getField4() {return field4;}
+    private int getField4() {
+        return field4; }
 
     /**
      * <thead> <br> </thead>
@@ -79,12 +85,14 @@ public class InputAbstractJavadocNonTightHtmlTags2 {
      * <p> </p>
      * @param field4 value to which {@link #field4} is to be set to
      */
-    private void setField4(int field4) {this.field4 = field4;}
+    private void setField4(final int field4) {
+        this.field4 = field4; }
 
     /**
      *  <p> <li> <TR> <Td> <tH> <body> <colGROUP> <DD> <dt> <Head> <HTML> <option> <tBody> <tHead>
      *      <tFoot>
      * @param field5 </p> value to which {@link #field5} is to be set to
      */
-    private void setField5(int field5) {this.field5 = field5;}
+    private void setField5(final int field5) {
+        this.field5 = field5; }
 }

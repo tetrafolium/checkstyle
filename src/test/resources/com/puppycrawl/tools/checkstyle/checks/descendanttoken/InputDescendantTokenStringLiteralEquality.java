@@ -2,7 +2,7 @@ package com.puppycrawl.tools.checkstyle.checks.descendanttoken;
 
 public class InputDescendantTokenStringLiteralEquality
 {
-    void foo(String name)
+    void foo(final String name)
     {
         if (name == "Lars")
         {

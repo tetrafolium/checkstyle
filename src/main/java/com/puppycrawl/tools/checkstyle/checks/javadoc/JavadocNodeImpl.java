@@ -115,7 +115,7 @@ public class JavadocNodeImpl implements DetailNode {
      * Sets node's type.
      * @param type Node's type.
      */
-    public void setType(int type) {
+    public void setType(final int type) {
         this.type = type;
     }
 
@@ -123,7 +123,7 @@ public class JavadocNodeImpl implements DetailNode {
      * Sets node's text content.
      * @param text Node's text content.
      */
-    public void setText(String text) {
+    public void setText(final String text) {
         this.text = text;
     }
 
@@ -131,7 +131,7 @@ public class JavadocNodeImpl implements DetailNode {
      * Sets line number.
      * @param lineNumber Line number.
      */
-    public void setLineNumber(int lineNumber) {
+    public void setLineNumber(final int lineNumber) {
         this.lineNumber = lineNumber;
     }
 
@@ -139,7 +139,7 @@ public class JavadocNodeImpl implements DetailNode {
      * Sets column number.
      * @param columnNumber Column number.
      */
-    public void setColumnNumber(int columnNumber) {
+    public void setColumnNumber(final int columnNumber) {
         this.columnNumber = columnNumber;
     }
 
@@ -147,7 +147,7 @@ public class JavadocNodeImpl implements DetailNode {
      * Sets array of child nodes.
      * @param children Array of child nodes.
      */
-    public void setChildren(DetailNode... children) {
+    public void setChildren(final DetailNode... children) {
         this.children = Arrays.copyOf(children, children.length);
     }
 
@@ -155,7 +155,7 @@ public class JavadocNodeImpl implements DetailNode {
      * Sets parent node.
      * @param parent Parent node.
      */
-    public void setParent(DetailNode parent) {
+    public void setParent(final DetailNode parent) {
         this.parent = parent;
     }
 
@@ -163,7 +163,7 @@ public class JavadocNodeImpl implements DetailNode {
      * Sets node's index among parent's children.
      * @param index Node's index among parent's children.
      */
-    public void setIndex(int index) {
+    public void setIndex(final int index) {
         this.index = index;
     }
 

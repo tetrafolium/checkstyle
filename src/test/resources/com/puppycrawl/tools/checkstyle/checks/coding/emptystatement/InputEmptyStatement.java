@@ -17,11 +17,11 @@ public class InputEmptyStatement
       ;
    }
 
-   public void EmptyStatements(boolean cond)
+   public void EmptyStatements(final boolean cond)
    {
-      for (;cond;);
+      for (; cond;);
 
-      for (;cond;)
+      for (; cond;)
       {
          ;
       }
@@ -36,9 +36,7 @@ public class InputEmptyStatement
       if (cond)
       {
          int i;
-      }
-
-      else
+      } else
       {
          ;
       }
@@ -58,7 +56,7 @@ public class InputEmptyStatement
          ;
       }
 
-      do;
+      do ;
       while (cond);
 
       do
@@ -70,12 +68,10 @@ public class InputEmptyStatement
       try
       {
          ;
-      }
-      catch (Exception ex)
+      } catch (Exception ex)
       {
          ;
-      }
-      finally
+      } finally
       {
          ;
       }

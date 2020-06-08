@@ -159,7 +159,7 @@ public class ArrayTrailingCommaCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST arrayInit) {
+    public void visitToken(final DetailAST arrayInit) {
         final DetailAST rcurly = arrayInit.findFirstToken(TokenTypes.RCURLY);
         final DetailAST previousSibling = rcurly.getPreviousSibling();
 

@@ -17,7 +17,7 @@ class InputJavadocTypeAllowedAnnotationByDefault {
 /**
  * Annotation for unit tests.
  */
-@interface ThisIsOk {}
+@interface ThisIsOk { }
 /**
  * Annotation for unit tests.
  */

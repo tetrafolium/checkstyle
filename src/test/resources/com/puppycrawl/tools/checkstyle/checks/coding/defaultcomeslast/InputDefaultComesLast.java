@@ -3,7 +3,7 @@ package com.puppycrawl.tools.checkstyle.checks.coding.defaultcomeslast;
 
 public class InputDefaultComesLast
 {
-    void method(int i) {
+    void method(final int i) {
         // switch with last default
         switch (i) {
         case 1: break;

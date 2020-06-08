@@ -89,7 +89,7 @@ public class NonEmptyAtclauseDescriptionCheck extends AbstractJavadocCheck {
     }
 
     @Override
-    public void visitJavadocToken(DetailNode ast) {
+    public void visitJavadocToken(final DetailNode ast) {
         if (isEmptyTag(ast.getParent())) {
             log(ast.getLineNumber(), MSG_KEY, ast.getText());
         }
@@ -100,7 +100,7 @@ public class NonEmptyAtclauseDescriptionCheck extends AbstractJavadocCheck {
      * @param tagNode at-clause tag.
      * @return true, if at-clause tag is empty.
      */
-    private static boolean isEmptyTag(DetailNode tagNode) {
+    private static boolean isEmptyTag(final DetailNode tagNode) {
         final DetailNode tagDescription =
                 JavadocUtil.findFirstToken(tagNode, JavadocTokenTypes.DESCRIPTION);
         return tagDescription == null;

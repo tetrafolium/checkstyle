@@ -93,17 +93,16 @@ public class EqualsHashCodeCheck
     }
 
     @Override
-    public void beginTree(DetailAST rootAST) {
+    public void beginTree(final DetailAST rootAST) {
         objBlockWithEquals.clear();
         objBlockWithHashCode.clear();
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         if (isEqualsMethod(ast)) {
             objBlockWithEquals.put(ast.getParent(), ast);
-        }
-        else if (isHashCodeMethod(ast)) {
+        } else if (isHashCodeMethod(ast)) {
             objBlockWithHashCode.put(ast.getParent(), ast);
         }
     }
@@ -114,7 +113,7 @@ public class EqualsHashCodeCheck
      * @param ast the AST to check
      * @return true if the {code ast} is a Equals method.
      */
-    private static boolean isEqualsMethod(DetailAST ast) {
+    private static boolean isEqualsMethod(final DetailAST ast) {
         final DetailAST modifiers = ast.getFirstChild();
         final DetailAST parameters = ast.findFirstToken(TokenTypes.PARAMETERS);
 
@@ -130,7 +129,7 @@ public class EqualsHashCodeCheck
      * @param ast the AST to check
      * @return true if the {code ast} is a HashCode method.
      */
-    private static boolean isHashCodeMethod(DetailAST ast) {
+    private static boolean isHashCodeMethod(final DetailAST ast) {
         final DetailAST modifiers = ast.getFirstChild();
         final DetailAST methodName = ast.findFirstToken(TokenTypes.IDENT);
         final DetailAST parameters = ast.findFirstToken(TokenTypes.PARAMETERS);
@@ -146,7 +145,7 @@ public class EqualsHashCodeCheck
      * @param paramNode the AST to check
      * @return true if firstChild is a parameter of an Object type.
      */
-    private static boolean isObjectParam(DetailAST paramNode) {
+    private static boolean isObjectParam(final DetailAST paramNode) {
         final DetailAST typeNode = paramNode.findFirstToken(TokenTypes.TYPE);
         final FullIdent fullIdent = FullIdent.createFullIdentBelow(typeNode);
         final String name = fullIdent.getText();
@@ -154,7 +153,7 @@ public class EqualsHashCodeCheck
     }
 
     @Override
-    public void finishTree(DetailAST rootAST) {
+    public void finishTree(final DetailAST rootAST) {
         objBlockWithEquals
             .entrySet().stream().filter(detailASTDetailASTEntry -> {
                 return objBlockWithHashCode.remove(detailASTDetailASTEntry.getKey()) == null;

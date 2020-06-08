@@ -12,8 +12,8 @@ public class InputVisibilityModifiersPublicImmutable {
     public final java.lang.String notes;
     public final BigDecimal value;
     public final List list;
-    public InputVisibilityModifiersPublicImmutable(Collection<String> includes,
-                                            BigDecimal value, String notes, int someValue, List l) {
+    public InputVisibilityModifiersPublicImmutable(final Collection<String> includes,
+                                            final BigDecimal value, final String notes, final int someValue, final List l) {
         this.includes = ImmutableSet.copyOf(includes);
         this.value = value;
         this.notes = notes;

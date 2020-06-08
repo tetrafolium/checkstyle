@@ -84,8 +84,8 @@ public class Comment implements TextBlock {
     }
 
     @Override
-    public boolean intersects(int startLine, int startCol,
-                              int endLine, int endCol) {
+    public boolean intersects(final int startLine, final int startCol,
+                              final int endLine, final int endCol) {
         // compute a single number for start and end
         // to simplify conditional logic
         final long multiplier = Integer.MAX_VALUE;

@@ -214,26 +214,21 @@ public class RedundantModifierCheck
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         if (ast.getType() == TokenTypes.INTERFACE_DEF) {
             checkInterfaceModifiers(ast);
-        }
-        else if (ast.getType() == TokenTypes.ENUM_DEF) {
+        } else if (ast.getType() == TokenTypes.ENUM_DEF) {
             checkEnumDef(ast);
-        }
-        else {
+        } else {
             if (ast.getType() == TokenTypes.CTOR_DEF) {
                 if (isEnumMember(ast)) {
                     checkEnumConstructorModifiers(ast);
-                }
-                else {
+                } else {
                     checkClassConstructorModifiers(ast);
                 }
-            }
-            else if (ast.getType() == TokenTypes.METHOD_DEF) {
+            } else if (ast.getType() == TokenTypes.METHOD_DEF) {
                 processMethods(ast);
-            }
-            else if (ast.getType() == TokenTypes.RESOURCE) {
+            } else if (ast.getType() == TokenTypes.RESOURCE) {
                 processResources(ast);
             }
 
@@ -247,7 +242,7 @@ public class RedundantModifierCheck
      * Checks if interface has proper modifiers.
      * @param ast interface to check
      */
-    private void checkInterfaceModifiers(DetailAST ast) {
+    private void checkInterfaceModifiers(final DetailAST ast) {
         final DetailAST modifiers =
             ast.findFirstToken(TokenTypes.MODIFIERS);
 
@@ -264,7 +259,7 @@ public class RedundantModifierCheck
      * Check if enum constructor has proper modifiers.
      * @param ast constructor of enum
      */
-    private void checkEnumConstructorModifiers(DetailAST ast) {
+    private void checkEnumConstructorModifiers(final DetailAST ast) {
         final DetailAST modifiers = ast.findFirstToken(TokenTypes.MODIFIERS);
         final DetailAST modifier = getFirstModifierAst(modifiers);
 
@@ -278,7 +273,7 @@ public class RedundantModifierCheck
      * @param modifiers The ast to examine.
      * @return The first modifier or {@code null} if none found.
      */
-    private static DetailAST getFirstModifierAst(DetailAST modifiers) {
+    private static DetailAST getFirstModifierAst(final DetailAST modifiers) {
         DetailAST modifier = modifiers.getFirstChild();
 
         while (modifier != null && modifier.getType() == TokenTypes.ANNOTATION) {
@@ -292,11 +287,10 @@ public class RedundantModifierCheck
      * Checks whether enum has proper modifiers.
      * @param ast enum definition.
      */
-    private void checkEnumDef(DetailAST ast) {
+    private void checkEnumDef(final DetailAST ast) {
         if (isInterfaceOrAnnotationMember(ast)) {
             processInterfaceOrAnnotation(ast);
-        }
-        else {
+        } else {
             checkForRedundantModifier(ast, TokenTypes.LITERAL_STATIC);
         }
     }
@@ -305,7 +299,7 @@ public class RedundantModifierCheck
      * Do validation of interface of annotation.
      * @param ast token AST
      */
-    private void processInterfaceOrAnnotation(DetailAST ast) {
+    private void processInterfaceOrAnnotation(final DetailAST ast) {
         final DetailAST modifiers = ast.findFirstToken(TokenTypes.MODIFIERS);
         DetailAST modifier = modifiers.getFirstChild();
         while (modifier != null) {
@@ -333,7 +327,7 @@ public class RedundantModifierCheck
      * Process validation of Methods.
      * @param ast method AST
      */
-    private void processMethods(DetailAST ast) {
+    private void processMethods(final DetailAST ast) {
         final DetailAST modifiers =
                         ast.findFirstToken(TokenTypes.MODIFIERS);
         // private method?
@@ -347,17 +341,14 @@ public class RedundantModifierCheck
                     parent.findFirstToken(TokenTypes.MODIFIERS);
                 checkFinal = classModifiers.findFirstToken(TokenTypes.FINAL) != null;
                 parent = null;
-            }
-            else if (parent.getType() == TokenTypes.LITERAL_NEW
+            } else if (parent.getType() == TokenTypes.LITERAL_NEW
                     || parent.getType() == TokenTypes.ENUM_CONSTANT_DEF) {
                 checkFinal = true;
                 parent = null;
-            }
-            else if (parent.getType() == TokenTypes.ENUM_DEF) {
+            } else if (parent.getType() == TokenTypes.ENUM_DEF) {
                 checkFinal = modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) != null;
                 parent = null;
-            }
-            else {
+            } else {
                 parent = parent.getParent();
             }
         }
@@ -374,7 +365,7 @@ public class RedundantModifierCheck
      * Process validation of parameters for Methods with no definition.
      * @param ast method AST
      */
-    private void processAbstractMethodParameters(DetailAST ast) {
+    private void processAbstractMethodParameters(final DetailAST ast) {
         final DetailAST parameters = ast.findFirstToken(TokenTypes.PARAMETERS);
 
         for (DetailAST child = parameters.getFirstChild(); child != null; child = child
@@ -389,7 +380,7 @@ public class RedundantModifierCheck
      * Check if class constructor has proper modifiers.
      * @param classCtorAst class constructor ast
      */
-    private void checkClassConstructorModifiers(DetailAST classCtorAst) {
+    private void checkClassConstructorModifiers(final DetailAST classCtorAst) {
         final DetailAST classDef = classCtorAst.getParent().getParent();
         if (!isClassPublic(classDef) && !isClassProtected(classDef)) {
             checkForRedundantModifier(classCtorAst, TokenTypes.LITERAL_PUBLIC);
@@ -400,7 +391,7 @@ public class RedundantModifierCheck
      * Checks if given resource has redundant modifiers.
      * @param ast ast
      */
-    private void processResources(DetailAST ast) {
+    private void processResources(final DetailAST ast) {
         checkForRedundantModifier(ast, TokenTypes.FINAL);
     }
 
@@ -409,7 +400,7 @@ public class RedundantModifierCheck
      * @param ast ast
      * @param modifierType The modifier to check for.
      */
-    private void checkForRedundantModifier(DetailAST ast, int modifierType) {
+    private void checkForRedundantModifier(final DetailAST ast, final int modifierType) {
         final DetailAST astModifiers = ast.findFirstToken(TokenTypes.MODIFIERS);
         DetailAST astModifier = astModifiers.getFirstChild();
         while (astModifier != null) {
@@ -426,7 +417,7 @@ public class RedundantModifierCheck
      * @param classDef class ast
      * @return true if class is protected, false otherwise
      */
-    private static boolean isClassProtected(DetailAST classDef) {
+    private static boolean isClassProtected(final DetailAST classDef) {
         final DetailAST classModifiers =
                 classDef.findFirstToken(TokenTypes.MODIFIERS);
         return classModifiers.findFirstToken(TokenTypes.LITERAL_PROTECTED) != null;
@@ -437,7 +428,7 @@ public class RedundantModifierCheck
      * @param ast class def to check
      * @return true if class is accessible from public scope,false otherwise
      */
-    private static boolean isClassPublic(DetailAST ast) {
+    private static boolean isClassPublic(final DetailAST ast) {
         boolean isAccessibleFromPublic = false;
         final boolean isMostOuterScope = ast.getParent() == null;
         final DetailAST modifiersAst = ast.findFirstToken(TokenTypes.MODIFIERS);
@@ -446,8 +437,7 @@ public class RedundantModifierCheck
 
         if (isMostOuterScope) {
             isAccessibleFromPublic = hasPublicModifier;
-        }
-        else {
+        } else {
             final DetailAST parentClassAst = ast.getParent().getParent();
 
             if (hasPublicModifier || parentClassAst.getType() == TokenTypes.INTERFACE_DEF) {
@@ -463,7 +453,7 @@ public class RedundantModifierCheck
      * @param ast AST node
      * @return true if it is an enum member
      */
-    private static boolean isEnumMember(DetailAST ast) {
+    private static boolean isEnumMember(final DetailAST ast) {
         final DetailAST parentTypeDef = ast.getParent().getParent();
         return parentTypeDef.getType() == TokenTypes.ENUM_DEF;
     }
@@ -473,7 +463,7 @@ public class RedundantModifierCheck
      * @param ast AST node
      * @return true or false
      */
-    private static boolean isInterfaceOrAnnotationMember(DetailAST ast) {
+    private static boolean isInterfaceOrAnnotationMember(final DetailAST ast) {
         DetailAST parentTypeDef = ast.getParent();
 
         if (parentTypeDef != null) {
@@ -491,7 +481,7 @@ public class RedundantModifierCheck
      * @param methodDef method definition node
      * @return true or false
      */
-    private static boolean isAnnotatedWithSafeVarargs(DetailAST methodDef) {
+    private static boolean isAnnotatedWithSafeVarargs(final DetailAST methodDef) {
         boolean result = false;
         final List<DetailAST> methodAnnotationsList = getMethodAnnotationsList(methodDef);
         for (DetailAST annotationNode : methodAnnotationsList) {
@@ -508,7 +498,7 @@ public class RedundantModifierCheck
      * @param methodDef method definition node
      * @return List of annotations
      */
-    private static List<DetailAST> getMethodAnnotationsList(DetailAST methodDef) {
+    private static List<DetailAST> getMethodAnnotationsList(final DetailAST methodDef) {
         final List<DetailAST> annotationsList = new ArrayList<>();
         final DetailAST modifiers = methodDef.findFirstToken(TokenTypes.MODIFIERS);
         DetailAST modifier = modifiers.getFirstChild();

@@ -357,8 +357,7 @@ public class XMLLoggerTest extends AbstractXmlTestSupport {
             // assert required to calm down eclipse's 'The allocated object is never used' violation
             assertNotNull(logger, "Null instance");
             fail("Exception was expected");
-        }
-        catch (IllegalArgumentException exception) {
+        } catch (IllegalArgumentException exception) {
             assertEquals("Parameter outputStreamOptions can not be null",
                     exception.getMessage(), "Invalid error message");
         }
@@ -377,12 +376,12 @@ public class XMLLoggerTest extends AbstractXmlTestSupport {
 
         private static final long serialVersionUID = 1L;
 
-        /* package */ TestException(String msg, Throwable cause) {
+        /* package */ TestException(final String msg, final Throwable cause) {
             super(msg, cause);
         }
 
         @Override
-        public void printStackTrace(PrintWriter printWriter) {
+        public void printStackTrace(final PrintWriter printWriter) {
             printWriter.print("stackTrace\r\nexample");
         }
 

@@ -3,7 +3,7 @@ package com.puppycrawl.tools.checkstyle.checks.coding.requirethis;
 public class InputRequireThisCaseGroup {
     private String aVariable;
 
-    public String method1(int val) {
+    public String method1(final int val) {
         switch (val) {
             case 0:
                 String aVariable = "";
@@ -18,7 +18,7 @@ public class InputRequireThisCaseGroup {
         }
     }
 
-    public String method2(int val) {
+    public String method2(final int val) {
         switch (val) {
             case 0:
                 String aVariable = "";
@@ -32,7 +32,7 @@ public class InputRequireThisCaseGroup {
         return null;
     }
 
-    public String method3(int val) {
+    public String method3(final int val) {
         switch (val) {
             case 0:
                 String other = "";

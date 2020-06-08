@@ -20,7 +20,7 @@ public class InputIndentationValidCommaIndent { //indent:0 exp:0
     public InputIndentationValidCommaIndent() { //indent:4 exp:4
     } //indent:4 exp:4
 
-    public void method1(int x, int y, int z) { //indent:4 exp:4
+    public void method1(final int x, final int y, final int z) { //indent:4 exp:4
         boolean test = true; //indent:8 exp:8
         int i, j = 2, //indent:8 exp:8
             k = 4, //indent:12 exp:>=12
@@ -40,7 +40,7 @@ public class InputIndentationValidCommaIndent { //indent:0 exp:0
 
     } //indent:4 exp:4
 
-    public void method1(int a, int x, //indent:4 exp:4
-        int y, int z) { //indent:8 exp:>=8
+    public void method1(final int a, final int x, //indent:4 exp:4
+        final int y, final int z) { //indent:8 exp:>=8
     } //indent:4 exp:4
 } //indent:0 exp:0

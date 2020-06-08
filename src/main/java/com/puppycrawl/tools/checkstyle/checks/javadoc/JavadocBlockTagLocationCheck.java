@@ -174,7 +174,7 @@ public class JavadocBlockTagLocationCheck extends AbstractJavadocCheck {
      *
      * @param values user's values.
      */
-    public final void setTags(String... values) {
+    public final void setTags(final String... values) {
         tags = Arrays.stream(values).collect(Collectors.toSet());
     }
 
@@ -206,7 +206,7 @@ public class JavadocBlockTagLocationCheck extends AbstractJavadocCheck {
     }
 
     @Override
-    public void visitJavadocToken(DetailNode ast) {
+    public void visitJavadocToken(final DetailNode ast) {
         if (!isCommentOrInlineTag(ast.getParent())) {
             final Matcher tagMatcher = JAVADOC_BLOCK_TAG_PATTERN.matcher(ast.getText());
             while (tagMatcher.find()) {
@@ -224,7 +224,7 @@ public class JavadocBlockTagLocationCheck extends AbstractJavadocCheck {
      * @param node to check
      * @return {@code true} if node is {@code @code}, {@code @literal} or HTML comment.
      */
-    private static boolean isCommentOrInlineTag(DetailNode node) {
+    private static boolean isCommentOrInlineTag(final DetailNode node) {
         return node.getType() == JavadocTokenTypes.JAVADOC_INLINE_TAG
                 || node.getType() == JavadocTokenTypes.HTML_COMMENT;
     }

@@ -194,7 +194,7 @@ public class FinalLocalVariableCheck extends AbstractCheck {
      * enhanced for-loop</a> variable.
      * @param validateEnhancedForLoopVariable whether to check for-loop variable
      */
-    public final void setValidateEnhancedForLoopVariable(boolean validateEnhancedForLoopVariable) {
+    public final void setValidateEnhancedForLoopVariable(final boolean validateEnhancedForLoopVariable) {
         this.validateEnhancedForLoopVariable = validateEnhancedForLoopVariable;
     }
 
@@ -243,7 +243,7 @@ public class FinalLocalVariableCheck extends AbstractCheck {
     // -@cs[CyclomaticComplexity] The only optimization which can be done here is moving CASE-block
     // expressions to separate methods, but that will not increase readability.
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         switch (ast.getType()) {
             case TokenTypes.OBJBLOCK:
             case TokenTypes.METHOD_DEF:
@@ -300,7 +300,7 @@ public class FinalLocalVariableCheck extends AbstractCheck {
     }
 
     @Override
-    public void leaveToken(DetailAST ast) {
+    public void leaveToken(final DetailAST ast) {
         Map<String, FinalVariableCandidate> scope = null;
         switch (ast.getType()) {
             case TokenTypes.OBJBLOCK:
@@ -358,15 +358,14 @@ public class FinalLocalVariableCheck extends AbstractCheck {
      * @param ident identifier.
      * @param candidate final local variable candidate.
      */
-    private static void determineAssignmentConditions(DetailAST ident,
-                                                      FinalVariableCandidate candidate) {
+    private static void determineAssignmentConditions(final DetailAST ident,
+                                                      final FinalVariableCandidate candidate) {
         if (candidate.assigned) {
             if (!isInSpecificCodeBlock(ident, TokenTypes.LITERAL_ELSE)
                     && !isInSpecificCodeBlock(ident, TokenTypes.CASE_GROUP)) {
                 candidate.alreadyAssigned = true;
             }
-        }
-        else {
+        } else {
             candidate.assigned = true;
         }
     }
@@ -377,7 +376,7 @@ public class FinalLocalVariableCheck extends AbstractCheck {
      * @param blockType block type.
      * @return true if the scope of a node is restricted to a specific code block.
      */
-    private static boolean isInSpecificCodeBlock(DetailAST node, int blockType) {
+    private static boolean isInSpecificCodeBlock(final DetailAST node, final int blockType) {
         boolean returnValue = false;
         for (DetailAST token = node.getParent(); token != null; token = token.getParent()) {
             final int type = token.getType();
@@ -394,7 +393,7 @@ public class FinalLocalVariableCheck extends AbstractCheck {
      * @param ast ast.
      * @return Optional of {@link FinalVariableCandidate} for ast from scopeStack.
      */
-    private Optional<FinalVariableCandidate> getFinalCandidate(DetailAST ast) {
+    private Optional<FinalVariableCandidate> getFinalCandidate(final DetailAST ast) {
         Optional<FinalVariableCandidate> result = Optional.empty();
         final Iterator<ScopeData> iterator = scopeStack.descendingIterator();
         while (iterator.hasNext() && !result.isPresent()) {
@@ -422,7 +421,7 @@ public class FinalLocalVariableCheck extends AbstractCheck {
      * @noinspection MethodParameterNamingConvention
      */
     private void updateAllUninitializedVariables(
-            Deque<DetailAST> prevScopeUninitializedVariableData) {
+            final Deque<DetailAST> prevScopeUninitializedVariableData) {
         // Check for only previous scope
         updateUninitializedVariables(prevScopeUninitializedVariableData);
         // Check for rest of the scope
@@ -433,7 +432,7 @@ public class FinalLocalVariableCheck extends AbstractCheck {
      * Update current scope data uninitialized variable according to the specific scope data.
      * @param scopeUninitializedVariableData variable for specific stack of uninitialized variables
      */
-    private void updateUninitializedVariables(Deque<DetailAST> scopeUninitializedVariableData) {
+    private void updateUninitializedVariables(final Deque<DetailAST> scopeUninitializedVariableData) {
         final Iterator<DetailAST> iterator = currentScopeAssignedVariables.peek().iterator();
         while (iterator.hasNext()) {
             final DetailAST assignedVariable = iterator.next();
@@ -466,7 +465,7 @@ public class FinalLocalVariableCheck extends AbstractCheck {
      * @param ast token to be checked
      * @return true if should be updated, else false
      */
-    private static boolean shouldUpdateUninitializedVariables(DetailAST ast) {
+    private static boolean shouldUpdateUninitializedVariables(final DetailAST ast) {
         return isIfTokenWithAnElseFollowing(ast) || isCaseTokenWithAnotherCaseFollowing(ast);
     }
 
@@ -475,7 +474,7 @@ public class FinalLocalVariableCheck extends AbstractCheck {
      * @param ast token to be checked
      * @return true if token is LITERAL_IF and there is an {@code else} following, else false
      */
-    private static boolean isIfTokenWithAnElseFollowing(DetailAST ast) {
+    private static boolean isIfTokenWithAnElseFollowing(final DetailAST ast) {
         return ast.getType() == TokenTypes.LITERAL_IF
                 && ast.getLastChild().getType() == TokenTypes.LITERAL_ELSE;
     }
@@ -485,7 +484,7 @@ public class FinalLocalVariableCheck extends AbstractCheck {
      * @param ast token to be checked
      * @return true if token is CASE_GROUP and there is another {@code case} following, else false
      */
-    private static boolean isCaseTokenWithAnotherCaseFollowing(DetailAST ast) {
+    private static boolean isCaseTokenWithAnotherCaseFollowing(final DetailAST ast) {
         return ast.getType() == TokenTypes.CASE_GROUP
                 && findLastChildWhichContainsSpecifiedToken(
                         ast.getParent(), TokenTypes.CASE_GROUP, TokenTypes.SLIST) != ast;
@@ -499,8 +498,8 @@ public class FinalLocalVariableCheck extends AbstractCheck {
      * @param containType the token type which has to be present in the branch
      * @return the matching token, or null if no match
      */
-    private static DetailAST findLastChildWhichContainsSpecifiedToken(DetailAST ast, int childType,
-                                                              int containType) {
+    private static DetailAST findLastChildWhichContainsSpecifiedToken(final DetailAST ast, final int childType,
+                                                              final int containType) {
         DetailAST returnValue = null;
         for (DetailAST astIterator = ast.getFirstChild(); astIterator != null;
                 astIterator = astIterator.getNextSibling()) {
@@ -517,7 +516,7 @@ public class FinalLocalVariableCheck extends AbstractCheck {
      * @param ast The ast to compare.
      * @return true if enhanced for-loop variable should be checked.
      */
-    private boolean shouldCheckEnhancedForLoopVariable(DetailAST ast) {
+    private boolean shouldCheckEnhancedForLoopVariable(final DetailAST ast) {
         return validateEnhancedForLoopVariable
                 || ast.getParent().getType() != TokenTypes.FOR_EACH_CLAUSE;
     }
@@ -526,7 +525,7 @@ public class FinalLocalVariableCheck extends AbstractCheck {
      * Insert a parameter at the topmost scope stack.
      * @param ast the variable to insert.
      */
-    private void insertParameter(DetailAST ast) {
+    private void insertParameter(final DetailAST ast) {
         final Map<String, FinalVariableCandidate> scope = scopeStack.peek().scope;
         final DetailAST astNode = ast.findFirstToken(TokenTypes.IDENT);
         scope.put(astNode.getText(), new FinalVariableCandidate(astNode));
@@ -536,7 +535,7 @@ public class FinalLocalVariableCheck extends AbstractCheck {
      * Insert a variable at the topmost scope stack.
      * @param ast the variable to insert.
      */
-    private void insertVariable(DetailAST ast) {
+    private void insertVariable(final DetailAST ast) {
         final Map<String, FinalVariableCandidate> scope = scopeStack.peek().scope;
         final DetailAST astNode = ast.findFirstToken(TokenTypes.IDENT);
         final FinalVariableCandidate candidate = new FinalVariableCandidate(astNode);
@@ -553,7 +552,7 @@ public class FinalLocalVariableCheck extends AbstractCheck {
      * @param ast VARIABLE_DEF to be checked
      * @return true if initialized
      */
-    private static boolean isInitialized(DetailAST ast) {
+    private static boolean isInitialized(final DetailAST ast) {
         return ast.getParent().getLastChild().getType() == TokenTypes.ASSIGN;
     }
 
@@ -562,7 +561,7 @@ public class FinalLocalVariableCheck extends AbstractCheck {
      * @param ast the ast to check.
      * @return true if the ast is the first child of its parent.
      */
-    private static boolean isFirstChild(DetailAST ast) {
+    private static boolean isFirstChild(final DetailAST ast) {
         return ast.getPreviousSibling() == null;
     }
 
@@ -570,7 +569,7 @@ public class FinalLocalVariableCheck extends AbstractCheck {
      * Removes the final variable candidate from the Stack.
      * @param ast variable to remove.
      */
-    private void removeFinalVariableCandidateFromStack(DetailAST ast) {
+    private void removeFinalVariableCandidateFromStack(final DetailAST ast) {
         final Iterator<ScopeData> iterator = scopeStack.descendingIterator();
         while (iterator.hasNext()) {
             final ScopeData scopeData = iterator.next();
@@ -594,7 +593,7 @@ public class FinalLocalVariableCheck extends AbstractCheck {
      * @param parameterDefAst parameter definition
      * @return true if it is a multiple type catch, false otherwise
      */
-    private static boolean isMultipleTypeCatch(DetailAST parameterDefAst) {
+    private static boolean isMultipleTypeCatch(final DetailAST parameterDefAst) {
         final DetailAST typeAst = parameterDefAst.findFirstToken(TokenTypes.TYPE);
         return typeAst.getFirstChild().getType() == TokenTypes.BOR;
     }
@@ -606,7 +605,7 @@ public class FinalLocalVariableCheck extends AbstractCheck {
      * @param ast the variable ast.
      * @return true, if the variable should be removed.
      */
-    private static boolean shouldRemoveFinalVariableCandidate(ScopeData scopeData, DetailAST ast) {
+    private static boolean shouldRemoveFinalVariableCandidate(final ScopeData scopeData, final DetailAST ast) {
         boolean shouldRemove = true;
         for (DetailAST variable : scopeData.uninitializedVariables) {
             if (variable.getText().equals(ast.getText())) {
@@ -638,7 +637,7 @@ public class FinalLocalVariableCheck extends AbstractCheck {
      * @param variable variable.
      * @return true if a variable which is declared outside loop is used inside loop.
      */
-    private static boolean isUseOfExternalVariableInsideLoop(DetailAST variable) {
+    private static boolean isUseOfExternalVariableInsideLoop(final DetailAST variable) {
         DetailAST loop2 = variable.getParent();
         while (loop2 != null
             && !isLoopAst(loop2.getType())) {
@@ -652,7 +651,7 @@ public class FinalLocalVariableCheck extends AbstractCheck {
      * @param parentType token AST
      * @return true is token type is in arithmetic operator
      */
-    private static boolean isAssignOperator(int parentType) {
+    private static boolean isAssignOperator(final int parentType) {
         return Arrays.binarySearch(ASSIGN_OPERATOR_TYPES, parentType) >= 0;
     }
 
@@ -668,7 +667,7 @@ public class FinalLocalVariableCheck extends AbstractCheck {
      * @param variableDef variable definition node.
      * @return true if variable is defined in {@link TokenTypes#FOR_INIT for-loop init}
      */
-    private static boolean isVariableInForInit(DetailAST variableDef) {
+    private static boolean isVariableInForInit(final DetailAST variableDef) {
         return variableDef.getParent().getType() == TokenTypes.FOR_INIT;
     }
 
@@ -677,7 +676,7 @@ public class FinalLocalVariableCheck extends AbstractCheck {
      * @param ast the AST to check.
      * @return true if ast is a descendant of an abstract or native method.
      */
-    private static boolean isInAbstractOrNativeMethod(DetailAST ast) {
+    private static boolean isInAbstractOrNativeMethod(final DetailAST ast) {
         boolean abstractOrNative = false;
         DetailAST parent = ast.getParent();
         while (parent != null && !abstractOrNative) {
@@ -697,7 +696,7 @@ public class FinalLocalVariableCheck extends AbstractCheck {
      * @param paramDef {@link TokenTypes#PARAMETER_DEF parameter def}.
      * @return true if current param is lambda's param.
      */
-    private static boolean isInLambda(DetailAST paramDef) {
+    private static boolean isInLambda(final DetailAST paramDef) {
         return paramDef.getParent().getParent().getType() == TokenTypes.LAMBDA;
     }
 
@@ -706,7 +705,7 @@ public class FinalLocalVariableCheck extends AbstractCheck {
      * @param ast Variable for which we want to find the scope in which it is defined
      * @return ast The Class or Constructor or Method in which it is defined.
      */
-    private static DetailAST findFirstUpperNamedBlock(DetailAST ast) {
+    private static DetailAST findFirstUpperNamedBlock(final DetailAST ast) {
         DetailAST astTraverse = ast;
         while (astTraverse.getType() != TokenTypes.METHOD_DEF
                 && astTraverse.getType() != TokenTypes.CLASS_DEF
@@ -724,7 +723,7 @@ public class FinalLocalVariableCheck extends AbstractCheck {
      * @param ast2 Variable to compare
      * @return true if both the variables are same, otherwise false
      */
-    private static boolean isSameVariables(DetailAST ast1, DetailAST ast2) {
+    private static boolean isSameVariables(final DetailAST ast1, final DetailAST ast2) {
         final DetailAST classOrMethodOfAst1 =
             findFirstUpperNamedBlock(ast1);
         final DetailAST classOrMethodOfAst2 =
@@ -738,7 +737,7 @@ public class FinalLocalVariableCheck extends AbstractCheck {
      * @param ast2 variable to compare.
      * @return true if both the variables are in the same loop.
      */
-    private static boolean isInTheSameLoop(DetailAST ast1, DetailAST ast2) {
+    private static boolean isInTheSameLoop(final DetailAST ast1, final DetailAST ast2) {
         DetailAST loop1 = ast1.getParent();
         while (loop1 != null && !isLoopAst(loop1.getType())) {
             loop1 = loop1.getParent();
@@ -755,7 +754,7 @@ public class FinalLocalVariableCheck extends AbstractCheck {
      * @param ast the ast to check.
      * @return true if the ast is a loop.
      */
-    private static boolean isLoopAst(int ast) {
+    private static boolean isLoopAst(final int ast) {
         return Arrays.binarySearch(LOOP_TYPES, ast) >= 0;
     }
 
@@ -778,7 +777,7 @@ public class FinalLocalVariableCheck extends AbstractCheck {
          * @param ast ast.
          * @return Optional of {@link FinalVariableCandidate}.
          */
-        public Optional<FinalVariableCandidate> findFinalVariableCandidateForAst(DetailAST ast) {
+        public Optional<FinalVariableCandidate> findFinalVariableCandidateForAst(final DetailAST ast) {
             Optional<FinalVariableCandidate> result = Optional.empty();
             DetailAST storedVariable = null;
             final Optional<FinalVariableCandidate> candidate =
@@ -808,7 +807,7 @@ public class FinalLocalVariableCheck extends AbstractCheck {
          * Creates new instance.
          * @param variableIdent variable identifier.
          */
-        /* package */ FinalVariableCandidate(DetailAST variableIdent) {
+        /* package */ FinalVariableCandidate(final DetailAST variableIdent) {
             this.variableIdent = variableIdent;
         }
 

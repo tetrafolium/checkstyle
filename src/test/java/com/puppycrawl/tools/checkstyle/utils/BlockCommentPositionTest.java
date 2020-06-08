@@ -81,8 +81,8 @@ public class BlockCommentPositionTest extends AbstractPathTestSupport {
         }
     }
 
-    private static int getJavadocsCount(DetailAST detailAST,
-                                        Function<DetailAST, Boolean> assertion) {
+    private static int getJavadocsCount(final DetailAST detailAST,
+                                        final Function<DetailAST, Boolean> assertion) {
         int matchFound = 0;
         DetailAST node = detailAST;
         while (node != null) {
@@ -110,8 +110,8 @@ public class BlockCommentPositionTest extends AbstractPathTestSupport {
         private final Function<DetailAST, Boolean> assertion;
         private final int matchesNum;
 
-        /* package */ BlockCommentPositionTestMetadata(String fileName, Function<DetailAST,
-                Boolean> assertion, int matchesNum) {
+        /* package */ BlockCommentPositionTestMetadata(final String fileName, final Function<DetailAST,
+                Boolean> assertion, final int matchesNum) {
             this.fileName = fileName;
             this.assertion = assertion;
             this.matchesNum = matchesNum;

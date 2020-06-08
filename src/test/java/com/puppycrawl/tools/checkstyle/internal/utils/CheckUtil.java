@@ -73,7 +73,7 @@ public final class CheckUtil {
      * @param checks class instances.
      * @return a set of simple names.
      */
-    public static Set<String> getSimpleNames(Set<Class<?>> checks) {
+    public static Set<String> getSimpleNames(final Set<Class<?>> checks) {
         return checks.stream().map(check -> {
             String name = check.getSimpleName();
 
@@ -92,7 +92,7 @@ public final class CheckUtil {
      *            file path of checkstyle_checks.xml.
      * @return names of checkstyle's checks which are referenced in checkstyle_checks.xml.
      */
-    private static Set<String> getCheckStyleModulesReferencedInConfig(String configFilePath) {
+    private static Set<String> getCheckStyleModulesReferencedInConfig(final String configFilePath) {
         try {
             final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
@@ -128,8 +128,7 @@ public final class CheckUtil {
                 }
             }
             return checksReferencedInCheckstyleChecksXml;
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             throw new IllegalStateException(exception);
         }
     }
@@ -169,7 +168,7 @@ public final class CheckUtil {
      * @see ModuleReflectionUtil#isCheckstyleModule(Class)
      */
     private static Set<Class<?>> getCheckstyleModulesRecursive(
-            String packageName, ClassLoader loader) throws IOException {
+            final String packageName, final ClassLoader loader) throws IOException {
         final ClassPath classPath = ClassPath.from(loader);
         return classPath.getTopLevelClassesRecursive(packageName).stream()
                 .map(ClassPath.ClassInfo::load)
@@ -184,7 +183,7 @@ public final class CheckUtil {
      * @param cls class to check
      * @return true if class is from allowed packages, false otherwise
      */
-    private static boolean isFromAllowedPackages(Class<?> cls) {
+    private static boolean isFromAllowedPackages(final Class<?> cls) {
         final String canonicalName = cls.getCanonicalName();
         return !canonicalName.startsWith("com.puppycrawl.tools.checkstyle.packageobjectfactory")
             && !canonicalName.startsWith("com.puppycrawl.tools.checkstyle.internal.testmodules");
@@ -196,7 +195,7 @@ public final class CheckUtil {
      * @return a set of checkstyle's module message fields.
      * @throws ClassNotFoundException if the attempt to read a protected class fails.
      */
-    public static Set<Field> getCheckMessages(Class<?> module) throws ClassNotFoundException {
+    public static Set<Field> getCheckMessages(final Class<?> module) throws ClassNotFoundException {
         final Set<Field> checkstyleMessages = new HashSet<>();
 
         // get all fields from current class
@@ -219,8 +218,7 @@ public final class CheckUtil {
         if (module == RegexpMultilineCheck.class) {
             checkstyleMessages.addAll(getCheckMessages(Class
                     .forName("com.puppycrawl.tools.checkstyle.checks.regexp.MultilineDetector")));
-        }
-        else if (module == RegexpSinglelineCheck.class
+        } else if (module == RegexpSinglelineCheck.class
                 || module == RegexpSinglelineJavaCheck.class) {
             checkstyleMessages.addAll(getCheckMessages(Class
                     .forName("com.puppycrawl.tools.checkstyle.checks.regexp.SinglelineDetector")));
@@ -239,33 +237,30 @@ public final class CheckUtil {
      * @param arguments the arguments of message in 'messages*.properties' file.
      * @return the check's formatted message.
      */
-    public static String getCheckMessage(Class<?> module, Locale locale, String messageKey,
-            Object... arguments) {
+    public static String getCheckMessage(final Class<?> module, final Locale locale, final String messageKey,
+            final Object... arguments) {
         String checkMessage;
         try {
             final Properties pr = new Properties();
             if (locale == Locale.ENGLISH) {
                 pr.load(module.getResourceAsStream("messages.properties"));
-            }
-            else {
+            } else {
                 pr.load(module
                         .getResourceAsStream("messages_" + locale.getLanguage() + ".properties"));
             }
             final MessageFormat formatter = new MessageFormat(pr.getProperty(messageKey), locale);
             checkMessage = formatter.format(arguments);
-        }
-        catch (IOException ignored) {
+        } catch (IOException ignored) {
             checkMessage = null;
         }
         return checkMessage;
     }
 
-    public static String getTokenText(int[] tokens, int... subtractions) {
+    public static String getTokenText(final int[] tokens, final int... subtractions) {
         final String tokenText;
         if (subtractions.length == 0 && Arrays.equals(tokens, TokenUtil.getAllTokenIds())) {
             tokenText = "TokenTypes.";
-        }
-        else {
+        } else {
             final StringBuilder result = new StringBuilder(50);
             boolean first = true;
 
@@ -285,8 +280,7 @@ public final class CheckUtil {
 
                 if (first) {
                     first = false;
-                }
-                else {
+                } else {
                     result.append(", ");
                 }
 
@@ -295,8 +289,7 @@ public final class CheckUtil {
 
             if (result.length() == 0) {
                 result.append("empty");
-            }
-            else {
+            } else {
                 result.append('.');
             }
 
@@ -305,7 +298,7 @@ public final class CheckUtil {
         return tokenText;
     }
 
-    public static Set<String> getTokenNameSet(int... tokens) {
+    public static Set<String> getTokenNameSet(final int... tokens) {
         final Set<String> result = new HashSet<>();
 
         for (int token : tokens) {
@@ -315,7 +308,7 @@ public final class CheckUtil {
         return result;
     }
 
-    public static String getJavadocTokenText(int[] tokens, int... subtractions) {
+    public static String getJavadocTokenText(final int[] tokens, final int... subtractions) {
         final StringBuilder result = new StringBuilder(50);
         boolean first = true;
 
@@ -335,8 +328,7 @@ public final class CheckUtil {
 
             if (first) {
                 first = false;
-            }
-            else {
+            } else {
                 result.append(", ");
             }
 
@@ -345,15 +337,14 @@ public final class CheckUtil {
 
         if (result.length() == 0) {
             result.append("empty");
-        }
-        else {
+        } else {
             result.append('.');
         }
 
         return result.toString();
     }
 
-    public static String getLineSeparatorForFile(String filepath, Charset charset)
+    public static String getLineSeparatorForFile(final String filepath, final Charset charset)
             throws IOException {
         final boolean[] crFound = {false};
         new FileText(new File(filepath), charset.name())
@@ -370,8 +361,7 @@ public final class CheckUtil {
         final String result;
         if (crFound[0]) {
             result = CRLF;
-        }
-        else {
+        } else {
             result = "\n";
         }
         return result;

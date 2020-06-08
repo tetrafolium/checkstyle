@@ -35,7 +35,7 @@ public class IndentLevel {
      * Creates new instance with one acceptable indentation level.
      * @param indent acceptable indentation level.
      */
-    public IndentLevel(int indent) {
+    public IndentLevel(final int indent) {
         levels.set(indent);
     }
 
@@ -44,7 +44,7 @@ public class IndentLevel {
      * @param base parent's level
      * @param offsets offsets from parent's level.
      */
-    public IndentLevel(IndentLevel base, int... offsets) {
+    public IndentLevel(final IndentLevel base, final int... offsets) {
         final BitSet src = base.levels;
         for (int i = src.nextSetBit(0); i >= 0; i = src.nextSetBit(i + 1)) {
             for (int offset : offsets) {
@@ -74,7 +74,7 @@ public class IndentLevel {
      * @return true if given indentation is acceptable,
      *         false otherwise.
      */
-    public boolean isAcceptable(int indent) {
+    public boolean isAcceptable(final int indent) {
         return levels.get(indent);
     }
 
@@ -85,7 +85,7 @@ public class IndentLevel {
      * @return true if {@code indent} less than minimal of
      *         acceptable indentation levels, false otherwise.
      */
-    public boolean isGreaterThan(int indent) {
+    public boolean isGreaterThan(final int indent) {
         return levels.nextSetBit(0) > indent;
     }
 
@@ -95,7 +95,7 @@ public class IndentLevel {
      * @param additions new acceptable indentation.
      * @return New acceptable indentation level instance.
      */
-    public static IndentLevel addAcceptable(IndentLevel base, int... additions) {
+    public static IndentLevel addAcceptable(final IndentLevel base, final int... additions) {
         final IndentLevel result = new IndentLevel();
         result.levels.or(base.levels);
         for (int addition : additions) {
@@ -110,7 +110,7 @@ public class IndentLevel {
      * @param addition new acceptable indentation.
      * @return New acceptable indentation level instance.
      */
-    public static IndentLevel addAcceptable(IndentLevel base, IndentLevel addition) {
+    public static IndentLevel addAcceptable(final IndentLevel base, final IndentLevel addition) {
         final IndentLevel result = new IndentLevel();
         result.levels.or(base.levels);
         result.levels.or(addition.levels);
@@ -138,8 +138,7 @@ public class IndentLevel {
         final String result;
         if (levels.cardinality() == 1) {
             result = String.valueOf(levels.nextSetBit(0));
-        }
-        else {
+        } else {
             final StringBuilder sb = new StringBuilder(50);
             for (int i = levels.nextSetBit(0); i >= 0;
                  i = levels.nextSetBit(i + 1)) {

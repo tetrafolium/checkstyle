@@ -80,7 +80,7 @@ public class SimplifyBooleanReturnCheck
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         // LITERAL_IF has the following four or five children:
         // '('
         // condition
@@ -125,7 +125,7 @@ public class SimplifyBooleanReturnCheck
      * @param ast the syntax tree to check
      * @return if ast is a return statement with a boolean literal.
      */
-    private static boolean canReturnOnlyBooleanLiteral(DetailAST ast) {
+    private static boolean canReturnOnlyBooleanLiteral(final DetailAST ast) {
         boolean result = true;
         if (!isBooleanLiteralReturnStatement(ast)) {
             final DetailAST firstStatement = ast.getFirstChild();
@@ -146,7 +146,7 @@ public class SimplifyBooleanReturnCheck
      * @param ast the syntax tree to check
      * @return if ast is a return statement with a boolean literal.
      */
-    private static boolean isBooleanLiteralReturnStatement(DetailAST ast) {
+    private static boolean isBooleanLiteralReturnStatement(final DetailAST ast) {
         boolean booleanReturnStatement = false;
 
         if (ast != null && ast.getType() == TokenTypes.LITERAL_RETURN) {

@@ -95,7 +95,7 @@ public class NoArrayTrailingCommaCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST arrayInit) {
+    public void visitToken(final DetailAST arrayInit) {
         final DetailAST rcurly = arrayInit.findFirstToken(TokenTypes.RCURLY);
         final DetailAST previousSibling = rcurly.getPreviousSibling();
         if (previousSibling != null && previousSibling.getType() == TokenTypes.COMMA) {

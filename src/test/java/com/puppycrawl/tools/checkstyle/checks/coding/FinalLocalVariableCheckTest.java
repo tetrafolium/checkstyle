@@ -191,8 +191,7 @@ public class FinalLocalVariableCheckTest
         try {
             check.visitToken(lambdaAst);
             fail("IllegalStateException is expected");
-        }
-        catch (IllegalStateException ex) {
+        } catch (IllegalStateException ex) {
             // it is OK
         }
     }

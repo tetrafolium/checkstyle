@@ -42,8 +42,7 @@ public class AttributeNodeTest {
         try {
             attributeNode.getAttributeValue("", "");
             fail("Exception is excepted");
-        }
-        catch (UnsupportedOperationException ex) {
+        } catch (UnsupportedOperationException ex) {
             assertEquals("Operation is not supported",
                 ex.getMessage(), "Invalid exception message");
         }
@@ -54,8 +53,7 @@ public class AttributeNodeTest {
         try {
             attributeNode.getParent();
             fail("Exception is excepted");
-        }
-        catch (UnsupportedOperationException ex) {
+        } catch (UnsupportedOperationException ex) {
             assertEquals("Operation is not supported",
                 ex.getMessage(), "Invalid exception message");
         }
@@ -66,8 +64,7 @@ public class AttributeNodeTest {
         try {
             attributeNode.getRoot();
             fail("Exception is excepted");
-        }
-        catch (UnsupportedOperationException ex) {
+        } catch (UnsupportedOperationException ex) {
             assertEquals("Operation is not supported",
                 ex.getMessage(), "Invalid exception message");
         }
@@ -82,8 +79,7 @@ public class AttributeNodeTest {
     public void testIterate() {
         try (AxisIterator ignored = attributeNode.iterateAxis(AxisInfo.SELF)) {
             fail("Exception is excepted");
-        }
-        catch (UnsupportedOperationException ex) {
+        } catch (UnsupportedOperationException ex) {
             assertEquals("Operation is not supported",
                 ex.getMessage(), "Invalid exception message");
         }
@@ -94,8 +90,7 @@ public class AttributeNodeTest {
         try {
             attributeNode.getLineNumber();
             fail("Exception is excepted");
-        }
-        catch (UnsupportedOperationException ex) {
+        } catch (UnsupportedOperationException ex) {
             assertEquals("Operation is not supported",
                 ex.getMessage(), "Invalid exception message");
         }
@@ -106,8 +101,7 @@ public class AttributeNodeTest {
         try {
             attributeNode.getColumnNumber();
             fail("Exception is excepted");
-        }
-        catch (UnsupportedOperationException ex) {
+        } catch (UnsupportedOperationException ex) {
             assertEquals("Operation is not supported",
                 ex.getMessage(), "Invalid exception message");
         }
@@ -118,8 +112,7 @@ public class AttributeNodeTest {
         try {
             attributeNode.getTokenType();
             fail("Exception is excepted");
-        }
-        catch (UnsupportedOperationException ex) {
+        } catch (UnsupportedOperationException ex) {
             assertEquals("Operation is not supported",
                 ex.getMessage(), "Invalid exception message");
         }
@@ -130,8 +123,7 @@ public class AttributeNodeTest {
         try {
             attributeNode.getUnderlyingNode();
             fail("Exception is excepted");
-        }
-        catch (UnsupportedOperationException ex) {
+        } catch (UnsupportedOperationException ex) {
             assertEquals("Operation is not supported",
                 ex.getMessage(), "Invalid exception message");
         }

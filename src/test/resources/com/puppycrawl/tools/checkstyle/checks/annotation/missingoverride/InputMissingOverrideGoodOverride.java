@@ -18,7 +18,7 @@ public class InputMissingOverrideGoodOverride
         }
     };
 
-    void doFoo(Runnable r) {
+    void doFoo(final Runnable r) {
         doFoo(new Runnable() {
 
             public void run() {
@@ -36,7 +36,7 @@ public class InputMissingOverrideGoodOverride
         });
     }
 
-    void doFoo2(Runnable r) {
+    void doFoo2(final Runnable r) {
         doFoo(new Runnable() {
 
             public void run() {

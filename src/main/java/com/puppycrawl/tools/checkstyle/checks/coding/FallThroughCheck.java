@@ -159,7 +159,7 @@ public class FallThroughCheck extends AbstractCheck {
      * @param pattern
      *            The regular expression pattern.
      */
-    public void setReliefPattern(Pattern pattern) {
+    public void setReliefPattern(final Pattern pattern) {
         reliefPattern = pattern;
     }
 
@@ -167,12 +167,12 @@ public class FallThroughCheck extends AbstractCheck {
      * Setter to control whether the last case group must be checked.
      * @param value new value of the property.
      */
-    public void setCheckLastCaseGroup(boolean value) {
+    public void setCheckLastCaseGroup(final boolean value) {
         checkLastCaseGroup = value;
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         final DetailAST nextGroup = ast.getNextSibling();
         final boolean isLastGroup = nextGroup.getType() != TokenTypes.CASE_GROUP;
         if (!isLastGroup || checkLastCaseGroup) {
@@ -182,8 +182,7 @@ public class FallThroughCheck extends AbstractCheck {
                 && !hasFallThroughComment(ast, nextGroup)) {
                 if (isLastGroup) {
                     log(ast, MSG_FALL_THROUGH_LAST);
-                }
-                else {
+                } else {
                     log(nextGroup, MSG_FALL_THROUGH);
                 }
             }
@@ -198,8 +197,8 @@ public class FallThroughCheck extends AbstractCheck {
      * @param useContinue should we consider continue as terminator.
      * @return true if the subtree is terminated.
      */
-    private boolean isTerminated(final DetailAST ast, boolean useBreak,
-                                 boolean useContinue) {
+    private boolean isTerminated(final DetailAST ast, final boolean useBreak,
+                                 final boolean useContinue) {
         final boolean terminated;
 
         switch (ast.getType()) {
@@ -247,8 +246,8 @@ public class FallThroughCheck extends AbstractCheck {
      * @param useContinue should we consider continue as terminator.
      * @return true if SLIST is terminated.
      */
-    private boolean checkSlist(final DetailAST slistAst, boolean useBreak,
-                               boolean useContinue) {
+    private boolean checkSlist(final DetailAST slistAst, final boolean useBreak,
+                               final boolean useContinue) {
         DetailAST lastStmt = slistAst.getLastChild();
 
         if (lastStmt.getType() == TokenTypes.RCURLY) {
@@ -267,8 +266,8 @@ public class FallThroughCheck extends AbstractCheck {
      * @param useContinue should we consider continue as terminator.
      * @return true if IF is terminated.
      */
-    private boolean checkIf(final DetailAST ast, boolean useBreak,
-                            boolean useContinue) {
+    private boolean checkIf(final DetailAST ast, final boolean useBreak,
+                            final boolean useContinue) {
         final DetailAST thenStmt = ast.findFirstToken(TokenTypes.RPAREN)
                 .getNextSibling();
         final DetailAST elseStmt = thenStmt.getNextSibling();
@@ -289,8 +288,7 @@ public class FallThroughCheck extends AbstractCheck {
         if (ast.getType() == TokenTypes.LITERAL_DO) {
             final DetailAST lparen = ast.findFirstToken(TokenTypes.DO_WHILE);
             loopBody = lparen.getPreviousSibling();
-        }
-        else {
+        } else {
             final DetailAST rparen = ast.findFirstToken(TokenTypes.RPAREN);
             loopBody = rparen.getNextSibling();
         }
@@ -305,8 +303,8 @@ public class FallThroughCheck extends AbstractCheck {
      * @param useContinue should we consider continue as terminator.
      * @return true if try/catch/finally block is terminated.
      */
-    private boolean checkTry(final DetailAST ast, boolean useBreak,
-                             boolean useContinue) {
+    private boolean checkTry(final DetailAST ast, final boolean useBreak,
+                             final boolean useContinue) {
         final DetailAST finalStmt = ast.getLastChild();
         boolean isTerminated = false;
         if (finalStmt.getType() == TokenTypes.LITERAL_FINALLY) {
@@ -344,7 +342,7 @@ public class FallThroughCheck extends AbstractCheck {
      * @param useContinue should we consider continue as terminator.
      * @return true if switch is terminated.
      */
-    private boolean checkSwitch(final DetailAST literalSwitchAst, boolean useContinue) {
+    private boolean checkSwitch(final DetailAST literalSwitchAst, final boolean useContinue) {
         DetailAST caseGroup = literalSwitchAst.findFirstToken(TokenTypes.CASE_GROUP);
         boolean isTerminated = caseGroup != null;
         while (isTerminated && caseGroup.getType() != TokenTypes.RCURLY) {
@@ -364,8 +362,8 @@ public class FallThroughCheck extends AbstractCheck {
      * @param useContinue should we consider continue as terminator.
      * @return true if synchronized block is terminated.
      */
-    private boolean checkSynchronized(final DetailAST synchronizedAst, boolean useBreak,
-                                      boolean useContinue) {
+    private boolean checkSynchronized(final DetailAST synchronizedAst, final boolean useBreak,
+                                      final boolean useContinue) {
         return isTerminated(
             synchronizedAst.findFirstToken(TokenTypes.SLIST), useBreak, useContinue);
     }
@@ -378,7 +376,7 @@ public class FallThroughCheck extends AbstractCheck {
      * @param nextCase AST of the next case.
      * @return True if a relief comment was found
      */
-    private boolean hasFallThroughComment(DetailAST currentCase, DetailAST nextCase) {
+    private boolean hasFallThroughComment(final DetailAST currentCase, final DetailAST nextCase) {
         boolean allThroughComment = false;
         final int endLineNo = nextCase.getLineNo();
         final int endColNo = nextCase.getColumnNo();
@@ -400,8 +398,7 @@ public class FallThroughCheck extends AbstractCheck {
         final String linePart = lines[endLineNo - 1].substring(0, endColNo);
         if (matchesComment(reliefPattern, linePart, endLineNo)) {
             allThroughComment = true;
-        }
-        else {
+        } else {
             // Handle:
             //    case 1:
             //    .....
@@ -432,7 +429,7 @@ public class FallThroughCheck extends AbstractCheck {
      * @param lineNo The line number in the file.
      * @return True if a match was found inside a comment.
      */
-    private boolean matchesComment(Pattern pattern, String line, int lineNo) {
+    private boolean matchesComment(final Pattern pattern, final String line, final int lineNo) {
         final Matcher matcher = pattern.matcher(line);
         boolean matches = false;
 

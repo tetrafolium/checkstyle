@@ -55,17 +55,17 @@ public class InputMissingDeprecatedSpecialCase
 
     }
 
-    void local(@Deprecated String s) {
+    void local(final @Deprecated String s) {
 
     }
 
     void local2(
         /** @deprecated bleh*/
-        String s) {
+        final String s) {
 
     }
 
-    void local3(/** @deprecated */ @Deprecated String s) {
+    void local3(/** @deprecated */ final @Deprecated String s) {
 
     }
 

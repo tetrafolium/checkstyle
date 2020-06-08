@@ -381,7 +381,7 @@ public class SuppressionCommentFilter
      * Setter to specify comment pattern to trigger filter to begin suppression.
      * @param pattern a pattern.
      */
-    public final void setOffCommentFormat(Pattern pattern) {
+    public final void setOffCommentFormat(final Pattern pattern) {
         offCommentFormat = pattern;
     }
 
@@ -389,7 +389,7 @@ public class SuppressionCommentFilter
      * Setter to specify comment pattern to trigger filter to end suppression.
      * @param pattern a pattern.
      */
-    public final void setOnCommentFormat(Pattern pattern) {
+    public final void setOnCommentFormat(final Pattern pattern) {
         onCommentFormat = pattern;
     }
 
@@ -406,7 +406,7 @@ public class SuppressionCommentFilter
      * @param fileContents the FileContents for this filter.
      * @noinspection WeakerAccess
      */
-    public void setFileContents(FileContents fileContents) {
+    public void setFileContents(final FileContents fileContents) {
         fileContentsReference = new WeakReference<>(fileContents);
     }
 
@@ -414,7 +414,7 @@ public class SuppressionCommentFilter
      * Setter to specify check pattern to suppress.
      * @param format a {@code String} value
      */
-    public final void setCheckFormat(String format) {
+    public final void setCheckFormat(final String format) {
         checkFormat = format;
     }
 
@@ -422,7 +422,7 @@ public class SuppressionCommentFilter
      * Setter to specify message pattern to suppress.
      * @param format a {@code String} value
      */
-    public void setMessageFormat(String format) {
+    public void setMessageFormat(final String format) {
         messageFormat = format;
     }
 
@@ -430,7 +430,7 @@ public class SuppressionCommentFilter
      * Setter to specify check ID pattern to suppress.
      * @param format a {@code String} value
      */
-    public void setIdFormat(String format) {
+    public void setIdFormat(final String format) {
         idFormat = format;
     }
 
@@ -440,7 +440,7 @@ public class SuppressionCommentFilter
      */
     // -@cs[AbbreviationAsWordInName] We can not change it as,
     // check's property is a part of API (used in configurations).
-    public void setCheckCPP(boolean checkCpp) {
+    public void setCheckCPP(final boolean checkCpp) {
         checkCPP = checkCpp;
     }
 
@@ -448,7 +448,7 @@ public class SuppressionCommentFilter
      * Setter to control whether to check C style comments ({@code &#47;* ... *&#47;}).
      * @param checkC {@code true} if C comments are checked.
      */
-    public void setCheckC(boolean checkC) {
+    public void setCheckC(final boolean checkC) {
         this.checkC = checkC;
     }
 
@@ -458,7 +458,7 @@ public class SuppressionCommentFilter
     }
 
     @Override
-    public boolean accept(TreeWalkerAuditEvent event) {
+    public boolean accept(final TreeWalkerAuditEvent event) {
         boolean accepted = true;
 
         if (event.getLocalizedMessage() != null) {
@@ -482,7 +482,7 @@ public class SuppressionCommentFilter
      * @param event the {@code TreeWalkerAuditEvent} to match.
      * @return The {@code Tag} nearest event.
      */
-    private Tag findNearestMatch(TreeWalkerAuditEvent event) {
+    private Tag findNearestMatch(final TreeWalkerAuditEvent event) {
         Tag result = null;
         for (Tag tag : tags) {
             if (tag.getLine() > event.getLine()
@@ -520,7 +520,7 @@ public class SuppressionCommentFilter
      * set of suppression tags.
      * @param comments the set of comments.
      */
-    private void tagSuppressions(Collection<TextBlock> comments) {
+    private void tagSuppressions(final Collection<TextBlock> comments) {
         for (TextBlock comment : comments) {
             final int startLineNo = comment.getStartLineNo();
             final String[] text = comment.getText();
@@ -538,12 +538,11 @@ public class SuppressionCommentFilter
      * @param line the line number of text.
      * @param column the column number of text.
      */
-    private void tagCommentLine(String text, int line, int column) {
+    private void tagCommentLine(final String text, final int line, final int column) {
         final Matcher offMatcher = offCommentFormat.matcher(text);
         if (offMatcher.find()) {
             addTag(offMatcher.group(0), line, column, TagType.OFF);
-        }
-        else {
+        } else {
             final Matcher onMatcher = onCommentFormat.matcher(text);
             if (onMatcher.find()) {
                 addTag(onMatcher.group(0), line, column, TagType.ON);
@@ -558,7 +557,7 @@ public class SuppressionCommentFilter
      * @param column the column number of the tag.
      * @param reportingOn {@code true} if the tag turns checkstyle reporting on.
      */
-    private void addTag(String text, int line, int column, TagType reportingOn) {
+    private void addTag(final String text, final int line, final int column, final TagType reportingOn) {
         final Tag tag = new Tag(line, column, text, reportingOn, this);
         tags.add(tag);
     }
@@ -600,8 +599,8 @@ public class SuppressionCommentFilter
          * @param filter the {@code SuppressionCommentFilter} with the context
          * @throws IllegalArgumentException if unable to parse expanded text.
          */
-        /* package */ Tag(int line, int column, String text, TagType tagType,
-                   SuppressionCommentFilter filter) {
+        /* package */ Tag(final int line, final int column, final String text, final TagType tagType,
+                   final SuppressionCommentFilter filter) {
             this.line = line;
             this.column = column;
             this.text = text;
@@ -610,8 +609,7 @@ public class SuppressionCommentFilter
             final Pattern commentFormat;
             if (this.tagType == TagType.ON) {
                 commentFormat = filter.onCommentFormat;
-            }
-            else {
+            } else {
                 commentFormat = filter.offCommentFormat;
             }
 
@@ -625,8 +623,7 @@ public class SuppressionCommentFilter
 
                 if (filter.messageFormat == null) {
                     tagMessageRegexp = null;
-                }
-                else {
+                } else {
                     format = CommonUtil.fillTemplateWithStringsByRegexp(
                             filter.messageFormat, text, commentFormat);
                     tagMessageRegexp = Pattern.compile(format);
@@ -634,14 +631,12 @@ public class SuppressionCommentFilter
 
                 if (filter.idFormat == null) {
                     tagIdRegexp = null;
-                }
-                else {
+                } else {
                     format = CommonUtil.fillTemplateWithStringsByRegexp(
                             filter.idFormat, text, commentFormat);
                     tagIdRegexp = Pattern.compile(format);
                 }
-            }
-            catch (final PatternSyntaxException ex) {
+            } catch (final PatternSyntaxException ex) {
                 throw new IllegalArgumentException(
                     "unable to parse expanded comment " + format, ex);
             }
@@ -683,12 +678,11 @@ public class SuppressionCommentFilter
          *     tag is after the other tag.
          */
         @Override
-        public int compareTo(Tag object) {
+        public int compareTo(final Tag object) {
             final int result;
             if (line == object.line) {
                 result = Integer.compare(column, object.column);
-            }
-            else {
+            } else {
                 result = Integer.compare(line, object.line);
             }
             return result;
@@ -700,7 +694,7 @@ public class SuppressionCommentFilter
          * @noinspection EqualsCalledOnEnumConstant
          */
         @Override
-        public boolean equals(Object other) {
+        public boolean equals(final Object other) {
             if (this == other) {
                 return true;
             }
@@ -729,7 +723,7 @@ public class SuppressionCommentFilter
          * @param event the {@code TreeWalkerAuditEvent} to check.
          * @return true if the source of event matches the text of this tag.
          */
-        public boolean isMatch(TreeWalkerAuditEvent event) {
+        public boolean isMatch(final TreeWalkerAuditEvent event) {
             return isCheckMatch(event) && isIdMatch(event) && isMessageMatch(event);
         }
 
@@ -738,7 +732,7 @@ public class SuppressionCommentFilter
          * @param event {@link TreeWalkerAuditEvent} instance.
          * @return true if the {@link TreeWalkerAuditEvent} source name matches the check format.
          */
-        private boolean isCheckMatch(TreeWalkerAuditEvent event) {
+        private boolean isCheckMatch(final TreeWalkerAuditEvent event) {
             final Matcher checkMatcher = tagCheckRegexp.matcher(event.getSourceName());
             return checkMatcher.find();
         }
@@ -748,13 +742,12 @@ public class SuppressionCommentFilter
          * @param event {@link TreeWalkerAuditEvent} instance.
          * @return true if the {@link TreeWalkerAuditEvent} module ID matches the ID format.
          */
-        private boolean isIdMatch(TreeWalkerAuditEvent event) {
+        private boolean isIdMatch(final TreeWalkerAuditEvent event) {
             boolean match = true;
             if (tagIdRegexp != null) {
                 if (event.getModuleId() == null) {
                     match = false;
-                }
-                else {
+                } else {
                     final Matcher idMatcher = tagIdRegexp.matcher(event.getModuleId());
                     match = idMatcher.find();
                 }
@@ -767,7 +760,7 @@ public class SuppressionCommentFilter
          * @param event {@link TreeWalkerAuditEvent} instance.
          * @return true if the {@link TreeWalkerAuditEvent} message matches the message format.
          */
-        private boolean isMessageMatch(TreeWalkerAuditEvent event) {
+        private boolean isMessageMatch(final TreeWalkerAuditEvent event) {
             boolean match = true;
             if (tagMessageRegexp != null) {
                 final Matcher messageMatcher = tagMessageRegexp.matcher(event.getMessage());

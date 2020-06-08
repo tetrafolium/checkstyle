@@ -217,8 +217,7 @@ public class ImportOrderCheckTest extends AbstractModuleTestSupport {
 
             verify(checkConfig, getPath("InputImportOrder_Top.java"), expected);
             fail("exception expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             assertEquals(
                     "cannot initialize module com.puppycrawl.tools.checkstyle.TreeWalker - "
                         + "cannot initialize module com.puppycrawl.tools.checkstyle.checks"
@@ -614,8 +613,7 @@ public class ImportOrderCheckTest extends AbstractModuleTestSupport {
 
             verify(checkConfig, getPath("InputImportOrder.java"), expected);
             fail("exception expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             assertEquals("cannot initialize module com.puppycrawl.tools.checkstyle.TreeWalker - "
                         + "cannot initialize module com.puppycrawl.tools.checkstyle.checks"
                         + ".imports.ImportOrderCheck - "
@@ -674,8 +672,7 @@ public class ImportOrderCheckTest extends AbstractModuleTestSupport {
         try {
             mock.visitToken(astImport);
             fail("An exception is expected");
-        }
-        catch (IllegalStateException ex) {
+        } catch (IllegalStateException ex) {
             assertTrue(ex.getMessage().endsWith(": null"), "invalid exception message");
         }
     }

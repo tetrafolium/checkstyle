@@ -62,13 +62,13 @@ public class SlistHandler extends BlockParentHandler {
      * @param ast           the abstract syntax tree
      * @param parent        the parent handler
      */
-    public SlistHandler(IndentationCheck indentCheck,
-        DetailAST ast, AbstractExpressionHandler parent) {
+    public SlistHandler(final IndentationCheck indentCheck,
+        final DetailAST ast, final AbstractExpressionHandler parent) {
         super(indentCheck, "block", ast, parent);
     }
 
     @Override
-    public IndentLevel getSuggestedChildIndent(AbstractExpressionHandler child) {
+    public IndentLevel getSuggestedChildIndent(final AbstractExpressionHandler child) {
         // this is:
         //  switch (var) {
         //     case 3: {
@@ -85,8 +85,7 @@ public class SlistHandler extends BlockParentHandler {
             || child instanceof SlistHandler
                 && getParent() instanceof CaseHandler) {
             result = getParent().getSuggestedChildIndent(child);
-        }
-        else {
+        } else {
             result = super.getSuggestedChildIndent(child);
         }
         return result;

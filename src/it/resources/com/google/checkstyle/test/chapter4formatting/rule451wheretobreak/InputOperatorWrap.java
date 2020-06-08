@@ -8,8 +8,8 @@ class InputOperatorWrap
 {
     void test()
     {
-        /*warn*/int x = 1 +
-                /*warn*/ 2 -
+        /*warn*/int x = 1
+                + /*warn*/ 2 -
             3
             -
             4;
@@ -17,8 +17,8 @@ class InputOperatorWrap
         boolean y = true
             &&
             false;
-        /*warn*/ y = true &&
-            false;
+        /*warn*/ y = true
+            && false;
         y = false
             && true;
         /* Note: The three tests below will be used when issue #3381 is closed */
@@ -40,8 +40,8 @@ class InputOperatorWrap
     }
 
     <
-    T extends Comparable &
-        java.io.Serializable
+    T extends Comparable
+        & java.io.Serializable
     >
     void testGenerics1()
     {
@@ -56,33 +56,33 @@ class InputOperatorWrap
 
         int init = 9;
 
-        /*ok*/ for (Map.Entry<String, String> entry :
-            map.entrySet())
+        /*ok*/ for (Map.Entry<String, String> entry
+            : map.entrySet())
         {
-            /*warn*/int i = flag == true ?
-                    1 : 2;
+            /*warn*/int i = flag == true
+                    ? 1 : 2;
         }
 
-        /*warn*/ if (init !=
-                9)
-        {
-
-        }
-
-        /*warn*/ while (init ==
-                10)
+        /*warn*/ if (init
+                != 9)
         {
 
         }
 
-        /*warn*/ if (init >
-                10)
+        /*warn*/ while (init
+                == 10)
         {
 
-        } else {}
+        }
 
-        /*warn*/ while (init < 10 ||
-                !flag) {
+        /*warn*/ if (init
+                > 10)
+        {
+
+        } else { }
+
+        /*warn*/ while (init < 10
+                || !flag) {
 
         }
     }
@@ -101,40 +101,40 @@ class InputOperatorWrap
 
             int init = 9;
 
-            /*ok*/ for (Map.Entry<String, String> entry :
-                map.entrySet())
+            /*ok*/ for (Map.Entry<String, String> entry
+                : map.entrySet())
             {
-                /*warn*/int i = flag == true ?
-                        1 : 2;
+                /*warn*/int i = flag == true
+                        ? 1 : 2;
             }
 
-            /*warn*/ if (init !=
-                    9)
-            {
-
-            }
-
-            /*warn*/ while (init ==
-                    10)
+            /*warn*/ if (init
+                    != 9)
             {
 
             }
 
-            /*warn*/ if (init >
-                    10)
+            /*warn*/ while (init
+                    == 10)
             {
 
-            } else {}
+            }
 
-            /*warn*/ while (init < 10 ||
-                    !flag) {
+            /*warn*/ if (init
+                    > 10)
+            {
+
+            } else { }
+
+            /*warn*/ while (init < 10
+                    || !flag) {
 
             }
         }
     }
 
     Inner anon = new Inner
-            (){
+            () {
         void testGenerics1
         ()
         {
@@ -147,33 +147,33 @@ class InputOperatorWrap
             boolean flag = false;
             int init = 9;
 
-            /*ok*/ for (Map.Entry<String, String> entry :
-                map.entrySet())
+            /*ok*/ for (Map.Entry<String, String> entry
+                : map.entrySet())
             {
-                /*warn*/int i = flag == true ?
-                        1 : 2;
+                /*warn*/int i = flag == true
+                        ? 1 : 2;
             }
 
-            /*warn*/ if (init !=
-                    9)
-            {
-
-            }
-
-            /*warn*/ while (init ==
-                    10)
+            /*warn*/ if (init
+                    != 9)
             {
 
             }
 
-            /*warn*/ if (init >
-                    10)
+            /*warn*/ while (init
+                    == 10)
             {
 
-            } else {}
+            }
 
-            /*warn*/ while (init < 10 ||
-                    !flag) {
+            /*warn*/ if (init
+                    > 10)
+            {
+
+            } else { }
+
+            /*warn*/ while (init < 10
+                    || !flag) {
 
             }
         }
@@ -191,8 +191,8 @@ class AsInput {
 class Ternary {
     void foo() {
         boolean flag = true;
-        /*warn*/int i = flag == true ?
-                1 :
+        /*warn*/int i = flag == true
+                ? 1 :
                 2;
         int i2 = flag == true
                 ?

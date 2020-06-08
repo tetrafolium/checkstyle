@@ -49,7 +49,7 @@ class SinglelineDetector {
      * Creates an instance.
      * @param options the options to use.
      */
-    /* package */ SinglelineDetector(DetectorOptions options) {
+    /* package */ SinglelineDetector(final DetectorOptions options) {
         this.options = options;
     }
 
@@ -57,7 +57,7 @@ class SinglelineDetector {
      * Processes a set of lines looking for matches.
      * @param fileText {@link FileText} object contains the lines to process.
      */
-    public void processLines(FileText fileText) {
+    public void processLines(final FileText fileText) {
         resetState();
         int lineNo = 0;
         for (int index = 0; index < fileText.size(); index++) {
@@ -74,8 +74,7 @@ class SinglelineDetector {
             if (options.getMessage().isEmpty()) {
                 options.getReporter().log(1, MSG_REGEXP_MINIMUM,
                         options.getMinimum(), options.getFormat());
-            }
-            else {
+            } else {
                 options.getReporter().log(1, options.getMessage());
             }
         }
@@ -95,8 +94,8 @@ class SinglelineDetector {
      * @param matcher the matcher to use
      * @param startPosition the position to start searching from.
      */
-    private void checkLine(int lineNo, String line, Matcher matcher,
-            int startPosition) {
+    private void checkLine(final int lineNo, final String line, final Matcher matcher,
+            final int startPosition) {
         final boolean foundMatch = matcher.find(startPosition);
         if (foundMatch) {
             // match is found, check for intersection with comment
@@ -109,15 +108,13 @@ class SinglelineDetector {
             if (options.getSuppressor()
                     .shouldSuppress(lineNo, startCol, lineNo, endCol - 1)) {
                 checkLine(lineNo, line, matcher, endCol);
-            }
-            else {
+            } else {
                 currentMatches++;
                 if (currentMatches > options.getMaximum()) {
                     if (options.getMessage().isEmpty()) {
                         options.getReporter().log(lineNo, MSG_REGEXP_EXCEEDED,
                                 matcher.pattern().toString());
-                    }
-                    else {
+                    } else {
                         options.getReporter().log(lineNo, options.getMessage());
                     }
                 }

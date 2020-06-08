@@ -35,13 +35,13 @@ public class LambdaHandler extends AbstractExpressionHandler {
      * @param ast the abstract syntax tree
      * @param parent the parent handler
      */
-    public LambdaHandler(IndentationCheck indentCheck,
-                         DetailAST ast, AbstractExpressionHandler parent) {
+    public LambdaHandler(final IndentationCheck indentCheck,
+                         final DetailAST ast, final AbstractExpressionHandler parent) {
         super(indentCheck, "lambda", ast, parent);
     }
 
     @Override
-    public IndentLevel getSuggestedChildIndent(AbstractExpressionHandler child) {
+    public IndentLevel getSuggestedChildIndent(final AbstractExpressionHandler child) {
         return getIndent();
     }
 

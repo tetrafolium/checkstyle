@@ -39,7 +39,7 @@ final class InputMethodLengthSimple
     protected int mNumCreated2 = 0;
 
     /** commas are wrong **/
-    private int[] mInts = new int[] {1,2, 3,
+    private int[] mInts = new int[] {1, 2, 3,
                                      4};
 
     //
@@ -68,7 +68,7 @@ final class InputMethodLengthSimple
      * @param badFormat3 bad format
      * @throws java.lang.Exception abc
      **/
-    int test1(int badFormat1,int badFormat2,
+    int test1(final int badFormat1, final int badFormat2,
               final int badFormat3)
         throws java.lang.Exception
     {
@@ -150,12 +150,12 @@ final class InputMethodLengthSimple
     {
         // with tab-width 8 all statements below start at the same column,
         // with different combinations of ' ' and '\t' before the statement
-                int tab0 =1;
-                int tab1 =1;
-                 int tab2 =1;
-                int tab3 =1;
-                    int tab4 =1;
-                  int tab5 =1;
+                int tab0 = 1;
+                int tab1 = 1;
+                 int tab2 = 1;
+                int tab3 = 1;
+                    int tab4 = 1;
+                  int tab5 = 1;
     }
 
     // MEMME:
@@ -191,8 +191,8 @@ final class InputMethodLengthSimple
     /**
      * @see to lazy to document all args. Testing excessive # args
      **/
-    void toManyArgs(int aArg1, int aArg2, int aArg3, int aArg4, int aArg5,
-                    int aArg6, int aArg7, int aArg8, int aArg9)
+    void toManyArgs(final int aArg1, final int aArg2, final int aArg3, final int aArg4, final int aArg5,
+                    final int aArg6, final int aArg7, final int aArg8, final int aArg9)
     {
     }
 }

@@ -74,7 +74,7 @@ public class AbstractJavadocCheckTest extends AbstractModuleTestSupport {
      * @param systemErr wrapper for {@code System.err}
      */
     @BeforeEach
-    public void setUp(@SysErr Capturable systemErr) {
+    public void setUp(final @SysErr Capturable systemErr) {
         systemErr.captureMuted();
     }
 
@@ -125,7 +125,7 @@ public class AbstractJavadocCheckTest extends AbstractModuleTestSupport {
     }
 
     @Test
-    public void testParsingErrors(@SysErr Capturable systemErr) throws Exception {
+    public void testParsingErrors(final @SysErr Capturable systemErr) throws Exception {
         final DefaultConfiguration checkConfig = createModuleConfig(TempCheck.class);
         final String[] expected = {
             "4: " + getCheckMessage(MSG_JAVADOC_MISSED_HTML_CLOSE, 4, "unclosedTag"),
@@ -147,7 +147,7 @@ public class AbstractJavadocCheckTest extends AbstractModuleTestSupport {
     }
 
     @Test
-    public void testAntlrError(@SysErr Capturable systemErr) throws Exception {
+    public void testAntlrError(final @SysErr Capturable systemErr) throws Exception {
         final DefaultConfiguration checkConfig = createModuleConfig(TempCheck.class);
         final String[] expected = {
             "4: " + getCheckMessage(MSG_JAVADOC_PARSE_RULE_ERROR, 78,
@@ -159,7 +159,7 @@ public class AbstractJavadocCheckTest extends AbstractModuleTestSupport {
 
     @Test
     public void testCheckReuseAfterParseErrorWithFollowingAntlrErrorInTwoFiles(
-            @SysErr Capturable systemErr) throws Exception {
+            final @SysErr Capturable systemErr) throws Exception {
         final DefaultConfiguration checkConfig = createModuleConfig(TempCheck.class);
         final Map<String, List<String>> expectedMessages = new LinkedHashMap<>(2);
         expectedMessages.put(getPath("InputAbstractJavadocParsingErrors.java"), asList(
@@ -226,7 +226,7 @@ public class AbstractJavadocCheckTest extends AbstractModuleTestSupport {
         final int[] defaultJavadocTokens = {JavadocTokenTypes.JAVADOC};
         final AbstractJavadocCheck check = new AbstractJavadocCheck() {
             @Override
-            public void visitJavadocToken(DetailNode ast) {
+            public void visitJavadocToken(final DetailNode ast) {
                 // no code necessary
             }
 
@@ -259,8 +259,7 @@ public class AbstractJavadocCheckTest extends AbstractModuleTestSupport {
             final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
             verify(checkConfig, getPath("InputAbstractJavadocMain.java"), expected);
             fail("CheckstyleException is expected");
-        }
-        catch (IllegalStateException ex) {
+        } catch (IllegalStateException ex) {
             final String expected = "Javadoc Token "
                     + "\"RETURN_LITERAL\" was not found in "
                     + "Acceptable javadoc tokens list in check";
@@ -291,8 +290,7 @@ public class AbstractJavadocCheckTest extends AbstractModuleTestSupport {
             final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
             verify(checkConfig, pathToEmptyFile, expected);
             fail("CheckstyleException is expected");
-        }
-        catch (IllegalStateException ex) {
+        } catch (IllegalStateException ex) {
             final String expected = "Javadoc Token \""
                     + JavadocTokenTypes.RETURN_LITERAL + "\" from required"
                     + " javadoc tokens was not found in default javadoc tokens list in check";
@@ -474,7 +472,7 @@ public class AbstractJavadocCheckTest extends AbstractModuleTestSupport {
         }
 
         @Override
-        public void visitJavadocToken(DetailNode ast) {
+        public void visitJavadocToken(final DetailNode ast) {
             // do nothing
         }
 
@@ -494,7 +492,7 @@ public class AbstractJavadocCheckTest extends AbstractModuleTestSupport {
         }
 
         @Override
-        public void visitJavadocToken(DetailNode ast) {
+        public void visitJavadocToken(final DetailNode ast) {
             assertEquals("JAVADOC", ast.getText(), ast.toString());
             final DetailNode text = JavadocUtil.findFirstToken(ast, JavadocTokenTypes.TEXT);
             assertNotNull(text, "Empty javadoc text at " + ast);
@@ -522,7 +520,7 @@ public class AbstractJavadocCheckTest extends AbstractModuleTestSupport {
         }
 
         @Override
-        public void visitJavadocToken(DetailNode ast) {
+        public void visitJavadocToken(final DetailNode ast) {
             // not used
         }
 
@@ -546,7 +544,7 @@ public class AbstractJavadocCheckTest extends AbstractModuleTestSupport {
         }
 
         @Override
-        public void visitJavadocToken(DetailNode ast) {
+        public void visitJavadocToken(final DetailNode ast) {
             // not used
         }
 
@@ -578,12 +576,12 @@ public class AbstractJavadocCheckTest extends AbstractModuleTestSupport {
         }
 
         @Override
-        public void visitJavadocToken(DetailNode ast) {
+        public void visitJavadocToken(final DetailNode ast) {
             visitCount++;
         }
 
         @Override
-        public void leaveJavadocToken(DetailNode ast) {
+        public void leaveJavadocToken(final DetailNode ast) {
             leaveCount++;
         }
 
@@ -593,7 +591,7 @@ public class AbstractJavadocCheckTest extends AbstractModuleTestSupport {
 
         private boolean reportVisitJavadocToken;
 
-        public final void setReportVisitJavadocToken(boolean reportVisitJavadocToken) {
+        public final void setReportVisitJavadocToken(final boolean reportVisitJavadocToken) {
             this.reportVisitJavadocToken = reportVisitJavadocToken;
         }
 
@@ -607,7 +605,7 @@ public class AbstractJavadocCheckTest extends AbstractModuleTestSupport {
         }
 
         @Override
-        public void visitJavadocToken(DetailNode ast) {
+        public void visitJavadocToken(final DetailNode ast) {
             if (reportVisitJavadocToken) {
                 log(ast.getLineNumber(), ast.getColumnNumber(), MSG_SUMMARY_FIRST_SENTENCE);
             }
@@ -624,7 +622,7 @@ public class AbstractJavadocCheckTest extends AbstractModuleTestSupport {
 
         private boolean reportVisitJavadocToken;
 
-        public final void setReportVisitJavadocToken(boolean reportVisitJavadocToken) {
+        public final void setReportVisitJavadocToken(final boolean reportVisitJavadocToken) {
             this.reportVisitJavadocToken = reportVisitJavadocToken;
         }
 
@@ -638,7 +636,7 @@ public class AbstractJavadocCheckTest extends AbstractModuleTestSupport {
         }
 
         @Override
-        public void visitJavadocToken(DetailNode ast) {
+        public void visitJavadocToken(final DetailNode ast) {
             if (reportVisitJavadocToken) {
                 log(ast.getLineNumber(), ast.getColumnNumber(), MSG_SUMMARY_FIRST_SENTENCE);
             }

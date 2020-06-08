@@ -46,8 +46,7 @@ public class ThreadModeSettingsTest {
         try {
             configuration.resolveName(ThreadModeSettings.CHECKER_MODULE_NAME);
             fail("An exception is expected");
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertEquals("Multi thread mode for Checker module is not implemented",
                     ex.getMessage(), "Invalid exception message");
         }
@@ -68,8 +67,7 @@ public class ThreadModeSettingsTest {
         try {
             configuration.resolveName(ThreadModeSettings.TREE_WALKER_MODULE_NAME);
             fail("Exception is expected");
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertEquals("Multi thread mode for TreeWalker module is not implemented",
                     ex.getMessage(), "Invalid exception message");
         }

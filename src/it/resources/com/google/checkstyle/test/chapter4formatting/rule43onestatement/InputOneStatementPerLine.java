@@ -51,11 +51,16 @@ public class InputOneStatementPerLine {
     if (one == 1) {
         one++; two++; //warn
     }
-    if (one != 1) { one++; } else { one--; } //warn
+    if (one != 1) {
+        one++;
+    } else {
+        one--;
+    } //warn
     int n = 10;
 
     doLegal(); doLegal(); //warn
-    while (one == 1) {one++; two--;} //warn
+    while (one == 1) {
+        one++; two--; } //warn
 
   }
 
@@ -65,7 +70,7 @@ public class InputOneStatementPerLine {
    */
   public void doIllegal2() {
     one = 1
-    ; two = 2; //warn
+; two = 2; //warn
   }
 
   class Inner
@@ -96,11 +101,16 @@ public class InputOneStatementPerLine {
         if (one == 1) {
             one++; two++; //warn
         }
-        if (one != 1) { one++; } else { one--; } //warn
+        if (one != 1) {
+            one++;
+        } else {
+            one--;
+        } //warn
         int n = 10;
 
         doLegal(); doLegal(); //warn
-        while (one == 1) {one++; two--;} //warn
+        while (one == 1) {
+            one++; two--; } //warn
 
       }
   }
@@ -160,7 +170,7 @@ public class InputOneStatementPerLine {
   int w = 1,
       x = 2,
       y = 5
-          ;
+;
 
   /**
    * Two multiline  assignment (declaration) statements
@@ -175,7 +185,7 @@ public class InputOneStatementPerLine {
    */
   int four = 1,
       five = 5
-          ;
+;
   int seven = 2;
 
   /**
@@ -203,7 +213,7 @@ public class InputOneStatementPerLine {
   private void foo2() {
     toString(
 
-    ); toString (
+    ); toString(
 
     ); //warn
   }
@@ -214,7 +224,7 @@ public class InputOneStatementPerLine {
    * of 2 statements on one line.
    */
   int var9 = 1, var10 = 5
-      ; int var11 = 2; //warn
+; int var11 = 2; //warn
 
 
   /**
@@ -274,25 +284,27 @@ public class InputOneStatementPerLine {
     /**
      * a "forever" loop.
      */
-    for(;;){} //legal
+    for (;;) { } //legal
   }
 
   public void foo6() {
   /**
    * One statement inside for block is legal
    */
-    for (;;) { one = 5; } //legal
+    for (;;) {
+        one = 5; } //legal
   }
 
   /**
    * One statement inside multiline for loop is legal.
    */
   private void foo7() {
-    for(int n = 0,
+    for (int n = 0,
             k = 1
-            ; n<5
-            ;
-            n++, k--) { var1++; } //legal
+; n < 5
+;
+            n++, k--) {
+                var1++; } //legal
     }
 
   /**
@@ -300,10 +312,11 @@ public class InputOneStatementPerLine {
    * inside multiline for loop are illegal.
    */
   private void foo8() {
-    for(int n = 0,
+    for (int n = 0,
             k = 1
-            ; n<5
-            ;
-            n++, k--) { var1++; var2++; } //warn
+; n < 5
+;
+            n++, k--) {
+                var1++; var2++; } //warn
     }
 }

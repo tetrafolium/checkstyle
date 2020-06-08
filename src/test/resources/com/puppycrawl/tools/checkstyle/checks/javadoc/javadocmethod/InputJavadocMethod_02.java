@@ -8,7 +8,7 @@ public class InputJavadocMethod_02 {
         /** Exception 1.
          * @param messg message
          */
-        TestException1(String messg) {
+        TestException1(final String messg) {
             super(messg);
         }
     }
@@ -18,7 +18,7 @@ public class InputJavadocMethod_02 {
         /** Exception 2.
          * @param messg message
          */
-        TestException2(String messg) {
+        TestException2(final String messg) {
             super(messg);
         }
     }

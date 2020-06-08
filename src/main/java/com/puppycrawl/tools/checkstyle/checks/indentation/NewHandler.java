@@ -35,9 +35,9 @@ public class NewHandler extends AbstractExpressionHandler {
      * @param ast           the abstract syntax tree
      * @param parent        the parent handler
      */
-    public NewHandler(IndentationCheck indentCheck,
-                      DetailAST ast,
-                      AbstractExpressionHandler parent) {
+    public NewHandler(final IndentationCheck indentCheck,
+                      final DetailAST ast,
+                      final AbstractExpressionHandler parent) {
         super(indentCheck, "operator new", ast, parent);
     }
 
@@ -59,8 +59,7 @@ public class NewHandler extends AbstractExpressionHandler {
         // of the line
         if (getLineStart(getMainAst()) == getMainAst().getColumnNo()) {
             result = super.getIndentImpl();
-        }
-        else {
+        } else {
             result = new IndentLevel(getLineStart(getMainAst()));
         }
         return result;

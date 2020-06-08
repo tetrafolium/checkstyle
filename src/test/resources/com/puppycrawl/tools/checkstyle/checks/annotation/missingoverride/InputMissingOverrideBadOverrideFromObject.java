@@ -5,7 +5,7 @@ public class InputMissingOverrideBadOverrideFromObject
     /**
      * {@inheritDoc}
      */
-    public boolean equals(Object obj)
+    public boolean equals(final Object obj)
     {
         return false;
     }
@@ -51,5 +51,5 @@ enum Bleh3 {
         return "B";
     }
 
-    private static void test() {}
+    private static void test() { }
 }

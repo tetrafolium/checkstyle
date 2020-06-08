@@ -84,8 +84,7 @@ public class DefaultConfigurationTest {
         try {
             config.getAttribute(attributeName);
             fail("Exception is expected");
-        }
-        catch (CheckstyleException expected) {
+        } catch (CheckstyleException expected) {
             assertEquals(
                     "missing key '" + attributeName + "' in " + name,
                     expected.getMessage(), "Invalid exception message");

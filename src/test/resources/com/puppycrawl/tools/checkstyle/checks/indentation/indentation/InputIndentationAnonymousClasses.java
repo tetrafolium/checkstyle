@@ -17,14 +17,14 @@ package com.puppycrawl.tools.checkstyle.checks.indentation.indentation; //indent
 @MyAnnotation1 //indent:0 exp:0
 public class //indent:0 exp:0
     InputIndentationAnonymousClasses { //indent:4 exp:4
-  public InputIndentationAnonymousClasses(String longStr, String secondLongStr) { //indent:2 exp:2
+  public InputIndentationAnonymousClasses(final String longStr, final String secondLongStr) { //indent:2 exp:2
 
   } //indent:2 exp:2
   public boolean foo() { //indent:2 exp:2
     return false; //indent:4 exp:4
   } //indent:2 exp:2
 
-  void foo2(StrangeInstance instance) {} //indent:2 exp:2
+  void foo2(final StrangeInstance instance) { } //indent:2 exp:2
 } //indent:0 exp:0
 
 class WithAnonymousClass { //indent:0 exp:0
@@ -36,12 +36,12 @@ class WithAnonymousClass { //indent:0 exp:0
   }; //indent:2 exp:2
 
   InputIndentationAnonymousClasses foo() { //indent:2 exp:2
-    return new InputIndentationAnonymousClasses( //indent:4 exp:4
+    return new InputIndentationAnonymousClasses(//indent:4 exp:4
         "Loooooooooooooooong", "SecondLoooooooooong") { //indent:8 exp:>=8
           @Override public boolean foo() { //indent:10 exp:10
             Obj2 obj2Intance = new Obj2("", ""); //indent:12 exp:12
             obj2Intance.equals(new StrangeInstance(new Obj2("", "")) { //indent:12 exp:12
-              @Override void foo (String longString, String secondLongString) {} //indent:14 exp:14
+              @Override void foo(final String longString, final String secondLongString) { } //indent:14 exp:14
             }); //indent:12 exp:12
             return false; //indent:12 exp:12
           } //indent:10 exp:10
@@ -50,13 +50,14 @@ class WithAnonymousClass { //indent:0 exp:0
 } //indent:0 exp:0
 
 class StrangeInstance { //indent:0 exp:0
-  public StrangeInstance(Object inputIndentationAnonymousClasses) {} //indent:2 exp:2
-  void foo (String longString, String secondLongString) {} //indent:2 exp:2
+  public StrangeInstance(final Object inputIndentationAnonymousClasses) { } //indent:2 exp:2
+  void foo(final String longString, final String secondLongString) { } //indent:2 exp:2
 } //indent:0 exp:0
 
 class Obj2 { //indent:0 exp:0
-  public Obj2(String value1, String value2) {} //indent:2 exp:2
-  boolean foo () { return true; } //indent:2 exp:2
+  public Obj2(final String value1, final String value2) { } //indent:2 exp:2
+  boolean foo() {
+      return true; } //indent:2 exp:2
 } //indent:0 exp:0
 
-@interface MyAnnotation1 {} //indent:0 exp:0
+@interface MyAnnotation1 { } //indent:0 exp:0

@@ -75,7 +75,7 @@ public class StringLiteralEqualityCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         // no need to check for nulls here, == and != always have two children
         final DetailAST firstChild = ast.getFirstChild();
         final DetailAST secondChild = firstChild.getNextSibling();

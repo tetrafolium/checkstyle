@@ -4,8 +4,8 @@ public class InputAbstractJavadocCustomTag {
     /**
      * {@customTag}
      */
-    void customTag() {}
+    void customTag() { }
 
     /** {@customTag} */
-    void customTag2() {}
+    void customTag2() { }
 }

@@ -38,7 +38,7 @@ public class TestRootModuleChecker implements RootModule {
     private static String property;
 
     @Override
-    public void configure(Configuration configuration) throws CheckstyleException {
+    public void configure(final Configuration configuration) throws CheckstyleException {
         config = configuration;
         property = configuration.getAttribute("property");
     }
@@ -49,19 +49,19 @@ public class TestRootModuleChecker implements RootModule {
     }
 
     @Override
-    public int process(List<File> files) {
+    public int process(final List<File> files) {
         processed = true;
         filesToCheck = new ArrayList<>(files);
         return 0;
     }
 
     @Override
-    public void addListener(AuditListener listener) {
+    public void addListener(final AuditListener listener) {
         // not used
     }
 
     @Override
-    public void setModuleClassLoader(ClassLoader moduleClassLoader) {
+    public void setModuleClassLoader(final ClassLoader moduleClassLoader) {
         // not used
     }
 

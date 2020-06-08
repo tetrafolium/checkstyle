@@ -1,16 +1,16 @@
 package com.puppycrawl.tools.checkstyle.checks.blocks.emptyblock;
 
 public class InputEmptyBlockDefault {
-    void method1(int a) {
-        switch (a) {}
-        switch (a) {default: ; } // no violation
-        switch (a) {default: {}} // violation
+    void method1(final int a) {
+        switch (a) { }
+        switch (a) { default: ; } // no violation
+        switch (a) { default: { }} // violation
         switch (a) {
             default:
         }
         switch (a) {
             default:             // violation
-            {}
+            { }
         }
         switch (a) {
             default:             // violation if checking statements
@@ -19,7 +19,7 @@ public class InputEmptyBlockDefault {
         }
     }
 
-    void method2(int a) {
+    void method2(final int a) {
         switch (a) {
             case 1:a++;
             case 2:a++;
@@ -32,24 +32,24 @@ public class InputEmptyBlockDefault {
         }
     }
 
-    void method3(int a, int b) {
+    void method3(final int a, final int b) {
         switch (a) {
             case 1: break;
-            default: {} method2(a);  // violation
+            default: { } method2(a);  // violation
         }
 
         switch (b) {
             case 2: break;
-            default: method2(b); {}  // no violation
+            default: method2(b); { }  // no violation
         }
 
-        switch (a+b) {case 1: break; default: {} ; } // violation
+        switch (a + b) { case 1: break; default: { } ; } // violation
     }
 
-    void method4(int a, int b) {
+    void method4(final int a, final int b) {
         switch (a) {
             case 1:
-            default: {}    // violation
+            default: { }    // violation
         }
 
         switch (b) {
@@ -57,12 +57,12 @@ public class InputEmptyBlockDefault {
             default:       // no violation
         }
 
-        switch (a+b) {
+        switch (a + b) {
             default:       // no violation
             case 1: { }
         }
 
-        switch (a-b) {
+        switch (a - b) {
             case 1:
             default: {     // violation if checking statements
 
@@ -71,7 +71,7 @@ public class InputEmptyBlockDefault {
         }
     }
 
-    void method5(int a, int b) {
+    void method5(final int a, final int b) {
         switch (a) {
             case 1:
             case 2:

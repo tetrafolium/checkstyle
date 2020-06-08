@@ -108,7 +108,7 @@ public abstract class AbstractItModuleTestSupport extends AbstractPathTestSuppor
      * @return canonical path for the file with the given file name.
      * @throws IOException if I/O exception occurs while forming the path.
      */
-    protected final String getNonCompilablePath(String filename) throws IOException {
+    protected final String getNonCompilablePath(final String filename) throws IOException {
         return new File("src/" + getResourceLocation() + "/resources-noncompilable/"
                 + getPackageLocation() + "/" + filename).getCanonicalPath();
     }
@@ -119,7 +119,7 @@ public abstract class AbstractItModuleTestSupport extends AbstractPathTestSuppor
      * @return {@link Checker} instance based on the given {@link Configuration} instance.
      * @throws Exception if an exception occurs during checker configuration.
      */
-    protected final Checker createChecker(Configuration moduleConfig)
+    protected final Checker createChecker(final Configuration moduleConfig)
             throws Exception {
         final String name = moduleConfig.getName();
 
@@ -134,18 +134,16 @@ public abstract class AbstractItModuleTestSupport extends AbstractPathTestSuppor
      * @return {@link Checker} instance.
      * @throws Exception if an exception occurs during checker configuration.
      */
-    protected final Checker createChecker(Configuration moduleConfig,
-                                    ModuleCreationOption moduleCreationOption)
+    protected final Checker createChecker(final Configuration moduleConfig,
+                                    final ModuleCreationOption moduleCreationOption)
             throws Exception {
         final Configuration dc;
 
         if (moduleCreationOption == ModuleCreationOption.IN_TREEWALKER) {
             dc = createTreeWalkerConfig(moduleConfig);
-        }
-        else if (ROOT_MODULE_NAME.equals(moduleConfig.getName())) {
+        } else if (ROOT_MODULE_NAME.equals(moduleConfig.getName())) {
             dc = moduleConfig;
-        }
-        else {
+        } else {
             dc = createRootConfig(moduleConfig);
         }
 
@@ -167,7 +165,7 @@ public abstract class AbstractItModuleTestSupport extends AbstractPathTestSuppor
      * @param config {@link Configuration} instance.
      * @return {@link DefaultConfiguration} for the {@link Checker}.
      */
-    protected final DefaultConfiguration createTreeWalkerConfig(Configuration config) {
+    protected final DefaultConfiguration createTreeWalkerConfig(final Configuration config) {
         final DefaultConfiguration dc =
                 new DefaultConfiguration("configuration");
         final DefaultConfiguration twConf = createModuleConfig(TreeWalker.class);
@@ -183,7 +181,7 @@ public abstract class AbstractItModuleTestSupport extends AbstractPathTestSuppor
      * @param config {@link Configuration} instance.
      * @return {@link DefaultConfiguration} for the given {@link Configuration} instance.
      */
-    protected static DefaultConfiguration createRootConfig(Configuration config) {
+    protected static DefaultConfiguration createRootConfig(final Configuration config) {
         final DefaultConfiguration dc = new DefaultConfiguration(ROOT_MODULE_NAME);
         dc.addChild(config);
         return dc;
@@ -202,8 +200,8 @@ public abstract class AbstractItModuleTestSupport extends AbstractPathTestSuppor
      * @param warnsExpected an array of expected warning numbers.
      * @throws Exception if exception occurs during verification process.
      */
-    protected final void verify(Configuration config, String fileName, String[] expected,
-            Integer... warnsExpected) throws Exception {
+    protected final void verify(final Configuration config, final String fileName, final String[] expected,
+            final Integer... warnsExpected) throws Exception {
         verify(createChecker(config),
                 new File[] {new File(fileName)},
                 fileName, expected, warnsExpected);
@@ -218,11 +216,11 @@ public abstract class AbstractItModuleTestSupport extends AbstractPathTestSuppor
      * @param warnsExpected an array of expected warning line numbers.
      * @throws Exception if exception occurs during verification process.
      */
-    protected final void verify(Checker checker,
-            File[] processedFiles,
-            String messageFileName,
-            String[] expected,
-            Integer... warnsExpected)
+    protected final void verify(final Checker checker,
+            final File[] processedFiles,
+            final String messageFileName,
+            final String[] expected,
+            final Integer... warnsExpected)
             throws Exception {
         stream.flush();
         stream.reset();
@@ -272,8 +270,8 @@ public abstract class AbstractItModuleTestSupport extends AbstractPathTestSuppor
      * @return The message of the check with the arguments applied.
      * @throws IOException if there is a problem loading the property file.
      */
-    protected static String getCheckMessage(Class<? extends AbstractViolationReporter> aClass,
-            String messageKey, Object... arguments) throws IOException {
+    protected static String getCheckMessage(final Class<? extends AbstractViolationReporter> aClass,
+            final String messageKey, final Object... arguments) throws IOException {
         final Properties pr = new Properties();
         pr.load(aClass.getResourceAsStream("messages.properties"));
         final MessageFormat formatter = new MessageFormat(pr.getProperty(messageKey),
@@ -288,8 +286,8 @@ public abstract class AbstractItModuleTestSupport extends AbstractPathTestSuppor
      * @param arguments the arguments of message in 'messages.properties' file.
      * @return The message of the check with the arguments applied.
      */
-    protected static String getCheckMessage(Map<String, String> messages, String messageKey,
-            Object... arguments) {
+    protected static String getCheckMessage(final Map<String, String> messages, final String messageKey,
+            final Object... arguments) {
         String checkMessage = null;
         for (Map.Entry<String, String> entry : messages.entrySet()) {
             if (messageKey.equals(entry.getKey())) {
@@ -301,7 +299,7 @@ public abstract class AbstractItModuleTestSupport extends AbstractPathTestSuppor
         return checkMessage;
     }
 
-    private static String removeDeviceFromPathOnWindows(String path) {
+    private static String removeDeviceFromPathOnWindows(final String path) {
         String fixedPath = path;
         final String os = System.getProperty("os.name", "Unix");
         if (os.startsWith("Windows")) {
@@ -317,7 +315,7 @@ public abstract class AbstractItModuleTestSupport extends AbstractPathTestSuppor
      * @return an array of integers which represents the warning line numbers.
      * @throws IOException if I/O exception occurs while reading the file.
      */
-    protected Integer[] getLinesWithWarn(String fileName) throws IOException {
+    protected Integer[] getLinesWithWarn(final String fileName) throws IOException {
         final List<Integer> result = new ArrayList<>();
         try (BufferedReader br = Files.newBufferedReader(
                 Paths.get(fileName), StandardCharsets.UTF_8)) {

@@ -39,7 +39,7 @@ public class InputJavaNCSS {
         ItemListener lis = new ItemListener() {
 
             //should give an ncss of 2
-            public void itemStateChanged(ItemEvent e) {
+            public void itemStateChanged(final ItemEvent e) {
                 System.identityHashCode("Hello");
             }
         };
@@ -60,14 +60,13 @@ class TestTopLevelNestedClass {
     //should give an ncss of 8
     private void testMethod() {
 
-        for (int i=0; i<10; i++) {
+        for (int i = 0; i < 10; i++) {
 
-            if (i==0) {
+            if (i == 0) {
 
                 //should count as 1
                 int x = 1, y = 2;
-            }
-            else {
+            } else {
                 int abc = 0;
 
                 //should count as 2

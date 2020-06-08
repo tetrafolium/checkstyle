@@ -144,8 +144,7 @@ public class JavadocPackageCheckTest
         try {
             check.processFiltered(fileWithInvalidPath, mockFileText);
             fail("CheckstyleException expected to be thrown");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             assertEquals(expectedExceptionMessage, ex.getMessage(),
                     "Invalid exception message. Expected: " + expectedExceptionMessage);
         }

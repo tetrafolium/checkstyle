@@ -52,7 +52,7 @@ public final class DetailNodeTreeStringPrinter {
      * @return parse tree as a string
      * @throws IOException if the file could not be read.
      */
-    public static String printFileAst(File file) throws IOException {
+    public static String printFileAst(final File file) throws IOException {
         return printTree(parseFile(file), "", "");
     }
 
@@ -61,7 +61,7 @@ public final class DetailNodeTreeStringPrinter {
      * @param blockComment DetailAST
      * @return DetailNode tree
      */
-    public static DetailNode parseJavadocAsDetailNode(DetailAST blockComment) {
+    public static DetailNode parseJavadocAsDetailNode(final DetailAST blockComment) {
         final JavadocDetailNodeParser parser = new JavadocDetailNodeParser();
         final ParseStatus status = parser.parseJavadocAsDetailNode(blockComment);
         if (status.getParseErrorMessage() != null) {
@@ -75,7 +75,7 @@ public final class DetailNodeTreeStringPrinter {
      * @param javadocComment javadoc comment content
      * @return tree
      */
-    private static DetailNode parseJavadocAsDetailNode(String javadocComment) {
+    private static DetailNode parseJavadocAsDetailNode(final String javadocComment) {
         final DetailAST blockComment = CommonUtil.createBlockCommentNode(javadocComment);
         return parseJavadocAsDetailNode(blockComment);
     }
@@ -85,7 +85,7 @@ public final class DetailNodeTreeStringPrinter {
      * @param parseErrorMessage ParseErrorMessage
      * @return error message
      */
-    private static String getParseErrorMessage(ParseErrorMessage parseErrorMessage) {
+    private static String getParseErrorMessage(final ParseErrorMessage parseErrorMessage) {
         final LocalizedMessage lmessage = new LocalizedMessage(
                 parseErrorMessage.getLineNumber(),
                 "com.puppycrawl.tools.checkstyle.checks.javadoc.messages",
@@ -104,14 +104,13 @@ public final class DetailNodeTreeStringPrinter {
      * @param prefix prefix for other nodes
      * @return string AST.
      */
-    public static String printTree(DetailNode ast, String rootPrefix, String prefix) {
+    public static String printTree(final DetailNode ast, final String rootPrefix, final String prefix) {
         final StringBuilder messageBuilder = new StringBuilder(1024);
         DetailNode node = ast;
         while (node != null) {
             if (node.getType() == JavadocTokenTypes.JAVADOC) {
                 messageBuilder.append(rootPrefix);
-            }
-            else {
+            } else {
                 messageBuilder.append(prefix);
             }
             messageBuilder.append(getIndentation(node))
@@ -130,7 +129,7 @@ public final class DetailNodeTreeStringPrinter {
      * @param node the DetailNode to get the indentation for.
      * @return the indentation in String format.
      */
-    private static String getIndentation(DetailNode node) {
+    private static String getIndentation(final DetailNode node) {
         final boolean isLastChild = JavadocUtil.getNextSibling(node) == null;
         DetailNode currentNode = node;
         final StringBuilder indentation = new StringBuilder(1024);
@@ -141,16 +140,13 @@ public final class DetailNodeTreeStringPrinter {
                     // only ASCII symbols must be used due to
                     // problems with running tests on Windows
                     indentation.append("`--");
-                }
-                else {
+                } else {
                     indentation.append("|--");
                 }
-            }
-            else {
+            } else {
                 if (JavadocUtil.getNextSibling(currentNode) == null) {
                     indentation.insert(0, "    ");
-                }
-                else {
+                } else {
                     indentation.insert(0, "|   ");
                 }
             }
@@ -164,7 +160,7 @@ public final class DetailNodeTreeStringPrinter {
      * @return the root node of the parse tree.
      * @throws IOException if the file could not be read.
      */
-    private static DetailNode parseFile(File file) throws IOException {
+    private static DetailNode parseFile(final File file) throws IOException {
         final FileText text = new FileText(file.getAbsoluteFile(),
             System.getProperty("file.encoding", StandardCharsets.UTF_8.name()));
         return parseJavadocAsDetailNode(text.getFullText().toString());

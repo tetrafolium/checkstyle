@@ -6,11 +6,11 @@ import java.util.function.Supplier;
 public class InputMethodReferences2
 {
 
-    public static void main(String[] args)
+    public static void main(final String[] args)
     {
 
         Supplier<InputMethodReferences2> supplier = InputMethodReferences2::new;
-        Supplier<InputMethodReferences2> suppl = InputMethodReferences2::<Integer> new;
+        Supplier<InputMethodReferences2> suppl = InputMethodReferences2::<Integer>new;
         Function<Integer, String[]> messageArrayFactory = String[]::new;
 
     }

@@ -64,7 +64,7 @@ public final class InlineTagUtil {
      * @return The extracted inline Javadoc tags.
      * @throws IllegalArgumentException when comment lines contain newlines
      */
-    public static List<TagInfo> extractInlineTags(String... lines) {
+    public static List<TagInfo> extractInlineTags(final String... lines) {
         for (String line : lines) {
             if (line.contains(LINE_FEED) || line.contains(CARRIAGE_RETURN)) {
                 throw new IllegalArgumentException("comment lines cannot contain newlines");
@@ -103,7 +103,7 @@ public final class InlineTagUtil {
      * @param lines A number of lines, in order.
      * @return The lines, joined together with newlines, as a single string.
      */
-    private static String convertLinesToString(String... lines) {
+    private static String convertLinesToString(final String... lines) {
         final StringBuilder builder = new StringBuilder(1024);
         for (String line : lines) {
             builder.append(line);
@@ -118,7 +118,7 @@ public final class InlineTagUtil {
      * @param index An index into the string.
      * @return A position in the source representing what line and column that index appears on.
      */
-    private static LineColumn getLineColumnOfIndex(String source, int index) {
+    private static LineColumn getLineColumnOfIndex(final String source, final int index) {
         final String precedingText = source.subSequence(0, index).toString();
         final String[] precedingLines = NEWLINE_PATTERN.split(precedingText);
         final String lastLine = precedingLines[precedingLines.length - 1];
@@ -130,7 +130,7 @@ public final class InlineTagUtil {
      * @param str Source string.
      * @return The given string with all whitespace collapsed.
      */
-    private static String collapseWhitespace(String str) {
+    private static String collapseWhitespace(final String str) {
         final Matcher matcher = WHITESPACE_PATTERN.matcher(str);
         return matcher.replaceAll(" ").trim();
     }
@@ -140,7 +140,7 @@ public final class InlineTagUtil {
      * @param source A string to remove leading Javadoc from.
      * @return The given string with leading Javadoc "*" characters from each line removed.
      */
-    private static String removeLeadingJavaDoc(String source) {
+    private static String removeLeadingJavaDoc(final String source) {
         final Matcher matcher = JAVADOC_PREFIX_PATTERN.matcher(source);
         return matcher.replaceAll("");
     }

@@ -19,8 +19,7 @@ public class InputSimplifyBooleanReturn
         // can be simplified to "if (even)"
         if (even == true) {
             return false;
-        }
-        else {
+        } else {
             return true;
         }
         // return can be simplified to "return !even"
@@ -46,14 +45,12 @@ public class InputSimplifyBooleanReturn
     public void tryToProvokeNPE()
     {
         if (true) {
-        }
-        else {
+        } else {
         }
 
         if (true) {
             return;
-        }
-        else {
+        } else {
             return;
         }
     }
@@ -91,8 +88,8 @@ public class InputSimplifyBooleanReturn
     boolean b() {
         boolean asd = false;
 
-        if(asd);
-        else;
+        if (asd);
+        else ;
 
         return true;
     }

@@ -52,7 +52,7 @@ public class RootNode extends AbstractNode {
      *
      * @param detailAst reference to {@code DetailAST}
      */
-    public RootNode(DetailAST detailAst) {
+    public RootNode(final DetailAST detailAst) {
         super(new GenericTreeInfo(Configuration.newConfiguration()));
         this.detailAst = detailAst;
 
@@ -80,7 +80,7 @@ public class RootNode extends AbstractNode {
      * @return attribute value
      */
     @Override
-    public String getAttributeValue(String namespace, String localPart) {
+    public String getAttributeValue(final String namespace, final String localPart) {
         throw throwUnsupportedOperationException();
     }
 
@@ -127,7 +127,7 @@ public class RootNode extends AbstractNode {
      * @return {@code AxisIterator} object
      */
     @Override
-    public AxisIterator iterateAxis(byte axisNumber) {
+    public AxisIterator iterateAxis(final byte axisNumber) {
         final AxisIterator result;
         switch (axisNumber) {
             case AxisInfo.ANCESTOR:
@@ -151,8 +151,7 @@ public class RootNode extends AbstractNode {
                             getChildren().toArray(EMPTY_ABSTRACT_NODE_ARRAY))) {
                         result = iterator;
                     }
-                }
-                else {
+                } else {
                     result = EmptyIterator.OfNodes.THE_INSTANCE;
                 }
                 break;
@@ -162,8 +161,7 @@ public class RootNode extends AbstractNode {
                                  new Navigator.DescendantEnumeration(this, false, true)) {
                         result = iterator;
                     }
-                }
-                else {
+                } else {
                     result = EmptyIterator.OfNodes.THE_INSTANCE;
                 }
                 break;

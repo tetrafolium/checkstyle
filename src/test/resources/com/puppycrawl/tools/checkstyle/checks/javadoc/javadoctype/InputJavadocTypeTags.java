@@ -30,7 +30,7 @@ class InputJavadocTypeTags1
      * <p>missing return
      * @param aOne ignored
      **/
-    int method4(int aOne)
+    int method4(final int aOne)
     {
         return aOne;
     }
@@ -57,7 +57,7 @@ class InputJavadocTypeTags1
     }
 
     /** missing param **/
-    void method8(int aOne)
+    void method8(final int aOne)
     {
     }
 
@@ -65,12 +65,12 @@ class InputJavadocTypeTags1
      * @see missing param
      * @see need to see tags to avoid shortcut logic
      **/
-    void method9(int aOne)
+    void method9(final int aOne)
     {
     }
 
     /** @param WrongParam problem **/
-    void method10(int aOne, int aTwo)
+    void method10(final int aOne, final int aTwo)
     {
     }
 
@@ -106,12 +106,12 @@ class InputJavadocTypeTags1
      *
      * @param aFive
      **/
-    void method13(int aOne, int aTwo, int aThree, int aFour, int aFive)
+    void method13(final int aOne, final int aTwo, final int aThree, final int aFour, final int aFive)
     {
     }
 
     /** @param aOne Perfectly legal **/
-    void method14(int aOne)
+    void method14(final int aOne)
     {
     }
 
@@ -169,7 +169,7 @@ class InputJavadocTypeTags1
      * @param aOne valid parameter content
      */
     //**********************************************************************/
-    void method16(int aOne)
+    void method16(final int aOne)
     {
     }
 
@@ -269,23 +269,26 @@ class InputJavadocTypeTags1
 
     /** {@inheritDoc} */
     int method26()
-    { return 0;
+    {
+        return 0;
     }
 
     /**
      * {@inheritDoc}
      * @return something very important.
      */
-    int method27(int aParam)
-    { return 0;
+    int method27(final int aParam)
+    {
+        return 0;
     }
 
     /**
      * @return something very important.
      * {@inheritDoc}
      */
-    int method28(int aParam)
-    { return 0;
+    int method28(final int aParam)
+    {
+        return 0;
     }
 
     /**
@@ -293,7 +296,7 @@ class InputJavadocTypeTags1
      *
      * @return 1
      */
-    public int foo(Object _arg) {
+    public int foo(final Object _arg) {
 
         return 1;
     }

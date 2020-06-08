@@ -286,7 +286,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      * @param allow
      *        User's value.
      */
-    public final void setAllowNoEmptyLineBetweenFields(boolean allow) {
+    public final void setAllowNoEmptyLineBetweenFields(final boolean allow) {
         allowNoEmptyLineBetweenFields = allow;
     }
 
@@ -294,7 +294,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      * Setter to allow multiple empty lines between class members.
      * @param allow User's value.
      */
-    public void setAllowMultipleEmptyLines(boolean allow) {
+    public void setAllowMultipleEmptyLines(final boolean allow) {
         allowMultipleEmptyLines = allow;
     }
 
@@ -302,7 +302,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      * Setter to allow multiple empty lines inside class members.
      * @param allow User's value.
      */
-    public void setAllowMultipleEmptyLinesInsideClassMembers(boolean allow) {
+    public void setAllowMultipleEmptyLinesInsideClassMembers(final boolean allow) {
         allowMultipleEmptyLinesInsideClassMembers = allow;
     }
 
@@ -339,7 +339,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         checkComments(ast);
         if (hasMultipleLinesBefore(ast)) {
             log(ast.getLineNo(), MSG_MULTIPLE_LINES, ast.getText());
@@ -365,7 +365,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      * @param ast token to validate
      * @param nextToken next sibling of the token
      */
-    private void checkToken(DetailAST ast, DetailAST nextToken) {
+    private void checkToken(final DetailAST ast, final DetailAST nextToken) {
         final int astType = ast.getType();
         switch (astType) {
             case TokenTypes.VARIABLE_DEF:
@@ -383,8 +383,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
                     if (hasNotAllowedTwoEmptyLinesBefore(nextToken)) {
                         log(ast.getLineNo(), MSG_MULTIPLE_LINES_AFTER, ast.getText());
                     }
-                }
-                else if (!hasEmptyLineAfter(ast)) {
+                } else if (!hasEmptyLineAfter(ast)) {
                     log(nextToken.getLineNo(), MSG_SHOULD_BE_SEPARATED,
                         nextToken.getText());
                 }
@@ -396,7 +395,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      *
      * @param packageDef package def token
      */
-    private void checkCommentInModifiers(DetailAST packageDef) {
+    private void checkCommentInModifiers(final DetailAST packageDef) {
         final Optional<DetailAST> comment = findCommentUnder(packageDef);
         if (comment.isPresent()) {
             log(comment.get().getLineNo(), MSG_SHOULD_BE_SEPARATED, comment.get().getText());
@@ -408,7 +407,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      * initialization block or method.
      * @param ast the ast to check.
      */
-    private void processMultipleLinesInside(DetailAST ast) {
+    private void processMultipleLinesInside(final DetailAST ast) {
         final int astType = ast.getType();
         if (isClassMemberBlock(astType)) {
             final List<Integer> emptyLines = getEmptyLines(ast);
@@ -426,7 +425,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      * @param astType the AST to check.
      * @return true if the AST is a class member block.
      */
-    private static boolean isClassMemberBlock(int astType) {
+    private static boolean isClassMemberBlock(final int astType) {
         return astType == TokenTypes.STATIC_INIT
                 || astType == TokenTypes.INSTANCE_INIT
                 || astType == TokenTypes.METHOD_DEF
@@ -438,7 +437,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      * @param ast the ast to check.
      * @return list of line numbers for empty lines.
      */
-    private List<Integer> getEmptyLines(DetailAST ast) {
+    private List<Integer> getEmptyLines(final DetailAST ast) {
         final DetailAST lastToken = ast.getLastChild().getLastChild();
         int lastTokenLineNo = 0;
         if (lastToken != null) {
@@ -462,7 +461,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      * @param emptyLines list of empty lines.
      * @return list of empty lines to log.
      */
-    private static List<Integer> getEmptyLinesToLog(List<Integer> emptyLines) {
+    private static List<Integer> getEmptyLinesToLog(final List<Integer> emptyLines) {
         final List<Integer> emptyLinesToLog = new ArrayList<>();
         if (emptyLines.size() >= 2) {
             int previousEmptyLineNo = emptyLines.get(0);
@@ -481,7 +480,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      * @param ast the ast to check.
      * @return true if the token has not allowed multiple empty lines before.
      */
-    private boolean hasMultipleLinesBefore(DetailAST ast) {
+    private boolean hasMultipleLinesBefore(final DetailAST ast) {
         boolean result = false;
         if ((ast.getType() != TokenTypes.VARIABLE_DEF
             || isTypeField(ast))
@@ -496,14 +495,13 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      * @param ast token
      * @param nextToken next token
      */
-    private void processPackage(DetailAST ast, DetailAST nextToken) {
+    private void processPackage(final DetailAST ast, final DetailAST nextToken) {
         if (ast.getLineNo() > 1 && !hasEmptyLineBefore(ast)) {
             if (getFileContents().getFileName().endsWith("package-info.java")) {
                 if (!ast.getFirstChild().hasChildren() && !isPrecededByJavadoc(ast)) {
                     log(ast.getLineNo(), MSG_SHOULD_BE_SEPARATED, ast.getText());
                 }
-            }
-            else {
+            } else {
                 log(ast.getLineNo(), MSG_SHOULD_BE_SEPARATED, ast.getText());
             }
         }
@@ -517,7 +515,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      * @param ast token
      * @param nextToken next token
      */
-    private void processImport(DetailAST ast, DetailAST nextToken) {
+    private void processImport(final DetailAST ast, final DetailAST nextToken) {
         if (nextToken.getType() != TokenTypes.IMPORT
                 && nextToken.getType() != TokenTypes.STATIC_IMPORT && !hasEmptyLineAfter(ast)) {
             log(nextToken.getLineNo(), MSG_SHOULD_BE_SEPARATED, nextToken.getText());
@@ -529,7 +527,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      * @param ast token
      * @param nextToken next Token
      */
-    private void processVariableDef(DetailAST ast, DetailAST nextToken) {
+    private void processVariableDef(final DetailAST ast, final DetailAST nextToken) {
         if (isTypeField(ast) && !hasEmptyLineAfter(ast)
                 && isViolatingEmptyLineBetweenFieldsPolicy(nextToken)) {
             log(nextToken.getLineNo(), MSG_SHOULD_BE_SEPARATED,
@@ -542,7 +540,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      * @param detailAST token to be analyzed
      * @return true if policy is violated and warning should be raised; false otherwise
      */
-    private boolean isViolatingEmptyLineBetweenFieldsPolicy(DetailAST detailAST) {
+    private boolean isViolatingEmptyLineBetweenFieldsPolicy(final DetailAST detailAST) {
         return detailAST.getType() != TokenTypes.RCURLY
                 && (!allowNoEmptyLineBetweenFields
                     || detailAST.getType() != TokenTypes.VARIABLE_DEF);
@@ -553,7 +551,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      * @param token DetailAST token
      * @return true, if token has empty two lines before and allowMultipleEmptyLines is false
      */
-    private boolean hasNotAllowedTwoEmptyLinesBefore(DetailAST token) {
+    private boolean hasNotAllowedTwoEmptyLinesBefore(final DetailAST token) {
         return !allowMultipleEmptyLines && hasEmptyLineBefore(token)
                 && isPrePreviousLineEmpty(token);
     }
@@ -562,7 +560,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      * Check if group of comments located right before token has more than one previous empty line.
      * @param token DetailAST token
      */
-    private void checkComments(DetailAST token) {
+    private void checkComments(final DetailAST token) {
         if (!allowMultipleEmptyLines) {
             if (TOKEN_TYPES_WITHOUT_COMMENTS_TO_CHECK_INSIDE.contains(token.getType())) {
                 DetailAST previousNode = token.getPreviousSibling();
@@ -572,8 +570,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
                     }
                     previousNode = previousNode.getPreviousSibling();
                 }
-            }
-            else {
+            } else {
                 checkCommentsInsideToken(token);
             }
         }
@@ -584,7 +581,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      * line.
      * @param token DetailAST token
      */
-    private void checkCommentsInsideToken(DetailAST token) {
+    private void checkCommentsInsideToken(final DetailAST token) {
         final List<DetailAST> childNodes = new LinkedList<>();
         DetailAST childNode = token.getLastChild();
         while (childNode != null) {
@@ -596,8 +593,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
                         childNodes.add(node);
                     }
                 }
-            }
-            else if (isCommentInBeginningOfLine(childNode)) {
+            } else if (isCommentInBeginningOfLine(childNode)) {
                 childNodes.add(childNode);
             }
             childNode = childNode.getPreviousSibling();
@@ -614,7 +610,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      * @param token DetailAST token.
      * @return true, if token has empty lines before.
      */
-    private boolean isPrePreviousLineEmpty(DetailAST token) {
+    private boolean isPrePreviousLineEmpty(final DetailAST token) {
         boolean result = false;
         final int lineNo = token.getLineNo();
         // 3 is the number of the pre-previous line because the numbering starts from zero.
@@ -631,7 +627,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      * @param token token.
      * @return true if token have empty line after.
      */
-    private boolean hasEmptyLineAfter(DetailAST token) {
+    private boolean hasEmptyLineAfter(final DetailAST token) {
         DetailAST lastToken = token.getLastChild().getLastChild();
         if (lastToken == null) {
             lastToken = token.getLastChild();
@@ -653,7 +649,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      * @param packageDef token to check
      * @return comment under the token
      */
-    private static Optional<DetailAST> findCommentUnder(DetailAST packageDef) {
+    private static Optional<DetailAST> findCommentUnder(final DetailAST packageDef) {
         return Optional.ofNullable(packageDef.getNextSibling())
             .map(sibling -> sibling.findFirstToken(TokenTypes.MODIFIERS))
             .map(DetailAST::getFirstChild)
@@ -669,7 +665,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      * @return {@code true} if found any blank line within the range, {@code false}
      *         otherwise
      */
-    private boolean hasEmptyLine(int startLine, int endLine) {
+    private boolean hasEmptyLine(final int startLine, final int endLine) {
         // Initial value is false - blank line not found
         boolean result = false;
         final FileContents fileContents = getFileContents();
@@ -688,7 +684,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      * @param token token.
      * @return true, if token have empty line before.
      */
-    private boolean hasEmptyLineBefore(DetailAST token) {
+    private boolean hasEmptyLineBefore(final DetailAST token) {
         boolean result = false;
         final int lineNo = token.getLineNo();
         if (lineNo != 1) {
@@ -704,7 +700,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      * @param comment comment token for check.
      * @return true, if token is comment, which starting in beginning of line.
      */
-    private boolean isCommentInBeginningOfLine(DetailAST comment) {
+    private boolean isCommentInBeginningOfLine(final DetailAST comment) {
         // [comment.getLineNo() - 1] is the number of the previous line as the numbering starts
         // from zero.
         boolean result = false;
@@ -720,7 +716,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      * @param token token for check.
      * @return true, if token is preceded by javadoc comment.
      */
-    private static boolean isPrecededByJavadoc(DetailAST token) {
+    private static boolean isPrecededByJavadoc(final DetailAST token) {
         boolean result = false;
         final DetailAST previous = token.getPreviousSibling();
         if (previous.getType() == TokenTypes.BLOCK_COMMENT_BEGIN
@@ -735,7 +731,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      * @param ast ast node
      * @return true, if given ast is comment.
      */
-    private static boolean isComment(DetailAST ast) {
+    private static boolean isComment(final DetailAST ast) {
         return ast.getType() == TokenTypes.SINGLE_LINE_COMMENT
                    || ast.getType() == TokenTypes.BLOCK_COMMENT_BEGIN;
     }
@@ -745,7 +741,7 @@ public class EmptyLineSeparatorCheck extends AbstractCheck {
      * @param variableDef variable definition.
      * @return true variable definition is a type field.
      */
-    private static boolean isTypeField(DetailAST variableDef) {
+    private static boolean isTypeField(final DetailAST variableDef) {
         final int parentType = variableDef.getParent().getParent().getType();
         return parentType == TokenTypes.CLASS_DEF;
     }

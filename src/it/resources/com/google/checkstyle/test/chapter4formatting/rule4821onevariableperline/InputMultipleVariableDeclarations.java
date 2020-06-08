@@ -14,15 +14,15 @@ public class InputMultipleVariableDeclarations
     java.lang.String string; java.lang.String //warn
         strings[];
     //both definitions is wrapped
-    java.lang. //warn
+    java.lang.//warn
         String string1; java.lang.String
             strings1[];
 
     void method2() {
-        for (int i=0, j=0; i < 10; i++, j--) { //ok
+        for (int i = 0, j = 0; i < 10; i++, j--) { //ok
         }
 
-        for(int i=0; i<4;i++) {
+        for (int i = 0; i < 4; i++) {
 
         }
     }
@@ -40,15 +40,15 @@ public class InputMultipleVariableDeclarations
         java.lang.String string; java.lang.String //warn
             strings[];
         //both definitions is wrapped
-        java.lang. //warn
+        java.lang.//warn
             String string1; java.lang.String
                 strings1[];
 
         void method2() {
-            for (int i=0, j=0; i < 10; i++, j--) { //ok
+            for (int i = 0, j = 0; i < 10; i++, j--) { //ok
             }
 
-            for(int i=0; i<4;i++) {
+            for (int i = 0; i < 4; i++) {
 
             }
         }
@@ -66,15 +66,15 @@ public class InputMultipleVariableDeclarations
             java.lang.String string; java.lang.String //warn
                 strings[];
             //both definitions is wrapped
-            java.lang. //warn
+            java.lang.//warn
                 String string1; java.lang.String
                     strings1[];
 
             void method2() {
-                for (int i=0, j=0; i < 10; i++, j--) { //ok
+                for (int i = 0, j = 0; i < 10; i++, j--) { //ok
                 }
 
-                for(int i=0; i<4;i++) {
+                for (int i = 0; i < 4; i++) {
 
                 }
             }

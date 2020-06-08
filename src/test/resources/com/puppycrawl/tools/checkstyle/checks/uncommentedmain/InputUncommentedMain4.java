@@ -7,7 +7,7 @@ package com.puppycrawl.tools.checkstyle.checks.uncommentedmain;
 class InputUncommentedMain4
 {
     // one more uncommented main
-    public static void main(int[] args)
+    public static void main(final int[] args)
     {
         System.identityHashCode("test1.main()");
     }

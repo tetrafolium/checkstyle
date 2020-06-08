@@ -8,8 +8,7 @@ class InputRightCurlyTryResource {
         try (BufferedReader br1 = new BufferedReader(null);
                 BufferedReader br2 = new BufferedReader(br1)) {
             ;
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             ;
         }
         try (BufferedReader br1 = new BufferedReader(null);
@@ -21,19 +20,28 @@ class InputRightCurlyTryResource {
             ;
         }
         try (BufferedReader br1 = new BufferedReader(null);
-                BufferedReader br2 = new BufferedReader(br1)) { ; }
-        catch (IOException e) { ; }
+                BufferedReader br2 = new BufferedReader(br1)) {
+                    ;
+                } catch (IOException e) {
+            ;
+        }
         try (BufferedReader br1 = new BufferedReader(null);
-                BufferedReader br2 = new BufferedReader(br1)) {} catch (IOException e) { ; }
+                BufferedReader br2 = new BufferedReader(br1)) { } catch (IOException e) {
+                    ;
+                }
         try (BufferedReader br1 = new BufferedReader(null);
                 BufferedReader br2 = new BufferedReader(br1)) {
             ;
         }
         try (BufferedReader br1 = new BufferedReader(null);
-                BufferedReader br2 = new BufferedReader(br1)) { ; }
+                BufferedReader br2 = new BufferedReader(br1)) {
+                    ;
+                }
         try (BufferedReader br1 = new BufferedReader(null)) {
-            ; } // violation
+            ;
+        } // violation
         try (BufferedReader br1 = new BufferedReader(null)) {
-            } int i; // violation
+            }
+            int i; // violation
     }
 }

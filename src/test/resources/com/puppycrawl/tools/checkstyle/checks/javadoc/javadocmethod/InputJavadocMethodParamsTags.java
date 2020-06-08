@@ -20,7 +20,7 @@ public class InputJavadocMethodParamsTags {
    *        @param unexpectedParam3
      @param unexpectedParam4
    */
-  void testEmpty(Object param1, Object param2, Object param3) {
+  void testEmpty(final Object param1, final Object param2, final Object param3) {
 
   }
 
@@ -30,35 +30,35 @@ public class InputJavadocMethodParamsTags {
    * @param r
    *            a reference to an
                existing path */
-  public void setPathRef(Object r) {
+  public void setPathRef(final Object r) {
 
   }
 
   /** @param s
    a reference to an existing path */
-  public void setPathRef2(Object s) {
+  public void setPathRef2(final Object s) {
 
   }
 
   /** @param k
     */
-  public void setPathRef3(Object k) {
+  public void setPathRef3(final Object k) {
 
   }
 
   /** @param t
    */
-  public void setPathRef4(Object w) {
+  public void setPathRef4(final Object w) {
 
   }
 
   /** @param z*/
-  public void setPathRef5(Object z) {
+  public void setPathRef5(final Object z) {
 
   }
 
   /** @param x*/
-  public void setPathRef6(Object y) {
+  public void setPathRef6(final Object y) {
 
   }
 

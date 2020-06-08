@@ -6,7 +6,7 @@ package com.puppycrawl.tools.checkstyle.api.abstractcheck;
 public class InputAbstractCheckTestFileContents {
     private int variable;
 
-    public InputAbstractCheckTestFileContents(int variable) {
+    public InputAbstractCheckTestFileContents(final int variable) {
         this.variable = variable;
     }
 
@@ -14,11 +14,11 @@ public class InputAbstractCheckTestFileContents {
         return variable;
     }
 
-    public void setVariable(int variable) {
+    public void setVariable(final int variable) {
         this.variable = variable;
     }
 
-    public int multiplyBy(int multiplier) {
+    public int multiplyBy(final int multiplier) {
         return variable * multiplier;
     }
 }

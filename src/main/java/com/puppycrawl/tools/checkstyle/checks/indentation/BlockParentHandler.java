@@ -68,8 +68,8 @@ public class BlockParentHandler extends AbstractExpressionHandler {
      * @param parent        the parent handler
      * @noinspection WeakerAccess
      */
-    public BlockParentHandler(IndentationCheck indentCheck,
-        String name, DetailAST ast, AbstractExpressionHandler parent) {
+    public BlockParentHandler(final IndentationCheck indentCheck,
+        final String name, final DetailAST ast, final AbstractExpressionHandler parent) {
         super(indentCheck, name, ast, parent);
     }
 
@@ -236,8 +236,7 @@ public class BlockParentHandler extends AbstractExpressionHandler {
         final DetailAST listChild = getListChild();
         if (listChild == null) {
             checkNonListChild();
-        }
-        else {
+        } else {
             // NOTE: switch statements usually don't have curlies
             if (!hasCurlies() || !TokenUtil.areOnSameLine(getLeftCurly(), getRightCurly())) {
                 checkChildren(listChild,
@@ -262,8 +261,7 @@ public class BlockParentHandler extends AbstractExpressionHandler {
             if (isOnStartOfLine(getLeftCurly())) {
                 indentLevel = new IndentLevel(expandedTabsColumnNo(getLeftCurly())
                         + getBasicOffset());
-            }
-            else if (isOnStartOfLine(getRightCurly())) {
+            } else if (isOnStartOfLine(getRightCurly())) {
                 final IndentLevel level = new IndentLevel(curlyIndent(), getBasicOffset());
                 indentLevel = IndentLevel.addAcceptable(level, level.getFirstIndentLevel()
                         + getLineWrappingIndent());
@@ -273,7 +271,7 @@ public class BlockParentHandler extends AbstractExpressionHandler {
     }
 
     @Override
-    public IndentLevel getSuggestedChildIndent(AbstractExpressionHandler child) {
+    public IndentLevel getSuggestedChildIndent(final AbstractExpressionHandler child) {
         return getChildrenExpectedIndent();
     }
 

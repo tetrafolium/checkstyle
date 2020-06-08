@@ -133,11 +133,10 @@ public class NewlineAtEndOfFileCheck
     private LineSeparatorOption lineSeparator = LineSeparatorOption.LF_CR_CRLF;
 
     @Override
-    protected void processFiltered(File file, FileText fileText) {
+    protected void processFiltered(final File file, final FileText fileText) {
         try {
             readAndCheckFile(file);
-        }
-        catch (final IOException ignored) {
+        } catch (final IOException ignored) {
             log(1, MSG_KEY_UNABLE_OPEN, file.getPath());
         }
     }
@@ -149,7 +148,7 @@ public class NewlineAtEndOfFileCheck
      * @throws IllegalArgumentException If the specified line separator is not
      *         one of 'crlf', 'lf', 'cr', 'lf_cr_crlf' or 'system'
      */
-    public void setLineSeparator(String lineSeparatorParam) {
+    public void setLineSeparator(final String lineSeparatorParam) {
         lineSeparator =
             Enum.valueOf(LineSeparatorOption.class, lineSeparatorParam.trim()
                 .toUpperCase(Locale.ENGLISH));
@@ -161,14 +160,13 @@ public class NewlineAtEndOfFileCheck
      * @throws IOException When an IO error occurred while reading from the
      *         file provided
      */
-    private void readAndCheckFile(File file) throws IOException {
+    private void readAndCheckFile(final File file) throws IOException {
         // Cannot use lines as the line separators have been removed!
         try (RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r")) {
             if (lineSeparator == LineSeparatorOption.LF
                     && endsWithNewline(randomAccessFile, LineSeparatorOption.CRLF)) {
                 log(1, MSG_KEY_WRONG_ENDING, file.getPath());
-            }
-            else if (!endsWithNewline(randomAccessFile, lineSeparator)) {
+            } else if (!endsWithNewline(randomAccessFile, lineSeparator)) {
                 log(1, MSG_KEY_NO_NEWLINE_EOF, file.getPath());
             }
         }
@@ -183,14 +181,13 @@ public class NewlineAtEndOfFileCheck
      * @throws IOException When an IO error occurred while reading from the
      *         provided reader
      */
-    private static boolean endsWithNewline(RandomAccessFile file, LineSeparatorOption separator)
+    private static boolean endsWithNewline(final RandomAccessFile file, final LineSeparatorOption separator)
             throws IOException {
         final boolean result;
         final int len = separator.length();
         if (file.length() < len) {
             result = false;
-        }
-        else {
+        } else {
             file.seek(file.length() - len);
             final byte[] lastBytes = new byte[len];
             final int readBytes = file.read(lastBytes);

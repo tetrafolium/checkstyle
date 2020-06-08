@@ -114,17 +114,17 @@ public final class LocalizedMessage
      * @noinspection ConstructorWithTooManyParameters
      */
     // -@cs[ParameterNumber] Class is immutable, we need that amount of arguments.
-    public LocalizedMessage(int lineNo,
-                            int columnNo,
-                            int columnCharIndex,
-                            int tokenType,
-                            String bundle,
-                            String key,
-                            Object[] args,
-                            SeverityLevel severityLevel,
-                            String moduleId,
-                            Class<?> sourceClass,
-                            String customMessage) {
+    public LocalizedMessage(final int lineNo,
+                            final int columnNo,
+                            final int columnCharIndex,
+                            final int tokenType,
+                            final String bundle,
+                            final String key,
+                            final Object[] args,
+                            final SeverityLevel severityLevel,
+                            final String moduleId,
+                            final Class<?> sourceClass,
+                            final String customMessage) {
         this.lineNo = lineNo;
         this.columnNo = columnNo;
         this.columnCharIndex = columnCharIndex;
@@ -133,8 +133,7 @@ public final class LocalizedMessage
 
         if (args == null) {
             this.args = null;
-        }
-        else {
+        } else {
             this.args = Arrays.copyOf(args, args.length);
         }
         this.bundle = bundle;
@@ -160,16 +159,16 @@ public final class LocalizedMessage
      * @noinspection ConstructorWithTooManyParameters
      */
     // -@cs[ParameterNumber] Class is immutable, we need that amount of arguments.
-    public LocalizedMessage(int lineNo,
-                            int columnNo,
-                            int tokenType,
-                            String bundle,
-                            String key,
-                            Object[] args,
-                            SeverityLevel severityLevel,
-                            String moduleId,
-                            Class<?> sourceClass,
-                            String customMessage) {
+    public LocalizedMessage(final int lineNo,
+                            final int columnNo,
+                            final int tokenType,
+                            final String bundle,
+                            final String key,
+                            final Object[] args,
+                            final SeverityLevel severityLevel,
+                            final String moduleId,
+                            final Class<?> sourceClass,
+                            final String customMessage) {
         this(lineNo, columnNo, columnNo, tokenType, bundle, key, args, severityLevel, moduleId,
                 sourceClass, customMessage);
     }
@@ -189,15 +188,15 @@ public final class LocalizedMessage
      * @noinspection ConstructorWithTooManyParameters
      */
     // -@cs[ParameterNumber] Class is immutable, we need that amount of arguments.
-    public LocalizedMessage(int lineNo,
-                            int columnNo,
-                            String bundle,
-                            String key,
-                            Object[] args,
-                            SeverityLevel severityLevel,
-                            String moduleId,
-                            Class<?> sourceClass,
-                            String customMessage) {
+    public LocalizedMessage(final int lineNo,
+                            final int columnNo,
+                            final String bundle,
+                            final String key,
+                            final Object[] args,
+                            final SeverityLevel severityLevel,
+                            final String moduleId,
+                            final Class<?> sourceClass,
+                            final String customMessage) {
         this(lineNo, columnNo, 0, bundle, key, args, severityLevel, moduleId, sourceClass,
                 customMessage);
     }
@@ -216,14 +215,14 @@ public final class LocalizedMessage
      * @noinspection ConstructorWithTooManyParameters
      */
     // -@cs[ParameterNumber] Class is immutable, we need that amount of arguments.
-    public LocalizedMessage(int lineNo,
-                            int columnNo,
-                            String bundle,
-                            String key,
-                            Object[] args,
-                            String moduleId,
-                            Class<?> sourceClass,
-                            String customMessage) {
+    public LocalizedMessage(final int lineNo,
+                            final int columnNo,
+                            final String bundle,
+                            final String key,
+                            final Object[] args,
+                            final String moduleId,
+                            final Class<?> sourceClass,
+                            final String customMessage) {
         this(lineNo,
                 columnNo,
              bundle,
@@ -249,14 +248,14 @@ public final class LocalizedMessage
      * @noinspection ConstructorWithTooManyParameters
      */
     // -@cs[ParameterNumber] Class is immutable, we need that amount of arguments.
-    public LocalizedMessage(int lineNo,
-                            String bundle,
-                            String key,
-                            Object[] args,
-                            SeverityLevel severityLevel,
-                            String moduleId,
-                            Class<?> sourceClass,
-                            String customMessage) {
+    public LocalizedMessage(final int lineNo,
+                            final String bundle,
+                            final String key,
+                            final Object[] args,
+                            final SeverityLevel severityLevel,
+                            final String moduleId,
+                            final Class<?> sourceClass,
+                            final String customMessage) {
         this(lineNo, 0, bundle, key, args, severityLevel, moduleId,
                 sourceClass, customMessage);
     }
@@ -274,13 +273,13 @@ public final class LocalizedMessage
      * @param customMessage optional custom message overriding the default
      */
     public LocalizedMessage(
-        int lineNo,
-        String bundle,
-        String key,
-        Object[] args,
-        String moduleId,
-        Class<?> sourceClass,
-        String customMessage) {
+        final int lineNo,
+        final String bundle,
+        final String key,
+        final Object[] args,
+        final String moduleId,
+        final Class<?> sourceClass,
+        final String customMessage) {
         this(lineNo, 0, bundle, key, args, DEFAULT_SEVERITY, moduleId,
                 sourceClass, customMessage);
     }
@@ -292,7 +291,7 @@ public final class LocalizedMessage
      */
     // -@cs[CyclomaticComplexity] equals - a lot of fields to check.
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(final Object object) {
         if (this == object) {
             return true;
         }
@@ -341,8 +340,7 @@ public final class LocalizedMessage
                 final String pattern = resourceBundle.getString(key);
                 final MessageFormat formatter = new MessageFormat(pattern, Locale.ROOT);
                 message = formatter.format(args);
-            }
-            catch (final MissingResourceException ignored) {
+            } catch (final MissingResourceException ignored) {
                 // If the Check author didn't provide i18n resource bundles
                 // and logs audit event messages directly, this will return
                 // the author's original message
@@ -374,7 +372,7 @@ public final class LocalizedMessage
      * @param bundleName the bundle name
      * @return a ResourceBundle
      */
-    private ResourceBundle getBundle(String bundleName) {
+    private ResourceBundle getBundle(final String bundleName) {
         return BUNDLE_CACHE.computeIfAbsent(bundleName, name -> {
             return ResourceBundle.getBundle(
                 name, sLocale, sourceClass.getClassLoader(), new Utf8Control());
@@ -451,12 +449,11 @@ public final class LocalizedMessage
      * Sets a locale to use for localization.
      * @param locale the locale to use for localization
      */
-    public static void setLocale(Locale locale) {
+    public static void setLocale(final Locale locale) {
         clearCache();
         if (Locale.ENGLISH.getLanguage().equals(locale.getLanguage())) {
             sLocale = Locale.ROOT;
-        }
-        else {
+        } else {
             sLocale = locale;
         }
     }
@@ -466,29 +463,24 @@ public final class LocalizedMessage
     ////////////////////////////////////////////////////////////////////////////
 
     @Override
-    public int compareTo(LocalizedMessage other) {
+    public int compareTo(final LocalizedMessage other) {
         final int result;
 
         if (lineNo == other.lineNo) {
             if (columnNo == other.columnNo) {
                 if (Objects.equals(moduleId, other.moduleId)) {
                     result = getMessage().compareTo(other.getMessage());
-                }
-                else if (moduleId == null) {
+                } else if (moduleId == null) {
                     result = -1;
-                }
-                else if (other.moduleId == null) {
+                } else if (other.moduleId == null) {
                     result = 1;
-                }
-                else {
+                } else {
                     result = moduleId.compareTo(other.moduleId);
                 }
-            }
-            else {
+            } else {
                 result = Integer.compare(columnNo, other.columnNo);
             }
-        }
-        else {
+        } else {
             result = Integer.compare(lineNo, other.lineNo);
         }
         return result;
@@ -503,8 +495,8 @@ public final class LocalizedMessage
     public static class Utf8Control extends Control {
 
         @Override
-        public ResourceBundle newBundle(String baseName, Locale locale, String format,
-                 ClassLoader loader, boolean reload) throws IOException {
+        public ResourceBundle newBundle(final String baseName, final Locale locale, final String format,
+                 final ClassLoader loader, final boolean reload) throws IOException {
             // The below is a copy of the default implementation.
             final String bundleName = toBundleName(baseName, locale);
             final String resourceName = toResourceName(bundleName, "properties");

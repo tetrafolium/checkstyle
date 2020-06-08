@@ -20,7 +20,7 @@ public class InputNoEnumTrailingComma {
     enum Foo4 {
         FOO,
         BAR, //violation
-        ;
+;
     }
 
     enum Foo5 {
@@ -35,14 +35,14 @@ public class InputNoEnumTrailingComma {
     enum Foo8 {
         FOO,
         BAR //OK
-        ;
+;
     }
 
     enum Foo9 { FOO, BAR; } //OK
 
     enum Foo10 { FOO, BAR } //OK
 
-    enum Foo11 {} //OK
+    enum Foo11 { } //OK
 
     enum Foo12 { FOO, } //violation
 
@@ -67,12 +67,12 @@ public class InputNoEnumTrailingComma {
 
     enum Foo19 {
         FOO
-        , //violation
+, //violation
     }
 
     enum Foo20 {
         FOO
-        ; //OK
+; //OK
     }
 
     public enum Foo21
@@ -85,51 +85,55 @@ public class InputNoEnumTrailingComma {
     }
 
     enum Foo22 {
-        A,B() //OK
+        A, B() //OK
     }
 
     enum Foo23 {
-        A,B{} //OK
+        A, B { } //OK
     }
 
     enum Foo24 {
-        A,B(){ public String toString() { return "";}} //OK
+        A, B() { public String toString() {
+            return ""; }} //OK
     }
 
     enum Foo25 {
-        A,B(){ public String toString() { return "";}}, //violation
+        A, B() { public String toString() {
+            return ""; }}, //violation
     }
 
     enum Foo26 {
-        A,B(), //violation
+        A, B(), //violation
     }
 
     enum Foo27 {
-        A,B{}, //violation
+        A, B { }, //violation
     }
 
     enum Foo28 {
-        A,B(); //OK
+        A, B(); //OK
     }
 
     enum Foo29 {
-        A,B{}; //OK
+        A, B { }; //OK
     }
 
     enum Foo30 {
-        A,B(){ public String toString() { return "";}}; //OK
+        A, B() { public String toString() {
+            return ""; }}; //OK
     }
 
     enum Foo31 {
-        A,B(),; //violation
+        A, B(),; //violation
     }
 
     enum Foo32 {
-        A,B{},; //violation
+        A, B { },; //violation
     }
 
     enum Foo33 {
-        A,B(){ public String toString() { return "";}},; //violation
+        A, B() { public String toString() {
+            return ""; }},; //violation
     }
 
     enum Foo34 {
@@ -155,93 +159,95 @@ public class InputNoEnumTrailingComma {
 
     enum Foo37 {
         A, B; //OK
-        Foo37() {}
+        Foo37() { }
     }
 
     enum Foo38 {
         A, B,; //violation
-        Foo38() {};
+        Foo38() { };
     }
 
     public enum Foo39 {
-        ONE_ONE(1,1),
-        ONE_TWO(1,2); //OK
+        ONE_ONE(1, 1),
+        ONE_TWO(1, 2); //OK
 
         int major, minor;
 
-        Foo39(int major, int minor) {
+        Foo39(final int major, final int minor) {
             this.major = major;
             this.minor = minor;
         }
     }
 
     public enum Foo40 {
-        ONE_ONE(1,1),
-        ONE_TWO(1,2),; //violation
+        ONE_ONE(1, 1),
+        ONE_TWO(1, 2),; //violation
 
         int major, minor;
 
-        Foo40(int major, int minor) {
+        Foo40(final int major, final int minor) {
             this.major = major;
             this.minor = minor;
         }
     }
 
     public enum Foo41 {
-        ONE_ONE (1, 1) {
+        ONE_ONE(1, 1) {
             @Override
             public void someFunction() {
             }
         },
-        ONE_TWO (1, 2) {
+        ONE_TWO(1, 2) {
             @Override
-            public void someFunction(){
+            public void someFunction() {
             }
         },; //violation
 
         int major, minor;
 
-        Foo41 (int major, int minor) {
+        Foo41(final int major, final int minor) {
             this.major = major;
             this.minor = minor;
         }
 
-        public void someFunction(){
+        public void someFunction() {
             major = 1;
         }
     }
 
     public enum Foo42 {
-        ONE_ONE (1, 1) {
+        ONE_ONE(1, 1) {
             @Override
             public void someFunction() {
             }
         },
-        ONE_TWO (1, 2) {
+        ONE_TWO(1, 2) {
             @Override
-            public void someFunction(){
+            public void someFunction() {
             }
         }; //OK
 
         int major, minor;
 
-        Foo42 (int major, int minor) {
+        Foo42(final int major, final int minor) {
             this.major = major;
             this.minor = minor;
         }
 
-        public void someFunction(){
+        public void someFunction() {
             major = 1;
         }
     }
 
     enum Foo43 {
-        A,B(){ public String toString() { return "";}}; //OK
-        interface SomeInterface {}
+        A, B() { public String toString() {
+            return ""; }}; //OK
+        interface SomeInterface { }
     }
 
     enum Foo44 {
-        A,B(){ public String toString() { return "";}},; //violation
-        interface SomeInterface {}
+        A, B() { public String toString() {
+            return ""; }},; //violation
+        interface SomeInterface { }
     }
 }

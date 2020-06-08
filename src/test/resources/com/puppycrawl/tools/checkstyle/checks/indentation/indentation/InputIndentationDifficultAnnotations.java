@@ -67,4 +67,4 @@ class IncorrectClass { //indent:0 exp:0
     String name(); //indent:4 exp:4
 } //indent:0 exp:0
 
-@interface SimpleAnnotation {} //indent:0 exp:0
+@interface SimpleAnnotation { } //indent:0 exp:0

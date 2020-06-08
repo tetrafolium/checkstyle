@@ -2,21 +2,21 @@ package com.puppycrawl.tools.checkstyle.checks.coding.unnecessaryparentheses;
 public class InputUnnecessaryParenthesesOperatorsAndCasts {
     int f1() {
         int x = 0;
-        for (int i = (0+1); ((i) < (6+6)); i += (1+0)) {
+        for (int i = (0 + 1); ((i) < (6 + 6)); i += (1 + 0)) {
             x += (i + 100);
             (x) += (i + 100/**comment test*/);
             x = (x + i + 100);
             (x) = (x + i + 100);
         }
 
-        for (int i = (0+1); (i) < ((6+6)); i += (1+0)) {
+        for (int i = (0 + 1); (i) < ((6 + 6)); i += (1 + 0)) {
             System.identityHashCode("hi");
         }
 
         return (0);
     }
 
-    private int f2(int arg1, double arg2) {
+    private int f2(final int arg1, final double arg2) {
         int x, a, b, c, d;
         String e, f;
 
@@ -46,7 +46,7 @@ public class InputUnnecessaryParenthesesOperatorsAndCasts {
         return (b);
     }
 
-    public static int f4(int z, int a) {
+    public static int f4(final int z, final int a) {
         int r = (z * a);
         r = (a > z) ? a : z;
         r = ((a > z) ? a : z);
@@ -70,11 +70,11 @@ public class InputUnnecessaryParenthesesOperatorsAndCasts {
         }
 
         do {
-            print((y+=100));
+            print((y += 100));
         } while (y < (4000));
     }
 
-    private void f6(TypeA a) {
+    private void f6(final TypeA a) {
         TypeB b = (TypeB) a;
         TypeC c = ((TypeC) a);
         int r = 12345;
@@ -82,7 +82,7 @@ public class InputUnnecessaryParenthesesOperatorsAndCasts {
         TypeParameterized<String> d = ((TypeParameterized<String>) a);
     }
 
-    private void print(int arg)
+    private void print(final int arg)
     {
         System.identityHashCode("arg = " + arg);
     }
@@ -95,8 +95,8 @@ public class InputUnnecessaryParenthesesOperatorsAndCasts {
         return 0;
     }
 
-    static class TypeParameterized<T> {}
-    static class TypeA extends TypeParameterized<String> {}
-    static class TypeB extends TypeA {}
-    static class TypeC extends TypeA {}
+    static class TypeParameterized<T> { }
+    static class TypeA extends TypeParameterized<String> { }
+    static class TypeB extends TypeA { }
+    static class TypeC extends TypeA { }
 }

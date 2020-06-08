@@ -16,14 +16,14 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
     private boolean booleanField;
     private int intField;
 
-    public InputRequireThisValidateOnlyOverlappingFalse(String field1) {
+    public InputRequireThisValidateOnlyOverlappingFalse(final String field1) {
         field1 = field1; // violation
         fieldFinal1 = 0; // violation
         fieldFinal2 = 0; // violation
         fieldFinal3 = new BitSet(); // violation
     }
 
-    public InputRequireThisValidateOnlyOverlappingFalse(long value) {
+    public InputRequireThisValidateOnlyOverlappingFalse(final long value) {
         fieldFinal1 = value; // violation
         fieldFinal2 = 0; // violation
         fieldFinal3 = new BitSet(); // violation
@@ -37,7 +37,7 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
         fieldFinal3 = new BitSet(); // violation
     }
 
-    public InputRequireThisValidateOnlyOverlappingFalse(String name, long id) {
+    public InputRequireThisValidateOnlyOverlappingFalse(final String name, final long id) {
         fieldFinal1 = 0; // violation
         long field1 = 0L;
         field1 = field1; // violation
@@ -45,18 +45,17 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
         fieldFinal3 = new BitSet(); // violation
     }
 
-    public InputRequireThisValidateOnlyOverlappingFalse(int param) {
+    public InputRequireThisValidateOnlyOverlappingFalse(final int param) {
         fieldFinal2 = 0L; // violation
         fieldFinal3 = new BitSet(); // violation
         long fieldFinal1 = 1L;
         try {
             fieldFinal1 = 2L;
-        }
-        catch (Exception ex) {}
+        } catch (Exception ex) { }
         this.fieldFinal1 = fieldFinal1;
     }
 
-    public InputRequireThisValidateOnlyOverlappingFalse(BitSet fieldFinal3) {
+    public InputRequireThisValidateOnlyOverlappingFalse(final BitSet fieldFinal3) {
         fieldFinal1 = 1L; // violation
         fieldFinal2 = 0L; // violation
         fieldFinal3 = new BitSet();
@@ -66,7 +65,7 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
         this.fieldFinal3 = fieldFinal3;
     }
 
-    void foo1(String methodParam) {
+    void foo1(final String methodParam) {
         methodParam = methodParam;
     }
 
@@ -80,15 +79,15 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
         field1 = field1; // violation
     }
 
-    void foo4(String methodParam) {
+    void foo4(final String methodParam) {
         fieldStatic = methodParam;
     }
 
-    void foo5(String methodParam) {
+    void foo5(final String methodParam) {
         methodParam = methodParam + "string";
     }
 
-    void foo6(String field1) {
+    void foo6(final String field1) {
         field1 = this.field1 + field1;
         this.field1 = field1 + this.field1;
         field1 = field1 + this.field1;
@@ -98,28 +97,28 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
         field1 += field1;
     }
 
-    String addSuffixToParameter(String methodParam) {
+    String addSuffixToParameter(final String methodParam) {
         return methodParam += "suffix";
     }
 
-    String addSuf2F(String field1) {
+    String addSuf2F(final String field1) {
         return field1 += "suffix";
     }
 
-    String addSuffixToThisField(String field1) {
+    String addSuffixToThisField(final String field1) {
         return this.field1 += "suffix";
     }
 
-    static void foo7(String fieldStatic) {
+    static void foo7(final String fieldStatic) {
 //        this.fieldStatic = fieldStatic; <- fieldStatic cannot be referenced from a static context
         fieldStatic = fieldStatic;
     }
 
-    void foo8(Long field1) {
+    void foo8(final Long field1) {
         field1 += field1; // violation
     }
 
-    void foo9(Long fieldFinal1) {
+    void foo9(final Long fieldFinal1) {
 //        this.fieldFinal1 += fieldFinal1; <- cannot assign value to a final variable
         fieldFinal1 += fieldFinal1;
     }
@@ -129,14 +128,14 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
     }
 
     void method2() {
-        method1() ; // violation
+        method1(); // violation
     }
 
     void method3() {
         staticFoo();
         staticTwoArgs("message", "arg");
         staticTwoArgs("message", 1);
-        this.method1() ;
+        this.method1();
     }
 
     static void staticFoo() { }
@@ -148,9 +147,9 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
 
 //    void staticFoo() {} -> compile time error. Already defined in the scope.
 
-    static void staticTwoArgs(String message1, String argument) {}
+    static void staticTwoArgs(final String message1, final String argument) { }
 
-    void staticTwoArgs(String message1, int argument) {}
+    void staticTwoArgs(final String message1, final int argument) { }
 
     static void foo16() {
         long fieldFinal1 = 5L;
@@ -164,7 +163,7 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
         fieldStatic = "Hello, World!";
     }
 
-    InputRequireThisValidateOnlyOverlappingFalse(boolean flag) {
+    InputRequireThisValidateOnlyOverlappingFalse(final boolean flag) {
         fieldFinal1 = 0L; // violation
         fieldFinal2 = 0L; // violation
         fieldFinal3 = new BitSet(); // violation
@@ -172,7 +171,7 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
         field1 = field1; // violation
     }
 
-    InputRequireThisValidateOnlyOverlappingFalse(boolean flag, String name) {
+    InputRequireThisValidateOnlyOverlappingFalse(final boolean flag, final String name) {
         fieldFinal1 = 0L; // violation
         fieldFinal2 = 0L; // violation
         fieldFinal3 = new BitSet(); // violation
@@ -185,7 +184,7 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
         field1 = "Hello"; // violation
     }
 
-    void foo19(String field1) {
+    void foo19(final String field1) {
         field1 = "Hello"; // violation
     }
 
@@ -196,7 +195,7 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
         }
     }
 
-    boolean foo21(String s) {
+    boolean foo21(final String s) {
         return true;
     }
 
@@ -223,18 +222,16 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
                 String field1 = "Hello, World!";
                 if (true) {
                     field1 = new String(); // No violation. Local var allowed
-                }
-                else {
+                } else {
                     field1 += field1; // violation
                 }
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
 
         }
     }
 
-    void foo26(String field1) {
+    void foo26(final String field1) {
         field1 = field1.replace('/', '*'); // violation
     }
 
@@ -242,8 +239,7 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
         int intField = -1;
         if (intField == -1) {
             intField = 20;
-        }
-        else {
+        } else {
             intField = this.intField / 100;
         }
     }
@@ -253,35 +249,34 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
         booleanField = !booleanField; // violation
     }
 
-    static void foo29(String field1) {
+    static void foo29(final String field1) {
 //this.field1 = true ? "field1" : field1; /compile error: cannot be referenced from a static context
         field1 = true ? "field1" : field1;
     }
 
-    void foo30(String field1) {
+    void foo30(final String field1) {
         field1 = true ? "field1" : field1; // violation
     }
 
-    void foo31(String field1) {
+    void foo31(final String field1) {
         field1 = this.field1;
     }
 
-    String foo32(String field1) {
+    String foo32(final String field1) {
         field1 = addSuf2F(field1); // no violation! modification of parameter which is returned
         return field1;
     }
 
-    String foo33(String field1 ) {
+    String foo33(final String field1) {
         field1 = addSuf2F(field1); // violation (no return, variable 'stringField' will not be saved
         return "New String";
     }
 
-    String foo34(String field1) {
+    String foo34(final String field1) {
         field1 = field1.replace('A', 'B');
         if (field1.contains("C")) {
             return field1;
-        }
-        else {
+        } else {
             return field1 + 'C';
         }
     }
@@ -292,12 +287,12 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
         return field1;
     }
 
-    void foo36(String field1) {
+    void foo36(final String field1) {
         field1 = field1.replace('/', '*');
         field1 = this.field1;
     }
 
-    String foo37(String field1) {
+    String foo37(final String field1) {
         field1 += "suffix"; // violation
         return "New string";
     }
@@ -318,8 +313,7 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
             boolean booleanField = true;
 //this.booleanField = !booleanField; <-- compile error: cannot be referenced from a static context
             booleanField = !booleanField;
-        }
-        catch (Exception e) {}
+        } catch (Exception e) { }
     }
 
     static {
@@ -347,20 +341,20 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
         field1 = field1;
     }
 
-    void foo41(long fieldFinal1) {
+    void foo41(final long fieldFinal1) {
 //        this.fieldFinal1 = 1L; <- cannot assign value to a final variable
         fieldFinal1 = fieldFinal1;
     }
 
-    void foo42(String fieldStatic) {
+    void foo42(final String fieldStatic) {
         this.fieldStatic = fieldStatic;
     }
 
-    void foo43(String fieldStatic) {
+    void foo43(final String fieldStatic) {
         fieldStatic = fieldStatic;
     }
 
-    void foo44(String fieldStatic) {
+    void foo44(final String fieldStatic) {
         fieldStatic = this.fieldStatic;
     }
 
@@ -374,8 +368,7 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
         String action = getAction(); // violation (Method call to 'getaction' needs "this.".)
         if (true) {
             return processAction("action"); //violation(Method call to 'processAction' need "this.")
-        }
-        else if (action.endsWith("/")) {
+        } else if (action.endsWith("/")) {
             if (action.startsWith("/")) {
                 action = "" + action;
             }
@@ -384,12 +377,12 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
         return processAction(action); // violation (Method call to 'processAction' needs "this.".)
     }
 
-    private String processAction(String action) {
+    private String processAction(final String action) {
         return "";
     }
 
-    public InputRequireThisValidateOnlyOverlappingFalse(long fieldFinal1, long fieldFinal2,
-                                                        BitSet fieldFinal3, boolean booleanField) {
+    public InputRequireThisValidateOnlyOverlappingFalse(final long fieldFinal1, final long fieldFinal2,
+                                                        final BitSet fieldFinal3, final boolean booleanField) {
         this.fieldFinal1 = fieldFinal1;
         this.fieldFinal2 = fieldFinal2;
         this.fieldFinal3 = fieldFinal3;
@@ -402,7 +395,7 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
         this.booleanField = booleanField;
     }
 
-    void foo46(boolean booleanField) {
+    void foo46(final boolean booleanField) {
         booleanField = this.booleanField;
         if (booleanField) {
             booleanField = "Hello, World!".equals("Hello, Checkstyle!");
@@ -411,27 +404,24 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
         this.booleanField = booleanField;
     }
 
-    static void foo47(String fieldStatic) {
+    static void foo47(final String fieldStatic) {
         fieldStatic = "Andrei";
     }
 
-    void foo48(long fieldFinal1) {
+    void foo48(final long fieldFinal1) {
         fieldFinal1 = 1L;
     }
 
-    private boolean foo49(boolean booleanField) {
+    private boolean foo49(final boolean booleanField) {
         boolean suppressionSourceExists = true;
         try {
 
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             suppressionSourceExists = false;
-        }
-        finally {
+        } finally {
             if (booleanField) {
                 try {
-                }
-                catch (Exception ignored) {
+                } catch (Exception ignored) {
                     this.booleanField = false;
                 }
             }
@@ -439,33 +429,35 @@ public class InputRequireThisValidateOnlyOverlappingFalse {
         return suppressionSourceExists;
     }
 
-    void foo50(String fieldStatic) {
+    void foo50(final String fieldStatic) {
         fieldStatic = fieldStatic;
     }
 
-    void foo51(String methodParam) {
+    void foo51(final String methodParam) {
         fieldStatic = methodParam;
     }
 
-    void foo52(String fieldStatic) {
+    void foo52(final String fieldStatic) {
         fieldStatic += fieldStatic;
     }
 
-    void foo53(String fieldStatic) {
+    void foo53(final String fieldStatic) {
         fieldStatic += fieldStatic;
     }
 
-    void foo54(String methodParam) {
+    void foo54(final String methodParam) {
         fieldStatic += methodParam;
     }
 
-    void foo55(String methodParam) {
+    void foo55(final String methodParam) {
         fieldStatic += fieldStatic;
     }
 
-    void foo56(boolean booleanField) { booleanField = this.booleanField; }
+    void foo56(final boolean booleanField) {
+        booleanField = this.booleanField; }
 
-    boolean foo57(boolean booleanField) { booleanField = !booleanField;  return booleanField; }
+    boolean foo57(final boolean booleanField) {
+        booleanField = !booleanField;  return booleanField; }
 }
 class Issue6264 {
     private final String hashCode;
@@ -474,7 +466,7 @@ class Issue6264 {
         this.hashCode = new String();
     }
 
-    private void hashCodeMethod(String param) {
+    private void hashCodeMethod(final String param) {
         hashCode();
     }
 }

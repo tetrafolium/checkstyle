@@ -44,7 +44,7 @@ public interface InputRedundantModifierNestedClassInPublicInterfaceRedundantModi
     }
     final class FinalNestedClassInInterface {
         interface InnerInterface {
-            final class FinalNestedClassInNestedInterface {}
+            final class FinalNestedClassInNestedInterface { }
         }
     }
 }

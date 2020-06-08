@@ -66,7 +66,7 @@ public final class AnnotationUtil {
      * @return true if contains the annotation
      */
     public static boolean containsAnnotation(final DetailAST ast,
-        String annotation) {
+        final String annotation) {
         return getAnnotation(ast, annotation) != null;
     }
 
@@ -100,7 +100,7 @@ public final class AnnotationUtil {
      *                      {@code false} otherwise.
      * @throws IllegalArgumentException when ast or annotations are null
      */
-    public static boolean containsAnnotation(DetailAST ast, List<String> annotations) {
+    public static boolean containsAnnotation(final DetailAST ast, final List<String> annotations) {
         if (ast == null) {
             throw new IllegalArgumentException(THE_AST_IS_NULL);
         }
@@ -136,7 +136,7 @@ public final class AnnotationUtil {
      * @return the Annotation Holder
      * @throws IllegalArgumentException when ast is null
      */
-    public static DetailAST getAnnotationHolder(DetailAST ast) {
+    public static DetailAST getAnnotationHolder(final DetailAST ast) {
         if (ast == null) {
             throw new IllegalArgumentException(THE_AST_IS_NULL);
         }
@@ -146,8 +146,7 @@ public final class AnnotationUtil {
         if (ast.getType() == TokenTypes.ENUM_CONSTANT_DEF
             || ast.getType() == TokenTypes.PACKAGE_DEF) {
             annotationHolder = ast.findFirstToken(TokenTypes.ANNOTATIONS);
-        }
-        else {
+        } else {
             annotationHolder = ast.findFirstToken(TokenTypes.MODIFIERS);
         }
 
@@ -177,7 +176,7 @@ public final class AnnotationUtil {
      * @throws IllegalArgumentException when ast or annotations are null; when annotation is blank
      */
     public static DetailAST getAnnotation(final DetailAST ast,
-        String annotation) {
+        final String annotation) {
         if (ast == null) {
             throw new IllegalArgumentException(THE_AST_IS_NULL);
         }
@@ -214,7 +213,7 @@ public final class AnnotationUtil {
      * @return the AST representing that annotation
      */
     private static DetailAST findFirstAnnotation(final DetailAST ast,
-                                                 Predicate<DetailAST> predicate) {
+                                                 final Predicate<DetailAST> predicate) {
         final DetailAST holder = getAnnotationHolder(ast);
         DetailAST result = null;
         for (DetailAST child = holder.getFirstChild();

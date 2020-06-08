@@ -21,7 +21,7 @@ class InputRightCurlyOtherAlone
                 else
                 {
                     break;
-                }//ok
+                } //ok
                 switch (a)
                 {
                 case 0:
@@ -33,8 +33,8 @@ class InputRightCurlyOtherAlone
             catch (Exception e)
             {
                 break;
-            }//ok
-        }//ok
+            } //ok
+        } //ok
 
         synchronized (this)
         {
@@ -42,7 +42,7 @@ class InputRightCurlyOtherAlone
             {
                 x = 2;
             } while (x == 2); //ok
-        }//ok
+        } //ok
 
         this.wait(666
                  ); // Bizarre, but legal
@@ -50,20 +50,20 @@ class InputRightCurlyOtherAlone
         for (int k = 0; k < 1; k++)
         {
             String innerBlockVariable = "";
-        }//ok
+        } //ok
 
 
         if (System.currentTimeMillis() > 1000)
             return 1;
         else
             return 2;
-    }//ok
+    } //ok
 
 
     static
     {
         int x = 1;
-    }//ok
+    } //ok
 
     public enum GreetingsEnum
     {
@@ -76,11 +76,12 @@ class InputRightCurlyOtherAlone
         boolean flag = true;
         if (flag) {
             System.identityHashCode("heh");
-            flag = !flag; } System. //ok for alone config
+            flag = !flag; } System.//ok for alone config
               identityHashCode("Xe-xe");
 
 
-        if (flag) { System.identityHashCode("some foo"); }
+        if (flag) {
+            System.identityHashCode("some foo"); }
     } //ok
 } //ok
 
@@ -115,7 +116,7 @@ class FooInnerAlone
 {
     class InnerFoo
     {
-        public void fooInnerMethod ()
+        public void fooInnerMethod()
         {
 
         }
@@ -145,12 +146,12 @@ class WithArraysAlone {
 }
 
 class Interface {
-    public @interface TestAnnotation {} //warn
+    public @interface TestAnnotation { } //warn
 
     public @interface TestAnnotation1 { String someValue(); } //warn
 
     public @interface TestAnnotation2 {
-        String someValue();} //warn
+        String someValue(); } //warn
 
     public @interface TestAnnotation3 {
         String someValue();
@@ -160,12 +161,12 @@ class Interface {
     } //ok
 }
 
-enum TestEnum {} //warn
+enum TestEnum { } //warn
 
 enum TestEnum1 { SOME_VALUE; } //warn
 
 enum TestEnum2 {
-    SOME_VALUE;} //warn
+    SOME_VALUE; } //warn
 
 enum TestEnum3 {
     SOME_VALUE;

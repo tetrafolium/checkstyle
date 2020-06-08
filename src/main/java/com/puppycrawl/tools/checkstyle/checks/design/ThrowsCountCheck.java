@@ -124,7 +124,7 @@ public final class ThrowsCountCheck extends AbstractCheck {
      * Setter to allow private methods to be ignored.
      * @param ignorePrivateMethods whether private methods must be ignored.
      */
-    public void setIgnorePrivateMethods(boolean ignorePrivateMethods) {
+    public void setIgnorePrivateMethods(final boolean ignorePrivateMethods) {
         this.ignorePrivateMethods = ignorePrivateMethods;
     }
 
@@ -132,16 +132,15 @@ public final class ThrowsCountCheck extends AbstractCheck {
      * Setter to specify maximum allowed number of throws statements.
      * @param max maximum allowed throws statements.
      */
-    public void setMax(int max) {
+    public void setMax(final int max) {
         this.max = max;
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         if (ast.getType() == TokenTypes.LITERAL_THROWS) {
             visitLiteralThrows(ast);
-        }
-        else {
+        } else {
             throw new IllegalStateException(ast.toString());
         }
     }
@@ -150,7 +149,7 @@ public final class ThrowsCountCheck extends AbstractCheck {
      * Checks number of throws statements.
      * @param ast throws for check.
      */
-    private void visitLiteralThrows(DetailAST ast) {
+    private void visitLiteralThrows(final DetailAST ast) {
         if ((!ignorePrivateMethods || !isInPrivateMethod(ast))
                 && !isOverriding(ast)) {
             // Account for all the commas!
@@ -166,7 +165,7 @@ public final class ThrowsCountCheck extends AbstractCheck {
      * @param ast throws, which is being checked.
      * @return true, if a method has annotation @Override.
      */
-    private static boolean isOverriding(DetailAST ast) {
+    private static boolean isOverriding(final DetailAST ast) {
         final DetailAST modifiers = ast.getParent().findFirstToken(TokenTypes.MODIFIERS);
         boolean isOverriding = false;
         DetailAST child = modifiers.getFirstChild();
@@ -186,13 +185,12 @@ public final class ThrowsCountCheck extends AbstractCheck {
      * @param annotation to get name of.
      * @return name of an annotation.
      */
-    private static String getAnnotationName(DetailAST annotation) {
+    private static String getAnnotationName(final DetailAST annotation) {
         final DetailAST dotAst = annotation.findFirstToken(TokenTypes.DOT);
         final String name;
         if (dotAst == null) {
             name = annotation.findFirstToken(TokenTypes.IDENT).getText();
-        }
-        else {
+        } else {
             name = dotAst.findFirstToken(TokenTypes.IDENT).getText();
         }
         return name;
@@ -203,7 +201,7 @@ public final class ThrowsCountCheck extends AbstractCheck {
      * @param ast throws, which is being checked.
      * @return true, if method, which throws an exception is private.
      */
-    private static boolean isInPrivateMethod(DetailAST ast) {
+    private static boolean isInPrivateMethod(final DetailAST ast) {
         final DetailAST methodModifiers = ast.getParent().findFirstToken(TokenTypes.MODIFIERS);
         return methodModifiers.findFirstToken(TokenTypes.LITERAL_PRIVATE) != null;
     }

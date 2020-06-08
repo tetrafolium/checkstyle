@@ -16,5 +16,5 @@ public class InputThrowsCountMethodWithAnnotation extends ParentClass {
 
 class ParentClass {
     public void method() throws AWTException, SQLException,
-    FileNotFoundException, EOFException, FileAlreadyExistsException {}
+    FileNotFoundException, EOFException, FileAlreadyExistsException { }
 }

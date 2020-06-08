@@ -41,8 +41,8 @@ abstract class AbstractImportControl {
      * @param parent the parent node.
      * @param strategyOnMismatch strategy in a case if matching allow/disallow rule was not found.
      */
-    protected AbstractImportControl(AbstractImportControl parent,
-            MismatchStrategy strategyOnMismatch) {
+    protected AbstractImportControl(final AbstractImportControl parent,
+            final MismatchStrategy strategyOnMismatch) {
         this.parent = parent;
         this.strategyOnMismatch = strategyOnMismatch;
     }
@@ -67,7 +67,7 @@ abstract class AbstractImportControl {
      * Adds an {@link AbstractImportRule} to the node.
      * @param rule the rule to be added.
      */
-    protected void addImportRule(AbstractImportRule rule) {
+    protected void addImportRule(final AbstractImportRule rule) {
         rules.addLast(rule);
     }
 
@@ -82,28 +82,23 @@ abstract class AbstractImportControl {
      * @param forImport the import to check on.
      * @return an {@link AccessResult}.
      */
-    public AccessResult checkAccess(String inPkg, String inFileName, String forImport) {
+    public AccessResult checkAccess(final String inPkg, final String inFileName, final String forImport) {
         final AccessResult result;
         final AccessResult returnValue = localCheckAccess(inPkg, inFileName, forImport);
         if (returnValue != AccessResult.UNKNOWN) {
             result = returnValue;
-        }
-        else if (parent == null) {
+        } else if (parent == null) {
             if (strategyOnMismatch == MismatchStrategy.ALLOWED) {
                 result = AccessResult.ALLOWED;
-            }
-            else {
+            } else {
                 result = AccessResult.DISALLOWED;
             }
-        }
-        else {
+        } else {
             if (strategyOnMismatch == MismatchStrategy.ALLOWED) {
                 result = AccessResult.ALLOWED;
-            }
-            else if (strategyOnMismatch == MismatchStrategy.DISALLOWED) {
+            } else if (strategyOnMismatch == MismatchStrategy.DISALLOWED) {
                 result = AccessResult.DISALLOWED;
-            }
-            else {
+            } else {
                 result = parent.checkAccess(inPkg, inFileName, forImport);
             }
         }
@@ -118,7 +113,7 @@ abstract class AbstractImportControl {
      * @param forImport the import to check on.
      * @return an {@link AccessResult}.
      */
-    private AccessResult localCheckAccess(String inPkg, String inFileName, String forImport) {
+    private AccessResult localCheckAccess(final String inPkg, final String inFileName, final String forImport) {
         AccessResult localCheckAccessResult = AccessResult.UNKNOWN;
         for (AbstractImportRule importRule : rules) {
             // Check if an import rule is only meant to be applied locally.

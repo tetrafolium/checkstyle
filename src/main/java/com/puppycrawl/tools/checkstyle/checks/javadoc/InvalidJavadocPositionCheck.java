@@ -88,7 +88,7 @@ public class InvalidJavadocPositionCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         final String commentContent = JavadocUtil.getBlockCommentContent(ast);
 
         if (JavadocUtil.isJavadocComment(commentContent)

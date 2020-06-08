@@ -67,8 +67,7 @@ public class DetailNodeTreeStringPrinterTest extends AbstractTreeTestSupport {
             DetailNodeTreeStringPrinter.printFileAst(
                     new File(getPath("InputDetailNodeTreeStringPrinterJavadocWithError.javadoc")));
             fail("Javadoc parser didn't fail on missing end tag");
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             final String expected = (String) GET_PARSE_ERROR_MESSAGE.invoke(null,
                     new ParseErrorMessage(0, MSG_JAVADOC_MISSED_HTML_CLOSE, 1, "qwe"));
             assertEquals(expected, ex.getMessage(),
@@ -143,8 +142,7 @@ public class DetailNodeTreeStringPrinterTest extends AbstractTreeTestSupport {
                     getPath("InputDetailNodeTreeStringPrinter"
                             + "UnescapedJavaCodeWithGenericsInJavadoc.javadoc")));
             fail("Exception is expected");
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             final String expected = (String) GET_PARSE_ERROR_MESSAGE.invoke(null,
                     new ParseErrorMessage(35, MSG_JAVADOC_MISSED_HTML_CLOSE, 7, "parsing"));
             assertEquals(expected, ex.getMessage(),
@@ -158,8 +156,7 @@ public class DetailNodeTreeStringPrinterTest extends AbstractTreeTestSupport {
             DetailNodeTreeStringPrinter.printFileAst(new File(getPath(
                     "InputDetailNodeTreeStringPrinterNoViableAltException.javadoc")));
             fail("Exception is expected");
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             final String expected = (String) GET_PARSE_ERROR_MESSAGE.invoke(null,
                     new ParseErrorMessage(0, MSG_JAVADOC_PARSE_RULE_ERROR,
                             9, "no viable alternative at input '<<'", "HTML_ELEMENT"));
@@ -175,8 +172,7 @@ public class DetailNodeTreeStringPrinterTest extends AbstractTreeTestSupport {
                     "InputDetailNodeTreeStringPrinterHtmlTagCloseBeforeTagOpen.javadoc"
             )));
             fail("Exception is expected");
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             final String expected = (String) GET_PARSE_ERROR_MESSAGE.invoke(null,
                     new ParseErrorMessage(0, MSG_JAVADOC_PARSE_RULE_ERROR,
                             4, "no viable alternative at input '</tag'", "HTML_ELEMENT"));
@@ -192,8 +188,7 @@ public class DetailNodeTreeStringPrinterTest extends AbstractTreeTestSupport {
                     "InputDetailNodeTreeStringPrinterWrongHtmlTagOrder.javadoc"
             )));
             fail("Exception is expected");
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             final String expected = (String) GET_PARSE_ERROR_MESSAGE.invoke(null,
                     new ParseErrorMessage(0, MSG_JAVADOC_MISSED_HTML_CLOSE, 10, "tag2"));
             assertEquals(expected, ex.getMessage(),
@@ -208,8 +203,7 @@ public class DetailNodeTreeStringPrinterTest extends AbstractTreeTestSupport {
                     "InputDetailNodeTreeStringPrinterOmittedStartTagForHtmlElement.javadoc"
             )));
             fail("Exception is expected");
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             final String expected = (String) GET_PARSE_ERROR_MESSAGE.invoke(null,
                     new ParseErrorMessage(0, MSG_JAVADOC_MISSED_HTML_CLOSE, 3, "a"));
             assertEquals(expected, ex.getMessage(),

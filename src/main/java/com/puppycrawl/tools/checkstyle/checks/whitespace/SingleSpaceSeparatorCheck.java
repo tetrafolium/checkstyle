@@ -97,7 +97,7 @@ public class SingleSpaceSeparatorCheck extends AbstractCheck {
      *
      * @param validateComments {@code true} to validate surrounding whitespaces at comments.
      */
-    public void setValidateComments(boolean validateComments) {
+    public void setValidateComments(final boolean validateComments) {
         this.validateComments = validateComments;
     }
 
@@ -122,7 +122,7 @@ public class SingleSpaceSeparatorCheck extends AbstractCheck {
     }
 
     @Override
-    public void beginTree(DetailAST rootAST) {
+    public void beginTree(final DetailAST rootAST) {
         if (rootAST != null) {
             visitEachToken(rootAST);
         }
@@ -133,7 +133,7 @@ public class SingleSpaceSeparatorCheck extends AbstractCheck {
      *
      * @param node The node to start examining.
      */
-    private void visitEachToken(DetailAST node) {
+    private void visitEachToken(final DetailAST node) {
         DetailAST sibling = node;
 
         do {
@@ -174,7 +174,7 @@ public class SingleSpaceSeparatorCheck extends AbstractCheck {
      * @return {@code true} if the text at {@code columnNo} is separated
      *         correctly from the previous token.
      */
-    private boolean isTextSeparatedCorrectlyFromPrevious(String line, int columnNo) {
+    private boolean isTextSeparatedCorrectlyFromPrevious(final String line, final int columnNo) {
         return isSingleSpace(line, columnNo)
                 || !isWhitespace(line, columnNo)
                 || isFirstInLine(line, columnNo)
@@ -190,7 +190,7 @@ public class SingleSpaceSeparatorCheck extends AbstractCheck {
      * @return {@code true} if the character at {@code columnNo} is a space, and
      *         not preceded by another space.
      */
-    private static boolean isSingleSpace(String line, int columnNo) {
+    private static boolean isSingleSpace(final String line, final int columnNo) {
         return isSpace(line, columnNo) && !Character.isWhitespace(line.charAt(columnNo - 1));
     }
 
@@ -201,7 +201,7 @@ public class SingleSpaceSeparatorCheck extends AbstractCheck {
      * @param columnNo The column position in the {@code line} to examine.
      * @return {@code true} if the character at {@code columnNo} is a space.
      */
-    private static boolean isSpace(String line, int columnNo) {
+    private static boolean isSpace(final String line, final int columnNo) {
         return line.charAt(columnNo) == ' ';
     }
 
@@ -213,7 +213,7 @@ public class SingleSpaceSeparatorCheck extends AbstractCheck {
      * @return {@code true} if the character at {@code columnNo} is a
      *         whitespace.
      */
-    private static boolean isWhitespace(String line, int columnNo) {
+    private static boolean isWhitespace(final String line, final int columnNo) {
         return Character.isWhitespace(line.charAt(columnNo));
     }
 
@@ -226,7 +226,7 @@ public class SingleSpaceSeparatorCheck extends AbstractCheck {
      * @return {@code true} if the column position is the first non-whitespace
      *         text on the {@code line}.
      */
-    private static boolean isFirstInLine(String line, int columnNo) {
+    private static boolean isFirstInLine(final String line, final int columnNo) {
         return CommonUtil.isBlank(line.substring(0, columnNo));
     }
 
@@ -238,7 +238,7 @@ public class SingleSpaceSeparatorCheck extends AbstractCheck {
      * @param columnNo The column position in the {@code line} to examine.
      * @return {@code true} if the previous text is a end comment block.
      */
-    private static boolean isBlockCommentEnd(String line, int columnNo) {
+    private static boolean isBlockCommentEnd(final String line, final int columnNo) {
         return line.substring(0, columnNo).trim().endsWith("*/");
     }
 

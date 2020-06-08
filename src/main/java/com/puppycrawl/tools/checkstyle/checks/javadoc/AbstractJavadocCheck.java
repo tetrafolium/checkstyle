@@ -155,7 +155,7 @@ public abstract class AbstractJavadocCheck extends AbstractCheck {
      *
      * @param shouldReportViolation value to which the field shall be set to
      */
-    public final void setViolateExecutionOnNonTightHtml(boolean shouldReportViolation) {
+    public final void setViolateExecutionOnNonTightHtml(final boolean shouldReportViolation) {
         violateExecutionOnNonTightHtml = shouldReportViolation;
     }
 
@@ -163,7 +163,7 @@ public abstract class AbstractJavadocCheck extends AbstractCheck {
      * Adds a set of tokens the check is interested in.
      * @param strRep the string representation of the tokens interested in
      */
-    public final void setJavadocTokens(String... strRep) {
+    public final void setJavadocTokens(final String... strRep) {
         javadocTokens.clear();
         for (String str : strRep) {
             javadocTokens.add(JavadocUtil.getTokenId(str));
@@ -176,8 +176,7 @@ public abstract class AbstractJavadocCheck extends AbstractCheck {
         if (javadocTokens.isEmpty()) {
             javadocTokens.addAll(
                     Arrays.stream(getDefaultJavadocTokens()).boxed().collect(Collectors.toList()));
-        }
-        else {
+        } else {
             final int[] acceptableJavadocTokens = getAcceptableJavadocTokens();
             Arrays.sort(acceptableJavadocTokens);
             for (Integer javadocTokenId : javadocTokens) {
@@ -218,7 +217,7 @@ public abstract class AbstractJavadocCheck extends AbstractCheck {
      *        the root of the tree
      * @noinspection WeakerAccess
      */
-    public void beginJavadocTree(DetailNode rootAst) {
+    public void beginJavadocTree(final DetailNode rootAst) {
         // No code by default, should be overridden only by demand at subclasses
     }
 
@@ -228,7 +227,7 @@ public abstract class AbstractJavadocCheck extends AbstractCheck {
      *        the root of the tree
      * @noinspection WeakerAccess
      */
-    public void finishJavadocTree(DetailNode rootAst) {
+    public void finishJavadocTree(final DetailNode rootAst) {
         // No code by default, should be overridden only by demand at subclasses
     }
 
@@ -237,7 +236,7 @@ public abstract class AbstractJavadocCheck extends AbstractCheck {
      * @param ast
      *        the token leaving
      */
-    public void leaveJavadocToken(DetailNode ast) {
+    public void leaveJavadocToken(final DetailNode ast) {
         // No code by default, should be overridden only by demand at subclasses
     }
 
@@ -270,17 +269,17 @@ public abstract class AbstractJavadocCheck extends AbstractCheck {
     }
 
     @Override
-    public final void beginTree(DetailAST rootAST) {
+    public final void beginTree(final DetailAST rootAST) {
         TREE_CACHE.get().clear();
     }
 
     @Override
-    public final void finishTree(DetailAST rootAST) {
+    public final void finishTree(final DetailAST rootAST) {
         // No code, prevent override in subclasses
     }
 
     @Override
-    public final void visitToken(DetailAST blockCommentNode) {
+    public final void visitToken(final DetailAST blockCommentNode) {
         if (JavadocUtil.isJavadocComment(blockCommentNode)) {
             // store as field, to share with child Checks
             context.get().blockCommentAst = blockCommentNode;
@@ -292,8 +291,7 @@ public abstract class AbstractJavadocCheck extends AbstractCheck {
 
             if (TREE_CACHE.get().containsKey(treeCacheKey)) {
                 result = TREE_CACHE.get().get(treeCacheKey);
-            }
-            else {
+            } else {
                 result = context.get().parser
                         .parseJavadocAsDetailNode(blockCommentNode);
                 TREE_CACHE.get().put(treeCacheKey, result);
@@ -309,8 +307,7 @@ public abstract class AbstractJavadocCheck extends AbstractCheck {
                             JavadocDetailNodeParser.MSG_UNCLOSED_HTML_TAG,
                             result.getFirstNonTightHtmlTag().getText());
                 }
-            }
-            else {
+            } else {
                 final ParseErrorMessage parseErrorMessage = result.getParseErrorMessage();
                 log(parseErrorMessage.getLineNumber(),
                         parseErrorMessage.getMessageKey(),
@@ -332,7 +329,7 @@ public abstract class AbstractJavadocCheck extends AbstractCheck {
      * @param root
      *        root of JavadocAST tree.
      */
-    private void processTree(DetailNode root) {
+    private void processTree(final DetailNode root) {
         beginJavadocTree(root);
         walk(root);
         finishJavadocTree(root);
@@ -343,7 +340,7 @@ public abstract class AbstractJavadocCheck extends AbstractCheck {
      * @param root
      *        the root of tree for process
      */
-    private void walk(DetailNode root) {
+    private void walk(final DetailNode root) {
         DetailNode curNode = root;
         while (curNode != null) {
             boolean waitsForProcessing = shouldBeProcessed(curNode);
@@ -374,7 +371,7 @@ public abstract class AbstractJavadocCheck extends AbstractCheck {
      * @param curNode current node.
      * @return true if the current node should be processed by the check.
      */
-    private boolean shouldBeProcessed(DetailNode curNode) {
+    private boolean shouldBeProcessed(final DetailNode curNode) {
         return javadocTokens.contains(curNode.getType());
     }
 

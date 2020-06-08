@@ -25,9 +25,9 @@ public abstract class InputIllegalTypeGenerics {
         final Consumer<Foo> consumer = Foo<Boolean>::foo; // warn
     }
 
-    public <T extends Boolean, U extends Serializable> void typeParameter(T a) {} // warn
+    public <T extends Boolean, U extends Serializable> void typeParameter(final T a) { } // warn
 
-    public void fullName(java.util.ArrayList<? super Boolean> a) {} // warn
+    public void fullName(final java.util.ArrayList<? super Boolean> a) { } // warn
 
     public abstract Set<Boolean> shortName(Set<? super Set<Boolean>> a); // warn
 
@@ -35,7 +35,7 @@ public abstract class InputIllegalTypeGenerics {
         return new TreeSet<Foo<Boolean>>(); // OK
     }
 
-    public class MyClass<Foo extends Boolean> {} // warn
+    public class MyClass<Foo extends Boolean> { } // warn
 
 }
 
@@ -44,13 +44,13 @@ class Bounded {
     public boolean match = new TreeSet<Integer>().stream()
             .allMatch(new TreeSet<>()::add); // OK
 
-    public static <Boolean> void foo() {} // warn
+    public static <Boolean> void foo() { } // warn
 
 }
 
 class Foo<T extends Boolean & Serializable> { // OK
 
-    void foo() {}
+    void foo() { }
 
 }
 

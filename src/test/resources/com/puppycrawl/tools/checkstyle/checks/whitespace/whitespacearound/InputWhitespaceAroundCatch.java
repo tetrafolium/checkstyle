@@ -1,15 +1,15 @@
 package com.puppycrawl.tools.checkstyle.checks.whitespace.whitespacearound;
 
 public class InputWhitespaceAroundCatch {
-    public int case1(int i) {
+    public int case1(final int i) {
         int k = 1;
         try {
             k = 5 / i;
-        } catch (ArithmeticException ex) {}
+        } catch (ArithmeticException ex) { }
         return k;
     }
 
-    public int case2(int i) {
+    public int case2(final int i) {
         int k = 1;
         try {
             k = 10 / i;
@@ -17,7 +17,7 @@ public class InputWhitespaceAroundCatch {
         return k;
     }
 
-    public int case3(int i) {
+    public int case3(final int i) {
         int k = 1;
         try {
             k = 15 / i;
@@ -27,7 +27,7 @@ public class InputWhitespaceAroundCatch {
         return k;
     }
 
-    public int case4(int i) {
+    public int case4(final int i) {
         int k = 1;
         try {
             k = 20 / i;

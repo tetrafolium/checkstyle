@@ -15,20 +15,20 @@ public class InputDeclarationOrderVariableAccess {
     public static final InputDeclarationOrderVariableAccess.Stream STREAM =
             new InputDeclarationOrderVariableAccess.Stream() {
         @Override
-        public InputDeclarationOrderVariableAccess readResult(InputStream in) throws IOException {
+        public InputDeclarationOrderVariableAccess readResult(final InputStream in) throws IOException {
             InputDeclarationOrderVariableAccess buckets = new InputDeclarationOrderVariableAccess();
             buckets.readFrom(in);
             return buckets;
         }
     };
 
-    InputDeclarationOrderVariableAccess() {}
+    InputDeclarationOrderVariableAccess() { }
 
-    public void readFrom(InputStream in) throws IOException {
+    public void readFrom(final InputStream in) throws IOException {
     }
 
     static class Stream {
-        public InputDeclarationOrderVariableAccess readResult(InputStream in) throws IOException {
+        public InputDeclarationOrderVariableAccess readResult(final InputStream in) throws IOException {
             return null;
         }
     }

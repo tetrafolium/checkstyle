@@ -217,7 +217,7 @@ public class LocalVariableNameCheck
      *
      * @param allow Flag for allowing or not one character name in FOR loop.
      */
-    public final void setAllowOneCharVarInForLoop(boolean allow) {
+    public final void setAllowOneCharVarInForLoop(final boolean allow) {
         allowOneCharVarInForLoop = allow;
     }
 
@@ -239,13 +239,12 @@ public class LocalVariableNameCheck
     }
 
     @Override
-    protected final boolean mustCheckName(DetailAST ast) {
+    protected final boolean mustCheckName(final DetailAST ast) {
         final boolean result;
         if (allowOneCharVarInForLoop && isForLoopVariable(ast)) {
             final String variableName = ast.findFirstToken(TokenTypes.IDENT).getText();
             result = variableName.length() != 1;
-        }
-        else {
+        } else {
             final DetailAST modifiersAST = ast.findFirstToken(TokenTypes.MODIFIERS);
             final boolean isFinal = modifiersAST.findFirstToken(TokenTypes.FINAL) != null;
             result = !isFinal && ScopeUtil.isLocalVariableDef(ast);
@@ -258,7 +257,7 @@ public class LocalVariableNameCheck
      * @param variableDef variable definition.
      * @return true if a variable is the loop's one.
      */
-    private static boolean isForLoopVariable(DetailAST variableDef) {
+    private static boolean isForLoopVariable(final DetailAST variableDef) {
         final int parentType = variableDef.getParent().getType();
         return parentType == TokenTypes.FOR_INIT
                 || parentType == TokenTypes.FOR_EACH_CLAUSE;

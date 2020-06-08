@@ -123,8 +123,7 @@ public class ImportControlCheckTest extends AbstractModuleTestSupport {
             final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
             verify(checkConfig, getPath("InputImportControl.java"), expected);
             fail("Test should fail if exception was not thrown");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             final String message = getCheckstyleExceptionMessage(ex);
             final String messageStart = "Unable to find: ";
 
@@ -141,8 +140,7 @@ public class ImportControlCheckTest extends AbstractModuleTestSupport {
             final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
             verify(checkConfig, getPath("InputImportControl.java"), expected);
             fail("Test should fail if exception was not thrown");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             final String message = getCheckstyleExceptionMessage(ex);
             final String messageStart = "Unable to load ";
 
@@ -259,7 +257,7 @@ public class ImportControlCheckTest extends AbstractModuleTestSupport {
     }
 
     // all import-control_pkg-re* files should be equivalent so use one test for all
-    private void testRegExpInPackage(String file) throws Exception {
+    private void testRegExpInPackage(final String file) throws Exception {
         final DefaultConfiguration checkConfig = createModuleConfig(ImportControlCheck.class);
         checkConfig.addAttribute("file", getPath(file));
         final String[] expected = {"5:1: " + getCheckMessage(MSG_DISALLOWED, "java.io.File")};
@@ -299,8 +297,7 @@ public class ImportControlCheckTest extends AbstractModuleTestSupport {
             final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
             verify(checkConfig, getPath("InputImportControl.java"), expected);
             fail("Test should fail if exception was not thrown");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             final String message = getCheckstyleExceptionMessage(ex);
             final String messageStart = "Unable to find: ";
 
@@ -327,8 +324,7 @@ public class ImportControlCheckTest extends AbstractModuleTestSupport {
             final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
             verify(checkConfig, getPath("InputImportControl.java"), expected);
             fail("Test should fail if exception was not thrown");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             final String message = getCheckstyleExceptionMessage(ex);
             final String messageStart = "Unable to load ";
 
@@ -450,7 +446,7 @@ public class ImportControlCheckTest extends AbstractModuleTestSupport {
      * @param exception Exception
      * @return String message of original exception
      */
-    private static String getCheckstyleExceptionMessage(CheckstyleException exception) {
+    private static String getCheckstyleExceptionMessage(final CheckstyleException exception) {
         return exception.getCause().getCause().getCause().getCause().getMessage();
     }
 

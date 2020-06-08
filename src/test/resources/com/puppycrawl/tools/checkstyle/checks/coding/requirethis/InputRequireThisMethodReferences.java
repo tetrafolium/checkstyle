@@ -8,16 +8,16 @@ import java.util.stream.Collectors;
 
 public class InputRequireThisMethodReferences {
     private Set<String> tags = Collections.unmodifiableSortedSet(
-        Arrays.stream(new String[] {"br", "li", "dt", "dd", "hr", "img", "p", "td", "tr", "th",})
+        Arrays.stream(new String[] {"br", "li", "dt", "dd", "hr", "img", "p", "td", "tr", "th", })
             .collect(Collectors.toCollection(TreeSet::new)));
 
-    public InputRequireThisMethodReferences(Set<String> tags) {
+    public InputRequireThisMethodReferences(final Set<String> tags) {
         tags = tags; // violation
     }
 
     public InputRequireThisMethodReferences() {
         this.tags = Arrays.stream(
-            new String[] {"br", "li", "dt", "dd", "hr", "img", "p", "td", "tr", "th",})
+            new String[] {"br", "li", "dt", "dd", "hr", "img", "p", "td", "tr", "th", })
             .collect(Collectors.toCollection(TreeSet::new));
     }
 }

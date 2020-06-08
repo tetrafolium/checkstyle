@@ -3,37 +3,37 @@ package com.google.checkstyle.test.chapter4formatting.rule4841indentation;
 public class InputFastMatcher
 {
 
-    public boolean matches(char c)
+    public boolean matches(final char c)
     {
         // OOOO Auto-generated method stub
         return false;
     }
 
-    public String replaceFrom(CharSequence sequence, CharSequence replacement)
+    public String replaceFrom(final CharSequence sequence, final CharSequence replacement)
     {
         // OOOO Auto-generated method stub
         return null;
     }
 
-    public String collapseFrom(CharSequence sequence, char replacement)
+    public String collapseFrom(final CharSequence sequence, final char replacement)
     {
         // OOOO Auto-generated method stub
         return null;
     }
 
-    public String trimFrom(CharSequence s)
+    public String trimFrom(final CharSequence s)
     {
         // OOOO Auto-generated method stub
         return null;
     }
 
-    public String trimLeadingFrom(CharSequence sequence)
+    public String trimLeadingFrom(final CharSequence sequence)
     {
         // OOOO Auto-generated method stub
         return null;
     }
 
-    public String trimTrailingFrom(CharSequence sequence)
+    public String trimTrailingFrom(final CharSequence sequence)
     {
         // OOOO Auto-generated method stub
         return null;

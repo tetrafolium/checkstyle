@@ -2,21 +2,21 @@ package com.puppycrawl.tools.checkstyle.checks.whitespace.parenpad;
 
 public class InputParenPadWithSpace
 {
-    protected InputParenPadWithSpace ( int i )
+    protected InputParenPadWithSpace(final int i)
     {
         this ();
-        toString ();
+        toString();
     }
-    protected InputParenPadWithSpace ()
+    protected InputParenPadWithSpace()
     {
-        super ();
+        super();
     }
 
-    public void enhancedFor ()
+    public void enhancedFor()
     {
         int[] i = new int[2];
-        for ( int j: i ) {
-            System.identityHashCode ( j );
+        for (int j: i) {
+            System.identityHashCode(j);
         }
     }
 }

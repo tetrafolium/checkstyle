@@ -5,7 +5,7 @@ package com.puppycrawl.tools.checkstyle.grammar;
  */
 public class InputJava7StringSwitch
 {
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         String mystr = "value" + "2";
 
         switch (mystr) {

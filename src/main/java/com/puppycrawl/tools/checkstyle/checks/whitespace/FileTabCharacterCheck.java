@@ -90,7 +90,7 @@ public class FileTabCharacterCheck extends AbstractFileSetCheck {
     private boolean eachLine;
 
     @Override
-    protected void processFiltered(File file, FileText fileText) {
+    protected void processFiltered(final File file, final FileText fileText) {
         int lineNum = 0;
         for (int index = 0; index < fileText.size(); index++) {
             final String line = fileText.get(index);
@@ -99,8 +99,7 @@ public class FileTabCharacterCheck extends AbstractFileSetCheck {
             if (tabPosition != -1) {
                 if (eachLine) {
                     log(lineNum, tabPosition, MSG_CONTAINS_TAB);
-                }
-                else {
+                } else {
                     log(lineNum, tabPosition, MSG_FILE_CONTAINS_TAB);
                     break;
                 }
@@ -113,7 +112,7 @@ public class FileTabCharacterCheck extends AbstractFileSetCheck {
      * instance.
      * @param eachLine Whether report on each line containing a tab.
      */
-    public void setEachLine(boolean eachLine) {
+    public void setEachLine(final boolean eachLine) {
         this.eachLine = eachLine;
     }
 

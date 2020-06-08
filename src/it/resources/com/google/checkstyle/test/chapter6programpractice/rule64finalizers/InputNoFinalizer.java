@@ -13,7 +13,7 @@ public class InputNoFinalizer
             }
 
             // generates a PARAMETER_DEF AST inside the METHOD_DEF of finalize()
-            private void reallyFinalize(String s)
+            private void reallyFinalize(final String s)
             {
             }
         };
@@ -21,7 +21,7 @@ public class InputNoFinalizer
     }
 
     // should not be reported by NoFinalizer check
-    public void finalize(String x)
+    public void finalize(final String x)
     {
     }
 }

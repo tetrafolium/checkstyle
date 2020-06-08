@@ -51,7 +51,8 @@ public class InputIndentationValidBlockIndent { //indent:0 exp:0
 
     } //indent:4 exp:4
 
-    static { int var = 4; } //indent:4 exp:4
+    static {
+        int var = 4; } //indent:4 exp:4
 
 
     static { //indent:4 exp:4
@@ -85,14 +86,14 @@ enum EquivalenceTester { //indent:0 exp:0
         /** //indent:8 exp:8
          * {@inheritDoc} //indent:9 exp:9
          */ //indent:9 exp:9
-        public boolean areEqual( final Object first, final Object second ) { //indent:8 exp:8
+        public boolean areEqual(final Object first, final Object second) { //indent:8 exp:8
             return true; //indent:12 exp:12
         } //indent:8 exp:8
 
         /** //indent:8 exp:8
          * {@inheritDoc} //indent:9 exp:9
          */ //indent:9 exp:9
-        public int hashCode( final Object target ) { //indent:8 exp:8
+        public int hashCode(final Object target) { //indent:8 exp:8
             return 1; //indent:12 exp:12
         } //indent:8 exp:8
     }, //indent:4 exp:4
@@ -105,15 +106,15 @@ enum EquivalenceTester { //indent:0 exp:0
         /** //indent:8 exp:8
          * {@inheritDoc} //indent:9 exp:9
          */ //indent:9 exp:9
-        public boolean areEqual( final Object first, final Object second ) { //indent:8 exp:8
+        public boolean areEqual(final Object first, final Object second) { //indent:8 exp:8
             return first == second; //indent:12 exp:12
         } //indent:8 exp:8
 
         /** //indent:8 exp:8
          * {@inheritDoc} //indent:9 exp:9
          */ //indent:9 exp:9
-        public int hashCode( final Object target ) { //indent:8 exp:8
-            return System.identityHashCode( target ); //indent:12 exp:12
+        public int hashCode(final Object target) { //indent:8 exp:8
+            return System.identityHashCode(target); //indent:12 exp:12
         } //indent:8 exp:8
     }; //indent:4 exp:4
 
@@ -124,7 +125,7 @@ enum EquivalenceTester { //indent:0 exp:0
      * @param second second comparand //indent:5 exp:5
      * @return whether {@code first} and {@code second} are considered equivalent //indent:5 exp:5
      */ //indent:5 exp:5
-    public abstract boolean areEqual( Object first, Object second ); //indent:4 exp:4
+    public abstract boolean areEqual(Object first, Object second); //indent:4 exp:4
 
     /** //indent:4 exp:4
      * Computes a hash code for the given object. //indent:5 exp:5
@@ -132,7 +133,7 @@ enum EquivalenceTester { //indent:0 exp:0
      * @param target object to compute a hash for //indent:5 exp:5
      * @return the computed hash //indent:5 exp:5
      */ //indent:5 exp:5
-    public abstract int hashCode( Object target ); //indent:4 exp:4
+    public abstract int hashCode(Object target); //indent:4 exp:4
 } //indent:0 exp:0
 
 class bug1251988 //indent:0 exp:0
@@ -166,8 +167,10 @@ class bug1336737 { //indent:0 exp:0
         IMPORT("import"), //indent:8 exp:8
         LIST("list"); //indent:8 exp:8
         private final String c; //indent:8 exp:8
-        Command(String c) { this.c = c; } //indent:8 exp:8
-        public String toString() { return c; } //indent:8 exp:8
+        Command(final String c) {
+            this.c = c; } //indent:8 exp:8
+        public String toString() {
+            return c; } //indent:8 exp:8
     } //indent:4 exp:4
 } //indent:0 exp:0
 
@@ -186,10 +189,20 @@ class OneLineCode { //indent:0 exp:0
         { if (true) return; }  //indent:8 exp:8
     } //indent:4 exp:4
     void lambda() { //indent:4 exp:4
-        Stream.of(false).map(x -> { if (x) return 0; else return 1; }); //indent:8 exp:8
+        Stream.of(false).map(x -> {
+            if (x) return 0; else return 1; }); //indent:8 exp:8
     } //indent:4 exp:4
-    void tryCatchDoWhile(Closeable is) throws Exception { //indent:4 exp:4
-        if (is != null) { try { is.close(); } catch (Exception e) {} } //indent:8 exp:8
-        if (is != null) { do { is.close(); } while (is != null); } //indent:8 exp:8
+    void tryCatchDoWhile(final Closeable is) throws Exception { //indent:4 exp:4
+        if (is != null) {
+            try {
+                is.close();
+            } catch (Exception e) {
+            }
+            } //indent:8 exp:8
+        if (is != null) {
+            do {
+                is.close(); } while (is != null);
+                }
+                //indent:8 exp:8
     } //indent:4 exp:4
 } //indent:0 exp:0

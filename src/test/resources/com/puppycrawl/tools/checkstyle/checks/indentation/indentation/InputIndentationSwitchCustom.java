@@ -19,7 +19,7 @@ public class InputIndentationSwitchCustom { //indent:0 exp:0
     private static final int ABC2 = 0; //indent:4 exp:4
     private static final int ABC3 = 0; //indent:4 exp:4
 
-    public int getValue(int value) { //indent:4 exp:4
+    public int getValue(final int value) { //indent:4 exp:4
         switch (value) { //indent:8 exp:8
             case 0: return ABC1; //indent:12 exp:12
             case 1: return ABC2; //indent:12 exp:12
@@ -28,7 +28,7 @@ public class InputIndentationSwitchCustom { //indent:0 exp:0
         return 0; //indent:8 exp:8
     } //indent:4 exp:4
 
-    public int getValue1(int value) { //indent:4 exp:4
+    public int getValue1(final int value) { //indent:4 exp:4
         switch (value) { //indent:8 exp:8
             case 0: //indent:12 exp:12
                 return ABC1; //indent:16 exp:16

@@ -25,7 +25,7 @@ class InputSuppressWarningsFilter
     private int K; // should fail MemberNameCheck
 
     // DO NOT REFORMAT: L and X should be on the same line
-    @SuppressWarnings(value="membername")
+    @SuppressWarnings(value = "membername")
     private int L; private int X; // L should NOT fail, X should
 
     // test "checkstyle:" prefix
@@ -36,13 +36,12 @@ class InputSuppressWarningsFilter
     // test explicit warning alias
     @SuppressWarnings("paramnum")
     // should NOT fail ParameterNumberCheck
-    public void needsLotsOfParameters(@SuppressWarnings("unused") int a,
-        int b, int c, int d, int e, int f, int g, int h)
+    public void needsLotsOfParameters(final @SuppressWarnings("unused") int a,
+        final int b, final int c, final int d, final int e, final int f, final int g, final int h)
     {
         @SuppressWarnings("unused") int z;
         try {
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             // should fail IllegalCatchCheck
         }
     }
@@ -52,8 +51,7 @@ class InputSuppressWarningsFilter
     public void needsToCatchException()
     {
         try {
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             // should NOT fail IllegalCatchCheck
         }
     }
@@ -62,34 +60,34 @@ class InputSuppressWarningsFilter
         @SuppressWarnings("rawtypes")
         ELEMENT;
     }
-    private static final String UNUSED="UnusedDeclaration";
+    private static final String UNUSED = "UnusedDeclaration";
 
     @SuppressWarnings(UNUSED)
-    public void annotationUsingStringConstantValue(){
+    public void annotationUsingStringConstantValue() {
     }
 
     @SuppressWarnings("checkstyle:uncommentedmain")
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
 
     }
 
     static class TestClass1 {
         @SuppressWarnings("uncommentedmain")
-        public static void main(String[] args) {
+        public static void main(final String[] args) {
 
         }
     }
 
     static class TestClass2 {
         @SuppressWarnings("UncommentedMain")
-        public static void main(String[] args) {
+        public static void main(final String[] args) {
 
         }
     }
 
     static class TestClass3 {
         @SuppressWarnings("checkstyle:UncommentedMain")
-        public static void main(String[] args) {
+        public static void main(final String[] args) {
 
         }
     }

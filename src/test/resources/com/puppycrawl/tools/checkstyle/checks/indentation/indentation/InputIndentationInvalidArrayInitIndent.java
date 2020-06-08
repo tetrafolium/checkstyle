@@ -48,9 +48,9 @@ public class InputIndentationInvalidArrayInitIndent { //indent:0 exp:0
   {1, 2, 3};
 
 
-    int[] array6 = new int[] { 1, 2,
+    int[] array6 = new int[] {1, 2,
                     3,
-    4,};
+    4, };
 
 
 
@@ -60,24 +60,24 @@ public class InputIndentationInvalidArrayInitIndent { //indent:0 exp:0
     };
 
 
-  int[] array8 = new int[] { };
+  int[] array8 = new int[] {};
 
       int[] array9 = new int[] {
   };
 
     int[][] array10 = new int[][] {
-      new int[] { 1, 2, 3},
-        new int[] { 1, 2, 3},
+      new int[] {1, 2, 3},
+        new int[] {1, 2, 3},
     };
 
 
     int[][] array10b
         = new int[][] {
-          new int[] { 1, 2, 3},
-            new int[] { 1, 2, 3},
+          new int[] {1, 2, 3},
+            new int[] {1, 2, 3},
         };
 
-    private void func1(int[] arg) {
+    private void func1(final int[] arg) {
 
     }
 

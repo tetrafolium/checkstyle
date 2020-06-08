@@ -5,20 +5,21 @@ public class InputRightCurlyAlone {
     private int a;
     private static int b;
     {  a = 2; }  //violation
-    static { b = 3; }  //violation
+    static {
+        b = 3; }  //violation
 
     void method1() {
-        Thread t = new Thread() {@Override public void run() {
-            int a; int b;} //violation
+        Thread t = new Thread() { @Override public void run() {
+            int a; int b; } //violation
         };
     }
 
-    void method2(java.util.HashSet<String> set) {
+    void method2(final java.util.HashSet<String> set) {
         java.util.Map<String, String> map1 = new java.util.LinkedHashMap<String, String>() {{
             put("Hello", "World");
             put("first", "second");
             put("polygene", "lubricants");
-            put("alpha", "betical");}  //violation
+            put("alpha", "betical"); }  //violation
         };
 
         java.util.Map<String, String> map2 = new java.util.LinkedHashMap<String, String>() {{
@@ -38,41 +39,49 @@ public class InputRightCurlyAlone {
         }});  //violation
     }
 
-    int method4(int a) {
-        if (a>2) a*=10; return ++a; }   //violation
+    int method4(final int a) {
+        if (a > 2) a *= 10; return ++a; }   //violation
 
-    void method5(int a) {
-        while (a > 5) { a--; }  //violation
+    void method5(final int a) {
+        while (a > 5) {
+            a--; }  //violation
 
-        if (a > 4) { a++; }  //violation
+        if (a > 4) {
+            a++;
+        }  //violation
 
-        do {a--;} while (a > 3);  //violation
+        do {
+            a--; } while (a > 3);  //violation
 
-        for (int i = 1; i < 10; i++) { byte b = 10; }  //violation
+        for (int i = 1; i < 10; i++) {
+            byte b = 10; }  //violation
 
-        if (a < 2) { --a; } else if (a > 3) { a++; } //2 violations
+        if (a < 2) {
+            --a;
+        } else if (a > 3) { a++; } //2 violations
 
         java.util.List<String> list = new java.util.ArrayList<>();
         list.stream()
-                .filter(e -> {return !e.isEmpty() && !"null".equals(e);} )
+                .filter(e -> {
+                    return !e.isEmpty() && !"null".equals(e); })
                 .collect(java.util.stream.Collectors.toList());
     }
 
-    void method6(int a) {
+    void method6(final int a) {
         java.util.Map<String, String> map3 = new java.util.LinkedHashMap<String, String>() {{
             put("Hello", "World");
             put("first", "second");
             put("polygene", "lubricants");
-        }{}; // violation
+        } { }; // violation
         };
     }
 
-    public @interface TestAnnotation {} //violation
+    public @interface TestAnnotation { } //violation
 
-    public @interface TestAnnotation1{ String value(); } //violation
+    public @interface TestAnnotation1 { String value(); } //violation
 
     public @interface TestAnnotation2 {
-        String value();} //violation
+        String value(); } //violation
 
     public @interface TestAnnotation3 {
         String value();

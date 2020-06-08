@@ -80,7 +80,7 @@ public abstract class AbstractHeaderCheck extends AbstractFileSetCheck
      * @param charset the charset to use for loading the header from a file
      * @throws UnsupportedEncodingException if charset is unsupported
      */
-    public void setCharset(String charset) throws UnsupportedEncodingException {
+    public void setCharset(final String charset) throws UnsupportedEncodingException {
         if (!Charset.isSupported(charset)) {
             final String message = "unsupported charset: '" + charset + "'";
             throw new UnsupportedEncodingException(message);
@@ -94,7 +94,7 @@ public abstract class AbstractHeaderCheck extends AbstractFileSetCheck
      * @param uri the uri of the header to load.
      * @throws CheckstyleException if fileName is empty.
      */
-    public void setHeaderFile(URI uri) throws CheckstyleException {
+    public void setHeaderFile(final URI uri) throws CheckstyleException {
         if (uri == null) {
             throw new CheckstyleException(
                 "property 'headerFile' is missing or invalid in module "
@@ -113,8 +113,7 @@ public abstract class AbstractHeaderCheck extends AbstractFileSetCheck
         try (Reader headerReader = new InputStreamReader(new BufferedInputStream(
                     headerFile.toURL().openStream()), charset)) {
             loadHeader(headerReader);
-        }
-        catch (final IOException ex) {
+        } catch (final IOException ex) {
             throw new CheckstyleException(
                     "unable to load header file " + headerFile, ex);
         }
@@ -138,7 +137,7 @@ public abstract class AbstractHeaderCheck extends AbstractFileSetCheck
      * @param header header content to check against.
      * @throws IllegalArgumentException if the header cannot be interpreted
      */
-    public void setHeader(String header) {
+    public void setHeader(final String header) {
         if (!CommonUtil.isBlank(header)) {
             checkHeaderNotInitialized();
 
@@ -147,8 +146,7 @@ public abstract class AbstractHeaderCheck extends AbstractFileSetCheck
 
             try (Reader headerReader = new StringReader(headerExpandedNewLines)) {
                 loadHeader(headerReader);
-            }
-            catch (final IOException ex) {
+            } catch (final IOException ex) {
                 throw new IllegalArgumentException("unable to load header", ex);
             }
         }
@@ -185,8 +183,7 @@ public abstract class AbstractHeaderCheck extends AbstractFileSetCheck
 
         if (headerFile == null) {
             result = Collections.emptySet();
-        }
-        else {
+        } else {
             result = Collections.singleton(headerFile.toString());
         }
 

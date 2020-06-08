@@ -12,4 +12,4 @@ import java.util //indent:0 exp:0
  * basicOffset = 8                                                            //indent:1 exp:1
  * tabWidth = 4                                                               //indent:1 exp:1
  */                                                                           //indent:1 exp:1
-public class InputIndentationInvalidImportIndent implements RandomAccess {} //indent:0 exp:0
+public class InputIndentationInvalidImportIndent implements RandomAccess { } //indent:0 exp:0

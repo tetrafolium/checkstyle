@@ -127,8 +127,7 @@ public class SuppressionXpathSingleFilterTest
                     "InputSuppressionXpathSingleFilter", "Test",
                     null, null, xpath);
             fail("Exception was expected but got " + test);
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertTrue(ex.getMessage().contains("Incorrect xpath query"),
                     "Message should be: Unexpected xpath query");
         }
@@ -172,8 +171,7 @@ public class SuppressionXpathSingleFilterTest
         try {
             filter.setFiles("e[l");
             fail("PatternSyntaxException is expected");
-        }
-        catch (PatternSyntaxException ex) {
+        } catch (PatternSyntaxException ex) {
             assertTrue(ex.getMessage().contains("Unclosed character class"),
                     "Message should be: Unclosed character class");
         }
@@ -185,8 +183,7 @@ public class SuppressionXpathSingleFilterTest
         try {
             filter.setChecks("e[l");
             fail("PatternSyntaxException is expected");
-        }
-        catch (PatternSyntaxException ex) {
+        } catch (PatternSyntaxException ex) {
             assertTrue(ex.getMessage().contains("Unclosed character class"),
                     "Message should be: Unclosed character class");
         }
@@ -299,15 +296,14 @@ public class SuppressionXpathSingleFilterTest
         try {
             filter.accept(ev);
             fail("Exception is expected");
-        }
-        catch (IllegalStateException ex) {
+        } catch (IllegalStateException ex) {
             assertTrue(ex.getMessage().contains("Cannot initialize context and evaluate query"),
                     "Exception message does not match expected one");
         }
     }
 
     private static SuppressionXpathSingleFilter createSuppressionXpathSingleFilter(
-            String files, String checks, String message, String moduleId, String query) {
+            final String files, final String checks, final String message, final String moduleId, final String query) {
         final SuppressionXpathSingleFilter filter = new SuppressionXpathSingleFilter();
         filter.setFiles(files);
         filter.setChecks(checks);
@@ -318,7 +314,7 @@ public class SuppressionXpathSingleFilterTest
         return filter;
     }
 
-    private TreeWalkerAuditEvent createEvent(int line, int column, int tokenType)
+    private TreeWalkerAuditEvent createEvent(final int line, final int column, final int tokenType)
             throws Exception {
         final LocalizedMessage message =
                 new LocalizedMessage(line, column, tokenType, "", "", null, null, null,

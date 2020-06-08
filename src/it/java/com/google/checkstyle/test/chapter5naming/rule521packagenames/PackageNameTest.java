@@ -37,7 +37,7 @@ public class PackageNameTest extends AbstractGoogleModuleTestSupport {
         return "com/google/checkstyle/test/chapter5naming";
     }
 
-    private String getPath(String packageName, String fileName) throws IOException {
+    private String getPath(final String packageName, final String fileName) throws IOException {
         return getPath("rule521" + packageName + File.separator + fileName);
     }
 

@@ -86,7 +86,7 @@ public abstract class AbstractCheck extends AbstractViolationReporter {
      * @param strRep the string representation of the tokens interested in
      * @noinspection WeakerAccess
      */
-    public final void setTokens(String... strRep) {
+    public final void setTokens(final String... strRep) {
         Collections.addAll(tokens, strRep);
     }
 
@@ -133,7 +133,7 @@ public abstract class AbstractCheck extends AbstractViolationReporter {
      * information that is to be collected whilst processing a tree.
      * @param rootAST the root of the tree
      */
-    public void beginTree(DetailAST rootAST) {
+    public void beginTree(final DetailAST rootAST) {
         // No code by default, should be overridden only by demand at subclasses
     }
 
@@ -142,7 +142,7 @@ public abstract class AbstractCheck extends AbstractViolationReporter {
      * information collected whilst processing a tree.
      * @param rootAST the root of the tree
      */
-    public void finishTree(DetailAST rootAST) {
+    public void finishTree(final DetailAST rootAST) {
         // No code by default, should be overridden only by demand at subclasses
     }
 
@@ -150,7 +150,7 @@ public abstract class AbstractCheck extends AbstractViolationReporter {
      * Called to process a token.
      * @param ast the token to process
      */
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         // No code by default, should be overridden only by demand at subclasses
     }
 
@@ -158,7 +158,7 @@ public abstract class AbstractCheck extends AbstractViolationReporter {
      * Called after all the child nodes have been process.
      * @param ast the token leaving
      */
-    public void leaveToken(DetailAST ast) {
+    public void leaveToken(final DetailAST ast) {
         // No code by default, should be overridden only by demand at subclasses
     }
 
@@ -175,7 +175,7 @@ public abstract class AbstractCheck extends AbstractViolationReporter {
      * @param index index of the line
      * @return the line from the file contents
      */
-    public final String getLine(int index) {
+    public final String getLine(final int index) {
         return context.get().fileContents.getLine(index);
     }
 
@@ -183,7 +183,7 @@ public abstract class AbstractCheck extends AbstractViolationReporter {
      * Set the file contents associated with the tree.
      * @param contents the manager
      */
-    public final void setFileContents(FileContents contents) {
+    public final void setFileContents(final FileContents contents) {
         context.get().fileContents = contents;
     }
 
@@ -208,7 +208,7 @@ public abstract class AbstractCheck extends AbstractViolationReporter {
      * Set the tab width to report audit events with.
      * @param tabWidth an {@code int} value
      */
-    public final void setTabWidth(int tabWidth) {
+    public final void setTabWidth(final int tabWidth) {
         this.tabWidth = tabWidth;
     }
 
@@ -220,7 +220,7 @@ public abstract class AbstractCheck extends AbstractViolationReporter {
      * @param key key to locale message format
      * @param args arguments to format
      */
-    public final void log(DetailAST ast, String key, Object... args) {
+    public final void log(final DetailAST ast, final String key, final Object... args) {
         // CommonUtil.lengthExpandedTabs returns column number considering tabulation
         // characters, it takes line from the file by line number, ast column number and tab
         // width as arguments. Returned value is 0-based, but user must see column number starting
@@ -245,7 +245,7 @@ public abstract class AbstractCheck extends AbstractViolationReporter {
     }
 
     @Override
-    public final void log(int line, String key, Object... args) {
+    public final void log(final int line, final String key, final Object... args) {
         context.get().messages.add(
             new LocalizedMessage(
                 line,
@@ -259,8 +259,8 @@ public abstract class AbstractCheck extends AbstractViolationReporter {
     }
 
     @Override
-    public final void log(int lineNo, int colNo, String key,
-            Object... args) {
+    public final void log(final int lineNo, final int colNo, final String key,
+            final Object... args) {
         final int col = 1 + CommonUtil.lengthExpandedTabs(
             getLines()[lineNo - 1], colNo, tabWidth);
         context.get().messages.add(

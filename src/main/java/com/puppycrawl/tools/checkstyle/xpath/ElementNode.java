@@ -70,7 +70,7 @@ public class ElementNode extends AbstractNode {
      * @param parent {@code Node} parent of the current node
      * @param detailAst reference to {@code DetailAST}
      */
-    public ElementNode(AbstractNode root, AbstractNode parent, DetailAST detailAst) {
+    public ElementNode(final AbstractNode root, final AbstractNode parent, final DetailAST detailAst) {
         super(root.getTreeInfo());
         this.parent = parent;
         this.root = root;
@@ -102,17 +102,15 @@ public class ElementNode extends AbstractNode {
      * @return attribute value
      */
     @Override
-    public String getAttributeValue(String namespace, String localPart) {
+    public String getAttributeValue(final String namespace, final String localPart) {
         final String result;
         if (TEXT_ATTRIBUTE_NAME.equals(localPart)) {
             if (attributeNode == null) {
                 result = null;
-            }
-            else {
+            } else {
                 result = attributeNode.getStringValue();
             }
-        }
-        else {
+        } else {
             result = null;
         }
         return result;
@@ -162,7 +160,7 @@ public class ElementNode extends AbstractNode {
      * @return {@code AxisIterator} object
      */
     @Override
-    public AxisIterator iterateAxis(byte axisNumber) {
+    public AxisIterator iterateAxis(final byte axisNumber) {
         final AxisIterator result;
         switch (axisNumber) {
             case AxisInfo.ANCESTOR:
@@ -186,8 +184,7 @@ public class ElementNode extends AbstractNode {
                             getChildren().toArray(EMPTY_ABSTRACT_NODE_ARRAY))) {
                         result = iterator;
                     }
-                }
-                else {
+                } else {
                     result = EmptyIterator.OfNodes.THE_INSTANCE;
                 }
                 break;
@@ -197,8 +194,7 @@ public class ElementNode extends AbstractNode {
                                  new Navigator.DescendantEnumeration(this, false, true)) {
                         result = iterator;
                     }
-                }
-                else {
+                } else {
                     result = EmptyIterator.OfNodes.THE_INSTANCE;
                 }
                 break;
@@ -284,8 +280,7 @@ public class ElementNode extends AbstractNode {
         final AxisIterator result;
         if (indexAmongSiblings == 0) {
             result = EmptyIterator.OfNodes.THE_INSTANCE;
-        }
-        else {
+        } else {
             try (AxisIterator iterator = new ArrayIterator.OfNodes(
                     getPrecedingSiblings().toArray(EMPTY_ABSTRACT_NODE_ARRAY))) {
                 result = iterator;
@@ -302,8 +297,7 @@ public class ElementNode extends AbstractNode {
         final AxisIterator result;
         if (indexAmongSiblings == parent.getChildren().size() - 1) {
             result = EmptyIterator.OfNodes.THE_INSTANCE;
-        }
-        else {
+        } else {
             try (AxisIterator iterator = new ArrayIterator.OfNodes(
                     getFollowingSiblings().toArray(EMPTY_ABSTRACT_NODE_ARRAY))) {
                 result = iterator;
@@ -365,7 +359,7 @@ public class ElementNode extends AbstractNode {
          * Create an iterator over the "following" axis.
          * @param start the initial context node.
          */
-        /* package */ FollowingEnumeration(NodeInfo start) {
+        /* package */ FollowingEnumeration(final NodeInfo start) {
             siblingEnum = start.iterateAxis(AxisInfo.FOLLOWING_SIBLING);
         }
 
@@ -385,8 +379,7 @@ public class ElementNode extends AbstractNode {
                 result = siblingEnum.next();
                 if (result == null) {
                     siblingEnum = null;
-                }
-                else {
+                } else {
                     descendEnum = new Navigator.DescendantEnumeration(result, true, false);
                     result = next();
                 }

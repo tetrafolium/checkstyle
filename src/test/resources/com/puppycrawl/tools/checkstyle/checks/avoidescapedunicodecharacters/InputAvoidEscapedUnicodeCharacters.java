@@ -34,7 +34,7 @@ public class InputAvoidEscapedUnicodeCharacters {
                 String allCharactersEscaped = "\u03bc\u03bc";
         }
 
-        private static String abbreviate(TimeUnit unit) {
+        private static String abbreviate(final TimeUnit unit) {
                 switch (unit) {
                 case NANOSECONDS:
                         return "ns";
@@ -61,7 +61,7 @@ public class InputAvoidEscapedUnicodeCharacters {
                                 + "\u0009\u0020\u2006\u2001\u202F\u00A0\u000C\u2009"
                                 + "\u3000\u2004\u3000\u3000\u2028\n\u2007\u3000";
 
-              public boolean matches(char c) {
+              public boolean matches(final char c) {
                 switch (c) {
                   case '\t':
                   case '\n':

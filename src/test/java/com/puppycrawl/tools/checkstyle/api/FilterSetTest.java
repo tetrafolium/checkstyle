@@ -93,12 +93,12 @@ public class FilterSetTest {
 
         private final boolean acceptValue;
 
-        /* package */ DummyFilter(boolean accept) {
+        /* package */ DummyFilter(final boolean accept) {
             acceptValue = accept;
         }
 
         @Override
-        public boolean accept(AuditEvent event) {
+        public boolean accept(final AuditEvent event) {
             return acceptValue;
         }
 
@@ -108,7 +108,7 @@ public class FilterSetTest {
         }
 
         @Override
-        public boolean equals(Object object) {
+        public boolean equals(final Object object) {
             if (getClass() != object.getClass()) {
                 return false;
             }

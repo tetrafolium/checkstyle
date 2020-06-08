@@ -6,16 +6,16 @@ package com.puppycrawl.tools.checkstyle.checks.javadoc.missingjavadocmethod;
 public class InputMissingJavadocMethodAllowedAnnotations implements SomeInterface {
 
     @ThisIsOk
-    public void allowed1() {}
+    public void allowed1() { }
 
     @ThisIsOkToo
-    public void allowed2() {}
+    public void allowed2() { }
 
     @com.puppycrawl.tools.checkstyle.checks.javadoc.missingjavadocmethod.ThisIsOk
-    public void allowed3() {}
+    public void allowed3() { }
 
     @Override
-    public void method() {}
+    public void method() { }
 }
 
 /**
@@ -31,9 +31,9 @@ interface SomeInterface {
 /**
  * Some javadoc.
  */
-@interface ThisIsOk {}
+@interface ThisIsOk { }
 
 /**
  * Some javadoc.
  */
-@interface ThisIsOkToo {}
+@interface ThisIsOkToo { }

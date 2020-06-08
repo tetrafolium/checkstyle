@@ -37,9 +37,9 @@ public class InputDeclarationOrderForwardReference {
     private int a = 1;
     public int b = a + 2;
 
-    public static void foo1() {}
+    public static void foo1() { }
     public static final double MAX = 0.60; // violation
-    public static void foo2() {}
+    public static void foo2() { }
 
     void foo3() {
         int i = 5;
@@ -47,7 +47,7 @@ public class InputDeclarationOrderForwardReference {
 }
 class InputDeclarationOrderFieldAnonymousClass {
 
-    private static final String[] REQUIRED_WORKDS = new String[] { "copyright" };
+    private static final String[] REQUIRED_WORKDS = new String[] {"copyright" };
 
     enum RequiredHeaderPlacement {
         TEMP;

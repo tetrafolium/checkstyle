@@ -53,24 +53,28 @@ public class InputAbstractJavadocNonTightHtmlTags {
      *
      * @return <li> <li> outer list isn't nested in parse tree </li> </li>
      */
-    int getField1() {return field1;}
+    int getField1() {
+        return field1; }
 
     /***/
-    int getField2() {return field2;} //method with empty javadoc
+    int getField2() {
+        return field2; } //method with empty javadoc
 
     /**
      * <tr> <li> list is going to be nested in the parse tree </li> </tr>
      *
      * @param field1 {@code <p> paraTag will not be recognized} in javadoc tree </p>
      */
-    void setField1(int field1) {this.field1 = field1;}
+    void setField1(final int field1) {
+        this.field1 = field1; }
 
     /**
      * <p>This is a setter method.
      * And paraTag shall be nested in parse tree </p>
      * @param field2 <p> setter
      */
-    void setField2(int field2) {this.field2 = field2;}
+    void setField2(final int field2) {
+        this.field2 = field2; }
 
     /**
      * <p> paragraph with a <br>singletonElement. <hr> And it contains another one. </p>
@@ -79,19 +83,22 @@ public class InputAbstractJavadocNonTightHtmlTags {
      * @return <tr> tr with <base href="www.something.com"> singletonElement </tr>
      *     <tr> nonTight </th>
      */
-    private int getField3() {return field3;}
+    private int getField3() {
+        return field3; }
 
     /**
      * @param field3 <td> td with singletonElement <br/> </td>
      */
-    private void setField3(int field3) { this.field3 = field3;}
+    private void setField3(final int field3) {
+        this.field3 = field3; }
 
     /**
      * <html> <bR> <Br> <BR> <Br/> <BR/> <bR/> </html>
      * <option> <INPut/> </option>
      * @return <tbody> <input/> <br> </tbody>
      */
-    private int getField4() {return field4;}
+    private int getField4() {
+        return field4; }
 
     /**
      * <thead> <br> </thead>
@@ -99,7 +106,8 @@ public class InputAbstractJavadocNonTightHtmlTags {
      * <p> </p>
      * @param field4 value to which {@link #field4} is to be set to
      */
-    private void setField4(int field4) {this.field4 = field4;}
+    private void setField4(final int field4) {
+        this.field4 = field4; }
 
     /**
      * <li> </li>
@@ -118,12 +126,14 @@ public class InputAbstractJavadocNonTightHtmlTags {
      * <tFoot> </TfOOT>
      * @param field5 value to which {@link #field5} is to be set to
      */
-    private void setField5(int field5) {this.field5 = field5;}
+    private void setField5(final int field5) {
+        this.field5 = field5; }
 
     /**
      *  <p> <li> <TR> <Td> <tH> <body> <colGROUP> <DD> <dt> <Head> <HTML> <option> <tBody> <tHead>
      *      <tFoot>
      * @param field6 </p> value to which {@link #field6} is to be set to
      */
-    private void setField6(int field6) {this.field6 = field6;}
+    private void setField6(final int field6) {
+        this.field6 = field6; }
 }

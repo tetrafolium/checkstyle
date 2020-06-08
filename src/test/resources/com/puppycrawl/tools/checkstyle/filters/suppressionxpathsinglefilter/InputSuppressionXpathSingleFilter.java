@@ -11,7 +11,7 @@ public class InputSuppressionXpathSingleFilter {
         return "InputSuppressByXpathThree";
     }
 
-    public int sum(int a, int b) {
+    public int sum(final int a, final int b) {
         String someVariable = "Hello World";
         return a + b;
     }

@@ -164,8 +164,7 @@ public class SuppressWarningsHolderTest extends AbstractModuleTestSupport {
         try {
             holder.setAliasList("=SomeAlias");
             fail("Exception expected");
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertEquals("'=' expected in alias list item: =SomeAlias", ex.getMessage(),
                     "Error message is unexpected");
         }
@@ -290,8 +289,7 @@ public class SuppressWarningsHolderTest extends AbstractModuleTestSupport {
         try {
             getAllAnnotationValues.invoke(holder, parent);
             fail("Exception expected");
-        }
-        catch (InvocationTargetException ex) {
+        } catch (InvocationTargetException ex) {
             assertTrue(ex.getCause() instanceof IllegalArgumentException,
                     "Error type is unexpected");
             assertEquals("Unexpected AST: Method Def[0x0]", ex.getCause().getMessage(),
@@ -315,8 +313,7 @@ public class SuppressWarningsHolderTest extends AbstractModuleTestSupport {
         try {
             getAllAnnotationValues.invoke(holder, methodDef);
             fail("Exception expected");
-        }
-        catch (InvocationTargetException ex) {
+        } catch (InvocationTargetException ex) {
             assertTrue(ex.getCause() instanceof IllegalArgumentException,
                     "Error type is unexpected");
             assertEquals("Expression or annotation array initializer AST expected: Method Def[0x0]",
@@ -345,8 +342,7 @@ public class SuppressWarningsHolderTest extends AbstractModuleTestSupport {
         try {
             getAnnotationTarget.invoke(holder, methodDef);
             fail("Exception expected");
-        }
-        catch (InvocationTargetException ex) {
+        } catch (InvocationTargetException ex) {
             assertTrue(ex.getCause() instanceof IllegalArgumentException,
                     "Error type is unexpected");
             assertEquals("Unexpected container AST: Parent ast[0x0]", ex.getCause().getMessage(),
@@ -363,8 +359,7 @@ public class SuppressWarningsHolderTest extends AbstractModuleTestSupport {
         try {
             holder.visitToken(methodDef);
             fail("Exception expected");
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertEquals("Identifier AST expected, but get null.", ex.getMessage(),
                     "Error message is unexpected");
         }
@@ -398,9 +393,9 @@ public class SuppressWarningsHolderTest extends AbstractModuleTestSupport {
                 "State is not cleared on beginTree");
     }
 
-    private static void populateHolder(String checkName, int firstLine,
-                                                         int firstColumn, int lastLine,
-                                                         int lastColumn) throws Exception {
+    private static void populateHolder(final String checkName, final int firstLine,
+                                                         final int firstColumn, final int lastLine,
+                                                         final int lastColumn) throws Exception {
         final Class<?> entry = Class
                 .forName("com.puppycrawl.tools.checkstyle.checks.SuppressWarningsHolder$Entry");
         final Constructor<?> entryConstr = entry.getDeclaredConstructor(String.class, int.class,
@@ -415,7 +410,7 @@ public class SuppressWarningsHolderTest extends AbstractModuleTestSupport {
         entries.get().add(entryInstance);
     }
 
-    private static AuditEvent createAuditEvent(String moduleId, int line, int column) {
+    private static AuditEvent createAuditEvent(final String moduleId, final int line, final int column) {
         final Checker source = new Checker();
         final LocalizedMessage message = new LocalizedMessage(line, column, null, null, null,
                 moduleId, MemberNameCheck.class, "message");

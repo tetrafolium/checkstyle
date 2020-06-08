@@ -36,8 +36,8 @@ public class SwitchHandler extends BlockParentHandler {
      * @param ast           the abstract syntax tree
      * @param parent        the parent handler
      */
-    public SwitchHandler(IndentationCheck indentCheck,
-        DetailAST ast, AbstractExpressionHandler parent) {
+    public SwitchHandler(final IndentationCheck indentCheck,
+        final DetailAST ast, final AbstractExpressionHandler parent) {
         super(indentCheck, "switch", ast, parent);
     }
 

@@ -29,7 +29,7 @@ class InputIndentationLabels { //indent:0 exp:0
   void foo3() { //indent:2 exp:2
     OUT1: //indent:4 exp:4
     for (;;) { //indent:4 exp:4
-      if (true){ //indent:6 exp:6
+      if (true) { //indent:6 exp:6
         break OUT1; //indent:8 exp:8
       } //indent:6 exp:6
     } //indent:4 exp:4
@@ -37,7 +37,7 @@ class InputIndentationLabels { //indent:0 exp:0
 
   void foo4() { //indent:2 exp:2
     OUT1: for (;;) { //indent:4 exp:4
-      if (true){ //indent:6 exp:6
+      if (true) { //indent:6 exp:6
         break OUT1; //indent:8 exp:8
       } //indent:6 exp:6
     } //indent:4 exp:4
@@ -55,12 +55,12 @@ class InputIndentationLabels { //indent:0 exp:0
   } //indent:2 exp:2
 
   void foooo() { //indent:2 exp:2
-    IN: do {} while (true); //indent:4 exp:4
+    IN: do { } while (true); //indent:4 exp:4
   } //indent:2 exp:2
 
   void foooo1() { //indent:2 exp:2
     IN: //indent:4 exp:4
-    do {} while (true); //indent:4 exp:4
+    do { } while (true); //indent:4 exp:4
   } //indent:2 exp:2
 
   class Inner { //indent:2 exp:2
@@ -78,7 +78,7 @@ class InputIndentationLabels { //indent:0 exp:0
     void foo5() { //indent:4 exp:4
       OUT1: //indent:6 exp:6
       for (;;) { //indent:6 exp:6
-        if (true){ //indent:8 exp:8
+        if (true) { //indent:8 exp:8
           break OUT1; //indent:10 exp:10
         } //indent:8 exp:8
       } //indent:6 exp:6
@@ -86,7 +86,7 @@ class InputIndentationLabels { //indent:0 exp:0
 
     void foo6() { //indent:4 exp:4
       OUT1: for (;;) { //indent:6 exp:6
-        if (true){ //indent:8 exp:8
+        if (true) { //indent:8 exp:8
           break OUT1; //indent:10 exp:10
         } //indent:8 exp:8
       } //indent:6 exp:6
@@ -104,12 +104,12 @@ class InputIndentationLabels { //indent:0 exp:0
     } //indent:4 exp:4
 
     void foooo3() { //indent:4 exp:4
-      IN: do {} while (true); //indent:6 exp:6
+      IN: do { } while (true); //indent:6 exp:6
     } //indent:4 exp:4
 
     void foooo4() { //indent:4 exp:4
       IN: //indent:6 exp:6
-      do {} while (true); //indent:6 exp:6
+      do { } while (true); //indent:6 exp:6
     } //indent:4 exp:4
   } //indent:2 exp:2
 
@@ -128,7 +128,7 @@ class InputIndentationLabels { //indent:0 exp:0
     void foo5() { //indent:4 exp:4
       OUT1: //indent:6 exp:6
       for (;;) { //indent:6 exp:6
-        if (true){ //indent:8 exp:8
+        if (true) { //indent:8 exp:8
           break OUT1; //indent:10 exp:10
         } //indent:8 exp:8
       } //indent:6 exp:6
@@ -136,7 +136,7 @@ class InputIndentationLabels { //indent:0 exp:0
 
     void foo6() { //indent:4 exp:4
       OUT1: for (;;) { //indent:6 exp:6
-        if (true){ //indent:8 exp:8
+        if (true) { //indent:8 exp:8
           break OUT1; //indent:10 exp:10
         } //indent:8 exp:8
       } //indent:6 exp:6
@@ -154,12 +154,12 @@ class InputIndentationLabels { //indent:0 exp:0
     } //indent:4 exp:4
 
     void foooo3() { //indent:4 exp:4
-      IN: do {} while (true); //indent:6 exp:6
+      IN: do { } while (true); //indent:6 exp:6
     } //indent:4 exp:4
 
     void foooo4() { //indent:4 exp:4
       IN: //indent:6 exp:6
-      do {} while (true); //indent:6 exp:6
+      do { } while (true); //indent:6 exp:6
     } //indent:4 exp:4
   }; //indent:2 exp:2
 } //indent:0 exp:0

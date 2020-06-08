@@ -5,10 +5,12 @@ class InputRightCurlyAnnotations
 
     @Deprecated
     @Override
-    public boolean equals(Object other) { boolean flag = true; return flag; } //violation
+    public boolean equals(final Object other) {
+        boolean flag = true; return flag; } //violation
 
     @Override
-    public String toString() { String s = "toString"; return s; } //violation
+    public String toString() {
+        String s = "toString"; return s; } //violation
 
     @Override
     @SuppressWarnings("unused")
@@ -19,52 +21,66 @@ class InputRightCurlyAnnotations
     }
 
     @SuppressWarnings("unused")
-    private void foo2() { int a = 9; return; } //violation
+    private void foo2() {
+        int a = 9; return; } //violation
 
     @SuppressWarnings("unused")
     private void foo3()
-    { int var1 = 5; var2 = 6; } //violation
+    {
+        int var1 = 5; var2 = 6; } //violation
 
     @Deprecated
-    private void foo4() { return; } //violation
+    private void foo4() {
+        return; } //violation
 
     @SuppressWarnings("unused")
-    private int foo5() { return 1; } //violation
+    private int foo5() {
+        return 1; } //violation
 
     @SuppressWarnings("unused")
-    private String foo6() { return toString();
+    private String foo6() {
+        return toString();
     }
 
-    private String foo7() { String s = toString(); return s.toString(); } //violation
+    private String foo7() {
+        String s = toString(); return s.toString(); } //violation
 
-    private void foo8() { ; return; } //violation
+    private void foo8() {
+        ; return; } //violation
 
     private int var1; private int v1;
     private int var2; private int v2;
     @SuppressWarnings("unused")
-    public InputRightCurlyAnnotations() { this.var1 = 1; } //violation
+    public InputRightCurlyAnnotations() {
+        this.var1 = 1; } //violation
     @SuppressWarnings("unused")
-    public InputRightCurlyAnnotations(int v1, int v2) {this.var1 = v1; this.var2 = v2; } //violation
+    public InputRightCurlyAnnotations(final int v1, final int v2) {
+        this.var1 = v1; this.var2 = v2; } //violation
 
     @SuppressWarnings("unused")
-    private void foo9() { ;; } //violation
+    private void foo9() {
+        ;; } //violation
 
     @SuppressWarnings("unused")
-    private void foo10() { ; } //violation
+    private void foo10() {
+        ; } //violation
 
     @SuppressWarnings("unused")
     private void foo11() {  } //empty block - violation
 
     @SuppressWarnings("unused")
     private void foo12() {
-        try { int i = 5; int b = 10; } //violation
+        try {
+            int i = 5; int b = 10;
+        } //violation
         catch (Exception e) { } //empty block - violation
     }
 
     @Deprecated
     @SuppressWarnings("unused")
     private void foo13() {
-        for (int i = 0; i < 10; i++) { int a = 5; int b = 6; } //violation
+        for (int i = 0; i < 10; i++) {
+            int a = 5; int b = 6; } //violation
 
         do
         {
@@ -73,11 +89,13 @@ class InputRightCurlyAnnotations
         while (var2 == 2);
     }
 
-    static { int a; int b; } //violation
+    static {
+        int a; int b; } //violation
 
-    static { int a; } //violation
+    static {
+        int a; } //violation
 
-    { int c; int d;} //violation
+    { int c; int d; } //violation
 
     { int c; } //violation
 
@@ -92,39 +110,49 @@ class InputRightCurlyAnnotations
     private void foo15() {
         class A { int a; } var1++; //violation
         class B {  } //empty block - violation
-        if(true) {
+        if (true) {
 
-        }
-        else;
+        } else ;
     }
 
     @Deprecated
     private void foo16() {
-        if (true) { return; } else { } //violation
+        if (true) {
+            return;
+        } else { } //violation
         if (false) {
         }
 
-        if (true) { return; } else { } //violation
+        if (true) {
+            return;
+        } else { } //violation
     }
 
     @Deprecated
-    void foo17() { int v1 = 5; v2 = 6; } @Deprecated void foo18() {int v1 = 5; v2 = 6; } //violation
+    void foo17() {
+        int v1 = 5; v2 = 6; } @Deprecated void foo18() {
+            int v1 = 5; v2 = 6; } //violation
 
-    private void foo19() {int var1 = 5;
-        var2 = 6;} //violation
+    private void foo19() {
+        int var1 = 5;
+        var2 = 6; } //violation
 
     @SuppressWarnings("Hello, world!")
     private String foo20() {
-        do { var2 ++; } //violation
+        do {
+            var2++; } //violation
         while (var2 < 15);
 
-        while (var1 < 10) { var1++; } //violation
+        while (var1 < 10) {
+            var1++; } //violation
 
-        do { var2++; var1++; } while (var2 < 15); return ""+0xCAFEBABE; //violation
+        do {
+            var2++; var1++; } while (var2 < 15); return "" + 0xCAFEBABE; //violation
     }
 
     private void foo21() {
-        new Object() { @Override protected void finalize() { "".toString(); }}; //violation
+        new Object() { @Override protected void finalize() {
+            "".toString(); }}; //violation
     }
 
     @SuppressWarnings("All")
@@ -135,7 +163,9 @@ class InputRightCurlyAnnotations
             toString();
         } catch (Exception e) { //violation
             throw new RuntimeException(e);
-        } finally { toString(); } //violation
+        } finally {
+            toString();
+        } //violation
     }
 
     @SuppressWarnings("")
@@ -147,23 +177,27 @@ class InputRightCurlyAnnotations
             put("alpha", "betical");
         }}; //NO violation
 
-        Thread t = new Thread() {@Override public void run() {super.run();}}; //violation
-        new Object() { public int hashCode() { return 1; }  { int a = 5; }}; //violation
-        new Object() { public int hashCode() { return 1; }  int b = 10; }; //violation
-        new Object() { public int hashCode() { return 1; }  { int c = 5; } int d = 8; }; //violation
+        Thread t = new Thread() { @Override public void run() {
+            super.run(); }}; //violation
+        new Object() { public int hashCode() {
+            return 1; }  { int a = 5; }}; //violation
+        new Object() { public int hashCode() {
+            return 1; }  int b = 10; }; //violation
+        new Object() { public int hashCode() {
+            return 1; }  { int c = 5; } int d = 8; }; //violation
 
         java.util.Map<String, String> map2 = new java.util.LinkedHashMap<String, String>() {{
             put("Hello", "World");
             put("first", "second");
             put("polygene", "lubricants");
-            put("alpha", "betical");}  //violation
+            put("alpha", "betical"); }  //violation
         };
 
         java.util.Map<String, String> map3 = new java.util.LinkedHashMap<String, String>() {{
             put("Hello", "World");
             put("first", "second");
             put("polygene", "lubricants");
-            put("alpha", "betical");}};  //violation
+            put("alpha", "betical"); }};  //violation
 
         java.util.Map<String, String> map4 = new java.util.LinkedHashMap<String, String>() {{
             put("Hello", "World");
@@ -185,10 +219,10 @@ class InputRightCurlyAnnotations
             add("AB21/X");
             add("YYLEX");
             add("AR5E");
-        }});} //violation
+        }}); } //violation
 
 
-    void foo23(java.util.HashSet<String> set) {
+    void foo23(final java.util.HashSet<String> set) {
     }
 
     void foo25() {
@@ -198,14 +232,17 @@ class InputRightCurlyAnnotations
 
     void foo26() {
         for (int i = 0; i < 10; i++) {
-            System.identityHashCode("Hello, world!");}} //violation
+            System.identityHashCode("Hello, world!"); }} //violation
 
     void foo27() {
-        for (int i = 0; i < 10; i++) {for (int j = 0; j < 15; j++) {int a;}}} //violation
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 15; j++) {
+                int a; }}} //violation
 
-    private java.util.ArrayList<Integer> foo28(int delta) {
+    private java.util.ArrayList<Integer> foo28(final int delta) {
         return new java.util.ArrayList<Integer>() {
-        @Override public int size() { return Math.max(0, super.size() + 1);}; //violation
+        @Override public int size() {
+            return Math.max(0, super.size() + 1); }; //violation
         };
     }
 
@@ -213,33 +250,35 @@ class InputRightCurlyAnnotations
         boolean flag = true;
         if (flag) {
             System.identityHashCode("heh");
-            flag = !flag; } String.CASE_INSENSITIVE_ORDER. //violation
+            flag = !flag;
+        }
+        String.CASE_INSENSITIVE_ORDER.//violation
             equals("Xe-xe");
     }
 
-    public void testMethod() {}; //violation
+    public void testMethod() { }; //violation
 
     public void testMethod1() {
     }; //violation
 
-    public class TestClass {}; //violation
+    public class TestClass { }; //violation
 
     public class TestClass1 {
     }; //violation
 
     public class TestClass2 {
-        public TestClass2() {}; //violation
+        public TestClass2() { }; //violation
 
-        public TestClass2(String someValue) {
+        public TestClass2(final String someValue) {
         }; //violation
     }
 
-   public @interface TestAnnotation {} //violation
+   public @interface TestAnnotation { } //violation
 
-    public @interface TestAnnotation1{ String value(); } //violation
+    public @interface TestAnnotation1 { String value(); } //violation
 
     public @interface TestAnnotation2 {
-        String value();} //violation
+        String value(); } //violation
 
     public @interface TestAnnotation3 {
         String value();
@@ -251,7 +290,7 @@ class InputRightCurlyAnnotations
     public @interface TestAnnnotation5 {
         String someValue(); }; //violation
 
-    public @interface TestAnnotation6 {}; //violation
+    public @interface TestAnnotation6 { }; //violation
 
     public @interface TestAnnotation7 {
         String someValue();

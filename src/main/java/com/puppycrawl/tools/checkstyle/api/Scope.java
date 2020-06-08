@@ -60,7 +60,7 @@ public enum Scope {
      * @param scope a {@code Scope} value
      * @return if {@code this} is a subscope of {@code scope}.
      */
-    public boolean isIn(Scope scope) {
+    public boolean isIn(final Scope scope) {
         return compareTo(scope) <= 0;
     }
 
@@ -70,7 +70,7 @@ public enum Scope {
      * @param scopeName scope name, such as "nothing", "public", etc.
      * @return the {@code Scope} associated with {@code scopeName}
      */
-    public static Scope getInstance(String scopeName) {
+    public static Scope getInstance(final String scopeName) {
         return valueOf(Scope.class, scopeName.trim().toUpperCase(Locale.ENGLISH));
     }
 

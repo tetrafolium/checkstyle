@@ -1,18 +1,18 @@
 package com.puppycrawl.tools.checkstyle.checks.design.innertypelast;
 
 public class InputInnerTypeLastClass {
-	public int test1 = 100;
+        public int test1 = 100;
 
-	public void methodTestInner1() {
-		double test2 = 200;
+        public void methodTestInner1() {
+                double test2 = 200;
 
-		class InnerInMethod1 {
-			void methodTest1() {
-				System.identityHashCode("test1");
-			}
-		}
+                class InnerInMethod1 {
+                        void methodTest1() {
+                                System.identityHashCode("test1");
+                        }
+                }
 
-		int test3 = 300;
+                int test3 = 300;
 	}
 
 	public void methodTestInner2() {

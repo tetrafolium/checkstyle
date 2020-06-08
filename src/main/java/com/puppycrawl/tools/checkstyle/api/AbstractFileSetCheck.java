@@ -70,12 +70,12 @@ public abstract class AbstractFileSetCheck
     }
 
     @Override
-    public void beginProcessing(String charset) {
+    public void beginProcessing(final String charset) {
         // No code by default, should be overridden only by demand at subclasses
     }
 
     @Override
-    public final SortedSet<LocalizedMessage> process(File file, FileText fileText)
+    public final SortedSet<LocalizedMessage> process(final File file, final FileText fileText)
             throws CheckstyleException {
         final SortedSet<LocalizedMessage> messages = context.get().messages;
         context.get().fileContents = new FileContents(fileText);
@@ -95,7 +95,7 @@ public abstract class AbstractFileSetCheck
     }
 
     @Override
-    public final void setMessageDispatcher(MessageDispatcher messageDispatcher) {
+    public final void setMessageDispatcher(final MessageDispatcher messageDispatcher) {
         this.messageDispatcher = messageDispatcher;
     }
 
@@ -121,7 +121,7 @@ public abstract class AbstractFileSetCheck
      * Set the file contents associated with the tree.
      * @param contents the manager
      */
-    public final void setFileContents(FileContents contents) {
+    public final void setFileContents(final FileContents contents) {
         context.get().fileContents = contents;
     }
 
@@ -149,7 +149,7 @@ public abstract class AbstractFileSetCheck
      *         initial '.' character of an extension is automatically added.
      * @throws IllegalArgumentException is argument is null
      */
-    public final void setFileExtensions(String... extensions) {
+    public final void setFileExtensions(final String... extensions) {
         if (extensions == null) {
             throw new IllegalArgumentException("Extensions array can not be null");
         }
@@ -159,8 +159,7 @@ public abstract class AbstractFileSetCheck
             final String extension = extensions[i];
             if (CommonUtil.startsWithChar(extension, '.')) {
                 fileExtensions[i] = extension;
-            }
-            else {
+            } else {
                 fileExtensions[i] = "." + extension;
             }
         }
@@ -178,7 +177,7 @@ public abstract class AbstractFileSetCheck
      * Set the tab width to report audit events with.
      * @param tabWidth an {@code int} value
      */
-    public final void setTabWidth(int tabWidth) {
+    public final void setTabWidth(final int tabWidth) {
         this.tabWidth = tabWidth;
     }
 
@@ -186,12 +185,12 @@ public abstract class AbstractFileSetCheck
      * Adds the sorted set of {@link LocalizedMessage} to the message collector.
      * @param messages the sorted set of {@link LocalizedMessage}.
      */
-    protected void addMessages(SortedSet<LocalizedMessage> messages) {
+    protected void addMessages(final SortedSet<LocalizedMessage> messages) {
         context.get().messages.addAll(messages);
     }
 
     @Override
-    public final void log(int line, String key, Object... args) {
+    public final void log(final int line, final String key, final Object... args) {
         context.get().messages.add(
                 new LocalizedMessage(line,
                         getMessageBundle(),
@@ -204,8 +203,8 @@ public abstract class AbstractFileSetCheck
     }
 
     @Override
-    public final void log(int lineNo, int colNo, String key,
-            Object... args) {
+    public final void log(final int lineNo, final int colNo, final String key,
+            final Object... args) {
         final int col = 1 + CommonUtil.lengthExpandedTabs(
                 context.get().fileContents.getLine(lineNo - 1), colNo, tabWidth);
         context.get().messages.add(
@@ -226,7 +225,7 @@ public abstract class AbstractFileSetCheck
      * all logged errors and then clears errors' list.
      * @param fileName the audited file
      */
-    protected final void fireErrors(String fileName) {
+    protected final void fireErrors(final String fileName) {
         final SortedSet<LocalizedMessage> errors = new TreeSet<>(context.get().messages);
         context.get().messages.clear();
         messageDispatcher.fireErrors(fileName, errors);

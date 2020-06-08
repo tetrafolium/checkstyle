@@ -97,7 +97,7 @@ public class InputCyclomaticComplexity {
 
     /** Inner */
     // NP = 0
-    public InputCyclomaticComplexity(int aParam)
+    public InputCyclomaticComplexity(final int aParam)
     {
         Runnable runnable = new Runnable() {
             // NP = 2

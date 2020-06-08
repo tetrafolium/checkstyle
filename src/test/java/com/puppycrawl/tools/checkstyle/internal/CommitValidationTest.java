@@ -150,7 +150,7 @@ public class CommitValidationTest {
         }
     }
 
-    private static int validateCommitMessage(String commitMessage) {
+    private static int validateCommitMessage(final String commitMessage) {
         final String message = commitMessage.replace("\r", "").replace("\n", "");
         final String trimRight = commitMessage.replaceAll("[\\r\\n]+$", "");
         final int result;
@@ -158,21 +158,17 @@ public class CommitValidationTest {
         if (!ACCEPTED_COMMIT_MESSAGE_PATTERN.matcher(message).matches()) {
             // improper prefix
             result = 1;
-        }
-        else if (!trimRight.equals(message)) {
+        } else if (!trimRight.equals(message)) {
             // single line of text (multiple new lines are allowed on end because of
             // git (1 new line) and github's web ui (2 new lines))
             result = 2;
-        }
-        else if (INVALID_POSTFIX_PATTERN.matcher(message).matches()) {
+        } else if (INVALID_POSTFIX_PATTERN.matcher(message).matches()) {
             // improper postfix
             result = 3;
-        }
-        else if (message.length() > 200) {
+        } else if (message.length() > 200) {
             // commit message has more than 200 characters
             result = 4;
-        }
-        else {
+        } else {
             result = 0;
         }
 
@@ -186,8 +182,7 @@ public class CommitValidationTest {
             if (COMMITS_RESOLUTION_MODE == CommitsResolutionMode.BY_COUNTER) {
                 commits = getCommitsByCounter(revCommitsPair.getFirst());
                 commits.addAll(getCommitsByCounter(revCommitsPair.getSecond()));
-            }
-            else {
+            } else {
                 commits = getCommitsByLastCommitAuthor(revCommitsPair.getFirst());
                 commits.addAll(getCommitsByLastCommitAuthor(revCommitsPair.getSecond()));
             }
@@ -195,7 +190,7 @@ public class CommitValidationTest {
         return commits;
     }
 
-    private static List<RevCommit> filterValidCommits(List<RevCommit> revCommits) {
+    private static List<RevCommit> filterValidCommits(final List<RevCommit> revCommits) {
         final List<RevCommit> filteredCommits = new LinkedList<>();
         for (RevCommit commit : revCommits) {
             final String commitAuthor = commit.getAuthorIdent().getName();
@@ -206,7 +201,7 @@ public class CommitValidationTest {
         return filteredCommits;
     }
 
-    private static RevCommitsPair resolveRevCommitsPair(Repository repo) {
+    private static RevCommitsPair resolveRevCommitsPair(final Repository repo) {
         RevCommitsPair revCommitIteratorPair;
 
         try (RevWalk revWalk = new RevWalk(repo);
@@ -221,8 +216,7 @@ public class CommitValidationTest {
                 final RevCommit secondParent = headCommit.getParent(1);
                 first = git.log().add(firstParent).call().iterator();
                 second = git.log().add(secondParent).call().iterator();
-            }
-            else {
+            } else {
                 first = git.log().call().iterator();
                 second = Collections.emptyIterator();
             }
@@ -230,20 +224,19 @@ public class CommitValidationTest {
             revCommitIteratorPair =
                     new RevCommitsPair(new OmitMergeCommitsIterator(first),
                             new OmitMergeCommitsIterator(second));
-        }
-        catch (GitAPIException | IOException ignored) {
+        } catch (GitAPIException | IOException ignored) {
             revCommitIteratorPair = new RevCommitsPair();
         }
 
         return revCommitIteratorPair;
     }
 
-    private static boolean isMergeCommit(RevCommit currentCommit) {
+    private static boolean isMergeCommit(final RevCommit currentCommit) {
         return currentCommit.getParentCount() > 1;
     }
 
     private static List<RevCommit> getCommitsByCounter(
-            Iterator<RevCommit> previousCommitsIterator) {
+            final Iterator<RevCommit> previousCommitsIterator) {
         final Spliterator<RevCommit> spliterator =
             Spliterators.spliteratorUnknownSize(previousCommitsIterator, Spliterator.ORDERED);
         return StreamSupport.stream(spliterator, false).limit(PREVIOUS_COMMITS_TO_CHECK_COUNT)
@@ -251,7 +244,7 @@ public class CommitValidationTest {
     }
 
     private static List<RevCommit> getCommitsByLastCommitAuthor(
-            Iterator<RevCommit> previousCommitsIterator) {
+            final Iterator<RevCommit> previousCommitsIterator) {
         final List<RevCommit> commits = new LinkedList<>();
 
         if (previousCommitsIterator.hasNext()) {
@@ -266,8 +259,7 @@ public class CommitValidationTest {
                 final String currentCommitAuthor = currentCommit.getAuthorIdent().getName();
                 if (currentCommitAuthor.equals(lastCommitAuthor)) {
                     commits.add(currentCommit);
-                }
-                else {
+                } else {
                     wasLastCheckedCommitAuthorSameAsLastCommit = false;
                 }
             }
@@ -289,8 +281,8 @@ public class CommitValidationTest {
                 + "The rule broken was: ";
     }
 
-    private static String getInvalidCommitMessageFormattingError(String commitId,
-            String commitMessage) {
+    private static String getInvalidCommitMessageFormattingError(final String commitId,
+            final String commitMessage) {
         return "Commit " + commitId + " message: \""
                 + commitMessage.replace("\r", "\\r").replace("\n", "\\n").replace("\t", "\\t")
                 + "\" is invalid\n" + getRulesForCommitMessageFormatting();
@@ -313,7 +305,7 @@ public class CommitValidationTest {
             second = Collections.emptyIterator();
         }
 
-        /* package */ RevCommitsPair(Iterator<RevCommit> first, Iterator<RevCommit> second) {
+        /* package */ RevCommitsPair(final Iterator<RevCommit> first, final Iterator<RevCommit> second) {
             this.first = first;
             this.second = second;
         }
@@ -332,7 +324,7 @@ public class CommitValidationTest {
 
         private final Iterator<RevCommit> revCommitIterator;
 
-        /* package */ OmitMergeCommitsIterator(Iterator<RevCommit> revCommitIterator) {
+        /* package */ OmitMergeCommitsIterator(final Iterator<RevCommit> revCommitIterator) {
             this.revCommitIterator = revCommitIterator;
         }
 

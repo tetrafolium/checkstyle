@@ -5,24 +5,24 @@ public class InputMethodNameExtra
     public void doit()
     {
         Object historyDetails = null;
-		Object previousNameService = null;
-		Object entityId = null;
-		Object agencyName = null;
-		createNameHistoryDetails(historyDetails, previousNameService, entityId,
+                Object previousNameService = null;
+                Object entityId = null;
+                Object agencyName = null;
+                createNameHistoryDetails(historyDetails, previousNameService, entityId,
             new More.ViewChangeHistoryBaseAction.ChangeHistoryDisplayName(agencyName)
             {
                 String getDisplayName()
-                {//comment
+                { //comment
                     return getPreviousName();
                 }
             });
     }
 
-	private
-			void
-			createNameHistoryDetails(Object historyDetails, Object previousNameService,
-					Object entityId, More.ViewChangeHistoryBaseAction.ChangeHistoryDisplayName
-							changeHistoryDisplayName)
+        private
+                        void
+                        createNameHistoryDetails(final Object historyDetails, final Object previousNameService,
+                                        final Object entityId, final More.ViewChangeHistoryBaseAction.ChangeHistoryDisplayName
+                                                        changeHistoryDisplayName)
 	{
 
 	}
@@ -32,8 +32,8 @@ public class InputMethodNameExtra
 		return null;
 	}
 
-	private void createNameHistoryDetails(Object historyDetails, Object previousNameService,
-			Object entityId, ChangeHistoryDisplayName changeHistoryDisplayName)
+	private void createNameHistoryDetails(final Object historyDetails, final Object previousNameService,
+			final Object entityId, final ChangeHistoryDisplayName changeHistoryDisplayName)
 	{
 
 	}
@@ -42,7 +42,7 @@ public class InputMethodNameExtra
 		public static class ViewChangeHistoryBaseAction {
 			public static class ChangeHistoryDisplayName {
 
-				public ChangeHistoryDisplayName(Object agencyName)
+				public ChangeHistoryDisplayName(final Object agencyName)
 				{
 
 				}

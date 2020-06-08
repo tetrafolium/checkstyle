@@ -6,7 +6,7 @@ class InputNonEmptyAtclauseDescription
          * @param a Some javadoc.
          * @param b Some javadoc.
          */
-        public InputNonEmptyAtclauseDescription(String a, int b)
+        public InputNonEmptyAtclauseDescription(final String a, final int b)
         {
 
         }
@@ -16,7 +16,7 @@ class InputNonEmptyAtclauseDescription
          * @param a Some javadoc.
          * @deprecated Some javadoc.
          */
-        public InputNonEmptyAtclauseDescription(String a)
+        public InputNonEmptyAtclauseDescription(final String a)
         {
 
         }
@@ -27,7 +27,7 @@ class InputNonEmptyAtclauseDescription
          * @param b
          * @param c
          */
-        public InputNonEmptyAtclauseDescription(String a, int b, double c)
+        public InputNonEmptyAtclauseDescription(final String a, final int b, final double c)
         {
 
         }
@@ -38,7 +38,7 @@ class InputNonEmptyAtclauseDescription
          * @param e
          * @deprecated
          */
-        public InputNonEmptyAtclauseDescription(String a, boolean e)
+        public InputNonEmptyAtclauseDescription(final String a, final boolean e)
         {
 
         }
@@ -52,7 +52,7 @@ class InputNonEmptyAtclauseDescription
          * @throws Exception Some javadoc
          * @deprecated Some javadoc
          */
-        public int foo1(String a, int b, double c) throws Exception
+        public int foo1(final String a, final int b, final double c) throws Exception
         {
                 return 1;
         }
@@ -65,7 +65,7 @@ class InputNonEmptyAtclauseDescription
          * @return Some javadoc
          * @throws Exception Some javadoc
          */
-        public int foo2(String a, int b, double c) throws Exception
+        public int foo2(final String a, final int b, final double c) throws Exception
         {
                 return 1;
         }
@@ -79,7 +79,7 @@ class InputNonEmptyAtclauseDescription
          * @throws Exception
          * @deprecated
          */
-        public int foo3(String a, int b, double c) throws Exception
+        public int foo3(final String a, final int b, final double c) throws Exception
         {
                 return 1;
         }
@@ -92,7 +92,7 @@ class InputNonEmptyAtclauseDescription
          * @deprecated
          * @throws Exception
          */
-        public int foo4(String a, int b, double c) throws Exception
+        public int foo4(final String a, final int b, final double c) throws Exception
         {
                 return 1;
         }
@@ -106,7 +106,7 @@ class InputNonEmptyAtclauseDescription
          * @exception Exception Some javadoc
          * @deprecated Some javadoc
          */
-        public int foo5(String a, int b, double c) throws Exception
+        public int foo5(final String a, final int b, final double c) throws Exception
         {
                 return 1;
         }
@@ -119,7 +119,7 @@ class InputNonEmptyAtclauseDescription
          * @return Some javadoc
          * @exception Exception
          */
-        public int foo6(String a, int b, double c) throws Exception
+        public int foo6(final String a, final int b, final double c) throws Exception
         {
                 return 1;
         }

@@ -10,9 +10,9 @@ public class InputJava7MultiCatch
     public static class CustomException extends Exception { }
     public static class AnotherCustomException extends RuntimeException { }
 
-    public static void logException(Exception e) { }
+    public static void logException(final Exception e) { }
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         try {
             FileInputStream in = new FileInputStream("InputJava7MultiCatch.java");
             throw new CustomException();

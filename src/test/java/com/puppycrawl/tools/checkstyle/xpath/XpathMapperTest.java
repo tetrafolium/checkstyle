@@ -419,8 +419,7 @@ public class XpathMapperTest extends AbstractPathTestSupport {
         try {
             getXpathItems(xpath, rootNode);
             fail("Exception is excepted");
-        }
-        catch (UnsupportedOperationException ex) {
+        } catch (UnsupportedOperationException ex) {
             assertThat("Invalid exception", ex.getMessage(), equalTo("Operation is not supported"));
         }
     }
@@ -432,8 +431,7 @@ public class XpathMapperTest extends AbstractPathTestSupport {
         try {
             getXpathItems(xpath, rootNode);
             fail("Exception is excepted");
-        }
-        catch (UnsupportedOperationException ex) {
+        } catch (UnsupportedOperationException ex) {
             assertThat("Invalid exception", ex.getMessage(), equalTo("Operation is not supported"));
         }
     }
@@ -961,13 +959,13 @@ public class XpathMapperTest extends AbstractPathTestSupport {
         assertThat("Result nodes differ from expected", actual, equalTo(expected));
     }
 
-    private RootNode getRootNode(String fileName) throws Exception {
+    private RootNode getRootNode(final String fileName) throws Exception {
         final File file = new File(getPath(fileName));
         final DetailAST rootAst = JavaParser.parseFile(file, JavaParser.Options.WITHOUT_COMMENTS);
         return new RootNode(rootAst);
     }
 
-    private static DetailAST[] convertToArray(List<NodeInfo> nodes) {
+    private static DetailAST[] convertToArray(final List<NodeInfo> nodes) {
         final DetailAST[] result = new DetailAST[nodes.size()];
         for (int i = 0; i < nodes.size(); i++) {
             final AbstractNode abstractNode = (AbstractNode) nodes.get(i);
@@ -976,7 +974,7 @@ public class XpathMapperTest extends AbstractPathTestSupport {
         return result;
     }
 
-    private static DetailAST getSiblingByType(DetailAST node, int type) {
+    private static DetailAST getSiblingByType(final DetailAST node, final int type) {
         DetailAST returnValue = null;
         for (DetailAST ast = node; ast != null; ast = ast.getNextSibling()) {
             if (ast.getType() == type) {

@@ -16,12 +16,12 @@ import java.io.FileFilter; //indent:0 exp:0
  * throwsIndent = 4                                                         //indent:1 exp:1
  */                                                                         //indent:1 exp:1
 public class InputIndentationAnonymousClassInMethod { //indent:0 exp:0
-	private void walkDir(File dir, FileFilter fileFilter) { //indent:8 exp:2 warn
-		walkDir( dir, new FileFilter() { //indent:16 exp:4 warn
-			@Override //indent:24 exp:18,20,22 warn
-			public boolean accept(File path) { //indent:24 exp:24
-				return ( path.isDirectory() ); //indent:32 exp:20,22,24 warn
-			} //indent:24 exp:18,20,22 warn
-		} ); //indent:16 exp:16
-	} //indent:8 exp:2 warn
+        private void walkDir(final File dir, final FileFilter fileFilter) { //indent:8 exp:2 warn
+                walkDir(dir, new FileFilter() { //indent:16 exp:4 warn
+                        @Override //indent:24 exp:18,20,22 warn
+                        public boolean accept(final File path) { //indent:24 exp:24
+                                return (path.isDirectory()); //indent:32 exp:20,22,24 warn
+                        } //indent:24 exp:18,20,22 warn
+                }); //indent:16 exp:16
+        } //indent:8 exp:2 warn
 } //indent:0 exp:0

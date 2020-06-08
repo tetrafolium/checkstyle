@@ -81,7 +81,7 @@ public class RedundantImportCheck
     private String pkgName;
 
     @Override
-    public void beginTree(DetailAST aRootAST) {
+    public void beginTree(final DetailAST aRootAST) {
         pkgName = null;
         imports.clear();
         staticImports.clear();
@@ -105,17 +105,15 @@ public class RedundantImportCheck
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         if (ast.getType() == TokenTypes.PACKAGE_DEF) {
             pkgName = FullIdent.createFullIdent(
                     ast.getLastChild().getPreviousSibling()).getText();
-        }
-        else if (ast.getType() == TokenTypes.IMPORT) {
+        } else if (ast.getType() == TokenTypes.IMPORT) {
             final FullIdent imp = FullIdent.createFullIdentBelow(ast);
             if (isFromPackage(imp.getText(), "java.lang")) {
                 log(ast, MSG_LANG, imp.getText());
-            }
-            // imports from unnamed package are not allowed,
+            } // imports from unnamed package are not allowed,
             // so we are checking SAME rule only for named packages
             else if (pkgName != null && isFromPackage(imp.getText(), pkgName)) {
                 log(ast, MSG_SAME, imp.getText());
@@ -125,8 +123,7 @@ public class RedundantImportCheck
                 .forEach(full -> log(ast, MSG_DUPLICATE, full.getLineNo(), imp.getText()));
 
             imports.add(imp);
-        }
-        else {
+        } else {
             // Check for a duplicate static import
             final FullIdent imp =
                 FullIdent.createFullIdent(
@@ -144,7 +141,7 @@ public class RedundantImportCheck
      * @param pkg the package name
      * @return whether from the package
      */
-    private static boolean isFromPackage(String importName, String pkg) {
+    private static boolean isFromPackage(final String importName, final String pkg) {
         // imports from unnamed package are not allowed:
         // https://docs.oracle.com/javase/specs/jls/se7/html/jls-7.html#jls-7.5
         // So '.' must be present in member name and we are not checking for it

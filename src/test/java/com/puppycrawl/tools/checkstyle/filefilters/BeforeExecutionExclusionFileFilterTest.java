@@ -85,7 +85,7 @@ public class BeforeExecutionExclusionFileFilterTest extends AbstractModuleTestSu
     }
 
     private static BeforeExecutionExclusionFileFilter
-            createExclusionBeforeExecutionFileFilter(String fileName) {
+            createExclusionBeforeExecutionFileFilter(final String fileName) {
         final BeforeExecutionExclusionFileFilter exclusionBeforeExecutionFileFilter =
                 new BeforeExecutionExclusionFileFilter();
         if (fileName != null) {

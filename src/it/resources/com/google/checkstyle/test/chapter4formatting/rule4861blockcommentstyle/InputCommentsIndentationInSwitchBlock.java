@@ -3,7 +3,7 @@ package com.google.checkstyle.test.chapter4formatting.rule4861blockcommentstyle;
 public class InputCommentsIndentationInSwitchBlock {
 
     private static void fooSwitch() {
-        switch("") {
+        switch ("") {
             case "0": //some comment
             case "1":
                 // my comment
@@ -27,7 +27,7 @@ public class InputCommentsIndentationInSwitchBlock {
                 int k = 7;
                 // fall through
             case "7":
-                if (true) {}
+                if (true) { }
                    // warn
             case "8":
                 break;
@@ -35,7 +35,7 @@ public class InputCommentsIndentationInSwitchBlock {
                 foo1();
                 // fall through
             case "10": {
-                if (true) {}
+                if (true) { }
                 // fall through
             }
             case "11": {
@@ -66,7 +66,8 @@ public class InputCommentsIndentationInSwitchBlock {
                 int a;
             }
               // warn
-                case "18": { System.lineSeparator();
+                case "18": {
+                    System.lineSeparator();
                 }   // trailing comment
             case "19":
                 // comment
@@ -81,7 +82,7 @@ public class InputCommentsIndentationInSwitchBlock {
 
     private static void foo1() {
         if (true) {
-            switch(1) {
+            switch (1) {
                 case 0:
 
                 case 1:
@@ -127,7 +128,7 @@ public class InputCommentsIndentationInSwitchBlock {
             // middle
             + ""
         // end
-        ;
+;
     }
 
     public void foo2() {

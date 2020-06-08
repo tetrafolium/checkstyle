@@ -60,8 +60,7 @@ public class HeaderCheckPowerTest extends AbstractModuleTestSupport {
         try {
             check.setHeader("header");
             fail("Exception expected");
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertTrue("Invalid exception cause", ex.getCause() instanceof IOException);
             assertEquals("Invalid exception message", "unable to load header", ex.getMessage());
         }

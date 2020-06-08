@@ -77,7 +77,7 @@ public class MultipleVariableDeclarationsCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         DetailAST nextNode = ast.getNextSibling();
 
         if (nextNode != null) {
@@ -101,8 +101,7 @@ public class MultipleVariableDeclarationsCheck extends AbstractCheck {
                     if (ast.getParent().getType() != TokenTypes.FOR_INIT) {
                         log(firstNode, MSG_MULTIPLE_COMMA);
                     }
-                }
-                else {
+                } else {
                     final DetailAST lastNode = getLastNode(ast);
                     final DetailAST firstNextNode = CheckUtil.getFirstNode(nextNode);
 

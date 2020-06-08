@@ -36,8 +36,8 @@ public class MethodDefHandler extends BlockParentHandler {
      * @param ast           the abstract syntax tree
      * @param parent        the parent handler
      */
-    public MethodDefHandler(IndentationCheck indentCheck,
-        DetailAST ast, AbstractExpressionHandler parent) {
+    public MethodDefHandler(final IndentationCheck indentCheck,
+        final DetailAST ast, final AbstractExpressionHandler parent) {
         super(indentCheck, getHandlerName(ast), ast, parent);
     }
 
@@ -78,7 +78,7 @@ public class MethodDefHandler extends BlockParentHandler {
      *            The method definition ast.
      * @return The start column position of the method.
      */
-    private static int getMethodDefLineStart(DetailAST mainAst) {
+    private static int getMethodDefLineStart(final DetailAST mainAst) {
         // get first type position
         int lineStart = mainAst.findFirstToken(TokenTypes.IDENT).getLineNo();
 
@@ -123,7 +123,7 @@ public class MethodDefHandler extends BlockParentHandler {
      *          method definition ast node(TokenTypes.LITERAL_IF)
      * @return right parenthesis of method definition parameter list.
      */
-    private static DetailAST getMethodDefParamRightParen(DetailAST methodDefAst) {
+    private static DetailAST getMethodDefParamRightParen(final DetailAST methodDefAst) {
         return methodDefAst.findFirstToken(TokenTypes.RPAREN);
     }
 
@@ -133,16 +133,14 @@ public class MethodDefHandler extends BlockParentHandler {
      * @param ast the abstract syntax tree.
      * @return handler name for this class.
      */
-    private static String getHandlerName(DetailAST ast) {
+    private static String getHandlerName(final DetailAST ast) {
         final String name;
 
         if (ast.getType() == TokenTypes.CTOR_DEF) {
             name = "ctor def";
-        }
-        else if (ast.getType() == TokenTypes.ANNOTATION_FIELD_DEF) {
+        } else if (ast.getType() == TokenTypes.ANNOTATION_FIELD_DEF) {
             name = "annotation field def";
-        }
-        else {
+        } else {
             name = "method def";
         }
         return name;

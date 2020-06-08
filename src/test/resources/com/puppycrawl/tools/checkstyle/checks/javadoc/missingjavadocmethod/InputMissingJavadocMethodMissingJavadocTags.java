@@ -7,7 +7,7 @@ public class InputMissingJavadocMethodMissingJavadocTags {
      * @param number to return
      * @throws ThreadDeath sometimes
      */
-    int missingReturn(int number) throws ThreadDeath {
+    int missingReturn(final int number) throws ThreadDeath {
         return number;
     }
 
@@ -17,7 +17,7 @@ public class InputMissingJavadocMethodMissingJavadocTags {
      * @return number
      * @throws ThreadDeath sometimes
      */
-    int missingParam(int number) throws ThreadDeath {
+    int missingParam(final int number) throws ThreadDeath {
         return number;
     }
 
@@ -27,7 +27,7 @@ public class InputMissingJavadocMethodMissingJavadocTags {
      * @param number to return
      * @return number
      */
-    int missingThrows(int number) throws ThreadDeath {
+    int missingThrows(final int number) throws ThreadDeath {
         return number;
     }
 
@@ -37,7 +37,7 @@ public class InputMissingJavadocMethodMissingJavadocTags {
      * @param number to return
      * @throws java.util.NoSuchElementException sometimes
      */
-    int missingReturnButInheritDocPresent(int number) throws java.util.NoSuchElementException {
+    int missingReturnButInheritDocPresent(final int number) throws java.util.NoSuchElementException {
         return number;
     }
 
@@ -48,7 +48,7 @@ public class InputMissingJavadocMethodMissingJavadocTags {
      * @return
      * @throws java.util.NoSuchElementException sometimes
      */
-    private int missingReturnInTheMiddle(int number) {
+    private int missingReturnInTheMiddle(final int number) {
         return number;
     }
 
@@ -58,7 +58,7 @@ public class InputMissingJavadocMethodMissingJavadocTags {
      * @param number to return
      * @return
      */
-    private int missingReturnAtTheEnd(int number) {
+    private int missingReturnAtTheEnd(final int number) {
         return number;
     }
 
@@ -69,7 +69,7 @@ public class InputMissingJavadocMethodMissingJavadocTags {
      * @return
      *
      */
-    private int missingReturnAtTheEndFollowedByEmptyLine(int number) {
+    private int missingReturnAtTheEndFollowedByEmptyLine(final int number) {
         return number;
     }
 }

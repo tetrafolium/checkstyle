@@ -100,7 +100,7 @@ class WithoutFinalize {
     }
 }
 
-class WithoutMethods {}
+class WithoutMethods { }
 
 class WithAnonymousClass {
 

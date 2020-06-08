@@ -268,7 +268,7 @@ public class JavadocStyleCheck
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         if (shouldCheck(ast)) {
             final FileContents contents = getFileContents();
             // Need to start searching for the comment before the annotations
@@ -291,15 +291,13 @@ public class JavadocStyleCheck
 
         if (ast.getType() == TokenTypes.PACKAGE_DEF) {
             check = getFileContents().inPackageInfo();
-        }
-        else if (!ScopeUtil.isInCodeBlock(ast)) {
+        } else if (!ScopeUtil.isInCodeBlock(ast)) {
             final Scope customScope;
 
             if (ScopeUtil.isInInterfaceOrAnnotationBlock(ast)
                     || ast.getType() == TokenTypes.ENUM_CONSTANT_DEF) {
                 customScope = Scope.PUBLIC;
-            }
-            else {
+            } else {
                 customScope = ScopeUtil.getScopeFromMods(ast.findFirstToken(TokenTypes.MODIFIERS));
             }
             final Scope surroundingScope = ScopeUtil.getSurroundingScope(ast);
@@ -332,8 +330,7 @@ public class JavadocStyleCheck
             if (getFileContents().inPackageInfo()) {
                 log(ast.getLineNo(), MSG_JAVADOC_MISSING);
             }
-        }
-        else {
+        } else {
             if (checkFirstSentence) {
                 checkFirstSentenceEnding(ast, comment);
             }
@@ -358,7 +355,7 @@ public class JavadocStyleCheck
      * @param ast the current node
      * @param comment the source lines that make up the Javadoc comment.
      */
-    private void checkFirstSentenceEnding(final DetailAST ast, TextBlock comment) {
+    private void checkFirstSentenceEnding(final DetailAST ast, final TextBlock comment) {
         final String commentText = getCommentText(comment.getText());
 
         if (!commentText.isEmpty()
@@ -374,7 +371,7 @@ public class JavadocStyleCheck
      *
      * @param comment the source lines that make up the Javadoc comment.
      */
-    private void checkJavadocIsNotEmpty(TextBlock comment) {
+    private void checkJavadocIsNotEmpty(final TextBlock comment) {
         final String commentText = getCommentText(comment.getText());
 
         if (commentText.isEmpty()) {
@@ -387,7 +384,7 @@ public class JavadocStyleCheck
      * @param comments the lines of Javadoc.
      * @return a comment text String.
      */
-    private static String getCommentText(String... comments) {
+    private static String getCommentText(final String... comments) {
         final StringBuilder builder = new StringBuilder(1024);
         for (final String line : comments) {
             final int textStart = findTextStart(line);
@@ -414,18 +411,16 @@ public class JavadocStyleCheck
      * @return the int index relative to 0 for the start of text
      *         or -1 if not found.
      */
-    private static int findTextStart(String line) {
+    private static int findTextStart(final String line) {
         int textStart = -1;
         int index = 0;
         while (index < line.length()) {
             if (!Character.isWhitespace(line.charAt(index))) {
                 if (line.regionMatches(index, "/**", 0, "/**".length())) {
                     index += 2;
-                }
-                else if (line.regionMatches(index, "*/", 0, 2)) {
+                } else if (line.regionMatches(index, "*/", 0, 2)) {
                     index++;
-                }
-                else if (line.charAt(index) != '*') {
+                } else if (line.charAt(index) != '*') {
                     textStart = index;
                     break;
                 }
@@ -439,13 +434,12 @@ public class JavadocStyleCheck
      * Trims any trailing whitespace or the end of Javadoc comment string.
      * @param builder the StringBuilder to trim.
      */
-    private static void trimTail(StringBuilder builder) {
+    private static void trimTail(final StringBuilder builder) {
         int index = builder.length() - 1;
         while (true) {
             if (Character.isWhitespace(builder.charAt(index))) {
                 builder.deleteCharAt(index);
-            }
-            else if (index > 0 && builder.charAt(index) == '/'
+            } else if (index > 0 && builder.charAt(index) == '/'
                     && builder.charAt(index - 1) == '*') {
                 builder.deleteCharAt(index);
                 builder.deleteCharAt(index - 1);
@@ -454,8 +448,7 @@ public class JavadocStyleCheck
                     builder.deleteCharAt(index - 1);
                     index--;
                 }
-            }
-            else {
+            } else {
                 break;
             }
             index--;
@@ -500,14 +493,12 @@ public class JavadocStyleCheck
                         tag.getPosition(),
                         MSG_EXTRA_HTML,
                         tag.getText());
-                }
-                else {
+                } else {
                     // See if there are any unclosed tags that were opened
                     // after this one.
                     checkUnclosedTags(htmlStack, tag.getId());
                 }
-            }
-            else {
+            } else {
                 // We only push html tags that are allowed
                 if (isAllowedTag(tag)) {
                     htmlStack.push(tag);
@@ -539,7 +530,7 @@ public class JavadocStyleCheck
      * @param htmlStack the stack of opened HTML tags.
      * @param token the current HTML tag name that has been closed.
      */
-    private void checkUnclosedTags(Deque<HtmlTag> htmlStack, String token) {
+    private void checkUnclosedTags(final Deque<HtmlTag> htmlStack, final String token) {
         final Deque<HtmlTag> unclosedTags = new ArrayDeque<>();
         HtmlTag lastOpenTag = htmlStack.pop();
         while (!token.equalsIgnoreCase(lastOpenTag.getId())) {
@@ -547,8 +538,7 @@ public class JavadocStyleCheck
             // output order won't be back-to-front.
             if (isSingleTag(lastOpenTag)) {
                 lastOpenTag = htmlStack.pop();
-            }
-            else {
+            } else {
                 unclosedTags.push(lastOpenTag);
                 lastOpenTag = htmlStack.pop();
             }
@@ -576,7 +566,7 @@ public class JavadocStyleCheck
      * @param tag the HtmlTag to check.
      * @return {@code true} if the HtmlTag is a single tag.
      */
-    private static boolean isSingleTag(HtmlTag tag) {
+    private static boolean isSingleTag(final HtmlTag tag) {
         // If its a singleton tag (<p>, <br>, etc.), ignore it
         // Can't simply not put them on the stack, since singletons
         // like <dt> and <dd> (unhappily) may either be terminated
@@ -590,7 +580,7 @@ public class JavadocStyleCheck
      * @param tag the HtmlTag to check.
      * @return {@code true} if the HtmlTag is an allowed html tag.
      */
-    private static boolean isAllowedTag(HtmlTag tag) {
+    private static boolean isAllowedTag(final HtmlTag tag) {
         return ALLOWED_TAGS.contains(tag.getId().toLowerCase(Locale.ENGLISH));
     }
 
@@ -603,7 +593,7 @@ public class JavadocStyleCheck
      * @return {@code false} if a previous open tag was found
      *         for the token.
      */
-    private static boolean isExtraHtml(String token, Deque<HtmlTag> htmlStack) {
+    private static boolean isExtraHtml(final String token, final Deque<HtmlTag> htmlStack) {
         boolean isExtra = true;
         for (final HtmlTag tag : htmlStack) {
             // Loop, looking for tags that are closed.
@@ -624,7 +614,7 @@ public class JavadocStyleCheck
      *
      * @param scope a scope.
      */
-    public void setScope(Scope scope) {
+    public void setScope(final Scope scope) {
         this.scope = scope;
     }
 
@@ -633,7 +623,7 @@ public class JavadocStyleCheck
      *
      * @param excludeScope a scope.
      */
-    public void setExcludeScope(Scope excludeScope) {
+    public void setExcludeScope(final Scope excludeScope) {
         this.excludeScope = excludeScope;
     }
 
@@ -642,7 +632,7 @@ public class JavadocStyleCheck
      *
      * @param pattern a pattern.
      */
-    public void setEndOfSentenceFormat(Pattern pattern) {
+    public void setEndOfSentenceFormat(final Pattern pattern) {
         endOfSentenceFormat = pattern;
     }
 
@@ -651,7 +641,7 @@ public class JavadocStyleCheck
      *
      * @param flag {@code true} if the first sentence is to be checked
      */
-    public void setCheckFirstSentence(boolean flag) {
+    public void setCheckFirstSentence(final boolean flag) {
         checkFirstSentence = flag;
     }
 
@@ -660,7 +650,7 @@ public class JavadocStyleCheck
      *
      * @param flag {@code true} if HTML checking is to be performed.
      */
-    public void setCheckHtml(boolean flag) {
+    public void setCheckHtml(final boolean flag) {
         checkHtml = flag;
     }
 
@@ -669,7 +659,7 @@ public class JavadocStyleCheck
      *
      * @param flag {@code true} if empty Javadoc checking should be done.
      */
-    public void setCheckEmptyJavadoc(boolean flag) {
+    public void setCheckEmptyJavadoc(final boolean flag) {
         checkEmptyJavadoc = flag;
     }
 

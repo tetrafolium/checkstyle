@@ -14,7 +14,7 @@ public class InputLeftCurlyEolSwitch {
             { // warn
                 break;
             }
-            case (1+0):
+            case (1 + 0):
             { // warn
                 break;
             }
@@ -35,7 +35,7 @@ public class InputLeftCurlyEolSwitch {
                 }
                 break;
             case (5
-                +1):
+                + 1):
             { // warn
                 break;
             }

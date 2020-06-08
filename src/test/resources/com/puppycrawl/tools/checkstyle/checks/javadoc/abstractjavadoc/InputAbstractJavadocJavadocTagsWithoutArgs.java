@@ -3,7 +3,7 @@ package com.puppycrawl.tools.checkstyle.checks.javadoc.abstractjavadoc;
 import java.io.Serializable;
 
 /**@author*/
-public class InputAbstractJavadocJavadocTagsWithoutArgs implements Serializable{
+public class InputAbstractJavadocJavadocTagsWithoutArgs implements Serializable {
     /**@serial*/
     private static final long serialVersionUID = 7556448691029650757L;
 
@@ -35,22 +35,22 @@ public class InputAbstractJavadocJavadocTagsWithoutArgs implements Serializable{
     }
 
     /**@param*/
-    public static void method4(int a) {
+    public static void method4(final int a) {
 
     }
 
     /**@customTag*/
-    public static void method5(int a) {
+    public static void method5(final int a) {
 
     }
 
     /**@deprecated*/
-    public static void method6(int a) {
+    public static void method6(final int a) {
 
     }
 
     /**@serialData*/
-    private void readObject(java.io.ObjectInputStream inputStream) {
+    private void readObject(final java.io.ObjectInputStream inputStream) {
 
     }
 

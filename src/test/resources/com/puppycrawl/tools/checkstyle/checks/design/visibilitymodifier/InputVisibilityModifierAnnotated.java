@@ -50,8 +50,8 @@ public class InputVisibilityModifierAnnotated {
     protected String unannotatedProtected;
     private String unannotatedPrivate;
 
-    @Retention(value=RetentionPolicy.RUNTIME)
-    @Target(value={ElementType.FIELD})
+    @Retention(value = RetentionPolicy.RUNTIME)
+    @Target(value = {ElementType.FIELD})
     public @interface CustomAnnotation {
     }
 

@@ -34,7 +34,7 @@ class InputWhitespaceAfterBraces
         }
 
         // Invalid
-        while(condition());
+        while (condition());
         while (condition())
             testWhile();
         while (condition())
@@ -51,7 +51,7 @@ class InputWhitespaceAfterBraces
         }
 
         // Invalid
-        for(int i = 1;i < 5;i++);
+        for (int i = 1; i < 5; i++);
         for (int i = 1; i < 5; i++)
             testFor();
         for (int i = 1; i < 5;
@@ -66,11 +66,9 @@ class InputWhitespaceAfterBraces
         // Valid
         if (condition()) {
             testIf();
-        }
-        else if (condition()) {
+        } else if (condition()) {
             testIf();
-        }
-        else {
+        } else {
             testIf();
         }
 
@@ -89,8 +87,7 @@ class InputWhitespaceAfterBraces
         }
         if (condition()) {
             testIf();
-        }
-        else
+        } else
             testIf();
         if (condition())
             if (condition())
@@ -100,7 +97,7 @@ class InputWhitespaceAfterBraces
     void whitespaceAfterSemi()
     {
         //reject
-        int i = 1;int j = 2;
+        int i = 1; int j = 2;
 
         //accept
         for (;;) {
@@ -108,8 +105,8 @@ class InputWhitespaceAfterBraces
     }
 
     /** Empty constructor block. **/
-    public InputWhitespaceAfterBraces() {}
+    public InputWhitespaceAfterBraces() { }
 
     /** Empty method block. **/
-    public void emptyImplementation() {}
+    public void emptyImplementation() { }
 }

@@ -22,7 +22,7 @@ public class InputRegressionJavaClass1 {
     /* multi
      line */
     /** javadoc */
-    // tab ->	<-
+    // tab ->   <-
 
     // fields
     // modifiers
@@ -37,69 +37,77 @@ public class InputRegressionJavaClass1 {
     Object f9;
 
     // constructors
-    static {}
-    public InputRegressionJavaClass1() {f6 = 0;}
-    public InputRegressionJavaClass1(int i) {this.f6 = i;}
-    public InputRegressionJavaClass1(float f) {this((int)f);}
-    InputRegressionJavaClass1(double a) throws Exception {f6 = 0;}
+    static { }
+    public InputRegressionJavaClass1() {
+        f6 = 0; }
+    public InputRegressionJavaClass1(final int i) {
+        this.f6 = i; }
+    public InputRegressionJavaClass1(final float f) {
+        this((int) f); }
+    InputRegressionJavaClass1(final double a) throws Exception {
+        f6 = 0; }
 
     // methods
     // modifiers
     native void m1();
-    void m2() {}
-    synchronized void m4() {}
-    strictfp void m5() {}
+    void m2() { }
+    synchronized void m4() { }
+    strictfp void m5() { }
 
     // returns
-    public int[] m6() {return null;}
-    public int m7() [] {return null;}
+    public int[] m6() {
+        return null; }
+    public int m7() [] {
+        return null; }
 
     // parameters
-    public void m10(String p1) {}
-    public void m11(final String p1) {}
-    public void m12(String[] p1) {}
-    public void m13(String[][] p1) {}
-    public void m14(String p1, String p2) {}
-    public void m15(String... p1) {}
-    public void m16(String[]... p1) {}
-    public void m17(int p1, String[]... p2) {}
+    public void m10(final String p1) { }
+    public void m11(final String p1) { }
+    public void m12(final String[] p1) { }
+    public void m13(final String[][] p1) { }
+    public void m14(final String p1, final String p2) { }
+    public void m15(final String... p1) { }
+    public void m16(final String[]... p1) { }
+    public void m17(final int p1, final String[]... p2) { }
 
     // throws
-    public void m18() throws Exception {}
-    public void m19() throws IOException, Exception {}
+    public void m18() throws Exception { }
+    public void m19() throws IOException, Exception { }
 
     // types
-    public <T_$> T_$ m20() {return null;}
-    public <$_T> $_T m21() {return null;}
-    public <T extends Enum<T>> void m22() {}
-    public <T> void m23() {};
-    public <T extends RuntimeException & java.io.Serializable> void m24() {}
+    public <T_$> T_$ m20() {
+        return null; }
+    public <$_T> $_T m21() {
+        return null; }
+    public <T extends Enum<T>> void m22() { }
+    public <T> void m23() { };
+    public <T extends RuntimeException & java.io.Serializable> void m24() { }
 
     // annotations
     @SuppressWarnings({})
-    public void m50() {}
+    public void m50() { }
     @SuppressWarnings({"1"})
-    public void m51() {}
-    @SuppressWarnings({"1","2"})
-    public void m52() {}
-    @SuppressWarnings(value={"1"})
-    public void m53() {}
-    @SuppressWarnings(value={"1",})
-    public void m54() {}
-    @SuppressWarnings(value={"1","2"})
-    public void m55() {}
-    @InputRegressionJavaAnnotation1(m1="1", m2="2")
-    public void m56() {}
+    public void m51() { }
+    @SuppressWarnings({"1", "2"})
+    public void m52() { }
+    @SuppressWarnings(value = {"1"})
+    public void m53() { }
+    @SuppressWarnings(value = {"1", })
+    public void m54() { }
+    @SuppressWarnings(value = {"1", "2"})
+    public void m55() { }
+    @InputRegressionJavaAnnotation1(m1 = "1", m2 = "2")
+    public void m56() { }
     @ComplexAnnotation({
             @InputRegressionJavaAnnotation1(m1 = "1"), @InputRegressionJavaAnnotation1(m1 = "1")
     })
-    public void m57() {}
-    public void m58(@Deprecated String s) {}
-    public void m59(final @Deprecated List l) {}
+    public void m57() { }
+    public void m58(final @Deprecated String s) { }
+    public void m59(final @Deprecated List l) { }
 
     // extra
-    {}
-    ;
+    { }
+;
 
     // instructions
     public void instructions() throws Exception {
@@ -181,10 +189,10 @@ public class InputRegressionJavaClass1 {
         vlong = 0L;
         vlong = 1L;
         vlong = 0b1L;
-        vlong = 1234567890l;
         vlong = 1234567890L;
-        vlong = 0x0l;
-        vlong = 0xABCDEFl;
+        vlong = 1234567890L;
+        vlong = 0x0L;
+        vlong = 0xABCDEFL;
         vlong = 0XABCDEFL;
         vfloat = 0f;
         vfloat = 0F;
@@ -263,7 +271,7 @@ public class InputRegressionJavaClass1 {
         --vint;
         String[] arrayinit = {};
         String[] arrayinit2 = {""};
-        String[] arrayinit3 = {"", "",};
+        String[] arrayinit3 = {"", "", };
 
         // new
         varray = new int[]{};
@@ -272,7 +280,7 @@ public class InputRegressionJavaClass1 {
         varray = new int[5];
         vlist = new ArrayList<String>();
         vmap = new HashMap<String, String[]>();
-        Object anonymous = new InputRegressionJavaClass1() {};
+        Object anonymous = new InputRegressionJavaClass1() { };
 
         // statements
         ;
@@ -282,22 +290,30 @@ public class InputRegressionJavaClass1 {
         test_label1:
 
         // blocks
-        {}
+        { }
         if (true) ;
-        if (true) {}
-        if (true) {} else ;
-        if (true) {} else {}
-        if (b) { for (;;) ; }
-        if (b) { for (;;) {} }
-        for (int i = 0; i < 1; i++) {}
-        for (int i = 0, j = 0; i < 1; i++, j += 2) {}
+        if (true) { }
+        if (true) { } else ;
+        if (true) { } else { }
+        if (b) {
+            for (;;) ;
+        }
+        if (b) {
+            for (;;) { }
+        }
+        for (int i = 0; i < 1; i++) { }
+        for (int i = 0, j = 0; i < 1; i++, j += 2) { }
         for (int value: new int[]{}) ;
         for (String s : new String[]{}) ;
         for (final String s : new String[]{}) ;
-        if (b) { while (true) ; }
-        if (b) { while (true) {} }
-        do {} while (false);
-        synchronized (f9) {}
+        if (b) {
+            while (true) ;
+        }
+        if (b) {
+            while (true) { }
+        }
+        do { } while (false);
+        synchronized (f9) { }
 
         switch (0) {
             case 1:
@@ -306,15 +322,19 @@ public class InputRegressionJavaClass1 {
         }
 
         try {
-            if (b) { throw new IOException(); }
-            if (b) { throw new ArrayIndexOutOfBoundsException(); }
+            if (b) {
+                throw new IOException();
+            }
+            if (b) {
+                throw new ArrayIndexOutOfBoundsException();
+            }
             throw new Exception();
         } catch (IOException | ArrayIndexOutOfBoundsException e) {
         } catch (Exception e) {
-        } finally {}
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(null, "utf-8"))) {}
+        } finally { }
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(null, "utf-8"))) { }
         try (BufferedReader br1 = new BufferedReader(new InputStreamReader(null, "utf-8"));
-                BufferedReader br2 = new BufferedReader(new InputStreamReader(null, "utf-8"));) {}
+                BufferedReader br2 = new BufferedReader(new InputStreamReader(null, "utf-8"));) { }
 
         // access
         test4 = InputRegressionJavaClass1.class;
@@ -325,24 +345,32 @@ public class InputRegressionJavaClass1 {
         for (Map.Entry<String, String[]> e : vmap.entrySet()) { }
 
         // others
-        for (;;) {break;}
+        for (;;) {
+            break; }
         test_label2:
-        for (;;) {break test_label2;}
-        if (b) { for (;;) {continue;} }
-        if (b) { test_label3: for (;;) {continue test_label3;} }
+        for (;;) {
+            break test_label2; }
+        if (b) {
+            for (;;) {
+                continue; }
+                }
+        if (b) {
+            test_label3: for (;;) {
+                continue test_label3; }
+                }
         if (false) return;
         if (false) throw new Exception();
-        assert(false);
+        assert (false);
         assert true : "false";
         f9 = (Object) f9;
         f9.equals(((vstring = "")));
-        for (int i = 0; ((i) < (6+6)); i++) ;
-        if ((b & b)) {}
+        for (int i = 0; ((i) < (6 + 6)); i++) ;
+        if ((b & b)) { }
 
         // ast error handling
         vint = vboolean ? (vint = 1) : (vint = 0);
         varray[vint] = Integer.parseInt("0");
     }
 
-    public @interface innerAnnotation {}
+    public @interface innerAnnotation { }
 }

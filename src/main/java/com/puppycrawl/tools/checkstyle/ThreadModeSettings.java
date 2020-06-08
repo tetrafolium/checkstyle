@@ -57,7 +57,7 @@ public class ThreadModeSettings implements Serializable {
      * @param checkerThreadsNumber the Checker threads number
      * @param treeWalkerThreadsNumber the TreeWalker threads number
      */
-    public ThreadModeSettings(int checkerThreadsNumber, int treeWalkerThreadsNumber) {
+    public ThreadModeSettings(final int checkerThreadsNumber, final int treeWalkerThreadsNumber) {
         this.checkerThreadsNumber = checkerThreadsNumber;
         this.treeWalkerThreadsNumber = treeWalkerThreadsNumber;
     }
@@ -84,7 +84,7 @@ public class ThreadModeSettings implements Serializable {
      * @return resolved module name.
      * @throws IllegalArgumentException when name is Checker or TreeWalker
      */
-    public final String resolveName(String name) {
+    public final String resolveName(final String name) {
         if (checkerThreadsNumber > 1) {
             if (CHECKER_MODULE_NAME.equals(name)) {
                 throw new IllegalArgumentException(

@@ -39,21 +39,21 @@ import com.puppycrawl.tools.checkstyle.internal.utils.XmlUtil;
 
 public abstract class AbstractXmlTestSupport extends AbstractModuleTestSupport {
 
-    protected static Document getOutputStreamXml(ByteArrayOutputStream outputStream)
+    protected static Document getOutputStreamXml(final ByteArrayOutputStream outputStream)
             throws ParserConfigurationException {
         final String xml = new String(outputStream.toByteArray(), StandardCharsets.UTF_8);
 
         return XmlUtil.getRawXml("audit output", xml, xml);
     }
 
-    protected static void verifyXml(String expectedOutputFile,
-            ByteArrayOutputStream actualOutputStream, String... messages) throws Exception {
+    protected static void verifyXml(final String expectedOutputFile,
+            final ByteArrayOutputStream actualOutputStream, final String... messages) throws Exception {
         verifyXml(expectedOutputFile, actualOutputStream, null, messages);
     }
 
-    protected static void verifyXml(String expectedOutputFile,
-            ByteArrayOutputStream actualOutputStream,
-            BiPredicate<Node, Node> ordered, String... messages) throws Exception {
+    protected static void verifyXml(final String expectedOutputFile,
+            final ByteArrayOutputStream actualOutputStream,
+            final BiPredicate<Node, Node> ordered, final String... messages) throws Exception {
         String expectedContents = readFile(expectedOutputFile);
 
         for (int i = 0; i < messages.length; i++) {
@@ -71,8 +71,8 @@ public abstract class AbstractXmlTestSupport extends AbstractModuleTestSupport {
         verifyXmlNode(expectedDocument, actualDocument, "/", ordered);
     }
 
-    private static void verifyXmlNodes(Node expected, Node actual, String path,
-            BiPredicate<Node, Node> ordered) {
+    private static void verifyXmlNodes(final Node expected, final Node actual, final String path,
+            final BiPredicate<Node, Node> ordered) {
         final Node expectedFirstChild = expected.getFirstChild();
         final Node actualFirstChild = actual.getFirstChild();
 
@@ -80,8 +80,7 @@ public abstract class AbstractXmlTestSupport extends AbstractModuleTestSupport {
             assertNull(actualFirstChild, "no children nodes should exist: " + path);
             assertEquals(expected.getNodeValue(), actual.getNodeValue(),
                     "text should be the same: " + path);
-        }
-        else {
+        } else {
             assertNotNull(actualFirstChild, "children nodes should exist: " + path);
 
             if (ordered == null) {
@@ -95,8 +94,7 @@ public abstract class AbstractXmlTestSupport extends AbstractModuleTestSupport {
                 }
 
                 assertNull(actualChild, "node have same number of children: " + path);
-            }
-            else {
+            } else {
                 final Set<Node> expectedChildren = XmlUtil.getChildrenElements(expected);
                 final Set<Node> actualChildren = XmlUtil.getChildrenElements(actual);
 
@@ -122,14 +120,13 @@ public abstract class AbstractXmlTestSupport extends AbstractModuleTestSupport {
         }
     }
 
-    private static void verifyXmlNode(Node expected, Node actual, String path,
-            BiPredicate<Node, Node> ordered) {
+    private static void verifyXmlNode(final Node expected, final Node actual, final String path,
+            final BiPredicate<Node, Node> ordered) {
         if (expected == null) {
             if (actual != null) {
                 fail("no node should exist: " + path + actual.getNodeName() + "/");
             }
-        }
-        else {
+        } else {
             final String newPath = path + expected.getNodeName() + "/";
 
             assertNotNull(actual, "node should exist: " + newPath);
@@ -144,12 +141,11 @@ public abstract class AbstractXmlTestSupport extends AbstractModuleTestSupport {
         }
     }
 
-    private static void verifyXmlAttributes(NamedNodeMap expected, NamedNodeMap actual,
-            String path) {
+    private static void verifyXmlAttributes(final NamedNodeMap expected, final NamedNodeMap actual,
+            final String path) {
         if (expected == null) {
             assertNull(actual, "no attributes should exist: " + path);
-        }
-        else {
+        } else {
             assertNotNull(actual, "attributes should exist: " + path);
 
             for (int i = 0; i < expected.getLength(); i++) {
@@ -161,7 +157,7 @@ public abstract class AbstractXmlTestSupport extends AbstractModuleTestSupport {
         }
     }
 
-    private static void verifyXmlAttribute(Node expected, Node actual, String path) {
+    private static void verifyXmlAttribute(final Node expected, final Node actual, final String path) {
         final String expectedName = expected.getNodeName();
 
         assertNotNull(actual,

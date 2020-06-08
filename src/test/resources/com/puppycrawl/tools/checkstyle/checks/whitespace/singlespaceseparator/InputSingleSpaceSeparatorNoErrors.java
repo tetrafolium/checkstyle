@@ -8,7 +8,7 @@ public class InputSingleSpaceSeparatorNoErrors {
     int count; //long indentation - OK
     String text = "             "; // OK
 
-    private void foo(int i) {
+    private void foo(final int i) {
         if (i > 10) {
             if (bar()) {
                 i++;

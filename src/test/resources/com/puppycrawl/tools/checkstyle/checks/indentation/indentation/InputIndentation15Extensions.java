@@ -28,7 +28,7 @@ public class InputIndentation15Extensions //indent:0 exp:0
 enum Enum1 //indent:0 exp:0
 { //indent:0 exp:0
     A, B, C; //indent:4 exp:4
-    Enum1() {} //indent:4 exp:4
+    Enum1() { } //indent:4 exp:4
     public String toString() { //indent:4 exp:4
         return ""; //some custom implementation //indent:8 exp:8
     } //indent:4 exp:4

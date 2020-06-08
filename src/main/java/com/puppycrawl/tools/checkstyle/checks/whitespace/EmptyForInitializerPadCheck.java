@@ -87,7 +87,7 @@ public class EmptyForInitializerPadCheck
      * @param optionStr string to decode option from
      * @throws IllegalArgumentException if unable to decode
      */
-    public void setOption(String optionStr) {
+    public void setOption(final String optionStr) {
         option = PadOption.valueOf(optionStr.trim().toUpperCase(Locale.ENGLISH));
     }
 
@@ -107,7 +107,7 @@ public class EmptyForInitializerPadCheck
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         if (!ast.hasChildren()) {
             // empty for initializer. test pad before semi.
             final DetailAST semi = ast.getNextSibling();
@@ -119,8 +119,7 @@ public class EmptyForInitializerPadCheck
                 if (option == PadOption.NOSPACE
                     && Character.isWhitespace(line.charAt(before))) {
                     log(ast, MSG_PRECEDED, SEMICOLON);
-                }
-                else if (option == PadOption.SPACE
+                } else if (option == PadOption.SPACE
                          && !Character.isWhitespace(line.charAt(before))) {
                     log(ast, MSG_NOT_PRECEDED, SEMICOLON);
                 }

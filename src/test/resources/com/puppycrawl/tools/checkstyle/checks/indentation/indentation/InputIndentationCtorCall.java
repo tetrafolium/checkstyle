@@ -14,58 +14,58 @@ class InputIndentationCtorCall { //indent:0 exp:0
 
   class Base { //indent:2 exp:2
 
-    public Base(long arg) { //indent:4 exp:4
+    public Base(final long arg) { //indent:4 exp:4
     } //indent:4 exp:4
 
-    public Base(Function arg) { //indent:4 exp:4
+    public Base(final Function arg) { //indent:4 exp:4
     } //indent:4 exp:4
 
   } //indent:2 exp:2
 
   class Invalid extends Base { //indent:2 exp:2
 
-    public Invalid(long arg) { //indent:4 exp:4
-    super( //indent:4 exp:6 warn
+    public Invalid(final long arg) { //indent:4 exp:4
+    super(//indent:4 exp:6 warn
     arg //indent:4 exp:6 warn
     + 1L); //indent:4 exp:6 warn
     } //indent:4 exp:4
 
     public Invalid() { //indent:4 exp:4
-    this( //indent:4 exp:6 warn
+    this(//indent:4 exp:6 warn
     0L); //indent:4 exp:6 warn
     } //indent:4 exp:4
 
-    public Invalid(int arg) { //indent:4 exp:4
-    new InputIndentationCtorCall().super( //indent:4 exp:6 warn
+    public Invalid(final int arg) { //indent:4 exp:4
+    new InputIndentationCtorCall().super(//indent:4 exp:6 warn
     arg //indent:4 exp:8 warn
     + 1L); //indent:4 exp:8 warn
     } //indent:4 exp:4
 
-    public Invalid(InputIndentationCtorCall obj, long arg) { //indent:4 exp:4
-    obj.super( //indent:4 exp:6 warn
+    public Invalid(final InputIndentationCtorCall obj, final long arg) { //indent:4 exp:4
+    obj.super(//indent:4 exp:6 warn
     arg); //indent:4 exp:8 warn
     } //indent:4 exp:4
 
-    public Invalid(InputIndentationCtorCall arg) { //indent:4 exp:4
+    public Invalid(final InputIndentationCtorCall arg) { //indent:4 exp:4
     arg.super //indent:4 exp:6 warn
-    ( //indent:4 exp:8 warn
+    (//indent:4 exp:8 warn
     x -> x); //indent:4 exp:8 warn
     } //indent:4 exp:4
 
-    public Invalid(char arg) { //indent:4 exp:4
+    public Invalid(final char arg) { //indent:4 exp:4
     this //indent:4 exp:6 warn
     (); //indent:4 exp:6 warn
     } //indent:4 exp:4
 
-    public Invalid(InputIndentationCtorCall obj, int arg) { //indent:4 exp:4
+    public Invalid(final InputIndentationCtorCall obj, final int arg) { //indent:4 exp:4
       obj //indent:6 exp:6
-    .super( //indent:4 exp:10 warn
+    .super(//indent:4 exp:10 warn
     arg); //indent:4 exp:8 warn
     } //indent:4 exp:4
 
-    public Invalid(InputIndentationCtorCall obj, char arg) { //indent:4 exp:4
-      obj. //indent:6 exp:6
-    super( //indent:4 exp:10 warn
+    public Invalid(final InputIndentationCtorCall obj, final char arg) { //indent:4 exp:4
+      obj.//indent:6 exp:6
+    super(//indent:4 exp:10 warn
     arg); //indent:4 exp:8 warn
     } //indent:4 exp:4
 
@@ -73,48 +73,48 @@ class InputIndentationCtorCall { //indent:0 exp:0
 
   class Valid extends Base { //indent:2 exp:2
 
-    public Valid(int arg) { //indent:4 exp:4
-      super( //indent:6 exp:6
+    public Valid(final int arg) { //indent:4 exp:4
+      super(//indent:6 exp:6
           arg //indent:10 exp:10
             + 1L); //indent:12 exp:12
     } //indent:4 exp:4
 
-    public Valid(long arg) { //indent:4 exp:4
-      new InputIndentationCtorCall().super( //indent:6 exp:6
+    public Valid(final long arg) { //indent:4 exp:4
+      new InputIndentationCtorCall().super(//indent:6 exp:6
           arg //indent:10 exp:10
             + 1L); //indent:12 exp:12
     } //indent:4 exp:4
 
     public Valid() { //indent:4 exp:4
-      this( //indent:6 exp:6
+      this(//indent:6 exp:6
           0L); //indent:10 exp:10
     } //indent:4 exp:4
 
-    public Valid(InputIndentationCtorCall obj, long arg) { //indent:4 exp:4
-      obj.super( //indent:6 exp:6
+    public Valid(final InputIndentationCtorCall obj, final long arg) { //indent:4 exp:4
+      obj.super(//indent:6 exp:6
           arg); //indent:10 exp:10
     } //indent:4 exp:4
 
-    public Valid(InputIndentationCtorCall obj, char arg) { //indent:4 exp:4
-      obj.super( //indent:6 exp:6
+    public Valid(final InputIndentationCtorCall obj, final char arg) { //indent:4 exp:4
+      obj.super(//indent:6 exp:6
           x -> arg); //indent:10 exp:10
     } //indent:4 exp:4
 
-    public Valid(InputIndentationCtorCall obj, int arg) { //indent:4 exp:4
+    public Valid(final InputIndentationCtorCall obj, final int arg) { //indent:4 exp:4
       obj //indent:6 exp:6
-          .super( //indent:10 exp:10
+          .super(//indent:10 exp:10
             arg); //indent:12 exp:12
     } //indent:4 exp:4
 
-    public Valid(InputIndentationCtorCall obj, float arg) { //indent:4 exp:4
-      obj. //indent:6 exp:6
-          super( //indent:10 exp:10
+    public Valid(final InputIndentationCtorCall obj, final float arg) { //indent:4 exp:4
+      obj.//indent:6 exp:6
+          super(//indent:10 exp:10
               x -> arg); //indent:14 exp:14
     } //indent:4 exp:4
 
-    public Valid(InputIndentationCtorCall obj, double arg) { //indent:4 exp:4
-      obj. //indent:6 exp:6
-          super( //indent:10 exp:10
+    public Valid(final InputIndentationCtorCall obj, final double arg) { //indent:4 exp:4
+      obj.//indent:6 exp:6
+          super(//indent:10 exp:10
             x -> arg); //indent:12 exp:12
     } //indent:4 exp:4
 

@@ -46,20 +46,18 @@ public abstract class AbstractSunModuleTestSupport extends AbstractItModuleTestS
         try {
             CONFIGURATION = ConfigurationLoader.loadConfiguration(XML_NAME,
                     new PropertiesExpander(System.getProperties()));
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             throw new IllegalStateException(ex);
         }
         try {
             CHECKSTYLE_MODULES = CheckUtil.getCheckstyleModules();
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             throw new IllegalStateException(ex);
         }
     }
 
     @Override
-    protected ModuleCreationOption findModuleCreationOption(String moduleName) {
+    protected ModuleCreationOption findModuleCreationOption(final String moduleName) {
         ModuleCreationOption moduleCreationOption = ModuleCreationOption.IN_CHECKER;
 
         for (Class<?> moduleClass : CHECKSTYLE_MODULES) {
@@ -77,7 +75,7 @@ public abstract class AbstractSunModuleTestSupport extends AbstractItModuleTestS
     }
 
     @Override
-    protected DefaultConfiguration createModuleConfig(Class<?> clazz) {
+    protected DefaultConfiguration createModuleConfig(final Class<?> clazz) {
         return new DefaultConfiguration(clazz.getName());
     }
 
@@ -87,7 +85,7 @@ public abstract class AbstractSunModuleTestSupport extends AbstractItModuleTestS
      * @param moduleName module name.
      * @return {@link Configuration} instance for the given module name.
      */
-    protected static Configuration getModuleConfig(String moduleName) {
+    protected static Configuration getModuleConfig(final String moduleName) {
         return getModuleConfig(moduleName, null);
     }
 
@@ -98,24 +96,20 @@ public abstract class AbstractSunModuleTestSupport extends AbstractItModuleTestS
      * @param moduleId module id.
      * @return {@link Configuration} instance for the given module name.
      */
-    protected static Configuration getModuleConfig(String moduleName, String moduleId) {
+    protected static Configuration getModuleConfig(final String moduleName, final String moduleId) {
         final Configuration result;
         final List<Configuration> configs = getModuleConfigs(moduleName);
         if (configs.size() == 1) {
             result = configs.get(0);
-        }
-        else if (configs.isEmpty()) {
+        } else if (configs.isEmpty()) {
             throw new IllegalStateException("no instances of the Module was found: " + moduleName);
-        }
-        else if (moduleId == null) {
+        } else if (moduleId == null) {
             throw new IllegalStateException("multiple instances of the same Module are detected");
-        }
-        else {
+        } else {
             result = configs.stream().filter(conf -> {
                 try {
                     return conf.getAttribute("id").equals(moduleId);
-                }
-                catch (CheckstyleException ex) {
+                } catch (CheckstyleException ex) {
                     throw new IllegalStateException("problem to get ID attribute from " + conf, ex);
                 }
             })
@@ -131,7 +125,7 @@ public abstract class AbstractSunModuleTestSupport extends AbstractItModuleTestS
      * @param moduleName module name.
      * @return {@link Configuration} instance for the given module name.
      */
-    protected static List<Configuration> getModuleConfigs(String moduleName) {
+    protected static List<Configuration> getModuleConfigs(final String moduleName) {
         final List<Configuration> result = new ArrayList<>();
         for (Configuration currentConfig : CONFIGURATION.getChildren()) {
             if ("TreeWalker".equals(currentConfig.getName())) {
@@ -140,8 +134,7 @@ public abstract class AbstractSunModuleTestSupport extends AbstractItModuleTestS
                         result.add(moduleConfig);
                     }
                 }
-            }
-            else if (moduleName.equals(currentConfig.getName())) {
+            } else if (moduleName.equals(currentConfig.getName())) {
                 result.add(currentConfig);
             }
         }

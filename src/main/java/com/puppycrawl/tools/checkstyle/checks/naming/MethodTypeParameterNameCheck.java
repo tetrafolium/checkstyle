@@ -92,7 +92,7 @@ public class MethodTypeParameterNameCheck
     }
 
     @Override
-    protected final boolean mustCheckName(DetailAST ast) {
+    protected final boolean mustCheckName(final DetailAST ast) {
         final DetailAST location =
             ast.getParent().getParent();
         return location.getType() == TokenTypes.METHOD_DEF;

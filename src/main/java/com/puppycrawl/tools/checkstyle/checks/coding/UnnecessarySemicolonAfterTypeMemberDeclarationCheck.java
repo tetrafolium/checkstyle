@@ -136,7 +136,7 @@ public final class UnnecessarySemicolonAfterTypeMemberDeclarationCheck extends A
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         switch (ast.getType()) {
             case TokenTypes.CLASS_DEF:
             case TokenTypes.INTERFACE_DEF:
@@ -161,7 +161,7 @@ public final class UnnecessarySemicolonAfterTypeMemberDeclarationCheck extends A
      *
      * @param ast type member
      */
-    private void checkTypeMember(DetailAST ast) {
+    private void checkTypeMember(final DetailAST ast) {
         if (isSemicolon(ast.getNextSibling())) {
             log(ast.getNextSibling(), MSG_SEMI);
         }
@@ -172,7 +172,7 @@ public final class UnnecessarySemicolonAfterTypeMemberDeclarationCheck extends A
      *
      * @param ast type definition
      */
-    private void checkTypeDefinition(DetailAST ast) {
+    private void checkTypeDefinition(final DetailAST ast) {
         if (!ScopeUtil.isOuterMostType(ast) && isSemicolon(ast.getNextSibling())) {
             log(ast.getNextSibling(), MSG_SEMI);
         }
@@ -188,7 +188,7 @@ public final class UnnecessarySemicolonAfterTypeMemberDeclarationCheck extends A
      *
      * @param variableDef variable definition
      */
-    private void checkVariableDefinition(DetailAST variableDef) {
+    private void checkVariableDefinition(final DetailAST variableDef) {
         if (isSemicolon(variableDef.getLastChild()) && isSemicolon(variableDef.getNextSibling())) {
             log(variableDef.getNextSibling(), MSG_SEMI);
         }
@@ -199,7 +199,7 @@ public final class UnnecessarySemicolonAfterTypeMemberDeclarationCheck extends A
      *
      * @param ast enum constant
      */
-    private void checkEnumConstant(DetailAST ast) {
+    private void checkEnumConstant(final DetailAST ast) {
         final DetailAST next = ast.getNextSibling();
         if (isSemicolon(next) && isSemicolon(next.getNextSibling())) {
             log(next.getNextSibling(), MSG_SEMI);
@@ -212,7 +212,7 @@ public final class UnnecessarySemicolonAfterTypeMemberDeclarationCheck extends A
      * @param ast token to check
      * @return true if ast is semicolon, false otherwise
      */
-    private static boolean isSemicolon(DetailAST ast) {
+    private static boolean isSemicolon(final DetailAST ast) {
         return ast.getType() == TokenTypes.SEMI;
     }
 }

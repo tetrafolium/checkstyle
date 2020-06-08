@@ -79,14 +79,18 @@ public class InputModifierOrderTypeAnnotations extends MyClass {
 
     // Type annotation on method return type
     @Override
-    public @TypeAnnotation String toString() { return ""; }
+    public @TypeAnnotation String toString() {
+        return ""; }
 
     @Override
-    @TypeAnnotation public int hashCode() { return 1; }
+    @TypeAnnotation public int hashCode() {
+        return 1; }
 
-    public @TypeAnnotation int foo8() { return 1; }
+    public @TypeAnnotation int foo8() {
+        return 1; }
 
-    public @TypeAnnotation boolean equals(Object obj) { return super.equals(obj); }
+    public @TypeAnnotation boolean equals(final Object obj) {
+        return super.equals(obj); }
 
 //    @TypeAnnotation void foo9() { } <-- Compiletime error:
                                         // void type cannot be annotated with type annotation
@@ -100,11 +104,11 @@ public class InputModifierOrderTypeAnnotations extends MyClass {
 class MyClass {
 
     // It is annotation on method, but not on type!
-    @MethodAnnotation void foo10() {}
-    private @MethodAnnotation void foo11() {}
+    @MethodAnnotation void foo10() { }
+    private @MethodAnnotation void foo11() { }
 
-    public @TypeAnnotation MyClass() {}
-    @ConstructorAnnotation public MyClass(String name) {}
+    public @TypeAnnotation MyClass() { }
+    @ConstructorAnnotation public MyClass(final String name) { }
 }
 
 enum MyEnum {
@@ -123,6 +127,6 @@ interface IInterfacable {
 @interface TypeAnnotation {
 }
 
-@interface MethodAnnotation {}
+@interface MethodAnnotation { }
 
-@interface ConstructorAnnotation {}
+@interface ConstructorAnnotation { }

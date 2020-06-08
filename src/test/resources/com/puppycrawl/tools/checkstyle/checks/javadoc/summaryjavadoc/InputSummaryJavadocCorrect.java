@@ -13,71 +13,71 @@ class InputSummaryJavadocCorrect {
     /**
      * As of JDK 1.1, replaced by {@link #setBounds(int,int,int,int)}.
      */
-    void foo3() {}
+    void foo3() { }
 
     /**
      * This is valid.
      * @throws Exception if a problem occurs.
      */
-    void foo4() throws Exception {}
+    void foo4() throws Exception { }
 
     /** An especially This method returns short bit of Javadoc. */
-    void foo5() {}
+    void foo5() { }
 
     /**
      * An especially short
      * bit of Javadoc. This method returns.
      */
-    void foo6() {}
+    void foo6() { }
 
     /** {@inheritDoc} */
-    void foo7() {}
+    void foo7() { }
 
     /**
      * {@inheritDoc} */
-    void foo8() {}
+    void foo8() { }
 
     /**
      * {@inheritDoc}
      */
-    void foo9() {}
+    void foo9() { }
 
     /**
      *
      *
      * {@inheritDoc}
      */
-    void foo10() {}
+    void foo10() { }
 
     /**
      * {@inheritDoc}mm
      */
-    void foo9a() {}
+    void foo9a() { }
 
     /**
      * {@inheritDoc}mm.
      */
-    void foo11() {}
+    void foo11() { }
 
     /**
      * {@inheritDoc} M m m m
      */
-    void foo12() {}
+    void foo12() { }
 
     /**
      * {@inheritDoc} M m m m.
      */
-    void foo13() {}
+    void foo13() { }
 
     /**
      * mm. {@inheritDoc}
      */
-    void foo14() {}
+    void foo14() { }
 
     /**
      * M m m m. {@inheritDoc}
      */
-    void foo15() {}
+    void foo15() { }
 
     /**
      * This is summary java doc.
@@ -99,37 +99,38 @@ class InputSummaryJavadocCorrect {
         /**
          * Returns the customer ID. This method returns.
          */
-        int getId() {return 666;}
+        int getId() {
+            return 666; }
 
         /**
          * This is valid.
          * <a href="mailto:vlad@htmlbook.ru"/>.
          */
-        void foo2() {}
+        void foo2() { }
 
         /**
          * As of JDK 1.1,
          * replaced by {@link #setBounds(int,int,int,int)}. This method returns.
          */
-        void foo3() {}
+        void foo3() { }
 
         /**
          * This is description.
          * @throws Exception if a problem occurs.
          */
-        void foo4() throws Exception {}
+        void foo4() throws Exception { }
 
         /**
          * JAXB Provider Use Only: Provides partial default
          * implementations for some of the javax.xml.bind interfaces.
          */
-        void foo5() {}
+        void foo5() { }
 
         /**
          * An especially short (int... A) bit of Javadoc. This
          * method returns.
          */
-        void foo6() {}
+        void foo6() { }
     }
 
      /**
@@ -150,50 +151,56 @@ class InputSummaryJavadocCorrect {
          * Returns the current state.
          * This method returns.
          */
-        boolean emulated(String s) {return false;}
+        boolean emulated(final String s) {
+            return false; }
 
         /**
          * As of JDK 1.1, replaced by {@link #setBounds(int,int,int,int)}.
          */
-        void foo3() {}
+        void foo3() { }
 
         /**
          * This is valid.
          * @throws Exception if a problem occurs.
          */
-        void foo4() throws Exception {}
+        void foo4() throws Exception { }
 
         /** An especially short bit of Javadoc. */
-        void foo5() {}
+        void foo5() { }
 
         /**
          * An especially short bit of Javadoc.
          */
-        void foo6() {}
+        void foo6() { }
 
         /**
          * Some Javadoc. This method returns some javadoc.
          */
-        boolean emulated() {return false;}
+        boolean emulated() {
+            return false; }
 
         /**
          * Some Javadoc. This method returns some javadoc. Some Javadoc.
          */
-        boolean emulated1() {return false;}
+        boolean emulated1() {
+            return false; }
 
         /**
          * This is valid.
          * @return Some Javadoc the customer ID.
          */
-        int geId() {return 666;}
+        int geId() {
+            return 666; }
 
         /**
          * This is valid.
          * @return Sentence one. Sentence two.
          */
-        String twoSentences() {return "Sentence one. Sentence two.";}
+        String twoSentences() {
+            return "Sentence one. Sentence two."; }
 
          /** Stop instances being created. **/
-         String twoSentences1() {return "Sentence one. Sentence two.";}
+         String twoSentences1() {
+             return "Sentence one. Sentence two."; }
     };
 }

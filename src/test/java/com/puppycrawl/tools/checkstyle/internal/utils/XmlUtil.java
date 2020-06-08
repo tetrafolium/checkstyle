@@ -47,7 +47,7 @@ public final class XmlUtil {
     private XmlUtil() {
     }
 
-    public static Document getRawXml(String fileName, String code, String unserializedSource)
+    public static Document getRawXml(final String fileName, final String code, final String unserializedSource)
             throws ParserConfigurationException {
         Document rawXml = null;
         try {
@@ -61,8 +61,7 @@ public final class XmlUtil {
             final DocumentBuilder builder = factory.newDocumentBuilder();
 
             rawXml = builder.parse(new InputSource(new StringReader(code)));
-        }
-        catch (IOException | SAXException ex) {
+        } catch (IOException | SAXException ex) {
             fail(fileName + " has invalid xml (" + ex.getMessage() + "): "
                     + unserializedSource);
         }
@@ -70,7 +69,7 @@ public final class XmlUtil {
         return rawXml;
     }
 
-    public static Set<Node> getChildrenElements(Node node) {
+    public static Set<Node> getChildrenElements(final Node node) {
         final Set<Node> result = new LinkedHashSet<>();
 
         for (Node child = node.getFirstChild(); child != null; child = child.getNextSibling()) {
@@ -82,7 +81,7 @@ public final class XmlUtil {
         return result;
     }
 
-    public static Node getFirstChildElement(Node node) {
+    public static Node getFirstChildElement(final Node node) {
         Node firstChildElement = null;
         for (Node child = node.getFirstChild(); child != null; child = child.getNextSibling()) {
             if (child.getNodeType() != Node.TEXT_NODE) {
@@ -101,7 +100,7 @@ public final class XmlUtil {
      * @param id the unique {@code id} value for a node.
      * @return the matching node or {@code null} if none matches.
      */
-    public static Node findChildElementById(Node node, String id) {
+    public static Node findChildElementById(final Node node, final String id) {
         Node childElement = null;
         for (Node child = node.getFirstChild(); child != null; child = child.getNextSibling()) {
             final NamedNodeMap attributes = child.getAttributes();
@@ -117,14 +116,13 @@ public final class XmlUtil {
         return childElement;
     }
 
-    public static Set<Node> findChildElementsByTag(Node node, String tag) {
+    public static Set<Node> findChildElementsByTag(final Node node, final String tag) {
         final Set<Node> result = new LinkedHashSet<>();
 
         for (Node child = node.getFirstChild(); child != null; child = child.getNextSibling()) {
             if (tag.equals(child.getNodeName())) {
                 result.add(child);
-            }
-            else if (child.hasChildNodes()) {
+            } else if (child.hasChildNodes()) {
                 result.addAll(findChildElementsByTag(child, tag));
             }
         }
@@ -138,7 +136,7 @@ public final class XmlUtil {
      * @param node to retrieve the name
      * @return the value of the attribute "name"
      */
-    public static String getNameAttributeOfNode(Node node) {
+    public static String getNameAttributeOfNode(final Node node) {
         return node.getAttributes().getNamedItem("name").getNodeValue();
     }
 
@@ -153,7 +151,7 @@ public final class XmlUtil {
      * @param rawXml the text to sanitize
      * @return the sanitized text
      */
-    public static String sanitizeXml(String rawXml) {
+    public static String sanitizeXml(final String rawXml) {
         return rawXml
                 .replaceAll("(^\\s+|\\s+$)", "")
                 .replaceAll("\\s+", " ")

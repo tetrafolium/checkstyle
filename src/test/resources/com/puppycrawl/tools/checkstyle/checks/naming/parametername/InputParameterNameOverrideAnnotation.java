@@ -3,29 +3,30 @@ package com.puppycrawl.tools.checkstyle.checks.naming.parametername;
 public class InputParameterNameOverrideAnnotation {
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         return super.equals(o);
     }
 
     @SuppressWarnings("")
-    public void foo(Object object) {
+    public void foo(final Object object) {
 
     }
 
-    public void foo2(Integer aaaa) {}
+    public void foo2(final Integer aaaa) { }
 
-    void foo3() {} // No NPE here!
+    void foo3() { } // No NPE here!
 
-    void foo4(int abc, int bd) {} // No NPE here!
+    void foo4(final int abc, final int bd) { } // No NPE here!
 
-    int foo5(int abc) {return 1;} // No NPE here!
+    int foo5(final int abc) {
+        return 1; } // No NPE here!
 
     private int field;
     private java.util.Set<String> packageNames;
 
-    InputParameterNameOverrideAnnotation() {} // No NPE here!
+    InputParameterNameOverrideAnnotation() { } // No NPE here!
 
-    InputParameterNameOverrideAnnotation(int fie, java.util.Set<String> pkgNames) {} // No NPE here!
+    InputParameterNameOverrideAnnotation(final int fie, final java.util.Set<String> pkgNames) { } // No NPE here!
 
 
 }

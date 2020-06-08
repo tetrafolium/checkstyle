@@ -8,7 +8,7 @@ public class InputCovariantEquals
 {
     private class Inner
     {
-        public boolean equals(Inner aInner)
+        public boolean equals(final Inner aInner)
         {
             return false;
         }
@@ -16,18 +16,18 @@ public class InputCovariantEquals
 
     private class Inner2
     {
-        public boolean equals(Inner2 aInner2)
+        public boolean equals(final Inner2 aInner2)
         {
             return false;
         }
 
-        public boolean equals(Object aObj)
+        public boolean equals(final Object aObj)
         {
             return false;
         }
     }
 
-    public boolean equals(InputCovariantEquals aInputCovariantEquals)
+    public boolean equals(final InputCovariantEquals aInputCovariantEquals)
     {
         return false;
     }
@@ -35,12 +35,12 @@ public class InputCovariantEquals
 
 class InputCovariant2
 {
-    public boolean equals(InputCovariant2 aInputCovariant2)
+    public boolean equals(final InputCovariant2 aInputCovariant2)
     {
         return false;
     }
 
-    public boolean equals(Object aObject)
+    public boolean equals(final Object aObject)
     {
         return false;
     }
@@ -48,12 +48,12 @@ class InputCovariant2
 
 class InputCovariant3
 {
-    public boolean equals(InputCovariant3 aInputCovariant3)
+    public boolean equals(final InputCovariant3 aInputCovariant3)
     {
         return false;
     }
 
-    public boolean equals(java.lang.Object aObject)
+    public boolean equals(final java.lang.Object aObject)
     {
         return false;
     }
@@ -61,7 +61,7 @@ class InputCovariant3
 
 class InputCovariant4
 {
-    public boolean equals(int i)
+    public boolean equals(final int i)
     {
         return false;
     }
@@ -71,17 +71,17 @@ class AnonymousIC
 {
     Comparable comp = new Comparable()
         {
-            public int compareTo(Object aObject)
+            public int compareTo(final Object aObject)
             {
                 return 0;
             }
-            public boolean equals(String aString)
+            public boolean equals(final String aString)
             {
                 return false;
             }
         };
 
-    public boolean equals(Object aObject)
+    public boolean equals(final Object aObject)
     {
         return false;
     }
@@ -104,12 +104,12 @@ interface InputCovariant6
 
 class InputGenericCovariant7
 {
-    public <A> boolean equals(InputGenericCovariant7 aInputCovariant7)
+    public <A> boolean equals(final InputGenericCovariant7 aInputCovariant7)
     {
         return true;
     }
 
-    public boolean equals(Object aObject)
+    public boolean equals(final Object aObject)
     {
         return false;
     }
@@ -117,12 +117,12 @@ class InputGenericCovariant7
 
 class InputGenericCovariant8
 {
-    public <A> boolean equals(InputGenericCovariant8 aInputCovariant8)
+    public <A> boolean equals(final InputGenericCovariant8 aInputCovariant8)
     {
         return true;
     }
 
-    public boolean equals(Object aObject)
+    public boolean equals(final Object aObject)
     {
         return false;
     }
@@ -131,11 +131,11 @@ class InputGenericCovariant8
 enum InputEnumCovariant {
     EQUALS;
 
-    public boolean equals(InputEnumCovariant inputEnumCovariant) {
+    public boolean equals(final InputEnumCovariant inputEnumCovariant) {
         return false;
     }
 
-    int equals(Integer integer) {
+    int equals(final Integer integer) {
         return 0;
     }
 }

@@ -34,7 +34,7 @@ public class CheckstyleException extends Exception {
      *
      * @param message a {@code String} value
      */
-    public CheckstyleException(String message) {
+    public CheckstyleException(final String message) {
         super(message);
     }
 
@@ -45,7 +45,7 @@ public class CheckstyleException extends Exception {
      * @param message a message that explains this exception
      * @param cause the Exception that is wrapped by this exception
      */
-    public CheckstyleException(String message, Throwable cause) {
+    public CheckstyleException(final String message, final Throwable cause) {
         super(message, cause);
     }
 

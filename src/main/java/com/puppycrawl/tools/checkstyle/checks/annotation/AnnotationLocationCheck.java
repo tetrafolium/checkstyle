@@ -188,7 +188,7 @@ public class AnnotationLocationCheck extends AbstractCheck {
      * target element.
      * @param allow User's value of allowSamelineSingleParameterlessAnnotation.
      */
-    public final void setAllowSamelineSingleParameterlessAnnotation(boolean allow) {
+    public final void setAllowSamelineSingleParameterlessAnnotation(final boolean allow) {
         allowSamelineSingleParameterlessAnnotation = allow;
     }
 
@@ -197,7 +197,7 @@ public class AnnotationLocationCheck extends AbstractCheck {
      * target element.
      * @param allow User's value of allowSamelineParameterizedAnnotation.
      */
-    public final void setAllowSamelineParameterizedAnnotation(boolean allow) {
+    public final void setAllowSamelineParameterizedAnnotation(final boolean allow) {
         allowSamelineParameterizedAnnotation = allow;
     }
 
@@ -206,7 +206,7 @@ public class AnnotationLocationCheck extends AbstractCheck {
      * target element.
      * @param allow User's value of allowSamelineMultipleAnnotations.
      */
-    public final void setAllowSamelineMultipleAnnotations(boolean allow) {
+    public final void setAllowSamelineMultipleAnnotations(final boolean allow) {
         allowSamelineMultipleAnnotations = allow;
     }
 
@@ -246,7 +246,7 @@ public class AnnotationLocationCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         // ignore variable def tokens that are not field definitions
         if (ast.getType() != TokenTypes.VARIABLE_DEF
                 || ast.getParent().getType() == TokenTypes.OBJBLOCK) {
@@ -264,7 +264,7 @@ public class AnnotationLocationCheck extends AbstractCheck {
      * @param node modifiers or annotations node.
      * @return the annotation indentation.
      */
-    private static int getExpectedAnnotationIndentation(DetailAST node) {
+    private static int getExpectedAnnotationIndentation(final DetailAST node) {
         return node.getColumnNo();
     }
 
@@ -275,7 +275,7 @@ public class AnnotationLocationCheck extends AbstractCheck {
      * @param modifierNode modifiers node.
      * @param correctIndentation correct indentation of the annotation.
      */
-    private void checkAnnotations(DetailAST modifierNode, int correctIndentation) {
+    private void checkAnnotations(final DetailAST modifierNode, final int correctIndentation) {
         DetailAST annotation = modifierNode.getFirstChild();
 
         while (annotation != null && annotation.getType() == TokenTypes.ANNOTATION) {
@@ -284,8 +284,7 @@ public class AnnotationLocationCheck extends AbstractCheck {
             if (!isCorrectLocation(annotation, hasParameters)) {
                 log(annotation.getLineNo(),
                         MSG_KEY_ANNOTATION_LOCATION_ALONE, getAnnotationName(annotation));
-            }
-            else if (annotation.getColumnNo() != correctIndentation && !hasNodeBefore(annotation)) {
+            } else if (annotation.getColumnNo() != correctIndentation && !hasNodeBefore(annotation)) {
                 log(annotation.getLineNo(), MSG_KEY_ANNOTATION_LOCATION,
                     getAnnotationName(annotation), annotation.getColumnNo(), correctIndentation);
             }
@@ -298,7 +297,7 @@ public class AnnotationLocationCheck extends AbstractCheck {
      * @param annotation annotation node.
      * @return true if the annotation has parameters.
      */
-    private static boolean isParameterized(DetailAST annotation) {
+    private static boolean isParameterized(final DetailAST annotation) {
         return TokenUtil.findFirstTokenByPredicate(annotation, ast -> {
             return ast.getType() == TokenTypes.EXPR
                 || ast.getType() == TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR;
@@ -310,7 +309,7 @@ public class AnnotationLocationCheck extends AbstractCheck {
      * @param annotation annotation node.
      * @return annotation name.
      */
-    private static String getAnnotationName(DetailAST annotation) {
+    private static String getAnnotationName(final DetailAST annotation) {
         DetailAST identNode = annotation.findFirstToken(TokenTypes.IDENT);
         if (identNode == null) {
             identNode = annotation.findFirstToken(TokenTypes.DOT).findFirstToken(TokenTypes.IDENT);
@@ -332,13 +331,12 @@ public class AnnotationLocationCheck extends AbstractCheck {
      * @param hasParams whether an annotation has parameters.
      * @return true if the annotation has a correct location.
      */
-    private boolean isCorrectLocation(DetailAST annotation, boolean hasParams) {
+    private boolean isCorrectLocation(final DetailAST annotation, final boolean hasParams) {
         final boolean allowingCondition;
 
         if (hasParams) {
             allowingCondition = allowSamelineParameterizedAnnotation;
-        }
-        else {
+        } else {
             allowingCondition = allowSamelineSingleParameterlessAnnotation;
         }
         return allowSamelineMultipleAnnotations
@@ -351,7 +349,7 @@ public class AnnotationLocationCheck extends AbstractCheck {
      * @param annotation annotation node.
      * @return true if an annotation node has any node before on the same line.
      */
-    private static boolean hasNodeBefore(DetailAST annotation) {
+    private static boolean hasNodeBefore(final DetailAST annotation) {
         final int annotationLineNo = annotation.getLineNo();
         final DetailAST previousNode = annotation.getPreviousSibling();
 
@@ -363,7 +361,7 @@ public class AnnotationLocationCheck extends AbstractCheck {
      * @param annotation annotation node.
      * @return true if an annotation node has any node before or after on the same line.
      */
-    private static boolean hasNodeBeside(DetailAST annotation) {
+    private static boolean hasNodeBeside(final DetailAST annotation) {
         return hasNodeBefore(annotation) || hasNodeAfter(annotation);
     }
 
@@ -372,7 +370,7 @@ public class AnnotationLocationCheck extends AbstractCheck {
      * @param annotation annotation node.
      * @return true if an annotation node has any node after on the same line.
      */
-    private static boolean hasNodeAfter(DetailAST annotation) {
+    private static boolean hasNodeAfter(final DetailAST annotation) {
         final int annotationLineNo = annotation.getLineNo();
         DetailAST nextNode = annotation.getNextSibling();
 

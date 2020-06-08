@@ -162,12 +162,12 @@ public class NoWhitespaceAfterCheck extends AbstractCheck {
      * @param allowLineBreaks whether whitespace should be
      *     flagged at linebreaks.
      */
-    public void setAllowLineBreaks(boolean allowLineBreaks) {
+    public void setAllowLineBreaks(final boolean allowLineBreaks) {
         this.allowLineBreaks = allowLineBreaks;
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         final DetailAST whitespaceFollowedAst = getWhitespaceFollowedNode(ast);
 
         if (shouldCheckWhitespaceAfter(whitespaceFollowedAst)) {
@@ -187,7 +187,7 @@ public class NoWhitespaceAfterCheck extends AbstractCheck {
      *        , visited node.
      * @return node before ast.
      */
-    private static DetailAST getWhitespaceFollowedNode(DetailAST ast) {
+    private static DetailAST getWhitespaceFollowedNode(final DetailAST ast) {
         final DetailAST whitespaceFollowedAst;
         switch (ast.getType()) {
             case TokenTypes.TYPECAST:
@@ -212,14 +212,13 @@ public class NoWhitespaceAfterCheck extends AbstractCheck {
      * @param ast the visited node
      * @return true if whitespace after ast should be checked
      */
-    private static boolean shouldCheckWhitespaceAfter(DetailAST ast) {
+    private static boolean shouldCheckWhitespaceAfter(final DetailAST ast) {
         boolean checkWhitespace = true;
         final DetailAST sibling = ast.getNextSibling();
         if (sibling != null) {
             if (sibling.getType() == TokenTypes.ANNOTATIONS) {
                 checkWhitespace = false;
-            }
-            else if (sibling.getType() == TokenTypes.ARRAY_DECLARATOR) {
+            } else if (sibling.getType() == TokenTypes.ARRAY_DECLARATOR) {
                 checkWhitespace = sibling.getFirstChild().getType() != TokenTypes.ANNOTATIONS;
             }
         }
@@ -231,7 +230,7 @@ public class NoWhitespaceAfterCheck extends AbstractCheck {
      * @param ast Node representing token.
      * @return position after token.
      */
-    private static int getPositionAfter(DetailAST ast) {
+    private static int getPositionAfter(final DetailAST ast) {
         final int after;
         // If target of possible redundant whitespace is in method definition.
         if (ast.getType() == TokenTypes.IDENT
@@ -240,8 +239,7 @@ public class NoWhitespaceAfterCheck extends AbstractCheck {
             final DetailAST methodDef = ast.getParent();
             final DetailAST endOfParams = methodDef.findFirstToken(TokenTypes.RPAREN);
             after = endOfParams.getColumnNo() + 1;
-        }
-        else {
+        } else {
             after = ast.getColumnNo() + ast.getText().length();
         }
         return after;
@@ -257,15 +255,14 @@ public class NoWhitespaceAfterCheck extends AbstractCheck {
      *        , line number of a possible whitespace.
      * @return true if whitespace found.
      */
-    private boolean hasTrailingWhitespace(DetailAST ast,
-        int whitespaceColumnNo, int whitespaceLineNo) {
+    private boolean hasTrailingWhitespace(final DetailAST ast,
+        final int whitespaceColumnNo, final int whitespaceLineNo) {
         final boolean result;
         final int astLineNo = ast.getLineNo();
         final String line = getLine(astLineNo - 1);
         if (astLineNo == whitespaceLineNo && whitespaceColumnNo < line.length()) {
             result = Character.isWhitespace(line.charAt(whitespaceColumnNo));
-        }
-        else {
+        } else {
             result = !allowLineBreaks;
         }
         return result;
@@ -279,14 +276,13 @@ public class NoWhitespaceAfterCheck extends AbstractCheck {
      *        , {@link TokenTypes#ARRAY_DECLARATOR ARRAY_DECLARATOR} node.
      * @return previous node by text order.
      */
-    private static DetailAST getArrayDeclaratorPreviousElement(DetailAST ast) {
+    private static DetailAST getArrayDeclaratorPreviousElement(final DetailAST ast) {
         final DetailAST previousElement;
         final DetailAST firstChild = ast.getFirstChild();
         if (firstChild.getType() == TokenTypes.ARRAY_DECLARATOR) {
             // second or higher array index
             previousElement = firstChild.findFirstToken(TokenTypes.RBRACK);
-        }
-        else {
+        } else {
             // first array index, is preceded with identifier or type
             final DetailAST parent = getFirstNonArrayDeclaratorParent(ast);
             switch (parent.getType()) {
@@ -296,8 +292,7 @@ public class NoWhitespaceAfterCheck extends AbstractCheck {
                     if (wildcard == null) {
                         // usual generic type argument like <char[]>
                         previousElement = getTypeLastNode(ast);
-                    }
-                    else {
+                    } else {
                         // constructions with wildcard like <? extends String[]>
                         previousElement = getTypeLastNode(ast.getFirstChild());
                     }
@@ -320,8 +315,7 @@ public class NoWhitespaceAfterCheck extends AbstractCheck {
                     if (ident == null) {
                         // i.e. int[]::new
                         previousElement = ast.getFirstChild();
-                    }
-                    else {
+                    } else {
                         previousElement = ident;
                     }
                     break;
@@ -340,14 +334,13 @@ public class NoWhitespaceAfterCheck extends AbstractCheck {
      *        , {@link TokenTypes#INDEX_OP INDEX_OP} node.
      * @return previous node by text order.
      */
-    private static DetailAST getIndexOpPreviousElement(DetailAST ast) {
+    private static DetailAST getIndexOpPreviousElement(final DetailAST ast) {
         final DetailAST result;
         final DetailAST firstChild = ast.getFirstChild();
         if (firstChild.getType() == TokenTypes.INDEX_OP) {
             // second or higher array index
             result = firstChild.findFirstToken(TokenTypes.RBRACK);
-        }
-        else {
+        } else {
             final DetailAST ident = getIdentLastToken(ast);
             if (ident == null) {
                 final DetailAST rparen = ast.findFirstToken(TokenTypes.RPAREN);
@@ -355,13 +348,11 @@ public class NoWhitespaceAfterCheck extends AbstractCheck {
                 if (rparen == null) {
                     final DetailAST lastChild = firstChild.getLastChild();
                     result = lastChild.findFirstToken(TokenTypes.RCURLY);
-                }
-                // construction like ((byte[]) pixels)[0]
+                } // construction like ((byte[]) pixels)[0]
                 else {
                     result = rparen;
                 }
-            }
-            else {
+            } else {
                 result = ident;
             }
         }
@@ -374,7 +365,7 @@ public class NoWhitespaceAfterCheck extends AbstractCheck {
      *        , {@link TokenTypes#ARRAY_DECLARATOR ARRAY_DECLARATOR} node.
      * @return owner node.
      */
-    private static DetailAST getFirstNonArrayDeclaratorParent(DetailAST ast) {
+    private static DetailAST getFirstNonArrayDeclaratorParent(final DetailAST ast) {
         DetailAST parent = ast.getParent();
         while (parent.getType() == TokenTypes.ARRAY_DECLARATOR) {
             parent = parent.getParent();
@@ -389,7 +380,7 @@ public class NoWhitespaceAfterCheck extends AbstractCheck {
      *        , subject node.
      * @return type node.
      */
-    private static DetailAST getTypeLastNode(DetailAST ast) {
+    private static DetailAST getTypeLastNode(final DetailAST ast) {
         DetailAST result = ast.findFirstToken(TokenTypes.TYPE_ARGUMENTS);
         if (result == null) {
             result = getIdentLastToken(ast);
@@ -397,8 +388,7 @@ public class NoWhitespaceAfterCheck extends AbstractCheck {
                 // primitive literal expected
                 result = ast.getFirstChild();
             }
-        }
-        else {
+        } else {
             result = result.findFirstToken(TokenTypes.GENERIC_END);
         }
         return result;
@@ -413,7 +403,7 @@ public class NoWhitespaceAfterCheck extends AbstractCheck {
      *        , its parent node.
      * @return previous node by text order.
      */
-    private static DetailAST getPreviousNodeWithParentOfTypeAst(DetailAST ast, DetailAST parent) {
+    private static DetailAST getPreviousNodeWithParentOfTypeAst(final DetailAST ast, final DetailAST parent) {
         final DetailAST previousElement;
         final DetailAST ident = getIdentLastToken(parent.getParent());
         final DetailAST lastTypeNode = getTypeLastNode(ast);
@@ -423,11 +413,9 @@ public class NoWhitespaceAfterCheck extends AbstractCheck {
         // determining if it is java style or C style
         if (ident == null || ident.getLineNo() > ast.getLineNo()) {
             previousElement = lastTypeNode;
-        }
-        else if (ident.getLineNo() < ast.getLineNo()) {
+        } else if (ident.getLineNo() < ast.getLineNo()) {
             previousElement = ident;
-        }
-        // ident and lastTypeNode lay on one line
+        } // ident and lastTypeNode lay on one line
         else {
             final int instanceOfSize = 13;
             // +2 because ast has `[]` after the ident
@@ -436,8 +424,7 @@ public class NoWhitespaceAfterCheck extends AbstractCheck {
                 // ' instanceof ' (12 characters)
                 || lastTypeNode.getColumnNo() >= ident.getColumnNo() + instanceOfSize) {
                 previousElement = lastTypeNode;
-            }
-            else {
+            } else {
                 previousElement = ident;
             }
         }
@@ -450,7 +437,7 @@ public class NoWhitespaceAfterCheck extends AbstractCheck {
      *        , token possibly possessing an identifier.
      * @return leftmost token of identifier.
      */
-    private static DetailAST getIdentLastToken(DetailAST ast) {
+    private static DetailAST getIdentLastToken(final DetailAST ast) {
         final DetailAST result;
         final DetailAST dot = ast.findFirstToken(TokenTypes.DOT);
         // method call case
@@ -458,12 +445,10 @@ public class NoWhitespaceAfterCheck extends AbstractCheck {
             final DetailAST methodCall = ast.findFirstToken(TokenTypes.METHOD_CALL);
             if (methodCall == null) {
                 result = ast.findFirstToken(TokenTypes.IDENT);
-            }
-            else {
+            } else {
                 result = methodCall.findFirstToken(TokenTypes.RPAREN);
             }
-        }
-        // qualified name case
+        } // qualified name case
         else {
             result = dot.getFirstChild().getNextSibling();
         }

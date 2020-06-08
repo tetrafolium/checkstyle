@@ -33,7 +33,7 @@ public final class ConfigurationUtil {
     private ConfigurationUtil() {
     }
 
-    public static Configuration loadConfiguration(String path) throws CheckstyleException {
+    public static Configuration loadConfiguration(final String path) throws CheckstyleException {
         final Properties props = new Properties();
 
         props.setProperty("checkstyle.basedir", "basedir");
@@ -48,19 +48,18 @@ public final class ConfigurationUtil {
         return loadConfiguration(path, props);
     }
 
-    public static Configuration loadConfiguration(String path, Properties props)
+    public static Configuration loadConfiguration(final String path, final Properties props)
             throws CheckstyleException {
         return ConfigurationLoader.loadConfiguration(path, new PropertiesExpander(props));
     }
 
-    public static Set<Configuration> getModules(Configuration config) {
+    public static Set<Configuration> getModules(final Configuration config) {
         final Set<Configuration> result = new HashSet<>();
 
         for (Configuration child : config.getChildren()) {
             if ("TreeWalker".equals(child.getName())) {
                 result.addAll(getModules(child));
-            }
-            else {
+            } else {
                 result.add(child);
             }
         }
@@ -68,7 +67,7 @@ public final class ConfigurationUtil {
         return result;
     }
 
-    public static Set<Configuration> getChecks(Configuration config) {
+    public static Set<Configuration> getChecks(final Configuration config) {
         final Set<Configuration> result = new HashSet<>();
 
         for (Configuration child : config.getChildren()) {

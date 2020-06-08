@@ -23,7 +23,7 @@ public class InputIndentationValidDoWhileIndent { //indent:0 exp:0
     public void method1() { //indent:4 exp:4
         boolean test = true; //indent:8 exp:8
 
-        do System.getProperty("foo"); while (test) ; //indent:8 exp:8
+        do System.getProperty("foo"); while (test); //indent:8 exp:8
 
         do System.getProperty("foo"); //indent:8 exp:8
         while (test); //indent:8 exp:8
@@ -43,7 +43,8 @@ public class InputIndentationValidDoWhileIndent { //indent:0 exp:0
         while (test); //indent:8 exp:8
 
         do  //indent:8 exp:8
-        { System.getProperty("foo"); } //indent:8 exp:8
+        {
+            System.getProperty("foo"); } //indent:8 exp:8
         while (test); //indent:8 exp:8
 
         do { //indent:8 exp:8

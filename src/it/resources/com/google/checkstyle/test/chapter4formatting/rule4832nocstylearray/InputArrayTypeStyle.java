@@ -8,11 +8,11 @@ public class InputArrayTypeStyle
     private int[] javaStyle = new int[0];
     private int cStyle[] = new int[0]; //warn
 
-    public static void mainJava(String[] aJavaStyle) //ok
+    public static void mainJava(final String[] aJavaStyle) //ok
     {
     }
 
-    public static void mainC(String aCStyle[]) //warn
+    public static void mainC(final String aCStyle[]) //warn
     {
         final int[] blah = new int[0]; //ok
         final boolean isOK1 = aCStyle instanceof String[]; //ok

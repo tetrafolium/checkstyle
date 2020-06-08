@@ -35,7 +35,7 @@ public class InputUnusedImportsFromJavaLang {
     private Field field;
     private Annotation annotation;
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         Double d = new Double(0.0d);
         Float f = new Float(0.1f);
         Integer i = new Integer(1);

@@ -248,8 +248,7 @@ public class SuppressWithPlainTextCommentFilterTest extends AbstractModuleTestSu
                 filterCfg, checkCfg
             );
             fail("CheckstyleException is expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             final IllegalArgumentException cause = (IllegalArgumentException) ex.getCause();
             assertEquals("unable to parse expanded comment e[l", cause.getMessage(),
                     "Invalid exception message");
@@ -273,8 +272,7 @@ public class SuppressWithPlainTextCommentFilterTest extends AbstractModuleTestSu
                 CommonUtil.EMPTY_STRING_ARRAY, filterCfg, checkCfg
             );
             fail("CheckstyleException is expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             final IllegalArgumentException cause = (IllegalArgumentException) ex.getCause();
             assertEquals("unable to parse expanded comment e[l", cause.getMessage(),
                     "Invalid exception message");
@@ -307,8 +305,7 @@ public class SuppressWithPlainTextCommentFilterTest extends AbstractModuleTestSu
                 filterCfg, checkCfg
             );
             fail("CheckstyleException is expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             final IllegalArgumentException cause = (IllegalArgumentException) ex.getCause();
             assertEquals("unable to parse expanded comment e[l", cause.getMessage(),
                     "Invalid exception message");
@@ -339,8 +336,7 @@ public class SuppressWithPlainTextCommentFilterTest extends AbstractModuleTestSu
                 filterCfg, checkCfg
             );
             fail("CheckstyleException is expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             final IllegalArgumentException cause = (IllegalArgumentException) ex.getCause();
             assertEquals("unable to parse expanded comment e[l", cause.getMessage(),
                     "Invalid exception message");
@@ -592,8 +588,7 @@ public class SuppressWithPlainTextCommentFilterTest extends AbstractModuleTestSu
         try {
             filter.accept(auditEvent);
             fail(IllegalStateException.class.getSimpleName() + " is expected");
-        }
-        catch (IllegalStateException ex) {
+        } catch (IllegalStateException ex) {
             assertEquals("Cannot read source file: " + fileName, ex.getMessage(),
                     "Invalid exception message");
 
@@ -722,8 +717,8 @@ public class SuppressWithPlainTextCommentFilterTest extends AbstractModuleTestSu
         assertTrue(filter.accept(event), "filter should accept directory");
     }
 
-    private void verifySuppressed(String fileNameWithExtension, String[] violationMessages,
-                                  Configuration... childConfigs) throws Exception {
+    private void verifySuppressed(final String fileNameWithExtension, final String[] violationMessages,
+                                  final Configuration... childConfigs) throws Exception {
         final DefaultConfiguration checkerConfig = createRootConfig(null);
 
         Arrays.stream(childConfigs).forEach(checkerConfig::addChild);
@@ -734,7 +729,7 @@ public class SuppressWithPlainTextCommentFilterTest extends AbstractModuleTestSu
         verify(checkerConfig, getPath(fileNameWithExtension), violationMessages);
     }
 
-    private static String[] removeSuppressed(String[] from, String... remove) {
+    private static String[] removeSuppressed(final String[] from, final String... remove) {
         final Collection<String> coll = Arrays.stream(from).collect(Collectors.toList());
         coll.removeAll(Arrays.asList(remove));
         return coll.toArray(CommonUtil.EMPTY_STRING_ARRAY);

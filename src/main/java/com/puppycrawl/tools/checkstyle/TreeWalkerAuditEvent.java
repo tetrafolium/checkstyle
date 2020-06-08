@@ -46,8 +46,8 @@ public class TreeWalkerAuditEvent {
      * @param localizedMessage the actual message
      * @param rootAst root AST element {@link DetailAST} of the file
      */
-    public TreeWalkerAuditEvent(FileContents fileContents, String fileName,
-                                LocalizedMessage localizedMessage, DetailAST rootAst) {
+    public TreeWalkerAuditEvent(final FileContents fileContents, final String fileName,
+                                final LocalizedMessage localizedMessage, final DetailAST rootAst) {
         this.fileContents = fileContents;
         this.fileName = fileName;
         this.localizedMessage = localizedMessage;

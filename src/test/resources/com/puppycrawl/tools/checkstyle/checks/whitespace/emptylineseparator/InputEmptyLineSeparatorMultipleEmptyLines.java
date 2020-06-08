@@ -40,9 +40,9 @@ public class InputEmptyLineSeparatorMultipleEmptyLines
     private int k;
 
 
-    private static void foo() {}
+    private static void foo() { }
 
-    private static void foo1() {}
+    private static void foo1() { }
 
 
 }
@@ -54,6 +54,6 @@ class Test2 {
         }
 
 
-        for(int i = 1;i < 5;i++);
+        for (int i = 1; i < 5; i++);
     }
 }

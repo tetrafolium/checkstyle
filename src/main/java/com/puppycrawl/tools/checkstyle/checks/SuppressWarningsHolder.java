@@ -147,7 +147,7 @@ public class SuppressWarningsHolder
      *        name)
      * @return the default alias for the given check
      */
-    public static String getDefaultAlias(String sourceName) {
+    public static String getDefaultAlias(final String sourceName) {
         int endIndex = sourceName.length();
         if (sourceName.endsWith(CHECK_SUFFIX)) {
             endIndex -= CHECK_SUFFIX.length();
@@ -164,7 +164,7 @@ public class SuppressWarningsHolder
      *        name)
      * @return the current alias for the given check
      */
-    public static String getAlias(String sourceName) {
+    public static String getAlias(final String sourceName) {
         String checkAlias = CHECK_ALIAS_MAP.get(sourceName);
         if (checkAlias == null) {
             checkAlias = getDefaultAlias(sourceName);
@@ -178,7 +178,7 @@ public class SuppressWarningsHolder
      *        name)
      * @param checkAlias the alias used in {@link SuppressWarnings} annotations
      */
-    private static void registerAlias(String sourceName, String checkAlias) {
+    private static void registerAlias(final String sourceName, final String checkAlias) {
         CHECK_ALIAS_MAP.put(sourceName, checkAlias);
     }
 
@@ -188,14 +188,13 @@ public class SuppressWarningsHolder
      * @param aliasList the list of comma-separated alias assignments
      * @throws IllegalArgumentException when alias item does not have '='
      */
-    public void setAliasList(String... aliasList) {
+    public void setAliasList(final String... aliasList) {
         for (String sourceAlias : aliasList) {
             final int index = sourceAlias.indexOf('=');
             if (index > 0) {
                 registerAlias(sourceAlias.substring(0, index), sourceAlias
                     .substring(index + 1));
-            }
-            else if (!sourceAlias.isEmpty()) {
+            } else if (!sourceAlias.isEmpty()) {
                 throw new IllegalArgumentException(
                     "'=' expected in alias list item: " + sourceAlias);
             }
@@ -209,7 +208,7 @@ public class SuppressWarningsHolder
      * @return whether the check with the given name is suppressed at the given
      *         source location
      */
-    public static boolean isSuppressed(AuditEvent event) {
+    public static boolean isSuppressed(final AuditEvent event) {
         final List<Entry> entries = ENTRIES.get();
         final String sourceName = event.getSourceName();
         final String checkAlias = getAlias(sourceName);
@@ -241,7 +240,7 @@ public class SuppressWarningsHolder
      * @return true if suppression entry position is after the audit event occurrence position
      *         in the source file.
      */
-    private static boolean isSuppressedAfterEventStart(int line, int column, Entry entry) {
+    private static boolean isSuppressedAfterEventStart(final int line, final int column, final Entry entry) {
         return entry.getFirstLine() < line
             || entry.getFirstLine() == line
             && (column == 0 || entry.getFirstColumn() <= column);
@@ -256,7 +255,7 @@ public class SuppressWarningsHolder
      * @return true if suppression entry position is before the audit event occurrence position
      *         in the source file.
      */
-    private static boolean isSuppressedBeforeEventEnd(int line, int column, Entry entry) {
+    private static boolean isSuppressedBeforeEventEnd(final int line, final int column, final Entry entry) {
         return entry.getLastLine() > line
             || entry.getLastLine() == line && entry
                 .getLastColumn() >= column;
@@ -278,12 +277,12 @@ public class SuppressWarningsHolder
     }
 
     @Override
-    public void beginTree(DetailAST rootAST) {
+    public void beginTree(final DetailAST rootAST) {
         ENTRIES.get().clear();
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         // check whether annotation is SuppressWarnings
         // expected children: AT ( IDENT | DOT ) LPAREN <values> RPAREN
         String identifier = getIdentifier(getNthChild(ast, 1));
@@ -297,8 +296,7 @@ public class SuppressWarningsHolder
 
                 if (targetAST == null) {
                     log(ast.getLineNo(), MSG_KEY);
-                }
-                else {
+                } else {
                     // get text range of target
                     final int firstLine = targetAST.getLineNo();
                     final int firstColumn = targetAST.getColumnNo();
@@ -308,8 +306,7 @@ public class SuppressWarningsHolder
                     if (nextAST == null) {
                         lastLine = Integer.MAX_VALUE;
                         lastColumn = Integer.MAX_VALUE;
-                    }
-                    else {
+                    } else {
                         lastLine = nextAST.getLineNo();
                         lastColumn = nextAST.getColumnNo() - 1;
                     }
@@ -335,7 +332,7 @@ public class SuppressWarningsHolder
      *            - name of the check
      * @return check name without prefix
      */
-    private static String removeCheckstylePrefixIfExists(String checkName) {
+    private static String removeCheckstylePrefixIfExists(final String checkName) {
         String result = checkName;
         if (checkName.startsWith(CHECKSTYLE_PREFIX)) {
             result = checkName.substring(CHECKSTYLE_PREFIX.length());
@@ -348,7 +345,7 @@ public class SuppressWarningsHolder
      * @param ast annotation token
      * @return list values
      */
-    private static List<String> getAllAnnotationValues(DetailAST ast) {
+    private static List<String> getAllAnnotationValues(final DetailAST ast) {
         // get values of annotation
         List<String> values = null;
         final DetailAST lparenAST = ast.findFirstToken(TokenTypes.LPAREN);
@@ -384,7 +381,7 @@ public class SuppressWarningsHolder
      * @param values list of values in the annotation
      * @return whether annotation is empty or contains some values
      */
-    private static boolean isAnnotationEmpty(List<String> values) {
+    private static boolean isAnnotationEmpty(final List<String> values) {
         return values == null;
     }
 
@@ -393,7 +390,7 @@ public class SuppressWarningsHolder
      * @param ast the AST node to get the child of
      * @return get target of annotation
      */
-    private static DetailAST getAnnotationTarget(DetailAST ast) {
+    private static DetailAST getAnnotationTarget(final DetailAST ast) {
         final DetailAST targetAST;
         final DetailAST parentAST = ast.getParent();
         switch (parentAST.getType()) {
@@ -416,7 +413,7 @@ public class SuppressWarningsHolder
      * @param child an ast
      * @return returns ast - parent of given
      */
-    private static DetailAST getAcceptableParent(DetailAST child) {
+    private static DetailAST getAcceptableParent(final DetailAST child) {
         final DetailAST result;
         final DetailAST parent = child.getParent();
         switch (parent.getType()) {
@@ -452,7 +449,7 @@ public class SuppressWarningsHolder
      * @param index the index of the child to get
      * @return the n'th child of the given AST node, or {@code null} if none
      */
-    private static DetailAST getNthChild(DetailAST ast, int index) {
+    private static DetailAST getNthChild(final DetailAST ast, final int index) {
         DetailAST child = ast.getFirstChild();
         for (int i = 0; i < index && child != null; ++i) {
             child = child.getNextSibling();
@@ -466,15 +463,14 @@ public class SuppressWarningsHolder
      * @return the Java identifier represented by the given AST subtree
      * @throws IllegalArgumentException if the AST is invalid
      */
-    private static String getIdentifier(DetailAST ast) {
+    private static String getIdentifier(final DetailAST ast) {
         if (ast == null) {
             throw new IllegalArgumentException("Identifier AST expected, but get null.");
         }
         final String identifier;
         if (ast.getType() == TokenTypes.IDENT) {
             identifier = ast.getText();
-        }
-        else {
+        } else {
             identifier = getIdentifier(ast.getFirstChild()) + "."
                 + getIdentifier(ast.getLastChild());
         }
@@ -488,7 +484,7 @@ public class SuppressWarningsHolder
      *         or empty string if expression is too complex
      * @throws IllegalArgumentException if the AST is invalid
      */
-    private static String getStringExpr(DetailAST ast) {
+    private static String getStringExpr(final DetailAST ast) {
         final DetailAST firstChild = ast.getFirstChild();
         String expr = "";
 
@@ -517,7 +513,7 @@ public class SuppressWarningsHolder
      *         expression or annotation array initializer
      * @throws IllegalArgumentException if the AST is invalid
      */
-    private static List<String> getAnnotationValues(DetailAST ast) {
+    private static List<String> getAnnotationValues(final DetailAST ast) {
         final List<String> annotationValues;
         switch (ast.getType()) {
             case TokenTypes.EXPR:
@@ -538,7 +534,7 @@ public class SuppressWarningsHolder
      * @param parent ast, that contains children
      * @return list of expressions in strings
      */
-    private static List<String> findAllExpressionsInChildren(DetailAST parent) {
+    private static List<String> findAllExpressionsInChildren(final DetailAST parent) {
         final List<String> valueList = new LinkedList<>();
         DetailAST childAST = parent.getFirstChild();
         while (childAST != null) {
@@ -578,8 +574,8 @@ public class SuppressWarningsHolder
          * @param lastLine the last line of the suppression region
          * @param lastColumn the last column of the suppression region
          */
-        /* package */ Entry(String checkName, int firstLine, int firstColumn,
-            int lastLine, int lastColumn) {
+        /* package */ Entry(final String checkName, final int firstLine, final int firstColumn,
+            final int lastLine, final int lastColumn) {
             this.checkName = checkName;
             this.firstLine = firstLine;
             this.firstColumn = firstColumn;

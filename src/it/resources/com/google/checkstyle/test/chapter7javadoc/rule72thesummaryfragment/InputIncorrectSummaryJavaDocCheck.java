@@ -9,20 +9,20 @@ class InputIncorrectSummaryJavaDocCheck {
     /**
      * As of JDK 1.1, replaced by {@link #setBounds(int,int,int,int)}
      */
-    void foo3() {}
+    void foo3() { }
 
 /*warn*//**
      * @throws Exception if a problem occurs
      */
-    void foo4() throws Exception {}
+    void foo4() throws Exception { }
 
     /** An especially short bit of Javadoc. */
-    void foo5() {}
+    void foo5() { }
 
     /**
      * An especially short bit of Javadoc.
      */
-    void foo6() {}
+    void foo6() { }
 
     /**
      * Some Javadoc.
@@ -48,36 +48,38 @@ class InputIncorrectSummaryJavaDocCheck {
          * This method
          * returns some javadoc. Some javadoc.
          */
-        boolean emulated() {return false;}
+        boolean emulated() {
+            return false; }
 
 /*warn*//**
          * <a href="mailto:vlad@htmlbook.ru"/>
          */
-        void foo2() {}
+        void foo2() { }
 
 /*warn*//**
          * @return the
          * customer ID some javadoc.
          */
-        int geId() {return 666;}
+        int geId() {
+            return 666; }
 
         /**
          * As of JDK 1.1, replaced by {@link #setBounds(int,int,int,int)}.
          */
-        void foo3() {}
+        void foo3() { }
 
 /*warn*//**
          * @throws Exception if a problem occurs
          */
-        void foo4() throws Exception {}
+        void foo4() throws Exception { }
 
         /** An especially short bit of Javadoc. */
-        void foo5() {}
+        void foo5() { }
 
         /**
          * An especially short bit of Javadoc.
          */
-        void foo6() {}
+        void foo6() { }
     }
 
 /*warn*//**
@@ -93,24 +95,24 @@ class InputIncorrectSummaryJavaDocCheck {
         /**
          * Some Javadoc.
          */
-        void emulated(String s) {}
+        void emulated(final String s) { }
 
         /**
          * As of JDK 1.1, replaced by {@link #setBounds(int,int,int,int)}.
          */
-        void foo3() {}
+        void foo3() { }
 
 /*warn*//**
          * @throws Exception if a problem occurs
          */
-        void foo4() throws Exception {}
+        void foo4() throws Exception { }
 
         /** An especially short bit of Javadoc. */
-        void foo5() {}
+        void foo5() { }
 
         /**
          * An especially short bit of Javadoc.
          */
-        void foo6() {}
+        void foo6() { }
     };
 }

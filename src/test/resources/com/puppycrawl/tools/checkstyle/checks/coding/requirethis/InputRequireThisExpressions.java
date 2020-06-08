@@ -11,7 +11,7 @@ public class InputRequireThisExpressions {
     int length;
     boolean b;
 
-    public void method(int[] arr) {
+    public void method(final int[] arr) {
         Object plus = "" + id; // violation
         Object minus = 1 - length; // violation
         Object multi = 1 * length; // violation
@@ -33,7 +33,7 @@ public class InputRequireThisExpressions {
         Object land = false && b; // violation
     }
 
-    public void methodThis(int[] arr) {
+    public void methodThis(final int[] arr) {
         Object plus = "" + this.id;
         Object minus = 1 - this.length;
         Object multi = 1 * this.length;

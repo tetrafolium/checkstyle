@@ -98,7 +98,7 @@ public class FullIdentTest extends AbstractModuleTestSupport {
         assertEquals("int[][][5x12]", ident.toString(), "Invalid full indent");
     }
 
-    private static FullIdent prepareFullIdentWithCoordinates(int columnNo, int lineNo) {
+    private static FullIdent prepareFullIdentWithCoordinates(final int columnNo, final int lineNo) {
         final DetailAstImpl ast = new DetailAstImpl();
         ast.setType(TokenTypes.DOT);
         ast.setColumnNo(1);

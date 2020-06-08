@@ -116,12 +116,12 @@ public final class UnnecessarySemicolonInTryWithResourcesCheck extends AbstractC
      * Setter to allow unnecessary semicolon if closing paren is not on the same line.
      * @param allowWhenNoBraceAfterSemicolon a value to set.
      */
-    public void setAllowWhenNoBraceAfterSemicolon(boolean allowWhenNoBraceAfterSemicolon) {
+    public void setAllowWhenNoBraceAfterSemicolon(final boolean allowWhenNoBraceAfterSemicolon) {
         this.allowWhenNoBraceAfterSemicolon = allowWhenNoBraceAfterSemicolon;
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         final DetailAST closingParen = ast.getLastChild();
         final DetailAST tokenBeforeCloseParen = closingParen.getPreviousSibling();
         if (tokenBeforeCloseParen.getType() == TokenTypes.SEMI

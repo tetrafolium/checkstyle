@@ -10,8 +10,7 @@ public class InputNPathComplexity {
     //NP = 5
     void testIfElseWithExpression() {
         // NP = (if-range=1) + (else-range=1) + (expr=3) = 5
-        if (true && true || (true || true)) { }
-        else { }
+        if (true && true || (true || true)) { } else { }
     }
 
     //NP = 4
@@ -19,7 +18,7 @@ public class InputNPathComplexity {
         int a = 0;
         // NP = (case-range[1]=1) + (case-range[2]=1) + (case-range[3]=1)
         //         + (default-range=1) + (expr=0) = 4
-        switch(a) {
+        switch (a) {
         case 1:
             break;
         case 2:
@@ -34,7 +33,7 @@ public class InputNPathComplexity {
         int a = 0;
         // NP = (case-range[1]=1) + (case-range[2]=1) + (case-range[3]=1)
         //         + (default-range=1) + (expr=0) = 4
-        switch(a) {
+        switch (a) {
         case 1:
             break;
         case 2:
@@ -50,7 +49,7 @@ public class InputNPathComplexity {
         int a = 0;
         // NP = (case-range[1]=1) + (case-range[2]=1) + (case-range[3]=1)
         //         + (default-range=1) + (expr=2) = 6
-        switch(true ? a : a) {
+        switch (true ? a : a) {
         case 1:
             break;
         case 2:
@@ -66,15 +65,14 @@ public class InputNPathComplexity {
         int a = 0;
         // NP = (case-range[1]=2) + (case-range[2]=5*2) + (case-range[3]=2)
         //         + (default-range=1) + (expr=0) = 15
-        switch(a) {
+        switch (a) {
         case 1:
             // NP(case-range) = (if-range=1) + 1 + (expr=0) = 2
             if (true) { }
             break;
         case 2:
             // NP(case-range) = (if-range=1) + (else-range=1) + (expr=3) = 5
-            if (true && true || (true || true)) { }
-            else { }
+            if (true && true || (true || true)) { } else { }
             // NP(case-range) = (if-range=1) + 1 + (expr=0) = 2
             if (true) { }
         case 3:
@@ -89,10 +87,8 @@ public class InputNPathComplexity {
     // NP = 11
     void testComplexIfElse() {
         // NP = (if-range=1) + (else-range=9) + (expr=1) = 11
-        if (true && true) { }
-        // NP(else-range) = (if-range=1) + (else-range=6) + (expr=2) = 9
-        else if (true || true || true) { }
-        // NP(else-range) = (if-range=1) + 1 + (expr=4) = 6
+        if (true && true) { } // NP(else-range) = (if-range=1) + (else-range=6) + (expr=2) = 9
+        else if (true || true || true) { } // NP(else-range) = (if-range=1) + 1 + (expr=4) = 6
         else if (true && true && true || true || true) { }
     }
 
@@ -127,7 +123,8 @@ public class InputNPathComplexity {
         // NP(while-statement) = (while-range=1) + (expr=0) + 1 = 2
         while (a != 0) { }
         // NP(while-statement) = (while-range=1) + (expr=1) + 1 = 3
-        while (a != 0 && a == 0) { return a == 0 || a == 0; }
+        while (a != 0 && a == 0) {
+            return a == 0 || a == 0; }
         return true;
     }
 
@@ -155,14 +152,16 @@ public class InputNPathComplexity {
     // NP = (if-expression[1]=5) * (if-expression[2]=5) = 25
     void testSimpleTernaryBadFormatting() {
         // NP(if-expression) = (if-range=2) + 1 + (expr=2) = 5
-        if(
+        if (
            true ? true : true
-                ) { boolean a = true ? true
+                ) {
+                    boolean a = true ? true
                         : true;
         }
         // NP(if-expression) = (if-range=2) + 1 + (expr=2) = 5
-        if(
-                true ? true : true) { boolean b = true ? true : true;
+        if (
+                true ? true : true) {
+                    boolean b = true ? true : true;
              }
     }
 
@@ -170,8 +169,7 @@ public class InputNPathComplexity {
     //See issue #3814 https://github.com/checkstyle/checkstyle/issues/3814
     void testTryCatch() {
        try {
-       }
-       catch (Exception e) {
+       } catch (Exception e) {
        }
     }
 

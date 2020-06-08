@@ -35,18 +35,18 @@ abstract class AbstractClassName3 {
 
 abstract class Class3Factory {
     class WellNamedFACTORY {
-    	public void marazmaticMETHODName() {
-    		int marazmaticVARIABLEName = 2;
-    		int MARAZMATICVariableName = 1;
-    	}
+        public void marazmaticMETHODName() {
+                int marazmaticVARIABLEName = 2;
+                int MARAZMATICVariableName = 1;
+        }
     }
 }
 
 interface Directions {
-  int RIGHT=1;
-  int LEFT=2;
-  int UP=3;
-  int DOWN=4;
+  int RIGHT = 1;
+  int LEFT = 2;
+  int UP = 3;
+  int DOWN = 4;
 }
 
 interface BadNameForInterface
@@ -55,15 +55,15 @@ interface BadNameForInterface
 }
 
 abstract class NonAAAAbstractClassName2 {
-	public int serialNUMBER = 6;
-	public final int s1erialNUMBER = 6;
-	private static int s2erialNUMBER = 6;
-	private static final int s3erialNUMBER = 6;
+        public int serialNUMBER = 6;
+        public final int s1erialNUMBER = 6;
+        private static int s2erialNUMBER = 6;
+        private static final int s3erialNUMBER = 6;
 }
 
 interface Interface1 {
 
-	String VALUEEEE = "value"; // in interface this is final/static
+        String VALUEEEE = "value"; // in interface this is final/static
 
 }
 
@@ -89,7 +89,7 @@ class FIleNameFormatException extends Exception {
 
     private static final long serialVersionUID = 1L;
 
-    public FIleNameFormatException(Exception e) {
+    public FIleNameFormatException(final Exception e) {
         super(e);
     }
 }

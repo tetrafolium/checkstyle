@@ -1,9 +1,10 @@
 package com.google.checkstyle.test.chapter4formatting.rule412nonemptyblocks;
 
 public class InputRightCurlySame {
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         boolean after = false;
         try {
-        } finally { after = true; }
+        } finally {
+            after = true; }
     }
 }

@@ -85,7 +85,7 @@ public class TodoCommentCheck
      * @param pattern
      *        pattern of 'todo' comment.
      */
-    public void setFormat(Pattern pattern) {
+    public void setFormat(final Pattern pattern) {
         format = pattern;
     }
 
@@ -105,7 +105,7 @@ public class TodoCommentCheck
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         final String[] lines = ast.getText().split("\n");
 
         for (int i = 0; i < lines.length; i++) {

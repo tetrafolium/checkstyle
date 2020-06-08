@@ -14,13 +14,13 @@ package com.puppycrawl.tools.checkstyle.checks.imports.importorder;
 import
     java.awt.Button;
 import java.awt.Dialog
-    ;
+;
 import
 java.awt.Frame;
 import java
     .awt.event.
     ActionEvent
-    ;
+;
 import
 java.io.File
 ;
@@ -33,7 +33,7 @@ import
 import static
  java.io.File.createTempFile;
 import static javax.swing
-    .WindowConstants.*
-    ;
+    .WindowConstants.
+*;
 public class InputImportOrderMultiline {
 }

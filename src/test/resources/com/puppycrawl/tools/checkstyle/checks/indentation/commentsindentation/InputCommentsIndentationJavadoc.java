@@ -11,7 +11,7 @@ public class InputCommentsIndentationJavadoc {
         /**
          * violation
          */
-    void foo() {}
+    void foo() { }
 
     enum Bar {
           /** violation */

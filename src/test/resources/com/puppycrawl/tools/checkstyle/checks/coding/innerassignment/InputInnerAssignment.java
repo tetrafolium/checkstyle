@@ -35,18 +35,19 @@ public class InputInnerAssignment
         boolean bb;
         int i;
 
-        if (bb = false) {}
-        for (i = 0; bb = false; i = i + 1) {}
-        while (bb = false) {}
-        if ((bb = false)) {}
-        for (int j = 0; (bb = false); j += 1) {}
-        while ((bb = false)) {}
+        if (bb = false) { }
+        for (i = 0; bb = false; i = i + 1) { }
+        while (bb = false) { }
+        if ((bb = false)) { }
+        for (int j = 0; (bb = false); j += 1) { }
+        while ((bb = false)) { }
         i = (bb = false) ? (b = 2) : (b += 1);
         i = (b += 1) + (b -= 1);
-        do {i += 1;} while (bb = false);
+        do {
+            i += 1; } while (bb = false);
     }
 
-    public static void demoInputStreamIdiom(java.io.InputStream is) throws java.io.IOException
+    public static void demoInputStreamIdiom(final java.io.InputStream is) throws java.io.IOException
     {
         int b;
         while ((b = is.read()) != -1) // common idiom to avoid clumsy loop control logic, don't flag (make configurable later)
@@ -95,7 +96,7 @@ public class InputInnerAssignment
     }
 
     // Taken from JDK7 java.lang.Package src code.
-    private static Manifest loadManifest(String fn) {
+    private static Manifest loadManifest(final String fn) {
         try (FileInputStream fis = new FileInputStream(fn);
              JarInputStream jis = new JarInputStream(fis, false))
         {
@@ -115,18 +116,18 @@ public class InputInnerAssignment
     void method() throws IOException {
         Integer line;
         FileInputStream file = null;
-        while (!((line = file.read()) != null)) {}
-        while ((line = file.read()) != null && line < 3) {}
-        while ((line = file.read()) != null && line < 3 && line > 5) {}
-        while ((line = file.read()) != null || line < 3) {}
-        while ((line = file.read()) != null || line < 3 || line > 5) {}
-        while ((line = file.read()) != null & line < 3) {}
-        while ((line = file.read()) != null & line < 3 & line > 5) {}
-        while ((line = file.read()) != null | line < 3) {}
-        while ((line = file.read()) != null | line < 3 | line > 5) {}
-        while (line < 3 && (line = file.read()) != null) {}
-        while (line < 3 || (line = file.read()) != null) {}
-        while (line < 3 & (line = file.read()) != null) {}
-        while (line < 3 | (line = file.read()) != null) {}
+        while (!((line = file.read()) != null)) { }
+        while ((line = file.read()) != null && line < 3) { }
+        while ((line = file.read()) != null && line < 3 && line > 5) { }
+        while ((line = file.read()) != null || line < 3) { }
+        while ((line = file.read()) != null || line < 3 || line > 5) { }
+        while ((line = file.read()) != null & line < 3) { }
+        while ((line = file.read()) != null & line < 3 & line > 5) { }
+        while ((line = file.read()) != null | line < 3) { }
+        while ((line = file.read()) != null | line < 3 | line > 5) { }
+        while (line < 3 && (line = file.read()) != null) { }
+        while (line < 3 || (line = file.read()) != null) { }
+        while (line < 3 & (line = file.read()) != null) { }
+        while (line < 3 | (line = file.read()) != null) { }
     }
 }

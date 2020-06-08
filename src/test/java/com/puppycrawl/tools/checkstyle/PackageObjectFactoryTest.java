@@ -67,8 +67,7 @@ public class PackageObjectFactoryTest {
         try {
             final Object test = new PackageObjectFactory(new HashSet<>(), null);
             fail("Exception is expected but got " + test);
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertEquals(NULL_LOADER_MESSAGE, ex.getMessage(), "Invalid exception message");
         }
     }
@@ -78,8 +77,7 @@ public class PackageObjectFactoryTest {
         try {
             final Object test = new PackageObjectFactory("test", null);
             fail("Exception is expected but got " + test);
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertEquals(NULL_LOADER_MESSAGE, ex.getMessage(), "Invalid exception message");
         }
     }
@@ -90,8 +88,7 @@ public class PackageObjectFactoryTest {
         try {
             final Object test = new PackageObjectFactory(Collections.singleton(null), classLoader);
             fail("Exception is expected but got " + test);
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertEquals(NULL_PACKAGE_MESSAGE, ex.getMessage(), "Invalid exception message");
         }
     }
@@ -102,8 +99,7 @@ public class PackageObjectFactoryTest {
         try {
             final Object test = new PackageObjectFactory((String) null, classLoader);
             fail("Exception is expected but got " + test);
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertEquals(NULL_PACKAGE_MESSAGE, ex.getMessage(), "Invalid exception message");
         }
     }
@@ -115,8 +111,7 @@ public class PackageObjectFactoryTest {
             final Object test = new PackageObjectFactory(Collections.singleton(null), classLoader,
                     TRY_IN_ALL_REGISTERED_PACKAGES);
             fail("Exception is expected but got " + test);
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertEquals(NULL_PACKAGE_MESSAGE, ex.getMessage(), "Invalid exception message");
         }
     }
@@ -136,8 +131,7 @@ public class PackageObjectFactoryTest {
         try {
             factory.createModule(name);
             fail("Exception is expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             final LocalizedMessage exceptionMessage = new LocalizedMessage(1,
                     Definitions.CHECKSTYLE_BUNDLE, UNABLE_TO_INSTANTIATE_EXCEPTION_MESSAGE,
                     new String[] {name, null}, null, factory.getClass(), null);
@@ -153,8 +147,7 @@ public class PackageObjectFactoryTest {
             try {
                 factory.createModule(name);
                 fail("Exception is expected");
-            }
-            catch (CheckstyleException ex) {
+            } catch (CheckstyleException ex) {
                 final String attemptedNames = BASE_PACKAGE + PACKAGE_SEPARATOR + name
                     + STRING_SEPARATOR + name + CHECK_SUFFIX + STRING_SEPARATOR
                     + BASE_PACKAGE + PACKAGE_SEPARATOR + name + CHECK_SUFFIX;
@@ -218,8 +211,7 @@ public class PackageObjectFactoryTest {
         try {
             objectFactory.createModule(name);
             fail("Exception is expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             final String optionalNames = barPackage + PACKAGE_SEPARATOR + name
                     + STRING_SEPARATOR + fooPackage + PACKAGE_SEPARATOR + name;
             final LocalizedMessage exceptionMessage = new LocalizedMessage(1,
@@ -242,8 +234,7 @@ public class PackageObjectFactoryTest {
         try {
             objectFactory.createModule(name);
             fail("Exception is expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             final String attemptedNames = package1 + PACKAGE_SEPARATOR + name + STRING_SEPARATOR
                     + package2 + PACKAGE_SEPARATOR + name + STRING_SEPARATOR
                     + checkName + STRING_SEPARATOR
@@ -270,8 +261,7 @@ public class PackageObjectFactoryTest {
         try {
             objectFactory.createModule(name);
             fail("Exception is expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             final String attemptedNames = package1 + PACKAGE_SEPARATOR + name + STRING_SEPARATOR
                     + package2 + PACKAGE_SEPARATOR + name + STRING_SEPARATOR
                     + checkName + STRING_SEPARATOR
@@ -361,8 +351,7 @@ public class PackageObjectFactoryTest {
         try {
             factory.createModule(FailConstructorFileSet.class.getName());
             fail("Exception is expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             assertEquals("Unable to instantiate com.puppycrawl.tools.checkstyle."
                     + "PackageObjectFactoryTest$FailConstructorFileSet", ex.getMessage(),
                     "Invalid exception message");
@@ -397,7 +386,7 @@ public class PackageObjectFactoryTest {
         }
 
         @Override
-        protected void processFiltered(File file, FileText fileText) {
+        protected void processFiltered(final File file, final FileText fileText) {
             // not used
         }
 

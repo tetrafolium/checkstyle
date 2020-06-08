@@ -88,8 +88,7 @@ public class SuppressionXpathFilterTest extends AbstractModuleTestSupport {
             final boolean optional = false;
             createSuppressionXpathFilter(fileName, optional);
             fail("Exception is expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             assertEquals("Unable to find: " + fileName, ex.getMessage(), "Invalid error message");
         }
     }
@@ -101,8 +100,7 @@ public class SuppressionXpathFilterTest extends AbstractModuleTestSupport {
             final boolean optional = true;
             createSuppressionXpathFilter(fileName, optional);
             fail("Exception is expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             assertEquals("Unable to parse " + fileName
                     + " - invalid files or checks or message format for suppress-xpath",
                     ex.getMessage(), "Invalid error message");
@@ -166,8 +164,8 @@ public class SuppressionXpathFilterTest extends AbstractModuleTestSupport {
         assertEquals(expected, actual, "Invalid external resource");
     }
 
-    private static SuppressionXpathFilter createSuppressionXpathFilter(String fileName,
-                                                                       boolean optional)
+    private static SuppressionXpathFilter createSuppressionXpathFilter(final String fileName,
+                                                                       final boolean optional)
             throws CheckstyleException {
         final SuppressionXpathFilter suppressionXpathFilter = new SuppressionXpathFilter();
         suppressionXpathFilter.setFile(fileName);

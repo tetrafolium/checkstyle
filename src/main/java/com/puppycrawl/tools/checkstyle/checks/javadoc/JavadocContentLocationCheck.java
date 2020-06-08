@@ -181,12 +181,12 @@ public class JavadocContentLocationCheck extends AbstractCheck {
      * @param value string to decode location from
      * @throws IllegalArgumentException if unable to decode
      */
-    public void setLocation(String value) {
+    public void setLocation(final String value) {
         location = JavadocContentLocationOption.valueOf(value.trim().toUpperCase(Locale.ENGLISH));
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         if (isMultilineComment(ast) && JavadocUtil.isJavadocComment(ast)) {
             final String commentContent = JavadocUtil.getJavadocCommentContent(ast);
             final int indexOfFirstNonBlankLine = findIndexOfFirstNonBlankLine(commentContent);
@@ -195,8 +195,7 @@ public class JavadocContentLocationCheck extends AbstractCheck {
                     if (indexOfFirstNonBlankLine != 0) {
                         log(ast, MSG_JAVADOC_CONTENT_FIRST_LINE);
                     }
-                }
-                else if (indexOfFirstNonBlankLine != 1) {
+                } else if (indexOfFirstNonBlankLine != 1) {
                     log(ast, MSG_JAVADOC_CONTENT_SECOND_LINE);
                 }
             }
@@ -211,7 +210,7 @@ public class JavadocContentLocationCheck extends AbstractCheck {
      * @param node node to check
      * @return {@code true} for multi-line comment nodes
      */
-    private static boolean isMultilineComment(DetailAST node) {
+    private static boolean isMultilineComment(final DetailAST node) {
         return !TokenUtil.areOnSameLine(node, node.getLastChild());
     }
 
@@ -222,15 +221,14 @@ public class JavadocContentLocationCheck extends AbstractCheck {
      * @param commentContent Javadoc content to process
      * @return the index of the first non-blank line or {@code -1} if all lines are blank
      */
-    private static int findIndexOfFirstNonBlankLine(String commentContent) {
+    private static int findIndexOfFirstNonBlankLine(final String commentContent) {
         int lineNo = 0;
         boolean noContent = true;
         for (int i = 0; i < commentContent.length(); ++i) {
             final char character = commentContent.charAt(i);
             if (character == '\n') {
                 ++lineNo;
-            }
-            else if (character != '*' && !Character.isWhitespace(character)) {
+            } else if (character != '*' && !Character.isWhitespace(character)) {
                 noContent = false;
                 break;
             }

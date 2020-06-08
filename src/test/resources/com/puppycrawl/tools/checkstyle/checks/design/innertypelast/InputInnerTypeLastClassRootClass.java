@@ -12,7 +12,7 @@ public enum InputInnerTypeLastClassRootClass {
 
     private final int bits;
 
-    private InputInnerTypeLastClassRootClass(int bits) {
+    private InputInnerTypeLastClassRootClass(final int bits) {
         this.bits = bits;
     }
 }

@@ -141,19 +141,19 @@ public class UnusedImportsCheck extends AbstractCheck {
      *
      * @param value Flag for processing Javadoc comments.
      */
-    public void setProcessJavadoc(boolean value) {
+    public void setProcessJavadoc(final boolean value) {
         processJavadoc = value;
     }
 
     @Override
-    public void beginTree(DetailAST rootAST) {
+    public void beginTree(final DetailAST rootAST) {
         collect = false;
         imports.clear();
         referenced.clear();
     }
 
     @Override
-    public void finishTree(DetailAST rootAST) {
+    public void finishTree(final DetailAST rootAST) {
         // loop over all the imports to see if referenced.
         imports.stream()
             .filter(imprt -> isUnusedImport(imprt.getText()))
@@ -191,19 +191,16 @@ public class UnusedImportsCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         if (ast.getType() == TokenTypes.IDENT) {
             if (collect) {
                 processIdent(ast);
             }
-        }
-        else if (ast.getType() == TokenTypes.IMPORT) {
+        } else if (ast.getType() == TokenTypes.IMPORT) {
             processImport(ast);
-        }
-        else if (ast.getType() == TokenTypes.STATIC_IMPORT) {
+        } else if (ast.getType() == TokenTypes.STATIC_IMPORT) {
             processStaticImport(ast);
-        }
-        else {
+        } else {
             collect = true;
             if (processJavadoc) {
                 collectReferencesFromJavadoc(ast);
@@ -216,7 +213,7 @@ public class UnusedImportsCheck extends AbstractCheck {
      * @param imprt an import.
      * @return true if an import is unused.
      */
-    private boolean isUnusedImport(String imprt) {
+    private boolean isUnusedImport(final String imprt) {
         final Matcher javaLangPackageMatcher = JAVA_LANG_PACKAGE_PATTERN.matcher(imprt);
         return !referenced.contains(CommonUtil.baseClassName(imprt))
             || javaLangPackageMatcher.matches();
@@ -226,7 +223,7 @@ public class UnusedImportsCheck extends AbstractCheck {
      * Collects references made by IDENT.
      * @param ast the IDENT node to process
      */
-    private void processIdent(DetailAST ast) {
+    private void processIdent(final DetailAST ast) {
         final DetailAST parent = ast.getParent();
         final int parentType = parent.getType();
         if (parentType != TokenTypes.DOT
@@ -241,7 +238,7 @@ public class UnusedImportsCheck extends AbstractCheck {
      * Collects the details of imports.
      * @param ast node containing the import details
      */
-    private void processImport(DetailAST ast) {
+    private void processImport(final DetailAST ast) {
         final FullIdent name = FullIdent.createFullIdentBelow(ast);
         if (!name.getText().endsWith(STAR_IMPORT_SUFFIX)) {
             imports.add(name);
@@ -252,7 +249,7 @@ public class UnusedImportsCheck extends AbstractCheck {
      * Collects the details of static imports.
      * @param ast node containing the static import details
      */
-    private void processStaticImport(DetailAST ast) {
+    private void processStaticImport(final DetailAST ast) {
         final FullIdent name =
             FullIdent.createFullIdent(
                 ast.getFirstChild().getNextSibling());
@@ -265,7 +262,7 @@ public class UnusedImportsCheck extends AbstractCheck {
      * Collects references made in Javadoc comments.
      * @param ast node to inspect for Javadoc
      */
-    private void collectReferencesFromJavadoc(DetailAST ast) {
+    private void collectReferencesFromJavadoc(final DetailAST ast) {
         final FileContents contents = getFileContents();
         final int lineNo = ast.getLineNo();
         final TextBlock textBlock = contents.getJavadocBefore(lineNo);
@@ -280,7 +277,7 @@ public class UnusedImportsCheck extends AbstractCheck {
      * @param textBlock The javadoc block to parse
      * @return a set of classes referenced in the javadoc block
      */
-    private static Set<String> collectReferencesFromJavadoc(TextBlock textBlock) {
+    private static Set<String> collectReferencesFromJavadoc(final TextBlock textBlock) {
         final List<JavadocTag> tags = new ArrayList<>();
         // gather all the inline tags, like @link
         // INLINE tags inside BLOCKs get hidden when using ALL
@@ -302,8 +299,8 @@ public class UnusedImportsCheck extends AbstractCheck {
      * @param tagType The type of tags we're interested in
      * @return the list of tags
      */
-    private static List<JavadocTag> getValidTags(TextBlock cmt,
-            JavadocUtil.JavadocTagType tagType) {
+    private static List<JavadocTag> getValidTags(final TextBlock cmt,
+            final JavadocUtil.JavadocTagType tagType) {
         return JavadocUtil.getJavadocTags(cmt, tagType).getValidTags();
     }
 
@@ -312,7 +309,7 @@ public class UnusedImportsCheck extends AbstractCheck {
      * @param tag The javadoc tag to parse
      * @return A list of references found in this tag
      */
-    private static Set<String> processJavadocTag(JavadocTag tag) {
+    private static Set<String> processJavadocTag(final JavadocTag tag) {
         final Set<String> references = new HashSet<>();
         final String identifier = tag.getFirstArg().trim();
         for (Pattern pattern : new Pattern[]
@@ -329,7 +326,7 @@ public class UnusedImportsCheck extends AbstractCheck {
      * @param pattern The Pattern used to extract the texts
      * @return A list of texts which matched the pattern
      */
-    private static Set<String> matchPattern(String identifier, Pattern pattern) {
+    private static Set<String> matchPattern(final String identifier, final Pattern pattern) {
         final Set<String> references = new HashSet<>();
         final Matcher matcher = pattern.matcher(identifier);
         while (matcher.find()) {
@@ -345,13 +342,12 @@ public class UnusedImportsCheck extends AbstractCheck {
      * @param type A possibly qualified type name
      * @return The simple name of the top level type
      */
-    private static String topLevelType(String type) {
+    private static String topLevelType(final String type) {
         final String topLevelType;
         final int dotIndex = type.indexOf('.');
         if (dotIndex == -1) {
             topLevelType = type;
-        }
-        else {
+        } else {
             topLevelType = type.substring(0, dotIndex);
         }
         return topLevelType;

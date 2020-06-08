@@ -18,7 +18,7 @@ class InputHiddenFieldReorder
         int hidden = 0; //shadows field
     }
 
-    public InputHiddenFieldReorder(int hidden) //parameter shadows field
+    public InputHiddenFieldReorder(final int hidden) //parameter shadows field
     {
     }
 
@@ -33,7 +33,7 @@ class InputHiddenFieldReorder
         }
     }
 
-    public void shadowParam(int hidden) //parameter shadows field
+    public void shadowParam(final int hidden) //parameter shadows field
     {
     }
 
@@ -46,7 +46,7 @@ class InputHiddenFieldReorder
             int innerHidden = 0; //shadows field
         }
 
-        public Inner(int innerHidden) //shadows field
+        public Inner(final int innerHidden) //shadows field
         {
         }
 
@@ -66,21 +66,21 @@ class InputHiddenFieldReorder
         }
 
         private void shadowParam(
-            int innerHidden, //parameter shadows inner field
-            int hidden //parameter shadows outer field
+            final int innerHidden, //parameter shadows inner field
+            final int hidden //parameter shadows outer field
         )
         {
         }
 
         {
-            int innerHidden = 0;//shadows inner field
+            int innerHidden = 0; //shadows inner field
             int hidden = 0; //shadows outer field
         }
         private int innerHidden = 0;
     }
 
     {
-        int hidden = 0;//shadows field
+        int hidden = 0; //shadows field
     }
     private int hidden = 0;
 }
@@ -115,7 +115,7 @@ enum HiddenEnum1
     /**
      * ctor parameter hides member
      */
-    HiddenEnum1(int hidden)
+    HiddenEnum1(final int hidden)
     {
     }
 

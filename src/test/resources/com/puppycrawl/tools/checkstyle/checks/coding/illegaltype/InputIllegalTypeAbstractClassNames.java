@@ -11,7 +11,7 @@ public class InputIllegalTypeAbstractClassNames {
 
         boolean perfect = true;
 
-        private MyNonAbstractClass() {}
+        private MyNonAbstractClass() { }
 
         @Override
         String getClassInfo() {
@@ -26,7 +26,7 @@ public class InputIllegalTypeAbstractClassNames {
 
     AbstractClass a = new MyNonAbstractClass();
 
-    public String getInnerClassInfo(AbstractClass clazz) {
+    public String getInnerClassInfo(final AbstractClass clazz) {
         return clazz.getClassInfo();
     }
 

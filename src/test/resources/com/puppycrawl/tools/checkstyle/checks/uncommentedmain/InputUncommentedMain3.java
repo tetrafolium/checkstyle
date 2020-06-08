@@ -6,7 +6,7 @@ package com.puppycrawl.tools.checkstyle.checks.uncommentedmain;
 
 class InputUncommentedMain3 {
 
-    public static void anyWrongMethodName(String[] args)
+    public static void anyWrongMethodName(final String[] args)
     {
         System.identityHashCode("InputUncommentedMain.main()");
     }

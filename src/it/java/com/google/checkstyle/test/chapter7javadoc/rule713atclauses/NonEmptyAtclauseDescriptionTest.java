@@ -86,7 +86,7 @@ public class NonEmptyAtclauseDescriptionTest extends AbstractGoogleModuleTestSup
      * @param expected an array with expected messages.
      * @return Integer array with numbers of lines with violations.
      */
-    private static Integer[] getLineNumbersFromExpected(String... expected) {
+    private static Integer[] getLineNumbersFromExpected(final String... expected) {
         final Integer[] result = new Integer[expected.length];
         for (int i = 0; i < expected.length; i++) {
             result[i] = Integer.valueOf(expected[i].substring(0, expected[i].indexOf(':')));

@@ -47,7 +47,7 @@ public abstract class AbstractNameCheck
      * Creates a new {@code AbstractNameCheck} instance.
      * @param format format to check with
      */
-    protected AbstractNameCheck(String format) {
+    protected AbstractNameCheck(final String format) {
         this.format = CommonUtil.createPattern(format);
     }
 
@@ -64,12 +64,12 @@ public abstract class AbstractNameCheck
      * Set the format for the specified regular expression.
      * @param pattern the new pattern
      */
-    public final void setFormat(Pattern pattern) {
+    public final void setFormat(final Pattern pattern) {
         format = pattern;
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         if (mustCheckName(ast)) {
             final DetailAST nameAST = ast.findFirstToken(TokenTypes.IDENT);
             if (!format.matcher(nameAST.getText()).find()) {

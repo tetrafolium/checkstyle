@@ -18,14 +18,14 @@ public class InputJavadocTypePublicOnly // ignore - need javadoc
             private InnerInnerClass()
             {
                 final Runnable r = new Runnable() {
-                        public void run() {};
+                        public void run() { };
                     };
             }
 
             void method2() // ignore - when not relaxed about Javadoc
             {
                 final Runnable r = new Runnable() {
-                        public void run() {};
+                        public void run() { };
                     };
             }
         }
@@ -46,42 +46,42 @@ public class InputJavadocTypePublicOnly // ignore - need javadoc
     public int aFreddo; // ignore
 
     // ignore - need Javadoc
-    private InputJavadocTypePublicOnly(int aA)
+    private InputJavadocTypePublicOnly(final int aA)
     {
     }
 
     // ignore - need Javadoc when not relaxed
-    InputJavadocTypePublicOnly(String aA)
+    InputJavadocTypePublicOnly(final String aA)
     {
     }
 
     // ignore - always need javadoc
-    protected InputJavadocTypePublicOnly(Object aA)
+    protected InputJavadocTypePublicOnly(final Object aA)
     {
     }
 
     // ignore - always need javadoc
-    public InputJavadocTypePublicOnly(Class<Object> aA)
+    public InputJavadocTypePublicOnly(final Class<Object> aA)
     {
     }
 
     // ignore - when not relaxed about Javadoc
-    private void method(int aA)
+    private void method(final int aA)
     {
     }
 
     // ignore - when not relaxed about Javadoc
-    void method(Long aA)
+    void method(final Long aA)
     {
     }
 
     // ignore - need javadoc
-    protected void method(Class<Object> aA)
+    protected void method(final Class<Object> aA)
     {
     }
 
     // ignore - need javadoc
-    public void method(StringBuffer aA)
+    public void method(final StringBuffer aA)
     {
     }
 
@@ -91,7 +91,7 @@ public class InputJavadocTypePublicOnly // ignore - need javadoc
        Writing a little documentation should not be worse than not
        writing any documentation at all.
      */
-    private void method(String aA)
+    private void method(final String aA)
     {
     }
 

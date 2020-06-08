@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class InputHideUtilityClassConstructorSerializableInnerStatic implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    public InputHideUtilityClassConstructorSerializableInnerStatic(int i) {
+    public InputHideUtilityClassConstructorSerializableInnerStatic(final int i) {
         // no code
     }
 
@@ -20,7 +20,7 @@ public class InputHideUtilityClassConstructorSerializableInnerStatic implements 
         private String ind;
         private String ind1;
 
-        public Event(String value){
+        public Event(final String value) {
             // do a lot of calculations
         }
 
@@ -36,7 +36,7 @@ public class InputHideUtilityClassConstructorSerializableInnerStatic implements 
         private String ind;
         private String ind1;
 
-        private Event1(){
+        private Event1() {
             // do a lot of calculations
         }
 

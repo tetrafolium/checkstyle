@@ -21,7 +21,7 @@ final class InputMemberNameSimple
     protected int m_M = 0; //warn
 
 
-    private int[] m$nts = new int[] {1,2, 3, //warn
+    private int[] m$nts = new int[] {1, 2, 3, //warn
                                      4};
 
 
@@ -86,7 +86,7 @@ final class InputMemberNameSimple
         protected int m_M = 0; //warn
 
 
-        private int[] m$nts = new int[] {1,2, 3, //warn
+        private int[] m$nts = new int[] {1, 2, 3, //warn
                                          4};
 
 
@@ -116,7 +116,7 @@ final class InputMemberNameSimple
                     int m_M = 0; //warn
 
 
-                    int[] m$nts = new int[] {1,2, 3, //warn
+                    int[] m$nts = new int[] {1, 2, 3, //warn
                                                      4};
 
 
@@ -130,7 +130,7 @@ final class InputMemberNameSimple
 
                     int mTest2$; //warn
 
-                    public void greet() {}
+                    public void greet() { }
             };
         }
     }

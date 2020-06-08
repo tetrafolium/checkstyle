@@ -18,20 +18,20 @@ class InputIndentationArrays { //indent:0 exp:0
   /**                             //indent:2 exp:2
    * Look-up table for factories. //indent:3 exp:3
    */                             //indent:3 exp:3
-  static final int[] factories = { 666666, 666666, //indent:2 exp:2
+  static final int[] factories = {666666, 666666, //indent:2 exp:2
     666666, 666666, 666666, //indent:4 exp:4
     666666, 666666, 666666, //indent:4 exp:4
   }; //indent:2 exp:2
 
-  static final int[][] factories1 = { //indent:2 exp:2
-    { 666666, 666666, 666666, 666666 }, //indent:4 exp:4
+  static final int[][] factories1 = {//indent:2 exp:2
+    {666666, 666666, 666666, 666666 }, //indent:4 exp:4
     {}, // no support for SOFT keys //indent:4 exp:4
-    { 666666, 666666, 666666, 666666 } //indent:4 exp:4
+    {666666, 666666, 666666, 666666 } //indent:4 exp:4
   }; //indent:2 exp:2
 
   // binomial(biggestBinomials[k], k) fits in an int, but not //indent:2 exp:2
   // binomial(biggestBinomials[k]+1,k).                       //indent:2 exp:2
-  static int[] biggestBinomials = { //indent:2 exp:2
+  static int[] biggestBinomials = {//indent:2 exp:2
     Integer.MAX_VALUE, //indent:4 exp:4
     Integer.MAX_VALUE, //indent:4 exp:4
     65536, //indent:4 exp:4
@@ -56,7 +56,7 @@ class InputIndentationArrays { //indent:0 exp:0
 
   public byte[] asBytes() { //indent:2 exp:2
     byte hash = 0; //indent:4 exp:4
-    return new byte[] { //indent:4 exp:4
+    return new byte[] {//indent:4 exp:4
         (byte) hash, //indent:8 exp:8
         (byte) (hash >> 8), //indent:8 exp:8
         (byte) (hash >> 16), //indent:8 exp:8
@@ -68,4 +68,4 @@ class InputIndentationArrays { //indent:0 exp:0
   } //indent:2 exp:2
 } //indent:0 exp:0
 
-@interface VisibleForTesting {} //indent:0 exp:0
+@interface VisibleForTesting { } //indent:0 exp:0

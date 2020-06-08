@@ -52,7 +52,7 @@ public final class AuditEvent
      * Creates a new instance.
      * @param source the object that created the event
      */
-    public AuditEvent(Object source) {
+    public AuditEvent(final Object source) {
         this(source, null);
     }
 
@@ -61,7 +61,7 @@ public final class AuditEvent
      * @param src source of the event
      * @param fileName file associated with the event
      */
-    public AuditEvent(Object src, String fileName) {
+    public AuditEvent(final Object src, final String fileName) {
         this(src, fileName, null);
     }
 
@@ -72,7 +72,7 @@ public final class AuditEvent
      * @param fileName file associated with the event
      * @param localizedMessage the actual message
      */
-    public AuditEvent(Object src, String fileName, LocalizedMessage localizedMessage) {
+    public AuditEvent(final Object src, final String fileName, final LocalizedMessage localizedMessage) {
         super(src);
         this.fileName = fileName;
         this.localizedMessage = localizedMessage;

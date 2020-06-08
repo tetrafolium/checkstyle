@@ -49,7 +49,7 @@ public interface InputInterfaceMemberImpliedModifierNestedOnInterface {
     public default boolean methodWithLocalClass(String input) {
         class LocalClass {
 
-            public boolean test(String str) {
+            public boolean test(final String str) {
                 return str.isEmpty();
             }
         }

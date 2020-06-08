@@ -46,11 +46,11 @@ public class InputCommentsIndentationSurroundingCode
     private void foo3() {
         int a = 5, b = 3, v = 6;
         if (a == b
-            && v == b || ( a ==1
+            && v == b || (a == 1
                            /// // warn
                        /* // warn
                         * one fine day ... */
-                                    && b == 1)   ) {
+                                    && b == 1)) {
         }
     }
 
@@ -60,10 +60,10 @@ public class InputCommentsIndentationSurroundingCode
 
     private static final String[][] mergeMatrix = {
         // This example of trailing block comments was found in PMD sources.
-        /* TOP */{ "", },
-        /* ALWAYS */{ "", "", },
-       /* NEVER */{ "NEVER", "UNKNOWN", "NEVER", },
-       /* UNKNOWN */{ "UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN" }, };
+        /* TOP */{"", },
+        /* ALWAYS */{"", "", },
+       /* NEVER */{"NEVER", "UNKNOWN", "NEVER", },
+       /* UNKNOWN */{"UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN" }, };
 
     private void foo4() {
         if (!Arrays.equals(new String[]{""}, new String[]{""})
@@ -109,7 +109,7 @@ public class InputCommentsIndentationSurroundingCode
         String someStr = new String();
     }
 
-    public String foo9(String s1, String s2, String s3) {
+    public String foo9(final String s1, final String s2, final String s3) {
         return "";
     }
 

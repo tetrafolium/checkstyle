@@ -98,8 +98,7 @@ public class FinalClassCheckTest
         try {
             finalClassCheck.visitToken(badAst);
             fail("IllegalStateException is expected");
-        }
-        catch (IllegalStateException ex) {
+        } catch (IllegalStateException ex) {
             // it is OK
         }
     }

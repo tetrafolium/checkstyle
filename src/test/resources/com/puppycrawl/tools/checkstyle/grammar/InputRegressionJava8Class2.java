@@ -15,11 +15,12 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class InputRegressionJava8Class2 {
-    static class Inner1 { static class Inner2<V> { public void m() {} } }
-    static class Inner3<T> { public void m() {} }
+    static class Inner1 { static class Inner2<V> { public void m() { } } }
+    static class Inner3<T> { public void m() { } }
 
-    public void m1(@MyAnnotation String @MyAnnotation ... vararg) {}
-    public String m2() @MyAnnotation [] @MyAnnotation [] { return null; }    
+    public void m1(final @MyAnnotation String @MyAnnotation... vararg) { }
+    public String m2() @MyAnnotation [] @MyAnnotation [] {
+        return null; }    
 
     public void instructions() {
         // annotations
@@ -27,7 +28,7 @@ public class InputRegressionJava8Class2 {
         String str = (@MyAnnotation String) "";
         (new Inner3()).<@MyAnnotation String>m();
         Object arr = new @MyAnnotation String @MyAnnotation [3];
-        for (String a @MyAnnotation [] : m2()) {}
+        for (String a @MyAnnotation [] : m2()) { }
         Object arr2 = new @MyAnnotation int[3];        
     }
 }

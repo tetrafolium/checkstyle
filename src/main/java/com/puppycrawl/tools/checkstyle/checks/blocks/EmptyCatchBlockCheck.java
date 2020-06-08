@@ -183,7 +183,7 @@ public class EmptyCatchBlockCheck extends AbstractCheck {
      * @param exceptionVariablePattern
      *        pattern of exception's variable name.
      */
-    public void setExceptionVariableName(Pattern exceptionVariablePattern) {
+    public void setExceptionVariableName(final Pattern exceptionVariablePattern) {
         exceptionVariableName = exceptionVariablePattern;
     }
 
@@ -194,7 +194,7 @@ public class EmptyCatchBlockCheck extends AbstractCheck {
      * @param commentPattern
      *        pattern of comment.
      */
-    public void setCommentFormat(Pattern commentPattern) {
+    public void setCommentFormat(final Pattern commentPattern) {
         commentFormat = commentPattern;
     }
 
@@ -221,7 +221,7 @@ public class EmptyCatchBlockCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         visitCatchBlock(ast);
     }
 
@@ -231,7 +231,7 @@ public class EmptyCatchBlockCheck extends AbstractCheck {
      *   specified regexp - skips from consideration, else - puts violation.
      * @param catchAst {@link TokenTypes#LITERAL_CATCH LITERAL_CATCH}
      */
-    private void visitCatchBlock(DetailAST catchAst) {
+    private void visitCatchBlock(final DetailAST catchAst) {
         if (isEmptyCatchBlock(catchAst)) {
             final String commentContent = getCommentFirstLine(catchAst);
             if (isVerifiable(catchAst, commentContent)) {
@@ -246,14 +246,13 @@ public class EmptyCatchBlockCheck extends AbstractCheck {
      * @param catchAst {@link TokenTypes#LITERAL_CATCH LITERAL_CATCH}
      * @return the first line of comment in catch block, "" if no comment was found.
      */
-    private static String getCommentFirstLine(DetailAST catchAst) {
+    private static String getCommentFirstLine(final DetailAST catchAst) {
         final DetailAST slistToken = catchAst.getLastChild();
         final DetailAST firstElementInBlock = slistToken.getFirstChild();
         String commentContent = "";
         if (firstElementInBlock.getType() == TokenTypes.SINGLE_LINE_COMMENT) {
             commentContent = firstElementInBlock.getFirstChild().getText();
-        }
-        else if (firstElementInBlock.getType() == TokenTypes.BLOCK_COMMENT_BEGIN) {
+        } else if (firstElementInBlock.getType() == TokenTypes.BLOCK_COMMENT_BEGIN) {
             commentContent = firstElementInBlock.getFirstChild().getText();
             final String[] lines = LINE_END_PATTERN.split(commentContent);
             for (String line : lines) {
@@ -273,7 +272,7 @@ public class EmptyCatchBlockCheck extends AbstractCheck {
      * @param commentContent text of comment.
      * @return true if empty catch block is verifiable by Check.
      */
-    private boolean isVerifiable(DetailAST emptyCatchAst, String commentContent) {
+    private boolean isVerifiable(final DetailAST emptyCatchAst, final String commentContent) {
         final String variableName = getExceptionVariableName(emptyCatchAst);
         final boolean isMatchingVariableName = exceptionVariableName
                 .matcher(variableName).find();
@@ -287,7 +286,7 @@ public class EmptyCatchBlockCheck extends AbstractCheck {
      * @param catchAst {@link TokenTypes#LITERAL_CATCH LITERAL_CATCH}
      * @return true if catch block is empty.
      */
-    private static boolean isEmptyCatchBlock(DetailAST catchAst) {
+    private static boolean isEmptyCatchBlock(final DetailAST catchAst) {
         boolean result = true;
         final DetailAST slistToken = catchAst.findFirstToken(TokenTypes.SLIST);
         DetailAST catchBlockStmt = slistToken.getFirstChild();
@@ -307,7 +306,7 @@ public class EmptyCatchBlockCheck extends AbstractCheck {
      * @param catchAst {@link TokenTypes#LITERAL_CATCH LITERAL_CATCH}
      * @return Variable's name associated with exception.
      */
-    private static String getExceptionVariableName(DetailAST catchAst) {
+    private static String getExceptionVariableName(final DetailAST catchAst) {
         final DetailAST parameterDef = catchAst.findFirstToken(TokenTypes.PARAMETER_DEF);
         final DetailAST variableName = parameterDef.findFirstToken(TokenTypes.IDENT);
         return variableName.getText();

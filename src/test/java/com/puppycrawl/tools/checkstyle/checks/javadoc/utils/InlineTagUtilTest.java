@@ -101,8 +101,7 @@ public class InlineTagUtilTest {
         try {
             InlineTagUtil.extractInlineTags("abc\ndef");
             fail("IllegalArgumentException expected");
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertTrue(ex.getMessage().contains("newline"), "Unexpected error message");
         }
     }
@@ -112,13 +111,12 @@ public class InlineTagUtilTest {
         try {
             InlineTagUtil.extractInlineTags("abc\rdef");
             fail("IllegalArgumentException expected");
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertTrue(ex.getMessage().contains("newline"), "Invalid error message");
         }
     }
 
-    private static void assertTag(TagInfo tag, String name, String value, int line, int col) {
+    private static void assertTag(final TagInfo tag, final String name, final String value, final int line, final int col) {
         assertEquals(name, tag.getName(), "Unexpected tags name");
         assertEquals(value, tag.getValue(), "Unexpected tags value");
         assertEquals(line, tag.getPosition().getLine(), "Unexpected tags position");

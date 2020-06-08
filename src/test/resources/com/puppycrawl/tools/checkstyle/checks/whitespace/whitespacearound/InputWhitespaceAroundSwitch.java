@@ -2,8 +2,8 @@ package com.puppycrawl.tools.checkstyle.checks.whitespace.whitespacearound;
 
 public class InputWhitespaceAroundSwitch {
 
-    public void switchTest(int k) {
-        switch(k) {
+    public void switchTest(final int k) {
+        switch (k) {
         default:
             break;
         }

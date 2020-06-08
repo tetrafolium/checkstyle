@@ -20,7 +20,7 @@ class InputFinalParameters
     }
 
     /** non final param constructor */
-    InputFinalParameters(String s)
+    InputFinalParameters(final String s)
     {
     }
 
@@ -35,12 +35,12 @@ class InputFinalParameters
     }
 
     /** non-final param constructor with annotation*/
-    InputFinalParameters(@MyAnnotation3 Boolean i)
+    InputFinalParameters(final @MyAnnotation3 Boolean i)
     {
     }
 
     /** mixed */
-    InputFinalParameters(String s, final Integer i)
+    InputFinalParameters(final String s, final Integer i)
     {
     }
 
@@ -50,7 +50,7 @@ class InputFinalParameters
     }
 
     /** non final param method */
-    void method(String s)
+    void method(final String s)
     {
     }
 
@@ -66,13 +66,13 @@ class InputFinalParameters
     }
 
     /** non-final param method with annotation **/
-    void method(@MyAnnotation3 Class<Object> s)
+    void method(final @MyAnnotation3 Class<Object> s)
     {
 
     }
 
     /** mixed */
-    void method(String s, final Integer i)
+    void method(final String s, final Integer i)
     {
     }
 
@@ -87,10 +87,10 @@ class InputFinalParameters
     {
         Action a = new AbstractAction()
             {
-                public void actionPerformed(ActionEvent e)
+                public void actionPerformed(final ActionEvent e)
                 {
                 }
-                void somethingElse(@MyAnnotation3 ActionEvent e)
+                void somethingElse(final @MyAnnotation3 ActionEvent e)
                 {
                 }
             };
@@ -107,13 +107,13 @@ class InputFinalParameters
     }
 
     /** methods with complicated types of the parameters. */
-    void methodA(java.lang.String aParam) {
+    void methodA(final java.lang.String aParam) {
     }
 
-    void methodB(String[] args) {
+    void methodB(final String[] args) {
     }
 
-    void methodC(java.lang.String[] args) {
+    void methodC(final java.lang.String[] args) {
     }
 
     /** some catch blocks */
@@ -121,17 +121,13 @@ class InputFinalParameters
     {
         try {
             String.CASE_INSENSITIVE_ORDER.equals("");
-        }
-        catch (java.lang.NullPointerException npe) {
+        } catch (java.lang.NullPointerException npe) {
             npe.getMessage();
-        }
-        catch (@MyAnnotation3 final ClassCastException e) {
+        } catch (@MyAnnotation3 final ClassCastException e) {
             e.getMessage();
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             e.getMessage();
-        }
-        catch (@MyAnnotation3 NoClassDefFoundError e) {
+        } catch (@MyAnnotation3 NoClassDefFoundError e) {
             e.getMessage();
         }
     }
@@ -149,19 +145,19 @@ class Foo
     /* Some for-each clauses */
     public void Bar()
     {
-        for(String s : someExpression())
+        for (String s : someExpression())
         {
 
         }
-        for(final String s : someExpression())
+        for (final String s : someExpression())
         {
 
         }
-        for(@MyAnnotation3 String s : someExpression())
+        for (@MyAnnotation3 String s : someExpression())
         {
 
         }
-        for(@MyAnnotation3 final String s : someExpression())
+        for (@MyAnnotation3 final String s : someExpression())
         {
 
         }

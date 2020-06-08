@@ -1,10 +1,10 @@
 // test file has no expected comments to test out blank line with just spaces
 package com.puppycrawl.tools.checkstyle.checks.indentation.indentation;
 
-import java.util.*
-    // next line should be empty with just spaces, indented correctly
+import java.util.
+    * // next line should be empty with just spaces, indented correctly
 
-    ;
+;
 
 public class InputIndentationSeparatedStatementWithSpaces {
 }

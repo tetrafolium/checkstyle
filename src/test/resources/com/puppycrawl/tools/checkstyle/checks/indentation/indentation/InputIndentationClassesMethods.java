@@ -31,7 +31,7 @@ class InputIndentationClassesMethods  //indent:0 exp:0
   class InnerClass2  //indent:2 exp:2
        extends  //indent:7 exp:>=6
          SecondClassWithLongLongLongLongName {  //indent:9 exp:>=6
-    public InnerClass2(String string) {  //indent:4 exp:4
+    public InnerClass2(final String string) {  //indent:4 exp:4
     }  //indent:4 exp:4
   }  //indent:2 exp:2
 
@@ -54,20 +54,20 @@ class InputIndentationClassesMethods  //indent:0 exp:0
 
 class SecondClassWithLongLongLongLongName  //indent:0 exp:0
     extends  //indent:4 exp:4
-         InputIndentationClassesMethods{  //indent:9 exp:>=4
-  private boolean conditionFirst(String longString, int //indent:2 exp:2
-      integer, InnerClass someInstance) { //indent:6 exp:6
+         InputIndentationClassesMethods {  //indent:9 exp:>=4
+  private boolean conditionFirst(final String longString, final int //indent:2 exp:2
+      integer, final InnerClass someInstance) { //indent:6 exp:6
     return false; //indent:4 exp:4
   } //indent:2 exp:2
 
-  private boolean conditionFirst1(String longString, int //indent:2 exp:2
-      integer, InnerClass someInstance) //indent:6 exp:6
+  private boolean conditionFirst1(final String longString, final int //indent:2 exp:2
+      integer, final InnerClass someInstance) //indent:6 exp:6
           throws Exception { //indent:10 exp:>=6
     return false; //indent:4 exp:4
   } //indent:2 exp:2
 }  //indent:0 exp:0
 
-@interface MyAnnotation2 {} //indent:0 exp:0
+@interface MyAnnotation2 { } //indent:0 exp:0
 
 @MyAnnotation2 //indent:0 exp:0
-class Foo {} //indent:0 exp:0
+class Foo { } //indent:0 exp:0

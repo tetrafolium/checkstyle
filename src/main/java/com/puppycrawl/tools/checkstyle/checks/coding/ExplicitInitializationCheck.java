@@ -130,12 +130,12 @@ public class ExplicitInitializationCheck extends AbstractCheck {
      * @param onlyObjectReferences whether only explicit initialization made to null
      *                             should be checked
      */
-    public void setOnlyObjectReferences(boolean onlyObjectReferences) {
+    public void setOnlyObjectReferences(final boolean onlyObjectReferences) {
         this.onlyObjectReferences = onlyObjectReferences;
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         if (!isSkipCase(ast)) {
             final DetailAST assign = ast.findFirstToken(TokenTypes.ASSIGN);
             final DetailAST exprStart =
@@ -154,7 +154,7 @@ public class ExplicitInitializationCheck extends AbstractCheck {
      * Checks for explicit initializations made to 'false', '0' and '\0'.
      * @param ast token being checked for explicit initializations
      */
-    private void validateNonObjects(DetailAST ast) {
+    private void validateNonObjects(final DetailAST ast) {
         final DetailAST ident = ast.findFirstToken(TokenTypes.IDENT);
         final DetailAST assign = ast.findFirstToken(TokenTypes.ASSIGN);
         final DetailAST exprStart =
@@ -179,7 +179,7 @@ public class ExplicitInitializationCheck extends AbstractCheck {
      * @param exprStart expression
      * @return true is literal is initialized by zero symbol
      */
-    private static boolean isZeroChar(DetailAST exprStart) {
+    private static boolean isZeroChar(final DetailAST exprStart) {
         return isZero(exprStart)
             || "'\\0'".equals(exprStart.getText());
     }
@@ -189,7 +189,7 @@ public class ExplicitInitializationCheck extends AbstractCheck {
      * @param ast Variable def AST
      * @return true is that is a case that need to be skipped.
      */
-    private static boolean isSkipCase(DetailAST ast) {
+    private static boolean isSkipCase(final DetailAST ast) {
         boolean skipCase = true;
 
         // do not check local variables and
@@ -212,7 +212,7 @@ public class ExplicitInitializationCheck extends AbstractCheck {
      * @return true if it's a numeric type.
      * @see TokenTypes
      */
-    private static boolean isNumericType(int type) {
+    private static boolean isNumericType(final int type) {
         return type == TokenTypes.LITERAL_BYTE
                 || type == TokenTypes.LITERAL_SHORT
                 || type == TokenTypes.LITERAL_INT
@@ -227,7 +227,7 @@ public class ExplicitInitializationCheck extends AbstractCheck {
      * @param expr node to check.
      * @return true if given node contains numeric constant for zero.
      */
-    private static boolean isZero(DetailAST expr) {
+    private static boolean isZero(final DetailAST expr) {
         final int type = expr.getType();
         final boolean isZero;
         switch (type) {

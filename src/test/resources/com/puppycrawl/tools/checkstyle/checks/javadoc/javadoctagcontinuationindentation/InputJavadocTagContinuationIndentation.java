@@ -47,7 +47,7 @@ class InputJavadocTagContinuationIndentation implements Serializable
      *    Some javadoc. // warn
      * @throws Exception Some text.
      */
-    String method(String aString) throws Exception
+    String method(final String aString) throws Exception
     {
         return "null";
     }
@@ -60,7 +60,7 @@ class InputJavadocTagContinuationIndentation implements Serializable
      * @param aString Some text.
      * @throws Exception Some text.
      */
-    String method1(String aString) throws Exception
+    String method1(final String aString) throws Exception
     {
         return "null";
     }
@@ -71,7 +71,7 @@ class InputJavadocTagContinuationIndentation implements Serializable
      *     Some javadoc.
      * @param aString Some text.
      */
-    void method2(String aString) throws Exception {}
+    void method2(final String aString) throws Exception { }
 
     /**
      * Some text.
@@ -79,7 +79,7 @@ class InputJavadocTagContinuationIndentation implements Serializable
      * @throws Exception Some text.
      *     Some javadoc.
      */
-    void method3() throws Exception {}
+    void method3() throws Exception { }
 
     /**
      * Some text.
@@ -97,7 +97,7 @@ class InputJavadocTagContinuationIndentation implements Serializable
      * @return Some text.
      * @param aString Some text.
      */
-    String method5(String aString)
+    String method5(final String aString)
     {
         return "null";
     }
@@ -114,7 +114,7 @@ class InputJavadocTagContinuationIndentation implements Serializable
      * @param aBoolean Some text.
      * @see Some text.
      */
-    String method6(String aString, int aInt, boolean aBoolean) throws Exception
+    String method6(final String aString, final int aInt, final boolean aBoolean) throws Exception
     {
         return "null";
     }
@@ -138,7 +138,7 @@ class InputJavadocTagContinuationIndentation implements Serializable
          * @throws Exception Some text.
          *     Some javadoc.
          */
-        String method(String aString) throws Exception
+        String method(final String aString) throws Exception
         {
             return "null";
         }
@@ -151,7 +151,7 @@ class InputJavadocTagContinuationIndentation implements Serializable
          * @param aString Some text.
          *     Some javadoc.
          */
-        String method1(String aString) throws Exception
+        String method1(final String aString) throws Exception
         {
             return "null";
         }
@@ -164,14 +164,14 @@ class InputJavadocTagContinuationIndentation implements Serializable
          *     Some javadoc.
          * @throws Exception Some text.
          */
-        void method2(String aString) throws Exception {}
+        void method2(final String aString) throws Exception { }
 
         /**
          * Some text.
          * @see Some text.
          * @throws Exception Some text.
          */
-        void method3() throws Exception {}
+        void method3() throws Exception { }
 
         /**
          * Some text.
@@ -190,7 +190,7 @@ class InputJavadocTagContinuationIndentation implements Serializable
          * @see Some text.
          * @return Some text.
          */
-        String method5(String aString)
+        String method5(final String aString)
         {
             return "null";
         }
@@ -206,7 +206,7 @@ class InputJavadocTagContinuationIndentation implements Serializable
          *    Some javadoc. // warn
          * @see Some text.
          */
-        String method6(String aString, int aInt, boolean aBoolean) throws Exception
+        String method6(final String aString, final int aInt, final boolean aBoolean) throws Exception
         {
             return "null";
         }
@@ -224,7 +224,7 @@ class InputJavadocTagContinuationIndentation implements Serializable
          * @see Some text.
          * @return Some text.
          */
-        String method(String aString) throws Exception
+        String method(final String aString) throws Exception
         {
             return "null";
         }
@@ -236,7 +236,7 @@ class InputJavadocTagContinuationIndentation implements Serializable
          * @throws Exception Some text.
          * @return Some text.
          */
-        String method1(String aString) throws Exception
+        String method1(final String aString) throws Exception
         {
             return "null";
         }
@@ -247,7 +247,7 @@ class InputJavadocTagContinuationIndentation implements Serializable
          *     Some javadoc.
          * @param aString Some text.
          */
-        void method2(String aString) throws Exception {}
+        void method2(final String aString) throws Exception { }
 
         /**
          * Some text.
@@ -255,7 +255,7 @@ class InputJavadocTagContinuationIndentation implements Serializable
          *     Some javadoc.
          * @throws Exception Some text.
          */
-        void method3() throws Exception {}
+        void method3() throws Exception { }
 
         /**
          * Some text.
@@ -273,7 +273,7 @@ class InputJavadocTagContinuationIndentation implements Serializable
          * @return Some text.
          * @param aString Some text.
          */
-        String method5(String aString)
+        String method5(final String aString)
         {
             return "null";
         }
@@ -291,7 +291,7 @@ class InputJavadocTagContinuationIndentation implements Serializable
          * @param aBoolean Some text.
          * @see Some text.
          */
-        String method6(String aString, int aInt, boolean aBoolean) throws Exception
+        String method6(final String aString, final int aInt, final boolean aBoolean) throws Exception
         {
             return "null";
         }
@@ -310,7 +310,7 @@ class InputJavadocTagContinuationIndentation implements Serializable
  *    Some javadoc. // warn
  * @author max
  */
-enum Foo1 {}
+enum Foo1 { }
 
 /**
  * Some javadoc.
@@ -327,13 +327,13 @@ enum Foo1 {}
  * @customTag {@link com.puppycrawl.tools.checkstyle.AllChecksPresentOnAvailableChecksPageTest
  *   some description} // no warning, as this is just inline tag description
  */
-interface FooIn1 {}
+interface FooIn1 { }
 
 /**
  * <p>Testing javadoc with spanning tag {@linkplain #DEFAULT default mapping
  * factory}.</p> // no warning
  */
-interface FooIn2 {}
+interface FooIn2 { }
 class ShortNextLine {
     /**
      * Test.

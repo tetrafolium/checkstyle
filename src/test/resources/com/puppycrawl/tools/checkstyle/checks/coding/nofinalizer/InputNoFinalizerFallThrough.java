@@ -2,7 +2,7 @@ package com.puppycrawl.tools.checkstyle.checks.coding.nofinalizer;
 
 public class InputNoFinalizerFallThrough
 {
-    void method(int i, int j, boolean cond) {
+    void method(final int i, final int j, final boolean cond) {
         while (true) {
             switch (i) {
             case 0: // no problem
@@ -54,7 +54,7 @@ public class InputNoFinalizerFallThrough
                 do {
                     System.identityHashCode("something");
                     return;
-                } while(true);
+                } while (true);
             case 16:
                 for (int j1 = 0; j1 < 10; j1++) {
                     String.valueOf("something");
@@ -64,7 +64,7 @@ public class InputNoFinalizerFallThrough
                 while (true)
                     throw new RuntimeException("");
             case 18:
-                while(cond) {
+                while (cond) {
                     break;
                 }
             case 19: //fall through!!!
@@ -130,7 +130,7 @@ public class InputNoFinalizerFallThrough
 
 
     /* Like above, but all fall throughs with relief comment */
-    void methodFallThru(int i, int j, boolean cond) {
+    void methodFallThru(final int i, final int j, final boolean cond) {
       while (true) {
           switch (i) {
           case -1: // FALLTHRU
@@ -187,7 +187,7 @@ public class InputNoFinalizerFallThrough
               do {
                   System.identityHashCode("something");
                   return;
-              } while(true);
+              } while (true);
           case 16:
               for (int j1 = 0; j1 < 10; j1++) {
                   String.valueOf("something");
@@ -197,7 +197,7 @@ public class InputNoFinalizerFallThrough
               while (cond)
                   throw new RuntimeException("");
           case 18:
-              while(cond) {
+              while (cond) {
                   break;
               }
               // fallthru
@@ -272,9 +272,9 @@ public class InputNoFinalizerFallThrough
    }
 
    /* Test relief comment. */
-   void methodFallThruCC(int i, int j, boolean cond) {
+   void methodFallThruCC(final int i, final int j, final boolean cond) {
       while (true) {
-          switch (i){
+          switch (i) {
           case 0:
               i++; // fallthru
 
@@ -297,9 +297,9 @@ public class InputNoFinalizerFallThrough
    }
 
    /* Like above, but C-style comments. */
-   void methodFallThruC(int i, int j, boolean cond) {
+   void methodFallThruC(final int i, final int j, final boolean cond) {
       while (true) {
-          switch (i){
+          switch (i) {
           case 0:
               i++; /* fallthru */
 
@@ -318,9 +318,9 @@ public class InputNoFinalizerFallThrough
    }
 
    /* Like above, but C-style comments with no spaces. */
-   void methodFallThruC2(int i, int j, boolean cond) {
+   void methodFallThruC2(final int i, final int j, final boolean cond) {
       while (true) {
-          switch (i){
+          switch (i) {
           case 0:
               i++; /*fallthru*/
 
@@ -339,9 +339,9 @@ public class InputNoFinalizerFallThrough
    }
 
    /* C-style comments with other default fallthru-comment. */
-   void methodFallThruCOtherWords(int i, int j, boolean cond) {
+   void methodFallThruCOtherWords(final int i, final int j, final boolean cond) {
       while (true) {
-          switch (i){
+          switch (i) {
           case 0:
               i++; /* falls through */
 
@@ -360,9 +360,9 @@ public class InputNoFinalizerFallThrough
    }
 
    /* C-style comments with custom fallthru-comment. */
-   void methodFallThruCCustomWords(int i, int j, boolean cond) {
+   void methodFallThruCCustomWords(final int i, final int j, final boolean cond) {
       while (true) {
-          switch (i){
+          switch (i) {
           case 0:
               i++; /* Continue with next case */
 
@@ -380,26 +380,26 @@ public class InputNoFinalizerFallThrough
       }
    }
 
-   void methodFallThruLastCaseGroup(int i, int j, boolean cond) {
+   void methodFallThruLastCaseGroup(final int i, final int j, final boolean cond) {
        while (true) {
-           switch (i){
+           switch (i) {
            case 0:
                i++; // fallthru
            }
-           switch (i){
+           switch (i) {
            case 0:
                i++;
                // fallthru
            }
-           switch (i){
+           switch (i) {
            case 0:
                i++;
            /* fallthru */ }
        }
     }
 
-    void method1472228(int i) {
-        switch(i) {
+    void method1472228(final int i) {
+        switch (i) {
         case 2:
             // do nothing
             break;
@@ -418,9 +418,9 @@ public class InputNoFinalizerFallThrough
     }
 
     void nextedSwitches2() {
-        switch(hashCode()) {
+        switch (hashCode()) {
         case 1:
-            switch(hashCode()){}
+            switch (hashCode()) { }
         case 2:
             System.lineSeparator();
             break;
@@ -428,7 +428,7 @@ public class InputNoFinalizerFallThrough
     }
 
     void ifWithoutBreak() {
-        switch(hashCode()) {
+        switch (hashCode()) {
         case 1:
             if (true) {
                 System.lineSeparator();
@@ -440,7 +440,7 @@ public class InputNoFinalizerFallThrough
     }
 
     void noCommentAtTheEnd() {
-        switch(hashCode()) {
+        switch (hashCode()) {
         case 1: System.lineSeparator();
 
         case 2:

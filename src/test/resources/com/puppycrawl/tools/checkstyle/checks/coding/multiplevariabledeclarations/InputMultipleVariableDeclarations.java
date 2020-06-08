@@ -18,14 +18,14 @@ public class InputMultipleVariableDeclarations
             strings1[];
 
     void method2() {
-        for (int i=0, j=0; i < 10; i++, j--) {
+        for (int i = 0, j = 0; i < 10; i++, j--) {
         }
 
-        for(int i=0; i<4;i++) {
+        for (int i = 0; i < 4; i++) {
 
         }
 
-        switch("") {
+        switch ("") {
         case "6":
             int k = 7;
         }
@@ -33,6 +33,6 @@ public class InputMultipleVariableDeclarations
 
     void method3() {
         java.lang.Object obj; Object obj1; Object obj2; Object obj3;
-        for (String s : new String[] {}) {}
+        for (String s : new String[] {}) { }
     }
 }

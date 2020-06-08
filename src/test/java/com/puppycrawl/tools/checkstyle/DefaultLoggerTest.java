@@ -94,8 +94,7 @@ public class DefaultLoggerTest {
             // assert required to calm down eclipse's 'The allocated object is never used' violation
             assertNotNull(logger, "Null instance");
             fail("Exception was expected");
-        }
-        catch (IllegalArgumentException exception) {
+        } catch (IllegalArgumentException exception) {
             assertEquals("Parameter infoStreamOptions can not be null",
                     exception.getMessage(), "Invalid error message");
         }
@@ -109,8 +108,7 @@ public class DefaultLoggerTest {
             // assert required to calm down eclipse's 'The allocated object is never used' violation
             assertNotNull(logger, "Null instance");
             fail("Exception was expected");
-        }
-        catch (IllegalArgumentException exception) {
+        } catch (IllegalArgumentException exception) {
             assertEquals("Parameter errorStreamOptions can not be null",
                     exception.getMessage(), "Invalid error message");
         }

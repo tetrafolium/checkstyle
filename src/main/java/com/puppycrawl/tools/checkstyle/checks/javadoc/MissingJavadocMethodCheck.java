@@ -176,7 +176,7 @@ public class MissingJavadocMethodCheck extends AbstractCheck {
      * Setter to configure the list of annotations that allow missed documentation.
      * @param userAnnotations user's value.
      */
-    public void setAllowedAnnotations(String... userAnnotations) {
+    public void setAllowedAnnotations(final String... userAnnotations) {
         allowedAnnotations = Arrays.asList(userAnnotations);
     }
 
@@ -184,7 +184,7 @@ public class MissingJavadocMethodCheck extends AbstractCheck {
      * Setter to ignore method whose names are matching specified regex.
      * @param pattern a pattern.
      */
-    public void setIgnoreMethodNamesRegex(Pattern pattern) {
+    public void setIgnoreMethodNamesRegex(final Pattern pattern) {
         ignoreMethodNamesRegex = pattern;
     }
 
@@ -192,7 +192,7 @@ public class MissingJavadocMethodCheck extends AbstractCheck {
      * Setter to control the minimal amount of lines in method to allow no documentation.
      * @param value user's value.
      */
-    public void setMinLineCount(int value) {
+    public void setMinLineCount(final int value) {
         minLineCount = value;
     }
 
@@ -211,7 +211,7 @@ public class MissingJavadocMethodCheck extends AbstractCheck {
      *
      * @param scope a scope.
      */
-    public void setScope(Scope scope) {
+    public void setScope(final Scope scope) {
         this.scope = scope;
     }
 
@@ -220,7 +220,7 @@ public class MissingJavadocMethodCheck extends AbstractCheck {
      *
      * @param excludeScope a scope.
      */
-    public void setExcludeScope(Scope excludeScope) {
+    public void setExcludeScope(final Scope excludeScope) {
         this.excludeScope = excludeScope;
     }
 
@@ -244,7 +244,7 @@ public class MissingJavadocMethodCheck extends AbstractCheck {
     }
 
     @Override
-    public final void visitToken(DetailAST ast) {
+    public final void visitToken(final DetailAST ast) {
         final Scope theScope = calculateScope(ast);
         if (shouldCheck(ast, theScope)) {
             final FileContents contents = getFileContents();
@@ -261,15 +261,14 @@ public class MissingJavadocMethodCheck extends AbstractCheck {
      * @param methodDef Some javadoc.
      * @return Some javadoc.
      */
-    private static int getMethodsNumberOfLine(DetailAST methodDef) {
+    private static int getMethodsNumberOfLine(final DetailAST methodDef) {
         final int numberOfLines;
         final DetailAST lcurly = methodDef.getLastChild();
         final DetailAST rcurly = lcurly.getLastChild();
 
         if (lcurly.getFirstChild() == rcurly) {
             numberOfLines = 1;
-        }
-        else {
+        } else {
             numberOfLines = rcurly.getLineNo() - lcurly.getLineNo() - 1;
         }
         return numberOfLines;
@@ -294,7 +293,7 @@ public class MissingJavadocMethodCheck extends AbstractCheck {
      * @param ast the tree node for the method or constructor.
      * @return True if this method or constructor doesn't need Javadoc.
      */
-    private boolean isContentsAllowMissingJavadoc(DetailAST ast) {
+    private boolean isContentsAllowMissingJavadoc(final DetailAST ast) {
         return (ast.getType() == TokenTypes.METHOD_DEF || ast.getType() == TokenTypes.CTOR_DEF)
                 && (getMethodsNumberOfLine(ast) <= minLineCount
                     || AnnotationUtil.containsAnnotation(ast, allowedAnnotations));
@@ -306,7 +305,7 @@ public class MissingJavadocMethodCheck extends AbstractCheck {
      * @param methodDef {@link TokenTypes#METHOD_DEF METHOD_DEF}
      * @return true if given method name matches the regex.
      */
-    private boolean matchesSkipRegex(DetailAST methodDef) {
+    private boolean matchesSkipRegex(final DetailAST methodDef) {
         boolean result = false;
         if (ignoreMethodNamesRegex != null) {
             final DetailAST ident = methodDef.findFirstToken(TokenTypes.IDENT);
@@ -350,8 +349,7 @@ public class MissingJavadocMethodCheck extends AbstractCheck {
 
         if (ScopeUtil.isInInterfaceOrAnnotationBlock(ast)) {
             scope = Scope.PUBLIC;
-        }
-        else {
+        } else {
             final DetailAST mods = ast.findFirstToken(TokenTypes.MODIFIERS);
             scope = ScopeUtil.getScopeFromMods(mods);
         }

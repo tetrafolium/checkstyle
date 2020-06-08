@@ -126,7 +126,7 @@ public class ClassMemberImpliedModifierCheck
      * @param violateImplied
      *        True to perform the check, false to turn the check off.
      */
-    public void setViolateImpliedStaticOnNestedEnum(boolean violateImplied) {
+    public void setViolateImpliedStaticOnNestedEnum(final boolean violateImplied) {
         violateImpliedStaticOnNestedEnum = violateImplied;
     }
 
@@ -136,7 +136,7 @@ public class ClassMemberImpliedModifierCheck
      * @param violateImplied
      *        True to perform the check, false to turn the check off.
      */
-    public void setViolateImpliedStaticOnNestedInterface(boolean violateImplied) {
+    public void setViolateImpliedStaticOnNestedInterface(final boolean violateImplied) {
         violateImpliedStaticOnNestedInterface = violateImplied;
     }
 
@@ -159,7 +159,7 @@ public class ClassMemberImpliedModifierCheck
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         if (ScopeUtil.isInClassBlock(ast) || ScopeUtil.isInEnumBlock(ast)) {
             final DetailAST modifiers = ast.findFirstToken(TokenTypes.MODIFIERS);
             switch (ast.getType()) {

@@ -20,8 +20,7 @@ public class InputFinalLocalVariableBreak {
 
             if (b == 1) {
                 e = new Exception();
-            }
-            else {
+            } else {
                 e = new Exception();
             }
             break;

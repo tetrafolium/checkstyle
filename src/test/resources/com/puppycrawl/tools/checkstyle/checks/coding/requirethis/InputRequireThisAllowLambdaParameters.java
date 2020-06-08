@@ -3,8 +3,8 @@ package com.puppycrawl.tools.checkstyle.checks.coding.requirethis;
 import java.util.function.Consumer;
 public class InputRequireThisAllowLambdaParameters {
     private String s1 = "foo1";
-    int x=-1;
-    int y=-2;
+    int x = -1;
+    int y = -2;
 
     void foo1() {
         final java.util.List<String> strings = new java.util.ArrayList<>();
@@ -27,14 +27,14 @@ public class InputRequireThisAllowLambdaParameters {
         int x;
         int y;
         int z;
-        void methodInFirstLevel(int x) {
+        void methodInFirstLevel(final int x) {
             Consumer<Integer> myConsumer = (y) ->   // NO violation; y is a lambda parameter
             {
                 new String("x = " + x);
                 new String("y = " + y);  // NO violation; y is a lambda parameter
-                new String("InputRequireThisAllowLambdaParameters.this.x = " +
-                        InputRequireThisAllowLambdaParameters.this.x);
-                y=x+z++; // 1 violation for z; NO violation for y; y is a lambda parameter
+                new String("InputRequireThisAllowLambdaParameters.this.x = "
+                        + InputRequireThisAllowLambdaParameters.this.x);
+                y = x + z++; // 1 violation for z; NO violation for y; y is a lambda parameter
             };
             myConsumer.accept(x);
         }
@@ -49,11 +49,11 @@ class Calculator {
         int operation(int a, int b);
     }
 
-    public int operateBinary(int a, int b, IntegerMath op) {
+    public int operateBinary(final int a, final int b, final IntegerMath op) {
         return op.operation(a, b);
     }
 
-    public void addSub(String... args) {
+    public void addSub(final String... args) {
 
         Calculator myApp = new Calculator();
         IntegerMath addition = (a, b) -> a = a + b;  // NO violations

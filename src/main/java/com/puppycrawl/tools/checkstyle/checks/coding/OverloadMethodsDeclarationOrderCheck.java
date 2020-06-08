@@ -77,7 +77,7 @@ public class OverloadMethodsDeclarationOrderCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         final int parentType = ast.getParent().getType();
         if (parentType == TokenTypes.CLASS_DEF
                 || parentType == TokenTypes.ENUM_DEF
@@ -93,7 +93,7 @@ public class OverloadMethodsDeclarationOrderCheck extends AbstractCheck {
      * @param objectBlock
      *        is a class, interface or enum object block.
      */
-    private void checkOverloadMethodsGrouping(DetailAST objectBlock) {
+    private void checkOverloadMethodsGrouping(final DetailAST objectBlock) {
         final int allowedDistance = 1;
         DetailAST currentToken = objectBlock.getFirstChild();
         final Map<String, Integer> methodIndexMap = new HashMap<>();

@@ -155,7 +155,7 @@ public class LeftCurlyCheck
      * @param optionStr string to decode option from
      * @throws IllegalArgumentException if unable to decode
      */
-    public void setOption(String optionStr) {
+    public void setOption(final String optionStr) {
         option = LeftCurlyOption.valueOf(optionStr.trim().toUpperCase(Locale.ENGLISH));
     }
 
@@ -163,7 +163,7 @@ public class LeftCurlyCheck
      * Setter to allow to ignore enums when left curly brace policy is EOL.
      * @param ignoreEnums check's option for ignoring enums.
      */
-    public void setIgnoreEnums(boolean ignoreEnums) {
+    public void setIgnoreEnums(final boolean ignoreEnums) {
         this.ignoreEnums = ignoreEnums;
     }
 
@@ -206,7 +206,7 @@ public class LeftCurlyCheck
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         final DetailAST startToken;
         DetailAST brace;
 
@@ -273,7 +273,7 @@ public class LeftCurlyCheck
      * @return {@code DetailAST} if the first child is {@code TokenTypes.SLIST},
      *     {@code null} otherwise.
      */
-    private static DetailAST getBraceAsFirstChild(DetailAST ast) {
+    private static DetailAST getBraceAsFirstChild(final DetailAST ast) {
         DetailAST brace = null;
         if (ast != null) {
             final DetailAST candidate = ast.getFirstChild();
@@ -289,7 +289,7 @@ public class LeftCurlyCheck
      * @param ast {@code DetailAST}.
      * @return {@code DetailAST}.
      */
-    private static DetailAST skipModifierAnnotations(DetailAST ast) {
+    private static DetailAST skipModifierAnnotations(final DetailAST ast) {
         DetailAST resultNode = ast;
         final DetailAST modifiers = ast.findFirstToken(TokenTypes.MODIFIERS);
 
@@ -299,8 +299,7 @@ public class LeftCurlyCheck
             if (lastAnnotation != null) {
                 if (lastAnnotation.getNextSibling() == null) {
                     resultNode = modifiers.getNextSibling();
-                }
-                else {
+                } else {
                     resultNode = lastAnnotation.getNextSibling();
                 }
             }
@@ -314,7 +313,7 @@ public class LeftCurlyCheck
      * @param modifiers {@code DetailAST}.
      * @return {@code DetailAST} or null if there are no annotations.
      */
-    private static DetailAST findLastAnnotation(DetailAST modifiers) {
+    private static DetailAST findLastAnnotation(final DetailAST modifiers) {
         DetailAST annotation = modifiers.findFirstToken(TokenTypes.ANNOTATION);
         while (annotation != null && annotation.getNextSibling() != null
                && annotation.getNextSibling().getType() == TokenTypes.ANNOTATION) {
@@ -340,11 +339,9 @@ public class LeftCurlyCheck
                 if (!CommonUtil.hasWhitespaceBefore(brace.getColumnNo(), braceLine)) {
                     log(brace, MSG_KEY_LINE_NEW, OPEN_CURLY_BRACE, brace.getColumnNo() + 1);
                 }
-            }
-            else if (option == LeftCurlyOption.EOL) {
+            } else if (option == LeftCurlyOption.EOL) {
                 validateEol(brace, braceLine);
-            }
-            else if (!TokenUtil.areOnSameLine(startToken, brace)) {
+            } else if (!TokenUtil.areOnSameLine(startToken, brace)) {
                 validateNewLinePosition(brace, startToken, braceLine);
             }
         }
@@ -355,7 +352,7 @@ public class LeftCurlyCheck
      * @param brace brace AST
      * @param braceLine line content
      */
-    private void validateEol(DetailAST brace, String braceLine) {
+    private void validateEol(final DetailAST brace, final String braceLine) {
         if (CommonUtil.hasWhitespaceBefore(brace.getColumnNo(), braceLine)) {
             log(brace, MSG_KEY_LINE_PREVIOUS, OPEN_CURLY_BRACE, brace.getColumnNo() + 1);
         }
@@ -370,17 +367,15 @@ public class LeftCurlyCheck
      * @param startToken start Token
      * @param braceLine content of line with Brace
      */
-    private void validateNewLinePosition(DetailAST brace, DetailAST startToken, String braceLine) {
+    private void validateNewLinePosition(final DetailAST brace, final DetailAST startToken, final String braceLine) {
         // not on the same line
         if (startToken.getLineNo() + 1 == brace.getLineNo()) {
             if (CommonUtil.hasWhitespaceBefore(brace.getColumnNo(), braceLine)) {
                 log(brace, MSG_KEY_LINE_PREVIOUS, OPEN_CURLY_BRACE, brace.getColumnNo() + 1);
-            }
-            else {
+            } else {
                 log(brace, MSG_KEY_LINE_NEW, OPEN_CURLY_BRACE, brace.getColumnNo() + 1);
             }
-        }
-        else if (!CommonUtil.hasWhitespaceBefore(brace.getColumnNo(), braceLine)) {
+        } else if (!CommonUtil.hasWhitespaceBefore(brace.getColumnNo(), braceLine)) {
             log(brace, MSG_KEY_LINE_NEW, OPEN_CURLY_BRACE, brace.getColumnNo() + 1);
         }
     }
@@ -392,12 +387,11 @@ public class LeftCurlyCheck
      * @return
      *        True, left curly has line break after.
      */
-    private boolean hasLineBreakAfter(DetailAST leftCurly) {
+    private boolean hasLineBreakAfter(final DetailAST leftCurly) {
         DetailAST nextToken = null;
         if (leftCurly.getType() == TokenTypes.SLIST) {
             nextToken = leftCurly.getFirstChild();
-        }
-        else {
+        } else {
             if (!ignoreEnums
                     && leftCurly.getParent().getParent().getType() == TokenTypes.ENUM_DEF) {
                 nextToken = leftCurly.getNextSibling();

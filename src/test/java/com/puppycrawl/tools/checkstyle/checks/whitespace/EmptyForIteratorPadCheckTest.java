@@ -90,8 +90,7 @@ public class EmptyForIteratorPadCheckTest
 
             verify(checkConfig, getPath("InputEmptyForIteratorPad.java"), expected);
             fail("exception expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             assertEquals("cannot initialize module com.puppycrawl.tools.checkstyle.TreeWalker - "
                     + "cannot initialize module com.puppycrawl.tools.checkstyle.checks."
                     + "whitespace.EmptyForIteratorPadCheck - "

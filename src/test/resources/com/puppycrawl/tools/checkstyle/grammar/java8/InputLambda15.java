@@ -7,7 +7,7 @@ public class InputLambda15
 {
     private static final Logger LOG = Logger.getLogger(InputLambda15.class.getName());
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         InputLambda15 ex = new InputLambda15();
         Function<Double, Double> sin = d -> ex.sin(d);
         Function<Double, Double> log = d -> ex.log(d);
@@ -28,24 +28,24 @@ public class InputLambda15
 
     }
 
-    public Double calculate(Function<Double, Double> operator, Double d)
+    public Double calculate(final Function<Double, Double> operator, final Double d)
     {
         return operator.apply(d);
     }
 
-    public Double sin(Double d)
+    public Double sin(final Double d)
     {
         LOG.info("sin:");
         return Math.sin(d);
     }
 
-    public Double log(Double d)
+    public Double log(final Double d)
     {
         LOG.info("log:");
         return Math.log(d);
     }
 
-    public Double exp(Double d)
+    public Double exp(final Double d)
     {
         LOG.info("exp:");
         return Math.exp(d);

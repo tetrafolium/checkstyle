@@ -2,27 +2,27 @@ package com.puppycrawl.tools.checkstyle.checks.naming.parametername;
 
 public class InputParameterNameAccessModifier {
 
-    public InputParameterNameAccessModifier(int pubconstr) {}
+    public InputParameterNameAccessModifier(final int pubconstr) { }
 
-    public void v1(int h) {
-        new Object () {
-            public void i(int inner) {}
+    public void v1(final int h) {
+        new Object() {
+            public void i(final int inner) { }
         };
     }
 
-    protected void v4(int h) {}
+    protected void v4(final int h) { }
 
-    void v2(int h) {}
+    void v2(final int h) { }
 
-    private void v3(int h) {}
+    private void v3(final int h) { }
 
-    public void i1(int pubpub) {}
+    public void i1(final int pubpub) { }
 
-    protected void i4(int pubprot) {}
+    protected void i4(final int pubprot) { }
 
-    void i2(int pubpack) {}
+    void i2(final int pubpack) { }
 
-    private void i3(int pubpriv) {}
+    private void i3(final int pubpriv) { }
 
     public interface InterfaceScope {
         void v1(int h);
@@ -33,21 +33,21 @@ public class InputParameterNameAccessModifier {
 
 class PrivateScope {
 
-    public void v1(int h) {}
+    public void v1(final int h) { }
 
-    protected void v4(int h) {}
+    protected void v4(final int h) { }
 
-    void v2(int h) {}
+    void v2(final int h) { }
 
-    private void v3(int h) {}
+    private void v3(final int h) { }
 
-    public void i1(int packpub) {}
+    public void i1(final int packpub) { }
 
-    protected void i4(int packprot) {}
+    protected void i4(final int packprot) { }
 
-    void i2(int packpack) {}
+    void i2(final int packpack) { }
 
-    private void i3(int packpriv) {
+    private void i3(final int packpriv) {
         try {
             /* Make sure catch var is ignored */
         } catch (Exception exc) {
@@ -65,9 +65,9 @@ class PrivateScope {
     }
 
     public void l() {
-        FuncIfc l1 = (int lexp)->{};
+        FuncIfc l1 = (int lexp) -> { };
 
-        FuncIfc l2 = (limp)->{};
+        FuncIfc l2 = (limp) -> { };
     }
 }
 

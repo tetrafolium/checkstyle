@@ -203,7 +203,7 @@ public class ParameterNameCheck extends AbstractNameCheck {
      * </pre>
      * @param ignoreOverridden Flag for skipping methods with Override annotation.
      */
-    public void setIgnoreOverridden(boolean ignoreOverridden) {
+    public void setIgnoreOverridden(final boolean ignoreOverridden) {
         this.ignoreOverridden = ignoreOverridden;
     }
 
@@ -211,7 +211,7 @@ public class ParameterNameCheck extends AbstractNameCheck {
      * Setter to access modifiers of methods where parameters are checked.
      * @param accessModifiers access modifiers of methods which should be checked.
      */
-    public void setAccessModifiers(AccessModifier... accessModifiers) {
+    public void setAccessModifiers(final AccessModifier... accessModifiers) {
         this.accessModifiers =
             Arrays.copyOf(accessModifiers, accessModifiers.length);
     }
@@ -232,7 +232,7 @@ public class ParameterNameCheck extends AbstractNameCheck {
     }
 
     @Override
-    protected boolean mustCheckName(DetailAST ast) {
+    protected boolean mustCheckName(final DetailAST ast) {
         boolean checkName = true;
         if (ignoreOverridden && isOverriddenMethod(ast)
                 || ast.getParent().getType() == TokenTypes.LITERAL_CATCH
@@ -257,8 +257,7 @@ public class ParameterNameCheck extends AbstractNameCheck {
 
         if (ScopeUtil.isInInterfaceOrAnnotationBlock(ast)) {
             accessModifier = AccessModifier.PUBLIC;
-        }
-        else {
+        } else {
             final DetailAST params = ast.getParent();
             final DetailAST meth = params.getParent();
             final DetailAST modsToken = meth.findFirstToken(TokenTypes.MODIFIERS);
@@ -282,7 +281,7 @@ public class ParameterNameCheck extends AbstractNameCheck {
      * @param ast method parameter definition token.
      * @return true if a method is annotated with Override annotation.
      */
-    private static boolean isOverriddenMethod(DetailAST ast) {
+    private static boolean isOverriddenMethod(final DetailAST ast) {
         boolean overridden = false;
 
         final DetailAST parent = ast.getParent().getParent();

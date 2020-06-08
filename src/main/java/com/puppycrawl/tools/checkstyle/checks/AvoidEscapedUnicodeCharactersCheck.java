@@ -268,7 +268,7 @@ public class AvoidEscapedUnicodeCharactersCheck
      * Setter to allow use escapes for non-printable, control characters.
      * @param allow user's value.
      */
-    public final void setAllowEscapesForControlCharacters(boolean allow) {
+    public final void setAllowEscapesForControlCharacters(final boolean allow) {
         allowEscapesForControlCharacters = allow;
     }
 
@@ -276,7 +276,7 @@ public class AvoidEscapedUnicodeCharactersCheck
      * Setter to allow use escapes if trail comment is present.
      * @param allow user's value.
      */
-    public final void setAllowByTailComment(boolean allow) {
+    public final void setAllowByTailComment(final boolean allow) {
         allowByTailComment = allow;
     }
 
@@ -284,7 +284,7 @@ public class AvoidEscapedUnicodeCharactersCheck
      * Setter to allow if all characters in literal are escaped.
      * @param allow user's value.
      */
-    public final void setAllowIfAllCharactersEscaped(boolean allow) {
+    public final void setAllowIfAllCharactersEscaped(final boolean allow) {
         allowIfAllCharactersEscaped = allow;
     }
 
@@ -292,7 +292,7 @@ public class AvoidEscapedUnicodeCharactersCheck
      * Setter to allow use escapes for non-printable, whitespace characters.
      * @param allow user's value.
      */
-    public final void setAllowNonPrintableEscapes(boolean allow) {
+    public final void setAllowNonPrintableEscapes(final boolean allow) {
         allowNonPrintableEscapes = allow;
     }
 
@@ -312,13 +312,13 @@ public class AvoidEscapedUnicodeCharactersCheck
     }
 
     @Override
-    public void beginTree(DetailAST rootAST) {
+    public void beginTree(final DetailAST rootAST) {
         singlelineComments = getFileContents().getSingleLineComments();
         blockComments = getFileContents().getBlockComments();
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         final String literal = ast.getText();
 
         if (hasUnicodeChar(literal) && !(allowByTailComment && hasTrailComment(ast)
@@ -336,7 +336,7 @@ public class AvoidEscapedUnicodeCharactersCheck
      * @param literal String literal.
      * @return true if literal has Unicode chars.
      */
-    private static boolean hasUnicodeChar(String literal) {
+    private static boolean hasUnicodeChar(final String literal) {
         final String literalWithoutEscapedBackslashes =
                 ESCAPED_BACKSLASH.matcher(literal).replaceAll("");
         return UNICODE_REGEXP.matcher(literalWithoutEscapedBackslashes).find();
@@ -348,7 +348,7 @@ public class AvoidEscapedUnicodeCharactersCheck
      * @param pattern RegExp for valid characters.
      * @return true, if String literal contains Unicode control chars.
      */
-    private static boolean isOnlyUnicodeValidChars(String literal, Pattern pattern) {
+    private static boolean isOnlyUnicodeValidChars(final String literal, final Pattern pattern) {
         final int unicodeMatchesCounter =
                 countMatches(UNICODE_REGEXP, literal);
         final int unicodeValidMatchesCounter =
@@ -361,13 +361,12 @@ public class AvoidEscapedUnicodeCharactersCheck
      * @param ast current token.
      * @return true if trail comment is present after ast token.
      */
-    private boolean hasTrailComment(DetailAST ast) {
+    private boolean hasTrailComment(final DetailAST ast) {
         boolean result = false;
         final int lineNo = ast.getLineNo();
         if (singlelineComments.containsKey(lineNo)) {
             result = true;
-        }
-        else {
+        } else {
             final List<TextBlock> commentList = blockComments.get(lineNo);
             if (commentList != null) {
                 final TextBlock comment = commentList.get(commentList.size() - 1);
@@ -384,7 +383,7 @@ public class AvoidEscapedUnicodeCharactersCheck
      * @param line the line where the comment starts.
      * @return true if the comment is trailing.
      */
-    private static boolean isTrailingBlockComment(TextBlock comment, String line) {
+    private static boolean isTrailingBlockComment(final TextBlock comment, final String line) {
         return comment.getText().length != 1
             || CommonUtil.isBlank(line.substring(comment.getEndColNo() + 1));
     }
@@ -395,7 +394,7 @@ public class AvoidEscapedUnicodeCharactersCheck
      * @param target String literal.
      * @return count of regexp matches.
      */
-    private static int countMatches(Pattern pattern, String target) {
+    private static int countMatches(final Pattern pattern, final String target) {
         int matcherCounter = 0;
         final Matcher matcher = pattern.matcher(target);
         while (matcher.find()) {
@@ -409,7 +408,7 @@ public class AvoidEscapedUnicodeCharactersCheck
      * @param literal current literal.
      * @return true if all characters in String literal is escaped.
      */
-    private boolean isAllCharactersEscaped(String literal) {
+    private boolean isAllCharactersEscaped(final String literal) {
         return allowIfAllCharactersEscaped
                 && ALL_ESCAPED_CHARS.matcher(literal.substring(1,
                         literal.length() - 1)).find();

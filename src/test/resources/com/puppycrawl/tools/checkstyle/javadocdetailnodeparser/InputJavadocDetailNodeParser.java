@@ -7,4 +7,4 @@ package com.puppycrawl.tools.checkstyle.javadocdetailnodeparser;
  *
  * @see <a href="http://code.google.com">Documentation about GWT emulated source</a>
  */
-public class InputJavadocDetailNodeParser {}
+public class InputJavadocDetailNodeParser { }

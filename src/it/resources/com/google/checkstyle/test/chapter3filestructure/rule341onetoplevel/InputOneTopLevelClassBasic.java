@@ -59,7 +59,7 @@ class CloneWithTypeArgumentsAndNoSuper //warn
 //Check that super keyword isn't snagged here
 class MyClassWithGenericSuperMethod //warn
 {
-    void someMethod(java.util.List<? super java.util.Map> l)
+    void someMethod(final java.util.List<? super java.util.Map> l)
     {
         //Some code
     }
@@ -69,7 +69,7 @@ class MyClassWithGenericSuperMethod //warn
      * @param o some object
      * @return a cloned Object?
      */
-    public static Object clone(Object o) {
+    public static Object clone(final Object o) {
     return null;
     }
 }
@@ -82,7 +82,7 @@ class AnotherClass { //warn
      * @param <T> a type
      * @return a cloned type?
      */
-    public <T> T clone(T t) {
+    public <T> T clone(final T t) {
     return null;
     }
 }

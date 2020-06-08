@@ -171,7 +171,7 @@ public class NeedBracesCheck extends AbstractCheck {
      * Setter to allow single-line statements without braces.
      * @param allowSingleLineStatement Check's option for skipping single-line statements
      */
-    public void setAllowSingleLineStatement(boolean allowSingleLineStatement) {
+    public void setAllowSingleLineStatement(final boolean allowSingleLineStatement) {
         this.allowSingleLineStatement = allowSingleLineStatement;
     }
 
@@ -179,7 +179,7 @@ public class NeedBracesCheck extends AbstractCheck {
      * Setter to allow loops with empty bodies.
      * @param allowEmptyLoopBody Check's option for allowing loops with empty body.
      */
-    public void setAllowEmptyLoopBody(boolean allowEmptyLoopBody) {
+    public void setAllowEmptyLoopBody(final boolean allowEmptyLoopBody) {
         this.allowEmptyLoopBody = allowEmptyLoopBody;
     }
 
@@ -214,7 +214,7 @@ public class NeedBracesCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         final boolean hasNoSlist = ast.findFirstToken(TokenTypes.SLIST) == null;
         if (hasNoSlist && !isSkipStatement(ast) && isBracesNeeded(ast)) {
             log(ast.getLineNo(), MSG_KEY_NEED_BRACES, ast.getText());
@@ -236,7 +236,7 @@ public class NeedBracesCheck extends AbstractCheck {
      * @return result of additional checks for specific token types,
      * {@code true} if there is no additional checks for token
      */
-    private boolean isBracesNeeded(DetailAST ast) {
+    private boolean isBracesNeeded(final DetailAST ast) {
         final boolean result;
         switch (ast.getType()) {
             case TokenTypes.LITERAL_FOR:
@@ -262,7 +262,7 @@ public class NeedBracesCheck extends AbstractCheck {
      * @param ast for, while statements.
      * @return true if current loop can be skipped by check.
      */
-    private boolean isEmptyLoopBodyAllowed(DetailAST ast) {
+    private boolean isEmptyLoopBodyAllowed(final DetailAST ast) {
         return allowEmptyLoopBody && ast.findFirstToken(TokenTypes.EMPTY_STAT) != null;
     }
 
@@ -271,7 +271,7 @@ public class NeedBracesCheck extends AbstractCheck {
      * @param ast case, default statements.
      * @return true if switch member has unbraced statements, false otherwise.
      */
-    private static boolean hasUnbracedStatements(DetailAST ast) {
+    private static boolean hasUnbracedStatements(final DetailAST ast) {
         final DetailAST nextSibling = ast.getNextSibling();
         return nextSibling != null
             && nextSibling.getType() == TokenTypes.SLIST
@@ -283,7 +283,7 @@ public class NeedBracesCheck extends AbstractCheck {
      * @param statement if, for, while, do-while, lambda, else, case, default statements.
      * @return true if current statement can be skipped by Check.
      */
-    private boolean isSkipStatement(DetailAST statement) {
+    private boolean isSkipStatement(final DetailAST statement) {
         return allowSingleLineStatement && isSingleLineStatement(statement);
     }
 
@@ -302,7 +302,7 @@ public class NeedBracesCheck extends AbstractCheck {
      * @param statement if, for, while, do-while, lambda, else, case, default statements.
      * @return true if current statement is single-line statement.
      */
-    private static boolean isSingleLineStatement(DetailAST statement) {
+    private static boolean isSingleLineStatement(final DetailAST statement) {
         final boolean result;
 
         switch (statement.getType()) {
@@ -343,7 +343,7 @@ public class NeedBracesCheck extends AbstractCheck {
      * @param literalWhile {@link TokenTypes#LITERAL_WHILE while statement}.
      * @return true if current while statement is single-line statement.
      */
-    private static boolean isSingleLineWhile(DetailAST literalWhile) {
+    private static boolean isSingleLineWhile(final DetailAST literalWhile) {
         boolean result = false;
         if (literalWhile.getParent().getType() == TokenTypes.SLIST) {
             final DetailAST block = literalWhile.getLastChild().getPreviousSibling();
@@ -362,7 +362,7 @@ public class NeedBracesCheck extends AbstractCheck {
      * @param literalDo {@link TokenTypes#LITERAL_DO do-while statement}.
      * @return true if current do-while statement is single-line statement.
      */
-    private static boolean isSingleLineDoWhile(DetailAST literalDo) {
+    private static boolean isSingleLineDoWhile(final DetailAST literalDo) {
         boolean result = false;
         if (literalDo.getParent().getType() == TokenTypes.SLIST) {
             final DetailAST block = literalDo.getFirstChild();
@@ -381,12 +381,11 @@ public class NeedBracesCheck extends AbstractCheck {
      * @param literalFor {@link TokenTypes#LITERAL_FOR for statement}.
      * @return true if current for statement is single-line statement.
      */
-    private static boolean isSingleLineFor(DetailAST literalFor) {
+    private static boolean isSingleLineFor(final DetailAST literalFor) {
         boolean result = false;
         if (literalFor.getLastChild().getType() == TokenTypes.EMPTY_STAT) {
             result = true;
-        }
-        else if (literalFor.getParent().getType() == TokenTypes.SLIST) {
+        } else if (literalFor.getParent().getType() == TokenTypes.SLIST) {
             result = TokenUtil.areOnSameLine(literalFor, literalFor.getLastChild());
         }
         return result;
@@ -402,15 +401,14 @@ public class NeedBracesCheck extends AbstractCheck {
      * @param literalIf {@link TokenTypes#LITERAL_IF if statement}.
      * @return true if current if statement is single-line statement.
      */
-    private static boolean isSingleLineIf(DetailAST literalIf) {
+    private static boolean isSingleLineIf(final DetailAST literalIf) {
         boolean result = false;
         if (literalIf.getParent().getType() == TokenTypes.SLIST) {
             final DetailAST literalIfLastChild = literalIf.getLastChild();
             final DetailAST block;
             if (literalIfLastChild.getType() == TokenTypes.LITERAL_ELSE) {
                 block = literalIfLastChild.getPreviousSibling();
-            }
-            else {
+            } else {
                 block = literalIfLastChild;
             }
             final DetailAST ifCondition = literalIf.findFirstToken(TokenTypes.EXPR);
@@ -429,7 +427,7 @@ public class NeedBracesCheck extends AbstractCheck {
      * @param lambda {@link TokenTypes#LAMBDA lambda statement}.
      * @return true if current lambda statement is single-line statement.
      */
-    private static boolean isSingleLineLambda(DetailAST lambda) {
+    private static boolean isSingleLineLambda(final DetailAST lambda) {
         final DetailAST lastLambdaToken = getLastLambdaToken(lambda);
         return TokenUtil.areOnSameLine(lambda, lastLambdaToken);
     }
@@ -440,7 +438,7 @@ public class NeedBracesCheck extends AbstractCheck {
      * @param lambda token to check.
      * @return last token in lambda
      */
-    private static DetailAST getLastLambdaToken(DetailAST lambda) {
+    private static DetailAST getLastLambdaToken(final DetailAST lambda) {
         DetailAST node = lambda;
         do {
             node = node.getLastChild();
@@ -462,7 +460,7 @@ public class NeedBracesCheck extends AbstractCheck {
      * {@link TokenTypes#LITERAL_DEFAULT default statement}.
      * @return true if current switch member is single-line statement.
      */
-    private static boolean isSingleLineSwitchMember(DetailAST ast) {
+    private static boolean isSingleLineSwitchMember(final DetailAST ast) {
         return Optional.of(ast)
                 .map(DetailAST::getNextSibling)
                 .map(DetailAST::getLastChild)
@@ -480,7 +478,7 @@ public class NeedBracesCheck extends AbstractCheck {
      * @param literalElse {@link TokenTypes#LITERAL_ELSE else statement}.
      * @return true if current else statement is single-line statement.
      */
-    private static boolean isSingleLineElse(DetailAST literalElse) {
+    private static boolean isSingleLineElse(final DetailAST literalElse) {
         final DetailAST block = literalElse.getFirstChild();
         return TokenUtil.areOnSameLine(literalElse, block);
     }

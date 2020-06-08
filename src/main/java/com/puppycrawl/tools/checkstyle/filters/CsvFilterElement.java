@@ -45,7 +45,7 @@ class CsvFilterElement implements IntFilterElement {
      * @throws NumberFormatException if a component substring does not
      *     contain a parsable integer.
      */
-    /* package */ CsvFilterElement(String pattern) {
+    /* package */ CsvFilterElement(final String pattern) {
         final StringTokenizer tokenizer = new StringTokenizer(pattern, ",");
         while (tokenizer.hasMoreTokens()) {
             final String token = tokenizer.nextToken().trim();
@@ -53,8 +53,7 @@ class CsvFilterElement implements IntFilterElement {
             if (index == -1) {
                 final int matchValue = Integer.parseInt(token);
                 addFilter(new IntMatchFilterElement(matchValue));
-            }
-            else {
+            } else {
                 final int lowerBound =
                     Integer.parseInt(token.substring(0, index));
                 final int upperBound =
@@ -68,7 +67,7 @@ class CsvFilterElement implements IntFilterElement {
      * Adds a IntFilterElement to the set.
      * @param filter the IntFilterElement to add.
      */
-    private void addFilter(IntFilterElement filter) {
+    private void addFilter(final IntFilterElement filter) {
         filters.add(filter);
     }
 
@@ -86,7 +85,7 @@ class CsvFilterElement implements IntFilterElement {
      * @return true if intValue is an Integer that matches a CSV value.
      */
     @Override
-    public boolean accept(int intValue) {
+    public boolean accept(final int intValue) {
         boolean result = false;
         for (IntFilterElement filter : getFilters()) {
             if (filter.accept(intValue)) {
@@ -98,7 +97,7 @@ class CsvFilterElement implements IntFilterElement {
     }
 
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(final Object object) {
         if (this == object) {
             return true;
         }

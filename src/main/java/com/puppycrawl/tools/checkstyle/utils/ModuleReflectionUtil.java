@@ -54,7 +54,7 @@ public final class ModuleReflectionUtil {
      * @see #isCheckstyleModule(Class)
      */
     public static Set<Class<?>> getCheckstyleModules(
-            Collection<String> packages, ClassLoader loader) throws IOException {
+            final Collection<String> packages, final ClassLoader loader) throws IOException {
         final ClassPath classPath = ClassPath.from(loader);
         return packages.stream()
                 .flatMap(pkg -> classPath.getTopLevelClasses(pkg).stream())
@@ -70,7 +70,7 @@ public final class ModuleReflectionUtil {
      * @param clazz class to check.
      * @return true if the class may be considered as the checkstyle module.
      */
-    public static boolean isCheckstyleModule(Class<?> clazz) {
+    public static boolean isCheckstyleModule(final Class<?> clazz) {
         return isValidCheckstyleClass(clazz)
             && (isCheckstyleTreeWalkerCheck(clazz)
                     || isFileSetModule(clazz)
@@ -87,7 +87,7 @@ public final class ModuleReflectionUtil {
      * @param clazz class to check.
      * @return true if a class may be considered a valid production class.
      */
-    public static boolean isValidCheckstyleClass(Class<?> clazz) {
+    public static boolean isValidCheckstyleClass(final Class<?> clazz) {
         return AutomaticBean.class.isAssignableFrom(clazz)
                 && !Modifier.isAbstract(clazz.getModifiers())
                 && hasDefaultConstructor(clazz)
@@ -99,7 +99,7 @@ public final class ModuleReflectionUtil {
      * @param clazz class to check
      * @return true if the class has a default constructor.
      */
-    private static boolean hasDefaultConstructor(Class<?> clazz) {
+    private static boolean hasDefaultConstructor(final Class<?> clazz) {
         boolean result = false;
         for (Constructor<?> constructor : clazz.getDeclaredConstructors()) {
             if (constructor.getParameterCount() == 0) {
@@ -117,7 +117,7 @@ public final class ModuleReflectionUtil {
      * @param clazz class to check.
      * @return true if a class may be considered as the checkstyle check.
      */
-    public static boolean isCheckstyleTreeWalkerCheck(Class<?> clazz) {
+    public static boolean isCheckstyleTreeWalkerCheck(final Class<?> clazz) {
         return AbstractCheck.class.isAssignableFrom(clazz);
     }
 
@@ -127,7 +127,7 @@ public final class ModuleReflectionUtil {
      * @param clazz class to check.
      * @return true if a class may be considered as the checkstyle file set.
      */
-    public static boolean isFileSetModule(Class<?> clazz) {
+    public static boolean isFileSetModule(final Class<?> clazz) {
         return AbstractFileSetCheck.class.isAssignableFrom(clazz);
     }
 
@@ -137,7 +137,7 @@ public final class ModuleReflectionUtil {
      * @param clazz class to check.
      * @return true if a class may be considered as the checkstyle filter.
      */
-    public static boolean isFilterModule(Class<?> clazz) {
+    public static boolean isFilterModule(final Class<?> clazz) {
         return Filter.class.isAssignableFrom(clazz);
     }
 
@@ -147,7 +147,7 @@ public final class ModuleReflectionUtil {
      * @param clazz class to check.
      * @return true if a class may be considered as the checkstyle file filter.
      */
-    public static boolean isFileFilterModule(Class<?> clazz) {
+    public static boolean isFileFilterModule(final Class<?> clazz) {
         return BeforeExecutionFileFilter.class.isAssignableFrom(clazz);
     }
 
@@ -157,7 +157,7 @@ public final class ModuleReflectionUtil {
      * @param clazz class to check.
      * @return true if a class may be considered as the checkstyle audit listener module.
      */
-    public static boolean isAuditListener(Class<?> clazz) {
+    public static boolean isAuditListener(final Class<?> clazz) {
         return AuditListener.class.isAssignableFrom(clazz);
     }
 
@@ -167,7 +167,7 @@ public final class ModuleReflectionUtil {
      * @param clazz class to check.
      * @return true if a class may be considered as the checkstyle root module.
      */
-    public static boolean isRootModule(Class<?> clazz) {
+    public static boolean isRootModule(final Class<?> clazz) {
         return RootModule.class.isAssignableFrom(clazz);
     }
 
@@ -178,7 +178,7 @@ public final class ModuleReflectionUtil {
      * @param clazz class to check.
      * @return true if a class may be considered as the checkstyle {@code TreeWalker} filter.
      */
-    public static boolean isTreeWalkerFilterModule(Class<?> clazz) {
+    public static boolean isTreeWalkerFilterModule(final Class<?> clazz) {
         return TreeWalkerFilter.class.isAssignableFrom(clazz);
     }
 
@@ -189,7 +189,7 @@ public final class ModuleReflectionUtil {
      * @param clazz class to check.
      * @return true if a class name starts with `XpathFileGenerator`.
      */
-    private static boolean isNotXpathFileGenerator(Class<?> clazz) {
+    private static boolean isNotXpathFileGenerator(final Class<?> clazz) {
         return !clazz.getSimpleName().startsWith("XpathFileGenerator");
     }
 }

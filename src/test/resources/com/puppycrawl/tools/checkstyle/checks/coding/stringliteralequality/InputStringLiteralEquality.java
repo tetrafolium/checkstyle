@@ -6,7 +6,7 @@ import java.util.Locale;
  */
 public class InputStringLiteralEquality
 {
-    void foo(String name)
+    void foo(final String name)
     {
         if (name == "Lars")
         {

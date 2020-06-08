@@ -26,7 +26,7 @@ public final class TestBeforeExecutionFileFilter implements BeforeExecutionFileF
     private boolean called;
 
     @Override
-    public boolean accept(String uri) {
+    public boolean accept(final String uri) {
         called = true;
         return true;
     }

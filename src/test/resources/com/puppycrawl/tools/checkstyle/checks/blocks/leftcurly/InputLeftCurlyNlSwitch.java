@@ -45,7 +45,7 @@ public class InputLeftCurlyNlSwitch
         switch (x)
         {
             case 0
-            :{ // warn
+            : { // warn
                 break;
             }
             default:

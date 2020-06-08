@@ -2,21 +2,21 @@ package com.google.checkstyle.test.chapter5naming.rule528typevariablenames;
 
 import java.io.Serializable;
 
-public class InputInterfaceTypeParameterName <t>
+public class InputInterfaceTypeParameterName<t>
 {
     public <TT> void foo() { }
 
-    <e_e> void foo(int i) {
+    <e_e> void foo(final int i) {
     }
 }
 
-class OtherClass <foo extends Serializable & Cloneable> {
+class OtherClass<foo extends Serializable & Cloneable> {
 
     foo getOne() {
-        return null;//comment
+        return null; //comment
     }
 
-    <Tfo$o2T extends foo> /*comment*/Tfo$o2T getTwo(Tfo$o2T a) {
+    <Tfo$o2T extends foo> /*comment*/Tfo$o2T getTwo(final Tfo$o2T a) {
         return null;
     }
 
@@ -24,13 +24,13 @@ class OtherClass <foo extends Serializable & Cloneable> {
         return null;
     }
 
-    static class Junk <foo> {
+    static class Junk<foo> {
         <_fo extends foo> void getMoreFoo() {
         }
     }
 }
 
-class MoreOtherClass <T extends Cloneable> {
+class MoreOtherClass<T extends Cloneable> {
 
     <E extends T> void getMore() {
         new Other() {

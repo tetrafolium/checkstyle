@@ -14,17 +14,17 @@ class InputOperatorWrap
 {
     void test()
     {
-        int x = 1 +
-            2 -
-            3
+        int x = 1
+            + 2
+            - 3
             -
             4;
         x = x + 2;
         boolean y = true
             &&
             false;
-        y = true &&
-            false;
+        y = true
+            && false;
         y = false
             && true;
         Arrays.sort(null, String
@@ -45,8 +45,8 @@ class InputOperatorWrap
     }
 
     <
-        T extends Comparable &
-        java.io.Serializable
+        T extends Comparable
+        & java.io.Serializable
     >
     void testGenerics1()
     {
@@ -58,25 +58,25 @@ class InputOperatorWrap
     }
 }
 
-class badCase2<T extends Foo &
-    Bar> {
+class badCase2<T extends Foo
+    & Bar> {
 }
 
 class goodCase<T extends Foo & Bar> {
 }
 
 class Switch {
-    public void test(int i, int j) {
-        switch(j) {
+    public void test(final int i, final int j) {
+        switch (j) {
         case 7:
             return;
         }
-        switch(i) {
+        switch (i) {
         case 1:
             break;
         default:
             ;
         }
-        for (int k : new int[]{1,2,3}) {}
+        for (int k : new int[]{1, 2, 3}) { }
     }
 }

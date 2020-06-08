@@ -6,4 +6,4 @@ import java.util.List; // VIOLATION
 /**
  * Use {@link Map.Entry} in this javadoc.
  */
-public class InputUnusedImportsJavadocQualifiedName {}
+public class InputUnusedImportsJavadocQualifiedName { }

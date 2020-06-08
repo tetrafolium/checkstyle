@@ -8,7 +8,7 @@ public class InputMethodCount7 {
     }
 
     enum InnerEnum {
-        ;
+;
 
         public static void test1() {
             Runnable r = (new Runnable() {

@@ -31,12 +31,12 @@ class IntMatchFilterElement implements IntFilterElement {
      * Constructs a MatchFilter for an int.
      * @param matchValue the matching int.
      */
-    /* package */ IntMatchFilterElement(int matchValue) {
+    /* package */ IntMatchFilterElement(final int matchValue) {
         this.matchValue = matchValue;
     }
 
     @Override
-    public boolean accept(int intValue) {
+    public boolean accept(final int intValue) {
         return matchValue == intValue;
     }
 
@@ -51,7 +51,7 @@ class IntMatchFilterElement implements IntFilterElement {
     }
 
     @Override
-    public final boolean equals(Object object) {
+    public final boolean equals(final Object object) {
         if (object instanceof IntMatchFilterElement) {
             final IntMatchFilterElement other = (IntMatchFilterElement) object;
             return matchValue == other.matchValue;

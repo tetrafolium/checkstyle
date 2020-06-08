@@ -71,7 +71,7 @@ public class MissingSwitchDefaultCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         final DetailAST firstCaseGroupAst = ast.findFirstToken(TokenTypes.CASE_GROUP);
 
         if (!containsDefaultSwitch(firstCaseGroupAst)) {
@@ -84,7 +84,7 @@ public class MissingSwitchDefaultCheck extends AbstractCheck {
      * @param caseGroupAst first case group to check.
      * @return true if 'default' switch found.
      */
-    private static boolean containsDefaultSwitch(DetailAST caseGroupAst) {
+    private static boolean containsDefaultSwitch(final DetailAST caseGroupAst) {
         DetailAST nextAst = caseGroupAst;
         boolean found = false;
 

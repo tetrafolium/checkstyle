@@ -89,7 +89,7 @@ public class MissingJavadocPackageCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         final FileContents contents = getFileContents();
         if (contents.inPackageInfo() && !hasJavadoc(ast)) {
             log(ast.getLineNo(), MSG_PKG_JAVADOC_MISSING);
@@ -106,7 +106,7 @@ public class MissingJavadocPackageCheck extends AbstractCheck {
      * @param ast {@link TokenTypes#PACKAGE_DEF} token to check
      * @return true if there is javadoc, false otherwise
      */
-    private static boolean hasJavadoc(DetailAST ast) {
+    private static boolean hasJavadoc(final DetailAST ast) {
         final boolean hasJavadocBefore = ast.getPreviousSibling() != null
             && isJavadoc(ast.getPreviousSibling());
         return hasJavadocBefore || hasJavadocAboveAnnotation(ast);
@@ -118,7 +118,7 @@ public class MissingJavadocPackageCheck extends AbstractCheck {
      * @param ast package def
      * @return true if there is a javadoc, false otherwise
      */
-    private static boolean hasJavadocAboveAnnotation(DetailAST ast) {
+    private static boolean hasJavadocAboveAnnotation(final DetailAST ast) {
         final Optional<DetailAST> firstAnnotationChild = Optional.of(ast.getFirstChild())
             .map(DetailAST::getFirstChild)
             .map(DetailAST::getFirstChild);
@@ -140,7 +140,7 @@ public class MissingJavadocPackageCheck extends AbstractCheck {
      * @param ast token to check
      * @return true if ast is a javadoc comment, false otherwise
      */
-    private static boolean isJavadoc(DetailAST ast) {
+    private static boolean isJavadoc(final DetailAST ast) {
         return ast.getType() == TokenTypes.BLOCK_COMMENT_BEGIN && JavadocUtil.isJavadocComment(ast);
     }
 }

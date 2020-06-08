@@ -300,7 +300,7 @@ public class JavadocMethodCheck extends AbstractCheck {
      *
      * @param value user's value.
      */
-    public void setValidateThrows(boolean value) {
+    public void setValidateThrows(final boolean value) {
         validateThrows = value;
     }
 
@@ -309,7 +309,7 @@ public class JavadocMethodCheck extends AbstractCheck {
      *
      * @param userAnnotations user's value.
      */
-    public void setAllowedAnnotations(String... userAnnotations) {
+    public void setAllowedAnnotations(final String... userAnnotations) {
         allowedAnnotations = Arrays.asList(userAnnotations);
     }
 
@@ -318,7 +318,7 @@ public class JavadocMethodCheck extends AbstractCheck {
      *
      * @param scope a scope.
      */
-    public void setScope(Scope scope) {
+    public void setScope(final Scope scope) {
         this.scope = scope;
     }
 
@@ -327,7 +327,7 @@ public class JavadocMethodCheck extends AbstractCheck {
      *
      * @param excludeScope a scope.
      */
-    public void setExcludeScope(Scope excludeScope) {
+    public void setExcludeScope(final Scope excludeScope) {
         this.excludeScope = excludeScope;
     }
 
@@ -337,7 +337,7 @@ public class JavadocMethodCheck extends AbstractCheck {
      *
      * @param flag a {@code Boolean} value
      */
-    public void setAllowMissingParamTags(boolean flag) {
+    public void setAllowMissingParamTags(final boolean flag) {
         allowMissingParamTags = flag;
     }
 
@@ -347,7 +347,7 @@ public class JavadocMethodCheck extends AbstractCheck {
      *
      * @param flag a {@code Boolean} value
      */
-    public void setAllowMissingReturnTag(boolean flag) {
+    public void setAllowMissingReturnTag(final boolean flag) {
         allowMissingReturnTag = flag;
     }
 
@@ -378,19 +378,18 @@ public class JavadocMethodCheck extends AbstractCheck {
     }
 
     @Override
-    public void beginTree(DetailAST rootAST) {
+    public void beginTree(final DetailAST rootAST) {
         currentClassName = "";
         currentTypeParams.clear();
     }
 
     @Override
-    public final void visitToken(DetailAST ast) {
+    public final void visitToken(final DetailAST ast) {
         if (ast.getType() == TokenTypes.CLASS_DEF
                  || ast.getType() == TokenTypes.INTERFACE_DEF
                  || ast.getType() == TokenTypes.ENUM_DEF) {
             processClass(ast);
-        }
-        else {
+        } else {
             if (ast.getType() == TokenTypes.METHOD_DEF) {
                 processTypeParams(ast);
             }
@@ -399,7 +398,7 @@ public class JavadocMethodCheck extends AbstractCheck {
     }
 
     @Override
-    public final void leaveToken(DetailAST ast) {
+    public final void leaveToken(final DetailAST ast) {
         if (ast.getType() == TokenTypes.CLASS_DEF
             || ast.getType() == TokenTypes.INTERFACE_DEF
             || ast.getType() == TokenTypes.ENUM_DEF) {
@@ -412,13 +411,11 @@ public class JavadocMethodCheck extends AbstractCheck {
             if (dotIdx == -1) {
                 // looks like a topmost class
                 currentClassName = "";
-            }
-            else {
+            } else {
                 currentClassName = currentClassName.substring(0, dotIdx);
             }
             currentTypeParams.pop();
-        }
-        else if (ast.getType() == TokenTypes.METHOD_DEF) {
+        } else if (ast.getType() == TokenTypes.METHOD_DEF) {
             currentTypeParams.pop();
         }
     }
@@ -428,7 +425,7 @@ public class JavadocMethodCheck extends AbstractCheck {
      * @param ast the AST to process. Guaranteed to not be PACKAGE_DEF or
      *             IMPORT tokens.
      */
-    private void processAST(DetailAST ast) {
+    private void processAST(final DetailAST ast) {
         final Scope theScope = calculateScope(ast);
         if (shouldCheck(ast, theScope)) {
             final FileContents contents = getFileContents();
@@ -463,14 +460,13 @@ public class JavadocMethodCheck extends AbstractCheck {
      * @param ast the token for the method
      * @param comment the Javadoc comment
      */
-    private void checkComment(DetailAST ast, TextBlock comment) {
+    private void checkComment(final DetailAST ast, final TextBlock comment) {
         final List<JavadocTag> tags = getMethodTags(comment);
 
         if (!hasShortCircuitTag(ast, tags)) {
             if (ast.getType() == TokenTypes.ANNOTATION_FIELD_DEF) {
                 checkReturnTag(tags, ast.getLineNo(), true);
-            }
-            else {
+            } else {
                 final Iterator<JavadocTag> it = tags.iterator();
                 // Check for inheritDoc
                 boolean hasInheritDocTag = false;
@@ -512,8 +508,7 @@ public class JavadocMethodCheck extends AbstractCheck {
             if (!JavadocTagInfo.INHERIT_DOC.isValidOn(ast)) {
                 log(ast, MSG_INVALID_INHERIT_DOC);
             }
-        }
-        else {
+        } else {
             result = false;
         }
         return result;
@@ -532,8 +527,7 @@ public class JavadocMethodCheck extends AbstractCheck {
 
         if (ScopeUtil.isInInterfaceOrAnnotationBlock(ast)) {
             scope = Scope.PUBLIC;
-        }
-        else {
+        } else {
             final DetailAST mods = ast.findFirstToken(TokenTypes.MODIFIERS);
             scope = ScopeUtil.getScopeFromMods(mods);
         }
@@ -547,7 +541,7 @@ public class JavadocMethodCheck extends AbstractCheck {
      * @param comment the Javadoc comment
      * @return the tags found
      */
-    private static List<JavadocTag> getMethodTags(TextBlock comment) {
+    private static List<JavadocTag> getMethodTags(final TextBlock comment) {
         final String[] lines = comment.getText();
         final List<JavadocTag> tags = new ArrayList<>();
         int currentLine = comment.getStartLineNo() - 1;
@@ -570,23 +564,19 @@ public class JavadocMethodCheck extends AbstractCheck {
                 final int col = calculateTagColumn(javadocArgMatcher, i, startColumnNumber);
                 tags.add(new JavadocTag(currentLine, col, javadocArgMatcher.group(1),
                         javadocArgMatcher.group(2)));
-            }
-            else if (javadocArgMissingDescriptionMatcher.find()) {
+            } else if (javadocArgMissingDescriptionMatcher.find()) {
                 final int col = calculateTagColumn(javadocArgMissingDescriptionMatcher, i,
                     startColumnNumber);
                 tags.add(new JavadocTag(currentLine, col,
                     javadocArgMissingDescriptionMatcher.group(1),
                     javadocArgMissingDescriptionMatcher.group(2)));
-            }
-            else if (javadocNoargMatcher.find()) {
+            } else if (javadocNoargMatcher.find()) {
                 final int col = calculateTagColumn(javadocNoargMatcher, i, startColumnNumber);
                 tags.add(new JavadocTag(currentLine, col, javadocNoargMatcher.group(1)));
-            }
-            else if (noargCurlyMatcher.find()) {
+            } else if (noargCurlyMatcher.find()) {
                 final int col = calculateTagColumn(noargCurlyMatcher, i, startColumnNumber);
                 tags.add(new JavadocTag(currentLine, col, noargCurlyMatcher.group(1)));
-            }
-            else if (noargMultilineStart.find()) {
+            } else if (noargMultilineStart.find()) {
                 tags.addAll(getMultilineNoArgTags(noargMultilineStart, lines, i, currentLine));
             }
         }
@@ -600,8 +590,8 @@ public class JavadocMethodCheck extends AbstractCheck {
      * @param startColumnNumber column number of Javadoc comment beginning
      * @return column number
      */
-    private static int calculateTagColumn(Matcher javadocTagMatcher,
-            int lineNumber, int startColumnNumber) {
+    private static int calculateTagColumn(final Matcher javadocTagMatcher,
+            final int lineNumber, final int startColumnNumber) {
         int col = javadocTagMatcher.start(1) - 1;
         if (lineNumber == 0) {
             col += startColumnNumber;
@@ -646,7 +636,7 @@ public class JavadocMethodCheck extends AbstractCheck {
      * @param ast the method node.
      * @return the list of parameter nodes for ast.
      */
-    private static List<DetailAST> getParameters(DetailAST ast) {
+    private static List<DetailAST> getParameters(final DetailAST ast) {
         final DetailAST params = ast.findFirstToken(TokenTypes.PARAMETERS);
         final List<DetailAST> returnValue = new ArrayList<>();
 
@@ -669,7 +659,7 @@ public class JavadocMethodCheck extends AbstractCheck {
      * @param ast the method node.
      * @return the list of exception nodes for ast.
      */
-    private List<ExceptionInfo> getThrows(DetailAST ast) {
+    private List<ExceptionInfo> getThrows(final DetailAST ast) {
         final List<ExceptionInfo> returnValue = new ArrayList<>();
         final DetailAST throwsAST = ast
                 .findFirstToken(TokenTypes.LITERAL_THROWS);
@@ -694,7 +684,7 @@ public class JavadocMethodCheck extends AbstractCheck {
      * @param methodAst method DetailAST object where to find exceptions
      * @return list of ExceptionInfo
      */
-    private List<ExceptionInfo> getThrowed(DetailAST methodAst) {
+    private List<ExceptionInfo> getThrowed(final DetailAST methodAst) {
         final List<ExceptionInfo> returnValue = new ArrayList<>();
         final DetailAST blockAst = methodAst.findFirstToken(TokenTypes.SLIST);
         if (blockAst != null) {
@@ -719,8 +709,8 @@ public class JavadocMethodCheck extends AbstractCheck {
      * @param list2 list of ExceptionInfo
      * @return combined list of ExceptionInfo
      */
-    private static List<ExceptionInfo> combineExceptionInfo(List<ExceptionInfo> list1,
-                                                     List<ExceptionInfo> list2) {
+    private static List<ExceptionInfo> combineExceptionInfo(final List<ExceptionInfo> list1,
+                                                     final List<ExceptionInfo> list2) {
         final List<ExceptionInfo> result = new ArrayList<>(list1);
         for (ExceptionInfo expectionInfo : list2) {
             if (result.stream().noneMatch(item -> isExceptionInfoSame(item, expectionInfo))) {
@@ -737,7 +727,7 @@ public class JavadocMethodCheck extends AbstractCheck {
      * @param astType value of TokenType
      * @return {@link List} of {@link DetailAST} nodes which matches the predicate.
      */
-    public static List<DetailAST> findTokensInAstByType(DetailAST root, int astType) {
+    public static List<DetailAST> findTokensInAstByType(final DetailAST root, final int astType) {
         final List<DetailAST> result = new ArrayList<>();
         DetailAST curNode = root;
         while (curNode != null) {
@@ -767,7 +757,7 @@ public class JavadocMethodCheck extends AbstractCheck {
      *            expected tag
      */
     private void checkParamTags(final List<JavadocTag> tags,
-            final DetailAST parent, boolean reportExpectedTags) {
+            final DetailAST parent, final boolean reportExpectedTags) {
         final List<DetailAST> params = getParameters(parent);
         final List<DetailAST> typeParams = CheckUtil
                 .getTypeParameters(parent);
@@ -823,8 +813,8 @@ public class JavadocMethodCheck extends AbstractCheck {
      *            name of required type
      * @return true if required type found in type parameters.
      */
-    private static boolean searchMatchingTypeParameter(List<DetailAST> typeParams,
-            String requiredTypeName) {
+    private static boolean searchMatchingTypeParameter(final List<DetailAST> typeParams,
+            final String requiredTypeName) {
         // Loop looking for matching type param
         final Iterator<DetailAST> typeParamsIt = typeParams.iterator();
         boolean found = false;
@@ -846,7 +836,7 @@ public class JavadocMethodCheck extends AbstractCheck {
      * @param paramName name of parameter
      * @return true if parameter found and removed
      */
-    private static boolean removeMatchingParam(List<DetailAST> params, String paramName) {
+    private static boolean removeMatchingParam(final List<DetailAST> params, final String paramName) {
         boolean found = false;
         final Iterator<DetailAST> paramIt = params.iterator();
         while (paramIt.hasNext()) {
@@ -869,8 +859,8 @@ public class JavadocMethodCheck extends AbstractCheck {
      * @param reportExpectedTags whether we should report if do not find
      *            expected tag
      */
-    private void checkReturnTag(List<JavadocTag> tags, int lineNo,
-        boolean reportExpectedTags) {
+    private void checkReturnTag(final List<JavadocTag> tags, final int lineNo,
+        final boolean reportExpectedTags) {
         // Loop over tags finding return tags. After the first one, report an
         // violation.
         boolean found = false;
@@ -903,8 +893,8 @@ public class JavadocMethodCheck extends AbstractCheck {
      * @param reportExpectedTags whether we should report if do not find
      *            expected tag
      */
-    private void checkThrowsTags(List<JavadocTag> tags,
-            List<ExceptionInfo> throwsList, boolean reportExpectedTags) {
+    private void checkThrowsTags(final List<JavadocTag> tags,
+            final List<ExceptionInfo> throwsList, final boolean reportExpectedTags) {
         // Loop over the tags, checking to see they exist in the throws.
         // The foundThrows used for performance only
         final Set<String> foundThrows = new HashSet<>();
@@ -944,8 +934,8 @@ public class JavadocMethodCheck extends AbstractCheck {
      * @param documentedClassInfo documented exception class info
      * @param foundThrows previously found throws
      */
-    private static void processThrows(List<ExceptionInfo> throwsList,
-                                      ClassInfo documentedClassInfo, Set<String> foundThrows) {
+    private static void processThrows(final List<ExceptionInfo> throwsList,
+                                      final ClassInfo documentedClassInfo, final Set<String> foundThrows) {
         ExceptionInfo foundException = null;
 
         // First look for matches on the exception name
@@ -969,7 +959,7 @@ public class JavadocMethodCheck extends AbstractCheck {
      * @param info2 ExceptionInfo object
      * @return true is ExceptionInfo object have the same name
      */
-    private static boolean isExceptionInfoSame(ExceptionInfo info1, ExceptionInfo info2) {
+    private static boolean isExceptionInfoSame(final ExceptionInfo info1, final ExceptionInfo info2) {
         return isClassNamesSame(info1.getName().getText(),
                                     info2.getName().getText());
     }
@@ -981,12 +971,11 @@ public class JavadocMethodCheck extends AbstractCheck {
      * @param class2 class name
      * @return true is ExceptionInfo object have the same name
      */
-    private static boolean isClassNamesSame(String class1, String class2) {
+    private static boolean isClassNamesSame(final String class1, final String class2) {
         boolean result = false;
         if (class1.equals(class2)) {
             result = true;
-        }
-        else {
+        } else {
             final String separator = ".";
             if (class1.contains(separator) || class2.contains(separator)) {
                 final String class1ShortName = class1
@@ -1003,7 +992,7 @@ public class JavadocMethodCheck extends AbstractCheck {
      * Process type params (if any) for given class, enum or method.
      * @param ast class, enum or method to process.
      */
-    private void processTypeParams(DetailAST ast) {
+    private void processTypeParams(final DetailAST ast) {
         final DetailAST params =
             ast.findFirstToken(TokenTypes.TYPE_PARAMETERS);
 
@@ -1035,7 +1024,7 @@ public class JavadocMethodCheck extends AbstractCheck {
      * Processes class definition.
      * @param ast class definition to process.
      */
-    private void processClass(DetailAST ast) {
+    private void processClass(final DetailAST ast) {
         final DetailAST ident = ast.findFirstToken(TokenTypes.IDENT);
         String innerClass = ident.getText();
 
@@ -1058,8 +1047,7 @@ public class JavadocMethodCheck extends AbstractCheck {
         final ClassInfo classInfo = findClassAlias(name.getText());
         if (classInfo == null) {
             result = new RegularClass(name, surroundingClass, this);
-        }
-        else {
+        } else {
             result = new ClassAlias(name, classInfo);
         }
         return result;
@@ -1159,7 +1147,7 @@ public class JavadocMethodCheck extends AbstractCheck {
          * @param name token which represents name of class alias.
          * @param classInfo class information associated with the alias.
          */
-        /* package */ ClassAlias(final Token name, ClassInfo classInfo) {
+        /* package */ ClassAlias(final Token name, final ClassInfo classInfo) {
             super(name);
             this.classInfo = classInfo;
         }
@@ -1189,7 +1177,7 @@ public class JavadocMethodCheck extends AbstractCheck {
          * @param lineNo token's line number
          * @param columnNo token's column number
          */
-        /* package */ Token(String text, int lineNo, int columnNo) {
+        /* package */ Token(final String text, final int lineNo, final int columnNo) {
             this.text = text;
             this.lineNo = lineNo;
             this.columnNo = columnNo;
@@ -1199,7 +1187,7 @@ public class JavadocMethodCheck extends AbstractCheck {
          * Converts FullIdent to Token.
          * @param fullIdent full ident to convert.
          */
-        /* package */ Token(FullIdent fullIdent) {
+        /* package */ Token(final FullIdent fullIdent) {
             text = fullIdent.getText();
             lineNo = fullIdent.getLineNo();
             columnNo = fullIdent.getColumnNo();
@@ -1250,7 +1238,7 @@ public class JavadocMethodCheck extends AbstractCheck {
          *
          * @param classInfo class info
          */
-        /* package */ ExceptionInfo(ClassInfo classInfo) {
+        /* package */ ExceptionInfo(final ClassInfo classInfo) {
             this.classInfo = classInfo;
         }
 

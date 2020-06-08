@@ -28,34 +28,41 @@ class InputInvalidJavadocPosition2 {
     int field21 /** violation */;
     @Deprecated /** violation */ int field22;
 
-    void method1() {}
+    void method1() { }
     /** valid */
-    void method2() {}
+    void method2() { }
     /** valid */
-    <T> T method3() { return null; }
+    <T> T method3() {
+        return null; }
     /** valid */
-    String[] method4() { return null; }
+    String[] method4() {
+        return null; }
 
-    void /** violation */ method20() {}
-    void method21 /** violation */ () {}
-    void method22(/** violation */) {}
-    void method23() /** violation */ {}
+    void /** violation */ method20() { }
+    void method21 /** violation */() { }
+    void method22(/** violation */) { }
+    void method23() /** violation */ { }
     void method24() { /** violation */ }
-    void method25() { /** violation */ int variable; }
+    void method25() {
+        /** violation */
+        int variable; }
 }
-@Deprecated
 /** violation */
-class InputInvalidJavadocPosition3 {}
+@Deprecated
+class InputInvalidJavadocPosition3 { }
 /** valid */
 @Deprecated
-class InputInvalidJavadocPosition4 {}
-class /** violation */ InputInvalidJavadocPosition5 {}
-class InputInvalidJavadocPosition6 /** violation */ {}
+class InputInvalidJavadocPosition4 { }
+class /** violation */ InputInvalidJavadocPosition5 { }
+class InputInvalidJavadocPosition6 /** violation */ { }
 class InputInvalidJavadocPosition7 {
     void method() {
-        /** violation */ int variable1;
-        /** violation */ final int variable2;
-        /** violation */ @Deprecated int variable3;
+        /** violation */
+        int variable1;
+        /** violation */
+        final int variable2;
+        /** violation */
+        @Deprecated int variable3;
     }
 }
 /** violation */

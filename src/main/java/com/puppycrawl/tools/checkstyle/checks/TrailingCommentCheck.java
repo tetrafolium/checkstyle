@@ -148,7 +148,7 @@ public class TrailingCommentCheck extends AbstractCheck {
      * Setter to specify pattern for strings allowed before the comment.
      * @param pattern a pattern
      */
-    public final void setFormat(Pattern pattern) {
+    public final void setFormat(final Pattern pattern) {
         format = pattern;
     }
 
@@ -168,12 +168,12 @@ public class TrailingCommentCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         throw new IllegalStateException("visitToken() shouldn't be called.");
     }
 
     @Override
-    public void beginTree(DetailAST rootAST) {
+    public void beginTree(final DetailAST rootAST) {
         final Map<Integer, TextBlock> cppComments = getFileContents()
                 .getSingleLineComments();
         final Map<Integer, List<TextBlock>> cComments = getFileContents()
@@ -189,8 +189,7 @@ public class TrailingCommentCheck extends AbstractCheck {
             if (cppComments.containsKey(lineNo)) {
                 comment = cppComments.get(lineNo);
                 lineBefore = line.substring(0, comment.getStartColNo());
-            }
-            else {
+            } else {
                 final List<TextBlock> commentList = cComments.get(lineNo);
                 comment = commentList.get(commentList.size() - 1);
                 lineBefore = line.substring(0, comment.getStartColNo());
@@ -221,8 +220,7 @@ public class TrailingCommentCheck extends AbstractCheck {
         // multi-line comment can not be legal
         if (legalComment == null || comment.getStartLineNo() != comment.getEndLineNo()) {
             legal = false;
-        }
-        else {
+        } else {
             String commentText = comment.getText()[0];
             // remove chars which start comment
             commentText = commentText.substring(2);

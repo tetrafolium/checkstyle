@@ -9,7 +9,7 @@ public class InputNoWhitespaceBeforeAtStartOfTheLine {
         }
     }
 
-    public <V> void methodName(V value) {
+    public <V> void methodName(final V value) {
         Supplier<?> t =
 A ::new;
     }

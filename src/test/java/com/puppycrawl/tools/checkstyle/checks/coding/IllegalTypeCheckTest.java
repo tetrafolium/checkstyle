@@ -331,8 +331,7 @@ public class IllegalTypeCheckTest extends AbstractModuleTestSupport {
         try {
             check.visitToken(classDefAst);
             fail("IllegalStateException is expected");
-        }
-        catch (IllegalStateException ex) {
+        } catch (IllegalStateException ex) {
             // it is OK
         }
     }

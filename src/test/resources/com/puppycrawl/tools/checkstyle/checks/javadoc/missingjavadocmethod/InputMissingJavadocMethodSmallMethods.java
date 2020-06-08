@@ -39,7 +39,7 @@ public class InputMissingJavadocMethodSmallMethods extends Some
     /**
      * Some javadoc.
      */
-    void foo4() {}
+    void foo4() { }
 
     //without comments
 
@@ -93,7 +93,7 @@ public class InputMissingJavadocMethodSmallMethods extends Some
     }
 }
 
-@interface MyAnnotation {}
+@interface MyAnnotation { }
 
 class Some {
     protected String foo11() {

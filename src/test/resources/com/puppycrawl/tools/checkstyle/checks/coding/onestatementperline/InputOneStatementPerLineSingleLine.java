@@ -128,7 +128,7 @@ public class InputOneStatementPerLineSingleLine {
    */
   public void doIllegal2() {
     one = 1
-    ; two = 2;
+; two = 2;
   }
 
   /**
@@ -147,7 +147,7 @@ public class InputOneStatementPerLineSingleLine {
    * @param sb The stringbuffer we want to append something
    * @param text The text to append
    */
-  private void appendToSpringBuffer(StringBuffer sb, String text) {
+  private void appendToSpringBuffer(final StringBuffer sb, final String text) {
     sb.append(text);
   }
 
@@ -229,20 +229,22 @@ public class InputOneStatementPerLineSingleLine {
     /**
      * a "forever" loop.
      */
-    for(;;){} //legal
+    for (;;) { } //legal
   }
 
   public void foo5() {
     /**
      *  One statement inside for block is legal
      */
-    for (;;) { one = 5; }
+    for (;;) {
+        one = 5; }
   }
 
   public void foo6() {
       bar(() -> {
-          return;}, () -> {return;});
+          return; }, () -> {
+              return; });
   }
 
-  void bar(Runnable r1, Runnable r2) { }
+  void bar(final Runnable r1, final Runnable r2) { }
 }

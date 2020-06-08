@@ -2,7 +2,7 @@ package com.google.checkstyle.test.chapter4formatting.rule4842fallthrough;
 
 public class InputFallThrough
 {
-    void method(int i, int j, boolean cond) {
+    void method(final int i, final int j, final boolean cond) {
         while (true) {
             switch (i) {
             case 0: // no problem
@@ -54,7 +54,7 @@ public class InputFallThrough
                 do {
                     System.identityHashCode("something");
                     return;
-                } while(true);
+                } while (true);
             case 16:
                 for (int j1 = 0; j1 < 10; j1++) {
                     System.identityHashCode("something");
@@ -64,7 +64,7 @@ public class InputFallThrough
                 while (true)
                     throw new RuntimeException("");
             case 18:
-                while(cond) {
+                while (cond) {
                     break;
                 }
             case 19:  //warn
@@ -130,7 +130,7 @@ public class InputFallThrough
 
 
     /* Like above, but all fall throughs with relief comment */
-    void methodFallThru(int i, int j, boolean cond) {
+    void methodFallThru(final int i, final int j, final boolean cond) {
       while (true) {
           switch (i) {
           case -1: // FALLTHRU
@@ -187,7 +187,7 @@ public class InputFallThrough
               do {
                   System.identityHashCode("something");
                   return;
-              } while(true);
+              } while (true);
           case 16:
               for (int j1 = 0; j1 < 10; j1++) {
                   System.identityHashCode("something");
@@ -197,7 +197,7 @@ public class InputFallThrough
               while (cond)
                   throw new RuntimeException("");
           case 18:
-              while(cond) {
+              while (cond) {
                   break;
               }
               // fallthru
@@ -272,9 +272,9 @@ public class InputFallThrough
    }
 
    /* Test relief comment. */
-   void methodFallThruCC(int i, int j, boolean cond) {
+   void methodFallThruCC(final int i, final int j, final boolean cond) {
       while (true) {
-          switch (i){
+          switch (i) {
           case 0:
               i++; // fallthru
 
@@ -297,9 +297,9 @@ public class InputFallThrough
    }
 
    /* Like above, but C-style comments. */
-   void methodFallThruC(int i, int j, boolean cond) {
+   void methodFallThruC(final int i, final int j, final boolean cond) {
       while (true) {
-          switch (i){
+          switch (i) {
           case 0:
               i++; /* fallthru */
 
@@ -318,9 +318,9 @@ public class InputFallThrough
    }
 
    /* Like above, but C-style comments with no spaces. */
-   void methodFallThruC2(int i, int j, boolean cond) {
+   void methodFallThruC2(final int i, final int j, final boolean cond) {
       while (true) {
-          switch (i){
+          switch (i) {
           case 0:
               i++; /*fallthru*/
 
@@ -339,9 +339,9 @@ public class InputFallThrough
    }
 
    /* C-style comments with other default fallthru-comment. */
-   void methodFallThruCOtherWords(int i, int j, boolean cond) {
+   void methodFallThruCOtherWords(final int i, final int j, final boolean cond) {
       while (true) {
-          switch (i){
+          switch (i) {
           case 0:
               i++; /* falls through */
 
@@ -360,9 +360,9 @@ public class InputFallThrough
    }
 
    /* C-style comments with custom fallthru-comment. */
-   void methodFallThruCustomWords(int i, int j, boolean cond) {
+   void methodFallThruCustomWords(final int i, final int j, final boolean cond) {
       while (true) {
-          switch (i){
+          switch (i) {
           case 0:
               i++; /* Continue with next case */
 
@@ -380,26 +380,26 @@ public class InputFallThrough
       }
    }
 
-   void methodFallThruLastCaseGroup(int i, int j, boolean cond) {
+   void methodFallThruLastCaseGroup(final int i, final int j, final boolean cond) {
        while (true) {
-           switch (i){
+           switch (i) {
            case 0:
                i++; // fallthru
            }
-           switch (i){
+           switch (i) {
            case 0:
                i++;
                // fallthru
            }
-           switch (i){
+           switch (i) {
            case 0:
                i++;
            /* fallthru */ }
        }
     }
 
-    void method1472228(int i) {
-        switch(i) {
+    void method1472228(final int i) {
+        switch (i) {
         case 2:
             // do nothing
             break;
@@ -408,9 +408,9 @@ public class InputFallThrough
     }
 
    /* Test relief comment. */
-   void methodFallThruWithDash(int i, int j, boolean cond) {
+   void methodFallThruWithDash(final int i, final int j, final boolean cond) {
       while (true) {
-          switch (i){
+          switch (i) {
               case 0:
                   i++; // fallthru
               case 1:

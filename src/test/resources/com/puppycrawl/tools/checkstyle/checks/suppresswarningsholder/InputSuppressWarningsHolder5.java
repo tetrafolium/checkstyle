@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 
-public class InputSuppressWarningsHolder5{
+public class InputSuppressWarningsHolder5 {
 
-    public static Object foo1(@SuppressWarnings("unused") Object str) {
+    public static Object foo1(final @SuppressWarnings("unused") Object str) {
         String myString = (@SuppressWarnings("unused") String) str;
         Object object = new @SuppressWarnings("unused") Object();
         try {
@@ -28,7 +28,7 @@ public class InputSuppressWarningsHolder5{
         myObject.new @SuppressWarnings("unused") MyObject2();
     }
 
-    public static <T> void foo4(Object str) {
+    public static <T> void foo4(final Object str) {
         List<@SuppressWarnings("unused") ? extends Comparable<T>> unchangeable;
     }
 
@@ -36,11 +36,11 @@ public class InputSuppressWarningsHolder5{
     implements @SuppressWarnings("unused") List<@SuppressWarnings("unused") T> {
     }
 
-    class MyObject{
+    class MyObject {
 
-        public void myMethod(){};
+        public void myMethod() { };
 
-        class MyObject2{}
+        class MyObject2 { }
     }
 
     @Target(ElementType.TYPE_USE)

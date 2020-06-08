@@ -19,7 +19,7 @@ class CWhatever {
 }
 enum EWhatever {
     TEST() {
-        public void method(String s) {};
+        public void method(final String s) { };
     };
 
     public abstract void method(final String s); // violation

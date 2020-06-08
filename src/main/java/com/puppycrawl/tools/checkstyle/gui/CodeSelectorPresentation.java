@@ -45,7 +45,7 @@ public class CodeSelectorPresentation {
      * @param lines2position list to map lines.
      * @noinspection AssignmentOrReturnOfFieldWithMutableType
      */
-    public CodeSelectorPresentation(DetailAST ast, List<Integer> lines2position) {
+    public CodeSelectorPresentation(final DetailAST ast, final List<Integer> lines2position) {
         node = ast;
         this.lines2position = lines2position;
     }
@@ -56,7 +56,7 @@ public class CodeSelectorPresentation {
      * @param lines2position list to map lines.
      * @noinspection AssignmentOrReturnOfFieldWithMutableType
      */
-    public CodeSelectorPresentation(DetailNode node, List<Integer> lines2position) {
+    public CodeSelectorPresentation(final DetailNode node, final List<Integer> lines2position) {
         this.node = node;
         this.lines2position = lines2position;
     }
@@ -83,8 +83,7 @@ public class CodeSelectorPresentation {
     public void findSelectionPositions() {
         if (node instanceof DetailAST) {
             findSelectionPositions((DetailAST) node);
-        }
-        else {
+        } else {
             findSelectionPositions((DetailNode) node);
         }
     }
@@ -93,13 +92,12 @@ public class CodeSelectorPresentation {
      * Find start and end selection positions from AST line and Column.
      * @param ast DetailAST node for which selection finds
      */
-    private void findSelectionPositions(DetailAST ast) {
+    private void findSelectionPositions(final DetailAST ast) {
         selectionStart = lines2position.get(ast.getLineNo()) + ast.getColumnNo();
 
         if (ast.hasChildren() || !TokenUtil.getTokenName(ast.getType()).equals(ast.getText())) {
             selectionEnd = findLastPosition(ast);
-        }
-        else {
+        } else {
             selectionEnd = selectionStart;
         }
     }
@@ -108,7 +106,7 @@ public class CodeSelectorPresentation {
      * Find start and end selection positions from DetailNode line and Column.
      * @param detailNode DetailNode node for which selection finds
      */
-    private void findSelectionPositions(DetailNode detailNode) {
+    private void findSelectionPositions(final DetailNode detailNode) {
         selectionStart = lines2position.get(detailNode.getLineNumber())
                             + detailNode.getColumnNumber();
 
@@ -124,8 +122,7 @@ public class CodeSelectorPresentation {
         final int lastPosition;
         if (astNode.hasChildren()) {
             lastPosition = findLastPosition(astNode.getLastChild());
-        }
-        else {
+        } else {
             lastPosition = lines2position.get(astNode.getLineNo()) + astNode.getColumnNo()
                     + astNode.getText().length();
         }
@@ -142,8 +139,7 @@ public class CodeSelectorPresentation {
         if (detailNode.getChildren().length == 0) {
             lastPosition = lines2position.get(detailNode.getLineNumber())
                     + detailNode.getColumnNumber() + detailNode.getText().length();
-        }
-        else {
+        } else {
             final DetailNode lastChild =
                     detailNode.getChildren()[detailNode.getChildren().length - 1];
             lastPosition = findLastPosition(lastChild);

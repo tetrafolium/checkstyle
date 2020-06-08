@@ -6,7 +6,7 @@ import java.io.Serializable;
 /**
  * @author author-name <link rel="author license" href="/about">
  */
-public class InputAbstractJavadocNoWsBeforeDescriptionInJavadocTags implements Serializable{
+public class InputAbstractJavadocNoWsBeforeDescriptionInJavadocTags implements Serializable {
 
     /**
      * Parse Error from ANTLR.
@@ -56,7 +56,7 @@ public class InputAbstractJavadocNoWsBeforeDescriptionInJavadocTags implements S
      *
      * @param a-description
      */
-    private static void method3(int a) {
+    private static void method3(final int a) {
 
     }
 

@@ -53,5 +53,5 @@ class InputCommentsIndentationAfterAnnotation5 {
 
 }
 
-@interface AfterAnnotationCommentsAnnotation1 {}
-@interface AfterAnnotationCommentsAnnotation2 {}
+@interface AfterAnnotationCommentsAnnotation1 { }
+@interface AfterAnnotationCommentsAnnotation2 { }

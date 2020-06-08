@@ -62,8 +62,7 @@ public class TokenUtilTest {
         try {
             TokenUtil.getIntFromField(field, 0);
             fail("IllegalStateException is expected");
-        }
-        catch (IllegalStateException expected) {
+        } catch (IllegalStateException expected) {
             // The exception message may vary depending on the version of the JDK.
             // It will definitely contain the TokenUtil class name and the Integer class name.
             final String message = expected.getMessage();
@@ -123,8 +122,7 @@ public class TokenUtilTest {
         try {
             TokenUtil.getTokenName(nextAfterMaxId);
             fail("IllegalArgumentException is expected");
-        }
-        catch (IllegalArgumentException expectedException) {
+        } catch (IllegalArgumentException expectedException) {
             assertEquals("given id " + nextAfterMaxId, expectedException.getMessage(),
                     "Invalid exception message");
         }
@@ -152,8 +150,7 @@ public class TokenUtilTest {
         try {
             TokenUtil.getTokenName(id);
             fail("IllegalArgumentException is expected");
-        }
-        catch (IllegalArgumentException expected) {
+        } catch (IllegalArgumentException expected) {
             assertEquals("given id " + id, expected.getMessage(), "Invalid exception message");
         }
     }
@@ -164,8 +161,7 @@ public class TokenUtilTest {
         try {
             TokenUtil.getTokenId(id);
             fail("IllegalArgumentException is expected");
-        }
-        catch (IllegalArgumentException expected) {
+        } catch (IllegalArgumentException expected) {
             assertEquals("given name " + id, expected.getMessage(), "Invalid exception message");
         }
     }
@@ -176,8 +172,7 @@ public class TokenUtilTest {
         try {
             TokenUtil.getShortDescription(id);
             fail("IllegalArgumentException is expected");
-        }
-        catch (IllegalArgumentException expected) {
+        } catch (IllegalArgumentException expected) {
             assertEquals("given name " + id, expected.getMessage(), "Invalid exception message");
         }
     }

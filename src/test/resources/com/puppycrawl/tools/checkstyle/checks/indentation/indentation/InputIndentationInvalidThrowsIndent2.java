@@ -25,16 +25,17 @@ NullPointerException { //indent:0 exp:6 warn
  } //indent:1 exp:1
  double[] m8() //indent:1 exp:1
 throws //indent:0 exp:6 warn
-Exception { return null; //indent:0 exp:6 warn
+Exception {
+    return null; //indent:0 exp:6 warn
  } //indent:1 exp:1
  public InputIndentationInvalidThrowsIndent2() //indent:1 exp:1
-throws Exception {//indent:0 exp:6 warn
+throws Exception { //indent:0 exp:6 warn
  } //indent:1 exp:1
  @TestAnnotation //indent:1 exp:1
  public //indent:1 exp:1
     static //indent:4 exp:4
     void m9() //indent:4 exp:4
-throws Exception {} //indent:0 exp:6 warn
+throws Exception { } //indent:0 exp:6 warn
 } //indent:0 exp:0
 
-@interface TestAnnotation {} //indent:0 exp:0
+@interface TestAnnotation { } //indent:0 exp:0

@@ -163,7 +163,7 @@ public class MissingJavadocTypeCheck extends AbstractCheck {
      * Setter to specify the visibility scope where Javadoc comments are checked.
      * @param scope a scope.
      */
-    public void setScope(Scope scope) {
+    public void setScope(final Scope scope) {
         this.scope = scope;
     }
 
@@ -171,7 +171,7 @@ public class MissingJavadocTypeCheck extends AbstractCheck {
      * Setter to specify the visibility scope where Javadoc comments are not checked.
      * @param excludeScope a scope.
      */
-    public void setExcludeScope(Scope excludeScope) {
+    public void setExcludeScope(final Scope excludeScope) {
         this.excludeScope = excludeScope;
     }
 
@@ -180,7 +180,7 @@ public class MissingJavadocTypeCheck extends AbstractCheck {
      * Only short names are allowed, e.g. {@code Generated}.
      * @param userAnnotations user's value.
      */
-    public void setSkipAnnotations(String... userAnnotations) {
+    public void setSkipAnnotations(final String... userAnnotations) {
         skipAnnotations = Arrays.asList(userAnnotations);
     }
 
@@ -205,7 +205,7 @@ public class MissingJavadocTypeCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         if (shouldCheck(ast)) {
             final FileContents contents = getFileContents();
             final int lineNo = ast.getLineNo();
@@ -226,8 +226,7 @@ public class MissingJavadocTypeCheck extends AbstractCheck {
 
         if (ScopeUtil.isInInterfaceOrAnnotationBlock(ast)) {
             customScope = Scope.PUBLIC;
-        }
-        else {
+        } else {
             final DetailAST mods = ast.findFirstToken(TokenTypes.MODIFIERS);
             customScope = ScopeUtil.getScopeFromMods(mods);
         }

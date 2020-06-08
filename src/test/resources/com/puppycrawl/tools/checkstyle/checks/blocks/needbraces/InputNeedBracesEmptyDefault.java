@@ -19,5 +19,5 @@ public class InputNeedBracesEmptyDefault {
 }
 
 interface IntefaceWithDefaultMethod {
-    default void doIt(){}
+    default void doIt() { }
 }

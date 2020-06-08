@@ -72,16 +72,15 @@ public abstract class AbstractSuperCheck
     }
 
     @Override
-    public void beginTree(DetailAST rootAST) {
+    public void beginTree(final DetailAST rootAST) {
         methodStack.clear();
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         if (isOverridingMethod(ast)) {
             methodStack.add(new MethodNode(ast));
-        }
-        else if (isSuperCall(ast)) {
+        } else if (isSuperCall(ast)) {
             final MethodNode methodNode = methodStack.getLast();
             methodNode.setCallingSuper();
         }
@@ -93,7 +92,7 @@ public abstract class AbstractSuperCheck
      * @param literalSuperAst the AST node of a 'super' literal.
      * @return true if ast is a call to the super method for this check.
      */
-    private boolean isSuperCall(DetailAST literalSuperAst) {
+    private boolean isSuperCall(final DetailAST literalSuperAst) {
         boolean superCall = false;
 
         if (literalSuperAst.getType() == TokenTypes.LITERAL_SUPER) {
@@ -114,7 +113,7 @@ public abstract class AbstractSuperCheck
      * @param ast The AST node of a 'dot operator' in 'super' call.
      * @return true if super call in overriding method.
      */
-    private boolean isSuperCallInOverridingMethod(DetailAST ast) {
+    private boolean isSuperCallInOverridingMethod(final DetailAST ast) {
         boolean inOverridingMethod = false;
         DetailAST dotAst = ast;
 
@@ -134,7 +133,7 @@ public abstract class AbstractSuperCheck
      * @param methodCallDotAst DOT DetailAST
      * @return true if any parameters found
      */
-    private static boolean hasArguments(DetailAST methodCallDotAst) {
+    private static boolean hasArguments(final DetailAST methodCallDotAst) {
         final DetailAST argumentsList = methodCallDotAst.getNextSibling();
         return argumentsList.hasChildren();
     }
@@ -144,7 +143,7 @@ public abstract class AbstractSuperCheck
      * @param ast method AST
      * @return true if method name is the same
      */
-    private boolean isSameNameMethod(DetailAST ast) {
+    private boolean isSameNameMethod(final DetailAST ast) {
         DetailAST sibling = ast.getNextSibling();
         // ignore type parameters
         if (sibling != null
@@ -155,7 +154,7 @@ public abstract class AbstractSuperCheck
     }
 
     @Override
-    public void leaveToken(DetailAST ast) {
+    public void leaveToken(final DetailAST ast) {
         if (isOverridingMethod(ast)) {
             final MethodNode methodNode =
                 methodStack.removeLast();
@@ -174,7 +173,7 @@ public abstract class AbstractSuperCheck
      * @param ast the method definition AST.
      * @return true if the method of ast is a method for this check.
      */
-    private boolean isOverridingMethod(DetailAST ast) {
+    private boolean isOverridingMethod(final DetailAST ast) {
         boolean overridingMethod = false;
 
         if (ast.getType() == TokenTypes.METHOD_DEF
@@ -208,7 +207,7 @@ public abstract class AbstractSuperCheck
          * Constructs a stack node for a method definition.
          * @param ast AST for the method definition.
          */
-        /* package */ MethodNode(DetailAST ast) {
+        /* package */ MethodNode(final DetailAST ast) {
             method = ast;
             callingSuper = false;
         }

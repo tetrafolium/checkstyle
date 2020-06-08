@@ -138,7 +138,7 @@ public class EmptyBlockCheck
      * @param optionStr string to decode option from
      * @throws IllegalArgumentException if unable to decode
      */
-    public void setOption(String optionStr) {
+    public void setOption(final String optionStr) {
         option = BlockOption.valueOf(optionStr.trim().toUpperCase(Locale.ENGLISH));
     }
 
@@ -186,15 +186,14 @@ public class EmptyBlockCheck
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         final DetailAST leftCurly = findLeftCurly(ast);
         if (leftCurly != null) {
             if (option == BlockOption.STATEMENT) {
                 final boolean emptyBlock;
                 if (leftCurly.getType() == TokenTypes.LCURLY) {
                     emptyBlock = leftCurly.getNextSibling().getType() != TokenTypes.CASE_GROUP;
-                }
-                else {
+                } else {
                     emptyBlock = leftCurly.getChildCount() <= 1;
                 }
                 if (emptyBlock) {
@@ -202,8 +201,7 @@ public class EmptyBlockCheck
                         MSG_KEY_BLOCK_NO_STATEMENT,
                         ast.getText());
                 }
-            }
-            else if (!hasText(leftCurly)) {
+            } else if (!hasText(leftCurly)) {
                 log(leftCurly,
                     MSG_KEY_BLOCK_EMPTY,
                     ast.getText());
@@ -222,8 +220,7 @@ public class EmptyBlockCheck
 
         if (rightCurly == null) {
             rcurlyAST = slistAST.getParent().findFirstToken(TokenTypes.RCURLY);
-        }
-        else {
+        } else {
             rcurlyAST = rightCurly;
         }
         final int slistLineNo = slistAST.getLineNo();
@@ -239,8 +236,7 @@ public class EmptyBlockCheck
             if (!CommonUtil.isBlank(txt)) {
                 returnValue = true;
             }
-        }
-        else {
+        } else {
             final String firstLine = lines[slistLineNo - 1].substring(slistColNo + 1);
             final String lastLine = lines[rcurlyLineNo - 1].substring(0, rcurlyColNo);
             // check if all lines are also only whitespace
@@ -261,7 +257,7 @@ public class EmptyBlockCheck
      *            check to this line numbers
      * @return true if lines contain only whitespaces
      */
-    private static boolean checkIsAllLinesAreWhitespace(String[] lines, int lineFrom, int lineTo) {
+    private static boolean checkIsAllLinesAreWhitespace(final String[] lines, final int lineFrom, final int lineTo) {
         boolean result = true;
         for (int i = lineFrom; i < lineTo - 1; i++) {
             if (!CommonUtil.isBlank(lines[i])) {
@@ -278,7 +274,7 @@ public class EmptyBlockCheck
      * @param ast a {@code DetailAST} value
      * @return the left curly corresponding to the block to be checked
      */
-    private static DetailAST findLeftCurly(DetailAST ast) {
+    private static DetailAST findLeftCurly(final DetailAST ast) {
         final DetailAST leftCurly;
         final DetailAST slistAST = ast.findFirstToken(TokenTypes.SLIST);
         if ((ast.getType() == TokenTypes.LITERAL_CASE
@@ -287,11 +283,9 @@ public class EmptyBlockCheck
                 && ast.getNextSibling().getFirstChild() != null
                 && ast.getNextSibling().getFirstChild().getType() == TokenTypes.SLIST) {
             leftCurly = ast.getNextSibling().getFirstChild();
-        }
-        else if (slistAST == null) {
+        } else if (slistAST == null) {
             leftCurly = ast.findFirstToken(TokenTypes.LCURLY);
-        }
-        else {
+        } else {
             leftCurly = slistAST;
         }
         return leftCurly;

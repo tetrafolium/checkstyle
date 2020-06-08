@@ -31,11 +31,11 @@ public @Ann
     }
 
     @Ann
-    @Ann2 public void setX(@Ann
+    @Ann2 public void setX(final @Ann
             @Ann2 int x) throws @Ann
                     @Ann2 Exception {
         this.<@Ann
-                @Ann2 Integer> getXAs();
+                @Ann2 Integer>getXAs();
         this.x = x;
     }
 

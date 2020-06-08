@@ -11,19 +11,19 @@ class A {
   }
 }
 
-class B{
+class B {
   public Object clone() throws CloneNotSupportedException {
       super.clone();
       return null;
   }
-  void clone(Object asd, Object asd2) {
+  void clone(final Object asd, final Object asd2) {
   }
 }
 
 class C extends B {
   void method() throws CloneNotSupportedException {
     Object asd = null;
-    super.clone(asd,asd);
+    super.clone(asd, asd);
     super.clone();
     Runnable a = () -> super.clone(null, null);
   }

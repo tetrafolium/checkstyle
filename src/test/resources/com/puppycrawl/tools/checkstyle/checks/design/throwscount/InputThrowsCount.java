@@ -52,8 +52,8 @@ class SubClass extends InputThrowsCount {
     }
 
     @SuppressWarnings("deprecation")
-    final void method2(Object ...objects) throws Exception, AWTException, SQLException,
-            FileNotFoundException, EOFException{
+    final void method2(final Object...objects) throws Exception, AWTException, SQLException,
+            FileNotFoundException, EOFException {
     }
 
     @java.lang.Override

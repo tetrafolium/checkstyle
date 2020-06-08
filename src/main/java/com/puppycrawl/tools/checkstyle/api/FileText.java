@@ -107,7 +107,7 @@ public final class FileText {
      * @throws NullPointerException if the text is null
      * @throws IOException if the file could not be read
      */
-    public FileText(File file, String charsetName) throws IOException {
+    public FileText(final File file, final String charsetName) throws IOException {
         this.file = file;
 
         // We use our own decoder, to be sure we have complete control
@@ -118,8 +118,7 @@ public final class FileText {
             decoder = charset.newDecoder();
             decoder.onMalformedInput(CodingErrorAction.REPLACE);
             decoder.onUnmappableCharacter(CodingErrorAction.REPLACE);
-        }
-        catch (final UnsupportedCharsetException ex) {
+        } catch (final UnsupportedCharsetException ex) {
             final String message = "Unsupported charset: " + charsetName;
             throw new IllegalStateException(message, ex);
         }
@@ -146,15 +145,14 @@ public final class FileText {
      * Copy constructor.
      * @param fileText to make copy of
      */
-    public FileText(FileText fileText) {
+    public FileText(final FileText fileText) {
         file = fileText.file;
         charset = fileText.charset;
         fullText = fileText.fullText;
         lines = fileText.lines.clone();
         if (fileText.lineBreaks == null) {
             lineBreaks = null;
-        }
-        else {
+        } else {
             lineBreaks = fileText.lineBreaks.clone();
         }
     }
@@ -170,7 +168,7 @@ public final class FileText {
      * @param lines the lines of the text, without terminators
      * @throws NullPointerException if the lines array is null
      */
-    public FileText(File file, List<String> lines) {
+    public FileText(final File file, final List<String> lines) {
         final StringBuilder buf = new StringBuilder(1024);
         for (final String line : lines) {
             buf.append(line).append('\n');
@@ -272,7 +270,7 @@ public final class FileText {
      * @param pos the character position in the full text
      * @return the line and column numbers of this character
      */
-    public LineColumn lineColumn(int pos) {
+    public LineColumn lineColumn(final int pos) {
         final int[] lineBreakPositions = findLineBreaks();
         int lineNo = Arrays.binarySearch(lineBreakPositions, pos);
         if (lineNo < 0) {

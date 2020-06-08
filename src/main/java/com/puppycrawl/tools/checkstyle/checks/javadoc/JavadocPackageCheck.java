@@ -97,13 +97,12 @@ public class JavadocPackageCheck extends AbstractFileSetCheck {
     }
 
     @Override
-    protected void processFiltered(File file, FileText fileText) throws CheckstyleException {
+    protected void processFiltered(final File file, final FileText fileText) throws CheckstyleException {
         // Check if already processed directory
         final File dir;
         try {
             dir = file.getCanonicalFile().getParentFile();
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             throw new CheckstyleException(
                     "Exception while getting canonical path to file " + file.getPath(), ex);
         }
@@ -117,8 +116,7 @@ public class JavadocPackageCheck extends AbstractFileSetCheck {
                 if (packageHtml.exists()) {
                     log(1, MSG_LEGACY_PACKAGE_HTML);
                 }
-            }
-            else if (!allowLegacy || !packageHtml.exists()) {
+            } else if (!allowLegacy || !packageHtml.exists()) {
                 log(1, MSG_PACKAGE_INFO);
             }
         }
@@ -129,7 +127,7 @@ public class JavadocPackageCheck extends AbstractFileSetCheck {
      *
      * @param allowLegacy whether to allow support.
      */
-    public void setAllowLegacy(boolean allowLegacy) {
+    public void setAllowLegacy(final boolean allowLegacy) {
         this.allowLegacy = allowLegacy;
     }
 

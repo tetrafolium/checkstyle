@@ -7,7 +7,7 @@ public class InputSuppressWarningsHolder2
         public void close() throws Exception { }
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(final String[] args) throws Exception {
         try (@SuppressWarnings("all") final MyResource resource = new MyResource()) { }
         try (@MyAnnotation("all") final MyResource resource = new MyResource()) { }
     }

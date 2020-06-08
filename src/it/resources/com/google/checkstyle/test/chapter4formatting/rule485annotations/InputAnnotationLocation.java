@@ -18,14 +18,14 @@ class InputAnnotationLocation
 
     @MyAnnotation2
         @MyAnnotation1 //warn
-    public InputAnnotationLocation() {}
+    public InputAnnotationLocation() { }
 
     @MyAnnotationWithParam("foo")
-    @MyAnnotation2 void foo1() {}
+    @MyAnnotation2 void foo1() { }
 
     @MyAnnotation1
        @MyAnnotation2 //warn
-    void foo2() {}
+    void foo2() { }
 
     @MyAnnotation1
         @MyAnnotation2 //warn
@@ -52,11 +52,11 @@ class InputAnnotationLocation
         }
         @MyAnnotation1
             @MyAnnotation2 //warn
-        void foo1() {}
+        void foo1() { }
 
         @MyAnnotation1
             @MyAnnotation2 //warn
-        void foo2() {}
+        void foo2() { }
     }
 
     @MyAnnotation1
@@ -75,31 +75,31 @@ class InputAnnotationLocation
         public int d;
 
         @MyAnnotation1
-           @MyAnnotation2 void foo1() {} //warn
+           @MyAnnotation2 void foo1() { } //warn
 
         @MyAnnotation1
           @MyAnnotation2 //warn
-        void foo2() {}
+        void foo2() { }
 
-        @MyAnnotation1 void foo42() {}
+        @MyAnnotation1 void foo42() { }
     };
 
 }
 
 @MyAnnotation1
  @MyAnnotation2 //warn
-class Foo {}
+class Foo { }
 
-@MyAnnotationWithParam(value = "bar") class Bar {} //warn
+@MyAnnotationWithParam(value = "bar") class Bar { } //warn
 
-@interface MyAnnotation1 {}
+@interface MyAnnotation1 { }
 
-@interface MyAnnotation2 {}
+@interface MyAnnotation2 { }
 
-@interface MyAnnotation3 {}
+@interface MyAnnotation3 { }
 
-@interface MyAnnotation4 {}
+@interface MyAnnotation4 { }
 
 @interface MyAnnotationWithParam {
 
-    String value();}
+    String value(); }

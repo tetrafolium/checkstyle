@@ -6,26 +6,26 @@ import static java.io.File
     .createTempFile
 
     // some comments
-    ;
+;
 
 // comment between import groups
 import java.util.
     Arrays
-    ;
+;
 
 // comment within import group
 
-import java.util. // warn
+import java.util.// warn
 
     BitSet
-    ;
+;
 import java.util.
 
     // some comments
     Collection
     // some comments
 
-    ;
+;
 import java.util.HashMap;
 
 
@@ -48,4 +48,4 @@ import antlr.*; // warn
 // comment within import group
 import antlr.Token;
 
-class InputCustomImportOrderSpanMultipleLines {}
+class InputCustomImportOrderSpanMultipleLines { }

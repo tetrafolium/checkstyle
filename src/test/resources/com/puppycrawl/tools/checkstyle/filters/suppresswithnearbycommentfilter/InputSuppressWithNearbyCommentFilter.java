@@ -40,15 +40,15 @@ class InputSuppressWithNearbyCommentFilter
     private static final int e9 = 0;
 
     // ALLOW Unused UNTIL THIS LINE+5
-    public static void doit1(int aInt) // this is +1
+    public static void doit1(final int aInt) // this is +1
     {
     }
 
-    public static void doit2(int aInt) // this is +5
+    public static void doit2(final int aInt) // this is +5
     {
     }
 
-    public static void doit3(int aInt) // this is +9
+    public static void doit3(final int aInt) // this is +9
     {
     }
 
@@ -56,27 +56,27 @@ class InputSuppressWithNearbyCommentFilter
     {
         try {
             // blah blah blah
-            for(int i = 0; i < 10; i++) {
+            for (int i = 0; i < 10; i++) {
                 // blah blah blah
-                while(true) {
+                while (true) {
                     try {
                         // blah blah blah
-                    } catch(Exception e) {
+                    } catch (Exception e) {
                         // bad bad bad
                     } catch (Throwable t) {
-                    	// ALLOW CATCH Throwable BECAUSE I threw this together.
+                        // ALLOW CATCH Throwable BECAUSE I threw this together.
                     }
                 }
                 // blah blah blah
             }
             // blah blah blah
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             // ALLOW CATCH Exception BECAUSE I am an exceptional person.
         }
     }
 }
 
 class Magic {
-    /* SUPPRESS CHECKSTYLE MemberNameCheck */ private int A2;/* SUPPRESS CHECKSTYLE MemberName ol */
+    /* SUPPRESS CHECKSTYLE MemberNameCheck */ private int A2; /* SUPPRESS CHECKSTYLE MemberName ol */
     private int A1;
 }

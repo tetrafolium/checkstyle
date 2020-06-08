@@ -13,20 +13,16 @@ public class InputFinalLocalVariableMultipleAndNestedConditions {
             if ("s1".equals(type)) {
                 if (getCondition(1)) {
                     value = getValue(1);
-                }
-                else {
+                } else {
                     continue;
                 }
-            }
-            else if ("s2".equals(type)) {
+            } else if ("s2".equals(type)) {
                 if (getCondition(2)) {
                     value = getValue(2);
-                }
-                else {
+                } else {
                     continue;
                 }
-            }
-            else {
+            } else {
                 continue;
             }
 
@@ -61,19 +57,19 @@ public class InputFinalLocalVariableMultipleAndNestedConditions {
         }
     }
 
-    public Object getValue(int i) {
+    public Object getValue(final int i) {
         return null;
     }
-    public Object getValue(int i, String type, Object value) {
+    public Object getValue(final int i, final String type, final Object value) {
         return value;
     }
-    public boolean getCondition(int i) {
+    public boolean getCondition(final int i) {
         return true;
     }
     public String getType() {
         return "s1";
     }
-    private String getName(Object element, String name) {
+    private String getName(final Object element, final String name) {
         return "s";
     }
 }

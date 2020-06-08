@@ -6,8 +6,8 @@ public class SuppressionXpathRegressionNestedTryDepth {
             try {
                 try { //warn
 
-                } catch (Exception e) {}
-            } catch (Exception e) {}
-        } catch (Exception e) {}
+                } catch (Exception e) { }
+            } catch (Exception e) { }
+        } catch (Exception e) { }
     }
 }

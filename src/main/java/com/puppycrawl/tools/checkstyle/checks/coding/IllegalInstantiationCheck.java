@@ -130,7 +130,7 @@ public class IllegalInstantiationCheck
     }
 
     @Override
-    public void beginTree(DetailAST rootAST) {
+    public void beginTree(final DetailAST rootAST) {
         pkgName = null;
         imports.clear();
         instantiations.clear();
@@ -138,7 +138,7 @@ public class IllegalInstantiationCheck
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         switch (ast.getType()) {
             case TokenTypes.LITERAL_NEW:
                 processLiteralNew(ast);
@@ -158,7 +158,7 @@ public class IllegalInstantiationCheck
     }
 
     @Override
-    public void finishTree(DetailAST rootAST) {
+    public void finishTree(final DetailAST rootAST) {
         instantiations.forEach(this::postProcessLiteralNew);
     }
 
@@ -168,7 +168,7 @@ public class IllegalInstantiationCheck
      *
      * @param ast the class def token.
      */
-    private void processClassDef(DetailAST ast) {
+    private void processClassDef(final DetailAST ast) {
         final DetailAST identToken = ast.findFirstToken(TokenTypes.IDENT);
         final String className = identToken.getText();
         classNames.add(className);
@@ -178,7 +178,7 @@ public class IllegalInstantiationCheck
      * Perform processing for an import token.
      * @param ast the import token
      */
-    private void processImport(DetailAST ast) {
+    private void processImport(final DetailAST ast) {
         final FullIdent name = FullIdent.createFullIdentBelow(ast);
         // Note: different from UnusedImportsCheck.processImport(),
         // '.*' imports are also added here
@@ -189,7 +189,7 @@ public class IllegalInstantiationCheck
      * Perform processing for an package token.
      * @param ast the package token
      */
-    private void processPackageDef(DetailAST ast) {
+    private void processPackageDef(final DetailAST ast) {
         final DetailAST packageNameAST = ast.getLastChild()
                 .getPreviousSibling();
         final FullIdent packageIdent =
@@ -201,7 +201,7 @@ public class IllegalInstantiationCheck
      * Collects a "new" token.
      * @param ast the "new" token
      */
-    private void processLiteralNew(DetailAST ast) {
+    private void processLiteralNew(final DetailAST ast) {
         if (ast.getParent().getType() != TokenTypes.METHOD_REF) {
             instantiations.add(ast);
         }
@@ -212,7 +212,7 @@ public class IllegalInstantiationCheck
      * has finished.
      * @param newTokenAst the "new" token.
      */
-    private void postProcessLiteralNew(DetailAST newTokenAst) {
+    private void postProcessLiteralNew(final DetailAST newTokenAst) {
         final DetailAST typeNameAst = newTokenAst.getFirstChild();
         final DetailAST nameSibling = typeNameAst.getNextSibling();
         if (nameSibling.getType() != TokenTypes.ARRAY_DECLARATOR) {
@@ -232,19 +232,17 @@ public class IllegalInstantiationCheck
      * @return the fully qualified class name of className
      *     or null if instantiation of className is OK
      */
-    private String getIllegalInstantiation(String className) {
+    private String getIllegalInstantiation(final String className) {
         String fullClassName = null;
 
         if (classes.contains(className)) {
             fullClassName = className;
-        }
-        else {
+        } else {
             final int pkgNameLen;
 
             if (pkgName == null) {
                 pkgNameLen = 0;
-            }
-            else {
+            } else {
                 pkgNameLen = pkgName.length();
             }
 
@@ -252,8 +250,7 @@ public class IllegalInstantiationCheck
                 if (isSamePackage(className, pkgNameLen, illegal)
                         || isStandardClass(className, illegal)) {
                     fullClassName = illegal;
-                }
-                else {
+                } else {
                     fullClassName = checkImportStatements(className);
                 }
 
@@ -270,7 +267,7 @@ public class IllegalInstantiationCheck
      * @param className name of the class
      * @return value of illegal instantiated type
      */
-    private String checkImportStatements(String className) {
+    private String checkImportStatements(final String className) {
         String illegalType = null;
         // import statements
         for (FullIdent importLineText : imports) {
@@ -295,7 +292,7 @@ public class IllegalInstantiationCheck
      * @param illegal illegal value
      * @return true if type of the same package
      */
-    private boolean isSamePackage(String className, int pkgNameLen, String illegal) {
+    private boolean isSamePackage(final String className, final int pkgNameLen, final String illegal) {
         // class from same package
 
         // the top level package (pkgName == null) is covered by the
@@ -316,7 +313,7 @@ public class IllegalInstantiationCheck
      * @param illegal illegal value
      * @return true if type is standard
      */
-    private boolean isStandardClass(String className, String illegal) {
+    private boolean isStandardClass(final String className, final String illegal) {
         boolean isStandardClass = false;
         // class from java.lang
         if (illegal.length() - JAVA_LANG.length() == className.length()
@@ -341,7 +338,7 @@ public class IllegalInstantiationCheck
      * Setter to specify fully qualified class names that should not be instantiated.
      * @param names a comma separate list of class names
      */
-    public void setClasses(String... names) {
+    public void setClasses(final String... names) {
         classes = Arrays.stream(names).collect(Collectors.toSet());
     }
 

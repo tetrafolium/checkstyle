@@ -57,7 +57,7 @@ public class AbbreviationAsWordInNameTest extends AbstractGoogleModuleTestSuppor
         verify(checkConfig, filePath, expected, warnList);
     }
 
-    private String getWarningMessage(String typeName, int expectedCapitalCount)
+    private String getWarningMessage(final String typeName, final int expectedCapitalCount)
             throws IOException {
         return getCheckMessage(clazz, MSG_KEY, typeName, expectedCapitalCount);
     }

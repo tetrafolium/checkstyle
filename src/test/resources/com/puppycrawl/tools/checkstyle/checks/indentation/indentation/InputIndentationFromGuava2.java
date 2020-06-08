@@ -39,7 +39,7 @@ public abstract class InputIndentationFromGuava2<K extends Comparable<?>, V> { /
     return outer; //indent:4 exp:4
   } //indent:2 exp:2
 
-  public V get(int index) { //indent:2 exp:2
+  public V get(final int index) { //indent:2 exp:2
     K key = null; //indent:4 exp:4
     int len = 0; //indent:4 exp:4
     checkElementIndex(index, len); //indent:4 exp:4
@@ -53,7 +53,7 @@ public abstract class InputIndentationFromGuava2<K extends Comparable<?>, V> { /
     } //indent:4 exp:4
   } //indent:2 exp:2
 
-  private void checkElementIndex(int index, Object len) //indent:2 exp:2
+  private void checkElementIndex(final int index, final Object len) //indent:2 exp:2
   { //indent:2 exp:2
 
   } //indent:2 exp:2
@@ -62,13 +62,13 @@ public abstract class InputIndentationFromGuava2<K extends Comparable<?>, V> { /
     return true; //indent:4 exp:4
   } //indent:2 exp:2
 
-  private Range<K> checkNotNull(Range<K> range) //indent:2 exp:2
+  private Range<K> checkNotNull(final Range<K> range) //indent:2 exp:2
   { //indent:2 exp:2
     return null; //indent:4 exp:4
   } //indent:2 exp:2
 
   @Deprecated //indent:2 exp:2
-  public V get(K key) //indent:2 exp:2
+  public V get(final K key) //indent:2 exp:2
   { //indent:2 exp:2
     return null; //indent:4 exp:4
   } //indent:2 exp:2
@@ -79,13 +79,13 @@ public abstract class InputIndentationFromGuava2<K extends Comparable<?>, V> { /
   } //indent:2 exp:2
 
   @Deprecated //indent:2 exp:2
-  public void put(Range<K> range, V value) //indent:2 exp:2
+  public void put(final Range<K> range, final V value) //indent:2 exp:2
   { //indent:2 exp:2
 
   } //indent:2 exp:2
 
   @Deprecated //indent:2 exp:2
-  public void putAll(RangeMap<K, V> rangeMap) //indent:2 exp:2
+  public void putAll(final RangeMap<K, V> rangeMap) //indent:2 exp:2
   { //indent:2 exp:2
 
   } //indent:2 exp:2
@@ -97,7 +97,7 @@ public abstract class InputIndentationFromGuava2<K extends Comparable<?>, V> { /
   } //indent:2 exp:2
 
   @Deprecated //indent:2 exp:2
-  public void remove(Range<K> range) //indent:2 exp:2
+  public void remove(final Range<K> range) //indent:2 exp:2
   { //indent:2 exp:2
 
   } //indent:2 exp:2
@@ -109,18 +109,19 @@ public abstract class InputIndentationFromGuava2<K extends Comparable<?>, V> { /
   } //indent:2 exp:2
 
   @Deprecated //indent:2 exp:2
-  public RangeMap<K, V> subRangeMap(Range<K> range) //indent:2 exp:2
+  public RangeMap<K, V> subRangeMap(final Range<K> range) //indent:2 exp:2
   { //indent:2 exp:2
     return null; //indent:4 exp:4
   } //indent:2 exp:2
 
   @Deprecated //indent:2 exp:2
-  public Entry<Range<K>, V> getEntry(K key) //indent:2 exp:2
+  public Entry<Range<K>, V> getEntry(final K key) //indent:2 exp:2
   { //indent:2 exp:2
     return null; //indent:4 exp:4
   } //indent:2 exp:2
 
   private static class SortedLists { //indent:2 exp:2
-    public static int binarySearch() { return 4; } //indent:4 exp:4
+    public static int binarySearch() {
+        return 4; } //indent:4 exp:4
   } //indent:2 exp:2
 } //indent:0 exp:0

@@ -75,7 +75,7 @@ public class XdocsMobileWrapperTest {
         }
     }
 
-    private static void iterateNode(Node node, String fileName, String sectionName) {
+    private static void iterateNode(final Node node, final String fileName, final String sectionName) {
         for (Node child : XmlUtil.getChildrenElements(node)) {
             if (NODES_TO_WRAP.contains(child.getNodeName())) {
                 final String wrapperMessage = fileName + "/" + sectionName + ": Tag '"
@@ -98,8 +98,7 @@ public class XdocsMobileWrapperTest {
                     assertTrue(node.getAttributes().getNamedItem("class").getNodeValue()
                                     .matches(".*(block|inline).*"), dataImageInlineMessage);
                 }
-            }
-            else {
+            } else {
                 iterateNode(child, fileName, sectionName);
             }
         }

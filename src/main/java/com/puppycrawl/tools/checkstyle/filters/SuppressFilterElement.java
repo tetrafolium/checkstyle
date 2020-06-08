@@ -84,42 +84,37 @@ public class SuppressFilterElement
      * @param lines   lines CSV values and ranges for line number filtering.
      * @param columns columns CSV values and ranges for column number filtering.
      */
-    public SuppressFilterElement(String files, String checks,
-                           String message, String modId, String lines, String columns) {
+    public SuppressFilterElement(final String files, final String checks,
+                           final String message, final String modId, final String lines, final String columns) {
         filePattern = files;
         if (files == null) {
             fileRegexp = null;
-        }
-        else {
+        } else {
             fileRegexp = Pattern.compile(files);
         }
         checkPattern = checks;
         if (checks == null) {
             checkRegexp = null;
-        }
-        else {
+        } else {
             checkRegexp = Pattern.compile(checks);
         }
         messagePattern = message;
         if (message == null) {
             messageRegexp = null;
-        }
-        else {
+        } else {
             messageRegexp = Pattern.compile(message);
         }
         moduleId = modId;
         linesCsv = lines;
         if (lines == null) {
             lineFilter = null;
-        }
-        else {
+        } else {
             lineFilter = new CsvFilterElement(lines);
         }
         columnsCsv = columns;
         if (columns == null) {
             columnFilter = null;
-        }
-        else {
+        } else {
             columnFilter = new CsvFilterElement(columns);
         }
     }
@@ -133,29 +128,26 @@ public class SuppressFilterElement
      * @param lines CSV for lines
      * @param columns CSV for columns
      */
-    public SuppressFilterElement(Pattern files, Pattern checks, Pattern message, String moduleId,
-            String lines, String columns) {
+    public SuppressFilterElement(final Pattern files, final Pattern checks, final Pattern message, final String moduleId,
+            final String lines, final String columns) {
         if (files == null) {
             filePattern = null;
             fileRegexp = null;
-        }
-        else {
+        } else {
             filePattern = files.pattern();
             fileRegexp = files;
         }
         if (checks == null) {
             checkPattern = null;
             checkRegexp = null;
-        }
-        else {
+        } else {
             checkPattern = checks.pattern();
             checkRegexp = checks;
         }
         if (message == null) {
             messagePattern = null;
             messageRegexp = null;
-        }
-        else {
+        } else {
             messagePattern = message.pattern();
             messageRegexp = message;
         }
@@ -163,23 +155,21 @@ public class SuppressFilterElement
         if (lines == null) {
             linesCsv = null;
             lineFilter = null;
-        }
-        else {
+        } else {
             linesCsv = lines;
             lineFilter = new CsvFilterElement(lines);
         }
         if (columns == null) {
             columnsCsv = null;
             columnFilter = null;
-        }
-        else {
+        } else {
             columnsCsv = columns;
             columnFilter = new CsvFilterElement(columns);
         }
     }
 
     @Override
-    public boolean accept(AuditEvent event) {
+    public boolean accept(final AuditEvent event) {
         return !isFileNameAndModuleNameMatching(event)
                 || !isMessageNameMatching(event)
                 || !isLineAndColumnMatching(event);
@@ -190,7 +180,7 @@ public class SuppressFilterElement
      * @param event event
      * @return true if it is matching
      */
-    private boolean isFileNameAndModuleNameMatching(AuditEvent event) {
+    private boolean isFileNameAndModuleNameMatching(final AuditEvent event) {
         return event.getFileName() != null
                 && (fileRegexp == null || fileRegexp.matcher(event.getFileName()).find())
                 && event.getLocalizedMessage() != null
@@ -203,7 +193,7 @@ public class SuppressFilterElement
      * @param event event
      * @return true if it is matching or not set.
      */
-    private boolean isMessageNameMatching(AuditEvent event) {
+    private boolean isMessageNameMatching(final AuditEvent event) {
         return messageRegexp == null || messageRegexp.matcher(event.getMessage()).find();
     }
 
@@ -212,7 +202,7 @@ public class SuppressFilterElement
      * @param event event to process.
      * @return true if line and column are matching or not set.
      */
-    private boolean isLineAndColumnMatching(AuditEvent event) {
+    private boolean isLineAndColumnMatching(final AuditEvent event) {
         return lineFilter == null && columnFilter == null
                 || lineFilter != null && lineFilter.accept(event.getLine())
                 || columnFilter != null && columnFilter.accept(event.getColumn());
@@ -225,7 +215,7 @@ public class SuppressFilterElement
     }
 
     @Override
-    public boolean equals(Object other) {
+    public boolean equals(final Object other) {
         if (this == other) {
             return true;
         }

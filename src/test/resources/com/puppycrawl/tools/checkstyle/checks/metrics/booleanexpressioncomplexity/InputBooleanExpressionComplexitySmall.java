@@ -8,8 +8,7 @@ public class InputBooleanExpressionComplexitySmall {
                         .getDeclaredMethod("method", null);
                 stopDispatching.setAccessible(true);
                 stopDispatching.invoke(this, null);
-            }
-            catch (java.lang.reflect.InvocationTargetException | NoSuchMethodException
+            } catch (java.lang.reflect.InvocationTargetException | NoSuchMethodException
                     | IllegalAccessException ex) {
             }
         });

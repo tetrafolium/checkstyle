@@ -212,7 +212,7 @@ public class CyclomaticComplexityCheck
      * @param switchBlockAsSingleDecisionPoint whether to treat the whole switch
      *                                          block as a single decision point.
      */
-    public void setSwitchBlockAsSingleDecisionPoint(boolean switchBlockAsSingleDecisionPoint) {
+    public void setSwitchBlockAsSingleDecisionPoint(final boolean switchBlockAsSingleDecisionPoint) {
         this.switchBlockAsSingleDecisionPoint = switchBlockAsSingleDecisionPoint;
     }
 
@@ -221,7 +221,7 @@ public class CyclomaticComplexityCheck
      *
      * @param max the maximum threshold
      */
-    public final void setMax(int max) {
+    public final void setMax(final int max) {
         this.max = max;
     }
 
@@ -276,7 +276,7 @@ public class CyclomaticComplexityCheck
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         switch (ast.getType()) {
             case TokenTypes.CTOR_DEF:
             case TokenTypes.METHOD_DEF:
@@ -290,7 +290,7 @@ public class CyclomaticComplexityCheck
     }
 
     @Override
-    public void leaveToken(DetailAST ast) {
+    public void leaveToken(final DetailAST ast) {
         switch (ast.getType()) {
             case TokenTypes.CTOR_DEF:
             case TokenTypes.METHOD_DEF:
@@ -309,13 +309,12 @@ public class CyclomaticComplexityCheck
      *
      * @param ast the token being visited
      */
-    private void visitTokenHook(DetailAST ast) {
+    private void visitTokenHook(final DetailAST ast) {
         if (switchBlockAsSingleDecisionPoint) {
             if (ast.getType() != TokenTypes.LITERAL_CASE) {
                 incrementCurrentValue(BigInteger.ONE);
             }
-        }
-        else if (ast.getType() != TokenTypes.LITERAL_SWITCH) {
+        } else if (ast.getType() != TokenTypes.LITERAL_SWITCH) {
             incrementCurrentValue(BigInteger.ONE);
         }
     }
@@ -325,7 +324,7 @@ public class CyclomaticComplexityCheck
      *
      * @param ast the token representing the method definition
      */
-    private void leaveMethodDef(DetailAST ast) {
+    private void leaveMethodDef(final DetailAST ast) {
         final BigInteger bigIntegerMax = BigInteger.valueOf(max);
         if (currentValue.compareTo(bigIntegerMax) > 0) {
             log(ast, MSG_KEY, currentValue, bigIntegerMax);
@@ -338,7 +337,7 @@ public class CyclomaticComplexityCheck
      *
      * @param amount the amount to increment by
      */
-    private void incrementCurrentValue(BigInteger amount) {
+    private void incrementCurrentValue(final BigInteger amount) {
         currentValue = currentValue.add(amount);
     }
 

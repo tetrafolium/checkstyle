@@ -16,7 +16,7 @@ package com.puppycrawl.tools.checkstyle.checks.sizes.linelength;
 final class InputLineLengthSimple
 {
     // Long line ----------------------------------------------------------------
-    // Contains a tab ->	<-
+    // Contains a tab ->        <-
     // Contains trailing whitespace ->
 
     // Name format tests
@@ -39,7 +39,7 @@ final class InputLineLengthSimple
     protected int mNumCreated2 = 0;
 
     /** commas are wrong **/
-    private int[] mInts = new int[] {1,2, 3,
+    private int[] mInts = new int[] {1, 2, 3,
                                      4};
 
     //
@@ -68,7 +68,7 @@ final class InputLineLengthSimple
      * @param badFormat3 bad format
      * @throws Exception abc
      **/
-    int test1(int badFormat1,int badFormat2,
+    int test1(final int badFormat1, final int badFormat2,
               final int badFormat3)
         throws Exception
     {
@@ -142,20 +142,20 @@ final class InputLineLengthSimple
     private static final int BAD__NAME = 3;
 
     // A very, very long line that is OK because it matches the regexp "^.*is OK.*regexp.*$"
-    // long line that has a tab ->	<- and would be OK if tab counted as 1 char
-    // tabs that count as one char because of their position ->	<-   ->	<-, OK
+    // long line that has a tab ->      <- and would be OK if tab counted as 1 char
+    // tabs that count as one char because of their position -> <-   -> <-, OK
 
     /** some lines to test the violation column after tabs */
     void errorColumnAfterTabs()
     {
         // with tab-width 8 all statements below start at the same column,
         // with different combinations of ' ' and '\t' before the statement
-                int tab0 =1;
-        	int tab1 =1;
-         	int tab2 =1;
-		int tab3 =1;
-  	  	int tab4 =1;
-  	        int tab5 =1;
+                int tab0 = 1;
+                int tab1 = 1;
+                int tab2 = 1;
+                int tab3 = 1;
+                int tab4 = 1;
+                int tab5 = 1;
     }
 
     // MEMME:
@@ -191,8 +191,8 @@ final class InputLineLengthSimple
     /**
      * @see to lazy to document all args. Testing excessive # args
      **/
-    void toManyArgs(int aArg1, int aArg2, int aArg3, int aArg4, int aArg5,
-                    int aArg6, int aArg7, int aArg8, int aArg9)
+    void toManyArgs(final int aArg1, final int aArg2, final int aArg3, final int aArg4, final int aArg5,
+                    final int aArg6, final int aArg7, final int aArg8, final int aArg9)
     {
     }
 }

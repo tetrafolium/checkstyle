@@ -123,7 +123,7 @@ public class ArrayTypeStyleCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         final DetailAST typeAST = ast.getParent();
         if (typeAST.getType() == TokenTypes.TYPE) {
             final DetailAST variableAST = typeAST.getNextSibling();
@@ -147,7 +147,7 @@ public class ArrayTypeStyleCheck extends AbstractCheck {
      * Setter to control whether to enforce Java style (true) or C style (false).
      * @param javaStyle true if Java style should be used.
      */
-    public void setJavaStyle(boolean javaStyle) {
+    public void setJavaStyle(final boolean javaStyle) {
         this.javaStyle = javaStyle;
     }
 

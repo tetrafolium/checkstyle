@@ -125,15 +125,15 @@ public class SuppressWarningsFilterTest
         verifySuppressed(filterConfig, suppressed);
     }
 
-    private void verifySuppressed(Configuration moduleConfig,
-            String... aSuppressed)
+    private void verifySuppressed(final Configuration moduleConfig,
+            final String... aSuppressed)
             throws Exception {
         verifySuppressed(moduleConfig, getPath("InputSuppressWarningsFilter.java"),
                ALL_MESSAGES, aSuppressed);
     }
 
-    private void verifySuppressed(Configuration moduleConfig, String fileName,
-            String[] expectedViolations, String... suppressedViolations) throws Exception {
+    private void verifySuppressed(final Configuration moduleConfig, final String fileName,
+            final String[] expectedViolations, final String... suppressedViolations) throws Exception {
         final DefaultConfiguration holderConfig =
             createModuleConfig(SuppressWarningsHolder.class);
         holderConfig.addAttribute("aliasList",
@@ -177,7 +177,7 @@ public class SuppressWarningsFilterTest
             removeSuppressed(expectedViolations, suppressedViolations));
     }
 
-    private static String[] removeSuppressed(String[] from, String... remove) {
+    private static String[] removeSuppressed(final String[] from, final String... remove) {
         final Collection<String> coll = Arrays.stream(from).collect(Collectors.toList());
         coll.removeAll(Arrays.asList(remove));
         return coll.toArray(CommonUtil.EMPTY_STRING_ARRAY);

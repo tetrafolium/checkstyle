@@ -17,7 +17,7 @@ public class InputVisibilityModifierPublicOnly
             private InnerInnerClass()
             {
                 final Runnable r = new Runnable() {
-                        public void run() {};
+                        public void run() { };
                     };
             }
         }

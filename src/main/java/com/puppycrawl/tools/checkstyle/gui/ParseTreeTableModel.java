@@ -46,7 +46,7 @@ public class ParseTreeTableModel implements TreeModel {
      * Initialise pModel.
      * @param parseTree DetailAST parse tree.
      */
-    public ParseTreeTableModel(DetailAST parseTree) {
+    public ParseTreeTableModel(final DetailAST parseTree) {
         pModel = new ParseTreeTablePresentation(parseTree);
         setParseTree(parseTree);
     }
@@ -55,7 +55,7 @@ public class ParseTreeTableModel implements TreeModel {
      * Sets parse tree.
      * @param parseTree DetailAST parse tree.
      */
-    protected final void setParseTree(DetailAST parseTree) {
+    protected final void setParseTree(final DetailAST parseTree) {
         pModel.setParseTree(parseTree);
         final Object[] path = {pModel.getRoot()};
         // no need to setup remaining info, as the call results in a
@@ -67,7 +67,7 @@ public class ParseTreeTableModel implements TreeModel {
      * Set parse mode.
      * @param mode ParseMode enum
      */
-    protected void setParseMode(ParseMode mode) {
+    protected void setParseMode(final ParseMode mode) {
         pModel.setParseMode(mode);
     }
 
@@ -84,7 +84,7 @@ public class ParseTreeTableModel implements TreeModel {
      * @param column the column number
      * @return the name for column number {@code column}.
      */
-    public String getColumnName(int column) {
+    public String getColumnName(final int column) {
         return pModel.getColumnName(column);
     }
 
@@ -95,7 +95,7 @@ public class ParseTreeTableModel implements TreeModel {
      */
     // -@cs[ForbidWildcardAsReturnType] We need to satisfy javax.swing.table.AbstractTableModel
     // public Class<?> getColumnClass(int columnIndex) {...}
-    public Class<?> getColumnClass(int column) {
+    public Class<?> getColumnClass(final int column) {
         return pModel.getColumnClass(column);
     }
 
@@ -106,22 +106,22 @@ public class ParseTreeTableModel implements TreeModel {
      * @return the value to be displayed for node {@code node},
      *     at column number {@code column}.
      */
-    public Object getValueAt(Object node, int column) {
+    public Object getValueAt(final Object node, final int column) {
         return pModel.getValueAt(node, column);
     }
 
     @Override
-    public Object getChild(Object parent, int index) {
+    public Object getChild(final Object parent, final int index) {
         return pModel.getChild(parent, index);
     }
 
     @Override
-    public int getChildCount(Object parent) {
+    public int getChildCount(final Object parent) {
         return pModel.getChildCount(parent);
     }
 
     @Override
-    public void valueForPathChanged(TreePath path, Object newValue) {
+    public void valueForPathChanged(final TreePath path, final Object newValue) {
         // No Code, as tree is read-only
     }
 
@@ -131,23 +131,23 @@ public class ParseTreeTableModel implements TreeModel {
     }
 
     @Override
-    public boolean isLeaf(Object node) {
+    public boolean isLeaf(final Object node) {
         return pModel.isLeaf(node);
     }
 
     // This is not called in the JTree's default mode: use a naive implementation.
     @Override
-    public int getIndexOfChild(Object parent, Object child) {
+    public int getIndexOfChild(final Object parent, final Object child) {
         return pModel.getIndexOfChild(parent, child);
     }
 
     @Override
-    public void addTreeModelListener(TreeModelListener listener) {
+    public void addTreeModelListener(final TreeModelListener listener) {
         listenerList.add(TreeModelListener.class, listener);
     }
 
     @Override
-    public void removeTreeModelListener(TreeModelListener listener) {
+    public void removeTreeModelListener(final TreeModelListener listener) {
         listenerList.remove(TreeModelListener.class, listener);
     }
 
@@ -162,9 +162,9 @@ public class ParseTreeTableModel implements TreeModel {
      * @param children An array of Object containing the inserted, removed, or changed objects.
      * @see EventListenerList
      */
-    private void fireTreeStructureChanged(Object source, Object[] path,
-                                  int[] childIndices,
-                                  Object... children) {
+    private void fireTreeStructureChanged(final Object source, final Object[] path,
+                                  final int[] childIndices,
+                                  final Object... children) {
         // Guaranteed to return a non-null array
         final Object[] listeners = listenerList.getListenerList();
         TreeModelEvent event = null;
@@ -189,7 +189,7 @@ public class ParseTreeTableModel implements TreeModel {
      * @param column the column number
      * @return true if editable
      */
-    public boolean isCellEditable(int column) {
+    public boolean isCellEditable(final int column) {
         return pModel.isCellEditable(column);
     }
 

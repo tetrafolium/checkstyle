@@ -66,7 +66,7 @@ public class ParseTreeTablePresentation {
      * Constructor initialise root node.
      * @param parseTree DetailAST parse tree.
      */
-    public ParseTreeTablePresentation(DetailAST parseTree) {
+    public ParseTreeTablePresentation(final DetailAST parseTree) {
         root = createArtificialTreeRoot();
         setParseTree(parseTree);
     }
@@ -75,7 +75,7 @@ public class ParseTreeTablePresentation {
      * Set parse tree.
      * @param parseTree DetailAST parse tree.
      */
-    protected final void setParseTree(DetailAST parseTree) {
+    protected final void setParseTree(final DetailAST parseTree) {
         ((AST) root).setFirstChild((AST) parseTree);
     }
 
@@ -83,7 +83,7 @@ public class ParseTreeTablePresentation {
      * Set parse mode.
      * @param mode ParseMode enum
      */
-    protected void setParseMode(ParseMode mode) {
+    protected void setParseMode(final ParseMode mode) {
         parseMode = mode;
     }
 
@@ -100,7 +100,7 @@ public class ParseTreeTablePresentation {
      * @param column the column number
      * @return the name for column number {@code column}.
      */
-    public String getColumnName(int column) {
+    public String getColumnName(final int column) {
         return COLUMN_NAMES[column];
     }
 
@@ -111,7 +111,7 @@ public class ParseTreeTablePresentation {
      */
     // -@cs[ForbidWildcardAsReturnType] We need to satisfy javax.swing.table.AbstractTableModel
     // public Class<?> getColumnClass(int columnIndex) {...}
-    public Class<?> getColumnClass(int column) {
+    public Class<?> getColumnClass(final int column) {
         final Class<?> columnClass;
 
         switch (column) {
@@ -138,13 +138,12 @@ public class ParseTreeTablePresentation {
      * @param column the column number
      * @return the value to be displayed for node {@code node}, at column number {@code column}.
      */
-    public Object getValueAt(Object node, int column) {
+    public Object getValueAt(final Object node, final int column) {
         final Object result;
 
         if (node instanceof DetailNode) {
             result = getValueAtDetailNode((DetailNode) node, column);
-        }
-        else {
+        } else {
             result = getValueAtDetailAST((DetailAST) node, column);
         }
 
@@ -157,13 +156,12 @@ public class ParseTreeTablePresentation {
      * @param index the index of a child.
      * @return the child of parent at index.
      */
-    public Object getChild(Object parent, int index) {
+    public Object getChild(final Object parent, final int index) {
         final Object result;
 
         if (parent instanceof DetailNode) {
             result = ((DetailNode) parent).getChildren()[index];
-        }
-        else {
+        } else {
             result = getChildAtDetailAst((DetailAST) parent, index);
         }
 
@@ -175,21 +173,19 @@ public class ParseTreeTablePresentation {
      * @param parent the node to count children for.
      * @return the number of children of the node parent.
      */
-    public int getChildCount(Object parent) {
+    public int getChildCount(final Object parent) {
         final int result;
 
         if (parent instanceof DetailNode) {
             result = ((DetailNode) parent).getChildren().length;
-        }
-        else {
+        } else {
             if (parseMode == ParseMode.JAVA_WITH_JAVADOC_AND_COMMENTS
                     && ((AST) parent).getType() == TokenTypes.COMMENT_CONTENT
                     && JavadocUtil.isJavadocComment(((DetailAST) parent).getParent())) {
                 // getChildCount return 0 on COMMENT_CONTENT,
                 // but we need to attach javadoc tree, that is separate tree
                 result = 1;
-            }
-            else {
+            } else {
                 result = ((DetailAST) parent).getChildCount();
             }
         }
@@ -210,7 +206,7 @@ public class ParseTreeTablePresentation {
      * @param node the node to check.
      * @return true if the node is a leaf.
      */
-    public boolean isLeaf(Object node) {
+    public boolean isLeaf(final Object node) {
         return getChildCount(node) == 0;
     }
 
@@ -226,7 +222,7 @@ public class ParseTreeTablePresentation {
      *     {@code child} or {@code parent} are {@code null}
      *     or don't belong to this tree model.
      */
-    public int getIndexOfChild(Object parent, Object child) {
+    public int getIndexOfChild(final Object parent, final Object child) {
         int index = -1;
         for (int i = 0; i < getChildCount(parent); i++) {
             if (getChild(parent, i).equals(child)) {
@@ -243,7 +239,7 @@ public class ParseTreeTablePresentation {
      * @param column the column number
      * @return true if editable
      */
-    public boolean isCellEditable(int column) {
+    public boolean isCellEditable(final int column) {
         return false;
     }
 
@@ -264,14 +260,13 @@ public class ParseTreeTablePresentation {
      * @return child DetailsAST or DetailNode if child is Javadoc node
      *         and parseMode is JAVA_WITH_JAVADOC_AND_COMMENTS.
      */
-    private Object getChildAtDetailAst(DetailAST parent, int index) {
+    private Object getChildAtDetailAst(final DetailAST parent, final int index) {
         final Object result;
         if (parseMode == ParseMode.JAVA_WITH_JAVADOC_AND_COMMENTS
                 && parent.getType() == TokenTypes.COMMENT_CONTENT
                 && JavadocUtil.isJavadocComment(parent.getParent())) {
             result = getJavadocTree(parent.getParent());
-        }
-        else {
+        } else {
             int currentIndex = 0;
             DetailAST child = parent.getFirstChild();
             while (currentIndex < index) {
@@ -290,7 +285,7 @@ public class ParseTreeTablePresentation {
      * @param column column index.
      * @return value at specified column.
      */
-    private static Object getValueAtDetailNode(DetailNode node, int column) {
+    private static Object getValueAtDetailNode(final DetailNode node, final int column) {
         final Object value;
 
         switch (column) {
@@ -322,7 +317,7 @@ public class ParseTreeTablePresentation {
      * @param column column index.
      * @return value at specified column.
      */
-    private static Object getValueAtDetailAST(DetailAST ast, int column) {
+    private static Object getValueAtDetailAST(final DetailAST ast, final int column) {
         final Object value;
 
         switch (column) {
@@ -353,7 +348,7 @@ public class ParseTreeTablePresentation {
      * @param blockComment Javadoc comment as a block comment
      * @return root of DetailNode tree
      */
-    private DetailNode getJavadocTree(DetailAST blockComment) {
+    private DetailNode getJavadocTree(final DetailAST blockComment) {
         return blockCommentToJavadocTree.computeIfAbsent(blockComment,
                 ParseTreeTablePresentation::parseJavadocTree);
     }
@@ -363,7 +358,7 @@ public class ParseTreeTablePresentation {
      * @param blockComment Javadoc comment as a block comment
      * @return root of DetailNode tree
      */
-    private static DetailNode parseJavadocTree(DetailAST blockComment) {
+    private static DetailNode parseJavadocTree(final DetailAST blockComment) {
         return new JavadocDetailNodeParser().parseJavadocAsDetailNode(blockComment).getTree();
     }
 

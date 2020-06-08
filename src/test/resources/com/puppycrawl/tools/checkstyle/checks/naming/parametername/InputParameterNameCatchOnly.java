@@ -13,8 +13,7 @@ public class InputParameterNameCatchOnly {
         try
         {
             return 1;
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             return 0;
         }
@@ -27,7 +26,7 @@ public class InputParameterNameCatchOnly {
 
     class InnerFoo
     {
-        public void fooInnerMethod ()
+        public void fooInnerMethod()
         {
         }
     }

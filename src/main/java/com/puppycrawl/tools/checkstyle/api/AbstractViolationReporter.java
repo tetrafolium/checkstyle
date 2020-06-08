@@ -55,7 +55,7 @@ public abstract class AbstractViolationReporter
      * @param severity  The new severity level
      * @see SeverityLevel
      */
-    public final void setSeverity(String severity) {
+    public final void setSeverity(final String severity) {
         severityLevel = SeverityLevel.getInstance(severity);
     }
 
@@ -127,8 +127,7 @@ public abstract class AbstractViolationReporter
         final String messages = "messages";
         if (endIndex == -1) {
             messageBundle = messages;
-        }
-        else {
+        } else {
             final String packageName = className.substring(0, endIndex);
             messageBundle = packageName + "." + messages;
         }

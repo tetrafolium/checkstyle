@@ -132,7 +132,7 @@ public class AvoidNestedBlocksCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         final DetailAST parent = ast.getParent();
         if (parent.getType() == TokenTypes.SLIST
                 && (!allowInSwitchCase || hasSiblings(ast))) {
@@ -146,7 +146,7 @@ public class AvoidNestedBlocksCheck extends AbstractCheck {
      * @param ast node to examine
      * @return {@code true} if the node has one or more siblings
      */
-    private static boolean hasSiblings(DetailAST ast) {
+    private static boolean hasSiblings(final DetailAST ast) {
         return ast.getPreviousSibling() != null || ast.getNextSibling() != null;
     }
 
@@ -155,7 +155,7 @@ public class AvoidNestedBlocksCheck extends AbstractCheck {
      * @param allowInSwitchCase whether nested blocks are allowed
      *                 if they are the only child of a switch case.
      */
-    public void setAllowInSwitchCase(boolean allowInSwitchCase) {
+    public void setAllowInSwitchCase(final boolean allowInSwitchCase) {
         this.allowInSwitchCase = allowInSwitchCase;
     }
 

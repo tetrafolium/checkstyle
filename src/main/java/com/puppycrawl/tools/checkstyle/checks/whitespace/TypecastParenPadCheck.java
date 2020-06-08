@@ -69,13 +69,12 @@ public class TypecastParenPadCheck extends AbstractParenPadCheck {
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         // Strange logic in this method to guard against checking RPAREN tokens
         // that are not associated with a TYPECAST token.
         if (ast.getType() == TokenTypes.TYPECAST) {
             processLeft(ast);
-        }
-        else if (ast.getParent().getType() == TokenTypes.TYPECAST
+        } else if (ast.getParent().getType() == TokenTypes.TYPECAST
                  && ast.getParent().findFirstToken(TokenTypes.RPAREN) == ast) {
             processRight(ast);
         }

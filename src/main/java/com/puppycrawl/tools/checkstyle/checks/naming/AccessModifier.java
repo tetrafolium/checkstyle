@@ -57,7 +57,7 @@ public enum AccessModifier {
      * @param modifierName access modifier name represented as a {@link String}.
      * @return the AccessModifier associated with given access modifier name.
      */
-    public static AccessModifier getInstance(String modifierName) {
+    public static AccessModifier getInstance(final String modifierName) {
         return valueOf(AccessModifier.class, modifierName.trim().toUpperCase(Locale.ENGLISH));
     }
 

@@ -94,8 +94,7 @@ public class SuppressionFilterTest extends AbstractModuleTestSupport {
             final boolean optional = false;
             createSuppressionFilter(fileName, optional);
             fail("Exception is expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             assertEquals("Unable to find: " + fileName, ex.getMessage(), "Invalid error message");
         }
     }
@@ -107,8 +106,7 @@ public class SuppressionFilterTest extends AbstractModuleTestSupport {
             final boolean optional = true;
             createSuppressionFilter(fileName, optional);
             fail("Exception is expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             assertEquals(
                     "Unable to parse " + fileName + " - invalid files or checks or message format",
                 ex.getMessage(), "Invalid error message");
@@ -216,7 +214,7 @@ public class SuppressionFilterTest extends AbstractModuleTestSupport {
         }
     }
 
-    private static boolean isConnectionAvailableAndStable(String url) throws Exception {
+    private static boolean isConnectionAvailableAndStable(final String url) throws Exception {
         boolean available = false;
 
         if (isUrlReachable(url)) {
@@ -228,16 +226,14 @@ public class SuppressionFilterTest extends AbstractModuleTestSupport {
                     // Attempt to read a byte in order to check whether file content is available
                     available = stream.read() != -1;
                     break;
-                }
-                catch (IOException ex) {
+                } catch (IOException ex) {
                     // for some reason Travis CI failed some times (unstable) on reading the file
                     if (attemptCount < attemptLimit && ex.getMessage().contains("Unable to read")) {
                         attemptCount++;
                         available = false;
                         // wait for bad / disconnection time to pass
                         Thread.sleep(1000);
-                    }
-                    else {
+                    } else {
                         throw ex;
                     }
                 }
@@ -246,20 +242,19 @@ public class SuppressionFilterTest extends AbstractModuleTestSupport {
         return available;
     }
 
-    private static boolean isUrlReachable(String url) {
+    private static boolean isUrlReachable(final String url) {
         boolean result = true;
         try {
             final URL verifiableUrl = new URL(url);
             final HttpURLConnection urlConnect = (HttpURLConnection) verifiableUrl.openConnection();
             urlConnect.getContent();
-        }
-        catch (IOException ignored) {
+        } catch (IOException ignored) {
             result = false;
         }
         return result;
     }
 
-    private static SuppressionFilter createSuppressionFilter(String fileName, boolean optional)
+    private static SuppressionFilter createSuppressionFilter(final String fileName, final boolean optional)
             throws CheckstyleException {
         final SuppressionFilter suppressionFilter = new SuppressionFilter();
         suppressionFilter.setFile(fileName);

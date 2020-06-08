@@ -51,8 +51,7 @@ public class AutomaticBeanTest {
         try {
             testBean.configure(conf);
             fail("Exception is expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             assertNull(ex.getCause(), "Exceptions cause should be null");
             assertEquals("Property 'NonExistent' does not exist, please check the documentation",
                     ex.getMessage(), "Invalid exception message");
@@ -67,8 +66,7 @@ public class AutomaticBeanTest {
         try {
             testBean.configure(conf);
             fail("Exception is expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             assertNull(ex.getCause(), "Exceptions cause should be null");
             assertEquals("Property 'privateField' does not exist, please check the documentation",
                     ex.getMessage(), "Invalid exception message");
@@ -83,8 +81,7 @@ public class AutomaticBeanTest {
         try {
             testBean.setupChild(new DefaultConfiguration("dummy"));
             fail("Exception expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             final String expectedMessage = "dummy is not allowed as a child in bean config. "
                     + "Please review 'Parent Module' section for this Check"
                     + " in web documentation if Check is standard.";
@@ -104,8 +101,7 @@ public class AutomaticBeanTest {
         try {
             testBean.setupChild(childConf);
             fail("expecting checkstyle exception");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             assertEquals("childConf is not allowed as a "
                             + "child in parentConf. Please review 'Parent Module' section "
                             + "for this Check in web documentation if Check is standard.",
@@ -121,8 +117,7 @@ public class AutomaticBeanTest {
         try {
             testBean.contextualize(context);
             fail("InvocationTargetException is expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             final String expected = "Cannot set property ";
             assertTrue(ex.getCause() instanceof InvocationTargetException,
                     "Invalid exception cause, should be: InvocationTargetException");
@@ -139,8 +134,7 @@ public class AutomaticBeanTest {
         try {
             testBean.contextualize(context);
             fail("InvocationTargetException is expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             final String expected = "illegal value ";
             assertTrue(ex.getCause() instanceof ConversionException,
                     "Invalid exception cause, should be: ConversionException");
@@ -158,8 +152,7 @@ public class AutomaticBeanTest {
         try {
             testBean.setExceptionalMethod("someValue");
             fail("exception expected");
-        }
-        catch (IllegalStateException ex) {
+        } catch (IllegalStateException ex) {
             assertEquals("null,wrongVal,0,someValue", ex.getMessage(), "Invalid exception message");
         }
     }
@@ -222,8 +215,7 @@ public class AutomaticBeanTest {
         try {
             bean.configure(config);
             fail("Exception is expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             assertEquals("illegal value 'BAD' for property 'uri'", ex.getMessage(),
                     "Error message is not expected");
         }
@@ -234,7 +226,7 @@ public class AutomaticBeanTest {
         private int registerCount;
 
         @Override
-        public void register(Converter converter, Class<?> clazz) {
+        public void register(final Converter converter, final Class<?> clazz) {
             super.register(converter, clazz);
             if (converter != null) {
                 registerCount++;
@@ -255,19 +247,19 @@ public class AutomaticBeanTest {
 
         private int val;
 
-        public void setWrong(String wrong) {
+        public void setWrong(final String wrong) {
             this.wrong = wrong;
         }
 
-        public void setVal(int val) {
+        public void setVal(final int val) {
             this.val = val;
         }
 
-        public void assignPrivateFieldSecretly(String input) {
+        public void assignPrivateFieldSecretly(final String input) {
             privateField = input;
         }
 
-        public void setExceptionalMethod(String value) {
+        public void setExceptionalMethod(final String value) {
             throw new IllegalStateException(privateField + "," + wrong + "," + val + "," + value);
         }
 
@@ -294,7 +286,7 @@ public class AutomaticBeanTest {
          * Setter for strings.
          * @param strings strings.
          */
-        public void setStrings(String... strings) {
+        public void setStrings(final String... strings) {
             this.strings = Arrays.copyOf(strings, strings.length);
         }
 
@@ -302,7 +294,7 @@ public class AutomaticBeanTest {
          * Setter for pattern.
          * @param pattern pattern.
          */
-        public void setPattern(Pattern pattern) {
+        public void setPattern(final Pattern pattern) {
             this.pattern = pattern;
         }
 
@@ -310,7 +302,7 @@ public class AutomaticBeanTest {
          * Setter for severity level.
          * @param severityLevel severity level.
          */
-        public void setSeverityLevel(SeverityLevel severityLevel) {
+        public void setSeverityLevel(final SeverityLevel severityLevel) {
             this.severityLevel = severityLevel;
         }
 
@@ -318,7 +310,7 @@ public class AutomaticBeanTest {
          * Setter for scope.
          * @param scope scope.
          */
-        public void setScope(Scope scope) {
+        public void setScope(final Scope scope) {
             this.scope = scope;
         }
 
@@ -326,7 +318,7 @@ public class AutomaticBeanTest {
          * Setter for uri.
          * @param uri uri.
          */
-        public void setUri(URI uri) {
+        public void setUri(final URI uri) {
             this.uri = uri;
         }
 
@@ -334,7 +326,7 @@ public class AutomaticBeanTest {
          * Setter for access modifiers.
          * @param accessModifiers access modifiers.
          */
-        public void setAccessModifiers(AccessModifier... accessModifiers) {
+        public void setAccessModifiers(final AccessModifier... accessModifiers) {
             this.accessModifiers = Arrays.copyOf(accessModifiers, accessModifiers.length);
         }
 

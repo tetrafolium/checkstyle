@@ -114,7 +114,7 @@ public final class XpathUtil {
      * @param ast {@code DetailAst} element
      * @return true if element supports {@code @text} attribute, false otherwise
      */
-    public static boolean supportsTextAttribute(DetailAST ast) {
+    public static boolean supportsTextAttribute(final DetailAST ast) {
         return TOKEN_TYPES_WITH_TEXT_ATTRIBUTE.contains(ast.getType());
     }
 
@@ -124,7 +124,7 @@ public final class XpathUtil {
      * @param ast {@code DetailAst} element
      * @return text attribute of the ast element
      */
-    public static String getTextAttributeValue(DetailAST ast) {
+    public static String getTextAttributeValue(final DetailAST ast) {
         String text = ast.getText();
         if (ast.getType() == TokenTypes.STRING_LITERAL) {
             text = text.substring(1, text.length() - 1);
@@ -141,7 +141,7 @@ public final class XpathUtil {
      * @throws CheckstyleException if some parsing error happens
      * @throws IOException if an error occurs
      */
-    public static String printXpathBranch(String xpath, File file) throws CheckstyleException,
+    public static String printXpathBranch(final String xpath, final File file) throws CheckstyleException,
             IOException {
         final XPathEvaluator xpathEvaluator = new XPathEvaluator();
         try {
@@ -155,8 +155,7 @@ public final class XpathUtil {
                 .map(item -> ((AbstractNode) item).getUnderlyingNode())
                 .map(AstTreeStringPrinter::printBranch)
                 .collect(Collectors.joining(DELIMITER));
-        }
-        catch (XPathException ex) {
+        } catch (XPathException ex) {
             final String errMsg = String.format(Locale.ROOT,
                 "Error during evaluation for xpath: %s, file: %s", xpath, file.getCanonicalPath());
             throw new CheckstyleException(errMsg, ex);

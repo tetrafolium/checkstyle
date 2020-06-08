@@ -129,7 +129,7 @@ public final class MissingDeprecatedCheck extends AbstractJavadocCheck {
     }
 
     @Override
-    public void visitJavadocToken(DetailNode ast) {
+    public void visitJavadocToken(final DetailNode ast) {
         final DetailAST parentAst = getParent(getBlockCommentAst());
 
         final boolean containsAnnotation =
@@ -149,7 +149,7 @@ public final class MissingDeprecatedCheck extends AbstractJavadocCheck {
      * @param javadoc the javadoc of the AST
      * @return true if contains the tag
      */
-    private boolean containsDeprecatedTag(DetailNode javadoc) {
+    private boolean containsDeprecatedTag(final DetailNode javadoc) {
         boolean found = false;
         for (DetailNode child : javadoc.getChildren()) {
             if (child.getType() == JavadocTokenTypes.JAVADOC_TAG
@@ -169,7 +169,7 @@ public final class MissingDeprecatedCheck extends AbstractJavadocCheck {
      * @param commentBlock child node.
      * @return parent node.
      */
-    private static DetailAST getParent(DetailAST commentBlock) {
+    private static DetailAST getParent(final DetailAST commentBlock) {
         DetailAST result = commentBlock.getParent();
 
         if (result == null) {
@@ -183,8 +183,7 @@ public final class MissingDeprecatedCheck extends AbstractJavadocCheck {
                     || type == TokenTypes.ARRAY_DECLARATOR || type == TokenTypes.TYPE_PARAMETERS
                     || type == TokenTypes.DOT) {
                 result = result.getParent();
-            }
-            else {
+            } else {
                 break;
             }
         }

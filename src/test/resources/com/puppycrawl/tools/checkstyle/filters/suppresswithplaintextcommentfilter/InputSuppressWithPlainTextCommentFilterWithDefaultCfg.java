@@ -2,11 +2,11 @@ package com.puppycrawl.tools.checkstyle.filters.suppresswithplaintextcommentfilt
 
 public class InputSuppressWithPlainTextCommentFilterWithDefaultCfg {
     // CHECKSTYLE:OFF
-    //	has tab here
+    //  has tab here
 
     // CHECKSTYLE:ON
-    //	has tab here
+    //  has tab here
 
-	private int a; // CHECKSTYLE:OFF
+        private int a; // CHECKSTYLE:OFF
     // CHECKSTYLE:ON
 }

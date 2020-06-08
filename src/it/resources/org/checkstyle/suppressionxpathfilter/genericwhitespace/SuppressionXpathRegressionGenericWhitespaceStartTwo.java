@@ -3,8 +3,8 @@ package org.checkstyle.suppressionxpathfilter.genericwhitespace;
 import java.util.function.Consumer;
 
 public class SuppressionXpathRegressionGenericWhitespaceStartTwo {
-    public <E> void bad(Consumer <E> consumer) {//warn
+    public <E> void bad(final Consumer<E> consumer) { //warn
     }
-    public <E> void good(Consumer<E> consumer) {
+    public <E> void good(final Consumer<E> consumer) {
     }
 }

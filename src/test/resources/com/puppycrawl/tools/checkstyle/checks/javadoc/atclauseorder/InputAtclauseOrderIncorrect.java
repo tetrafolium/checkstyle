@@ -39,7 +39,7 @@ class InputAtclauseOrderIncorrect implements Serializable
      * @deprecated Some text.
      * @throws Exception Some text. //warn
      */
-    String method(String aString) throws Exception
+    String method(final String aString) throws Exception
     {
         return "null";
     }
@@ -51,7 +51,7 @@ class InputAtclauseOrderIncorrect implements Serializable
      * @param aString Some text. //warn
      * @throws Exception Some text.
      */
-    String method1(String aString) throws Exception
+    String method1(final String aString) throws Exception
     {
         return "null";
     }
@@ -61,14 +61,14 @@ class InputAtclauseOrderIncorrect implements Serializable
      * @throws Exception Some text.
      * @param aString Some text. //warn
      */
-    void method2(String aString) throws Exception {}
+    void method2(final String aString) throws Exception { }
 
     /**
      * Some text.
      * @deprecated Some text.
      * @throws Exception Some text. //warn
      */
-    void method3() throws Exception {}
+    void method3() throws Exception { }
 
     /**
      * Some text.
@@ -86,7 +86,7 @@ class InputAtclauseOrderIncorrect implements Serializable
      * @return Some text. //warn
      * @param aString Some text. //warn
      */
-    String method5(String aString)
+    String method5(final String aString)
     {
         return "null";
     }
@@ -101,7 +101,7 @@ class InputAtclauseOrderIncorrect implements Serializable
      * @param aBoolean Some text. //warn
      * @deprecated Some text.
      */
-    String method6(String aString, int aInt, boolean aBoolean) throws Exception
+    String method6(final String aString, final int aInt, final boolean aBoolean) throws Exception
     {
         return "null";
     }
@@ -123,7 +123,7 @@ class InputAtclauseOrderIncorrect implements Serializable
          * @param aString Some text. //warn
          * @throws Exception Some text.
          */
-        String method(String aString) throws Exception
+        String method(final String aString) throws Exception
         {
             return "null";
         }
@@ -134,7 +134,7 @@ class InputAtclauseOrderIncorrect implements Serializable
          * @return Some text. //warn
          * @param aString Some text. //warn
          */
-        String method1(String aString) throws Exception
+        String method1(final String aString) throws Exception
         {
             return "null";
         }
@@ -145,14 +145,14 @@ class InputAtclauseOrderIncorrect implements Serializable
          * @param aString Some text. //warn
          * @throws Exception Some text.
          */
-        void method2(String aString) throws Exception {}
+        void method2(final String aString) throws Exception { }
 
         /**
          * Some text.
          * @deprecated Some text.
          * @throws Exception Some text. //warn
          */
-        void method3() throws Exception {}
+        void method3() throws Exception { }
 
         /**
          * Some text.
@@ -171,7 +171,7 @@ class InputAtclauseOrderIncorrect implements Serializable
          * @deprecated Some text.
          * @return Some text. //warn
          */
-        String method5(String aString)
+        String method5(final String aString)
         {
             return "null";
         }
@@ -185,7 +185,7 @@ class InputAtclauseOrderIncorrect implements Serializable
          * @param aBoolean Some text. //warn
          * @deprecated Some text.
          */
-        String method6(String aString, int aInt, boolean aBoolean) throws Exception
+        String method6(final String aString, final int aInt, final boolean aBoolean) throws Exception
         {
             return "null";
         }
@@ -201,7 +201,7 @@ class InputAtclauseOrderIncorrect implements Serializable
          * @deprecated Some text.
          * @return Some text. //warn
          */
-        String method(String aString) throws Exception
+        String method(final String aString) throws Exception
         {
             return "null";
         }
@@ -212,7 +212,7 @@ class InputAtclauseOrderIncorrect implements Serializable
          * @throws Exception Some text.
          * @return Some text. //warn
          */
-        String method1(String aString) throws Exception
+        String method1(final String aString) throws Exception
         {
             return "null";
         }
@@ -222,14 +222,14 @@ class InputAtclauseOrderIncorrect implements Serializable
          * @throws Exception Some text.
          * @param aString Some text. //warn
          */
-        void method2(String aString) throws Exception {}
+        void method2(final String aString) throws Exception { }
 
         /**
          * Some text.
          * @deprecated Some text.
          * @throws Exception Some text. //warn
          */
-        void method3() throws Exception {}
+        void method3() throws Exception { }
 
         /**
          * Some text.
@@ -247,7 +247,7 @@ class InputAtclauseOrderIncorrect implements Serializable
          * @return Some text. //warn
          * @param aString Some text. //warn
          */
-        String method5(String aString)
+        String method5(final String aString)
         {
             return "null";
         }
@@ -261,7 +261,7 @@ class InputAtclauseOrderIncorrect implements Serializable
          * @param aBoolean Some text. //warn
          * @deprecated Some text.
          */
-        String method6(String aString, int aInt, boolean aBoolean) throws Exception
+        String method6(final String aString, final int aInt, final boolean aBoolean) throws Exception
         {
             return "null";
         }
@@ -277,7 +277,7 @@ class InputAtclauseOrderIncorrect implements Serializable
  * @see Some javadoc. //warn
  * @author max //warn
  */
-enum Foo4 {}
+enum Foo4 { }
 
 /**
  * Some javadoc.

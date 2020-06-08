@@ -10,7 +10,7 @@ public class InputMagicNumber {
         //constants, ignore
         final int INT_CONST = 101_000;
         final long LONG_CONST1 = 100_000L;
-        final long LONG_CONST2 = 100l;
+        final long LONG_CONST2 = 100L;
         final float FLOAT_CONST1 = 1.500_0F;
         final float FLOAT_CONST2 = 1.5f;
         final double DOUBLE_CONST1 = 1.500_0D;
@@ -21,7 +21,7 @@ public class InputMagicNumber {
         int int_var1 = 1;
         int int_var2 = (2);
         long long_var1 = 0L;
-        long long_var2 = 0l;
+        long long_var2 = 0L;
         double double_var1 = 0D;
         double double_var2 = 0d;
 
@@ -61,7 +61,7 @@ public class InputMagicNumber {
         int octalVar9 = 011;
 
         long longOctalVar8 = 0_10L;
-        long longOctalVar9 = 011l;
+        long longOctalVar9 = 011L;
 
         //hex
         int hexVar0 = 0x0;
@@ -69,7 +69,7 @@ public class InputMagicNumber {
         int hexVar17 = 0X011;
         long longHexVar0 = 0x0L;
         long longHexVar16 = 0x10L;
-        long longHexVar17 = 0X11l;
+        long longHexVar17 = 0X11L;
     }
 }
 
@@ -148,7 +148,7 @@ enum MyEnum2
     A(3),
     B(54);
 
-    private MyEnum2(int value)
+    private MyEnum2(final int value)
     {
 
     }
@@ -161,7 +161,7 @@ class TestHashCodeMethod {
     }
 
     // invalid hash code method: has parameters
-    public int hashCode(int val) {
+    public int hashCode(final int val) {
         return 42;
     }
 
@@ -171,22 +171,22 @@ class TestHashCodeMethod {
     }
 
     static {
-        int x=21;
+        int x = 21;
     }
 
     {
-        int y=37;
+        int y = 37;
     }
 
     public TestHashCodeMethod() {
-        int z=101;
+        int z = 101;
     }
 
     @InputMagicNumberIntMethodAnnotation(42)
     public void another() {
     }
 
-    @InputMagicNumberIntMethodAnnotation(value=43)
+    @InputMagicNumberIntMethodAnnotation(value = 43)
     public void another2() {
     }
 
@@ -194,14 +194,14 @@ class TestHashCodeMethod {
     public void anotherNegative() {
     }
 
-    @InputMagicNumberIntMethodAnnotation(value=-45)
+    @InputMagicNumberIntMethodAnnotation(value = -45)
     public void anotherNegative2() {
     }
 }
 
 class TestMethodCall {
 
-        public TestMethodCall(int x){
+        public TestMethodCall(final int x) {
 
     }
 

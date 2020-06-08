@@ -8,11 +8,11 @@ class InputAbbreviationAsWordInTypeNameCheck {
 
     boolean supportsIpv6OnIos;
 
-    void XmlHttpRequest() {}
+    void XmlHttpRequest() { }
 
-    void YouTubeImporter() {}
+    void YouTubeImporter() { }
 
-    void YoutubeImporter() {}
+    void YoutubeImporter() { }
 
     class InnerGood {
 
@@ -22,11 +22,11 @@ class InputAbbreviationAsWordInTypeNameCheck {
 
         boolean supportsIpv6OnIos;
 
-        void XmlHttpRequest() {}
+        void XmlHttpRequest() { }
 
-        void YouTubeImporter() {}
+        void YouTubeImporter() { }
 
-        void YoutubeImporter() {}
+        void YoutubeImporter() { }
     }
 
         InputAbbreviationAsWordInTypeNameCheck anonymousGood
@@ -38,11 +38,11 @@ class InputAbbreviationAsWordInTypeNameCheck {
 
             boolean supportsIpv6OnIos;
 
-            void XmlHttpRequest() {}
+            void XmlHttpRequest() { }
 
-            void YouTubeImporter() {}
+            void YouTubeImporter() { }
 
-            void YoutubeImporter() {}
+            void YoutubeImporter() { }
     };
 }
 
@@ -52,7 +52,7 @@ class AbbreviationsIncorrect {
 
     boolean supportsIPv6OnIOS; //warn
 
-    void XMLHTTPRequest() {} //warn
+    void XMLHTTPRequest() { } //warn
 
     class InnerBad {
 
@@ -60,7 +60,7 @@ class AbbreviationsIncorrect {
 
         boolean supportsIPv6OnIOS; //warn
 
-        void XMLHTTPRequest() {} //warn
+        void XMLHTTPRequest() { } //warn
     }
 
         InputAbbreviationAsWordInTypeNameCheck anonymousBad
@@ -70,6 +70,6 @@ class AbbreviationsIncorrect {
 
             boolean supportsIPv6OnIOS; //warn
 
-            void XMLHTTPRequest() {} //warn
+            void XMLHTTPRequest() { } //warn
     };
 }

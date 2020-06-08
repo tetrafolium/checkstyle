@@ -8,13 +8,13 @@ public class InputMethodParamPad
         super();
     }
 
-    public InputMethodParamPad (int aParam)
+    public InputMethodParamPad(final int aParam)
     {
-        super ();
+        super();
     }
 
     public InputMethodParamPad
-        (double aParam)
+        (final double aParam)
     {
         super
             ();
@@ -24,22 +24,22 @@ public class InputMethodParamPad
     {
     }
 
-    public void method (int aParam)
+    public void method(final int aParam)
     {
     }
 
     public void method
-        (double aParam)
+        (final double aParam)
     {
         // invoke constructor
         InputMethodParamPad pad = new InputMethodParamPad();
-        pad = new InputMethodParamPad ();
+        pad = new InputMethodParamPad();
         pad = new InputMethodParamPad
             ();
 
         // call method
         method();
-        method ();
+        method();
         method
             ();
     }
@@ -47,18 +47,18 @@ public class InputMethodParamPad
     public void dottedCalls()
     {
         this.method();
-        this.method ();
+        this.method();
         this.method
             ();
 
         InputMethodParamPad p = new InputMethodParamPad();
         p.method();
-        p.method ();
+        p.method();
         p.method
             ();
 
         java.lang.Integer.parseInt("0");
-        java.lang.Integer.parseInt ("0");
+        java.lang.Integer.parseInt("0");
         java.lang.Integer.parseInt
             ("0");
     }
@@ -71,7 +71,7 @@ public class InputMethodParamPad
     }
 
     enum TestEnum {
-        FIRST ()
+        FIRST()
             {
             },
 

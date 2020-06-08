@@ -55,19 +55,19 @@ public class XpathFileGeneratorAuditListener extends AutomaticBean implements Au
      * @param out the output stream
      * @param outputStreamOptions if {@code CLOSE} stream should be closed in auditFinished()
      */
-    public XpathFileGeneratorAuditListener(OutputStream out,
-                                           OutputStreamOptions outputStreamOptions) {
+    public XpathFileGeneratorAuditListener(final OutputStream out,
+                                           final OutputStreamOptions outputStreamOptions) {
         writer = new PrintWriter(new OutputStreamWriter(out, StandardCharsets.UTF_8));
         closeStream = outputStreamOptions == OutputStreamOptions.CLOSE;
     }
 
     @Override
-    public void auditStarted(AuditEvent event) {
+    public void auditStarted(final AuditEvent event) {
         // No code by default
     }
 
     @Override
-    public void auditFinished(AuditEvent event) {
+    public void auditFinished(final AuditEvent event) {
         if (isXmlHeaderPrinted) {
             writer.println("</suppressions>");
         }
@@ -79,17 +79,17 @@ public class XpathFileGeneratorAuditListener extends AutomaticBean implements Au
     }
 
     @Override
-    public void fileStarted(AuditEvent event) {
+    public void fileStarted(final AuditEvent event) {
         // No code by default
     }
 
     @Override
-    public void fileFinished(AuditEvent event) {
+    public void fileFinished(final AuditEvent event) {
         // No code by default
     }
 
     @Override
-    public void addError(AuditEvent event) {
+    public void addError(final AuditEvent event) {
         final String xpathQuery = XpathFileGeneratorAstFilter.findCorrespondingXpathQuery(event);
         if (xpathQuery != null) {
             printXmlHeader();
@@ -106,8 +106,7 @@ public class XpathFileGeneratorAuditListener extends AutomaticBean implements Au
                         PackageObjectFactory.getShortFromFullModuleNames(event.getSourceName());
                 writer.print("       checks=\"");
                 writer.print(checkName);
-            }
-            else {
+            } else {
                 writer.print("       id=\"");
                 writer.print(event.getModuleId());
             }
@@ -121,7 +120,7 @@ public class XpathFileGeneratorAuditListener extends AutomaticBean implements Au
     }
 
     @Override
-    public void addException(AuditEvent event, Throwable throwable) {
+    public void addException(final AuditEvent event, final Throwable throwable) {
         throw new UnsupportedOperationException("Operation is not supported");
     }
 

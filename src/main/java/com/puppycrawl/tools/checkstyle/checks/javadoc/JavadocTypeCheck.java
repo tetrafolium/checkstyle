@@ -239,7 +239,7 @@ public class JavadocTypeCheck
      *
      * @param scope a scope.
      */
-    public void setScope(Scope scope) {
+    public void setScope(final Scope scope) {
         this.scope = scope;
     }
 
@@ -248,7 +248,7 @@ public class JavadocTypeCheck
      *
      * @param excludeScope a scope.
      */
-    public void setExcludeScope(Scope excludeScope) {
+    public void setExcludeScope(final Scope excludeScope) {
         this.excludeScope = excludeScope;
     }
 
@@ -257,7 +257,7 @@ public class JavadocTypeCheck
      *
      * @param pattern a pattern.
      */
-    public void setAuthorFormat(Pattern pattern) {
+    public void setAuthorFormat(final Pattern pattern) {
         authorFormat = pattern;
     }
 
@@ -266,7 +266,7 @@ public class JavadocTypeCheck
      *
      * @param pattern a pattern.
      */
-    public void setVersionFormat(Pattern pattern) {
+    public void setVersionFormat(final Pattern pattern) {
         versionFormat = pattern;
     }
 
@@ -276,7 +276,7 @@ public class JavadocTypeCheck
      *
      * @param flag a {@code Boolean} value
      */
-    public void setAllowMissingParamTags(boolean flag) {
+    public void setAllowMissingParamTags(final boolean flag) {
         allowMissingParamTags = flag;
     }
 
@@ -285,7 +285,7 @@ public class JavadocTypeCheck
      *
      * @param flag a {@code Boolean} value
      */
-    public void setAllowUnknownTags(boolean flag) {
+    public void setAllowUnknownTags(final boolean flag) {
         allowUnknownTags = flag;
     }
 
@@ -295,7 +295,7 @@ public class JavadocTypeCheck
      *
      * @param userAnnotations user's value.
      */
-    public void setAllowedAnnotations(String... userAnnotations) {
+    public void setAllowedAnnotations(final String... userAnnotations) {
         allowedAnnotations = Arrays.asList(userAnnotations);
     }
 
@@ -320,7 +320,7 @@ public class JavadocTypeCheck
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         if (shouldCheck(ast)) {
             final FileContents contents = getFileContents();
             final int lineNo = ast.getLineNo();
@@ -361,8 +361,7 @@ public class JavadocTypeCheck
 
         if (ScopeUtil.isInInterfaceOrAnnotationBlock(ast)) {
             customScope = Scope.PUBLIC;
-        }
-        else {
+        } else {
             final DetailAST mods = ast.findFirstToken(TokenTypes.MODIFIERS);
             customScope = ScopeUtil.getScopeFromMods(mods);
         }
@@ -382,7 +381,7 @@ public class JavadocTypeCheck
      * @param textBlock the Javadoc comment to process.
      * @return all standalone tags from the given javadoc.
      */
-    private List<JavadocTag> getJavadocTags(TextBlock textBlock) {
+    private List<JavadocTag> getJavadocTags(final TextBlock textBlock) {
         final JavadocTags tags = JavadocUtil.getJavadocTags(textBlock,
             JavadocUtil.JavadocTagType.BLOCK);
         if (!allowUnknownTags) {
@@ -401,8 +400,8 @@ public class JavadocTypeCheck
      * @param tagName the required tag name.
      * @param formatPattern regexp for the tag value.
      */
-    private void checkTag(int lineNo, List<JavadocTag> tags, String tagName,
-                          Pattern formatPattern) {
+    private void checkTag(final int lineNo, final List<JavadocTag> tags, final String tagName,
+                          final Pattern formatPattern) {
         if (formatPattern != null) {
             boolean hasTag = false;
             final String tagPrefix = "@";
@@ -474,14 +473,13 @@ public class JavadocTypeCheck
      * @param tag javadoc tag to extract parameter name
      * @return extracts type parameter name from tag
      */
-    private static String extractTypeParamNameFromTag(JavadocTag tag) {
+    private static String extractTypeParamNameFromTag(final JavadocTag tag) {
         final String typeParamName;
         final Matcher matchInAngleBrackets =
                 TYPE_NAME_IN_JAVADOC_TAG.matcher(tag.getFirstArg());
         if (matchInAngleBrackets.find()) {
             typeParamName = matchInAngleBrackets.group(1).trim();
-        }
-        else {
+        } else {
             typeParamName = TYPE_NAME_IN_JAVADOC_TAG_SPLITTER.split(tag.getFirstArg())[0];
         }
         return typeParamName;

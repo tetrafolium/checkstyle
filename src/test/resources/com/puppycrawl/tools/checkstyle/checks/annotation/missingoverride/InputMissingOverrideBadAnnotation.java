@@ -20,7 +20,7 @@ public class InputMissingOverrideBadAnnotation
         }
     };
 
-    void doFoo(Runnable r) {
+    void doFoo(final Runnable r) {
         doFoo(new Runnable() {
 
             /**

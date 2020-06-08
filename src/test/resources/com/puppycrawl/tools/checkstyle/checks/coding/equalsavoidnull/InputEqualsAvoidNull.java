@@ -2,7 +2,7 @@ package com.puppycrawl.tools.checkstyle.checks.coding.equalsavoidnull;
 import java.util.Map;
 public class InputEqualsAvoidNull {
 
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
     return false;
     }
     // another comment
@@ -194,7 +194,7 @@ public class InputEqualsAvoidNull {
 
 class InputEqualsAvoidNullOutter {
     public class InputEqualsAvoidNullInner {
-            public boolean equals(Object o) {
+            public boolean equals(final Object o) {
                 return true;
             }
     }
@@ -205,7 +205,7 @@ class MyString {
         return true;
     }
 
-    public boolean equals(String s1) {
+    public boolean equals(final String s1) {
         return true;
     }
 
@@ -213,7 +213,7 @@ class MyString {
         return true;
     }
 
-    public boolean equalsIgnoreCase(String s1) {
+    public boolean equalsIgnoreCase(final String s1) {
         return true;
     }
 
@@ -234,11 +234,11 @@ class NewTest {
     String instanceVar;
     NewTest testObj = new NewTest("");
 
-    NewTest(String param) {
+    NewTest(final String param) {
         param.equals("");
     }
 
-    public void method(String param) {
+    public void method(final String param) {
         final String localVar = "";
 
         localVar.equals("");
@@ -303,7 +303,7 @@ class NewTest {
             }
         }
     }
-    void foo(String param) {
+    void foo(final String param) {
         try {
             param.equals("");
             do {
@@ -312,7 +312,7 @@ class NewTest {
             } while (param.equals(""));
         } catch (Exception e) {
             while (param.equals("")) {
-                for (String s = ""; s.equals(""); ){
+                for (String s = ""; s.equals(""); ) {
                     if (s.equals("")) {
                         synchronized (this) {
                             switch (s) {
@@ -358,9 +358,9 @@ class NewTest {
             }
         };
 
-        Map.Entry<String,Long> enumInstance;
+        Map.Entry<String, Long> enumInstance;
 
-        EmbeddedEnum(int i) {
+        EmbeddedEnum(final int i) {
             enumInstance.equals("");
         }
 
@@ -371,8 +371,10 @@ class NewTest {
         static String enumStatic;
     }
 
-    private String foo() {return "";}
-    private Object foo(int i) {return i;}
+    private String foo() {
+        return ""; }
+    private Object foo(final int i) {
+        return i; }
 
     Object o2 = new Object();
     Object o3 = new Object();
@@ -387,7 +389,7 @@ String o3 = "";
     }
 }
 class Anonymous {
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         Runnable anonym = new Runnable() {
             String nullableStr = null;
             public void run() {
@@ -397,7 +399,7 @@ class Anonymous {
         Object nullableStr = new Object();
         nullableStr.equals("");
     }
-    {}
+    { }
 }
 
 enum TestEnum {

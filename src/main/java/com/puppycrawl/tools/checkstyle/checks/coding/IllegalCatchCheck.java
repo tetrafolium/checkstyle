@@ -101,7 +101,7 @@ public final class IllegalCatchCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST detailAST) {
+    public void visitToken(final DetailAST detailAST) {
         final DetailAST parameterDef =
             detailAST.findFirstToken(TokenTypes.PARAMETER_DEF);
         final DetailAST excTypeParent =
@@ -123,15 +123,14 @@ public final class IllegalCatchCheck extends AbstractCheck {
      * @param parentToken - parent node for types (TYPE or BOR)
      * @return list, that contains all exception types in current catch
      */
-    private static List<DetailAST> getAllExceptionTypes(DetailAST parentToken) {
+    private static List<DetailAST> getAllExceptionTypes(final DetailAST parentToken) {
         DetailAST currentNode = parentToken.getFirstChild();
         final List<DetailAST> exceptionTypes = new LinkedList<>();
         if (currentNode.getType() == TokenTypes.BOR) {
             exceptionTypes.addAll(getAllExceptionTypes(currentNode));
             currentNode = currentNode.getNextSibling();
             exceptionTypes.add(currentNode);
-        }
-        else {
+        } else {
             do {
                 exceptionTypes.add(currentNode);
                 currentNode = currentNode.getNextSibling();

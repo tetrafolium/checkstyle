@@ -94,7 +94,7 @@ public class XpathQueryGenerator {
      * @param event {@code TreeWalkerAuditEvent} object
      * @param tabWidth distance between tab stop position
      */
-    public XpathQueryGenerator(TreeWalkerAuditEvent event, int tabWidth) {
+    public XpathQueryGenerator(final TreeWalkerAuditEvent event, final int tabWidth) {
         this(event.getRootAst(), event.getLine(), event.getColumn(), event.getTokenType(),
                 event.getFileContents().getText(), tabWidth);
     }
@@ -108,8 +108,8 @@ public class XpathQueryGenerator {
      * @param fileText the {@code FileText} object
      * @param tabWidth distance between tab stop position
      */
-    public XpathQueryGenerator(DetailAST rootAst, int lineNumber, int columnNumber,
-                               FileText fileText, int tabWidth) {
+    public XpathQueryGenerator(final DetailAST rootAst, final int lineNumber, final int columnNumber,
+                               final FileText fileText, final int tabWidth) {
         this(rootAst, lineNumber, columnNumber, 0, fileText, tabWidth);
     }
 
@@ -123,8 +123,8 @@ public class XpathQueryGenerator {
      * @param fileText the {@code FileText} object
      * @param tabWidth distance between tab stop position
      */
-    public XpathQueryGenerator(DetailAST rootAst, int lineNumber, int columnNumber, int tokenType,
-                               FileText fileText, int tabWidth) {
+    public XpathQueryGenerator(final DetailAST rootAst, final int lineNumber, final int columnNumber, final int tokenType,
+                               final FileText fileText, final int tabWidth) {
         this.rootAst = rootAst;
         this.lineNumber = lineNumber;
         this.columnNumber = columnNumber;
@@ -150,7 +150,7 @@ public class XpathQueryGenerator {
      * @param root {@code DetailAST} root ast
      * @return child {@code DetailAst} element of the given root
      */
-    private static DetailAST findChildWithTextAttribute(DetailAST root) {
+    private static DetailAST findChildWithTextAttribute(final DetailAST root) {
         return TokenUtil.findFirstTokenByPredicate(root,
                 XpathUtil::supportsTextAttribute).orElse(null);
     }
@@ -161,7 +161,7 @@ public class XpathQueryGenerator {
      * @param root {@code DetailAST} root ast
      * @return child {@code DetailAst} element of the given root
      */
-    private static DetailAST findChildWithTextAttributeRecursively(DetailAST root) {
+    private static DetailAST findChildWithTextAttributeRecursively(final DetailAST root) {
         DetailAST res = findChildWithTextAttribute(root);
         for (DetailAST ast = root.getFirstChild(); ast != null && res == null;
              ast = ast.getNextSibling()) {
@@ -175,15 +175,14 @@ public class XpathQueryGenerator {
      * @param ast {@code DetailAST} ast element
      * @return full xpath query for given ast element
      */
-    private static String generateXpathQuery(DetailAST ast) {
+    private static String generateXpathQuery(final DetailAST ast) {
         final StringBuilder xpathQueryBuilder = new StringBuilder(getXpathQuery(null, ast));
         if (!isXpathQueryForNodeIsAccurateEnough(ast)) {
             xpathQueryBuilder.append('[');
             final DetailAST child = findChildWithTextAttributeRecursively(ast);
             if (child == null) {
                 xpathQueryBuilder.append(findPositionAmongSiblings(ast));
-            }
-            else {
+            } else {
                 xpathQueryBuilder.append('.').append(getXpathQuery(ast, child));
             }
             xpathQueryBuilder.append(']');
@@ -196,7 +195,7 @@ public class XpathQueryGenerator {
      * @param ast {@code DetailAST} ast element
      * @return position of the ast element
      */
-    private static int findPositionAmongSiblings(DetailAST ast) {
+    private static int findPositionAmongSiblings(final DetailAST ast) {
         DetailAST cur = ast;
         int pos = 0;
         while (cur != null) {
@@ -213,7 +212,7 @@ public class XpathQueryGenerator {
      * @param ast {@code DetailAST} ast element
      * @return true if ast element will have unique xpath query, false otherwise
      */
-    private static boolean isXpathQueryForNodeIsAccurateEnough(DetailAST ast) {
+    private static boolean isXpathQueryForNodeIsAccurateEnough(final DetailAST ast) {
         return !hasAtLeastOneSiblingWithSameTokenType(ast)
                 || XpathUtil.supportsTextAttribute(ast)
                 || findChildWithTextAttribute(ast) != null;
@@ -247,7 +246,7 @@ public class XpathQueryGenerator {
      * @param ast {@code DetailAST} ast element
      * @return relative xpath query for given ast element from root
      */
-    private static String getXpathQuery(DetailAST root, DetailAST ast) {
+    private static String getXpathQuery(final DetailAST root, final DetailAST ast) {
         final StringBuilder resultBuilder = new StringBuilder(1024);
         DetailAST cur = ast;
         while (cur != root) {
@@ -258,8 +257,7 @@ public class XpathQueryGenerator {
                 curNodeQueryBuilder.append("[@text='")
                         .append(XpathUtil.getTextAttributeValue(cur))
                         .append("']");
-            }
-            else {
+            } else {
                 final DetailAST child = findChildWithTextAttribute(cur);
                 if (child != null && child != ast) {
                     curNodeQueryBuilder.append("[.")
@@ -279,7 +277,7 @@ public class XpathQueryGenerator {
      * @param ast {@code DetailAST} ast element
      * @return if the given ast element has unique {@code TokenTypes} among siblings
      */
-    private static boolean hasAtLeastOneSiblingWithSameTokenType(DetailAST ast) {
+    private static boolean hasAtLeastOneSiblingWithSameTokenType(final DetailAST ast) {
         boolean result = false;
         DetailAST prev = ast.getPreviousSibling();
         while (prev != null) {
@@ -305,7 +303,7 @@ public class XpathQueryGenerator {
      * @param ast {@code DetailAST} root ast
      * @return the column number with tabs expanded
      */
-    private int expandedTabColumn(DetailAST ast) {
+    private int expandedTabColumn(final DetailAST ast) {
         return 1 + CommonUtil.lengthExpandedTabs(fileText.get(lineNumber - 1),
                 ast.getColumnNo(), tabWidth);
     }
@@ -316,7 +314,7 @@ public class XpathQueryGenerator {
      * @param ast {@code DetailAST} ast element
      * @return true if the given {@code DetailAST} node is matching
      */
-    private boolean isMatchingByLineAndColumnAndTokenType(DetailAST ast) {
+    private boolean isMatchingByLineAndColumnAndTokenType(final DetailAST ast) {
         return ast.getLineNo() == lineNumber
                 && expandedTabColumn(ast) == columnNumber
                 && (tokenType == 0 || tokenType == ast.getType());

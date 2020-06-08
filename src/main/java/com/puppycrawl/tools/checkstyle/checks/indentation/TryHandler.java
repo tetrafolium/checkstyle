@@ -36,8 +36,8 @@ public class TryHandler extends BlockParentHandler {
      * @param ast           the abstract syntax tree
      * @param parent        the parent handler
      */
-    public TryHandler(IndentationCheck indentCheck,
-        DetailAST ast, AbstractExpressionHandler parent) {
+    public TryHandler(final IndentationCheck indentCheck,
+        final DetailAST ast, final AbstractExpressionHandler parent) {
         super(indentCheck, "try", ast, parent);
     }
 
@@ -60,13 +60,12 @@ public class TryHandler extends BlockParentHandler {
     }
 
     @Override
-    public IndentLevel getSuggestedChildIndent(AbstractExpressionHandler child) {
+    public IndentLevel getSuggestedChildIndent(final AbstractExpressionHandler child) {
         final IndentLevel result;
         if (child instanceof CatchHandler
             || child instanceof FinallyHandler) {
             result = getIndent();
-        }
-        else {
+        } else {
             result = super.getSuggestedChildIndent(child);
         }
         return result;
@@ -109,13 +108,12 @@ public class TryHandler extends BlockParentHandler {
      * @param subType       String representing child type.
      * @param expectedIdent Expected indent level.
      */
-    private void checkChildIndentation(DetailAST ast, String subType, IndentLevel expectedIdent) {
+    private void checkChildIndentation(final DetailAST ast, final String subType, final IndentLevel expectedIdent) {
         if (getIndentCheck().isForceStrictCondition()) {
             if (!expectedIdent.isAcceptable(expandedTabsColumnNo(ast))) {
                 logError(ast, subType, expandedTabsColumnNo(ast), expectedIdent);
             }
-        }
-        else {
+        } else {
             if (expandedTabsColumnNo(ast) < expectedIdent.getFirstIndentLevel()) {
                 logError(ast, subType, expandedTabsColumnNo(ast), expectedIdent);
             }
@@ -141,8 +139,7 @@ public class TryHandler extends BlockParentHandler {
                 final DetailAST nextSibling;
                 if (resourceAst.getNextSibling() == null) {
                     nextSibling = getTryResRparen();
-                }
-                else {
+                } else {
                     nextSibling = resourceAst.getNextSibling();
                 }
                 if (isOnStartOfLine(resourceAst)) {
@@ -153,8 +150,7 @@ public class TryHandler extends BlockParentHandler {
                         getIndentCheck().getLineWrappingIndentation(),
                         expectedResourceIndent.getFirstIndentLevel(),
                         true);
-                }
-                else {
+                } else {
                     checkWrappingIndentation(resourceAst, nextSibling);
                 }
             }

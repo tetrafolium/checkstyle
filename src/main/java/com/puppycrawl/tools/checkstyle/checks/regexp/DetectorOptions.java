@@ -138,7 +138,7 @@ public final class DetectorOptions {
          * @return Builder object.
          * @noinspection ReturnOfInnerClass
          */
-        public Builder reporter(AbstractViolationReporter val) {
+        public Builder reporter(final AbstractViolationReporter val) {
             reporter = val;
             return this;
         }
@@ -150,7 +150,7 @@ public final class DetectorOptions {
          * @return Builder object.
          * @noinspection ReturnOfInnerClass
          */
-        public Builder compileFlags(int val) {
+        public Builder compileFlags(final int val) {
             compileFlags = val;
             return this;
         }
@@ -161,7 +161,7 @@ public final class DetectorOptions {
          * @return Builder object.
          * @noinspection ReturnOfInnerClass
          */
-        public Builder format(String val) {
+        public Builder format(final String val) {
             format = val;
             return this;
         }
@@ -172,7 +172,7 @@ public final class DetectorOptions {
          * @return Builder object.
          * @noinspection ReturnOfInnerClass
          */
-        public Builder message(String val) {
+        public Builder message(final String val) {
             message = val;
             return this;
         }
@@ -183,7 +183,7 @@ public final class DetectorOptions {
          * @return Builder object.
          * @noinspection ReturnOfInnerClass
          */
-        public Builder minimum(int val) {
+        public Builder minimum(final int val) {
             minimum = val;
             return this;
         }
@@ -194,7 +194,7 @@ public final class DetectorOptions {
          * @return Builder object.
          * @noinspection ReturnOfInnerClass
          */
-        public Builder maximum(int val) {
+        public Builder maximum(final int val) {
             maximum = val;
             return this;
         }
@@ -205,7 +205,7 @@ public final class DetectorOptions {
          * @return Builder object.
          * @noinspection ReturnOfInnerClass, BooleanParameter
          */
-        public Builder ignoreCase(boolean val) {
+        public Builder ignoreCase(final boolean val) {
             ignoreCase = val;
             return this;
         }
@@ -216,7 +216,7 @@ public final class DetectorOptions {
          * @return current instance
          * @noinspection ReturnOfInnerClass
          */
-        public Builder suppressor(MatchSuppressor val) {
+        public Builder suppressor(final MatchSuppressor val) {
             suppressor = val;
             return this;
         }

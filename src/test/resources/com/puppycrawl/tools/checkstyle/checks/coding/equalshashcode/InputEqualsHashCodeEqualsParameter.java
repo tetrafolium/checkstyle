@@ -2,7 +2,7 @@ package com.puppycrawl.tools.checkstyle.checks.coding.equalshashcode;
 
 public class InputEqualsHashCodeEqualsParameter {
     public static class TestClass1 { // no violation
-        public boolean equals(String o) {
+        public boolean equals(final String o) {
             return true;
         }
     }
@@ -10,15 +10,15 @@ public class InputEqualsHashCodeEqualsParameter {
         public int hashCode() {
             return 1;
         }
-        public boolean equals(String o) {
+        public boolean equals(final String o) {
             return true;
         }
     }
     public static class TestClass3 { // violation, no `hashCode`
-        public boolean equals(Object o) {
+        public boolean equals(final Object o) {
             return true;
         }
-        public boolean equals(String o) {
+        public boolean equals(final String o) {
             return false;
         }
     }
@@ -26,10 +26,10 @@ public class InputEqualsHashCodeEqualsParameter {
         public int hashCode() {
             return 1;
         }
-        public boolean equals(Object o) {
+        public boolean equals(final Object o) {
             return true;
         }
-        public boolean equals(String o) {
+        public boolean equals(final String o) {
             return false;
         }
     }
@@ -37,15 +37,15 @@ public class InputEqualsHashCodeEqualsParameter {
         public int hashCode() {
             return 1;
         }
-        public boolean equals(java.lang.Object o) {
+        public boolean equals(final java.lang.Object o) {
             return true;
         }
     }
     public static class TestClass6 { // violation, no `hashCode` implementation
-        public static int hashCode(int i) {
+        public static int hashCode(final int i) {
             return 1;
         }
-        public boolean equals(Object o) {
+        public boolean equals(final Object o) {
             return true;
         }
     }
@@ -53,7 +53,7 @@ public class InputEqualsHashCodeEqualsParameter {
         public int hashCode() {
             return 1;
         }
-        public static boolean equals(Object o, Object o2) {
+        public static boolean equals(final Object o, final Object o2) {
             return true;
         }
     }
@@ -79,7 +79,7 @@ public class InputEqualsHashCodeEqualsParameter {
     }
     public static abstract class TestClass13 { // violation, no `hashCode` implementation
         public abstract int hashCode();
-        public boolean equals(java.lang.Object o) {
+        public boolean equals(final java.lang.Object o) {
             return true;
         }
     }
@@ -97,7 +97,7 @@ public class InputEqualsHashCodeEqualsParameter {
         public int hashCode() {
             return 1;
         }
-        public int hashCode(int val) {
+        public int hashCode(final int val) {
             return 1;
         }
     }

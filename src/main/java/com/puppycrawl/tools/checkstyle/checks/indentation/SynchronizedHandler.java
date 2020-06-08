@@ -41,8 +41,8 @@ public class SynchronizedHandler extends BlockParentHandler {
      * @param ast         the abstract syntax tree
      * @param parent      the parent handler
      */
-    public SynchronizedHandler(IndentationCheck indentCheck, DetailAST ast,
-                               AbstractExpressionHandler parent) {
+    public SynchronizedHandler(final IndentationCheck indentCheck, final DetailAST ast,
+                               final AbstractExpressionHandler parent) {
         super(indentCheck, "synchronized", ast, parent);
         methodModifier = isMethodModifier(ast);
     }
@@ -73,7 +73,7 @@ public class SynchronizedHandler extends BlockParentHandler {
      * @param ast synchronized(TokenTypes.LITERAL_SYNCHRONIZED) to check
      * @return true if synchronized only modifies method
      */
-    private static boolean isMethodModifier(DetailAST ast) {
+    private static boolean isMethodModifier(final DetailAST ast) {
         return ast.getParent().getType() == TokenTypes.MODIFIERS;
     }
 
@@ -82,7 +82,7 @@ public class SynchronizedHandler extends BlockParentHandler {
      * @param syncStatementAST ast node(TokenTypes.LITERAL_SYNCHRONIZED)
      * @return right parenthesis of synchronized statement.
      */
-    private static DetailAST getSynchronizedStatementRightParen(DetailAST syncStatementAST) {
+    private static DetailAST getSynchronizedStatementRightParen(final DetailAST syncStatementAST) {
         return syncStatementAST.findFirstToken(TokenTypes.RPAREN);
     }
 

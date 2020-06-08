@@ -326,7 +326,7 @@ public class InputEmptyLineSeparatorWithComments {
     }
 
     // no violation
-    /* . */ public InputEmptyLineSeparatorWithComments(int i) {
+    /* . */ public InputEmptyLineSeparatorWithComments(final int i) {
         testNoViolationWithJavadoc = 1;
     }
 
@@ -334,7 +334,7 @@ public class InputEmptyLineSeparatorWithComments {
     // no violation
 
     // no violation
-    public InputEmptyLineSeparatorWithComments(int i, int j) {
+    public InputEmptyLineSeparatorWithComments(final int i, final int j) {
         testNoViolationWithJavadoc = 1;
     }
 
@@ -348,7 +348,7 @@ public class InputEmptyLineSeparatorWithComments {
 
 
     // violation
-    public InputEmptyLineSeparatorWithComments(int i, int j, int k) {
+    public InputEmptyLineSeparatorWithComments(final int i, final int j, final int k) {
         testNoViolationWithJavadoc = 1;
     }
 

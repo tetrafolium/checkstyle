@@ -4,12 +4,12 @@ import java.util.Collections;
 
 class InputGenericWhitespaceAtStartOfTheLine {
 
-    public String getConstructor(Class<?>... parameterTypes)
+    public String getConstructor(final Class<?>... parameterTypes)
     {
         Collections.<Object
- >emptySet();
+>emptySet();
         Collections.
- <Object>emptySet();
+<Object>emptySet();
         return "pitest makes me cry";
     }
 }

@@ -15,7 +15,7 @@ public class InputIndentationEmptyArray //indent:0 exp:0
         method(ArrayList::new); //indent:8 exp:8
     } //indent:4 exp:4
 
-    private static void method(Supplier<?> s) { //indent:4 exp:4
+    private static void method(final Supplier<?> s) { //indent:4 exp:4
     } //indent:4 exp:4
 
 } //indent:0 exp:0

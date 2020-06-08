@@ -40,7 +40,7 @@ public class AuditEventDefaultFormatter implements AuditEventFormatter {
     private static final String SUFFIX = "Check";
 
     @Override
-    public String format(AuditEvent event) {
+    public String format(final AuditEvent event) {
         final String fileName = event.getFileName();
         final String message = event.getMessage();
 
@@ -50,8 +50,7 @@ public class AuditEventDefaultFormatter implements AuditEventFormatter {
             // We change the name of severity level intentionally
             // to shorten the length of the log message.
             severityLevelName = "WARN";
-        }
-        else {
+        } else {
             severityLevelName = severityLevel.getName().toUpperCase(Locale.US);
         }
 
@@ -68,8 +67,7 @@ public class AuditEventDefaultFormatter implements AuditEventFormatter {
         if (event.getModuleId() == null) {
             final String checkShortName = getCheckShortName(event);
             sb.append(checkShortName);
-        }
-        else {
+        } else {
             sb.append(event.getModuleId());
         }
         sb.append(']');
@@ -85,7 +83,7 @@ public class AuditEventDefaultFormatter implements AuditEventFormatter {
      * @param severityLevelNameLength length of severity level name.
      * @return the length of the buffer for StringBuilder.
      */
-    private static int calculateBufferLength(AuditEvent event, int severityLevelNameLength) {
+    private static int calculateBufferLength(final AuditEvent event, final int severityLevelNameLength) {
         return LENGTH_OF_ALL_SEPARATORS + event.getFileName().length()
             + event.getMessage().length() + severityLevelNameLength
             + getCheckShortName(event).length();
@@ -96,24 +94,21 @@ public class AuditEventDefaultFormatter implements AuditEventFormatter {
      * @param event audit event.
      * @return check name without 'Check' suffix.
      */
-    private static String getCheckShortName(AuditEvent event) {
+    private static String getCheckShortName(final AuditEvent event) {
         final String checkFullName = event.getSourceName();
         final String checkShortName;
         final int lastDotIndex = checkFullName.lastIndexOf('.');
         if (lastDotIndex == -1) {
             if (checkFullName.endsWith(SUFFIX)) {
                 checkShortName = checkFullName.substring(0, checkFullName.lastIndexOf(SUFFIX));
-            }
-            else {
+            } else {
                 checkShortName = checkFullName;
             }
-        }
-        else {
+        } else {
             if (checkFullName.endsWith(SUFFIX)) {
                 checkShortName = checkFullName.substring(lastDotIndex + 1,
                     checkFullName.lastIndexOf(SUFFIX));
-            }
-            else {
+            } else {
                 checkShortName = checkFullName.substring(lastDotIndex + 1);
             }
         }

@@ -131,17 +131,16 @@ public final class SuppressionsLoader
     }
 
     @Override
-    public void startElement(String namespaceUri,
-                             String localName,
-                             String qName,
-                             Attributes attributes)
+    public void startElement(final String namespaceUri,
+                             final String localName,
+                             final String qName,
+                             final Attributes attributes)
             throws SAXException {
         if ("suppress".equals(qName)) {
             // add SuppressFilterElement filter to the filter chain
             final SuppressFilterElement suppress = getSuppressElement(attributes);
             filterChain.addFilter(suppress);
-        }
-        else if ("suppress-xpath".equals(qName)) {
+        } else if ("suppress-xpath".equals(qName)) {
             final XpathFilterElement filter = getXpathFilter(attributes);
             treeWalkerFilters.add(filter);
         }
@@ -154,7 +153,7 @@ public final class SuppressionsLoader
      * @return the suppress element
      * @throws SAXException if an error occurs.
      */
-    private static SuppressFilterElement getSuppressElement(Attributes attributes)
+    private static SuppressFilterElement getSuppressElement(final Attributes attributes)
             throws SAXException {
         final String checks = attributes.getValue(ATTRIBUTE_NAME_CHECKS);
         final String modId = attributes.getValue(ATTRIBUTE_NAME_ID);
@@ -169,8 +168,7 @@ public final class SuppressionsLoader
             final String lines = attributes.getValue(ATTRIBUTE_NAME_LINES);
             final String columns = attributes.getValue(ATTRIBUTE_NAME_COLUMNS);
             suppress = new SuppressFilterElement(files, checks, message, modId, lines, columns);
-        }
-        catch (final PatternSyntaxException ex) {
+        } catch (final PatternSyntaxException ex) {
             // -@cs[IllegalInstantiation] SAXException is in the overridden method signature
             throw new SAXException("invalid files or checks or message format", ex);
         }
@@ -184,7 +182,7 @@ public final class SuppressionsLoader
      * @return the xpath filter
      * @throws SAXException if an error occurs.
      */
-    private static XpathFilterElement getXpathFilter(Attributes attributes) throws SAXException {
+    private static XpathFilterElement getXpathFilter(final Attributes attributes) throws SAXException {
         final String checks = attributes.getValue(ATTRIBUTE_NAME_CHECKS);
         final String modId = attributes.getValue(ATTRIBUTE_NAME_ID);
         final String message = attributes.getValue(ATTRIBUTE_NAME_MESSAGE);
@@ -197,8 +195,7 @@ public final class SuppressionsLoader
             final String files = attributes.getValue(ATTRIBUTE_NAME_FILES);
             final String xpathQuery = attributes.getValue(ATTRIBUTE_NAME_QUERY);
             filter = new XpathFilterElement(files, checks, message, modId, xpathQuery);
-        }
-        catch (final PatternSyntaxException ex) {
+        } catch (final PatternSyntaxException ex) {
             // -@cs[IllegalInstantiation] SAXException is in the overridden method signature
             throw new SAXException("invalid files or checks or message format for suppress-xpath",
                     ex);
@@ -212,7 +209,7 @@ public final class SuppressionsLoader
      * @return the filter chain of suppression elements specified in the file.
      * @throws CheckstyleException if an error occurs.
      */
-    public static FilterSet loadSuppressions(String filename)
+    public static FilterSet loadSuppressions(final String filename)
             throws CheckstyleException {
         // figure out if this is a File or a URL
         final URI uri = CommonUtil.getUriByFilename(filename);
@@ -228,7 +225,7 @@ public final class SuppressionsLoader
      * @throws CheckstyleException if an error occurs.
      */
     private static FilterSet loadSuppressions(
-            InputSource source, String sourceName)
+            final InputSource source, final String sourceName)
             throws CheckstyleException {
         return getSuppressionLoader(source, sourceName).filterChain;
     }
@@ -239,7 +236,7 @@ public final class SuppressionsLoader
      * @return the set of xpath suppression elements specified in the file.
      * @throws CheckstyleException if an error occurs.
      */
-    public static Set<TreeWalkerFilter> loadXpathSuppressions(String filename)
+    public static Set<TreeWalkerFilter> loadXpathSuppressions(final String filename)
             throws CheckstyleException {
         // figure out if this is a File or a URL
         final URI uri = CommonUtil.getUriByFilename(filename);
@@ -255,7 +252,7 @@ public final class SuppressionsLoader
      * @throws CheckstyleException if an error occurs.
      */
     private static Set<TreeWalkerFilter> loadXpathSuppressions(
-            InputSource source, String sourceName)
+            final InputSource source, final String sourceName)
             throws CheckstyleException {
         return getSuppressionLoader(source, sourceName).treeWalkerFilters;
     }
@@ -267,26 +264,22 @@ public final class SuppressionsLoader
      * @return the suppression loader
      * @throws CheckstyleException if an error occurs.
      */
-    private static SuppressionsLoader getSuppressionLoader(InputSource source, String sourceName)
+    private static SuppressionsLoader getSuppressionLoader(final InputSource source, final String sourceName)
             throws CheckstyleException {
         try {
             final SuppressionsLoader suppressionsLoader =
                 new SuppressionsLoader();
             suppressionsLoader.parseInputSource(source);
             return suppressionsLoader;
-        }
-        catch (final FileNotFoundException ex) {
+        } catch (final FileNotFoundException ex) {
             throw new CheckstyleException(UNABLE_TO_FIND_ERROR_MESSAGE + sourceName, ex);
-        }
-        catch (final ParserConfigurationException | SAXException ex) {
+        } catch (final ParserConfigurationException | SAXException ex) {
             final String message = String.format(Locale.ROOT, "Unable to parse %s - %s",
                     sourceName, ex.getMessage());
             throw new CheckstyleException(message, ex);
-        }
-        catch (final IOException ex) {
+        } catch (final IOException ex) {
             throw new CheckstyleException("Unable to read " + sourceName, ex);
-        }
-        catch (final NumberFormatException ex) {
+        } catch (final NumberFormatException ex) {
             final String message = String.format(Locale.ROOT, "Number format exception %s - %s",
                     sourceName, ex.getMessage());
             throw new CheckstyleException(message, ex);

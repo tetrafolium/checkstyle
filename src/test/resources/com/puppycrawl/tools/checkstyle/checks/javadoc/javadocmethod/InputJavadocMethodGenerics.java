@@ -1,6 +1,6 @@
 package com.puppycrawl.tools.checkstyle.checks.javadoc.javadocmethod;
 
-public class InputJavadocMethodGenerics <E extends java.lang.Exception,
+public class InputJavadocMethodGenerics<E extends java.lang.Exception,
                            RE extends RuntimeException & java.io.Serializable>
 {
     /**
@@ -34,7 +34,7 @@ public class InputJavadocMethodGenerics <E extends java.lang.Exception,
     {
     }
 
-    public class InnerClass <RuntimeException extends ClassCastException>
+    public class InnerClass<RuntimeException extends ClassCastException>
     {
         /**
          * @throws E in some case
@@ -63,6 +63,6 @@ public class InputJavadocMethodGenerics <E extends java.lang.Exception,
     /**
      * @param <P> some parameter
      */
-    public interface InvalidParameterInJavadoc<T> {}
+    public interface InvalidParameterInJavadoc<T> { }
 }
 

@@ -2,7 +2,7 @@
 // Test case file for checkstyle.
 // Created: 2001
 ////////////////////////////////////////////////////////////////////////////////
-package com . puppycrawl
+package com .puppycrawl
     .tools.
     checkstyle.checks.javadoc.javadoctype;
 
@@ -13,7 +13,7 @@ package com . puppycrawl
 class InputJavadocTypeWhitespace
 {
     /** another check */
-    void donBradman(Runnable aRun)
+    void donBradman(final Runnable aRun)
     {
         donBradman(new Runnable() {
             public void run() {
@@ -30,7 +30,7 @@ class InputJavadocTypeWhitespace
     void bug806243()
     {
         Object o = new InputJavadocTypeWhitespace() {
-            private int j ;
+            private int j;
         };
     }
 }
@@ -42,7 +42,7 @@ class InputJavadocTypeWhitespace
  */
 interface IFoo
 {
-    void foo() ;
+    void foo();
 }
 
 /**

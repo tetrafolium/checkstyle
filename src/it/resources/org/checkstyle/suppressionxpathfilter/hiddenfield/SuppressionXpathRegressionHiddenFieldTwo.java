@@ -5,6 +5,6 @@ public class SuppressionXpathRegressionHiddenFieldTwo {
     static Object other = null;
     Object field = null;
 
-    static void method(Object field, Object other) { //warn
+    static void method(final Object field, final Object other) { //warn
     }
 }

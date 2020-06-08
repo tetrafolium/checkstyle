@@ -15,8 +15,8 @@ package com.puppycrawl.tools.checkstyle.checks.indentation.indentation; //indent
  *                                                                            //indent:1 exp:1
  */                                                                           //indent:1 exp:1
 public class InputIndentationZeroCaseLevel { //indent:0 exp:0
-    protected void begin(){ //indent:4 exp:4
-        int i=0; //indent:8 exp:8
+    protected void begin() { //indent:4 exp:4
+        int i = 0; //indent:8 exp:8
         switch (i) //indent:8 exp:8
         { //indent:8 exp:8
         case 1: i++; //indent:8 exp:8

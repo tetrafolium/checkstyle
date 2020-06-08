@@ -153,7 +153,7 @@ public class SuppressWarningsCheck extends AbstractCheck {
      * being suppressed matching this pattern will be flagged.
      * @param pattern the new pattern
      */
-    public final void setFormat(Pattern pattern) {
+    public final void setFormat(final Pattern pattern) {
         format = pattern;
     }
 
@@ -197,8 +197,7 @@ public class SuppressWarningsCheck extends AbstractCheck {
 
             if (token == null) {
                 warning = warningHolder.findFirstToken(TokenTypes.EXPR);
-            }
-            else {
+            } else {
                 // case like '@SuppressWarnings(value = UNUSED)'
                 warning = token.findFirstToken(TokenTypes.EXPR);
             }
@@ -207,8 +206,7 @@ public class SuppressWarningsCheck extends AbstractCheck {
             if (warning == null) {
                 // check to see if empty warnings are forbidden -- are by default
                 logMatch(warningHolder, "");
-            }
-            else {
+            } else {
                 while (warning != null) {
                     if (warning.getType() == TokenTypes.EXPR) {
                         final DetailAST fChild = warning.getFirstChild();
@@ -253,7 +251,7 @@ public class SuppressWarningsCheck extends AbstractCheck {
      * @param ast the AST
      * @return the {@link SuppressWarnings SuppressWarnings} annotation
      */
-    private static DetailAST getSuppressWarnings(DetailAST ast) {
+    private static DetailAST getSuppressWarnings(final DetailAST ast) {
         DetailAST annotation = AnnotationUtil.getAnnotation(ast, SUPPRESS_WARNINGS);
 
         if (annotation == null) {
@@ -269,7 +267,7 @@ public class SuppressWarningsCheck extends AbstractCheck {
      * @param ast the location to place the violation
      * @param warningText the warning.
      */
-    private void logMatch(DetailAST ast, final String warningText) {
+    private void logMatch(final DetailAST ast, final String warningText) {
         final Matcher matcher = format.matcher(warningText);
         if (matcher.matches()) {
             log(ast,
@@ -291,8 +289,7 @@ public class SuppressWarningsCheck extends AbstractCheck {
         if (annValuePair == null) {
             annArrayInit =
                     annotation.findFirstToken(TokenTypes.ANNOTATION_ARRAY_INIT);
-        }
-        else {
+        } else {
             annArrayInit =
                     annValuePair.findFirstToken(TokenTypes.ANNOTATION_ARRAY_INIT);
         }
@@ -333,8 +330,7 @@ public class SuppressWarningsCheck extends AbstractCheck {
         if (cond.getType() == TokenTypes.QUESTION) {
             walkConditional(getCondLeft(cond));
             walkConditional(getCondRight(cond));
-        }
-        else {
+        } else {
             final String warningText =
                     removeQuotes(cond.getText());
             logMatch(cond, warningText);

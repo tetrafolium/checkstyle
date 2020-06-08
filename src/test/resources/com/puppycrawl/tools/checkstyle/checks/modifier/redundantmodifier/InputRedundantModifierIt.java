@@ -130,16 +130,16 @@ abstract interface InnerImplementation // violation
 class SafeVarargsUsage {
     @Deprecated
     @SafeVarargs
-    private final void foo(int... k) {}
+    private final void foo(final int... k) { }
 
     @Deprecated
     @SafeVarargs
     @SuppressWarnings("")
-    private final void foo1(Object... obj) {}
+    private final void foo1(final Object... obj) { }
 }
 
 enum TestEnum {
-    ;
+;
 
     public void method() {
     }

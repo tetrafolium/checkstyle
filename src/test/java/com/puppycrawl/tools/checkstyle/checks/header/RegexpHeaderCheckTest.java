@@ -103,8 +103,7 @@ public class RegexpHeaderCheckTest extends AbstractModuleTestSupport {
             instance.setHeader(header);
             fail(String.format(Locale.ROOT, "%s should have been thrown",
                     IllegalArgumentException.class));
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertEquals("Unable to parse format: ^/**\\n *"
                 + " Licensed to the Apache Software Foundation (ASF)", ex.getMessage(),
                     "Invalid exception message");
@@ -126,8 +125,7 @@ public class RegexpHeaderCheckTest extends AbstractModuleTestSupport {
         try {
             createChecker(checkConfig);
             fail("Checker creation should not succeed with invalid headerFile");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             assertEquals("cannot initialize module"
                     + " com.puppycrawl.tools.checkstyle.checks.header.RegexpHeaderCheck"
                     + " - Cannot set property 'headerFile' to ''",
@@ -176,8 +174,7 @@ public class RegexpHeaderCheckTest extends AbstractModuleTestSupport {
         try {
             createChecker(checkConfig);
             fail("Checker creation should not succeed when regexp spans multiple lines");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             assertEquals("cannot initialize module"
                     + " com.puppycrawl.tools.checkstyle.checks.header.RegexpHeaderCheck"
                     + " - Cannot set property 'header' to '^(.*\\n.*)'",
@@ -329,8 +326,7 @@ public class RegexpHeaderCheckTest extends AbstractModuleTestSupport {
         try {
             verify(checkConfig, getPath("InputRegexpHeaderMulti52.java"), expected);
             fail("IllegalArgumentException is expected");
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertEquals("line 1 in header specification is not a regular expression",
                     ex.getMessage(), "Invalid exception message");
         }

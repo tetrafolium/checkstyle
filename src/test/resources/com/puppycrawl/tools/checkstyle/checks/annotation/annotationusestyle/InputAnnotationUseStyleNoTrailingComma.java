@@ -7,13 +7,13 @@ public class InputAnnotationUseStyleNoTrailingComma
   public void foo() {
 
       /** Suppress warnings */
-      @SuppressWarnings({"common","foo"})
+      @SuppressWarnings({"common", "foo"})
       Object o = new Object() {
 
-          @SuppressWarnings(value={"common"})
+          @SuppressWarnings(value = {"common"})
           public String toString() {
 
-              @SuppressWarnings(value={"leo","herbie"})
+              @SuppressWarnings(value = {"leo", "herbie"})
               final String pooches = "leo.herbie";
 
               return pooches;
@@ -21,15 +21,15 @@ public class InputAnnotationUseStyleNoTrailingComma
       };
   }
 
-  @Test2(value={"foo"}, more={"bar"})
+  @Test2(value = {"foo"}, more = {"bar"})
 
-  @Pooches2(tokens={},other={})
+  @Pooches2(tokens = {}, other = {})
   enum P {
 
-      @Pooches2(tokens={Pooches2.class},other={1})
+      @Pooches2(tokens = {Pooches2.class}, other = {1})
       L, // annotation in enum
 
-      @Test2(value={}, more={"unchecked"})
+      @Test2(value = {}, more = {"unchecked"})
       Y;
   }
 

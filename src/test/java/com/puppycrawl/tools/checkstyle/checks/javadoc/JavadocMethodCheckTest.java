@@ -512,8 +512,7 @@ public class JavadocMethodCheckTest extends AbstractModuleTestSupport {
         try {
             regularClassConstructor.newInstance(null, "", new JavadocMethodCheck());
             fail("Exception is expected");
-        }
-        catch (InvocationTargetException ex) {
+        } catch (InvocationTargetException ex) {
             assertTrue(ex.getCause() instanceof IllegalArgumentException,
                     "Invalid exception class, expected: IllegalArgumentException.class");
             assertEquals("ClassInfo's name should be non-null", ex.getCause().getMessage(),

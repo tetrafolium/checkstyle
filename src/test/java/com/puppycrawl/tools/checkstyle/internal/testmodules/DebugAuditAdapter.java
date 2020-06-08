@@ -58,7 +58,7 @@ public final class DebugAuditAdapter implements AuditListener {
     }
 
     @Override
-    public void addError(AuditEvent event) {
+    public void addError(final AuditEvent event) {
         called = true;
         if (event != null) {
             passedEvent = true;
@@ -66,7 +66,7 @@ public final class DebugAuditAdapter implements AuditListener {
     }
 
     @Override
-    public void addException(AuditEvent event, Throwable throwable) {
+    public void addException(final AuditEvent event, final Throwable throwable) {
         called = true;
         if (event != null) {
             passedEvent = true;
@@ -74,7 +74,7 @@ public final class DebugAuditAdapter implements AuditListener {
     }
 
     @Override
-    public void auditStarted(AuditEvent event) {
+    public void auditStarted(final AuditEvent event) {
         called = true;
         if (event != null) {
             passedEvent = true;
@@ -82,7 +82,7 @@ public final class DebugAuditAdapter implements AuditListener {
     }
 
     @Override
-    public void fileStarted(AuditEvent event) {
+    public void fileStarted(final AuditEvent event) {
         called = true;
         numFilesStarted++;
         if (event != null) {
@@ -91,7 +91,7 @@ public final class DebugAuditAdapter implements AuditListener {
     }
 
     @Override
-    public void auditFinished(AuditEvent event) {
+    public void auditFinished(final AuditEvent event) {
         called = true;
         if (event != null) {
             passedEvent = true;
@@ -99,7 +99,7 @@ public final class DebugAuditAdapter implements AuditListener {
     }
 
     @Override
-    public void fileFinished(AuditEvent event) {
+    public void fileFinished(final AuditEvent event) {
         called = true;
         numFilesFinished++;
         if (event != null) {

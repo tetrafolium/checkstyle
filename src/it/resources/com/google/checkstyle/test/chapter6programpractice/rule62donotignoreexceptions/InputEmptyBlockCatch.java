@@ -10,14 +10,14 @@ import java.awt.Color;
 
 class InputEmptyBlockCatch {
     boolean flag;
-    void doSm() {}
+    void doSm() { }
     void foo() {
         try {
            if (!flag) {
                doSm();
            }
         } catch (Exception e) { /* ignore */ } //ok
-        finally {/* ignore */} //ok
+        finally { /* ignore */ } //ok
     }
 
     void foo2() {
@@ -25,20 +25,19 @@ class InputEmptyBlockCatch {
            if (!flag) {
                doSm();
            }
-        } catch (Exception e) {}
-        finally {} //warn
+        } catch (Exception e) { } finally { } //warn
     }
 
     class Inner {
         boolean flag;
-        void doSm() {}
+        void doSm() { }
         void foo() {
             try {
                if (!flag) {
                    doSm();
                }
             } catch (Exception e) { /* ignore */ } //ok
-            finally {/* ignore */} //ok
+            finally { /* ignore */ } //ok
         }
 
         void foo2() {
@@ -46,21 +45,20 @@ class InputEmptyBlockCatch {
                if (!flag) {
                    doSm();
                }
-            } catch (Exception e) {}
-            finally {} //warn
+            } catch (Exception e) { } finally { } //warn
         }
     }
 
-    Inner anon = new Inner(){
+    Inner anon = new Inner() {
         boolean flag;
-        void doSm() {}
+        void doSm() { }
         void foo() {
             try {
                if (!flag) {
                    doSm();
                }
             } catch (Exception e) { /* ignore */ } //ok
-            finally {/* ignore */} //ok
+            finally { /* ignore */ } //ok
         }
 
         void foo2() {
@@ -68,24 +66,23 @@ class InputEmptyBlockCatch {
                if (!flag) {
                    doSm();
                }
-            } catch (Exception e) {}
-            finally {} //warn
+            } catch (Exception e) { } finally { } //warn
         }
     };
 
     void bar1() {
         try {
-           if(!flag) {
+           if (!flag) {
                doSm();
            }
-        } catch (Exception expected) {}
+        } catch (Exception expected) { }
     }
 
     void bar2() {
         try {
-           if(!flag) {
+           if (!flag) {
                doSm();
            }
-        } catch (Exception expected) {}
+        } catch (Exception expected) { }
     }
 }

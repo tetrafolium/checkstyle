@@ -226,11 +226,10 @@ public class RegexpHeaderCheck extends AbstractHeaderCheck {
      *
      * @param list comma separated list of line numbers to repeat in header.
      */
-    public void setMultiLines(int... list) {
+    public void setMultiLines(final int... list) {
         if (list.length == 0) {
             multiLines = EMPTY_INT_ARRAY;
-        }
-        else {
+        } else {
             multiLines = new int[list.length];
             System.arraycopy(list, 0, multiLines, 0, list.length);
             Arrays.sort(multiLines);
@@ -238,14 +237,13 @@ public class RegexpHeaderCheck extends AbstractHeaderCheck {
     }
 
     @Override
-    protected void processFiltered(File file, FileText fileText) {
+    protected void processFiltered(final File file, final FileText fileText) {
         final int headerSize = getHeaderLines().size();
         final int fileSize = fileText.size();
 
         if (headerSize - multiLines.length > fileSize) {
             log(1, MSG_HEADER_MISSING);
-        }
-        else {
+        } else {
             int headerLineNo = 0;
             int index;
             for (index = 0; headerLineNo < headerSize && index < fileSize; index++) {
@@ -278,7 +276,7 @@ public class RegexpHeaderCheck extends AbstractHeaderCheck {
      * @param headerLineNo header line number to return
      * @return the line from the header
      */
-    private String getHeaderLine(int headerLineNo) {
+    private String getHeaderLine(final int headerLineNo) {
         String line = getHeaderLines().get(headerLineNo);
         if (line.isEmpty()) {
             line = EMPTY_LINE_PATTERN;
@@ -291,7 +289,7 @@ public class RegexpHeaderCheck extends AbstractHeaderCheck {
      * @param startHeaderLine header line number to start from
      * @param headerSize whole header size
      */
-    private void logFirstSinglelineLine(int startHeaderLine, int headerSize) {
+    private void logFirstSinglelineLine(final int startHeaderLine, final int headerSize) {
         for (int lineNum = startHeaderLine; lineNum < headerSize; lineNum++) {
             if (!isMultiLine(lineNum)) {
                 log(1, MSG_HEADER_MISSING);
@@ -306,7 +304,7 @@ public class RegexpHeaderCheck extends AbstractHeaderCheck {
      * @param headerLineNo the header line number.
      * @return true if and only if the line matches the required header line.
      */
-    private boolean isMatch(String line, int headerLineNo) {
+    private boolean isMatch(final String line, final int headerLineNo) {
         return headerRegexps.get(headerLineNo).matcher(line).find();
     }
 
@@ -315,7 +313,7 @@ public class RegexpHeaderCheck extends AbstractHeaderCheck {
      * @param lineNo a line number
      * @return if {@code lineNo} is one of the repeat header lines.
      */
-    private boolean isMultiLine(int lineNo) {
+    private boolean isMultiLine(final int lineNo) {
         return Arrays.binarySearch(multiLines, lineNo + 1) >= 0;
     }
 
@@ -326,12 +324,10 @@ public class RegexpHeaderCheck extends AbstractHeaderCheck {
             try {
                 if (line.isEmpty()) {
                     headerRegexps.add(BLANK_LINE);
-                }
-                else {
+                } else {
                     headerRegexps.add(Pattern.compile(line));
                 }
-            }
-            catch (final PatternSyntaxException ex) {
+            } catch (final PatternSyntaxException ex) {
                 throw new IllegalArgumentException("line "
                         + (headerRegexps.size() + 1)
                         + " in header specification"
@@ -351,7 +347,7 @@ public class RegexpHeaderCheck extends AbstractHeaderCheck {
      * @param header the header value to validate and set (in that order)
      */
     @Override
-    public void setHeader(String header) {
+    public void setHeader(final String header) {
         if (!CommonUtil.isBlank(header)) {
             if (!CommonUtil.isPatternValid(header)) {
                 throw new IllegalArgumentException("Unable to parse format: " + header);

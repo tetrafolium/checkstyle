@@ -86,7 +86,7 @@ public class OuterTypeFilenameCheck extends AbstractCheck {
     }
 
     @Override
-    public void beginTree(DetailAST rootAST) {
+    public void beginTree(final DetailAST rootAST) {
         fileName = getFileName();
         seenFirstToken = false;
         hasPublic = false;
@@ -94,15 +94,14 @@ public class OuterTypeFilenameCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         if (seenFirstToken) {
             final DetailAST modifiers = ast.findFirstToken(TokenTypes.MODIFIERS);
             if (modifiers.findFirstToken(TokenTypes.LITERAL_PUBLIC) != null
                     && ast.getParent() == null) {
                 hasPublic = true;
             }
-        }
-        else {
+        } else {
             final String outerTypeName = ast.findFirstToken(TokenTypes.IDENT).getText();
 
             if (!fileName.equals(outerTypeName)) {
@@ -113,7 +112,7 @@ public class OuterTypeFilenameCheck extends AbstractCheck {
     }
 
     @Override
-    public void finishTree(DetailAST rootAST) {
+    public void finishTree(final DetailAST rootAST) {
         if (!hasPublic && wrongType != null) {
             log(wrongType.getLineNo(), MSG_KEY);
         }

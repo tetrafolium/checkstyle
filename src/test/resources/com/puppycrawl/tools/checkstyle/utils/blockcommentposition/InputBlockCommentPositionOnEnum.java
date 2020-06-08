@@ -16,6 +16,6 @@ enum BlockCommentPositionOnEnumInput1 {
  * I'm a javadoc
  */
 @Deprecated
-enum BlockCommentPositionOnEnumInput2{
+enum BlockCommentPositionOnEnumInput2 {
 
 }

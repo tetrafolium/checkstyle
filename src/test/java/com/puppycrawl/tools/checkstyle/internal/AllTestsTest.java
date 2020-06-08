@@ -76,21 +76,20 @@ public class AllTestsTest {
         });
     }
 
-    private static void walk(Path path, Consumer<Path> action) throws IOException {
+    private static void walk(final Path path, final Consumer<Path> action) throws IOException {
         try (Stream<Path> walk = Files.walk(path)) {
             walk.forEach(action);
         }
     }
 
-    private static void grabAllTests(Map<String, List<String>> allTests, File file) {
+    private static void grabAllTests(final Map<String, List<String>> allTests, final File file) {
         if (file.isFile() && file.getName().endsWith("Test.java")) {
             String path;
 
             try {
                 path = getSimplePath(file.getCanonicalPath()).replace("CheckTest.java", "")
                         .replace("Test.java", "");
-            }
-            catch (IOException ex) {
+            } catch (IOException ex) {
                 throw new IllegalStateException(ex);
             }
 
@@ -107,14 +106,13 @@ public class AllTestsTest {
         }
     }
 
-    private static void grabAllFiles(Map<String, List<String>> allTests, File file) {
+    private static void grabAllFiles(final Map<String, List<String>> allTests, final File file) {
         if (file.isFile()) {
             final String path;
 
             try {
                 path = getSimplePath(file.getCanonicalPath());
-            }
-            catch (IOException ex) {
+            } catch (IOException ex) {
                 throw new IllegalStateException(ex);
             }
 
@@ -126,14 +124,13 @@ public class AllTestsTest {
         }
     }
 
-    private static void verifyInputFile(Map<String, List<String>> allTests, File file) {
+    private static void verifyInputFile(final Map<String, List<String>> allTests, final File file) {
         if (file.isFile()) {
             final String path;
 
             try {
                 path = getSimplePath(file.getCanonicalPath());
-            }
-            catch (IOException ex) {
+            } catch (IOException ex) {
                 throw new IllegalStateException(ex);
             }
 
@@ -150,8 +147,7 @@ public class AllTestsTest {
 
                     if (fileName.startsWith("Input")) {
                         fileName = fileName.substring(5);
-                    }
-                    else {
+                    } else {
                         fileName = fileName.substring(8);
                     }
 
@@ -167,8 +163,8 @@ public class AllTestsTest {
         }
     }
 
-    private static void verifyInputFile(Map<String, List<String>> allTests, boolean skipFileNaming,
-            String path, String fileName) {
+    private static void verifyInputFile(final Map<String, List<String>> allTests, final boolean skipFileNaming,
+            final String path, final String fileName) {
         List<String> classes;
         int slash = path.lastIndexOf(File.separatorChar);
         String packge = path.substring(0, slash);
@@ -195,7 +191,7 @@ public class AllTestsTest {
                 + "for test 'MyCustomCheckTest': " + path);
     }
 
-    private static void verifyHasProductionFile(Map<String, List<String>> allTests, File file) {
+    private static void verifyHasProductionFile(final Map<String, List<String>> allTests, final File file) {
         if (file.isFile()) {
             final String fileName = file.getName().replace("Test.java", ".java");
 
@@ -206,8 +202,7 @@ public class AllTestsTest {
 
                 try {
                     path = getSimplePath(file.getCanonicalPath());
-                }
-                catch (IOException ex) {
+                } catch (IOException ex) {
                     throw new IllegalStateException(ex);
                 }
 
@@ -225,8 +220,8 @@ public class AllTestsTest {
         }
     }
 
-    private static boolean checkInputMatchCorrectFileStructure(List<String> classes,
-            String folderPath, boolean skipFileNaming, String fileName) {
+    private static boolean checkInputMatchCorrectFileStructure(final List<String> classes,
+            final String folderPath, final boolean skipFileNaming, final String fileName) {
         boolean result = false;
 
         for (String clss : classes) {
@@ -240,7 +235,7 @@ public class AllTestsTest {
         return result;
     }
 
-    private static boolean shouldSkipInputFileNameCheck(String path, String fileName) {
+    private static boolean shouldSkipInputFileNameCheck(final String path, final String fileName) {
         return "package-info.java".equals(fileName)
                 || "package.html".equals(fileName)
                 // special directory for files that can't be renamed or are secondary inputs
@@ -249,7 +244,7 @@ public class AllTestsTest {
                 || path.contains(File.separatorChar + "translation" + File.separatorChar);
     }
 
-    private static String getSimplePath(String path) {
+    private static String getSimplePath(final String path) {
         return path.substring(path.lastIndexOf("com" + File.separator + "puppycrawl"));
     }
 

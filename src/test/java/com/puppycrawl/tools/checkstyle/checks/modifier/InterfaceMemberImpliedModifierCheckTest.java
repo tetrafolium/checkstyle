@@ -419,8 +419,7 @@ public class InterfaceMemberImpliedModifierCheckTest
         try {
             check.visitToken(init);
             fail("IllegalStateException is expected");
-        }
-        catch (IllegalStateException ex) {
+        } catch (IllegalStateException ex) {
             assertEquals(init.toString(), ex.getMessage(), "Error message is unexpected");
         }
     }

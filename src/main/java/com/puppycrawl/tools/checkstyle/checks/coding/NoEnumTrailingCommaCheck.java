@@ -116,7 +116,7 @@ public class NoEnumTrailingCommaCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST detailAST) {
+    public void visitToken(final DetailAST detailAST) {
         final DetailAST nextSibling = detailAST.getNextSibling();
         if (nextSibling.getType() == TokenTypes.COMMA) {
             final DetailAST nextToNextSibling = nextSibling.getNextSibling();

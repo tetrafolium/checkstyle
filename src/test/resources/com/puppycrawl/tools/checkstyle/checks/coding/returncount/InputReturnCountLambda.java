@@ -30,7 +30,7 @@ public class InputReturnCountLambda {
         });
     }
 
-    Optional<Object> methodWithThreeReturnInLambda(int number) {
+    Optional<Object> methodWithThreeReturnInLambda(final int number) {
         return Optional.of(number).map(i -> {
             if (i == 42) return true;
             else if (i == 7) return true;

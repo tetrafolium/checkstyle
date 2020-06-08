@@ -81,13 +81,13 @@ public class FinalClassCheck
     }
 
     @Override
-    public void beginTree(DetailAST rootAST) {
+    public void beginTree(final DetailAST rootAST) {
         classes = new ArrayDeque<>();
         packageName = "";
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         final DetailAST modifiers = ast.findFirstToken(TokenTypes.MODIFIERS);
 
         switch (ast.getType()) {
@@ -110,8 +110,7 @@ public class FinalClassCheck
                     final ClassDesc desc = classes.peek();
                     if (modifiers.findFirstToken(TokenTypes.LITERAL_PRIVATE) == null) {
                         desc.registerNonPrivateCtor();
-                    }
-                    else {
+                    } else {
                         desc.registerPrivateCtor();
                     }
                 }
@@ -123,7 +122,7 @@ public class FinalClassCheck
     }
 
     @Override
-    public void leaveToken(DetailAST ast) {
+    public void leaveToken(final DetailAST ast) {
         if (ast.getType() == TokenTypes.CLASS_DEF) {
             final ClassDesc desc = classes.pop();
             if (desc.isWithPrivateCtor()
@@ -144,7 +143,7 @@ public class FinalClassCheck
      * @param ast ast to extract class name from
      * @return qualified name
      */
-    private static String extractQualifiedName(DetailAST ast) {
+    private static String extractQualifiedName(final DetailAST ast) {
         return FullIdent.createFullIdent(ast).getText();
     }
 
@@ -154,7 +153,7 @@ public class FinalClassCheck
      * @param classAst class which outer super classes will be
      *                 informed about nesting subclass
      */
-    private void registerNestedSubclassToOuterSuperClasses(DetailAST classAst) {
+    private void registerNestedSubclassToOuterSuperClasses(final DetailAST classAst) {
         final String currentAstSuperClassName = getSuperClassName(classAst);
         if (currentAstSuperClassName != null) {
             for (ClassDesc classDesc : classes) {
@@ -172,7 +171,7 @@ public class FinalClassCheck
      * @param classAst class to get qualified class name
      * @return qualified class name of a class
      */
-    private String getQualifiedClassName(DetailAST classAst) {
+    private String getQualifiedClassName(final DetailAST classAst) {
         final String className = classAst.findFirstToken(TokenTypes.IDENT).getText();
         String outerClassQualifiedName = null;
         if (!classes.isEmpty()) {
@@ -190,19 +189,17 @@ public class FinalClassCheck
      * @param className class name
      * @return qualified class name(package + class name)
      */
-    private static String getQualifiedClassName(String packageName, String outerClassQualifiedName,
-                                                String className) {
+    private static String getQualifiedClassName(final String packageName, final String outerClassQualifiedName,
+                                                final String className) {
         final String qualifiedClassName;
 
         if (outerClassQualifiedName == null) {
             if (packageName.isEmpty()) {
                 qualifiedClassName = className;
-            }
-            else {
+            } else {
                 qualifiedClassName = packageName + PACKAGE_SEPARATOR + className;
             }
-        }
-        else {
+        } else {
             qualifiedClassName = outerClassQualifiedName + PACKAGE_SEPARATOR + className;
         }
         return qualifiedClassName;
@@ -213,7 +210,7 @@ public class FinalClassCheck
      * @param classAst class
      * @return super class name or null if super class is not specified
      */
-    private static String getSuperClassName(DetailAST classAst) {
+    private static String getSuperClassName(final DetailAST classAst) {
         String superClassName = null;
         final DetailAST classExtend = classAst.findFirstToken(TokenTypes.EXTENDS_CLAUSE);
         if (classExtend != null) {
@@ -229,8 +226,8 @@ public class FinalClassCheck
      * @return true if given super class name in extend clause match super class qualified name,
      *         false otherwise
      */
-    private static boolean doesNameInExtendMatchSuperClassName(String superClassQualifiedName,
-                                                               String superClassInExtendClause) {
+    private static boolean doesNameInExtendMatchSuperClassName(final String superClassQualifiedName,
+                                                               final String superClassInExtendClause) {
         String superClassNormalizedName = superClassQualifiedName;
         if (!superClassInExtendClause.contains(PACKAGE_SEPARATOR)) {
             superClassNormalizedName = getClassNameFromQualifiedName(superClassQualifiedName);
@@ -243,7 +240,7 @@ public class FinalClassCheck
      * @param qualifiedName qualified class name
      * @return class name
      */
-    private static String getClassNameFromQualifiedName(String qualifiedName) {
+    private static String getClassNameFromQualifiedName(final String qualifiedName) {
         return qualifiedName.substring(qualifiedName.lastIndexOf(PACKAGE_SEPARATOR) + 1);
     }
 
@@ -276,8 +273,8 @@ public class FinalClassCheck
          *  @param declaredAsAbstract indicates if the
          *         class declared as abstract
          */
-        /* package */ ClassDesc(String qualifiedName, boolean declaredAsFinal,
-                boolean declaredAsAbstract) {
+        /* package */ ClassDesc(final String qualifiedName, final boolean declaredAsFinal,
+                final boolean declaredAsAbstract) {
             this.qualifiedName = qualifiedName;
             this.declaredAsFinal = declaredAsFinal;
             this.declaredAsAbstract = declaredAsAbstract;

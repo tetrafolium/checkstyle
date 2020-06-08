@@ -101,8 +101,7 @@ public class MainFrameModelPowerTest extends AbstractModuleTestSupport {
             model.openFile(testData);
 
             fail("Expected IllegalArgumentException is not thrown.");
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertEquals("Invalid exception message",
                     "Unknown mode: Unknown parse mode", ex.getMessage());
         }

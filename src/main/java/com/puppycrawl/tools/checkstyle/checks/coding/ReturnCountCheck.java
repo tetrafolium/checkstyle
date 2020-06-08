@@ -189,7 +189,7 @@ public final class ReturnCountCheck extends AbstractCheck {
      * Setter to specify method names to ignore.
      * @param pattern a pattern.
      */
-    public void setFormat(Pattern pattern) {
+    public void setFormat(final Pattern pattern) {
         format = pattern;
     }
 
@@ -198,7 +198,7 @@ public final class ReturnCountCheck extends AbstractCheck {
      * in non-void methods/lambdas.
      * @param max maximum allowed number of return statements.
      */
-    public void setMax(int max) {
+    public void setMax(final int max) {
         this.max = max;
     }
 
@@ -207,18 +207,18 @@ public final class ReturnCountCheck extends AbstractCheck {
      * in void methods/constructors/lambdas.
      * @param maxForVoid maximum allowed number of return statements for void methods.
      */
-    public void setMaxForVoid(int maxForVoid) {
+    public void setMaxForVoid(final int maxForVoid) {
         this.maxForVoid = maxForVoid;
     }
 
     @Override
-    public void beginTree(DetailAST rootAST) {
+    public void beginTree(final DetailAST rootAST) {
         context = new Context(false);
         contextStack.clear();
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         switch (ast.getType()) {
             case TokenTypes.CTOR_DEF:
             case TokenTypes.METHOD_DEF:
@@ -236,7 +236,7 @@ public final class ReturnCountCheck extends AbstractCheck {
     }
 
     @Override
-    public void leaveToken(DetailAST ast) {
+    public void leaveToken(final DetailAST ast) {
         switch (ast.getType()) {
             case TokenTypes.CTOR_DEF:
             case TokenTypes.METHOD_DEF:
@@ -255,7 +255,7 @@ public final class ReturnCountCheck extends AbstractCheck {
      * Creates new method context and places old one on the stack.
      * @param ast method definition for check.
      */
-    private void visitMethodDef(DetailAST ast) {
+    private void visitMethodDef(final DetailAST ast) {
         contextStack.push(context);
         final DetailAST methodNameAST = ast.findFirstToken(TokenTypes.IDENT);
         final boolean check = !format.matcher(methodNameAST.getText()).find();
@@ -266,7 +266,7 @@ public final class ReturnCountCheck extends AbstractCheck {
      * Checks number of return statements and restore previous context.
      * @param ast node to leave.
      */
-    private void leave(DetailAST ast) {
+    private void leave(final DetailAST ast) {
         context.checkCount(ast);
         context = contextStack.pop();
     }
@@ -283,13 +283,12 @@ public final class ReturnCountCheck extends AbstractCheck {
      * Examines the return statement and tells context about it.
      * @param ast return statement to check.
      */
-    private void visitReturn(DetailAST ast) {
+    private void visitReturn(final DetailAST ast) {
         // we can't identify which max to use for lambdas, so we can only assign
         // after the first return statement is seen
         if (ast.getFirstChild().getType() == TokenTypes.SEMI) {
             context.visitLiteralReturn(maxForVoid, true);
-        }
-        else {
+        } else {
             context.visitLiteralReturn(max, false);
         }
     }
@@ -312,7 +311,7 @@ public final class ReturnCountCheck extends AbstractCheck {
          * Creates new method context.
          * @param checking should we check this method or not.
          */
-        /* package */ Context(boolean checking) {
+        /* package */ Context(final boolean checking) {
             this.checking = checking;
         }
 
@@ -321,7 +320,7 @@ public final class ReturnCountCheck extends AbstractCheck {
          * @param maxAssigned Maximum allowed number of return statements.
          * @param voidReturn Identifies if context is void.
          */
-        public void visitLiteralReturn(int maxAssigned, Boolean voidReturn) {
+        public void visitLiteralReturn(final int maxAssigned, final Boolean voidReturn) {
             isVoidContext = voidReturn;
             maxAllowed = maxAssigned;
 
@@ -333,12 +332,11 @@ public final class ReturnCountCheck extends AbstractCheck {
          * than allowed.
          * @param ast method def associated with this context.
          */
-        public void checkCount(DetailAST ast) {
+        public void checkCount(final DetailAST ast) {
             if (checking && maxAllowed != null && count > maxAllowed) {
                 if (isVoidContext) {
                     log(ast, MSG_KEY_VOID, count, maxAllowed);
-                }
-                else {
+                } else {
                     log(ast, MSG_KEY, count, maxAllowed);
                 }
             }

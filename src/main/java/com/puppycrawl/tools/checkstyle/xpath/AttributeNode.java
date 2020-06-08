@@ -42,7 +42,7 @@ public class AttributeNode extends AbstractNode {
      * @param name name of the attribute
      * @param value value of the attribute
      */
-    public AttributeNode(String name, String value) {
+    public AttributeNode(final String name, final String value) {
         super(null);
         this.name = name;
         this.value = value;
@@ -56,7 +56,7 @@ public class AttributeNode extends AbstractNode {
      * @return attribute value
      */
     @Override
-    public String getAttributeValue(String namespace, String localPart) {
+    public String getAttributeValue(final String namespace, final String localPart) {
         throw throwUnsupportedOperationException();
     }
 
@@ -116,7 +116,7 @@ public class AttributeNode extends AbstractNode {
      * @return {@code AxisIterator} object
      */
     @Override
-    public AxisIterator iterateAxis(byte axisNumber) {
+    public AxisIterator iterateAxis(final byte axisNumber) {
         throw throwUnsupportedOperationException();
     }
 

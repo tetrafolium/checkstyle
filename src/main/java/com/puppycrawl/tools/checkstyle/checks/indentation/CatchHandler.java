@@ -36,8 +36,8 @@ public class CatchHandler extends BlockParentHandler {
      * @param ast           the abstract syntax tree
      * @param parent        the parent handler
      */
-    public CatchHandler(IndentationCheck indentCheck,
-        DetailAST ast, AbstractExpressionHandler parent) {
+    public CatchHandler(final IndentationCheck indentCheck,
+        final DetailAST ast, final AbstractExpressionHandler parent) {
         super(indentCheck, "catch", ast, parent);
     }
 

@@ -3,8 +3,8 @@ package org.checkstyle.suppressionxpathfilter.genericwhitespace;
 import java.util.Collections;
 
 public class SuppressionXpathRegressionGenericWhitespaceEnd {
-    void bad(Class<? > cls) {//warn
+    void bad(final Class<?> cls) { //warn
     }
-    void good(Class<?> cls) {
+    void good(final Class<?> cls) {
     }
 }

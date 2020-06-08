@@ -106,8 +106,8 @@ public abstract class AbstractXpathTestSupport extends AbstractCheckstyleModuleT
         return "org/checkstyle/suppressionxpathfilter/" + subpackage;
     }
 
-    private static List<String> generateXpathQueries(File fileToProcess,
-                                                     ViolationPosition position)
+    private static List<String> generateXpathQueries(final File fileToProcess,
+                                                     final ViolationPosition position)
             throws Exception {
         final FileText fileText = new FileText(fileToProcess,
                 StandardCharsets.UTF_8.name());
@@ -120,14 +120,14 @@ public abstract class AbstractXpathTestSupport extends AbstractCheckstyleModuleT
         return queryGenerator.generate();
     }
 
-    private static void verifyXpathQueries(List<String> generatedXpathQueries,
-                                           List<String> expectedXpathQueries) {
+    private static void verifyXpathQueries(final List<String> generatedXpathQueries,
+                                           final List<String> expectedXpathQueries) {
         assertEquals(expectedXpathQueries,
                 generatedXpathQueries, "Generated queries do not match expected ones");
     }
 
-    private String createSuppressionsXpathConfigFile(String checkName,
-                                                     List<String> xpathQueries)
+    private String createSuppressionsXpathConfigFile(final String checkName,
+                                                     final List<String> xpathQueries)
             throws Exception {
         final Path suppressionsXpathConfigPath =
                 Files.createTempFile(temporaryFolder, "", "");
@@ -153,8 +153,8 @@ public abstract class AbstractXpathTestSupport extends AbstractCheckstyleModuleT
         return suppressionsXpathConfigPath.toString();
     }
 
-    private DefaultConfiguration createSuppressionXpathFilter(String checkName,
-                                           List<String> xpathQueries) throws Exception {
+    private DefaultConfiguration createSuppressionXpathFilter(final String checkName,
+                                           final List<String> xpathQueries) throws Exception {
         final DefaultConfiguration suppressionXpathFilterConfig =
                 createModuleConfig(SuppressionXpathFilter.class);
         suppressionXpathFilterConfig.addAttribute("file",
@@ -163,7 +163,7 @@ public abstract class AbstractXpathTestSupport extends AbstractCheckstyleModuleT
         return suppressionXpathFilterConfig;
     }
 
-    private static ViolationPosition extractLineAndColumnNumber(String... expectedViolations) {
+    private static ViolationPosition extractLineAndColumnNumber(final String... expectedViolations) {
         ViolationPosition violation = null;
         final Matcher matcher =
                 LINE_COLUMN_NUMBER_REGEX.matcher(expectedViolations[0]);
@@ -189,10 +189,10 @@ public abstract class AbstractXpathTestSupport extends AbstractCheckstyleModuleT
      * @param expectedXpathQueries expected generated xpath queries.
      * @throws Exception if an error occurs
      */
-    protected void runVerifications(DefaultConfiguration moduleConfig,
-                                  File fileToProcess,
-                                  String[] expectedViolations,
-                                  List<String> expectedXpathQueries) throws Exception {
+    protected void runVerifications(final DefaultConfiguration moduleConfig,
+                                  final File fileToProcess,
+                                  final String[] expectedViolations,
+                                  final List<String> expectedXpathQueries) throws Exception {
         final ViolationPosition position =
                 extractLineAndColumnNumber(expectedViolations);
         final List<String> generatedXpathQueries =
@@ -214,8 +214,8 @@ public abstract class AbstractXpathTestSupport extends AbstractCheckstyleModuleT
         private final int violationLineNumber;
         private final int violationColumnNumber;
 
-        /* package */ ViolationPosition(int violationLineNumber,
-                              int violationColumnNumber) {
+        /* package */ ViolationPosition(final int violationLineNumber,
+                              final int violationColumnNumber) {
             this.violationLineNumber = violationLineNumber;
             this.violationColumnNumber = violationColumnNumber;
         }

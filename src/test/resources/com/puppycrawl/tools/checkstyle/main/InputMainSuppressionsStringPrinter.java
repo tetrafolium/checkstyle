@@ -1,10 +1,10 @@
 package com.puppycrawl.tools.checkstyle.main;
 
 class InputMainSuppressionsStringPrinter {
-			void call(){}
+                        void call() { }
 
-			public String getName() {
-				int var = 123;
-				return "Checkstyle";
-			}
+                        public String getName() {
+                                int var = 123;
+                                return "Checkstyle";
+                        }
 }

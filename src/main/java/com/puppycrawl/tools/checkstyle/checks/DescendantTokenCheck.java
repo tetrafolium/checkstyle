@@ -334,15 +334,14 @@ public class DescendantTokenCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         // reset counts
         Arrays.fill(counts, 0);
         countTokens(ast, 0);
 
         if (sumTokenCounts) {
             logAsTotal(ast);
-        }
-        else {
+        } else {
             logAsSeparated(ast);
         }
     }
@@ -351,7 +350,7 @@ public class DescendantTokenCheck extends AbstractCheck {
      * Log violations for each Token.
      * @param ast token
      */
-    private void logAsSeparated(DetailAST ast) {
+    private void logAsSeparated(final DetailAST ast) {
         // name of this token
         final String name = TokenUtil.getTokenName(ast.getType());
 
@@ -390,7 +389,7 @@ public class DescendantTokenCheck extends AbstractCheck {
      * Log validation as one violation.
      * @param ast current token
      */
-    private void logAsTotal(DetailAST ast) {
+    private void logAsTotal(final DetailAST ast) {
         // name of this token
         final String name = TokenUtil.getTokenName(ast.getType());
 
@@ -423,7 +422,7 @@ public class DescendantTokenCheck extends AbstractCheck {
      * @param ast the root token for descendants.
      * @param depth the maximum depth of the counted descendants.
      */
-    private void countTokens(DetailAST ast, int depth) {
+    private void countTokens(final DetailAST ast, final int depth) {
         if (depth <= maximumDepth) {
             // update count
             if (depth >= minimumDepth) {
@@ -459,7 +458,7 @@ public class DescendantTokenCheck extends AbstractCheck {
      *
      * @param limitedTokensParam - list of tokens to ignore.
      */
-    public void setLimitedTokens(String... limitedTokensParam) {
+    public void setLimitedTokens(final String... limitedTokensParam) {
         limitedTokens = new int[limitedTokensParam.length];
 
         int maxToken = 0;
@@ -477,7 +476,7 @@ public class DescendantTokenCheck extends AbstractCheck {
      *
      * @param minimumDepth the minimum depth for descendant counts.
      */
-    public void setMinimumDepth(int minimumDepth) {
+    public void setMinimumDepth(final int minimumDepth) {
         this.minimumDepth = minimumDepth;
     }
 
@@ -486,7 +485,7 @@ public class DescendantTokenCheck extends AbstractCheck {
      *
      * @param maximumDepth the maximum depth for descendant counts.
      */
-    public void setMaximumDepth(int maximumDepth) {
+    public void setMaximumDepth(final int maximumDepth) {
         this.maximumDepth = maximumDepth;
     }
 
@@ -495,7 +494,7 @@ public class DescendantTokenCheck extends AbstractCheck {
      *
      * @param minimumNumber the minimum count for descendants.
      */
-    public void setMinimumNumber(int minimumNumber) {
+    public void setMinimumNumber(final int minimumNumber) {
         this.minimumNumber = minimumNumber;
     }
 
@@ -504,7 +503,7 @@ public class DescendantTokenCheck extends AbstractCheck {
       *
       * @param maximumNumber the maximum count for descendants.
       */
-    public void setMaximumNumber(int maximumNumber) {
+    public void setMaximumNumber(final int maximumNumber) {
         this.maximumNumber = maximumNumber;
     }
 
@@ -520,7 +519,7 @@ public class DescendantTokenCheck extends AbstractCheck {
      *     <li>{3} - name of limited token</li>
      *     </ul>
      */
-    public void setMinimumMessage(String message) {
+    public void setMinimumMessage(final String message) {
         minimumMessage = message;
     }
 
@@ -537,7 +536,7 @@ public class DescendantTokenCheck extends AbstractCheck {
      * </ul>
      */
 
-    public void setMaximumMessage(String message) {
+    public void setMaximumMessage(final String message) {
         maximumMessage = message;
     }
 
@@ -547,7 +546,7 @@ public class DescendantTokenCheck extends AbstractCheck {
      *
      * @param sum whether to use the sum.
      */
-    public void setSumTokenCounts(boolean sum) {
+    public void setSumTokenCounts(final boolean sum) {
         sumTokenCounts = sum;
     }
 

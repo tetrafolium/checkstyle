@@ -9,15 +9,15 @@ public class InputFinalLocalVariableNativeMethods
          System.loadLibrary("foo");
      }
 
-     public void print () {
+     public void print() {
          String str = nativeFoo(1, 4);
          System.identityHashCode(str);
      }
 
      public static void main(final String[] args) {
          (new InputFinalLocalVariableNativeMethods()).print();
-         System.identityHashCode("In Java, the average is " +
-             new InputFinalLocalVariableNativeMethods().average(3, 2));
+         System.identityHashCode("In Java, the average is "
+             + new InputFinalLocalVariableNativeMethods().average(3, 2));
          return;
      }
 }

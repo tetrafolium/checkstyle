@@ -18,7 +18,7 @@ public class InputTrailingComment {
     /* c-style */ // cpp-style
     /* c-style 1 */ /*c-style 2 */
 
-    void method2(long ms /* we should ignore this */) {
+    void method2(final long ms /* we should ignore this */) {
         /* comment before text */int z;
         /* int y */int y/**/;
     }
@@ -26,8 +26,8 @@ public class InputTrailingComment {
     /**
      * comment with trailing space
      */
-    final static public String NAME="Some Name"; // NOI18N
-    final static public String NAME2="Some Name"; /*NOI18N*/
-    String NAME3="Some Name"; /*NOI18N
+    final static public String NAME = "Some Name"; // NOI18N
+    final static public String NAME2 = "Some Name"; /*NOI18N*/
+    String NAME3 = "Some Name"; /*NOI18N
 */
 }

@@ -108,7 +108,7 @@ public class CatchParameterNameCheck extends AbstractNameCheck {
     }
 
     @Override
-    protected boolean mustCheckName(DetailAST ast) {
+    protected boolean mustCheckName(final DetailAST ast) {
         return ast.getParent().getType() == TokenTypes.LITERAL_CATCH;
     }
 

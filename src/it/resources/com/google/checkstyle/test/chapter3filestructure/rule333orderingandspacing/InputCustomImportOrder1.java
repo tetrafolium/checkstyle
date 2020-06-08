@@ -16,4 +16,4 @@ import java.io.Reader; //warn
 
 import com.google.common.base.Ascii; //warn
 
-public class InputCustomImportOrder1 {}
+public class InputCustomImportOrder1 { }

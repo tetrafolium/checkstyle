@@ -21,7 +21,7 @@ class InputRightCurlyOther
                 else
                 {
                     break;
-                }//ok
+                } //ok
                 switch (a)
                 {
                 case 0:
@@ -33,8 +33,8 @@ class InputRightCurlyOther
             catch (Exception e)
             {
                 break;
-            }//ok
-        }//ok
+            } //ok
+        } //ok
 
         synchronized (this)
         {
@@ -42,7 +42,7 @@ class InputRightCurlyOther
             {
                 x = 2;
             } while (x == 2); //ok
-        }//ok
+        } //ok
 
         this.wait(666
                  ); // Bizarre, but legal
@@ -50,20 +50,20 @@ class InputRightCurlyOther
         for (int k = 0; k < 1; k++)
         {
             String innerBlockVariable = "";
-        }//ok
+        } //ok
 
 
         if (System.currentTimeMillis() > 1000)
             return 1;
         else
             return 2;
-    }//ok
+    } //ok
 
 
     static
     {
         int x = 1;
-    }//ok
+    } //ok
 
     public enum GreetingsEnum
     {
@@ -76,11 +76,15 @@ class InputRightCurlyOther
         boolean flag = true;
         if (flag) {
             System.identityHashCode("heh");
-            flag = !flag; } System. //warn
+            flag = !flag;
+        }
+        System.//warn
               identityHashCode("Xe-xe");
 
 
-        if (flag) { System.identityHashCode("some foo"); }
+        if (flag) {
+            System.identityHashCode("some foo");
+        }
     } //ok
 } //ok
 
@@ -115,7 +119,7 @@ class FooInner
 {
     class InnerFoo
     {
-        public void fooInnerMethod ()
+        public void fooInnerMethod()
         {
 
         }

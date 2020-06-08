@@ -161,7 +161,7 @@ public class NoCloneCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST aAST) {
+    public void visitToken(final DetailAST aAST) {
         final DetailAST mid = aAST.findFirstToken(TokenTypes.IDENT);
         final String name = mid.getText();
 

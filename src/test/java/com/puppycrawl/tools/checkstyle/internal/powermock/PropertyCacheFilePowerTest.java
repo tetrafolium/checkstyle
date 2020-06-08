@@ -126,8 +126,7 @@ public class PropertyCacheFilePowerTest extends AbstractPathTestSupport {
         try {
             method.invoke(cache, config);
             fail("InvocationTargetException is expected");
-        }
-        catch (InvocationTargetException ex) {
+        } catch (InvocationTargetException ex) {
             assertTrue("Invalid exception cause",
                     ex.getCause().getCause() instanceof NoSuchAlgorithmException);
             assertEquals("Invalid exception message",

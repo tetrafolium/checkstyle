@@ -38,7 +38,7 @@ public class LineColumn implements Comparable<LineColumn> {
      * @param line the one-based line number
      * @param column the zero-based column number
      */
-    public LineColumn(int line, int column) {
+    public LineColumn(final int line, final int column) {
         this.line = line;
         this.column = column;
     }
@@ -60,19 +60,18 @@ public class LineColumn implements Comparable<LineColumn> {
     }
 
     @Override
-    public int compareTo(LineColumn lineColumn) {
+    public int compareTo(final LineColumn lineColumn) {
         final int result;
         if (line == lineColumn.line) {
             result = Integer.compare(column, lineColumn.column);
-        }
-        else {
+        } else {
             result = Integer.compare(line, lineColumn.line);
         }
         return result;
     }
 
     @Override
-    public boolean equals(Object other) {
+    public boolean equals(final Object other) {
         if (this == other) {
             return true;
         }

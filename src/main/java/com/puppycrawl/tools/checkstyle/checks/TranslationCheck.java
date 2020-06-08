@@ -277,7 +277,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
      *
      * @param baseName base name regexp.
      */
-    public void setBaseName(Pattern baseName) {
+    public void setBaseName(final Pattern baseName) {
         this.baseName = baseName;
     }
 
@@ -286,7 +286,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
      *
      * @param translationCodes a comma separated list of language codes.
      */
-    public void setRequiredTranslations(String... translationCodes) {
+    public void setRequiredTranslations(final String... translationCodes) {
         requiredTranslations = Arrays.stream(translationCodes).collect(Collectors.toSet());
         validateUserSpecifiedLanguageCodes(requiredTranslations);
     }
@@ -296,7 +296,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
      * @param languageCodes user specified language codes for the check.
      * @throws IllegalArgumentException when any item of languageCodes is not valid language code
      */
-    private void validateUserSpecifiedLanguageCodes(Set<String> languageCodes) {
+    private void validateUserSpecifiedLanguageCodes(final Set<String> languageCodes) {
         for (String code : languageCodes) {
             if (!isValidLanguageCode(code)) {
                 final LocalizedMessage msg = new LocalizedMessage(1, TRANSLATION_BUNDLE,
@@ -326,12 +326,12 @@ public class TranslationCheck extends AbstractFileSetCheck {
     }
 
     @Override
-    public void beginProcessing(String charset) {
+    public void beginProcessing(final String charset) {
         filesToProcess.clear();
     }
 
     @Override
-    protected void processFiltered(File file, FileText fileText) {
+    protected void processFiltered(final File file, final FileText fileText) {
         // We just collecting files for processing at finishProcessing()
         filesToProcess.add(file);
     }
@@ -350,7 +350,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
      * Checks an existence of default translation file in the resource bundle.
      * @param bundle resource bundle.
      */
-    private void checkExistenceOfDefaultTranslation(ResourceBundle bundle) {
+    private void checkExistenceOfDefaultTranslation(final ResourceBundle bundle) {
         getMissingFileName(bundle, null)
             .ifPresent(fileName -> logMissingTranslation(bundle.getPath(), fileName));
     }
@@ -362,7 +362,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
      * suffix.
      * @param bundle resource bundle.
      */
-    private void checkExistenceOfRequiredTranslations(ResourceBundle bundle) {
+    private void checkExistenceOfRequiredTranslations(final ResourceBundle bundle) {
         for (String languageCode : requiredTranslations) {
             getMissingFileName(bundle, languageCode)
                 .ifPresent(fileName -> logMissingTranslation(bundle.getPath(), fileName));
@@ -377,7 +377,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
      * @return the name of translation file which is absent in resource bundle or Guava's Optional,
      *         if there is not missing translation.
      */
-    private static Optional<String> getMissingFileName(ResourceBundle bundle, String languageCode) {
+    private static Optional<String> getMissingFileName(final ResourceBundle bundle, final String languageCode) {
         final String fileNameRegexp;
         final boolean searchForDefaultTranslation;
         final String extension = bundle.getExtension();
@@ -386,8 +386,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
             searchForDefaultTranslation = true;
             fileNameRegexp = String.format(Locale.ROOT, REGEXP_FORMAT_TO_CHECK_DEFAULT_TRANSLATIONS,
                     baseName, extension);
-        }
-        else {
+        } else {
             searchForDefaultTranslation = false;
             fileNameRegexp = String.format(Locale.ROOT,
                 REGEXP_FORMAT_TO_CHECK_REQUIRED_TRANSLATIONS, baseName, languageCode, extension);
@@ -397,8 +396,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
             if (searchForDefaultTranslation) {
                 missingFileName = Optional.of(String.format(Locale.ROOT,
                         DEFAULT_TRANSLATION_FILE_NAME_FORMATTER, baseName, extension));
-            }
-            else {
+            } else {
                 missingFileName = Optional.of(String.format(Locale.ROOT,
                         FILE_NAME_WITH_LANGUAGE_CODE_FORMATTER, baseName, languageCode, extension));
             }
@@ -411,7 +409,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
      * @param filePath file path.
      * @param fileName file name.
      */
-    private void logMissingTranslation(String filePath, String fileName) {
+    private void logMissingTranslation(final String filePath, final String fileName) {
         final MessageDispatcher dispatcher = getMessageDispatcher();
         dispatcher.fireFileStarted(filePath);
         log(1, MSG_KEY_MISSING_TRANSLATION_FILE, fileName);
@@ -426,8 +424,8 @@ public class TranslationCheck extends AbstractFileSetCheck {
      * @param baseNameRegexp base name regexp pattern.
      * @return set of ResourceBundles.
      */
-    private static Set<ResourceBundle> groupFilesIntoBundles(Set<File> files,
-                                                             Pattern baseNameRegexp) {
+    private static Set<ResourceBundle> groupFilesIntoBundles(final Set<File> files,
+                                                             final Pattern baseNameRegexp) {
         final Set<ResourceBundle> resourceBundles = new HashSet<>();
         for (File currentFile : files) {
             final String fileName = currentFile.getName();
@@ -440,8 +438,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
                 final Optional<ResourceBundle> bundle = findBundle(resourceBundles, newBundle);
                 if (bundle.isPresent()) {
                     bundle.get().addFile(currentFile);
-                }
-                else {
+                } else {
                     newBundle.addFile(currentFile);
                     resourceBundles.add(newBundle);
                 }
@@ -456,8 +453,8 @@ public class TranslationCheck extends AbstractFileSetCheck {
      * @param targetBundle target bundle to search for.
      * @return Guava's Optional of resource bundle (present if target bundle is found).
      */
-    private static Optional<ResourceBundle> findBundle(Set<ResourceBundle> bundles,
-                                                       ResourceBundle targetBundle) {
+    private static Optional<ResourceBundle> findBundle(final Set<ResourceBundle> bundles,
+                                                       final ResourceBundle targetBundle) {
         Optional<ResourceBundle> result = Optional.empty();
         for (ResourceBundle currentBundle : bundles) {
             if (targetBundle.getBaseName().equals(currentBundle.getBaseName())
@@ -477,7 +474,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
      * @param fileName the fully qualified name of the translation file.
      * @return the extracted base name.
      */
-    private static String extractBaseName(String fileName) {
+    private static String extractBaseName(final String fileName) {
         final String regexp;
         final Matcher languageCountryVariantMatcher =
             LANGUAGE_COUNTRY_VARIANT_PATTERN.matcher(fileName);
@@ -485,14 +482,11 @@ public class TranslationCheck extends AbstractFileSetCheck {
         final Matcher languageMatcher = LANGUAGE_PATTERN.matcher(fileName);
         if (languageCountryVariantMatcher.matches()) {
             regexp = LANGUAGE_COUNTRY_VARIANT_PATTERN.pattern();
-        }
-        else if (languageCountryMatcher.matches()) {
+        } else if (languageCountryMatcher.matches()) {
             regexp = LANGUAGE_COUNTRY_PATTERN.pattern();
-        }
-        else if (languageMatcher.matches()) {
+        } else if (languageMatcher.matches()) {
             regexp = LANGUAGE_PATTERN.pattern();
-        }
-        else {
+        } else {
             regexp = DEFAULT_TRANSLATION_REGEXP;
         }
         // We use substring(...) instead of replace(...), so that the regular expression does
@@ -508,7 +502,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
      * @param fileNameWithPath file name which contains the path.
      * @return file path.
      */
-    private static String getPath(String fileNameWithPath) {
+    private static String getPath(final String fileNameWithPath) {
         return fileNameWithPath
             .substring(0, fileNameWithPath.lastIndexOf(File.separator));
     }
@@ -519,7 +513,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
      * an audit event message is posted giving information which key misses in which file.
      * @param bundle resource bundle.
      */
-    private void checkTranslationKeys(ResourceBundle bundle) {
+    private void checkTranslationKeys(final ResourceBundle bundle) {
         final Set<File> filesInBundle = bundle.getFiles();
         // build a map from files to the keys they contain
         final Set<String> allTranslationKeys = new HashSet<>();
@@ -538,8 +532,8 @@ public class TranslationCheck extends AbstractFileSetCheck {
      * @param fileKeys a Map from translation files to their key sets.
      * @param keysThatMustExist the set of keys to compare with.
      */
-    private void checkFilesForConsistencyRegardingTheirKeys(Map<File, Set<String>> fileKeys,
-                                                            Set<String> keysThatMustExist) {
+    private void checkFilesForConsistencyRegardingTheirKeys(final Map<File, Set<String>> fileKeys,
+                                                            final Set<String> keysThatMustExist) {
         for (Entry<File, Set<String>> fileKey : fileKeys.entrySet()) {
             final Set<String> currentFileKeys = fileKey.getValue();
             final Set<String> missingKeys = keysThatMustExist.stream()
@@ -562,14 +556,13 @@ public class TranslationCheck extends AbstractFileSetCheck {
      * @param file translation file.
      * @return a Set object which holds the loaded keys.
      */
-    private Set<String> getTranslationKeys(File file) {
+    private Set<String> getTranslationKeys(final File file) {
         Set<String> keys = new HashSet<>();
         try (InputStream inStream = Files.newInputStream(file.toPath())) {
             final Properties translations = new Properties();
             translations.load(inStream);
             keys = translations.stringPropertyNames();
-        }
-        // -@cs[IllegalCatch] It is better to catch all exceptions since it can throw
+        } // -@cs[IllegalCatch] It is better to catch all exceptions since it can throw
         // a runtime exception.
         catch (final Exception ex) {
             logException(ex, file);
@@ -582,14 +575,13 @@ public class TranslationCheck extends AbstractFileSetCheck {
      * @param exception the exception that occurred
      * @param file the file that could not be processed
      */
-    private void logException(Exception exception, File file) {
+    private void logException(final Exception exception, final File file) {
         final String[] args;
         final String key;
         if (exception instanceof NoSuchFileException) {
             args = null;
             key = "general.fileNotFound";
-        }
-        else {
+        } else {
             args = new String[] {exception.getMessage()};
             key = "general.exception";
         }
@@ -625,7 +617,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
          * @param path common path of files which are included in the resource bundle.
          * @param extension common extension of files which are included in the resource bundle.
          */
-        /* package */ ResourceBundle(String baseName, String path, String extension) {
+        /* package */ ResourceBundle(final String baseName, final String path, final String extension) {
             this.baseName = baseName;
             this.path = path;
             this.extension = extension;
@@ -652,7 +644,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
          * Adds a file into resource bundle.
          * @param file file which should be added into resource bundle.
          */
-        public void addFile(File file) {
+        public void addFile(final File file) {
             files.add(file);
         }
 
@@ -661,7 +653,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
          * @param fileNameRegexp file name regexp.
          * @return true if a resource bundle contains a file which name matches file name regexp.
          */
-        public boolean containsFile(String fileNameRegexp) {
+        public boolean containsFile(final String fileNameRegexp) {
             boolean containsFile = false;
             for (File currentFile : files) {
                 if (Pattern.matches(fileNameRegexp, currentFile.getName())) {

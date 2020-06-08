@@ -40,7 +40,7 @@ public class JavadocTag {
      * @param tag the tag string
      * @param firstArg the tag argument
      **/
-    public JavadocTag(int line, int column, String tag, String firstArg) {
+    public JavadocTag(final int line, final int column, final String tag, final String firstArg) {
         lineNo = line;
         columnNo = column;
         this.firstArg = firstArg;
@@ -53,7 +53,7 @@ public class JavadocTag {
      * @param column the column number of the tag
      * @param tag the tag string
      **/
-    public JavadocTag(int line, int column, String tag) {
+    public JavadocTag(final int line, final int column, final String tag) {
         this(line, column, tag, null);
     }
 

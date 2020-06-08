@@ -207,19 +207,18 @@ public final class MethodCountCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         if (ast.getType() == TokenTypes.METHOD_DEF) {
             if (isInLatestScopeDefinition(ast)) {
                 raiseCounter(ast);
             }
-        }
-        else {
+        } else {
             counters.push(new MethodCounter(ast));
         }
     }
 
     @Override
-    public void leaveToken(DetailAST ast) {
+    public void leaveToken(final DetailAST ast) {
         if (ast.getType() != TokenTypes.METHOD_DEF) {
             final MethodCounter counter = counters.pop();
 
@@ -235,7 +234,7 @@ public final class MethodCountCheck extends AbstractCheck {
      * @return {@code true} if the method is part of the latest scope definition and should be
      *         counted.
      */
-    private boolean isInLatestScopeDefinition(DetailAST methodDef) {
+    private boolean isInLatestScopeDefinition(final DetailAST methodDef) {
         boolean result = false;
 
         if (!counters.isEmpty()) {
@@ -252,7 +251,7 @@ public final class MethodCountCheck extends AbstractCheck {
      * @param method
      *            The method-subtree from the AbstractSyntaxTree.
      */
-    private void raiseCounter(DetailAST method) {
+    private void raiseCounter(final DetailAST method) {
         final MethodCounter actualCounter = counters.peek();
         final DetailAST temp = method.findFirstToken(TokenTypes.MODIFIERS);
         final Scope scope = ScopeUtil.getScopeFromMods(temp);
@@ -264,7 +263,7 @@ public final class MethodCountCheck extends AbstractCheck {
      * @param counter the method counters to check
      * @param ast to report violations against.
      */
-    private void checkCounters(MethodCounter counter, DetailAST ast) {
+    private void checkCounters(final MethodCounter counter, final DetailAST ast) {
         checkMax(maxPrivate, counter.value(Scope.PRIVATE),
                  MSG_PRIVATE_METHODS, ast);
         checkMax(maxPackage, counter.value(Scope.PACKAGE),
@@ -283,7 +282,7 @@ public final class MethodCountCheck extends AbstractCheck {
      * @param msg the message to log. Takes two arguments of value and maximum.
      * @param ast the AST to associate with the message.
      */
-    private void checkMax(int max, int value, String msg, DetailAST ast) {
+    private void checkMax(final int max, final int value, final String msg, final DetailAST ast) {
         if (max < value) {
             log(ast.getLineNo(), msg, value, max);
         }
@@ -294,7 +293,7 @@ public final class MethodCountCheck extends AbstractCheck {
      *
      * @param value the maximum allowed.
      */
-    public void setMaxPrivate(int value) {
+    public void setMaxPrivate(final int value) {
         maxPrivate = value;
     }
 
@@ -303,7 +302,7 @@ public final class MethodCountCheck extends AbstractCheck {
      *
      * @param value the maximum allowed.
      */
-    public void setMaxPackage(int value) {
+    public void setMaxPackage(final int value) {
         maxPackage = value;
     }
 
@@ -312,7 +311,7 @@ public final class MethodCountCheck extends AbstractCheck {
      *
      * @param value the maximum allowed.
      */
-    public void setMaxProtected(int value) {
+    public void setMaxProtected(final int value) {
         maxProtected = value;
     }
 
@@ -321,7 +320,7 @@ public final class MethodCountCheck extends AbstractCheck {
      *
      * @param value the maximum allowed.
      */
-    public void setMaxPublic(int value) {
+    public void setMaxPublic(final int value) {
         maxPublic = value;
     }
 
@@ -330,7 +329,7 @@ public final class MethodCountCheck extends AbstractCheck {
      *
      * @param value the maximum allowed.
      */
-    public void setMaxTotal(int value) {
+    public void setMaxTotal(final int value) {
         maxTotal = value;
     }
 
@@ -359,7 +358,7 @@ public final class MethodCountCheck extends AbstractCheck {
          *        The surrounding scope definition (class, enum, etc.) which to count all methods
          *        for.
          */
-        /* package */ MethodCounter(DetailAST scopeDefinition) {
+        /* package */ MethodCounter(final DetailAST scopeDefinition) {
             this.scopeDefinition = scopeDefinition;
             inInterface = scopeDefinition.getType() == TokenTypes.INTERFACE_DEF;
         }
@@ -368,12 +367,11 @@ public final class MethodCountCheck extends AbstractCheck {
          * Increments to counter by one for the supplied scope.
          * @param scope the scope counter to increment.
          */
-        private void increment(Scope scope) {
+        private void increment(final Scope scope) {
             total++;
             if (inInterface) {
                 counts.put(Scope.PUBLIC, 1 + value(Scope.PUBLIC));
-            }
-            else {
+            } else {
                 counts.put(scope, 1 + value(scope));
             }
         }
@@ -383,7 +381,7 @@ public final class MethodCountCheck extends AbstractCheck {
          * @param scope the scope counter to get the value of
          * @return the value of a scope counter
          */
-        private int value(Scope scope) {
+        private int value(final Scope scope) {
             Integer value = counts.get(scope);
             if (value == null) {
                 value = 0;

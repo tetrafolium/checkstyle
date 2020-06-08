@@ -11,7 +11,7 @@ class InputJavadocTagContinuationIndentationGuavaFalsePositive {
      * 
      */
   public static <T extends Enum<T>> Function<String, T> valueOfFunction(
-      Class<T> enumClass) {
+      final Class<T> enumClass) {
     return null;
   }
 }

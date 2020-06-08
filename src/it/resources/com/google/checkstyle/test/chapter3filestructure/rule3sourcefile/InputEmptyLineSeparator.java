@@ -52,7 +52,7 @@ class InputEmptyLineSeparator //warn
         //empty
     }
 
-    public int compareTo(InputEmptyLineSeparator aObject)
+    public int compareTo(final InputEmptyLineSeparator aObject)
     {
         int number = 0;
         return 0;
@@ -63,7 +63,7 @@ class InputEmptyLineSeparator //warn
      * @param result
      * @return
      */
-    public static <T> Callable<T> callable(Runnable task, T result) // warn
+    public static <T> Callable<T> callable(final Runnable task, final T result) // warn
     {
         return null;
     }
@@ -98,7 +98,7 @@ class InputEmptyLineSeparator //warn
     }
 
     class InnerClass3 { //ok
-        public int compareTo(InputEmptyLineSeparator aObject) //ok
+        public int compareTo(final InputEmptyLineSeparator aObject) //ok
         {
             int number = 0;
             return 0;
@@ -108,16 +108,16 @@ class InputEmptyLineSeparator //warn
 }
 
 class Class1 { //ok
-    private Class1() {} //ok
+    private Class1() { } //ok
 }
-class Class2{ //warn
-    public int compareTo(InputEmptyLineSeparator aObject) //ok
+class Class2 { //warn
+    public int compareTo(final InputEmptyLineSeparator aObject) //ok
     {
         int number = 0;
         return 0;
     }
-    Class2 anon = new Class2(){ //warn
-        public int compareTo(InputEmptyLineSeparator aObject) //ok
+    Class2 anon = new Class2() { //warn
+        public int compareTo(final InputEmptyLineSeparator aObject) //ok
         {
             int number = 0;
             return 0;

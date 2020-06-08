@@ -34,7 +34,7 @@ public class InputOneStatementPerLineMultiline {
     int k = 1,
         l = 2,
         m = 5
-        ;
+;
 
     /**
      * Two multiline  assignment (declaration) statements
@@ -76,7 +76,7 @@ public class InputOneStatementPerLineMultiline {
     private void foo() {
         toString(
 
-        );toString(
+        ); toString(
 
         ); //violation
     }
@@ -87,7 +87,7 @@ public class InputOneStatementPerLineMultiline {
      */
     int var9 = 1,
         var10 = 5
-            ; int var11 = 2; //violation
+; int var11 = 2; //violation
 
     /**
      * Multiline for loop statement is legal.
@@ -105,22 +105,23 @@ public class InputOneStatementPerLineMultiline {
      * Multiline for loop statement is legal.
      */
     private void foo3() {
-        for(int n = 0,
+        for (int n = 0,
             k = 1
-            ; n<5
-            ;
-            n++, k--) {}
+; n < 5
+;
+            n++, k--) { }
     }
 
     /**
      * One statement inside multiline for loop block is legal.
      */
     private void foo4() {
-        for(int n = 0,
+        for (int n = 0,
             k = 1
-            ; n<5
-            ; ) { int a = 5,
-        b = 2;}
+; n < 5
+; ) {
+    int a = 5,
+        b = 2; }
     }
 
     /**
@@ -128,11 +129,12 @@ public class InputOneStatementPerLineMultiline {
      * inside multiline for loop block are illegal.
      */
     private void foo5() {
-        for(int n = 0,
+        for (int n = 0,
             k = 1
-            ; n<5
-            ;
-            n++, k--) { var1++; var2++; } //violation
+; n < 5
+;
+            n++, k--) {
+                var1++; var2++; } //violation
     }
 
     /**
@@ -140,7 +142,7 @@ public class InputOneStatementPerLineMultiline {
      * @see <a href="https://github.com/checkstyle/checkstyle/issues/2211">false match</a>
      */
     private void issue2211pass() {
-        try(
+        try (
                 AutoCloseable i = new java.io.StringReader("");
                 AutoCloseable k = new java.io.StringReader("");
         ) {
@@ -153,7 +155,7 @@ public class InputOneStatementPerLineMultiline {
      * @see <a href="https://github.com/checkstyle/checkstyle/pull/2750#issuecomment-166032327"/>
      */
     private void issue2211pass2() {
-        try( AutoCloseable i = new java.io.StringReader("");
+        try (AutoCloseable i = new java.io.StringReader("");
             AutoCloseable k = new java.io.StringReader("");) {
         } catch (Exception e1) {
         }
@@ -164,8 +166,8 @@ public class InputOneStatementPerLineMultiline {
      * @see <a href="https://github.com/checkstyle/checkstyle/issues/2211">false match</a>
      */
     private void issue2211fail() {
-        try(
-    AutoCloseable i=new java.io.PipedReader();AutoCloseable k=new java.io.PipedReader(); //violation
+        try (
+    AutoCloseable i = new java.io.PipedReader(); AutoCloseable k = new java.io.PipedReader(); //violation
         ) {
         } catch (Exception e1) {
         }
@@ -176,7 +178,7 @@ public class InputOneStatementPerLineMultiline {
      * @see <a href="https://github.com/checkstyle/checkstyle/pull/2750#issuecomment-166032327"/>
      */
     private void issue2211fail2() {
-      try(AutoCloseable i=new StringReader("");AutoCloseable k=new StringReader("");) { //violation
+      try (AutoCloseable i = new StringReader(""); AutoCloseable k = new StringReader("");) { //violation
         } catch (Exception e1) {
         }
     }

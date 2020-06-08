@@ -2,7 +2,7 @@ package com.puppycrawl.tools.checkstyle.checks.uncommentedmain;
 
 public class InputUncommentedMain5
 {
-    public static void main(String[] args)
+    public static void main(final String[] args)
     {
         System.identityHashCode("InputUncommentedMain.main()");
     }
@@ -11,7 +11,7 @@ public class InputUncommentedMain5
 class PC {
 
     // uncommented main with depth 2
-    public static void main(String[] args)
+    public static void main(final String[] args)
     {
         System.identityHashCode("PC.main()");
     }
@@ -20,7 +20,7 @@ class PC {
     private class PC2 {
 
         // uncommented main with depth 3
-        public void main(String[] args)
+        public void main(final String[] args)
         {
             System.identityHashCode("PC.main()");
         }

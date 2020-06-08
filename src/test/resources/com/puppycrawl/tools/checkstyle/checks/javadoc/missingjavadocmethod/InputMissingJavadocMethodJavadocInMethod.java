@@ -6,8 +6,8 @@ public class InputMissingJavadocMethodJavadocInMethod {
     @Deprecated
     public void foo2() { }
 
-    @Deprecated
     /** */
+    @Deprecated
     public void foo3() { }
 
     public void foo4() { /** */ }
@@ -15,8 +15,8 @@ public class InputMissingJavadocMethodJavadocInMethod {
     @Deprecated
     public void foo5() { /** */ }
 
-    @Deprecated
     /** */
+    @Deprecated
     public void foo6() { /** */ }
 
     /** */
@@ -27,7 +27,7 @@ public class InputMissingJavadocMethodJavadocInMethod {
     public void foo8() { /** */ }
 
     /** */
-    @Deprecated
     /** */
+    @Deprecated
     public void foo9() { /** */ }
 }

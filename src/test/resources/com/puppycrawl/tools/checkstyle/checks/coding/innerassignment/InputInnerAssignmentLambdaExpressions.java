@@ -8,11 +8,12 @@ public class InputInnerAssignmentLambdaExpressions {
         void e(Object e);
     }
     private static class MyButton {
-        public void setOnAction(MyLambda my) {
+        public void setOnAction(final MyLambda my) {
         }
     }
     private void setAction() {
         MyButton button = new MyButton();
-        button.setOnAction(e -> { boolean pressed = true; });  //No violation here
+        button.setOnAction(e -> {
+            boolean pressed = true; });  //No violation here
     }
 }

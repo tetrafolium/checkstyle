@@ -91,7 +91,7 @@ public class UncommentedMainCheck
      *
      * @param excludedClasses a pattern
      */
-    public void setExcludedClasses(Pattern excludedClasses) {
+    public void setExcludedClasses(final Pattern excludedClasses) {
         this.excludedClasses = excludedClasses;
     }
 
@@ -115,21 +115,21 @@ public class UncommentedMainCheck
     }
 
     @Override
-    public void beginTree(DetailAST rootAST) {
+    public void beginTree(final DetailAST rootAST) {
         packageName = FullIdent.createFullIdent(null);
         currentClass = null;
         classDepth = 0;
     }
 
     @Override
-    public void leaveToken(DetailAST ast) {
+    public void leaveToken(final DetailAST ast) {
         if (ast.getType() == TokenTypes.CLASS_DEF) {
             classDepth--;
         }
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         switch (ast.getType()) {
             case TokenTypes.PACKAGE_DEF:
                 visitPackageDef(ast);
@@ -149,7 +149,7 @@ public class UncommentedMainCheck
      * Sets current package.
      * @param packageDef node for package definition
      */
-    private void visitPackageDef(DetailAST packageDef) {
+    private void visitPackageDef(final DetailAST packageDef) {
         packageName = FullIdent.createFullIdent(packageDef.getLastChild()
                 .getPreviousSibling());
     }
@@ -158,7 +158,7 @@ public class UncommentedMainCheck
      * If not inner class then change current class name.
      * @param classDef node for class definition
      */
-    private void visitClassDef(DetailAST classDef) {
+    private void visitClassDef(final DetailAST classDef) {
         // we are not use inner classes because they can not
         // have static methods
         if (classDepth == 0) {
@@ -173,7 +173,7 @@ public class UncommentedMainCheck
      * {@code public static void main(String[])}.
      * @param method method definition node
      */
-    private void visitMethodDef(DetailAST method) {
+    private void visitMethodDef(final DetailAST method) {
         if (classDepth == 1
                 // method not in inner class or in interface definition
                 && checkClassName()
@@ -198,7 +198,7 @@ public class UncommentedMainCheck
      * @param method the METHOD_DEF node
      * @return true if check passed, false otherwise
      */
-    private static boolean checkName(DetailAST method) {
+    private static boolean checkName(final DetailAST method) {
         final DetailAST ident = method.findFirstToken(TokenTypes.IDENT);
         return "main".equals(ident.getText());
     }
@@ -208,7 +208,7 @@ public class UncommentedMainCheck
      * @param method the METHOD_DEF node
      * @return true if check passed, false otherwise
      */
-    private static boolean checkModifiers(DetailAST method) {
+    private static boolean checkModifiers(final DetailAST method) {
         final DetailAST modifiers =
             method.findFirstToken(TokenTypes.MODIFIERS);
 
@@ -221,7 +221,7 @@ public class UncommentedMainCheck
      * @param method the METHOD_DEF node
      * @return true if check passed, false otherwise
      */
-    private static boolean checkType(DetailAST method) {
+    private static boolean checkType(final DetailAST method) {
         final DetailAST type =
             method.findFirstToken(TokenTypes.TYPE).getFirstChild();
         return type.getType() == TokenTypes.LITERAL_VOID;
@@ -232,7 +232,7 @@ public class UncommentedMainCheck
      * @param method the METHOD_DEF node
      * @return true if check passed, false otherwise
      */
-    private static boolean checkParams(DetailAST method) {
+    private static boolean checkParams(final DetailAST method) {
         boolean checkPassed = false;
         final DetailAST params = method.findFirstToken(TokenTypes.PARAMETERS);
 
@@ -245,8 +245,7 @@ public class UncommentedMainCheck
 
             if (arrayDecl.isPresent()) {
                 checkPassed = isStringType(arrayDecl.get().getFirstChild());
-            }
-            else if (varargs.isPresent()) {
+            } else if (varargs.isPresent()) {
                 checkPassed = isStringType(parameterType.getFirstChild());
             }
         }
@@ -258,7 +257,7 @@ public class UncommentedMainCheck
      * @param typeAst the type to check.
      * @return true, if the type is java.lang.String.
      */
-    private static boolean isStringType(DetailAST typeAst) {
+    private static boolean isStringType(final DetailAST typeAst) {
         final FullIdent type = FullIdent.createFullIdent(typeAst);
         return "String".equals(type.getText())
             || "java.lang.String".equals(type.getText());

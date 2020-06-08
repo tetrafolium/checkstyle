@@ -16,23 +16,23 @@ public class InputMethodReferences7 {
     }
 
     static class LambdaImpl implements LambdaInt {
-        <S, T> LambdaImpl(S p1, T p2) {
+        <S, T> LambdaImpl(final S p1, final T p2) {
         }
 
-        public <S, T> void m(S p1, T p2) {
+        public <S, T> void m(final S p1, final T p2) {
         }
     }
 
     public void m() {
     }
 
-    public void main(String[] args) {
-        MyFunctionalInterface fi = new InputMethodReferences7()::<Integer, String, Long> m;
-        LambdaInt li = LambdaImpl::<@TA Object, @TB Object> new;
-        Supplier s = Bar::<String> m;
-        li = li::<@TA Object, @TB Object> m;
-        s = Bar::<List<String>> m;
-        s = Bar::<List<List<?>>> m;
+    public void main(final String[] args) {
+        MyFunctionalInterface fi = new InputMethodReferences7()::<Integer, String, Long>m;
+        LambdaInt li = LambdaImpl::<@TA Object, @TB Object>new;
+        Supplier s = Bar::<String>m;
+        li = li::<@TA Object, @TB Object>m;
+        s = Bar::<List<String>>m;
+        s = Bar::<List<List<?>>>m;
     }
 }
 

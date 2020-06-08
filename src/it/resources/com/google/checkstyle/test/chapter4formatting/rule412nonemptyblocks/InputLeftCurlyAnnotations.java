@@ -10,7 +10,7 @@ class InputLeftCurlyAnnotations
 { //warn
     private static final int X = 10;
     @Override
-    public boolean equals(Object other)
+    public boolean equals(final Object other)
     { //warn
         return false;
     }
@@ -35,7 +35,7 @@ class InputLeftCurlyAnnotations
 class InputLeftCurlyAnnotations2 {
     private static final int X = 10;
     @Override
-    public boolean equals(Object other) {
+    public boolean equals(final Object other) {
         return false;
     }
 

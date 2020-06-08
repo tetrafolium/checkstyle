@@ -130,7 +130,7 @@ public class LocalFinalVariableNameCheck
     }
 
     @Override
-    protected final boolean mustCheckName(DetailAST ast) {
+    protected final boolean mustCheckName(final DetailAST ast) {
         final DetailAST modifiersAST =
             ast.findFirstToken(TokenTypes.MODIFIERS);
         final boolean isFinal = ast.getType() == TokenTypes.RESOURCE

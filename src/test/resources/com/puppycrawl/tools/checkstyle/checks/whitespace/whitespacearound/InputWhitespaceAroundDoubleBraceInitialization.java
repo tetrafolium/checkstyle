@@ -8,12 +8,12 @@ public class InputWhitespaceAroundDoubleBraceInitialization {
             setProperty("double curly braces", "are not a style error");
         }};
         new Properties() {{
-            setProperty("double curly braces", "are not a style error");}};
-        new Properties() {{setProperty("double curly braces", "are not a style error");
+            setProperty("double curly braces", "are not a style error"); }};
+        new Properties() {{ setProperty("double curly braces", "are not a style error");
         }};
-        new Properties() {{setProperty("double curly braces", "are not a style error");}};
+        new Properties() {{ setProperty("double curly braces", "are not a style error"); }};
         new Properties() {{
             setProperty("double curly braces", "are not a style error");
-        }private int i;};
+        } private int i; };
     }
 }

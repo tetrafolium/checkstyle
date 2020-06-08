@@ -89,7 +89,7 @@ public class AnonInnerLengthCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         final DetailAST openingBrace = ast.findFirstToken(TokenTypes.OBJBLOCK);
         if (openingBrace != null) {
             final DetailAST closingBrace =
@@ -107,7 +107,7 @@ public class AnonInnerLengthCheck extends AbstractCheck {
      *
      * @param length the maximum length of an anonymous inner class.
      */
-    public void setMax(int length) {
+    public void setMax(final int length) {
         max = length;
     }
 

@@ -11,17 +11,18 @@ public class InputRightCurlySameLambda {
 
     static Runnable r2 = () -> String.valueOf("Test rightCurly two!");
 
-    static Runnable r3 = () -> {String.valueOf("Test rightCurly three!");};
+    static Runnable r3 = () -> {
+        String.valueOf("Test rightCurly three!"); };
 
     static Runnable r4 = () -> {
-        String.valueOf("Test rightCurly four!");};    //violation
+        String.valueOf("Test rightCurly four!"); };    //violation
 
     static Runnable r5 = () ->
     {
         String.valueOf("Test rightCurly five!");
     };
 
-    static Runnable r6 = () -> {};
+    static Runnable r6 = () -> { };
 
     static Runnable r7 = () -> {
     };
@@ -44,19 +45,24 @@ public class InputRightCurlySameLambda {
                 return s != null;
         }).collect(Collectors.toList());
 
-        Stream.of("Hello").filter(s -> {return s != null;})
+        Stream.of("Hello").filter(s -> {
+            return s != null; })
                 .collect(Collectors.toList());
 
-        Stream.of("Hello").filter(s -> {return s != null;}).collect(Collectors.toList());
+        Stream.of("Hello").filter(s -> {
+            return s != null; }).collect(Collectors.toList());
 
         Stream.of("Hello").filter(s -> {
-            return s != null;}).collect(Collectors.toList()); // violation
+            return s != null; }).collect(Collectors.toList()); // violation
 
-        bar(() -> {return;}, () -> {return;});
+        bar(() -> {
+            return; }, () -> {
+                return; });
 
         bar(() -> {
             return;
-        }, () -> {return;});
+        }, () -> {
+            return; });
 
         bar(() -> {
             return;
@@ -65,14 +71,15 @@ public class InputRightCurlySameLambda {
         });
 
         bar(() -> {
-            return;}, () -> {return;}); // violation
+            return; }, () -> {
+                return; }); // violation
 
         bar(() -> {
             return;
         }, () -> {
-            return;}); // violation
+            return; }); // violation
 
     }
 
-    void bar(Runnable r1, Runnable r2) { }
+    void bar(final Runnable r1, final Runnable r2) { }
 }

@@ -23,7 +23,7 @@ public class InputIndentationInvalidMethodIndent { //indent:0 exp:0
       } //indent:6 exp:4 warn
 
     // ctor with rcurly on next line //indent:4 exp:4
-      public InputIndentationInvalidMethodIndent(int dummy) //indent:6 exp:4 warn
+      public InputIndentationInvalidMethodIndent(final int dummy) //indent:6 exp:4 warn
   { //indent:2 exp:4 warn
       } //indent:6 exp:4 warn
 
@@ -37,19 +37,19 @@ public class InputIndentationInvalidMethodIndent { //indent:0 exp:0
     } //indent:4 exp:4
 
     // method with a bunch of params //indent:4 exp:4
-    public int method2(int x, int y, int w, int h) { //indent:4 exp:4
+    public int method2(final int x, final int y, final int w, final int h) { //indent:4 exp:4
         return 1; //indent:8 exp:8
     } //indent:4 exp:4
 
     // params on multiple lines //indent:4 exp:4
-    public void method2(int x, int y, int w, int h, //indent:4 exp:4
-        int x1, int y1, int w1, int h1) //indent:8 exp:8
+    public void method2(final int x, final int y, final int w, final int h, //indent:4 exp:4
+        final int x1, final int y1, final int w1, final int h1) //indent:8 exp:8
     { //indent:4 exp:4
     } //indent:4 exp:4
 
     // params on multiple lines //indent:4 exp:4
-    public void method3(int x, int y, int w, int h, //indent:4 exp:4
-        int x1, int y1, int w1, int h1) //indent:8 exp:8
+    public void method3(final int x, final int y, final int w, final int h, //indent:4 exp:4
+        final int x1, final int y1, final int w1, final int h1) //indent:8 exp:8
     { //indent:4 exp:4
         System.getProperty("foo"); //indent:8 exp:8
     } //indent:4 exp:4
@@ -57,8 +57,8 @@ public class InputIndentationInvalidMethodIndent { //indent:0 exp:0
 
 
     // params on multiple lines //indent:4 exp:4
-    public void method4(int x, int y, int w, int h, //indent:4 exp:4
-        int x1, int y1, int w1, int h1) //indent:8 exp:8
+    public void method4(final int x, final int y, final int w, final int h, //indent:4 exp:4
+        final int x1, final int y1, final int w1, final int h1) //indent:8 exp:8
     { //indent:4 exp:4
         boolean test = true; //indent:8 exp:8
         if (test) { //indent:8 exp:8
@@ -88,7 +88,7 @@ public class InputIndentationInvalidMethodIndent { //indent:0 exp:0
         } //indent:8 exp:8
     } //indent:4 exp:4
 
-    public InputIndentationInvalidMethodIndent(int dummy, int dummy2) //indent:4 exp:4
+    public InputIndentationInvalidMethodIndent(final int dummy, final int dummy2) //indent:4 exp:4
     { //indent:4 exp:4
     System.getProperty("foo"); //indent:4 exp:8 warn
     } //indent:4 exp:4
@@ -101,41 +101,41 @@ public class InputIndentationInvalidMethodIndent { //indent:0 exp:0
       } //indent:6 exp:8 warn
 
         System.identityHashCode("methods are: " + //indent:8 exp:8
-          Arrays.asList( //indent:10 exp:12 warn
+          Arrays.asList(//indent:10 exp:12 warn
                 new String[] {"method"}).toString()); //indent:16 exp:>=14
 
 
         System.identityHashCode("methods are: " + //indent:8 exp:8
-            Arrays.asList( //indent:12 exp:>=12
+            Arrays.asList(//indent:12 exp:>=12
               new String[] {"method"}).toString()); //indent:14 exp:>=14
 
         System.identityHashCode("methods are: " //indent:8 exp:8
-          + Arrays.asList( //indent:10 exp:12 warn
+          + Arrays.asList(//indent:10 exp:12 warn
                 new String[] {"method"}).toString()); //indent:16 exp:>=14
 
         System.identityHashCode("methods are: " //indent:8 exp:8
-            + Arrays.asList( //indent:12 exp:>=12
+            + Arrays.asList(//indent:12 exp:>=12
               new String[] {"method"}).toString()); //indent:14 exp:>=12
 
 
-        String blah = (String) System.getProperty( //indent:8 exp:8
+        String blah = (String) System.getProperty(//indent:8 exp:8
           new String("type")); //indent:10 exp:12 warn
 
 
-        String blah1 = (String) System.getProperty( //indent:8 exp:8
+        String blah1 = (String) System.getProperty(//indent:8 exp:8
           new String("type") //indent:10 exp:12 warn
       ); //indent:6 exp:8 warn
 
-        System.identityHashCode("methods are: " + Arrays.asList( //indent:8 exp:8
+        System.identityHashCode("methods are: " + Arrays.asList(//indent:8 exp:8
             new String[] {"method"}).toString() //indent:12 exp:>=12
       ); //indent:6 exp:8 warn
     } //indent:4 exp:4
 
 
-    private void myfunc2(int a, int b, int c, int d, int e, int f, int g) { //indent:4 exp:4
+    private void myfunc2(final int a, final int b, final int c, final int d, final int e, final int f, final int g) { //indent:4 exp:4
     } //indent:4 exp:4
 
-    private int myfunc3(int a, int b, int c, int d) { //indent:4 exp:4
+    private int myfunc3(final int a, final int b, final int c, final int d) { //indent:4 exp:4
         return 1; //indent:8 exp:8
     } //indent:4 exp:4
 
@@ -190,5 +190,5 @@ int[] //indent:0 exp:8 warn
             getArray()[0] = 2; //indent:12 exp:8 warn
     } //indent:4 exp:4
 
-    /* package scope */ void methodWithCommentBefore() {} //indent:4 exp:4
+    /* package scope */ void methodWithCommentBefore() { } //indent:4 exp:4
 } //indent:0 exp:0

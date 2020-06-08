@@ -68,7 +68,7 @@ public class EmptyStatementCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         log(ast, MSG_KEY);
     }
 

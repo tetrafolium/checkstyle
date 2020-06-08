@@ -34,19 +34,19 @@ public class InputDesignForExtensionMultipleAnnotations {
     }
 
 
-    @Ignore
     /**
      * comment
      */
+    @Ignore
     @Deprecated
     public void foo6() {
         foo3();
     }
 
-    @Deprecated
     /**
      * comment
      */
+    @Deprecated
     @Ignore
     public void foo7() {
         foo3();
@@ -80,5 +80,5 @@ public class InputDesignForExtensionMultipleAnnotations {
         foo3();
     }
 
-    private void foo3() {}
+    private void foo3() { }
 }

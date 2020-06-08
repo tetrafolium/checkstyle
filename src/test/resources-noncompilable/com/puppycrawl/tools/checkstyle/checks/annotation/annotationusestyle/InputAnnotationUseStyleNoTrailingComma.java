@@ -3,7 +3,7 @@ package com.puppycrawl.tools.checkstyle.checks.annotation.annotationusestyle;
 
 public class InputAnnotationUseStyleNoTrailingComma
 {
-  @Test2(value={(false) ? "" : "foo"}, more={(true) ? "" : "bar"})
+  @Test2(value = {(false) ? "" : "foo"}, more = {(true) ? "" : "bar"})
 
   enum P {
       L,

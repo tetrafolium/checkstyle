@@ -2,7 +2,7 @@ package org.checkstyle.suppressionxpathfilter.avoidnestedblocks;
 
 public class SuppressionXpathRegressionAvoidNestedBlocksSwitch1 {
 
-    int s(int a) {
+    int s(final int a) {
         int x;
         int y;
         switch (a) {

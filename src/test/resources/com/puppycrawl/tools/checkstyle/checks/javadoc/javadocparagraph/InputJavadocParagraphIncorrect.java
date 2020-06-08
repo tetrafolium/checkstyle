@@ -27,7 +27,8 @@ class InputJavadocParagraphIncorrect {
      * @see <a href="http://www.gwtproject.org/doc/latest/DevGuideOrganizingProjects.html#DevGuideModules">
      *     Documentation about GWT emulated source</a>
      */
-    boolean emulated() {return false;}
+    boolean emulated() {
+        return false; }
 
     /**<p>Some Javadoc.<p>  //WARN
      * <p>  //WARN
@@ -52,7 +53,8 @@ class InputJavadocParagraphIncorrect {
          * @see <a href="http://www.gwtproject.org/doc/latest/DevGuideOrganizingProjects.html#DevGuideModules">
          *     Documentation about GWT emulated source</a>
          */
-        boolean emulated() {return false;}
+        boolean emulated() {
+            return false; }
     }
 
     InnerInputJavadocParagraphIncorrect anon = new InnerInputJavadocParagraphIncorrect() {
@@ -74,7 +76,8 @@ class InputJavadocParagraphIncorrect {
          * @see <a href="http://www.gwtproject.org/doc/latest/DevGuideOrganizingProjects.html#DevGuideModules">
          *     Documentation about <p> GWT emulated source</a> //WARN
          */
-        boolean emulated() {return false;}
+        boolean emulated() {
+            return false; }
 
         /**
          * Double newline.
@@ -82,6 +85,6 @@ class InputJavadocParagraphIncorrect {
          *
          * Some Javadoc. //DOUBLE WARN AT TWO PREVIOUS LINES
          */
-         void doubleNewline() {}
+         void doubleNewline() { }
     };
 }

@@ -107,8 +107,7 @@ public class CommonUtilTest extends AbstractPathTestSupport {
         try {
             CommonUtil.createPattern("[");
             fail("exception expected");
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertEquals("Failed to initialise regular expression [", ex.getMessage(),
                     "Invalid exception message");
         }
@@ -119,8 +118,7 @@ public class CommonUtilTest extends AbstractPathTestSupport {
         try {
             CommonUtil.createPattern("[", Pattern.MULTILINE);
             fail("exception expected");
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertEquals("Failed to initialise regular expression [", ex.getMessage(),
                     "Invalid exception message");
         }
@@ -233,8 +231,7 @@ public class CommonUtilTest extends AbstractPathTestSupport {
         try {
             CommonUtil.getConstructor(Math.class);
             fail("IllegalStateException is expected");
-        }
-        catch (IllegalStateException expected) {
+        } catch (IllegalStateException expected) {
             assertSame(NoSuchMethodException.class, expected.getCause().getClass(),
                     "Invalid exception cause");
         }
@@ -257,8 +254,7 @@ public class CommonUtilTest extends AbstractPathTestSupport {
         try {
             CommonUtil.invokeConstructor(constructor);
             fail("IllegalStateException is expected");
-        }
-        catch (IllegalStateException expected) {
+        } catch (IllegalStateException expected) {
             assertSame(InstantiationException.class,
                 expected.getCause().getClass(), "Invalid exception cause");
         }
@@ -281,8 +277,7 @@ public class CommonUtilTest extends AbstractPathTestSupport {
                 throw new IOException("Test IOException");
             });
             fail("exception expected");
-        }
-        catch (IllegalStateException ex) {
+        } catch (IllegalStateException ex) {
             assertEquals("Cannot close the stream", ex.getMessage(), "Invalid exception message");
         }
     }

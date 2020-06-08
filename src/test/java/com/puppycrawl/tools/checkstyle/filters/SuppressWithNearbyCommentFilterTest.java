@@ -310,15 +310,15 @@ public class SuppressWithNearbyCommentFilterTest
         assertEquals(EqualsVerifierReport.SUCCESS, ev, "Error: " + ev.getMessage());
     }
 
-    private void verifySuppressed(Configuration moduleConfig,
-            String... aSuppressed)
+    private void verifySuppressed(final Configuration moduleConfig,
+            final String... aSuppressed)
             throws Exception {
         verifySuppressed(moduleConfig, getPath("InputSuppressWithNearbyCommentFilter.java"),
                ALL_MESSAGES, aSuppressed);
     }
 
-    private void verifySuppressed(Configuration moduleConfig, String fileName,
-            String[] expectedViolations, String... suppressedViolations) throws Exception {
+    private void verifySuppressed(final Configuration moduleConfig, final String fileName,
+            final String[] expectedViolations, final String... suppressedViolations) throws Exception {
         final DefaultConfiguration memberNameCheckConfig =
                 createModuleConfig(MemberNameCheck.class);
         memberNameCheckConfig.addAttribute("id", "ignore");
@@ -343,7 +343,7 @@ public class SuppressWithNearbyCommentFilterTest
                 removeSuppressed(expectedViolations, suppressedViolations));
     }
 
-    private static String[] removeSuppressed(String[] from, String... remove) {
+    private static String[] removeSuppressed(final String[] from, final String... remove) {
         final Collection<String> coll = Arrays.stream(from).collect(Collectors.toList());
         coll.removeAll(Arrays.asList(remove));
         return coll.toArray(CommonUtil.EMPTY_STRING_ARRAY);
@@ -359,8 +359,7 @@ public class SuppressWithNearbyCommentFilterTest
             final String[] suppressed = CommonUtil.EMPTY_STRING_ARRAY;
             verifySuppressed(filterConfig, suppressed);
             fail("Exception is expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             final IllegalArgumentException cause = (IllegalArgumentException) ex.getCause();
             assertEquals("unable to parse influence"
                 + " from 'SUPPRESS CHECKSTYLE MemberNameCheck' using a", cause.getMessage(),
@@ -413,8 +412,7 @@ public class SuppressWithNearbyCommentFilterTest
             final String[] suppressed = CommonUtil.EMPTY_STRING_ARRAY;
             verifySuppressed(filterConfig, suppressed);
             fail("Exception is expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             final IllegalArgumentException cause = (IllegalArgumentException) ex.getCause();
             assertEquals("unable to parse expanded comment a[l", cause.getMessage(),
                     "Invalid exception message");
@@ -742,8 +740,8 @@ public class SuppressWithNearbyCommentFilterTest
      *
      * @return {@code Tag} list
      */
-    private static List<?> getTagsAfterExecution(SuppressWithNearbyCommentFilter filter,
-            String filename, String... lines) {
+    private static List<?> getTagsAfterExecution(final SuppressWithNearbyCommentFilter filter,
+            final String filename, final String... lines) {
         final FileContents contents = new FileContents(
                 new FileText(new File(filename), Arrays.asList(lines)));
         contents.reportSingleLineComment(1, 0);

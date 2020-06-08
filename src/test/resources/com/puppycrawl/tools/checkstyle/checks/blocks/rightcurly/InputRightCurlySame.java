@@ -33,17 +33,17 @@ public class InputRightCurlySame {
     public void function() {
     }
 
-    ;
+;
 
     public class TestClass {
     }
 
-    ;
+;
 
     public void testMethod() {
     }
 
-    ;
+;
 
     public @interface TestAnnotation {
     }

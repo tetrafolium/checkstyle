@@ -211,7 +211,7 @@ public class RegexpOnFilenameCheck extends AbstractFileSetCheck {
      *
      * @param folderPattern format of folder.
      */
-    public void setFolderPattern(Pattern folderPattern) {
+    public void setFolderPattern(final Pattern folderPattern) {
         this.folderPattern = folderPattern;
     }
 
@@ -220,7 +220,7 @@ public class RegexpOnFilenameCheck extends AbstractFileSetCheck {
      *
      * @param fileNamePattern format of file.
      */
-    public void setFileNamePattern(Pattern fileNamePattern) {
+    public void setFileNamePattern(final Pattern fileNamePattern) {
         this.fileNamePattern = fileNamePattern;
     }
 
@@ -230,7 +230,7 @@ public class RegexpOnFilenameCheck extends AbstractFileSetCheck {
      *
      * @param match check's option for matching file names.
      */
-    public void setMatch(boolean match) {
+    public void setMatch(final boolean match) {
         this.match = match;
     }
 
@@ -239,7 +239,7 @@ public class RegexpOnFilenameCheck extends AbstractFileSetCheck {
      *
      * @param ignoreFileNameExtensions check's option for ignoring file extension.
      */
-    public void setIgnoreFileNameExtensions(boolean ignoreFileNameExtensions) {
+    public void setIgnoreFileNameExtensions(final boolean ignoreFileNameExtensions) {
         this.ignoreFileNameExtensions = ignoreFileNameExtensions;
     }
 
@@ -251,7 +251,7 @@ public class RegexpOnFilenameCheck extends AbstractFileSetCheck {
     }
 
     @Override
-    protected void processFiltered(File file, FileText fileText) throws CheckstyleException {
+    protected void processFiltered(final File file, final FileText fileText) throws CheckstyleException {
         final String fileName = getFileName(file);
         final String folderPath = getFolderPath(file);
 
@@ -266,7 +266,7 @@ public class RegexpOnFilenameCheck extends AbstractFileSetCheck {
      * @param file Input file to examine.
      * @return The file name.
      */
-    private String getFileName(File file) {
+    private String getFileName(final File file) {
         String fileName = file.getName();
 
         if (ignoreFileNameExtensions) {
@@ -284,11 +284,10 @@ public class RegexpOnFilenameCheck extends AbstractFileSetCheck {
      * @throws CheckstyleException if there is an error getting the canonical
      *         path of the {@code file}.
      */
-    private static String getFolderPath(File file) throws CheckstyleException {
+    private static String getFolderPath(final File file) throws CheckstyleException {
         try {
             return file.getCanonicalFile().getParent();
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             throw new CheckstyleException("unable to create canonical path names for "
                     + file.getAbsolutePath(), ex);
         }
@@ -301,14 +300,13 @@ public class RegexpOnFilenameCheck extends AbstractFileSetCheck {
      * @param folderPath Input folder path to examine.
      * @return true if they do match.
      */
-    private boolean isMatchFolder(String folderPath) {
+    private boolean isMatchFolder(final String folderPath) {
         final boolean result;
 
         // null pattern always matches, regardless of value of 'match'
         if (folderPattern == null) {
             result = true;
-        }
-        else {
+        } else {
             // null pattern means 'match' applies to the folderPattern matching
             final boolean useMatch = fileNamePattern != null || match;
             result = folderPattern.matcher(folderPath).find() == useMatch;
@@ -324,7 +322,7 @@ public class RegexpOnFilenameCheck extends AbstractFileSetCheck {
      * @param fileName Input file name to examine.
      * @return true if they do match.
      */
-    private boolean isMatchFile(String fileName) {
+    private boolean isMatchFile(final String fileName) {
         // null pattern always matches, regardless of value of 'match'
         return fileNamePattern == null || fileNamePattern.matcher(fileName).find() == match;
     }
@@ -336,8 +334,7 @@ public class RegexpOnFilenameCheck extends AbstractFileSetCheck {
 
         if (match) {
             log(1, MSG_MATCH, folder, fileName);
-        }
-        else {
+        } else {
             log(1, MSG_MISMATCH, folder, fileName);
         }
     }
@@ -350,13 +347,12 @@ public class RegexpOnFilenameCheck extends AbstractFileSetCheck {
      * @param defaultString The result to use if {@code pattern} is null.
      * @return The String form of the {@code pattern}.
      */
-    private static String getStringOrDefault(Pattern pattern, String defaultString) {
+    private static String getStringOrDefault(final Pattern pattern, final String defaultString) {
         final String result;
 
         if (pattern == null) {
             result = defaultString;
-        }
-        else {
+        } else {
             result = pattern.toString();
         }
 

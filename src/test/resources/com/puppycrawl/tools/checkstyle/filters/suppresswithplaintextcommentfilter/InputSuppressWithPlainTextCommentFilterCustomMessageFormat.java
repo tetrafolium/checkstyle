@@ -5,7 +5,7 @@ public class InputSuppressWithPlainTextCommentFilterCustomMessageFormat {
     // CHECKSTYLE:OFF
     private int A1;
 
-	private static final int a1 = 5; // contains tab character
+        private static final int a1 = 5; // contains tab character
 
     int a2 = 100;
 

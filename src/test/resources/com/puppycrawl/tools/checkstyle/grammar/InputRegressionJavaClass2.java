@@ -6,12 +6,15 @@ import java.util.List;
 
 @SuppressWarnings("serial")
 class InputRegressionJavaClass2 extends ArrayList implements List, Collection {
-    public InputRegressionJavaClass2() { super(); }
+    public InputRegressionJavaClass2() {
+        super(); }
 
     @Override
-    public int size() { return super.size(); }
+    public int size() {
+        return super.size(); }
     @Override()
-    public boolean isEmpty() { return InputRegressionJavaClass2.super.isEmpty(); }
+    public boolean isEmpty() {
+        return InputRegressionJavaClass2.super.isEmpty(); }
 
     public class Inner1 {
         public void m() {
@@ -24,20 +27,25 @@ class InputRegressionJavaClass2 extends ArrayList implements List, Collection {
         }
     }
 
-    public void m() { this.new Inner1().m(); }
+    public void m() {
+        this.new Inner1().m(); }
 }
-class _c1 {}
-abstract class c2 {}
-class c3<A> { public c3<A> m(){return null;} }
-class c4<A,B> extends c3<A> {
-    class c4a {}
+class _c1 { }
+abstract class c2 { }
+class c3<A> { public c3<A> m() {
+    return null; } }
+class c4<A, B> extends c3<A> {
+    class c4a { }
 
-    public c4() { <String>super(); }
-    public c3<A> m() { return super.<A>m(); }
+    public c4() { <String> super(); }
+    public c3<A> m() {
+        return super.<A>m(); }
 }
 class c5 extends c4.c4a {
-    c5() { new c4().super(); }
-    c5(int a) { new c4().<String>super(); }
+    c5() {
+        new c4().super(); }
+    c5(final int a) {
+        new c4().<String> super(); }
 }
-interface i1 {}
-class c6<T extends c3<T> & i1> {}
+interface i1 { }
+class c6<T extends c3<T> & i1> { }

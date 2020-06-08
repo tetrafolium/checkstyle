@@ -6,15 +6,15 @@ import java.util.List;
 public class InputMultiDimensionalArraysInGenerics {
 
     @SuppressWarnings("unused")
-    void withUpperBound(List<? extends int[][]> list) {}
+    void withUpperBound(final List<? extends int[][]> list) { }
 
     @SuppressWarnings("unused")
-    void withLowerBound(List<? super String[][]> list) {}
+    void withLowerBound(final List<? super String[][]> list) { }
 
     @SuppressWarnings("unused")
-    void withLowerBound2(List<? super String[][][]> list) {}
+    void withLowerBound2(final List<? super String[][][]> list) { }
 
-    static WildcardType getWildcardType(String methodName) throws Exception {
+    static WildcardType getWildcardType(final String methodName) throws Exception {
       ParameterizedType parameterType = (ParameterizedType)
           WildcardType.class
               .getDeclaredMethod(methodName, List.class)

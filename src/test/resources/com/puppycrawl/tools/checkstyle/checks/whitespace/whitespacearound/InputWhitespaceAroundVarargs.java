@@ -6,11 +6,11 @@ package com.puppycrawl.tools.checkstyle.checks.whitespace.whitespacearound;
 
 class InputWhitespaceAroundVarargs
 {
-    public static void main0(String... args) { }
-    public static void main1(String ...args) { }
-    public static void main2(String...args) { }
-    public static void main3(String ... args) { }
-    public void varargs(int...arr) { }
-    public void doubleValue(int a, int...b) { }
+    public static void main0(final String... args) { }
+    public static void main1(final String...args) { }
+    public static void main2(final String...args) { }
+    public static void main3(final String... args) { }
+    public void varargs(final int...arr) { }
+    public void doubleValue(final int a, final int...b) { }
 
 }

@@ -39,7 +39,7 @@ public final class SeverityLevelCounter implements AuditListener {
      * @param level the severity level events need to have, must be non-null.
      * @throws IllegalArgumentException when level is null
      */
-    public SeverityLevelCounter(SeverityLevel level) {
+    public SeverityLevelCounter(final SeverityLevel level) {
         if (level == null) {
             throw new IllegalArgumentException("'level' cannot be null");
         }
@@ -47,36 +47,36 @@ public final class SeverityLevelCounter implements AuditListener {
     }
 
     @Override
-    public void addError(AuditEvent event) {
+    public void addError(final AuditEvent event) {
         if (level == event.getSeverityLevel()) {
             count.incrementAndGet();
         }
     }
 
     @Override
-    public void addException(AuditEvent event, Throwable throwable) {
+    public void addException(final AuditEvent event, final Throwable throwable) {
         if (level == SeverityLevel.ERROR) {
             count.incrementAndGet();
         }
     }
 
     @Override
-    public void auditStarted(AuditEvent event) {
+    public void auditStarted(final AuditEvent event) {
         count.set(0);
     }
 
     @Override
-    public void fileStarted(AuditEvent event) {
+    public void fileStarted(final AuditEvent event) {
         // No code by default, should be overridden only by demand at subclasses
     }
 
     @Override
-    public void auditFinished(AuditEvent event) {
+    public void auditFinished(final AuditEvent event) {
         // No code by default, should be overridden only by demand at subclasses
     }
 
     @Override
-    public void fileFinished(AuditEvent event) {
+    public void fileFinished(final AuditEvent event) {
         // No code by default, should be overridden only by demand at subclasses
     }
 

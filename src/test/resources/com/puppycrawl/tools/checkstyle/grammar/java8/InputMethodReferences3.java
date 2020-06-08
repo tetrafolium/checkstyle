@@ -13,7 +13,7 @@ public class InputMethodReferences3
   public static class Nested2<V> {
   }
 
-  public <V> void methodName(V value) {
+  public <V> void methodName(final V value) {
     Supplier<?> t = Nested2<V>::new;
     Supplier<SomeClass.Nested<V>> passes = SomeClass.Nested::new;
     Supplier<SomeClass.Nested<V>> fails = SomeClass.Nested<V>::new;

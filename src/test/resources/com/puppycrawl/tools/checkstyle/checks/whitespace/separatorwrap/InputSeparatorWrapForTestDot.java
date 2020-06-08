@@ -11,12 +11,12 @@ public class InputSeparatorWrapForTestDot<T extends FooForTestDot
         s.isEmpty();
         try {
             foo(i, s);
-        } catch (FooExceptionForTestDot |
-                BarExceptionForTestDot e) {}
+        } catch (FooExceptionForTestDot
+                | BarExceptionForTestDot e) { }
         foo(i,
                 s); //good wrapping
     }
-    public static void foo(int i, String s) throws FooExceptionForTestDot, BarExceptionForTestDot
+    public static void foo(final int i, final String s) throws FooExceptionForTestDot, BarExceptionForTestDot
     {
 
     }
@@ -25,7 +25,7 @@ public class InputSeparatorWrapForTestDot<T extends FooForTestDot
 class badCaseForTestDot<T extends FooForTestDot &  BarForTestDot> {
 
 
-    public void goodCaseForTestDot(int... aFoo)throws FooExceptionForTestDot, BarExceptionForTestDot
+    public void goodCaseForTestDot(final int... aFoo)throws FooExceptionForTestDot, BarExceptionForTestDot
     {
         String s = "ffffooooString";
         s.
@@ -33,13 +33,13 @@ class badCaseForTestDot<T extends FooForTestDot &  BarForTestDot> {
         try {
             foo(1, s);
         } catch (FooExceptionForTestDot
-                | BarExceptionForTestDot e) {}
+                | BarExceptionForTestDot e) { }
 
         foo(1
-                ,s);  //bad wrapping
+, s);  //bad wrapping
         int[] i;
     }
-    public static String foo(int i, String s) throws FooExceptionForTestDot, BarExceptionForTestDot
+    public static String foo(final int i, final String s) throws FooExceptionForTestDot, BarExceptionForTestDot
     {
         return new StringBuilder("")
                 .append("", 0, 1)

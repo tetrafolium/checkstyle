@@ -4,4 +4,4 @@ public @InterfaceAnnotation @interface InputModifierOrderAnnotationDeclaration {
     int getValue();
 }
 
-@interface InterfaceAnnotation {}
+@interface InterfaceAnnotation { }

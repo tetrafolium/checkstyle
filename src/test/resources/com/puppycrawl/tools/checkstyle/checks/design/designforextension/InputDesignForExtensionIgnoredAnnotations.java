@@ -13,7 +13,7 @@ public class InputDesignForExtensionIgnoredAnnotations {
      * @return boolean.
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         return super.equals(obj);
     }
 
@@ -28,15 +28,17 @@ public class InputDesignForExtensionIgnoredAnnotations {
         return super.toString();
     }
 
-    public int foo1() {return  1;} // violation
+    public int foo1() {
+        return  1; } // violation
 
     /**
      *
      * @return
      */
-    public int foo2() {return 2;}
+    public int foo2() {
+        return 2; }
 
-    public void foo3() {}
+    public void foo3() { }
 
     public class C extends B {
         @Deprecated
@@ -55,16 +57,19 @@ public class InputDesignForExtensionIgnoredAnnotations {
 
     // Deprecated
     @Deprecated
-    public void foo4() {return;}
+    public void foo4() {
+        return; }
 
     /*
      * Deprecated
      */
     @Deprecated
-    public void foo5() {return;}
+    public void foo5() {
+        return; }
 
     @java.lang.Deprecated
-    public void foo6() {return;}
+    public void foo6() {
+        return; }
 
     // Single line comment
     @Deprecated
@@ -91,8 +96,8 @@ public class InputDesignForExtensionIgnoredAnnotations {
         return;
     }
 
-    @Deprecated
     /** */
+    @Deprecated
     public int foo11() {
         return 1;
     }
@@ -107,12 +112,12 @@ public class InputDesignForExtensionIgnoredAnnotations {
     /* */
     public void foo13() { }
 
-    @Deprecated
     /** */
+    @Deprecated
     public void foo14() { }
 
-    @Deprecated
     /** */
+    @Deprecated
     public void foo15() { /** */ }
 
     @Deprecated
@@ -121,30 +126,35 @@ public class InputDesignForExtensionIgnoredAnnotations {
 
     @Deprecated
     @InputDesignForExtensionsLocalAnnotations.ClassRule
-    public void foo17() { return; }
+    public void foo17() {
+        return; }
 
-    @Deprecated
-    @InputDesignForExtensionsLocalAnnotations.ClassRule
-    /** */
-    public void foo18() { return; }
-
-    @Deprecated
     /** */
     @InputDesignForExtensionsLocalAnnotations.ClassRule
-    public void foo19() { return; }
+    @Deprecated
+    public void foo18() {
+        return; }
 
     /** */
     @Deprecated
     @InputDesignForExtensionsLocalAnnotations.ClassRule
-    public void foo20() { return; }
+    public void foo19() {
+        return; }
+
+    /** */
+    @Deprecated
+    @InputDesignForExtensionsLocalAnnotations.ClassRule
+    public void foo20() {
+        return; }
 
     @InputDesignForExtensionsLocalAnnotations.ClassRule // violation
-    public void foo21() { return; }
+    public void foo21() {
+        return; }
 
     private int age;
 
     @Inject // violation
-    public void setAge(int age) {
+    public void setAge(final int age) {
         this.age = age;
     }
 
@@ -158,7 +168,7 @@ public class InputDesignForExtensionIgnoredAnnotations {
         foo1();
     }
 
-    public void foo24(@MyAnnotation int a) { // violation
+    public void foo24(final @MyAnnotation int a) { // violation
         foo1();
     }
 

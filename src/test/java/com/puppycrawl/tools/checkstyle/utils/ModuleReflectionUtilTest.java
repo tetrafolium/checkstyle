@@ -197,7 +197,7 @@ public class ModuleReflectionUtilTest {
     private static class FileSetModuleClass extends AbstractFileSetCheck {
 
         @Override
-        protected void processFiltered(File file, FileText fileText) {
+        protected void processFiltered(final File file, final FileText fileText) {
             // dummy method
         }
 
@@ -211,7 +211,7 @@ public class ModuleReflectionUtilTest {
         }
 
         @Override
-        public boolean accept(AuditEvent event) {
+        public boolean accept(final AuditEvent event) {
             return false;
         }
 
@@ -226,7 +226,7 @@ public class ModuleReflectionUtilTest {
         }
 
         @Override
-        public boolean accept(String uri) {
+        public boolean accept(final String uri) {
             return false;
         }
 
@@ -240,12 +240,12 @@ public class ModuleReflectionUtilTest {
         }
 
         @Override
-        public void addListener(AuditListener listener) {
+        public void addListener(final AuditListener listener) {
             // dummy method
         }
 
         @Override
-        public int process(List<File> files) {
+        public int process(final List<File> files) {
             return 0;
         }
 
@@ -255,7 +255,7 @@ public class ModuleReflectionUtilTest {
         }
 
         @Override
-        public void setModuleClassLoader(ClassLoader moduleClassLoader) {
+        public void setModuleClassLoader(final ClassLoader moduleClassLoader) {
             // dummy method
         }
 
@@ -269,7 +269,7 @@ public class ModuleReflectionUtilTest {
         }
 
         @Override
-        public boolean accept(TreeWalkerAuditEvent treeWalkerAuditEvent) {
+        public boolean accept(final TreeWalkerAuditEvent treeWalkerAuditEvent) {
             return false;
         }
 
@@ -283,32 +283,32 @@ public class ModuleReflectionUtilTest {
         }
 
         @Override
-        public void auditStarted(AuditEvent event) {
+        public void auditStarted(final AuditEvent event) {
             // dummy method
         }
 
         @Override
-        public void auditFinished(AuditEvent event) {
+        public void auditFinished(final AuditEvent event) {
             // dummy method
         }
 
         @Override
-        public void fileStarted(AuditEvent event) {
+        public void fileStarted(final AuditEvent event) {
             // dummy method
         }
 
         @Override
-        public void fileFinished(AuditEvent event) {
+        public void fileFinished(final AuditEvent event) {
             // dummy method
         }
 
         @Override
-        public void addError(AuditEvent event) {
+        public void addError(final AuditEvent event) {
             // dummy method
         }
 
         @Override
-        public void addException(AuditEvent event, Throwable throwable) {
+        public void addException(final AuditEvent event, final Throwable throwable) {
             // dummy method
         }
 
@@ -324,13 +324,13 @@ public class ModuleReflectionUtilTest {
 
         private int field;
 
-        protected InvalidNonDefaultConstructorClass(int data) {
+        protected InvalidNonDefaultConstructorClass(final int data) {
             // keep pmd calm and happy
             field = 0;
             method(data);
         }
 
-        public final void method(int data) {
+        public final void method(final int data) {
             field++;
             if (data > 0) {
                 method(data - 1);

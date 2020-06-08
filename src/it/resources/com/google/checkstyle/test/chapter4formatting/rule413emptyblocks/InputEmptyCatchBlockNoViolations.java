@@ -18,16 +18,14 @@ public class InputEmptyCatchBlockNoViolations
     public void testTryCatch()
     {
         try {
-            int y=0;
-            int u=8;
-            int e=u-y;
+            int y = 0;
+            int u = 8;
+            int e = u - y;
             return;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.identityHashCode(e);
             return;
-        }
-        finally
+        } finally
         {
             return;
         }
@@ -36,15 +34,13 @@ public class InputEmptyCatchBlockNoViolations
     public void testTryCatch3()
     {
         try {
-            int y=0;
-            int u=8;
-            int e=u-y;
-        }
-        catch (IllegalArgumentException e) {
+            int y = 0;
+            int u = 8;
+            int e = u - y;
+        } catch (IllegalArgumentException e) {
             System.identityHashCode(e); //some comment
             return;
-        }
-        catch (IllegalStateException ex) {
+        } catch (IllegalStateException ex) {
                 System.identityHashCode(ex);
                 return;
         }
@@ -52,12 +48,11 @@ public class InputEmptyCatchBlockNoViolations
 
     public void testTryCatch4()
     {
-        int y=0;
-        int u=8;
+        int y = 0;
+        int u = 8;
         try {
-            int e=u-y;
-        }
-        catch (IllegalArgumentException e) {
+            int e = u - y;
+        } catch (IllegalArgumentException e) {
             System.identityHashCode(e);
             return;
         }

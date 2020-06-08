@@ -113,7 +113,7 @@ public class JavadocVariableCheck
      *
      * @param scope a scope.
      */
-    public void setScope(Scope scope) {
+    public void setScope(final Scope scope) {
         this.scope = scope;
     }
 
@@ -122,7 +122,7 @@ public class JavadocVariableCheck
      *
      * @param excludeScope a scope.
      */
-    public void setExcludeScope(Scope excludeScope) {
+    public void setExcludeScope(final Scope excludeScope) {
         this.excludeScope = excludeScope;
     }
 
@@ -131,7 +131,7 @@ public class JavadocVariableCheck
      *
      * @param pattern a pattern.
      */
-    public void setIgnoreNamePattern(Pattern pattern) {
+    public void setIgnoreNamePattern(final Pattern pattern) {
         ignoreNamePattern = pattern;
     }
 
@@ -160,7 +160,7 @@ public class JavadocVariableCheck
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         if (shouldCheck(ast)) {
             final FileContents contents = getFileContents();
             final TextBlock textBlock =
@@ -177,7 +177,7 @@ public class JavadocVariableCheck
      * @param ast the AST to check
      * @return true if the variable name of ast is in the ignore list.
      */
-    private boolean isIgnored(DetailAST ast) {
+    private boolean isIgnored(final DetailAST ast) {
         final String name = ast.findFirstToken(TokenTypes.IDENT).getText();
         return ignoreNamePattern != null && ignoreNamePattern.matcher(name).matches()
             || "serialVersionUID".equals(name);

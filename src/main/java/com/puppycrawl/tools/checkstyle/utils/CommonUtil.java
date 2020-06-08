@@ -87,7 +87,7 @@ public final class CommonUtil {
      * @throws IllegalArgumentException
      *             if unable to create Pattern object.
      **/
-    public static Pattern createPattern(String pattern) {
+    public static Pattern createPattern(final String pattern) {
         return createPattern(pattern, 0);
     }
 
@@ -102,11 +102,10 @@ public final class CommonUtil {
      * @throws IllegalArgumentException
      *             if unable to create Pattern object.
      **/
-    public static Pattern createPattern(String pattern, int flags) {
+    public static Pattern createPattern(final String pattern, final int flags) {
         try {
             return Pattern.compile(pattern, flags);
-        }
-        catch (final PatternSyntaxException ex) {
+        } catch (final PatternSyntaxException ex) {
             throw new IllegalArgumentException(
                 "Failed to initialise regular expression " + pattern, ex);
         }
@@ -117,7 +116,7 @@ public final class CommonUtil {
      * @param content comment content.
      * @return DetailAST block comment
      */
-    public static DetailAST createBlockCommentNode(String content) {
+    public static DetailAST createBlockCommentNode(final String content) {
         final DetailAstImpl blockCommentBegin = new DetailAstImpl();
         blockCommentBegin.setType(TokenTypes.BLOCK_COMMENT_BEGIN);
         blockCommentBegin.setText(BLOCK_MULTIPLE_COMMENT_BEGIN);
@@ -147,7 +146,7 @@ public final class CommonUtil {
      *        Token object.
      * @return DetailAST with BLOCK_COMMENT type.
      */
-    public static DetailAST createBlockCommentNode(Token token) {
+    public static DetailAST createBlockCommentNode(final Token token) {
         final DetailAstImpl blockComment = new DetailAstImpl();
         blockComment.initialize(TokenTypes.BLOCK_COMMENT_BEGIN, BLOCK_MULTIPLE_COMMENT_BEGIN);
 
@@ -189,7 +188,7 @@ public final class CommonUtil {
      *         counter.
      */
     private static Map.Entry<Integer, Integer> countLinesColumns(
-            String text, int initialLinesCnt, int initialColumnsCnt) {
+            final String text, final int initialLinesCnt, final int initialColumnsCnt) {
         int lines = initialLinesCnt;
         int columns = initialColumnsCnt;
         boolean foundCr = false;
@@ -198,8 +197,7 @@ public final class CommonUtil {
                 foundCr = false;
                 lines++;
                 columns = 0;
-            }
-            else {
+            } else {
                 if (foundCr) {
                     foundCr = false;
                     lines++;
@@ -227,20 +225,18 @@ public final class CommonUtil {
      *            files extensions, empty property in config makes it matches to all.
      * @return whether there is a match.
      */
-    public static boolean matchesFileExtension(File file, String... fileExtensions) {
+    public static boolean matchesFileExtension(final File file, final String... fileExtensions) {
         boolean result = false;
         if (fileExtensions == null || fileExtensions.length == 0) {
             result = true;
-        }
-        else {
+        } else {
             // normalize extensions so all of them have a leading dot
             final String[] withDotExtensions = new String[fileExtensions.length];
             for (int i = 0; i < fileExtensions.length; i++) {
                 final String extension = fileExtensions[i];
                 if (startsWithChar(extension, '.')) {
                     withDotExtensions[i] = extension;
-                }
-                else {
+                } else {
                     withDotExtensions[i] = "." + extension;
                 }
             }
@@ -266,7 +262,7 @@ public final class CommonUtil {
      *            the line to check
      * @return whether there is only whitespace
      */
-    public static boolean hasWhitespaceBefore(int index, String line) {
+    public static boolean hasWhitespaceBefore(final int index, final String line) {
         boolean result = true;
         for (int i = 0; i < index; i++) {
             if (!Character.isWhitespace(line.charAt(i))) {
@@ -286,7 +282,7 @@ public final class CommonUtil {
      *            the string to process
      * @return the length of the string ignoring all trailing whitespace
      **/
-    public static int lengthMinusTrailingWhitespace(String line) {
+    public static int lengthMinusTrailingWhitespace(final String line) {
         int len = line.length();
         for (int i = len - 1; i >= 0; i--) {
             if (!Character.isWhitespace(line.charAt(i))) {
@@ -310,15 +306,14 @@ public final class CommonUtil {
      *            the distance between tab stop position.
      * @return the length of string.substring(0, toIdx) with tabs expanded.
      */
-    public static int lengthExpandedTabs(String inputString,
-            int toIdx,
-            int tabWidth) {
+    public static int lengthExpandedTabs(final String inputString,
+            final int toIdx,
+            final int tabWidth) {
         int len = 0;
         for (int idx = 0; idx < toIdx; idx++) {
             if (inputString.charAt(idx) == '\t') {
                 len = (len / tabWidth + 1) * tabWidth;
-            }
-            else {
+            } else {
                 len++;
             }
         }
@@ -332,12 +327,11 @@ public final class CommonUtil {
      *            string to validate
      * @return true if the pattern is valid false otherwise
      */
-    public static boolean isPatternValid(String pattern) {
+    public static boolean isPatternValid(final String pattern) {
         boolean isValid = true;
         try {
             Pattern.compile(pattern);
-        }
-        catch (final PatternSyntaxException ignored) {
+        } catch (final PatternSyntaxException ignored) {
             isValid = false;
         }
         return isValid;
@@ -349,13 +343,12 @@ public final class CommonUtil {
      *            the fully qualified name. Cannot be null
      * @return the base class name from a fully qualified name
      */
-    public static String baseClassName(String type) {
+    public static String baseClassName(final String type) {
         final String className;
         final int index = type.lastIndexOf('.');
         if (index == -1) {
             className = type;
-        }
-        else {
+        } else {
             className = type.substring(index + 1);
         }
         return className;
@@ -375,8 +368,7 @@ public final class CommonUtil {
         final String resultPath;
         if (baseDirectory == null) {
             resultPath = path;
-        }
-        else {
+        } else {
             final Path pathAbsolute = Paths.get(path).normalize();
             final Path pathBase = Paths.get(baseDirectory).normalize();
             resultPath = pathBase.relativize(pathAbsolute).toString();
@@ -400,7 +392,7 @@ public final class CommonUtil {
      * @return {@code true} if the {@code char} is a prefix of the given {@code String};
      *  {@code false} otherwise.
      */
-    public static boolean startsWithChar(String value, char prefix) {
+    public static boolean startsWithChar(final String value, final char prefix) {
         return !value.isEmpty() && value.charAt(0) == prefix;
     }
 
@@ -420,7 +412,7 @@ public final class CommonUtil {
      * @return {@code true} if the {@code char} is a suffix of the given {@code String};
      *  {@code false} otherwise.
      */
-    public static boolean endsWithChar(String value, char suffix) {
+    public static boolean endsWithChar(final String value, final char suffix) {
         return !value.isEmpty() && value.charAt(value.length() - 1) == suffix;
     }
 
@@ -435,12 +427,11 @@ public final class CommonUtil {
      * @throws IllegalStateException if any exception occurs
      * @see Class#getConstructor(Class[])
      */
-    public static <T> Constructor<T> getConstructor(Class<T> targetClass,
-                                                    Class<?>... parameterTypes) {
+    public static <T> Constructor<T> getConstructor(final Class<T> targetClass,
+                                                    final Class<?>... parameterTypes) {
         try {
             return targetClass.getConstructor(parameterTypes);
-        }
-        catch (NoSuchMethodException ex) {
+        } catch (NoSuchMethodException ex) {
             throw new IllegalStateException(ex);
         }
     }
@@ -457,11 +448,10 @@ public final class CommonUtil {
      * @throws IllegalStateException if any exception occurs
      * @see Constructor#newInstance(Object...)
      */
-    public static <T> T invokeConstructor(Constructor<T> constructor, Object... parameters) {
+    public static <T> T invokeConstructor(final Constructor<T> constructor, final Object... parameters) {
         try {
             return constructor.newInstance(parameters);
-        }
-        catch (InstantiationException | IllegalAccessException | InvocationTargetException ex) {
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException ex) {
             throw new IllegalStateException(ex);
         }
     }
@@ -473,12 +463,11 @@ public final class CommonUtil {
      *            Closeable object
      * @throws IllegalStateException when any IOException occurs
      */
-    public static void close(Closeable closeable) {
+    public static void close(final Closeable closeable) {
         if (closeable != null) {
             try {
                 closeable.close();
-            }
-            catch (IOException ex) {
+            } catch (IOException ex) {
                 throw new IllegalStateException("Cannot close the stream", ex);
             }
         }
@@ -490,14 +479,13 @@ public final class CommonUtil {
      * @return resolved header file URI
      * @throws CheckstyleException on failure
      */
-    public static URI getUriByFilename(String filename) throws CheckstyleException {
+    public static URI getUriByFilename(final String filename) throws CheckstyleException {
         // figure out if this is a File or a URL
         URI uri;
         try {
             final URL url = new URL(filename);
             uri = url.toURI();
-        }
-        catch (final URISyntaxException | MalformedURLException ignored) {
+        } catch (final URISyntaxException | MalformedURLException ignored) {
             uri = null;
         }
 
@@ -505,23 +493,20 @@ public final class CommonUtil {
             final File file = new File(filename);
             if (file.exists()) {
                 uri = file.toURI();
-            }
-            else {
+            } else {
                 // check to see if the file is in the classpath
                 try {
                     final URL configUrl;
                     if (filename.charAt(0) == '/') {
                         configUrl = CommonUtil.class.getResource(filename);
-                    }
-                    else {
+                    } else {
                         configUrl = ClassLoader.getSystemResource(filename);
                     }
                     if (configUrl == null) {
                         throw new CheckstyleException(UNABLE_TO_FIND_EXCEPTION_PREFIX + filename);
                     }
                     uri = configUrl.toURI();
-                }
-                catch (final URISyntaxException ex) {
+                } catch (final URISyntaxException ex) {
                     throw new CheckstyleException(UNABLE_TO_FIND_EXCEPTION_PREFIX + filename, ex);
                 }
             }
@@ -539,7 +524,7 @@ public final class CommonUtil {
      * @return the string, based on template filled with given lines
      */
     public static String fillTemplateWithStringsByRegexp(
-        String template, String lineToPlaceInTemplate, Pattern regexp) {
+        final String template, final String lineToPlaceInTemplate, final Pattern regexp) {
         final Matcher matcher = regexp.matcher(lineToPlaceInTemplate);
         String result = template;
         if (matcher.find()) {
@@ -558,14 +543,13 @@ public final class CommonUtil {
      * @param fullFilename file name with extension.
      * @return file name without extension.
      */
-    public static String getFileNameWithoutExtension(String fullFilename) {
+    public static String getFileNameWithoutExtension(final String fullFilename) {
         final String fileName = new File(fullFilename).getName();
         final int dotIndex = fileName.lastIndexOf('.');
         final String fileNameWithoutExtension;
         if (dotIndex == -1) {
             fileNameWithoutExtension = fileName;
-        }
-        else {
+        } else {
             fileNameWithoutExtension = fileName.substring(0, dotIndex);
         }
         return fileNameWithoutExtension;
@@ -580,14 +564,13 @@ public final class CommonUtil {
      * @return file extension for the given file name
      *         or empty string if file does not have an extension.
      */
-    public static String getFileExtension(String fileNameWithExtension) {
+    public static String getFileExtension(final String fileNameWithExtension) {
         final String fileName = Paths.get(fileNameWithExtension).toString();
         final int dotIndex = fileName.lastIndexOf('.');
         final String extension;
         if (dotIndex == -1) {
             extension = "";
-        }
-        else {
+        } else {
             extension = fileName.substring(dotIndex + 1);
         }
         return extension;
@@ -598,14 +581,13 @@ public final class CommonUtil {
      * @param str A string to check.
      * @return true when the given string contains valid identifier.
      */
-    public static boolean isIdentifier(String str) {
+    public static boolean isIdentifier(final String str) {
         boolean isIdentifier = !str.isEmpty();
 
         for (int i = 0; isIdentifier && i < str.length(); i++) {
             if (i == 0) {
                 isIdentifier = Character.isJavaIdentifierStart(str.charAt(0));
-            }
-            else {
+            } else {
                 isIdentifier = Character.isJavaIdentifierPart(str.charAt(i));
             }
         }
@@ -618,7 +600,7 @@ public final class CommonUtil {
      * @param str A string to check.
      * @return true when the given string contains valid name.
      */
-    public static boolean isName(String str) {
+    public static boolean isName(final String str) {
         boolean isName = !str.isEmpty();
 
         final String[] identifiers = str.split("\\.", -1);
@@ -635,7 +617,7 @@ public final class CommonUtil {
      * @param value A string to check.
      * @return true if the arg is blank.
      */
-    public static boolean isBlank(String value) {
+    public static boolean isBlank(final String value) {
         boolean result = true;
         if (value != null && !value.isEmpty()) {
             for (int i = 0; i < value.length(); i++) {
@@ -653,17 +635,15 @@ public final class CommonUtil {
      * @param str a string to check
      * @return true if the given string is an integer, false otherwise.
      */
-    public static boolean isInt(String str) {
+    public static boolean isInt(final String str) {
         boolean isInt;
         if (str == null) {
             isInt = false;
-        }
-        else {
+        } else {
             try {
                 Integer.parseInt(str);
                 isInt = true;
-            }
-            catch (NumberFormatException ignored) {
+            } catch (NumberFormatException ignored) {
                 isInt = false;
             }
         }

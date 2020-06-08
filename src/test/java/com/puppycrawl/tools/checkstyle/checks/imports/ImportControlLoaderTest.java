@@ -41,7 +41,7 @@ import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 
 public class ImportControlLoaderTest {
 
-    private static String getPath(String filename) {
+    private static String getPath(final String filename) {
         return "src/test/resources/com/puppycrawl/tools/"
                 + "checkstyle/checks/imports/importcontrolloader/" + filename;
     }
@@ -60,8 +60,7 @@ public class ImportControlLoaderTest {
             ImportControlLoader.load(new URI("aaa://"
                     + getPath("InputImportControlLoaderComplete.xml")));
             fail("exception expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             assertSame(MalformedURLException.class, ex.getCause().getClass(),
                     "Invalid exception class");
             assertEquals("unknown protocol: aaa", ex.getCause().getMessage(),
@@ -82,7 +81,7 @@ public class ImportControlLoaderTest {
     public void testSafeGetThrowsException() throws Exception {
         final AttributesImpl attr = new AttributesImpl() {
             @Override
-            public String getValue(int index) {
+            public String getValue(final int index) {
                 return null;
                 }
             };
@@ -93,8 +92,7 @@ public class ImportControlLoaderTest {
             privateMethod.setAccessible(true);
             privateMethod.invoke(null, attr, "you_cannot_find_me");
             fail("exception expected");
-        }
-        catch (InvocationTargetException ex) {
+        } catch (InvocationTargetException ex) {
             assertSame(SAXException.class, ex.getCause().getClass(), "Invalid exception class");
             assertEquals("missing attribute you_cannot_find_me", ex.getCause().getMessage(),
                     "Invalid exception message");
@@ -115,8 +113,7 @@ public class ImportControlLoaderTest {
             privateMethod.invoke(null, source,
                     new File(getPath("InputImportControlLoaderComplete.xml")).toURI());
             fail("exception expected");
-        }
-        catch (InvocationTargetException ex) {
+        } catch (InvocationTargetException ex) {
             assertSame(CheckstyleException.class, ex.getCause().getClass(),
                     "Invalid exception class");
             assertTrue(ex.getCause().getMessage().startsWith("unable to read"),

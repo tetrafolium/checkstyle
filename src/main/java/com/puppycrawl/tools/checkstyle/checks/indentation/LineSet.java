@@ -40,7 +40,7 @@ public class LineSet {
      *
      * @return the starting column for the given line number
      */
-    public Integer getStartColumn(Integer lineNum) {
+    public Integer getStartColumn(final Integer lineNum) {
         return lines.get(lineNum);
     }
 
@@ -78,7 +78,7 @@ public class LineSet {
      * @param lineNum   the line to add
      * @param col       the starting column of the new line
      */
-    public void addLineAndCol(int lineNum, int col) {
+    public void addLineAndCol(final int lineNum, final int col) {
         lines.put(lineNum, col);
     }
 

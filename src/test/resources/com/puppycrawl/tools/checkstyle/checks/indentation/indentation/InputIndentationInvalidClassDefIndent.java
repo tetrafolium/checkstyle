@@ -74,7 +74,7 @@ final class InputIndentationValidClassDefIndent5b extends Object  //indent:0 exp
 
 
 class InputIndentationInvalidClassDefIndentc2 //indent:0 exp:0
-  extends java.awt.event.MouseAdapter implements java.awt.event.MouseListener {//indent:2 exp:4 warn
+  extends java.awt.event.MouseAdapter implements java.awt.event.MouseListener { //indent:2 exp:4 warn
 
 
 } //indent:0 exp:0
@@ -126,12 +126,13 @@ final class InputIndentationValidClassDefIndent66 extends Object { //indent:0 ex
         class localFoo2 { //indent:8 exp:8
           int x; //indent:10 exp:12 warn
 
-            int func() { return 3; } //indent:12 exp:12
+            int func() {
+                return 3; } //indent:12 exp:12
         } //indent:8 exp:8
 
           new JButton().addActionListener(new ActionListener() //indent:10 exp:8 warn
         { //indent:8 exp:10,14 warn
-            public void actionPerformed(ActionEvent e) { //indent:12 exp:12
+            public void actionPerformed(final ActionEvent e) { //indent:12 exp:12
 
             } //indent:12 exp:12
         }); //indent:8 exp:10,14 warn
@@ -139,7 +140,7 @@ final class InputIndentationValidClassDefIndent66 extends Object { //indent:0 ex
 
         new JButton().addActionListener(new ActionListener()  //indent:8 exp:8
       { //indent:6 exp:8,12 warn
-            public void actionPerformed(ActionEvent e) { //indent:12 exp:10 warn
+            public void actionPerformed(final ActionEvent e) { //indent:12 exp:10 warn
 
             } //indent:12 exp:10 warn
       }); //indent:6 exp:8,12 warn
@@ -147,21 +148,21 @@ final class InputIndentationValidClassDefIndent66 extends Object { //indent:0 ex
 
         new JButton().addActionListener(new ActionListener()  //indent:8 exp:8
         { //indent:8 exp:8,12
-          public void actionPerformed(ActionEvent e) { //indent:10 exp:12 warn
+          public void actionPerformed(final ActionEvent e) { //indent:10 exp:12 warn
 
           } //indent:10 exp:12 warn
         }); //indent:8 exp:8,12
 
 
         new JButton().addActionListener(new ActionListener() { //indent:8 exp:8
-            public void actionPerformed(ActionEvent e) { //indent:12 exp:12
+            public void actionPerformed(final ActionEvent e) { //indent:12 exp:12
                 int i = 2; //indent:16 exp:16
             } //indent:12 exp:12
         }); //indent:8 exp:8,12
 
         Object o = new ActionListener()  //indent:8 exp:8
         { //indent:8 exp:8,12
-            public void actionPerformed(ActionEvent e) { //indent:12 exp:12
+            public void actionPerformed(final ActionEvent e) { //indent:12 exp:12
 
             } //indent:12 exp:12
         }; //indent:8 exp:8,12
@@ -175,10 +176,10 @@ final class InputIndentationValidClassDefIndent66 extends Object { //indent:0 ex
 
     } //indent:4 exp:4
 
-    private void myfunc2(int a, int b, int c, int d, int e, int f, int g) { //indent:4 exp:4
+    private void myfunc2(final int a, final int b, final int c, final int d, final int e, final int f, final int g) { //indent:4 exp:4
     } //indent:4 exp:4
 
-    private int myfunc3(int a, int b, int c, int d) { //indent:4 exp:4
+    private int myfunc3(final int a, final int b, final int c, final int d) { //indent:4 exp:4
         return 1; //indent:8 exp:8
     } //indent:4 exp:4
 } //indent:0 exp:0

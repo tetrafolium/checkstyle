@@ -49,7 +49,7 @@ public class XpathFileGeneratorAstFilter extends AutomaticBean implements TreeWa
      * Sets tab width.
      * @param tabWidth the distance between tab stops
      */
-    public void setTabWidth(int tabWidth) {
+    public void setTabWidth(final int tabWidth) {
         this.tabWidth = tabWidth;
     }
 
@@ -60,7 +60,7 @@ public class XpathFileGeneratorAstFilter extends AutomaticBean implements TreeWa
      * @param event the {@code AuditEvent} object.
      * @return returns corresponding xpath query
      */
-    public static String findCorrespondingXpathQuery(AuditEvent event) {
+    public static String findCorrespondingXpathQuery(final AuditEvent event) {
         return MESSAGE_QUERY_MAP.get(event.getLocalizedMessage());
     }
 
@@ -70,7 +70,7 @@ public class XpathFileGeneratorAstFilter extends AutomaticBean implements TreeWa
     }
 
     @Override
-    public boolean accept(TreeWalkerAuditEvent event) {
+    public boolean accept(final TreeWalkerAuditEvent event) {
         if (event.getTokenType() != 0) {
             final XpathQueryGenerator xpathQueryGenerator =
                     new XpathQueryGenerator(event, tabWidth);

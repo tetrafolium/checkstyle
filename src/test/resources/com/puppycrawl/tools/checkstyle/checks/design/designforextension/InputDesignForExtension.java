@@ -63,13 +63,12 @@ public abstract class InputDesignForExtension
     // and it should not be necessary to declare compare() as final
     private class MyComparator implements java.util.Comparator
     {
-        public int compare(Object o1, Object o2)
+        public int compare(final Object o1, final Object o2)
         {
             // some complex stuff that would normally trigger an error report
             if (o1.hashCode() > o2.hashCode()) {
                 return -1;
-            }
-            else {
+            } else {
                 return 1;
             }
         }
@@ -86,7 +85,7 @@ public abstract class InputDesignForExtension
     public class nonFinalClass
     {
     //private ctor
-    private nonFinalClass(){}
+    private nonFinalClass() { }
         public void someMethod()
         {
         System.identityHashCode("nonempty and overriding is possible");
@@ -96,7 +95,7 @@ public abstract class InputDesignForExtension
     public class anotherNonFinalClass
     {
     //nonPrivate ctor
-    public anotherNonFinalClass(){}
+    public anotherNonFinalClass() { }
         public void someMethod()
         {
         System.identityHashCode("nonempty and overriding is possible");

@@ -26,8 +26,7 @@ public class InputFinalLocalVariableLeavingSlistToken {
     void foo2() {
         int a;
         if (true) {
-        }
-        else {
+        } else {
             a = 1;
 
             try {
@@ -38,7 +37,7 @@ public class InputFinalLocalVariableLeavingSlistToken {
             if (true) {
             }
 
-            Stream.of(1).forEach(integer -> {});
+            Stream.of(1).forEach(integer -> { });
 
             synchronized (InputFinalLocalVariableLeavingSlistToken.class) {
             }
@@ -51,7 +50,7 @@ public class InputFinalLocalVariableLeavingSlistToken {
             }
             while (Math.random() > 0);
 
-            {}
+            { }
 
             a = 2;
         }

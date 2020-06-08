@@ -11,12 +11,12 @@ public class InputSeparatorWrapForInvalidOption<T extends FooForInvalidOption
         s.isEmpty();
         try {
             foo(i, s);
-        } catch (FooException4IO |
-                BarException4IO e) {}
+        } catch (FooException4IO
+                | BarException4IO e) { }
         foo(i,
                 s); //good wrapping
     }
-    public static void foo(int i, String s) throws FooException4IO, BarException4IO
+    public static void foo(final int i, final String s) throws FooException4IO, BarException4IO
     {
 
     }
@@ -25,7 +25,7 @@ public class InputSeparatorWrapForInvalidOption<T extends FooForInvalidOption
 class badCaseForInvalidOption<T extends FooForInvalidOption &  BarForInvalidOption> {
 
 
-    public void goodCaseForInvalidOption(int... aFoo) throws FooException4IO, BarException4IO
+    public void goodCaseForInvalidOption(final int... aFoo) throws FooException4IO, BarException4IO
     {
         String s = "ffffooooString";
         s.
@@ -33,13 +33,13 @@ class badCaseForInvalidOption<T extends FooForInvalidOption &  BarForInvalidOpti
         try {
             foo(1, s);
         } catch (FooException4IO
-                | BarException4IO e) {}
+                | BarException4IO e) { }
 
         foo(1
-                ,s);  //bad wrapping
+, s);  //bad wrapping
         int[] i;
     }
-    public static String foo(int i, String s) throws FooException4IO, BarException4IO
+    public static String foo(final int i, final String s) throws FooException4IO, BarException4IO
     {
         return new StringBuilder("")
                 .append("", 0, 1)

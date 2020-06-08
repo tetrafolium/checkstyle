@@ -33,7 +33,7 @@ public class TestFileSetCheck extends AbstractFileSetCheck {
     private boolean called;
 
     @Override
-    protected void processFiltered(File file, FileText fileText) {
+    protected void processFiltered(final File file, final FileText fileText) {
         called = true;
     }
 

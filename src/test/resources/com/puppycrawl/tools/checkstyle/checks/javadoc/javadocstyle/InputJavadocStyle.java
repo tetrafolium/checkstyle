@@ -67,7 +67,7 @@ public class InputJavadocStyle
     *
     * @param arg1 <code>dummy.
     */
-   private void method5(int arg1)
+   private void method5(final int arg1)
    {
    }
 
@@ -137,7 +137,7 @@ public class InputJavadocStyle
      * >Link Text</a>
      */
     private void method12()
-    {// JavadocStyle should not report any error for this method
+    { // JavadocStyle should not report any error for this method
     }
 
     /**
@@ -178,7 +178,7 @@ public class InputJavadocStyle
      * </pre>
      */
     private void method13()
-    {// JavadocStyle should not report any error for this method
+    { // JavadocStyle should not report any error for this method
     }
 
     /**
@@ -211,14 +211,14 @@ public class InputJavadocStyle
     /**
      * @param a A parameter
      */
-    protected void method17(String a)
+    protected void method17(final String a)
     { // should report empty javadoc (no text before parameter)
     }
 
     /**
      * @exception RuntimeException should be thrown
      */
-    void method18(String a)
+    void method18(final String a)
     { // should report empty javadoc (no text before exception)
     }
 
@@ -319,16 +319,16 @@ public class InputJavadocStyle
     public void foo_1291847_2() {
     }
 
-		/**
-		 * Checks generics javadoc.
-		 *
-		 * @param strings this is a List<String>
-		 * @param test Map<String, List<String>> a map indexed on String of Lists of Strings.
-		 */
-		public void method20() {
-		}
+                /**
+                 * Checks generics javadoc.
+                 *
+                 * @param strings this is a List<String>
+                 * @param test Map<String, List<String>> a map indexed on String of Lists of Strings.
+                 */
+                public void method20() {
+                }
 
-		/**
+                /**
 		 * Checks HTML tags in javadoc.
 		 *
 		 * HTML no good tag
@@ -360,7 +360,7 @@ public class InputJavadocStyle
          * This Javadoc contains unclosed tag.
          * <code>unclosed 'code' tag<code>
          */
-        private void unclosedTag() {}
+        private void unclosedTag() { }
 
         void javadocLikeCommentInMethod() {
             /**
@@ -372,12 +372,12 @@ public class InputJavadocStyle
         /**
          * {@inheritDoc}
          */
-        private void inheritDoc() {}
+        private void inheritDoc() { }
 
         /**
          * <p><b>Note:<b> it's unterminated tag.</p>
          */
-        private void unterminatedTag() {}
+        private void unterminatedTag() { }
 
         /**
          * Javadoc without dot
@@ -400,20 +400,20 @@ public class InputJavadocStyle
          * .
          * @throws Exception if an error occurs
          */
-        void foo() throws Exception {}
+        void foo() throws Exception { }
 
         /**
          * text /
          * @throws Exception if an error occurs
          */
-        void bar() throws Exception {}
+        void bar() throws Exception { }
 
         /**
          * {@inheritDoc}
          * <p>
          * @throws IllegalArgumentException with errMsg as its message
          */
-        void inheritDocWithThrows() {}
+        void inheritDocWithThrows() { }
 
         /**
          * /
@@ -422,7 +422,8 @@ public class InputJavadocStyle
          * @param s
          * @return Return
          */
-        public int test(String s) { return 0; }
+        public int test(final String s) {
+            return 0; }
 
     /** Set of all class field names.*/
     public String field;
@@ -434,7 +435,7 @@ public class InputJavadocStyle
           ; i &lt; j; i++, j--) {}
        </pre>
      */
-    public void test2() {}
+    public void test2() { }
 
     /**
      * <p>Test.</p>
@@ -442,5 +443,5 @@ public class InputJavadocStyle
 public class SampleTest {
 }</code></pre>
      */
-    public void test3() {}
+    public void test3() { }
 }

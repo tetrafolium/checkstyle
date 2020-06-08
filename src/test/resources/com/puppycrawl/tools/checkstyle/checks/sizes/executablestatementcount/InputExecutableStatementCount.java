@@ -73,7 +73,7 @@ public class InputExecutableStatementCount {
     }
 
     /** Inner */
-    public InputExecutableStatementCount(int aParam)
+    public InputExecutableStatementCount(final int aParam)
     {
         Runnable runnable = new Runnable() {
             public void run() {
@@ -85,7 +85,7 @@ public class InputExecutableStatementCount {
     }
 
     /** Empty constructor */
-    public InputExecutableStatementCount(String someString) {}
+    public InputExecutableStatementCount(final String someString) { }
 
     static Runnable r1 = () -> {
         String.valueOf("Hello world one!");

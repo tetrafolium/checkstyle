@@ -108,7 +108,7 @@ public class PackageNameCheck
      * Setter to specifies valid identifiers.
      * @param pattern the new pattern
      */
-    public void setFormat(Pattern pattern) {
+    public void setFormat(final Pattern pattern) {
         format = pattern;
     }
 
@@ -128,7 +128,7 @@ public class PackageNameCheck
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         final DetailAST nameAST = ast.getLastChild().getPreviousSibling();
         final FullIdent full = FullIdent.createFullIdent(nameAST);
         if (!format.matcher(full.getText()).find()) {

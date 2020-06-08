@@ -114,7 +114,7 @@ public class AvoidStaticImportCheck
      * @param excludes a list of fully-qualified class names/specific
      *     static members where static imports are ok
      */
-    public void setExcludes(String... excludes) {
+    public void setExcludes(final String... excludes) {
         this.excludes = excludes.clone();
     }
 
@@ -136,7 +136,7 @@ public class AvoidStaticImportCheck
      *                the class or static member
      * @return true if except false if not
      */
-    private boolean isExempt(String classOrStaticMember) {
+    private boolean isExempt(final String classOrStaticMember) {
         boolean exempt = false;
 
         for (String exclude : excludes) {
@@ -156,7 +156,7 @@ public class AvoidStaticImportCheck
      * @param exclude - current exclusion
      * @return true if member in exclusion list
      */
-    private static boolean isStarImportOfPackage(String classOrStaticMember, String exclude) {
+    private static boolean isStarImportOfPackage(final String classOrStaticMember, final String exclude) {
         boolean result = false;
         if (exclude.endsWith(".*")) {
             // this section allows explicit imports

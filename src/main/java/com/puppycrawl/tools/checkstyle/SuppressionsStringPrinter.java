@@ -60,8 +60,8 @@ public final class SuppressionsStringPrinter {
      * @throws IOException if the file could not be read.
      * @throws CheckstyleException if the file is not a Java source.
      */
-    public static String printSuppressions(File file, String suppressionLineColumnNumber,
-                                           int tabWidth) throws IOException, CheckstyleException {
+    public static String printSuppressions(final File file, final String suppressionLineColumnNumber,
+                                           final int tabWidth) throws IOException, CheckstyleException {
         final Matcher matcher =
                 VALID_SUPPRESSION_LINE_COLUMN_NUMBER_REGEX.matcher(suppressionLineColumnNumber);
         if (!matcher.matches()) {
@@ -89,8 +89,8 @@ public final class SuppressionsStringPrinter {
      * @param tabWidth length of the tab character.
      * @return generated suppressions.
      */
-    private static String generate(FileText fileText, DetailAST detailAST, int lineNumber,
-                                   int columnNumber, int tabWidth) {
+    private static String generate(final FileText fileText, final DetailAST detailAST, final int lineNumber,
+                                   final int columnNumber, final int tabWidth) {
         final XpathQueryGenerator queryGenerator =
                 new XpathQueryGenerator(detailAST, lineNumber, columnNumber, fileText,
                         tabWidth);

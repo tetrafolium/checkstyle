@@ -56,22 +56,22 @@ public class InputAvoidDoubleBraceInitialization {
             } /* comment */
         };
         list = new ArrayList<Object>() {
-            ;
-            ;
-            {}
-            ;
-            ;
-            ;
+;
+;
+            { }
+;
+;
+;
         };
         Object obj = new Serializable() {  // violation
-            {}
+            { }
         };
         new ArrayList<Object>() {{ // violation
                 add("1");
                 add("2");
         }};
-        new ArrayList<Object>() {{ add("1");}}; // violation
-        new ArrayList<Object>() {{ add("1");}{ add("2");}}; // violation
+        new ArrayList<Object>() {{ add("1"); }}; // violation
+        new ArrayList<Object>() {{ add("1"); } { add("2"); }}; // violation
         list = new ArrayList<Object>() {
             {
                 add(null);
@@ -91,7 +91,7 @@ public class InputAvoidDoubleBraceInitialization {
             private Object o;
         };
         list = new ArrayList<Object>() {
-            ;
+;
         };
     }
 
@@ -99,11 +99,11 @@ public class InputAvoidDoubleBraceInitialization {
     }
 
     enum AA {
-        ;
-        {}
+;
+        { }
     }
 
     class Inner {
-        {}
+        { }
     }
 }

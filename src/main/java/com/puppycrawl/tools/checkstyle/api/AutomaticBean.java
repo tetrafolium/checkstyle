@@ -112,7 +112,7 @@ public abstract class AutomaticBean
      * @param cub
      *            Instance of {@link ConvertUtilsBean} to register types with.
      */
-    private static void registerIntegralTypes(ConvertUtilsBean cub) {
+    private static void registerIntegralTypes(final ConvertUtilsBean cub) {
         cub.register(new BooleanConverter(), Boolean.TYPE);
         cub.register(new BooleanConverter(), Boolean.class);
         cub.register(new ArrayConverter(
@@ -157,7 +157,7 @@ public abstract class AutomaticBean
      * @param cub
      *            Instance of {@link ConvertUtilsBean} to register types with.
      */
-    private static void registerCustomTypes(ConvertUtilsBean cub) {
+    private static void registerCustomTypes(final ConvertUtilsBean cub) {
         cub.register(new PatternConverter(), Pattern.class);
         cub.register(new SeverityLevelConverter(), SeverityLevel.class);
         cub.register(new ScopeConverter(), Scope.class);
@@ -179,7 +179,7 @@ public abstract class AutomaticBean
      * @see Configurable
      */
     @Override
-    public final void configure(Configuration config)
+    public final void configure(final Configuration config)
             throws CheckstyleException {
         configuration = config;
 
@@ -206,7 +206,7 @@ public abstract class AutomaticBean
      * @param recheck whether to check for property existence before copy
      * @throws CheckstyleException when property defined incorrectly
      */
-    private void tryCopyProperty(String key, Object value, boolean recheck)
+    private void tryCopyProperty(final String key, final Object value, final boolean recheck)
             throws CheckstyleException {
         final BeanUtilsBean beanUtils = createBeanUtilsBean();
 
@@ -225,8 +225,7 @@ public abstract class AutomaticBean
             }
             // finally we can set the bean property
             beanUtils.copyProperty(this, key, value);
-        }
-        catch (final InvocationTargetException | IllegalAccessException
+        } catch (final InvocationTargetException | IllegalAccessException
                 | NoSuchMethodException ex) {
             // There is no way to catch IllegalAccessException | NoSuchMethodException
             // as we do PropertyUtils.getPropertyDescriptor before beanUtils.copyProperty
@@ -235,8 +234,7 @@ public abstract class AutomaticBean
             final String message = String.format(Locale.ROOT,
                     "Cannot set property '%s' to '%s'", key, value);
             throw new CheckstyleException(message, ex);
-        }
-        catch (final IllegalArgumentException | ConversionException ex) {
+        } catch (final IllegalArgumentException | ConversionException ex) {
             final String message = String.format(Locale.ROOT, "illegal value '%s' for property "
                     + "'%s'", value, key);
             throw new CheckstyleException(message, ex);
@@ -248,7 +246,7 @@ public abstract class AutomaticBean
      * @see Contextualizable
      */
     @Override
-    public final void contextualize(Context context)
+    public final void contextualize(final Context context)
             throws CheckstyleException {
         final Collection<String> attributes = context.getAttributeNames();
 
@@ -279,7 +277,7 @@ public abstract class AutomaticBean
      * @throws CheckstyleException if there is a configuration error.
      * @see Configuration#getChildren
      */
-    protected void setupChild(Configuration childConf)
+    protected void setupChild(final Configuration childConf)
             throws CheckstyleException {
         if (childConf != null) {
             throw new CheckstyleException(childConf.getName() + " is not allowed as a child in "
@@ -293,7 +291,7 @@ public abstract class AutomaticBean
 
         @SuppressWarnings("unchecked")
         @Override
-        public Object convert(Class type, Object value) {
+        public Object convert(final Class type, final Object value) {
             return CommonUtil.createPattern(value.toString());
         }
 
@@ -304,7 +302,7 @@ public abstract class AutomaticBean
 
         @SuppressWarnings("unchecked")
         @Override
-        public Object convert(Class type, Object value) {
+        public Object convert(final Class type, final Object value) {
             return SeverityLevel.getInstance(value.toString());
         }
 
@@ -315,7 +313,7 @@ public abstract class AutomaticBean
 
         @SuppressWarnings("unchecked")
         @Override
-        public Object convert(Class type, Object value) {
+        public Object convert(final Class type, final Object value) {
             return Scope.getInstance(value.toString());
         }
 
@@ -326,15 +324,14 @@ public abstract class AutomaticBean
 
         @SuppressWarnings("unchecked")
         @Override
-        public Object convert(Class type, Object value) {
+        public Object convert(final Class type, final Object value) {
             final String url = value.toString();
             URI result = null;
 
             if (!CommonUtil.isBlank(url)) {
                 try {
                     result = CommonUtil.getUriByFilename(url);
-                }
-                catch (CheckstyleException ex) {
+                } catch (CheckstyleException ex) {
                     throw new IllegalArgumentException(ex);
                 }
             }
@@ -353,7 +350,7 @@ public abstract class AutomaticBean
 
         @SuppressWarnings("unchecked")
         @Override
-        public Object convert(Class type, Object value) {
+        public Object convert(final Class type, final Object value) {
             // Convert to a String and trim it for the tokenizer.
             final StringTokenizer tokenizer = new StringTokenizer(
                 value.toString().trim(), COMMA_SEPARATOR);
@@ -381,7 +378,7 @@ public abstract class AutomaticBean
 
         @SuppressWarnings("unchecked")
         @Override
-        public Object convert(Class type, Object value) {
+        public Object convert(final Class type, final Object value) {
             // Converts to a String and trims it for the tokenizer.
             final StringTokenizer tokenizer = new StringTokenizer(
                 value.toString().trim(), COMMA_SEPARATOR);

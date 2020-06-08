@@ -2,7 +2,7 @@
 // Test case file for checkstyle.
 // Created: 2001
 ////////////////////////////////////////////////////////////////////////////////
-package com . puppycrawl
+package com .puppycrawl
     .tools.
     checkstyle.checks.whitespace.nowhitespacebefore;
 
@@ -13,9 +13,9 @@ package com . puppycrawl
 class InputNoWhitespaceBeforeDot
 {
     /** ignore assignment **/
-    private int mVar1=1;
+    private int mVar1 = 1;
     /** ignore assignment **/
-    private int mVar2 =1;
+    private int mVar2 = 1;
     /** Should be ok **/
     private int mVar3 = 1;
 
@@ -23,22 +23,21 @@ class InputNoWhitespaceBeforeDot
     void method1()
     {
         final int a = 1;
-        int b= 1; // Ignore 1
-        b=1; // Ignore 1
-        b+=1; // Ignore 1
-        b -=- 1 + (+ b); // Ignore 2
-        b = b ++ + b --; // Ignore 1
-        b = ++ b - -- b; // Ignore 1
+        int b = 1; // Ignore 1
+        b = 1; // Ignore 1
+        b += 1; // Ignore 1
+        b -= -1 + (+b); // Ignore 2
+        b = b++ + b--; // Ignore 1
+        b = ++b - --b; // Ignore 1
     }
 
     /** method **/
     void method2()
     {
-        synchronized(this) {
+        synchronized (this) {
         }
-        try{
-        }
-        catch(RuntimeException e){
+        try {
+        } catch (RuntimeException e) {
         }
     }
 
@@ -55,11 +54,10 @@ class InputNoWhitespaceBeforeDot
     private void fastExit()
     {
         boolean complicatedStuffNeeded = true;
-        if( !complicatedStuffNeeded )
+        if (!complicatedStuffNeeded)
         {
             return; // should not complain about missing WS after return
-        }
-        else
+        } else
         {
             // do complicated stuff
         }
@@ -71,11 +69,10 @@ class InputNoWhitespaceBeforeDot
     */
     private int nonVoid()
     {
-        if ( true )
+        if (true)
         {
-            return(2); // should complain about missing WS after return
-        }
-        else
+            return (2); // should complain about missing WS after return
+        } else
         {
             return 2; // this is ok
         }
@@ -85,8 +82,8 @@ class InputNoWhitespaceBeforeDot
     private void testCasts()
     {
         Object o = (Object) new Object(); // ok
-        o = (Object)o; // violation
-        o = ( Object ) o; // ok
+        o = (Object) o; // violation
+        o = (Object) o; // ok
         o = (Object)
             o; // ok
     }
@@ -94,46 +91,46 @@ class InputNoWhitespaceBeforeDot
     /** test questions **/
     private void testQuestions()
     {
-        boolean b = (1 == 2)?true:false;
-        b = (1==2) ? false : true;
+        boolean b = (1 == 2) ? true : false;
+        b = (1 == 2) ? false : true;
     }
 
     /** star test **/
     private void starTest()
     {
-        int x = 2 *3* 4;
+        int x = 2 * 3 * 4;
     }
 
     /** boolean test **/
     private void boolTest()
     {
         boolean a = true;
-        boolean x = ! a;
-        int z = ~1 + ~ 2;
+        boolean x = !a;
+        int z = ~1 + ~2;
     }
 
     /** division test **/
     private void divTest()
     {
         int a = 4 % 2;
-        int b = 4% 2;
-        int c = 4 %2;
-        int d = 4%2;
+        int b = 4 % 2;
+        int c = 4 % 2;
+        int d = 4 % 2;
         int e = 4 / 2;
-        int f = 4/ 2;
-        int g = 4 /2;
-        int h = 4/2;
+        int f = 4 / 2;
+        int g = 4 / 2;
+        int h = 4 / 2;
     }
 
     /** @return dot test **/
-    private java .lang.  String dotTest()
+    private java .lang.String dotTest()
     {
         Object o = new java.lang.Object();
         o.
             toString();
         o
             .toString();
-        o . toString();
+        o .toString();
         return o.toString();
     }
 
@@ -150,14 +147,14 @@ class InputNoWhitespaceBeforeDot
         assert "OK".equals(null) ? false : true : "Whups";
 
         // missing WS around assert
-        assert(true);
+        assert (true);
 
         // missing WS around colon
-        assert true:"Whups";
+        assert true : "Whups";
     }
 
     /** another check */
-    void donBradman(Runnable aRun)
+    void donBradman(final Runnable aRun)
     {
         donBradman(new Runnable() {
             public void run() {
@@ -173,18 +170,18 @@ class InputNoWhitespaceBeforeDot
     /** rfe 521323, detect whitespace before ';' */
     void rfe521323()
     {
-        doStuff() ;
+        doStuff();
         //       ^ whitespace
-        for (int i = 0 ; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {
             //        ^ whitespace
         }
     }
 
 
     /** bug 806243 (NoWhitespaceBeforeCheck violation for anonymous inner class) */
-    private int i ;
+    private int i;
     //           ^ whitespace
-    private int i1, i2, i3 ;
+    private int i1, i2, i3;
     //                    ^ whitespace
     private int i4, i5, i6;
 
@@ -192,7 +189,7 @@ class InputNoWhitespaceBeforeDot
     void bug806243()
     {
         Object o = new InputNoWhitespaceBeforeDot() {
-            private int j ;
+            private int j;
             //           ^ whitespace
         };
     }
@@ -208,7 +205,7 @@ class InputNoWhitespaceBeforeDot
  */
 interface IFoo_NoWhitespaceBeforeDot
 {
-    void foo() ;
+    void foo();
     //        ^ whitespace
 }
 
@@ -223,22 +220,22 @@ class SpecialCasesInForLoop_NoWhitespaceBeforeDot
     {
         // avoid conflict between WhiteSpaceAfter ';' and ParenPad(nospace)
         for (int i = 0; i++ < 5;) {
-	    //                  ^ no whitespace
-	}
+            //                  ^ no whitespace
+        }
 
         // bug 895072
-	// avoid conflict between ParenPad(space) and NoWhiteSpace before ';'
-	int i = 0;
-	for ( ; i < 5; i++ ) {
-	//   ^ whitespace
-	}
+        // avoid conflict between ParenPad(space) and NoWhiteSpace before ';'
+        int i = 0;
+        for ( ; i < 5; i++) {
+        //   ^ whitespace
+        }
         for (int anInt : getSomeInts()) {
             //Should be ignored
         }
     }
 
     int[] getSomeInts() {
-        int i = (int) ( 2 / 3 );
+        int i = (int) (2 / 3);
         return null;
     }
 
@@ -249,7 +246,7 @@ class SpecialCasesInForLoop_NoWhitespaceBeforeDot
         }.start();
     }
 
-    public void foo(java.util.List<? extends String[]> bar, Comparable<? super Object[]> baz) { }
+    public void foo(final java.util.List<? extends String[]> bar, final Comparable<? super Object[]> baz) { }
 
     public void mySuperMethod() {
         Runnable[] runs = new Runnable[] {new Runnable() {
@@ -267,14 +264,14 @@ class SpecialCasesInForLoop_NoWhitespaceBeforeDot
     }
 
     public void testNullSemi() {
-        return ;
+        return;
     }
 
-    public void register(Object obj) { }
+    public void register(final Object obj) { }
 
-    public void doSomething(String args[]) {
+    public void doSomething(final String args[]) {
         register(boolean[].class);
-        register( args );
+        register(args);
     }
 
     public void parentheses() {
@@ -284,6 +281,6 @@ class SpecialCasesInForLoop_NoWhitespaceBeforeDot
 ;
     }
 
-    public static void testNoWhitespaceBeforeEllipses(String ... args) {
+    public static void testNoWhitespaceBeforeEllipses(final String... args) {
     }
 }

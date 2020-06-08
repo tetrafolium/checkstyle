@@ -47,7 +47,7 @@ public class AbstractViolationReporterTest {
         return getMessageBundleMethod;
     }
 
-    protected static DefaultConfiguration createModuleConfig(Class<?> clazz) {
+    protected static DefaultConfiguration createModuleConfig(final Class<?> clazz) {
         return new DefaultConfiguration(clazz.getName());
     }
 
@@ -119,8 +119,7 @@ public class AbstractViolationReporterTest {
         try {
             emptyCheck.log(1, "msgKey", "TestParam");
             fail("exception expected");
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertEquals("Unmatched braces in the pattern.", ex.getMessage(),
                     "Error message is unexpected");
         }

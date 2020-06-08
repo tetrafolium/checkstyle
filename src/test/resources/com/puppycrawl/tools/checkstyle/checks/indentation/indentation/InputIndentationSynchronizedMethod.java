@@ -1,4 +1,4 @@
-package com.puppycrawl.tools.checkstyle.checks.indentation.indentation;//indent:0 exp:0
+package com.puppycrawl.tools.checkstyle.checks.indentation.indentation; //indent:0 exp:0
 
 /**                                                                           //indent:0 exp:0
  * This test-input is intended to be checked using following configuration:   //indent:1 exp:1
@@ -14,8 +14,8 @@ package com.puppycrawl.tools.checkstyle.checks.indentation.indentation;//indent:
  *                                                                            //indent:1 exp:1
  *                                                                            //indent:1 exp:1
  */                                                                           //indent:1 exp:1
-public class InputIndentationSynchronizedMethod {//indent:0 exp:0
-    public synchronized InputIndentationSynchronizedMethod calculate() {//indent:4 exp:4
-        return null;//indent:8 exp:8
-    }//indent:4 exp:4
-}//indent:0 exp:0
+public class InputIndentationSynchronizedMethod { //indent:0 exp:0
+    public synchronized InputIndentationSynchronizedMethod calculate() { //indent:4 exp:4
+        return null; //indent:8 exp:8
+    } //indent:4 exp:4
+} //indent:0 exp:0

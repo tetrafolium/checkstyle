@@ -3,6 +3,6 @@ package com.puppycrawl.tools.checkstyle.checks.coding.packagedeclaration.subpack
 public class InputPackageDeclarationDiffDirectoryAtSubpackage {
     public String value;
 
-    private void get(){
+    private void get() {
     }
 }

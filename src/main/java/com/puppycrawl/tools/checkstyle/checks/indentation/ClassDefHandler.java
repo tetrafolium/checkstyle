@@ -36,9 +36,9 @@ public class ClassDefHandler extends BlockParentHandler {
      * @param ast           the abstract syntax tree
      * @param parent        the parent handler
      */
-    public ClassDefHandler(IndentationCheck indentCheck,
-                           DetailAST ast,
-                           AbstractExpressionHandler parent) {
+    public ClassDefHandler(final IndentationCheck indentCheck,
+                           final DetailAST ast,
+                           final AbstractExpressionHandler parent) {
         super(indentCheck, getHandlerName(ast), ast, parent);
     }
 
@@ -70,8 +70,7 @@ public class ClassDefHandler extends BlockParentHandler {
         final DetailAST modifiers = getMainAst().findFirstToken(TokenTypes.MODIFIERS);
         if (modifiers.hasChildren()) {
             checkModifiers();
-        }
-        else {
+        } else {
             if (getMainAst().getType() != TokenTypes.ANNOTATION_DEF) {
                 final DetailAST ident = getMainAst().findFirstToken(TokenTypes.IDENT);
                 final int lineStart = getLineStart(ident);
@@ -86,8 +85,7 @@ public class ClassDefHandler extends BlockParentHandler {
                 checkWrappingIndentation(getMainAst(), getListChild(), 0,
                         getIndent().getFirstIndentLevel(), false);
             }
-        }
-        else {
+        } else {
             checkWrappingIndentation(getMainAst(), getListChild());
         }
         super.checkIndentation();
@@ -111,19 +109,16 @@ public class ClassDefHandler extends BlockParentHandler {
      * @param ast the abstract syntax tree.
      * @return handler name for this class.
      */
-    private static String getHandlerName(DetailAST ast) {
+    private static String getHandlerName(final DetailAST ast) {
         final String name;
 
         if (ast.getType() == TokenTypes.CLASS_DEF) {
             name = "class def";
-        }
-        else if (ast.getType() == TokenTypes.ENUM_DEF) {
+        } else if (ast.getType() == TokenTypes.ENUM_DEF) {
             name = "enum def";
-        }
-        else if (ast.getType() == TokenTypes.ANNOTATION_DEF) {
+        } else if (ast.getType() == TokenTypes.ANNOTATION_DEF) {
             name = "annotation def";
-        }
-        else {
+        } else {
             name = "interface def";
         }
         return name;

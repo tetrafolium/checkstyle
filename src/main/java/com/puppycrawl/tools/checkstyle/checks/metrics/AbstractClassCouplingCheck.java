@@ -107,7 +107,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
      * Creates new instance of the check.
      * @param defaultMax default value for allowed complexity.
      */
-    protected AbstractClassCouplingCheck(int defaultMax) {
+    protected AbstractClassCouplingCheck(final int defaultMax) {
         max = defaultMax;
         excludeClassesRegexps.add(CommonUtil.createPattern("^$"));
     }
@@ -128,7 +128,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
      *
      * @param max allowed complexity.
      */
-    public final void setMax(int max) {
+    public final void setMax(final int max) {
         this.max = max;
     }
 
@@ -136,7 +136,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
      * Setter to specify user-configured class names to ignore.
      * @param excludedClasses the list of classes to ignore.
      */
-    public final void setExcludedClasses(String... excludedClasses) {
+    public final void setExcludedClasses(final String... excludedClasses) {
         this.excludedClasses =
             Collections.unmodifiableSet(Arrays.stream(excludedClasses).collect(Collectors.toSet()));
     }
@@ -146,7 +146,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
      *
      * @param from array representing regular expressions of classes to ignore.
      */
-    public void setExcludeClassesRegexps(String... from) {
+    public void setExcludeClassesRegexps(final String... from) {
         excludeClassesRegexps.addAll(Arrays.stream(from.clone())
                 .map(CommonUtil::createPattern)
                 .collect(Collectors.toSet()));
@@ -158,7 +158,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
      *
      * @param excludedPackages the list of packages to ignore.
      */
-    public final void setExcludedPackages(String... excludedPackages) {
+    public final void setExcludedPackages(final String... excludedPackages) {
         final List<String> invalidIdentifiers = Arrays.stream(excludedPackages)
             .filter(excludedPackageName -> !CommonUtil.isName(excludedPackageName))
             .collect(Collectors.toList());
@@ -173,7 +173,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
     }
 
     @Override
-    public final void beginTree(DetailAST ast) {
+    public final void beginTree(final DetailAST ast) {
         importedClassPackages.clear();
         classesContexts.clear();
         classesContexts.push(new ClassContext("", null));
@@ -181,7 +181,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         switch (ast.getType()) {
             case TokenTypes.PACKAGE_DEF:
                 visitPackageDef(ast);
@@ -215,7 +215,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
     }
 
     @Override
-    public void leaveToken(DetailAST ast) {
+    public void leaveToken(final DetailAST ast) {
         switch (ast.getType()) {
             case TokenTypes.CLASS_DEF:
             case TokenTypes.INTERFACE_DEF:
@@ -232,7 +232,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
      * Stores package of current class we check.
      * @param pkg package definition.
      */
-    private void visitPackageDef(DetailAST pkg) {
+    private void visitPackageDef(final DetailAST pkg) {
         final FullIdent ident = FullIdent.createFullIdent(pkg.getLastChild().getPreviousSibling());
         packageName = ident.getText();
     }
@@ -241,7 +241,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
      * Creates new context for a given class.
      * @param classDef class definition node.
      */
-    private void visitClassDef(DetailAST classDef) {
+    private void visitClassDef(final DetailAST classDef) {
         final String className = classDef.findFirstToken(TokenTypes.IDENT).getText();
         createNewClassContext(className, classDef);
     }
@@ -255,7 +255,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
      * Registers given import. This allows us to track imported classes.
      * @param imp import definition.
      */
-    private void registerImport(DetailAST imp) {
+    private void registerImport(final DetailAST imp) {
         final FullIdent ident = FullIdent.createFullIdent(
             imp.getLastChild().getPreviousSibling());
         final String fullName = ident.getText();
@@ -268,7 +268,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
      * @param className The class name.
      * @param ast The class ast.
      */
-    private void createNewClassContext(String className, DetailAST ast) {
+    private void createNewClassContext(final String className, final DetailAST ast) {
         classesContexts.push(new ClassContext(className, ast));
     }
 
@@ -281,7 +281,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
      * Visits type token for the current class context.
      * @param ast TYPE token.
      */
-    private void visitType(DetailAST ast) {
+    private void visitType(final DetailAST ast) {
         classesContexts.peek().visitType(ast);
     }
 
@@ -289,7 +289,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
      * Visits NEW token for the current class context.
      * @param ast NEW token.
      */
-    private void visitLiteralNew(DetailAST ast) {
+    private void visitLiteralNew(final DetailAST ast) {
         classesContexts.peek().visitLiteralNew(ast);
     }
 
@@ -297,7 +297,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
      * Visits THROWS token for the current class context.
      * @param ast THROWS token.
      */
-    private void visitLiteralThrows(DetailAST ast) {
+    private void visitLiteralThrows(final DetailAST ast) {
         classesContexts.peek().visitLiteralThrows(ast);
     }
 
@@ -305,7 +305,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
      * Visit ANNOTATION literal and get its type to referenced classes of context.
      * @param annotationAST Annotation ast.
      */
-    private void visitAnnotationType(DetailAST annotationAST) {
+    private void visitAnnotationType(final DetailAST annotationAST) {
         final DetailAST children = annotationAST.getFirstChild();
         final DetailAST type = children.getNextSibling();
         classesContexts.peek().addReferencedClassName(type.getText());
@@ -333,7 +333,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
          * @param className name of the given class.
          * @param ast ast of class definition.
          */
-        /* package */ ClassContext(String className, DetailAST ast) {
+        /* package */ ClassContext(final String className, final DetailAST ast) {
             this.className = className;
             classAst = ast;
         }
@@ -342,7 +342,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
          * Visits throws clause and collects all exceptions we throw.
          * @param literalThrows throws to process.
          */
-        public void visitLiteralThrows(DetailAST literalThrows) {
+        public void visitLiteralThrows(final DetailAST literalThrows) {
             for (DetailAST childAST = literalThrows.getFirstChild();
                  childAST != null;
                  childAST = childAST.getNextSibling()) {
@@ -356,7 +356,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
          * Visits type.
          * @param ast type to process.
          */
-        public void visitType(DetailAST ast) {
+        public void visitType(final DetailAST ast) {
             final String fullTypeName = CheckUtil.createFullType(ast).getText();
             addReferencedClassName(fullTypeName);
         }
@@ -365,7 +365,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
          * Visits NEW.
          * @param ast NEW to process.
          */
-        public void visitLiteralNew(DetailAST ast) {
+        public void visitLiteralNew(final DetailAST ast) {
             addReferencedClassName(ast.getFirstChild());
         }
 
@@ -373,7 +373,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
          * Adds new referenced class.
          * @param ast a node which represents referenced class.
          */
-        private void addReferencedClassName(DetailAST ast) {
+        private void addReferencedClassName(final DetailAST ast) {
             final String fullIdentName = FullIdent.createFullIdent(ast).getText();
             addReferencedClassName(fullIdentName);
         }
@@ -382,7 +382,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
          * Adds new referenced class.
          * @param referencedClassName class name of the referenced class.
          */
-        private void addReferencedClassName(String referencedClassName) {
+        private void addReferencedClassName(final String referencedClassName) {
             if (isSignificant(referencedClassName)) {
                 referencedClassNames.add(referencedClassName);
             }
@@ -405,7 +405,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
          * @param candidateClassName class to check.
          * @return true if we should count this class.
          */
-        private boolean isSignificant(String candidateClassName) {
+        private boolean isSignificant(final String candidateClassName) {
             return !excludedClasses.contains(candidateClassName)
                 && !isFromExcludedPackage(candidateClassName)
                 && !isExcludedClassRegexp(candidateClassName);
@@ -416,7 +416,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
          * @param candidateClassName class to check
          * @return true if we should not count this class.
          */
-        private boolean isFromExcludedPackage(String candidateClassName) {
+        private boolean isFromExcludedPackage(final String candidateClassName) {
             String classNameWithPackage = candidateClassName;
             if (!candidateClassName.contains(DOT)) {
                 classNameWithPackage = getClassNameWithPackage(candidateClassName)
@@ -439,7 +439,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
          * @param examineClassName Class name to be retrieved.
          * @return Class name with package name, if found, {@link Optional#empty()} otherwise.
          */
-        private Optional<String> getClassNameWithPackage(String examineClassName) {
+        private Optional<String> getClassNameWithPackage(final String examineClassName) {
             return Optional.ofNullable(importedClassPackages.get(examineClassName));
         }
 
@@ -448,7 +448,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
          * @param candidateClassName class to check.
          * @return true if we should not count this class.
          */
-        private boolean isExcludedClassRegexp(String candidateClassName) {
+        private boolean isExcludedClassRegexp(final String candidateClassName) {
             boolean result = false;
             for (Pattern pattern : excludeClassesRegexps) {
                 if (pattern.matcher(candidateClassName).matches()) {

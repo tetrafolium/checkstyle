@@ -31,17 +31,17 @@ public class InputRightCurlyDoWhileAlone {
 
     public void foo4() {
         int prog, user;
-        prog = (int)(Math.random() * 10) + 1;
+        prog = (int) (Math.random() * 10) + 1;
         Scanner input = new Scanner(System.in, "utf-8");
-        if( input.hasNextInt() ) {
+        if (input.hasNextInt()) {
             do {
                 user = input.nextInt();
-                if(user == prog) {
+                if (user == prog) {
                     String.CASE_INSENSITIVE_ORDER.equals("Good!");
                 } else {
                     if (user > 0 && user <= 10) {
                         String.CASE_INSENSITIVE_ORDER.equals("Bad! ");
-                        if( prog < user ) {
+                        if (prog < user) {
                             String.CASE_INSENSITIVE_ORDER.equals("My number is less than yours.");
                         } else {
                             String.CASE_INSENSITIVE_ORDER.equals("My number is greater than yours");
@@ -50,7 +50,7 @@ public class InputRightCurlyDoWhileAlone {
                         String.CASE_INSENSITIVE_ORDER.equals("Violation!");
                     }
                 }
-            } while( user != prog );
+            } while (user != prog);
         } else {
             String.CASE_INSENSITIVE_ORDER.equals("Violation!");
         }
@@ -64,7 +64,7 @@ public class InputRightCurlyDoWhileAlone {
     }
 
     public void foo6() {
-        do {} // ok - for alone
+        do { } // ok - for alone
         while (true);
     }
 
@@ -88,6 +88,6 @@ public class InputRightCurlyDoWhileAlone {
     }
 
     public void foo9() {
-        do {} while (true);
+        do { } while (true);
     }
 }

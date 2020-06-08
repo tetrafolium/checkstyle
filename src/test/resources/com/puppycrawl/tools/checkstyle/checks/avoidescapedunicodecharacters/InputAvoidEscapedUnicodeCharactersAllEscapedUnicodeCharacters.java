@@ -2,7 +2,7 @@ package com.puppycrawl.tools.checkstyle.checks.avoidescapedunicodecharacters;
 
 public class InputAvoidEscapedUnicodeCharactersAllEscapedUnicodeCharacters {
 
-  private String[] allEscapedUnicodeCharacters = { ""
+  private String[] allEscapedUnicodeCharacters = {""
                         /* control character ok */ + "\u0000"
                         /* control character ok */ + "\u0001"
                         /* control character ok */ + "\u0002"

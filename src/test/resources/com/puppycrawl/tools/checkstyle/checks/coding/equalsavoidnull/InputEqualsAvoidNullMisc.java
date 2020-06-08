@@ -6,15 +6,15 @@ import java.util.function.Function;
 public enum InputEqualsAvoidNullMisc {
     TEST;
 
-    public void method() {}
+    public void method() { }
 }
 class Receiver {
-    public void foo4(Receiver this, String s) {
+    public void foo4(Receiver this, final String s) {
         s.equals("abc");
     }
 
     private class Inner {
-        public Inner(Receiver Receiver.this) {}
+        public Inner(Receiver Receiver.this) { }
     }
 }
 class Lambda {

@@ -108,12 +108,11 @@ public class OrderedPropertiesCheck extends AbstractFileSetCheck {
      * @noinspection EnumerationCanBeIteration
      */
     @Override
-    protected void processFiltered(File file, FileText fileText) {
+    protected void processFiltered(final File file, final FileText fileText) {
         final SequencedProperties properties = new SequencedProperties();
         try (InputStream inputStream = Files.newInputStream(file.toPath())) {
             properties.load(inputStream);
-        }
-        catch (IOException | IllegalArgumentException ex) {
+        } catch (IOException | IllegalArgumentException ex) {
             log(1, MSG_IO_EXCEPTION_KEY, file.getPath(), ex.getLocalizedMessage());
         }
 
@@ -150,8 +149,8 @@ public class OrderedPropertiesCheck extends AbstractFileSetCheck {
      * @param propKey key name to look for
      * @return index number of first occurrence. If no key found in properties file, 0 is returned
      */
-    private static int getLineNumber(int startLineNo, FileText fileText,
-                                     String previousProp, String propKey) {
+    private static int getLineNumber(final int startLineNo, final FileText fileText,
+                                     final String previousProp, final String propKey) {
         final int indexOfPreviousProp = getIndex(startLineNo, fileText, previousProp);
         return getIndex(indexOfPreviousProp, fileText, propKey);
     }
@@ -164,7 +163,7 @@ public class OrderedPropertiesCheck extends AbstractFileSetCheck {
      * @param keyName key name to look for
      * @return index number of first occurrence. If no key found in properties file, 0 is returned
      */
-    private static int getIndex(int startLineNo, FileText fileText, String keyName) {
+    private static int getIndex(final int startLineNo, final FileText fileText, final String keyName) {
         final Pattern keyPattern = getKeyPattern(keyName);
         int indexNumber = 0;
         final Matcher matcher = keyPattern.matcher("");
@@ -186,7 +185,7 @@ public class OrderedPropertiesCheck extends AbstractFileSetCheck {
      *            key name to look for
      * @return regular expression pattern given key name
      */
-    private static Pattern getKeyPattern(String keyName) {
+    private static Pattern getKeyPattern(final String keyName) {
         final String keyPatternString = "^" + SPACE_PATTERN.matcher(keyName)
                 .replaceAll(Matcher.quoteReplacement("\\\\ ")) + "[\\s:=].*";
         return Pattern.compile(keyPatternString);
@@ -225,7 +224,7 @@ public class OrderedPropertiesCheck extends AbstractFileSetCheck {
          * @throws NullPointerException - if the key or value is null
          */
         @Override
-        public synchronized Object put(Object key, Object value) {
+        public synchronized Object put(final Object key, final Object value) {
             keyList.add(key);
 
             return super.put(key, value);

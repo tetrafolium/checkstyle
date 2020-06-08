@@ -100,7 +100,7 @@ public class JavadocDetailNodeParser {
      *        DetailAST of Javadoc comment
      * @return DetailNode tree of Javadoc comment
      */
-    public ParseStatus parseJavadocAsDetailNode(DetailAST javadocCommentAst) {
+    public ParseStatus parseJavadocAsDetailNode(final DetailAST javadocCommentAst) {
         blockCommentLineNumber = javadocCommentAst.getLineNo();
 
         final String javadocComment = JavadocUtil.getJavadocCommentContent(javadocCommentAst);
@@ -129,8 +129,7 @@ public class JavadocDetailNodeParser {
                                 + JAVADOC_START.length());
             result.setTree(tree);
             result.firstNonTightHtmlTag = getFirstNonTightHtmlTag(javadocParser);
-        }
-        catch (ParseCancellationException | IllegalArgumentException ex) {
+        } catch (ParseCancellationException | IllegalArgumentException ex) {
             ParseErrorMessage parseErrorMessage = null;
 
             if (ex.getCause() instanceof FailedPredicateException
@@ -165,7 +164,7 @@ public class JavadocDetailNodeParser {
      *        block comment content.
      * @return parse tree
      */
-    private JavadocParser createJavadocParser(String blockComment) {
+    private JavadocParser createJavadocParser(final String blockComment) {
         final JavadocLexer lexer = new JavadocLexer(CharStreams.fromString(blockComment));
 
         final CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -192,7 +191,7 @@ public class JavadocDetailNodeParser {
      * @return root of DetailNode tree
      * @noinspection SuspiciousArrayCast
      */
-    private DetailNode convertParseTreeToDetailNode(ParseTree parseTreeNode) {
+    private DetailNode convertParseTreeToDetailNode(final ParseTree parseTreeNode) {
         final JavadocNodeImpl rootJavadocNode = createRootJavadocNode(parseTreeNode);
 
         JavadocNodeImpl currentJavadocParent = rootJavadocNode;
@@ -212,8 +211,7 @@ public class JavadocDetailNodeParser {
             if (children.length > 0) {
                 currentJavadocParent = children[0];
                 parseTreeParent = parseTreeParent.getChild(0);
-            }
-            else {
+            } else {
                 JavadocNodeImpl nextJavadocSibling = (JavadocNodeImpl) JavadocUtil
                         .getNextSibling(currentJavadocParent);
 
@@ -247,7 +245,7 @@ public class JavadocDetailNodeParser {
      * @param parseTreeParent original ParseTree parent node
      * @param nodes array of JavadocNodeImpl nodes
      */
-    private void insertChildrenNodes(final JavadocNodeImpl[] nodes, ParseTree parseTreeParent) {
+    private void insertChildrenNodes(final JavadocNodeImpl[] nodes, final ParseTree parseTreeParent) {
         for (int i = 0; i < nodes.length; i++) {
             final JavadocNodeImpl currentJavadocNode = nodes[i];
             final ParseTree currentParseTreeNodeChild = parseTreeParent.getChild(i);
@@ -264,7 +262,7 @@ public class JavadocDetailNodeParser {
      * @return array of Javadoc nodes
      */
     private JavadocNodeImpl[]
-            createChildrenNodes(JavadocNodeImpl parentJavadocNode, ParseTree parseTreeNode) {
+            createChildrenNodes(final JavadocNodeImpl parentJavadocNode, final ParseTree parseTreeNode) {
         final JavadocNodeImpl[] children =
                 new JavadocNodeImpl[parseTreeNode.getChildCount()];
 
@@ -282,7 +280,7 @@ public class JavadocDetailNodeParser {
      * @param parseTreeNode ParseTree root node
      * @return root Javadoc node
      */
-    private JavadocNodeImpl createRootJavadocNode(ParseTree parseTreeNode) {
+    private JavadocNodeImpl createRootJavadocNode(final ParseTree parseTreeNode) {
         final JavadocNodeImpl rootJavadocNode = createJavadocNode(parseTreeNode, null, -1);
 
         final int childCount = parseTreeNode.getChildCount();
@@ -305,13 +303,12 @@ public class JavadocDetailNodeParser {
      * @param index child index that has new node
      * @return JavadocNodeImpl node on base of ParseTree node.
      */
-    private JavadocNodeImpl createJavadocNode(ParseTree parseTree, DetailNode parent, int index) {
+    private JavadocNodeImpl createJavadocNode(final ParseTree parseTree, final DetailNode parent, final int index) {
         final JavadocNodeImpl node = new JavadocNodeImpl();
         if (parseTree.getChildCount() == 0
                 || "Text".equals(getNodeClassNameWithoutContext(parseTree))) {
             node.setText(parseTree.getText());
-        }
-        else {
+        } else {
             node.setText(getFormattedNodeClassNameWithoutContext(parseTree));
         }
         node.setColumnNumber(getColumn(parseTree));
@@ -328,7 +325,7 @@ public class JavadocDetailNodeParser {
      * @param tree DetailNode tree root
      * @param javadocColumnNumber javadoc indent
      */
-    private void adjustFirstLineToJavadocIndent(DetailNode tree, int javadocColumnNumber) {
+    private void adjustFirstLineToJavadocIndent(final DetailNode tree, final int javadocColumnNumber) {
         if (tree.getLineNumber() == blockCommentLineNumber) {
             ((JavadocNodeImpl) tree).setColumnNumber(tree.getColumnNumber() + javadocColumnNumber);
             final DetailNode[] children = tree.getChildren();
@@ -344,12 +341,11 @@ public class JavadocDetailNodeParser {
      *        ParseTree node
      * @return line number
      */
-    private static int getLine(ParseTree tree) {
+    private static int getLine(final ParseTree tree) {
         final int line;
         if (tree instanceof TerminalNode) {
             line = ((TerminalNode) tree).getSymbol().getLine() - 1;
-        }
-        else {
+        } else {
             final ParserRuleContext rule = (ParserRuleContext) tree;
             line = rule.start.getLine() - 1;
         }
@@ -362,12 +358,11 @@ public class JavadocDetailNodeParser {
      *        ParseTree node
      * @return column number
      */
-    private static int getColumn(ParseTree tree) {
+    private static int getColumn(final ParseTree tree) {
         final int column;
         if (tree instanceof TerminalNode) {
             column = ((TerminalNode) tree).getSymbol().getCharPositionInLine();
-        }
-        else {
+        } else {
             final ParserRuleContext rule = (ParserRuleContext) tree;
             column = rule.start.getCharPositionInLine();
         }
@@ -379,7 +374,7 @@ public class JavadocDetailNodeParser {
      * @param node ParseTree node
      * @return next sibling of ParseTree node.
      */
-    private static ParseTree getNextSibling(ParseTree node) {
+    private static ParseTree getNextSibling(final ParseTree node) {
         ParseTree nextSibling = null;
 
         if (node.getParent() != null) {
@@ -402,13 +397,12 @@ public class JavadocDetailNodeParser {
      * @param node ParseTree node.
      * @return token type from JavadocTokenTypes
      */
-    private static int getTokenType(ParseTree node) {
+    private static int getTokenType(final ParseTree node) {
         final int tokenType;
 
         if (node.getChildCount() == 0) {
             tokenType = ((TerminalNode) node).getSymbol().getType();
-        }
-        else {
+        } else {
             final String className = getNodeClassNameWithoutContext(node);
             tokenType = JavadocUtil.getTokenId(convertUpperCamelToUpperUnderscore(className));
         }
@@ -423,7 +417,7 @@ public class JavadocDetailNodeParser {
      * @return uppercased class name without the word 'Context' and with appropriately
      *     inserted underscores
      */
-    private static String getFormattedNodeClassNameWithoutContext(ParseTree node) {
+    private static String getFormattedNodeClassNameWithoutContext(final ParseTree node) {
         final String classNameWithoutContext = getNodeClassNameWithoutContext(node);
         return convertUpperCamelToUpperUnderscore(classNameWithoutContext);
     }
@@ -435,7 +429,7 @@ public class JavadocDetailNodeParser {
      *        ParseTree node.
      * @return class name without 'Context'
      */
-    private static String getNodeClassNameWithoutContext(ParseTree node) {
+    private static String getNodeClassNameWithoutContext(final ParseTree node) {
         final String className = node.getClass().getSimpleName();
         // remove 'Context' at the end
         final int contextLength = 7;
@@ -469,7 +463,7 @@ public class JavadocDetailNodeParser {
      * @return returns appropriate {@link Token} if a HTML close tag is missed;
      *     null otherwise
      */
-    private static Token getMissedHtmlTag(RecognitionException exception) {
+    private static Token getMissedHtmlTag(final RecognitionException exception) {
         Token htmlTagNameStart = null;
         final Interval sourceInterval = exception.getCtx().getSourceInterval();
         final List<Token> tokenList = ((BufferedTokenStream) exception.getInputStream())
@@ -481,12 +475,10 @@ public class JavadocDetailNodeParser {
             if (tokenType == JavadocTokenTypes.HTML_TAG_NAME
                     && prevTokenType == JavadocTokenTypes.START) {
                 stack.push(token);
-            }
-            else if (tokenType == JavadocTokenTypes.HTML_TAG_NAME && !stack.isEmpty()) {
+            } else if (tokenType == JavadocTokenTypes.HTML_TAG_NAME && !stack.isEmpty()) {
                 if (stack.peek().getText().equals(token.getText())) {
                     stack.pop();
-                }
-                else {
+                } else {
                     htmlTagNameStart = stack.pop();
                 }
             }
@@ -508,13 +500,12 @@ public class JavadocDetailNodeParser {
      * @param javadocParser The ANTLR recognizer instance which has been used to parse the javadoc
      * @return First non-tight HTML tag if one exists; null otherwise
      */
-    private Token getFirstNonTightHtmlTag(JavadocParser javadocParser) {
+    private Token getFirstNonTightHtmlTag(final JavadocParser javadocParser) {
         final CommonToken offendingToken;
         final ParserRuleContext nonTightTagStartContext = javadocParser.nonTightTagStartContext;
         if (nonTightTagStartContext == null) {
             offendingToken = null;
-        }
-        else {
+        } else {
             final Token token = ((TerminalNode) nonTightTagStartContext.getChild(1))
                     .getSymbol();
             offendingToken = new CommonToken(token);
@@ -529,7 +520,7 @@ public class JavadocDetailNodeParser {
      * @param text The string to convert.
      * @return The result of the conversion.
      */
-    private static String convertUpperCamelToUpperUnderscore(String text) {
+    private static String convertUpperCamelToUpperUnderscore(final String text) {
         final StringBuilder result = new StringBuilder(20);
         boolean first = true;
         for (char letter : text.toCharArray()) {
@@ -574,7 +565,7 @@ public class JavadocDetailNodeParser {
          * @param offset
          *        offset line number
          */
-        public void setOffset(int offset) {
+        public void setOffset(final int offset) {
             this.offset = offset;
         }
 
@@ -590,9 +581,9 @@ public class JavadocDetailNodeParser {
          */
         @Override
         public void syntaxError(
-                Recognizer<?, ?> recognizer, Object offendingSymbol,
-                int line, int charPositionInLine,
-                String msg, RecognitionException ex) {
+                final Recognizer<?, ?> recognizer, final Object offendingSymbol,
+                final int line, final int charPositionInLine,
+                final String msg, final RecognitionException ex) {
             final int lineNumber = offset + line;
 
             if (MSG_JAVADOC_WRONG_SINGLETON_TAG.equals(msg)) {
@@ -651,7 +642,7 @@ public class JavadocDetailNodeParser {
          * Sets DetailNode tree.
          * @param tree DetailNode tree.
          */
-        public void setTree(DetailNode tree) {
+        public void setTree(final DetailNode tree) {
             this.tree = tree;
         }
 
@@ -667,7 +658,7 @@ public class JavadocDetailNodeParser {
          * Sets parse error message.
          * @param parseErrorMessage Parse error message.
          */
-        public void setParseErrorMessage(ParseErrorMessage parseErrorMessage) {
+        public void setParseErrorMessage(final ParseErrorMessage parseErrorMessage) {
             this.parseErrorMessage = parseErrorMessage;
         }
 
@@ -724,8 +715,8 @@ public class JavadocDetailNodeParser {
          * @param messageKey message key
          * @param messageArguments message arguments
          */
-        /* package */ ParseErrorMessage(int lineNumber, String messageKey,
-                Object... messageArguments) {
+        /* package */ ParseErrorMessage(final int lineNumber, final String messageKey,
+                final Object... messageArguments) {
             this.lineNumber = lineNumber;
             this.messageKey = messageKey;
             this.messageArguments = messageArguments.clone();
@@ -774,7 +765,7 @@ public class JavadocDetailNodeParser {
     private static class JavadocParserErrorStrategy extends BailErrorStrategy {
 
         @Override
-        public Token recoverInline(Parser recognizer) {
+        public Token recoverInline(final Parser recognizer) {
             reportError(recognizer, new InputMismatchException(recognizer));
             return super.recoverInline(recognizer);
         }

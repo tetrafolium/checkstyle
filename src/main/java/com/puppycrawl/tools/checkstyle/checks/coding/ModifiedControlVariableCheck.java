@@ -138,7 +138,7 @@ public final class ModifiedControlVariableCheck extends AbstractCheck {
      * enhanced for-loop</a> variable.
      * @param skipEnhancedForLoopVariable whether to skip enhanced for-loop variable
      */
-    public void setSkipEnhancedForLoopVariable(boolean skipEnhancedForLoopVariable) {
+    public void setSkipEnhancedForLoopVariable(final boolean skipEnhancedForLoopVariable) {
         this.skipEnhancedForLoopVariable = skipEnhancedForLoopVariable;
     }
 
@@ -179,13 +179,13 @@ public final class ModifiedControlVariableCheck extends AbstractCheck {
     }
 
     @Override
-    public void beginTree(DetailAST rootAST) {
+    public void beginTree(final DetailAST rootAST) {
         // clear data
         variableStack.clear();
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         switch (ast.getType()) {
             case TokenTypes.OBJBLOCK:
                 enterBlock();
@@ -219,7 +219,7 @@ public final class ModifiedControlVariableCheck extends AbstractCheck {
     }
 
     @Override
-    public void leaveToken(DetailAST ast) {
+    public void leaveToken(final DetailAST ast) {
         switch (ast.getType()) {
             case TokenTypes.FOR_ITERATOR:
                 leaveForIter(ast.getParent());
@@ -285,7 +285,7 @@ public final class ModifiedControlVariableCheck extends AbstractCheck {
      * Check if ident is parameter.
      * @param ast ident to check.
      */
-    private void checkIdent(DetailAST ast) {
+    private void checkIdent(final DetailAST ast) {
         final Deque<String> currentVariables = getCurrentVariables();
         final DetailAST identAST = ast.getFirstChild();
 
@@ -299,7 +299,7 @@ public final class ModifiedControlVariableCheck extends AbstractCheck {
      * Push current variables to the stack.
      * @param ast a for definition.
      */
-    private void leaveForIter(DetailAST ast) {
+    private void leaveForIter(final DetailAST ast) {
         final Set<String> variablesToPutInScope = getVariablesManagedByForLoop(ast);
         for (String variableName : variablesToPutInScope) {
             getCurrentVariables().push(variableName);
@@ -312,7 +312,7 @@ public final class ModifiedControlVariableCheck extends AbstractCheck {
      * @param ast For Loop
      * @return Set of Variable Name which are managed by for
      */
-    private static Set<String> getVariablesManagedByForLoop(DetailAST ast) {
+    private static Set<String> getVariablesManagedByForLoop(final DetailAST ast) {
         final Set<String> initializedVariables = getForInitVariables(ast);
         final Set<String> iteratingVariables = getForIteratorVariables(ast);
         return initializedVariables.stream().filter(iteratingVariables::contains)
@@ -323,7 +323,7 @@ public final class ModifiedControlVariableCheck extends AbstractCheck {
      * Push current variables to the stack.
      * @param paramDef a for-each clause variable
      */
-    private void leaveForEach(DetailAST paramDef) {
+    private void leaveForEach(final DetailAST paramDef) {
         final DetailAST paramName = paramDef.findFirstToken(TokenTypes.IDENT);
         getCurrentVariables().push(paramName.getText());
     }
@@ -332,15 +332,14 @@ public final class ModifiedControlVariableCheck extends AbstractCheck {
      * Pops the variables from the stack.
      * @param ast a for definition.
      */
-    private void leaveForDef(DetailAST ast) {
+    private void leaveForDef(final DetailAST ast) {
         final DetailAST forInitAST = ast.findFirstToken(TokenTypes.FOR_INIT);
         if (forInitAST == null) {
             if (!skipEnhancedForLoopVariable) {
                 // this is for-each loop, just pop variables
                 getCurrentVariables().pop();
             }
-        }
-        else {
+        } else {
             final Set<String> variablesManagedByForLoop = getVariablesManagedByForLoop(ast);
             popCurrentVariables(variablesManagedByForLoop.size());
         }
@@ -350,7 +349,7 @@ public final class ModifiedControlVariableCheck extends AbstractCheck {
      * Pops given number of variables from currentVariables.
      * @param count Count of variables to be popped from currentVariables
      */
-    private void popCurrentVariables(int count) {
+    private void popCurrentVariables(final int count) {
         for (int i = 0; i < count; i++) {
             getCurrentVariables().pop();
         }
@@ -361,7 +360,7 @@ public final class ModifiedControlVariableCheck extends AbstractCheck {
      * @param ast for loop token
      * @return set of variables initialized in for loop
      */
-    private static Set<String> getForInitVariables(DetailAST ast) {
+    private static Set<String> getForInitVariables(final DetailAST ast) {
         final Set<String> initializedVariables = new HashSet<>();
         final DetailAST forInitAST = ast.findFirstToken(TokenTypes.FOR_INIT);
 
@@ -383,7 +382,7 @@ public final class ModifiedControlVariableCheck extends AbstractCheck {
      * @param ast for loop literal(TokenTypes.LITERAL_FOR)
      * @return names of variables change in iterating part of for
      */
-    private static Set<String> getForIteratorVariables(DetailAST ast) {
+    private static Set<String> getForIteratorVariables(final DetailAST ast) {
         final Set<String> iteratorVariables = new HashSet<>();
         final DetailAST forIteratorAST = ast.findFirstToken(TokenTypes.FOR_ITERATOR);
         final DetailAST forUpdateListAST = forIteratorAST.findFirstToken(TokenTypes.ELIST);
@@ -404,7 +403,7 @@ public final class ModifiedControlVariableCheck extends AbstractCheck {
      * @param ast parent of expressions to find
      * @return all child of given ast
      */
-    private static List<DetailAST> findChildrenOfExpressionType(DetailAST ast) {
+    private static List<DetailAST> findChildrenOfExpressionType(final DetailAST ast) {
         final List<DetailAST> foundExpressions = new LinkedList<>();
         if (ast != null) {
             for (DetailAST iteratingExpressionAST = ast.findFirstToken(TokenTypes.EXPR);

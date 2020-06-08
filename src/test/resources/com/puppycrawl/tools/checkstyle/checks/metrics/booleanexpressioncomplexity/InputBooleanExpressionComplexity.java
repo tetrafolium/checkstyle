@@ -23,7 +23,7 @@ public class InputBooleanExpressionComplexity {
         }
     }
 
-    public boolean equals(Object object) {
+    public boolean equals(final Object object) {
         new NestedClass() {
             public void method() {
                 new Settings(Settings.FALSE || Settings.FALSE || Settings.FALSE || _a || _b);
@@ -67,11 +67,11 @@ public class InputBooleanExpressionComplexity {
         public final static boolean TRUE = true;
         public final static boolean FALSE = false;
 
-        public Settings(int flag)
+        public Settings(final int flag)
         {
         }
 
-        public Settings(boolean flag)
+        public Settings(final boolean flag)
         {
         }
     }

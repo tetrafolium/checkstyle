@@ -61,7 +61,7 @@ public class XmlLoader
      * @throws SAXException if an error occurs
      * @throws ParserConfigurationException if an error occurs
      */
-    protected XmlLoader(Map<String, String> publicIdToResourceNameMap)
+    protected XmlLoader(final Map<String, String> publicIdToResourceNameMap)
             throws SAXException, ParserConfigurationException {
         this.publicIdToResourceNameMap = new HashMap<>(publicIdToResourceNameMap);
         final SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -79,13 +79,13 @@ public class XmlLoader
      * @throws IOException if an error occurs
      * @throws SAXException in an error occurs
      */
-    public void parseInputSource(InputSource inputSource)
+    public void parseInputSource(final InputSource inputSource)
             throws IOException, SAXException {
         parser.parse(inputSource);
     }
 
     @Override
-    public InputSource resolveEntity(String publicId, String systemId)
+    public InputSource resolveEntity(final String publicId, final String systemId)
             throws SAXException, IOException {
         final InputSource inputSource;
         if (publicIdToResourceNameMap.containsKey(publicId)) {
@@ -97,15 +97,14 @@ public class XmlLoader
                 loader.getResourceAsStream(dtdResourceName);
 
             inputSource = new InputSource(dtdIs);
-        }
-        else {
+        } else {
             inputSource = super.resolveEntity(publicId, systemId);
         }
         return inputSource;
     }
 
     @Override
-    public void error(SAXParseException exception) throws SAXException {
+    public void error(final SAXParseException exception) throws SAXException {
         throw exception;
     }
 
@@ -141,7 +140,7 @@ public class XmlLoader
          * @throws SAXException if an error occurs
          * @throws ParserConfigurationException if an error occurs
          */
-        public static void setFeaturesBySystemProperty(SAXParserFactory factory)
+        public static void setFeaturesBySystemProperty(final SAXParserFactory factory)
                 throws SAXException, ParserConfigurationException {
 
             final boolean enableExternalDtdLoad = Boolean.parseBoolean(

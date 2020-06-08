@@ -117,8 +117,7 @@ public class CheckstyleAntTaskPowerTest extends AbstractPathTestSupport {
         try {
             antTask.execute();
             fail("Exception is expected");
-        }
-        catch (BuildException ex) {
+        } catch (BuildException ex) {
             assertTrue("Error message is unexpected",
                     ex.getMessage().startsWith("Unable to process files:"));
         }
@@ -154,12 +153,12 @@ public class CheckstyleAntTaskPowerTest extends AbstractPathTestSupport {
         private final List<MessageLevelPair> loggedMessages = new ArrayList<>();
 
         @Override
-        public void log(String msg, int msgLevel) {
+        public void log(final String msg, final int msgLevel) {
             loggedMessages.add(new MessageLevelPair(msg, msgLevel));
         }
 
         @Override
-        public void log(String msg, Throwable t, int msgLevel) {
+        public void log(final String msg, final Throwable t, final int msgLevel) {
             loggedMessages.add(new MessageLevelPair(msg, msgLevel));
         }
 
@@ -179,7 +178,7 @@ public class CheckstyleAntTaskPowerTest extends AbstractPathTestSupport {
         private final String msg;
         private final int level;
 
-        /* package */ MessageLevelPair(String msg, int level) {
+        /* package */ MessageLevelPair(final String msg, final int level) {
             this.msg = msg;
             this.level = level;
         }

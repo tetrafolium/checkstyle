@@ -10,9 +10,11 @@ package com.puppycrawl.tools.checkstyle.checks.blocks.rightcurly;
  * @author <a href="mailto:piotr.listkiewicz@gmail.com">liscju</a>
  */
 public class InputRightCurlyNameForOneLiners {
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         boolean after = false;
         try {
-        } finally { after = true; }
+        } finally {
+            after = true;
+        }
     }
 }

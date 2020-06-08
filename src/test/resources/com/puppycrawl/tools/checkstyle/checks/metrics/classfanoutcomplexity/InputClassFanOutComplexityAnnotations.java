@@ -10,12 +10,12 @@ public class InputClassFanOutComplexityAnnotations { // violation
 
     private int tokenType = TokenTypes.EXPR;
 
-    public void foo1(@TypeAnnotation char a) {}
+    public void foo1(final @TypeAnnotation char a) { }
 
-    public void foo2(final char @TypeAnnotation [] a) {}
+    public void foo2(final char @TypeAnnotation [] a) { }
 
     @MethodAnnotation
-    public void foo3() {}
+    public void foo3() { }
 
     @Override
     public String toString() {
@@ -27,7 +27,7 @@ public class InputClassFanOutComplexityAnnotations { // violation
 
         @MyAnnotation
         @MethodAnnotation
-        public void innerClassMethod() {}
+        public void innerClassMethod() { }
 
     }
 
@@ -35,7 +35,7 @@ public class InputClassFanOutComplexityAnnotations { // violation
 
         @MethodAnnotation
         @MyAnnotation
-        public String innerClass2Method(@TypeAnnotation String parameter) {
+        public String innerClass2Method(final @TypeAnnotation String parameter) {
             return parameter.trim();
         }
 
@@ -71,18 +71,18 @@ class OuterClass { // violation
 }
 
 @Target(ElementType.TYPE_USE)
-@interface TypeAnnotation {}
+@interface TypeAnnotation { }
 
 @Target(ElementType.METHOD)
-@interface MethodAnnotation {}
+@interface MethodAnnotation { }
 
 @MyAnnotation // violation
-class MyClass {}
+class MyClass { }
 
 @MyAnnotation // violation
-interface MyInterface {}
+interface MyInterface { }
 
-@interface MyAnnotation {}
+@interface MyAnnotation { }
 
 @interface TwoParametersAnnotation {
 

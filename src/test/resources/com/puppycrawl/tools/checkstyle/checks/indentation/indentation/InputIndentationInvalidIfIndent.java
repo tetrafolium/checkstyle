@@ -22,7 +22,7 @@ public class InputIndentationInvalidIfIndent { //indent:0 exp:0
     } //indent:4 exp:4
 
     // ctor with rcurly on next line //indent:4 exp:4
-    public InputIndentationInvalidIfIndent(int dummy) //indent:4 exp:4
+    public InputIndentationInvalidIfIndent(final int dummy) //indent:4 exp:4
     { //indent:4 exp:4
     } //indent:4 exp:4
 
@@ -36,13 +36,13 @@ public class InputIndentationInvalidIfIndent { //indent:0 exp:0
     } //indent:4 exp:4
 
     // method with a bunch of params //indent:4 exp:4
-    public void method2(int x, int y, int w, int h) //indent:4 exp:4
+    public void method2(final int x, final int y, final int w, final int h) //indent:4 exp:4
     { //indent:4 exp:4
     } //indent:4 exp:4
 
     // params on multiple lines //indent:4 exp:4
-    public void method2(int x, int y, int w, int h, //indent:4 exp:4
-        int x1, int y1, int w1, int h1) //indent:8 exp:>=8
+    public void method2(final int x, final int y, final int w, final int h, //indent:4 exp:4
+        final int x1, final int y1, final int w1, final int h1) //indent:8 exp:>=8
     { //indent:4 exp:4
     } //indent:4 exp:4
 
@@ -134,10 +134,10 @@ public class InputIndentationInvalidIfIndent { //indent:0 exp:0
         // lcurly for if and else on same line //indent:8 exp:8
         if (test) { //indent:8 exp:8
 
-              System. //indent:14 exp:12 warn
+              System.//indent:14 exp:12 warn
           getProperty("blah"); //indent:10 exp:12 warn
         } else { //indent:8 exp:8
-          System. //indent:10 exp:12 warn
+          System.//indent:10 exp:12 warn
         getProperty("blah"); //indent:8 exp:12 warn
         } //indent:8 exp:8
 
@@ -230,7 +230,8 @@ System.getProperty("blah"); //indent:0 exp:12 warn
                 } //indent:16 exp:16
 
         if (test) { //indent:8 exp:8
-            System.getProperty("blah"); } //indent:12 exp:12
+            System.getProperty("blah");
+        } //indent:12 exp:12
     } //indent:4 exp:4
 
     public void parenIfTest() { //indent:4 exp:4
@@ -248,7 +249,7 @@ System.getProperty("blah"); //indent:0 exp:12 warn
         } //indent:8 exp:8
 
         if  //indent:8 exp:8
-      ( //indent:6 exp:8 warn
+      (//indent:6 exp:8 warn
             test //indent:12 exp:12
       ) { //indent:6 exp:8 warn
             System.getProperty("blah");  //indent:12 exp:12

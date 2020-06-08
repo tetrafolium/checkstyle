@@ -126,7 +126,7 @@ public class AtclauseOrderCheck extends AbstractJavadocCheck {
      * Setter to specify the list of targets to check at-clauses.
      * @param targets user's targets.
      */
-    public void setTarget(String... targets) {
+    public void setTarget(final String... targets) {
         final List<Integer> customTarget = new ArrayList<>();
         for (String temp : targets) {
             customTarget.add(TokenUtil.getTokenId(temp.trim()));
@@ -138,7 +138,7 @@ public class AtclauseOrderCheck extends AbstractJavadocCheck {
      * Setter to specify the order by tags.
      * @param orders user's orders.
      */
-    public void setTagOrder(String... orders) {
+    public void setTagOrder(final String... orders) {
         final List<String> customOrder = new ArrayList<>();
         for (String order : orders) {
             customOrder.add(order.trim());
@@ -159,7 +159,7 @@ public class AtclauseOrderCheck extends AbstractJavadocCheck {
     }
 
     @Override
-    public void visitJavadocToken(DetailNode ast) {
+    public void visitJavadocToken(final DetailNode ast) {
         final int parentType = getParentType(getBlockCommentAst());
 
         if (target.contains(parentType)) {
@@ -171,7 +171,7 @@ public class AtclauseOrderCheck extends AbstractJavadocCheck {
      * Checks order of atclauses in tag section node.
      * @param javadoc Javadoc root node.
      */
-    private void checkOrderInTagSection(DetailNode javadoc) {
+    private void checkOrderInTagSection(final DetailNode javadoc) {
         int maxIndexOfPreviousTag = 0;
 
         for (DetailNode node : javadoc.getChildren()) {
@@ -182,8 +182,7 @@ public class AtclauseOrderCheck extends AbstractJavadocCheck {
                 if (indexOfCurrentTag != -1) {
                     if (indexOfCurrentTag < maxIndexOfPreviousTag) {
                         log(node.getLineNumber(), MSG_KEY, tagOrder.toString());
-                    }
-                    else {
+                    } else {
                         maxIndexOfPreviousTag = indexOfCurrentTag;
                     }
                 }
@@ -196,7 +195,7 @@ public class AtclauseOrderCheck extends AbstractJavadocCheck {
      * @param commentBlock child node.
      * @return parent type.
      */
-    private static int getParentType(DetailAST commentBlock) {
+    private static int getParentType(final DetailAST commentBlock) {
         final DetailAST parentNode = commentBlock.getParent();
         int result = 0;
         if (parentNode != null) {

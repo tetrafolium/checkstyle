@@ -9,6 +9,6 @@ class InputComments2
      */
     protected String line()
     {
-		return null;
+                return null;
     }
 }

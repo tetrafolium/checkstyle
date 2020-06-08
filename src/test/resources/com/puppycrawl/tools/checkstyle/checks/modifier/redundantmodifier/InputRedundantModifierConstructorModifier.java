@@ -9,9 +9,9 @@ public enum InputRedundantModifierConstructorModifier {
 
     private InputRedundantModifierConstructorModifier() { } // violation
 
-    InputRedundantModifierConstructorModifier(int i) { }
+    InputRedundantModifierConstructorModifier(final int i) { }
 
-    InputRedundantModifierConstructorModifier(char c) { }
+    InputRedundantModifierConstructorModifier(final char c) { }
 }
 
 class ProperPrivateConstructor {

@@ -52,7 +52,7 @@ class TreeTableCellRenderer extends JTree implements
      * @param treeTable tree table to render.
      * @param model Tree model.
      */
-    /* package */ TreeTableCellRenderer(TreeTable treeTable, TreeModel model) {
+    /* package */ TreeTableCellRenderer(final TreeTable treeTable, final TreeModel model) {
         super(model);
         this.treeTable = treeTable;
     }
@@ -83,7 +83,7 @@ class TreeTableCellRenderer extends JTree implements
      * the table.
      */
     @Override
-    public void setRowHeight(int newRowHeight) {
+    public void setRowHeight(final int newRowHeight) {
         if (newRowHeight > 0) {
             super.setRowHeight(newRowHeight);
             if (treeTable != null
@@ -97,7 +97,7 @@ class TreeTableCellRenderer extends JTree implements
      * This is overridden to set the height to match that of the JTable.
      */
     @Override
-    public void setBounds(int x, int y, int w, int h) {
+    public void setBounds(final int x, final int y, final int w, final int h) {
         super.setBounds(x, 0, w, treeTable.getHeight());
     }
 
@@ -106,7 +106,7 @@ class TreeTableCellRenderer extends JTree implements
      * row will be drawn at 0,0.
      */
     @Override
-    public void paint(Graphics graph) {
+    public void paint(final Graphics graph) {
         graph.translate(0, -visibleRow * getRowHeight());
         super.paint(graph);
     }
@@ -116,15 +116,14 @@ class TreeTableCellRenderer extends JTree implements
      * @see TableCellRenderer
      */
     @Override
-    public Component getTableCellRendererComponent(JTable table,
-            Object value,
-            boolean isSelected,
-            boolean hasFocus,
-            int row, int column) {
+    public Component getTableCellRendererComponent(final JTable table,
+            final Object value,
+            final boolean isSelected,
+            final boolean hasFocus,
+            final int row, final int column) {
         if (isSelected) {
             setBackground(table.getSelectionBackground());
-        }
-        else {
+        } else {
             setBackground(table.getBackground());
         }
 

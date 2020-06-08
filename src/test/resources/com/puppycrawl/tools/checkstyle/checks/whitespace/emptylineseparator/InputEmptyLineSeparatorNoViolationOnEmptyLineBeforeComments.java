@@ -379,7 +379,7 @@ public class InputEmptyLineSeparatorNoViolationOnEmptyLineBeforeComments {
     }
 
     // no violation
-    /* . */ public InputEmptyLineSeparatorNoViolationOnEmptyLineBeforeComments(int i) {
+    /* . */ public InputEmptyLineSeparatorNoViolationOnEmptyLineBeforeComments(final int i) {
         testNoViolationWithJavadoc = 1;
         // no violation
     }
@@ -388,7 +388,7 @@ public class InputEmptyLineSeparatorNoViolationOnEmptyLineBeforeComments {
     // no violation
 
     // no violation
-    public InputEmptyLineSeparatorNoViolationOnEmptyLineBeforeComments(int i, int j) {
+    public InputEmptyLineSeparatorNoViolationOnEmptyLineBeforeComments(final int i, final int j) {
         testNoViolationWithJavadoc = 1;
     }
 
@@ -400,7 +400,7 @@ public class InputEmptyLineSeparatorNoViolationOnEmptyLineBeforeComments {
     // no violation
 
     // no violation
-    public InputEmptyLineSeparatorNoViolationOnEmptyLineBeforeComments(int i, int j, int k) {
+    public InputEmptyLineSeparatorNoViolationOnEmptyLineBeforeComments(final int i, final int j, final int k) {
         testNoViolationWithJavadoc = 1;
     }
 

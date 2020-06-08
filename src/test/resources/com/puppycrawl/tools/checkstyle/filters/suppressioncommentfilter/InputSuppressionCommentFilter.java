@@ -24,7 +24,7 @@ class InputSuppressionCommentFilter
     /*
      * CSON: MemberNameCheck|ConstantNameCheck
      */
-    private int M2;//CSOFF: ConstantNameCheck
+    private int M2; //CSOFF: ConstantNameCheck
     private static final int n = 0;
     //CSON: ConstantNameCheck
 
@@ -44,11 +44,11 @@ class InputSuppressionCommentFilter
     //CHECKSTYLE:ON
 
     //UNUSED OFF: aInt
-    public static void doit1(int aInt)
+    public static void doit1(final int aInt)
     {
     }
     //UNUSED ON: aInt
-    public static void doit2(int aInt)
+    public static void doit2(final int aInt)
     {
     }
 
@@ -56,26 +56,26 @@ class InputSuppressionCommentFilter
     {
         try {
             // lots of code omitted
-            for(int i = 0; i < 10; i++) {
+            for (int i = 0; i < 10; i++) {
                 // more code omitted
-                while(true) {
+                while (true) {
                     try {
                         //CHECKSTYLE:OFF
-                    } catch(Exception e) {
+                    } catch (Exception e) {
                        //CHECKSTYLE:ON
                     }
                 }
                 // code omitted
             }
             //CHECKSTYLE:OFF
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             //CHECKSTYLE:ON
         }
 
-        try{
+        try {
             //IllegalCatchCheck OFF: Exception
-        } catch(RuntimeException ex){
-        } catch(Exception ex){
+        } catch (RuntimeException ex) {
+        } catch (Exception ex) {
             //IllegalCatchCheck ON: Exception
         }
     }
@@ -83,7 +83,7 @@ class InputSuppressionCommentFilter
     public void doit4() {
         try {
 
-        /* CHECKSTYLE:OFF */} catch(Exception e) {/* CHECKSTYLE:ON */
+        /* CHECKSTYLE:OFF */ } catch (Exception e) { /* CHECKSTYLE:ON */
 
         }
     }

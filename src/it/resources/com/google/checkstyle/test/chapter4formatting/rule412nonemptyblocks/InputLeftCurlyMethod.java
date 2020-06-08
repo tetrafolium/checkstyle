@@ -2,15 +2,15 @@ package com.google.checkstyle.test.chapter4formatting.rule412nonemptyblocks;
 
 class InputLeftCurlyMethod
 { //warn
-    InputLeftCurlyMethod() {} //ok
-    InputLeftCurlyMethod(String aOne) {//ok
+    InputLeftCurlyMethod() { } //ok
+    InputLeftCurlyMethod(final String aOne) { //ok
     }
-    InputLeftCurlyMethod(int aOne)
+    InputLeftCurlyMethod(final int aOne)
     { //warn
     }
 
-    void method1() {}//ok
-    void method2() {//ok
+    void method1() { } //ok
+    void method2() { //ok
     }
     void method3()
     { //warn
@@ -18,65 +18,65 @@ class InputLeftCurlyMethod
     void                                                               method4()
     { //warn
     }
-    void method5(String aOne,
-                 String aTwo)
-    {//warn
+    void method5(final String aOne,
+                 final String aTwo)
+    { //warn
     }
-    void method6(String aOne,
-                 String aTwo) {// ok
+    void method6(final String aOne,
+                 final String aTwo) { // ok
     }
 }
 
 enum InputLeftCurlyMethodEnum
-{//warn
+{ //warn
     CONSTANT1("hello")
-    {//warn
-        void method1() {}//ok
+    { //warn
+        void method1() { } //ok
         void method2() {
-        }//ok
+        } //ok
         void method3()
-        {//warn
+        { //warn
         }
         void                                                               method4()
         { //warn
         }
-        void method5(String aOne,
-                     String aTwo)
-        {//warn
+        void method5(final String aOne,
+                     final String aTwo)
+        { //warn
         }
-        void method6(String aOne,
-                     String aTwo) {//ok
+        void method6(final String aOne,
+                     final String aTwo) { //ok
         }
     },
 
-    CONSTANT2("hello") {//ok
+    CONSTANT2("hello") { //ok
 
     },
 
     CONSTANT3("hellohellohellohellohellohellohellohellohellohellohellohellohellohello")
-    {//warn
+    { //warn
     };
 
-    private InputLeftCurlyMethodEnum(String value)
-    {//warn
+    private InputLeftCurlyMethodEnum(final String value)
+    { //warn
 
     }
 
-    void method1() {}//ok
-    void method2() {//ok
+    void method1() { } //ok
+    void method2() { //ok
     }
     void method3()
-    {//warn
+    { //warn
     }
     void                            method4()
-    {//warn
+    { //warn
     }
-    void method5(String aOne,
-                 String aTwo)
-    {//warn
+    void method5(final String aOne,
+                 final String aTwo)
+    { //warn
     }
-    void method6(String aOne,
-                 String aTwo) {// ok
+    void method6(final String aOne,
+                 final String aTwo) { // ok
     }
 }
 

@@ -1,7 +1,7 @@
 package org.checkstyle.suppressionxpathfilter.defaultcomeslast;
 
 public class SuppressionXpathRegressionDefaultComesLastTwo {
-    public void test(int i) {
+    public void test(final int i) {
         switch (i) {
             case 1:
             default:

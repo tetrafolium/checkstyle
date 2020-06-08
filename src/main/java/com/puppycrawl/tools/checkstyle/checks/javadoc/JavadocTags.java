@@ -39,7 +39,7 @@ public final class JavadocTags {
      * @param tags the list of valid tags
      * @param invalidTags the list of invalid tags
      */
-    public JavadocTags(List<JavadocTag> tags, List<InvalidJavadocTag> invalidTags) {
+    public JavadocTags(final List<JavadocTag> tags, final List<InvalidJavadocTag> invalidTags) {
         final List<JavadocTag> validTagsCopy = new ArrayList<>(tags);
         validTags = Collections.unmodifiableList(validTagsCopy);
         final List<InvalidJavadocTag> invalidTagsCopy = new ArrayList<>(invalidTags);

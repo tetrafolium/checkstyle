@@ -279,33 +279,29 @@ public class UnnecessaryParenthesesCheck extends AbstractCheck {
 
     // -@cs[CyclomaticComplexity] All logs should be in visit token.
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         final int type = ast.getType();
         final DetailAST parent = ast.getParent();
 
         if (type == TokenTypes.LAMBDA && isLambdaSingleParameterSurrounded(ast)) {
             log(ast, MSG_LAMBDA, ast.getText());
-        }
-        else if (type != TokenTypes.ASSIGN
+        } else if (type != TokenTypes.ASSIGN
             || parent.getType() != TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR) {
             final boolean surrounded = isSurrounded(ast);
             // An identifier surrounded by parentheses.
             if (surrounded && type == TokenTypes.IDENT) {
                 parentToSkip = ast.getParent();
                 log(ast, MSG_IDENT, ast.getText());
-            }
-            // A literal (numeric or string) surrounded by parentheses.
+            } // A literal (numeric or string) surrounded by parentheses.
             else if (surrounded && isInTokenList(type, LITERALS)) {
                 parentToSkip = ast.getParent();
                 if (type == TokenTypes.STRING_LITERAL) {
                     log(ast, MSG_STRING,
                         chopString(ast.getText()));
-                }
-                else {
+                } else {
                     log(ast, MSG_LITERAL, ast.getText());
                 }
-            }
-            // The rhs of an assignment surrounded by parentheses.
+            } // The rhs of an assignment surrounded by parentheses.
             else if (isInTokenList(type, ASSIGNMENTS)) {
                 assignDepth++;
                 final DetailAST last = ast.getLastChild();
@@ -317,7 +313,7 @@ public class UnnecessaryParenthesesCheck extends AbstractCheck {
     }
 
     @Override
-    public void leaveToken(DetailAST ast) {
+    public void leaveToken(final DetailAST ast) {
         final int type = ast.getType();
         final DetailAST parent = ast.getParent();
 
@@ -333,18 +329,15 @@ public class UnnecessaryParenthesesCheck extends AbstractCheck {
                 if (parentToSkip != ast && isExprSurrounded(ast)) {
                     if (assignDepth >= 1) {
                         log(ast, MSG_ASSIGN);
-                    }
-                    else if (ast.getParent().getType() == TokenTypes.LITERAL_RETURN) {
+                    } else if (ast.getParent().getType() == TokenTypes.LITERAL_RETURN) {
                         log(ast, MSG_RETURN);
-                    }
-                    else {
+                    } else {
                         log(ast, MSG_EXPR);
                     }
                 }
 
                 parentToSkip = null;
-            }
-            else if (isInTokenList(type, ASSIGNMENTS)) {
+            } else if (isInTokenList(type, ASSIGNMENTS)) {
                 assignDepth--;
             }
         }
@@ -360,7 +353,7 @@ public class UnnecessaryParenthesesCheck extends AbstractCheck {
      * @return {@code true} if {@code ast} is surrounded by
      *         parentheses.
      */
-    private static boolean isSurrounded(DetailAST ast) {
+    private static boolean isSurrounded(final DetailAST ast) {
         // if previous sibling is left parenthesis,
         // next sibling can't be other than right parenthesis
         final DetailAST prev = ast.getPreviousSibling();
@@ -374,7 +367,7 @@ public class UnnecessaryParenthesesCheck extends AbstractCheck {
      * @return {@code true} if the expression is surrounded by
      *         parentheses.
      */
-    private static boolean isExprSurrounded(DetailAST ast) {
+    private static boolean isExprSurrounded(final DetailAST ast) {
         return ast.getFirstChild().getType() == TokenTypes.LPAREN;
     }
 
@@ -386,7 +379,7 @@ public class UnnecessaryParenthesesCheck extends AbstractCheck {
      * @return {@code true} if the lambda has a single parameter, no defined type, and is
      *         surrounded by parentheses.
      */
-    private static boolean isLambdaSingleParameterSurrounded(DetailAST ast) {
+    private static boolean isLambdaSingleParameterSurrounded(final DetailAST ast) {
         final DetailAST firstChild = ast.getFirstChild();
         boolean result = false;
         if (firstChild.getType() == TokenTypes.LPAREN) {
@@ -406,7 +399,7 @@ public class UnnecessaryParenthesesCheck extends AbstractCheck {
      * @return {@code true} if {@code type} was found in {@code
      *         tokens}.
      */
-    private static boolean isInTokenList(int type, int... tokens) {
+    private static boolean isInTokenList(final int type, final int... tokens) {
         // NOTE: Given the small size of the two arrays searched, I'm not sure
         //       it's worth bothering with doing a binary search or using a
         //       HashMap to do the searches.
@@ -426,7 +419,7 @@ public class UnnecessaryParenthesesCheck extends AbstractCheck {
      * @return the chopped string if {@code string} is longer than
      *         {@code MAX_QUOTED_LENGTH}; otherwise {@code string}.
      */
-    private static String chopString(String value) {
+    private static String chopString(final String value) {
         String result = value;
         if (value.length() > MAX_QUOTED_LENGTH) {
             result = value.substring(0, MAX_QUOTED_LENGTH) + "...\"";

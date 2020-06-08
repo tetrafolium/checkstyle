@@ -153,8 +153,7 @@ public class XpathUtilTest {
         try {
             XpathUtil.printXpathBranch(invalidXpath, file);
             fail("Should end with exception");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             final String expectedMessage =
                 "Error during evaluation for xpath: " + invalidXpath
                     + ", file: " + file.getCanonicalPath();
@@ -162,13 +161,13 @@ public class XpathUtilTest {
         }
     }
 
-    private static DetailAST createDetailAST(int type) {
+    private static DetailAST createDetailAST(final int type) {
         final DetailAstImpl detailAST = new DetailAstImpl();
         detailAST.setType(type);
         return detailAST;
     }
 
-    private static DetailAST createDetailAST(int type, String text) {
+    private static DetailAST createDetailAST(final int type, final String text) {
         final DetailAstImpl detailAST = new DetailAstImpl();
         detailAST.setType(type);
         detailAST.setText(text);

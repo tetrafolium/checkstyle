@@ -39,7 +39,7 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
 
     /////////////////////////////// (a single line border to separate a group of methods)
 
-    public void foo8() {}
+    public void foo8() { }
 
     public class TestClass {
         public void test() {
@@ -215,14 +215,14 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
     }
 
     public void foo31() {
-        String s = new String ("A"
+        String s = new String("A"
             + "B"
             + "C");
         // comment
     }
 
     public void foo32() {
-        String s = new String ("A"
+        String s = new String("A"
             + "B"
             + "C");
             // warn
@@ -288,7 +288,7 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
         if (a == 5) {
             int b;
             // comment
-        } else if (a ==6) {
+        } else if (a == 6) {
 
         }
     }

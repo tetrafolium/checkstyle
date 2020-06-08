@@ -112,8 +112,7 @@ public class OperatorWrapCheckTest
 
             verify(checkConfig, getPath("InputOperatorWrap.java"), expected);
             fail("exception expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             assertEquals("cannot initialize module com.puppycrawl.tools.checkstyle.TreeWalker - "
                     + "cannot initialize module com.puppycrawl.tools.checkstyle.checks."
                     + "whitespace.OperatorWrapCheck - "

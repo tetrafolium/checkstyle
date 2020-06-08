@@ -129,7 +129,7 @@ public class IllegalTokenTextCheck
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         final String text = ast.getText();
         if (format.matcher(text).find()) {
             String customMessage = message;
@@ -149,11 +149,10 @@ public class IllegalTokenTextCheck
      * @param message custom message which should be used
      *                 to report about violations.
      */
-    public void setMessage(String message) {
+    public void setMessage(final String message) {
         if (message == null) {
             this.message = "";
-        }
-        else {
+        } else {
             this.message = message;
         }
     }
@@ -162,7 +161,7 @@ public class IllegalTokenTextCheck
      * Setter to define the RegExp for illegal pattern.
      * @param format a {@code String} value
      */
-    public void setFormat(String format) {
+    public void setFormat(final String format) {
         formatString = format;
         updateRegexp();
     }
@@ -171,7 +170,7 @@ public class IllegalTokenTextCheck
      * Setter to control whether to ignore case when matching.
      * @param caseInsensitive true if the match is case insensitive.
      */
-    public void setIgnoreCase(boolean caseInsensitive) {
+    public void setIgnoreCase(final boolean caseInsensitive) {
         ignoreCase = caseInsensitive;
         updateRegexp();
     }
@@ -184,8 +183,7 @@ public class IllegalTokenTextCheck
         final int compileFlags;
         if (ignoreCase) {
             compileFlags = Pattern.CASE_INSENSITIVE;
-        }
-        else {
+        } else {
             compileFlags = 0;
         }
         format = CommonUtil.createPattern(formatString, compileFlags);

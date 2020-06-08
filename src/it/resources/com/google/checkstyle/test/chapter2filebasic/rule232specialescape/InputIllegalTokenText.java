@@ -112,7 +112,7 @@ public class InputIllegalTokenText
             String r8 = "\\134"; // warn
         }
 
-        Inner anoInner = new Inner(){
+        Inner anoInner = new Inner() {
             public String wrongEscapeSequences()
             {
                 final String r1 = "\u0008"; //ok

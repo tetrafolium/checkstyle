@@ -39,13 +39,13 @@ String author() default "author"; //indent:0 exp:4 warn
     { //indent:4 exp:4
         public String author() default "auth"; //indent:8 exp:8
        @AnnotationWithTarget(book = "") public String title() default "title"; //indent:7 exp:8 warn
-    }//indent:4 exp:4
+    } //indent:4 exp:4
 } //indent:0 exp:0
 @interface RepeatableInner { //indent:0 exp:0
     AnnotationWithTarget.AnnotationInnerLineWrap[] value(); //indent:4 exp:4
 } //indent:0 exp:0
 
-@interface Ann {} //indent:0 exp:0
+@interface Ann { } //indent:0 exp:0
 
 class InnerAnonClass { //indent:0 exp:0
     @interface MyInnerAnno { //indent:4 exp:4
@@ -58,7 +58,7 @@ class InnerAnonClass { //indent:0 exp:0
     AnnotationInnerLineWrap2 { //indent:4 exp:0 warn
    public String author() default "auth"; //indent:3 exp:4 warn
        @AnnotationWithTarget(book = "") public String title() default "title"; //indent:7 exp:4 warn
-    }//indent:4 exp:0 warn
+    } //indent:4 exp:0 warn
 
 @interface RepeatableInner2 { //indent:0 exp:0
     AnnotationInnerLineWrap2[] value(); //indent:4 exp:4
@@ -69,7 +69,7 @@ class InnerAnonClass { //indent:0 exp:0
 } //indent:0 exp:0
 
 class InnerAnnotSingleLine { //indent:0 exp:0
-   @Retention(RetentionPolicy.SOURCE) @interface AnnotationOneLine {} //indent:3 exp:4 warn
+   @Retention(RetentionPolicy.SOURCE) @interface AnnotationOneLine { } //indent:3 exp:4 warn
 } //indent:0 exp:0
 
 @interface AnnotationDef { //indent:0 exp:0
@@ -79,14 +79,14 @@ class InnerAnnotSingleLine { //indent:0 exp:0
 @interface AnnotationDef2 { //indent:0 exp:0
     int value //indent:4 exp:4
         = Integer.parseInt("1"); //indent:8 exp:8
-    Object object = new Object(){ //indent:4 exp:4
+    Object object = new Object() { //indent:4 exp:4
         @Override //indent:8 exp:8
         public String toString() { //indent:8 exp:8
             return //indent:12 exp:12
-                    new String( //indent:20 exp:20
+                    new String(//indent:20 exp:20
                             new StringBuilder("Hello") //indent:28 exp:28
                                     .append(",World")) //indent:36 exp:36
-                    ; //indent:20 exp:20
+; //indent:20 exp:20
         } //indent:8 exp:8
     }.toString(); //indent:4 exp:4
 } //indent:0 exp:0
@@ -97,12 +97,12 @@ class InnerAnnotSingleLine { //indent:0 exp:0
 @Retention(RetentionPolicy.RUNTIME) //indent:0 exp:0
 @interface MetaConfig { //indent:0 exp:0
 
-	static class DevConfig { //indent:4 exp:4
-	} //indent:4 exp:4
+        static class DevConfig { //indent:4 exp:4
+        } //indent:4 exp:4
 
-	static class ProductionConfig { //indent:4 exp:4
-	} //indent:4 exp:4
-	Class<?>[] classes() default { DevConfig.class, ProductionConfig.class }; //indent:4 exp:4
+        static class ProductionConfig { //indent:4 exp:4
+        } //indent:4 exp:4
+        Class<?>[] classes() default { DevConfig.class, ProductionConfig.class }; //indent:4 exp:4
 } //indent:0 exp:0
 
 @Retention(RetentionPolicy.RUNTIME) //indent:0 exp:0
@@ -114,7 +114,7 @@ class InnerAnnotSingleLine { //indent:0 exp:0
     String[] c(); //indent:4 exp:4
 } //indent:0 exp:0
 class InnerAnnotSingleLine2 { //indent:0 exp:0
-     @Retention(RetentionPolicy.SOURCE) @interface AnnotationOneLine {} //indent:5 exp:4 warn
+     @Retention(RetentionPolicy.SOURCE) @interface AnnotationOneLine { } //indent:5 exp:4 warn
 } //indent:0 exp:0
 @interface RepeatableInner4 { //indent:0 exp:0
     public AnnotationWithTarget.AnnotationInnerLineWrap[] value(); //indent:4 exp:4
@@ -124,22 +124,22 @@ class InnerAnnotSingleLine2 { //indent:0 exp:0
         String myString() //indent:8 exp:8
         default "Hello"; //indent:8 exp:8
 } //indent:0 exp:0
-@ //indent:0 exp:0
+@//indent:0 exp:0
  interface //indent:1 exp:0 warn
 MyAnnotationWrapped { //indent:0 exp:0
     int value() default -1; //indent:4 exp:4
     AnnotationWithTarget.AnnotationInnerLineWrap field(); //indent:4 exp:4
 } //indent:0 exp:0
 @Retention(RetentionPolicy.RUNTIME) //indent:0 exp:0
-           @interface Marker {} //indent:11 exp:0 warn
+           @interface Marker { } //indent:11 exp:0 warn
 @Target({ ElementType.METHOD, ElementType.TYPE_PARAMETER }) //indent:0 exp:0
 @Retention(RetentionPolicy.RUNTIME) //indent:0 exp:0
-				@interface FetchProfile { //indent:16 exp:0 warn
-	String name(); //indent:4 exp:4
+                                @interface FetchProfile { //indent:16 exp:0 warn
+        String name(); //indent:4 exp:4
 
-	FetchOverride[] fetchOverrides(); //indent:4 exp:4
+        FetchOverride[] fetchOverrides(); //indent:4 exp:4
 
-	@Target({ ElementType.TYPE, ElementType.METHOD }) //indent:4 exp:4
+        @Target({ ElementType.TYPE, ElementType.METHOD }) //indent:4 exp:4
 	@Retention(RetentionPolicy.RUNTIME) //indent:4 exp:4
 			@interface FetchOverride { //indent:12 exp:4 warn
 		String association(); //indent:8 exp:8

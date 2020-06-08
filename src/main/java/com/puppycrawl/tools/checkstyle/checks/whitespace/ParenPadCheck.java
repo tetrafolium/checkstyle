@@ -153,7 +153,7 @@ public class ParenPadCheck extends AbstractParenPadCheck {
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         switch (ast.getType()) {
             case TokenTypes.METHOD_CALL:
                 processLeft(ast);
@@ -190,7 +190,7 @@ public class ParenPadCheck extends AbstractParenPadCheck {
      * {@link TokenTypes#LAMBDA}.
      * @param ast the token to check.
      */
-    private void visitTokenWithOptionalParentheses(DetailAST ast) {
+    private void visitTokenWithOptionalParentheses(final DetailAST ast) {
         final DetailAST parenAst = ast.findFirstToken(TokenTypes.LPAREN);
         if (parenAst != null) {
             processLeft(parenAst);
@@ -202,7 +202,7 @@ public class ParenPadCheck extends AbstractParenPadCheck {
      * Checks parens in {@link TokenTypes#RESOURCE_SPECIFICATION}.
      * @param ast the token to check.
      */
-    private void visitResourceSpecification(DetailAST ast) {
+    private void visitResourceSpecification(final DetailAST ast) {
         processLeft(ast.findFirstToken(TokenTypes.LPAREN));
         final DetailAST rparen = ast.findFirstToken(TokenTypes.RPAREN);
         if (!hasPrecedingSemiColon(rparen)) {
@@ -215,7 +215,7 @@ public class ParenPadCheck extends AbstractParenPadCheck {
      * @param ast the token to check
      * @return whether a token is preceded by a semi-colon
      */
-    private static boolean hasPrecedingSemiColon(DetailAST ast) {
+    private static boolean hasPrecedingSemiColon(final DetailAST ast) {
         return ast.getPreviousSibling().getType() == TokenTypes.SEMI;
     }
 
@@ -223,7 +223,7 @@ public class ParenPadCheck extends AbstractParenPadCheck {
      * Checks parens in {@link TokenTypes#LITERAL_FOR}.
      * @param ast the token to check.
      */
-    private void visitLiteralFor(DetailAST ast) {
+    private void visitLiteralFor(final DetailAST ast) {
         final DetailAST lparen = ast.findFirstToken(TokenTypes.LPAREN);
         if (!isPrecedingEmptyForInit(lparen)) {
             processLeft(lparen);
@@ -239,16 +239,14 @@ public class ParenPadCheck extends AbstractParenPadCheck {
      * and {@link TokenTypes#METHOD_CALL}.
      * @param ast the token to check.
      */
-    private void processExpression(DetailAST ast) {
+    private void processExpression(final DetailAST ast) {
         DetailAST childAst = ast.getFirstChild();
         while (childAst != null) {
             if (childAst.getType() == TokenTypes.LPAREN) {
                 processLeft(childAst);
-            }
-            else if (childAst.getType() == TokenTypes.RPAREN && !isInTypecast(childAst)) {
+            } else if (childAst.getType() == TokenTypes.RPAREN && !isInTypecast(childAst)) {
                 processRight(childAst);
-            }
-            else if (!isAcceptableToken(childAst)) {
+            } else if (!isAcceptableToken(childAst)) {
                 // Traverse all subtree tokens which will never be configured
                 // to be launched in visitToken()
                 processExpression(childAst);
@@ -262,7 +260,7 @@ public class ParenPadCheck extends AbstractParenPadCheck {
      * @param ast the token to check.
      * @return true if the ast is in AcceptableTokens.
      */
-    private boolean isAcceptableToken(DetailAST ast) {
+    private boolean isAcceptableToken(final DetailAST ast) {
         boolean result = false;
         if (Arrays.binarySearch(acceptableTokens, ast.getType()) >= 0) {
             result = true;
@@ -305,7 +303,7 @@ public class ParenPadCheck extends AbstractParenPadCheck {
      * @param ast of a {@link TokenTypes#RPAREN} to check.
      * @return true if ast is a closing paren of a {@link TokenTypes#TYPECAST}.
      */
-    private static boolean isInTypecast(DetailAST ast) {
+    private static boolean isInTypecast(final DetailAST ast) {
         boolean result = false;
         if (ast.getParent().getType() == TokenTypes.TYPECAST) {
             final DetailAST firstRparen = ast.getParent().findFirstToken(TokenTypes.RPAREN);
@@ -322,7 +320,7 @@ public class ParenPadCheck extends AbstractParenPadCheck {
      * @param ast the token to check
      * @return whether a token follows an empty for iterator
      */
-    private static boolean isFollowsEmptyForIterator(DetailAST ast) {
+    private static boolean isFollowsEmptyForIterator(final DetailAST ast) {
         boolean result = false;
         final DetailAST parent = ast.getParent();
         // Only traditional for statements are examined, not for-each statements
@@ -339,7 +337,7 @@ public class ParenPadCheck extends AbstractParenPadCheck {
      * @param ast the token to check
      * @return whether a token precedes an empty for initializer
      */
-    private static boolean isPrecedingEmptyForInit(DetailAST ast) {
+    private static boolean isPrecedingEmptyForInit(final DetailAST ast) {
         boolean result = false;
         final DetailAST parent = ast.getParent();
         // Only traditional for statements are examined, not for-each statements

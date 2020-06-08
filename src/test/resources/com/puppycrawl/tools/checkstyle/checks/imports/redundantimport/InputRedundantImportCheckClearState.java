@@ -6,4 +6,4 @@ import static java.util.Arrays.asList;
 import java.util.List;
 import java.util.List;
 
-public class InputRedundantImportCheckClearState {}
+public class InputRedundantImportCheckClearState { }

@@ -12,11 +12,11 @@ public class InputDescendantTokenEmptyStatement
       ;
    }
 
-   public void EmptyStatements(boolean cond)
+   public void EmptyStatements(final boolean cond)
    {
-      for (;cond;);
+      for (; cond;);
 
-      for (;cond;)
+      for (; cond;)
       {
          ;
       }
@@ -31,9 +31,7 @@ public class InputDescendantTokenEmptyStatement
       if (cond)
       {
          int i;
-      }
-
-      else
+      } else
       {
          ;
       }
@@ -53,7 +51,7 @@ public class InputDescendantTokenEmptyStatement
          ;
       }
 
-      do;
+      do ;
       while (cond);
 
       do
@@ -65,12 +63,10 @@ public class InputDescendantTokenEmptyStatement
       try
       {
          ;
-      }
-      catch (Exception ex)
+      } catch (Exception ex)
       {
          ;
-      }
-      finally
+      } finally
       {
          ;
       }

@@ -53,7 +53,7 @@ public class TreeTableModelAdapter extends AbstractTableModel {
      * @param treeTableModel Tree table model.
      * @param tree JTree component.
      */
-    public TreeTableModelAdapter(ParseTreeTableModel treeTableModel, JTree tree) {
+    public TreeTableModelAdapter(final ParseTreeTableModel treeTableModel, final JTree tree) {
         this.tree = tree;
         this.treeTableModel = treeTableModel;
 
@@ -74,12 +74,12 @@ public class TreeTableModelAdapter extends AbstractTableModel {
     }
 
     @Override
-    public String getColumnName(int column) {
+    public String getColumnName(final int column) {
         return treeTableModel.getColumnName(column);
     }
 
     @Override
-    public Class<?> getColumnClass(int column) {
+    public Class<?> getColumnClass(final int column) {
         return treeTableModel.getColumnClass(column);
     }
 
@@ -89,12 +89,12 @@ public class TreeTableModelAdapter extends AbstractTableModel {
     }
 
     @Override
-    public Object getValueAt(int row, int column) {
+    public Object getValueAt(final int row, final int column) {
         return treeTableModel.getValueAt(nodeForRow(row), column);
     }
 
     @Override
-    public boolean isCellEditable(int row, int column) {
+    public boolean isCellEditable(final int row, final int column) {
         return treeTableModel.isCellEditable(column);
     }
 
@@ -103,7 +103,7 @@ public class TreeTableModelAdapter extends AbstractTableModel {
      * @param row Row for which to find a related node.
      * @return Node for a given row.
      */
-    private Object nodeForRow(int row) {
+    private Object nodeForRow(final int row) {
         final TreePath treePath = tree.getPathForRow(row);
         return treePath.getLastPathComponent();
     }
@@ -116,12 +116,12 @@ public class TreeTableModelAdapter extends AbstractTableModel {
         // Don't use fireTableRowsInserted() here; the selection model
         // would get updated twice.
         @Override
-        public void treeExpanded(TreeExpansionEvent event) {
+        public void treeExpanded(final TreeExpansionEvent event) {
             fireTableDataChanged();
         }
 
         @Override
-        public void treeCollapsed(TreeExpansionEvent event) {
+        public void treeCollapsed(final TreeExpansionEvent event) {
             fireTableDataChanged();
         }
 
@@ -133,22 +133,22 @@ public class TreeTableModelAdapter extends AbstractTableModel {
     private class UpdatingTreeModelListener implements TreeModelListener {
 
         @Override
-        public void treeNodesChanged(TreeModelEvent event) {
+        public void treeNodesChanged(final TreeModelEvent event) {
             delayedFireTableDataChanged();
         }
 
         @Override
-        public void treeNodesInserted(TreeModelEvent event) {
+        public void treeNodesInserted(final TreeModelEvent event) {
             delayedFireTableDataChanged();
         }
 
         @Override
-        public void treeNodesRemoved(TreeModelEvent event) {
+        public void treeNodesRemoved(final TreeModelEvent event) {
             delayedFireTableDataChanged();
         }
 
         @Override
-        public void treeStructureChanged(TreeModelEvent event) {
+        public void treeStructureChanged(final TreeModelEvent event) {
             delayedFireTableDataChanged();
         }
 

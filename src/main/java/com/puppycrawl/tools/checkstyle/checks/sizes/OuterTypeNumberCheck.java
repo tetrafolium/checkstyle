@@ -87,20 +87,20 @@ public class OuterTypeNumberCheck extends AbstractCheck {
     }
 
     @Override
-    public void beginTree(DetailAST ast) {
+    public void beginTree(final DetailAST ast) {
         currentDepth = 0;
         outerNum = 0;
     }
 
     @Override
-    public void finishTree(DetailAST ast) {
+    public void finishTree(final DetailAST ast) {
         if (max < outerNum) {
             log(ast, MSG_KEY, outerNum, max);
         }
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         if (currentDepth == 0) {
             outerNum++;
         }
@@ -108,7 +108,7 @@ public class OuterTypeNumberCheck extends AbstractCheck {
     }
 
     @Override
-    public void leaveToken(DetailAST ast) {
+    public void leaveToken(final DetailAST ast) {
         currentDepth--;
     }
 
@@ -117,7 +117,7 @@ public class OuterTypeNumberCheck extends AbstractCheck {
      *
      * @param max the new number.
      */
-    public void setMax(int max) {
+    public void setMax(final int max) {
         this.max = max;
     }
 

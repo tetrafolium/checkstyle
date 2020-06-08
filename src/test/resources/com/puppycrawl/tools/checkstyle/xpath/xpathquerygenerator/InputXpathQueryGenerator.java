@@ -63,13 +63,13 @@ public class InputXpathQueryGenerator {
     }
 
     static void foo() {
-        for (int i = 0; i < 10; i++, i+=2) {
+        for (int i = 0; i < 10; i++, i += 2) {
 
         }
         return;
     }
 
-    private boolean saveUser(String name, String surname, int age) {
+    private boolean saveUser(final String name, final String surname, final int age) {
         return true;
     }
 }

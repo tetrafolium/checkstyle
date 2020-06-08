@@ -120,24 +120,22 @@ public class DefaultComesLastCheck extends AbstractCheck {
      * {@code case} if they are not last.
      * @param newValue whether to ignore checking.
      */
-    public void setSkipIfLastAndSharedWithCase(boolean newValue) {
+    public void setSkipIfLastAndSharedWithCase(final boolean newValue) {
         skipIfLastAndSharedWithCase = newValue;
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         final DetailAST defaultGroupAST = ast.getParent();
         if (skipIfLastAndSharedWithCase) {
             if (Objects.nonNull(findNextSibling(ast, TokenTypes.LITERAL_CASE))) {
                 log(ast, MSG_KEY_SKIP_IF_LAST_AND_SHARED_WITH_CASE);
-            }
-            else if (ast.getPreviousSibling() == null
+            } else if (ast.getPreviousSibling() == null
                 && Objects.nonNull(findNextSibling(defaultGroupAST,
                                                    TokenTypes.CASE_GROUP))) {
                 log(ast, MSG_KEY);
             }
-        }
-        else if (Objects.nonNull(findNextSibling(defaultGroupAST,
+        } else if (Objects.nonNull(findNextSibling(defaultGroupAST,
                                                  TokenTypes.CASE_GROUP))) {
             log(ast, MSG_KEY);
         }
@@ -150,7 +148,7 @@ public class DefaultComesLastCheck extends AbstractCheck {
      * @param tokenType tokentype to be processed.
      * @return token if desired token is found or else null.
      */
-    private static DetailAST findNextSibling(DetailAST ast, int tokenType) {
+    private static DetailAST findNextSibling(final DetailAST ast, final int tokenType) {
         DetailAST token = null;
         DetailAST node = ast.getNextSibling();
         while (node != null) {

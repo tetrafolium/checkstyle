@@ -6,7 +6,7 @@ public class InputSuppressWarningsFilterById {
     private int A1 = 1;
 
     @SuppressWarnings("checkstyle:ignore")
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
 
     }
 

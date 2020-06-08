@@ -140,7 +140,7 @@ public class HeaderCheck extends AbstractHeaderCheck {
      * @param lineNo a line number
      * @return if {@code lineNo} is one of the ignored header lines.
      */
-    private boolean isIgnoreLine(int lineNo) {
+    private boolean isIgnoreLine(final int lineNo) {
         return Arrays.binarySearch(ignoreLines, lineNo) >= 0;
     }
 
@@ -150,7 +150,7 @@ public class HeaderCheck extends AbstractHeaderCheck {
      * @param line the line contents
      * @return true if and only if the line matches the required header line
      */
-    private boolean isMatch(int lineNumber, String line) {
+    private boolean isMatch(final int lineNumber, final String line) {
         // skip lines we are meant to ignore
         return isIgnoreLine(lineNumber + 1)
             || getHeaderLines().get(lineNumber).equals(line);
@@ -161,11 +161,10 @@ public class HeaderCheck extends AbstractHeaderCheck {
      *
      * @param list comma separated list of line numbers to ignore in header.
      */
-    public void setIgnoreLines(int... list) {
+    public void setIgnoreLines(final int... list) {
         if (list.length == 0) {
             ignoreLines = EMPTY_INT_ARRAY;
-        }
-        else {
+        } else {
             ignoreLines = new int[list.length];
             System.arraycopy(list, 0, ignoreLines, 0, list.length);
             Arrays.sort(ignoreLines);
@@ -173,11 +172,10 @@ public class HeaderCheck extends AbstractHeaderCheck {
     }
 
     @Override
-    protected void processFiltered(File file, FileText fileText) {
+    protected void processFiltered(final File file, final FileText fileText) {
         if (getHeaderLines().size() > fileText.size()) {
             log(1, MSG_MISSING);
-        }
-        else {
+        } else {
             for (int i = 0; i < getHeaderLines().size(); i++) {
                 if (!isMatch(i, fileText.get(i))) {
                     log(i + 1, MSG_MISMATCH, getHeaderLines().get(i));

@@ -22,8 +22,8 @@ class InputIndentationAndroidStyle //indent:0 exp:0
     String string1 = //indent:4 exp:4
             foo("fooooooooooooooo", 0, false); //indent:12 exp:12
 
-    String foo (String aStr, //indent:4 exp:4
-            int aNnum, boolean aFlag) { //indent:12 exp:12
+    String foo(final String aStr, //indent:4 exp:4
+            final int aNnum, final boolean aFlag) { //indent:12 exp:12
 
         if (true && true && //indent:8 exp:8
                 true && true) { //indent:16 exp:16
@@ -46,8 +46,8 @@ class InputIndentationAndroidStyleIncorrect //indent:0 exp:0
     String string1 = //indent:4 exp:4
         foo("fooooooooooooooo", 0, false); //indent:8 exp:12 warn
 
-    String foo (String aStr, //indent:4 exp:4
-        int aNnum, boolean aFlag) { //indent:8 exp:12 warn
+    String foo(final String aStr, //indent:4 exp:4
+        final int aNnum, final boolean aFlag) { //indent:8 exp:12 warn
 
         if (true && true && //indent:8 exp:8
              true && true) { //indent:13 exp:16 warn
@@ -63,4 +63,4 @@ class InputIndentationAndroidStyleIncorrect //indent:0 exp:0
     } //indent:4 exp:4
 } //indent:0 exp:0
 
-class FooForExtend {} //indent:0 exp:0
+class FooForExtend { } //indent:0 exp:0

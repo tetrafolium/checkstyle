@@ -80,7 +80,7 @@ public class CheckstyleAntTaskTest extends AbstractPathTestSupport {
         return getCheckstyleAntTask(CONFIG_FILE);
     }
 
-    private CheckstyleAntTask getCheckstyleAntTask(String configFile) throws IOException {
+    private CheckstyleAntTask getCheckstyleAntTask(final String configFile) throws IOException {
         final CheckstyleAntTask antTask = new CheckstyleAntTask();
         antTask.setConfig(getPath(configFile));
         antTask.setProject(new Project());
@@ -225,8 +225,7 @@ public class CheckstyleAntTaskTest extends AbstractPathTestSupport {
         try {
             antTask.execute();
             fail("Exception is expected");
-        }
-        catch (BuildException ex) {
+        } catch (BuildException ex) {
             assertEquals("Must specify 'config'.", ex.getMessage(),
                     "Error message is unexpected");
         }
@@ -241,8 +240,7 @@ public class CheckstyleAntTaskTest extends AbstractPathTestSupport {
         try {
             antTask.execute();
             fail("Exception is expected");
-        }
-        catch (BuildException ex) {
+        } catch (BuildException ex) {
             assertTrue(ex.getMessage().startsWith("Unable to create Root Module: config"),
                     "Error message is unexpected");
         }
@@ -257,8 +255,7 @@ public class CheckstyleAntTaskTest extends AbstractPathTestSupport {
         try {
             antTask.execute();
             fail("Exception is expected");
-        }
-        catch (BuildException ex) {
+        } catch (BuildException ex) {
             assertTrue(ex.getMessage().startsWith("Unable to create Root Module: config"),
                     "Error message is unexpected");
         }
@@ -270,8 +267,7 @@ public class CheckstyleAntTaskTest extends AbstractPathTestSupport {
         try {
             antTask.execute();
             fail("Exception is expected");
-        }
-        catch (BuildException ex) {
+        } catch (BuildException ex) {
             assertEquals("Must specify at least one of 'file' or nested 'fileset' or 'path'.",
                 ex.getMessage(), "Error message is unexpected");
         }
@@ -285,8 +281,7 @@ public class CheckstyleAntTaskTest extends AbstractPathTestSupport {
         try {
             antTask.execute();
             fail("Exception is expected");
-        }
-        catch (BuildException ex) {
+        } catch (BuildException ex) {
             assertEquals("Got 0 errors and 1 warnings.", ex.getMessage(),
                     "Error message is unexpected");
         }
@@ -319,8 +314,7 @@ public class CheckstyleAntTaskTest extends AbstractPathTestSupport {
         try {
             antTask.execute();
             fail("Exception is expected");
-        }
-        catch (BuildException ignored) {
+        } catch (BuildException ignored) {
             final Map<String, Object> hashtable = project.getProperties();
             final Object propertyValue = hashtable.get(failurePropertyName);
             assertEquals("Got 2 errors and 0 warnings.", propertyValue,
@@ -445,8 +439,7 @@ public class CheckstyleAntTaskTest extends AbstractPathTestSupport {
             antTask.setConfig(url.toString());
             antTask.setConfig(file.toString());
             fail("Exception is expected");
-        }
-        catch (BuildException ex) {
+        } catch (BuildException ex) {
             assertEquals(expected, ex.getMessage(), "Error message is unexpected");
         }
     }
@@ -472,8 +465,7 @@ public class CheckstyleAntTaskTest extends AbstractPathTestSupport {
         try {
             antTask.execute();
             fail("Exception is expected");
-        }
-        catch (BuildException ex) {
+        } catch (BuildException ex) {
             assertTrue(ex.getMessage().startsWith("Error loading Properties file"),
                     "Error message is unexpected");
         }
@@ -517,8 +509,7 @@ public class CheckstyleAntTaskTest extends AbstractPathTestSupport {
         try {
             antTask.execute();
             fail("Exception is expected");
-        }
-        catch (BuildException ex) {
+        } catch (BuildException ex) {
             assertTrue(ex.getMessage().startsWith("Unable to create listeners: formatters"),
                     "Error message is unexpected");
         }
@@ -538,8 +529,7 @@ public class CheckstyleAntTaskTest extends AbstractPathTestSupport {
         try {
             antTask.execute();
             fail("Exception is expected");
-        }
-        catch (BuildException ex) {
+        } catch (BuildException ex) {
             assertTrue(ex.getMessage().startsWith("Unable to create listeners: formatters"),
                     "Error message is unexpected");
         }
@@ -551,8 +541,7 @@ public class CheckstyleAntTaskTest extends AbstractPathTestSupport {
         try {
             formatterType.setValue("foo");
             fail("Exception is expected");
-        }
-        catch (BuildException ex) {
+        } catch (BuildException ex) {
             assertEquals("foo is not a legal value for this attribute", ex.getMessage(),
                     "Error message is unexpected");
         }
@@ -653,8 +642,7 @@ public class CheckstyleAntTaskTest extends AbstractPathTestSupport {
             final Path classpath = Whitebox.getInternalState(antTask, "classpath");
             classpath.list();
             fail("Exception is expected");
-        }
-        catch (BuildException ex) {
+        } catch (BuildException ex) {
             assertEquals("Reference idXX not found.", ex.getMessage(),
                     "unexpected exception message");
         }
@@ -700,12 +688,12 @@ public class CheckstyleAntTaskTest extends AbstractPathTestSupport {
         private final List<String> loggedMessages = new ArrayList<>();
 
         @Override
-        public void log(String msg, int msgLevel) {
+        public void log(final String msg, final int msgLevel) {
             loggedMessages.add(msg);
         }
 
         @Override
-        public void log(String msg, Throwable t, int msgLevel) {
+        public void log(final String msg, final Throwable t, final int msgLevel) {
             loggedMessages.add(msg);
         }
 

@@ -135,7 +135,7 @@ public class MultipleStringLiteralsCheck extends AbstractCheck {
      * Setter to specify the maximum number of occurrences to allow without generating a warning.
      * @param allowedDuplicates The maximum number of duplicates.
      */
-    public void setAllowedDuplicates(int allowedDuplicates) {
+    public void setAllowedDuplicates(final int allowedDuplicates) {
         this.allowedDuplicates = allowedDuplicates;
     }
 
@@ -145,11 +145,10 @@ public class MultipleStringLiteralsCheck extends AbstractCheck {
      *        regular expression pattern for ignored strings
      * @noinspection WeakerAccess
      */
-    public final void setIgnoreStringsRegexp(Pattern ignoreStringsRegexp) {
+    public final void setIgnoreStringsRegexp(final Pattern ignoreStringsRegexp) {
         if (ignoreStringsRegexp == null || ignoreStringsRegexp.pattern().isEmpty()) {
             this.ignoreStringsRegexp = null;
-        }
-        else {
+        } else {
             this.ignoreStringsRegexp = ignoreStringsRegexp;
         }
     }
@@ -160,7 +159,7 @@ public class MultipleStringLiteralsCheck extends AbstractCheck {
      * syntactical contexts like annotations or static initializers from the check.
      * @param strRep the string representation of the tokens interested in
      */
-    public final void setIgnoreOccurrenceContext(String... strRep) {
+    public final void setIgnoreOccurrenceContext(final String... strRep) {
         ignoreOccurrenceContext.clear();
         for (final String s : strRep) {
             final int type = TokenUtil.getTokenId(s);
@@ -184,7 +183,7 @@ public class MultipleStringLiteralsCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         if (!isInIgnoreOccurrenceContext(ast)) {
             final String currentString = ast.getText();
             if (ignoreStringsRegexp == null || !ignoreStringsRegexp.matcher(currentString).find()) {
@@ -201,7 +200,7 @@ public class MultipleStringLiteralsCheck extends AbstractCheck {
      * @return whether the path from the root node to ast contains one of the
      *     token type in {@link #ignoreOccurrenceContext}.
      */
-    private boolean isInIgnoreOccurrenceContext(DetailAST ast) {
+    private boolean isInIgnoreOccurrenceContext(final DetailAST ast) {
         boolean isInIgnoreOccurrenceContext = false;
         for (DetailAST token = ast;
              token.getParent() != null;
@@ -216,12 +215,12 @@ public class MultipleStringLiteralsCheck extends AbstractCheck {
     }
 
     @Override
-    public void beginTree(DetailAST rootAST) {
+    public void beginTree(final DetailAST rootAST) {
         stringMap.clear();
     }
 
     @Override
-    public void finishTree(DetailAST rootAST) {
+    public void finishTree(final DetailAST rootAST) {
         for (Map.Entry<String, List<DetailAST>> stringListEntry : stringMap.entrySet()) {
             final List<DetailAST> hits = stringListEntry.getValue();
             if (hits.size() > allowedDuplicates) {

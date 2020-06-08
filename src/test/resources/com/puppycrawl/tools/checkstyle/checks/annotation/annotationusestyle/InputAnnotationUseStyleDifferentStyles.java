@@ -1,14 +1,14 @@
 package com.puppycrawl.tools.checkstyle.checks.annotation.annotationusestyle;
 
 @Deprecated
-@SomeArrays(pooches={DOGS.LEO})
+@SomeArrays(pooches = {DOGS.LEO})
 @SuppressWarnings({""})
 public class InputAnnotationUseStyleDifferentStyles
 {
 
 }
 
-@SomeArrays(pooches={DOGS.LEO}, um={}, duh={"bleh"})
+@SomeArrays(pooches = {DOGS.LEO}, um = {}, duh = {"bleh"})
 @SuppressWarnings("") //compact_no_array
 @Deprecated()
 class Dep {
@@ -16,13 +16,13 @@ class Dep {
 }
 
 @Deprecated
-@SomeArrays(pooches={DOGS.LEO})
+@SomeArrays(pooches = {DOGS.LEO})
 @SuppressWarnings({""})
 enum SON {
 
     @Deprecated
-    @SomeArrays(pooches={DOGS.LEO}, um={""}, duh={"bleh"})
-    @APooch(dog=DOGS.HERBIE)
+    @SomeArrays(pooches = {DOGS.LEO}, um = {""}, duh = {"bleh"})
+    @APooch(dog = DOGS.HERBIE)
     @Another("") //compact_no_array
     ETHAN
 }
@@ -40,11 +40,11 @@ enum DOGS {
     String[] um() default {};
     @Another({""}) //compact
     String[] duh() default {};
-    @Another(value={""}) //expanded
+    @Another(value = {""}) //expanded
     DOGS[] pooches();
 }
 
-@Another(value={""}) //expanded
+@Another(value = {""}) //expanded
 enum E {
 
 }
@@ -69,13 +69,13 @@ class Closing {
 }
 
 @AnnotationWithAnnotationValue(@Another)
-class Example1 {}
+class Example1 { }
 @AnnotationWithAnnotationValue(value = @Another)
-class Example2 {}
+class Example2 { }
 @AnnotationWithAnnotationValue(@Another())
-class Example3 {}
+class Example3 { }
 @AnnotationWithAnnotationValue(value = @Another())
-class Example4 {}
+class Example4 { }
 
 @interface AnnotationWithAnnotationValue {
     Another value();

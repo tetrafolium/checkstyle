@@ -3,16 +3,17 @@ package com.puppycrawl.tools.checkstyle.checks.sizes.methodcount;
 public enum InputMethodCount2 {
 
     RED {
-        @Override void something() {};
+        @Override void something() { };
     },
 
     BLUE {
-        @Override void something() {};
-        protected void other1() {};
-        private void other2() {};
+        @Override void something() { };
+        protected void other1() { };
+        private void other2() { };
     };
 
-    @Override public String toString() { return ""; };
+    @Override public String toString() {
+        return ""; };
 
     abstract void something();
 }

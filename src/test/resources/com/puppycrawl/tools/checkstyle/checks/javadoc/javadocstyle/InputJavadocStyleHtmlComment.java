@@ -78,5 +78,5 @@ public class InputJavadocStyleHtmlComment
      * Parameterized interface.
      * @param <I>
      */
-    interface Interface<I> {}
+    interface Interface<I> { }
 }

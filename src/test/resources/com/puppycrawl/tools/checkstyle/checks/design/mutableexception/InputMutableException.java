@@ -33,14 +33,14 @@ public class InputMutableException {
         public class CustomFailure extends ThreadDeath {
             private int errorCode;
             public void someMethod() {
-                if(true) {
+                if (true) {
                     final int i = 0;
                 }
             }
         }
     }
 
-    class CustomException extends java.lang.Exception {}
+    class CustomException extends java.lang.Exception { }
 
     class CustomMutableException extends java.lang.Exception {
         int errorCode;

@@ -131,7 +131,7 @@ public class StaticVariableNameCheck
     }
 
     @Override
-    protected final boolean mustCheckName(DetailAST ast) {
+    protected final boolean mustCheckName(final DetailAST ast) {
         final DetailAST modifiersAST =
             ast.findFirstToken(TokenTypes.MODIFIERS);
         final boolean isStatic = modifiersAST.findFirstToken(TokenTypes.LITERAL_STATIC) != null;

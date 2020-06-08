@@ -8,6 +8,6 @@ import static java.lang.Math.PI;
 
 public class InputUnusedImportsFileInUnnamedPackage
 {
-    public static double pi=PI;
+    public static double pi = PI;
     public List myList;
 }

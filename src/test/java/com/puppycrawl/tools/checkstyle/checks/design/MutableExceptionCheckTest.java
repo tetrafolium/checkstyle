@@ -123,8 +123,7 @@ public class MutableExceptionCheckTest extends AbstractModuleTestSupport {
         try {
             obj.visitToken(ast);
             fail("IllegalStateException is expected");
-        }
-        catch (IllegalStateException ex) {
+        } catch (IllegalStateException ex) {
             // exception is expected
             assertEquals("interface[0x-1]", ex.getMessage(),
                     "Invalid exception message");

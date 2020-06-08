@@ -69,7 +69,7 @@ public final class XdocUtil {
      * @param files list of all xdoc files
      * @return a list of xdocs config file paths.
      */
-    public static Set<Path> getXdocsConfigFilePaths(Set<Path> files) {
+    public static Set<Path> getXdocsConfigFilePaths(final Set<Path> files) {
         final Set<Path> xdocs = new HashSet<>();
         for (Path entry : files) {
             final String fileName = entry.getFileName().toString();
@@ -85,7 +85,7 @@ public final class XdocUtil {
      * @param files list of all xdoc files
      * @return a list of xdocs style file paths.
      */
-    public static Set<Path> getXdocsStyleFilePaths(Set<Path> files) {
+    public static Set<Path> getXdocsStyleFilePaths(final Set<Path> files) {
         final Set<Path> xdocs = new HashSet<>();
         for (Path entry : files) {
             final String fileName = entry.getFileName().toString();

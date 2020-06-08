@@ -33,8 +33,7 @@ public class PropertiesExpanderTest {
         try {
             final Object test = new PropertiesExpander(null);
             fail("exception expected but got " + test);
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertEquals("cannot pass null", ex.getMessage(), "Invalid exception message");
         }
     }

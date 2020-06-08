@@ -7,17 +7,17 @@ class InputMethodParamPad
 {
     void test()
     {
-        int x = 1 +
-                 2 -
-            3
+        int x = 1
+                 + 2
+            - 3
             -
             4;
         x = x + 2;
         boolean y = true
             &&
             false;
-         y = true &&
-            false;
+         y = true
+            && false;
         y = false
             && true;
     }
@@ -31,8 +31,8 @@ class InputMethodParamPad
     }
 
     <
-     T extends Comparable &
-        java.io.Serializable
+     T extends Comparable
+        & java.io.Serializable
     >
     void testGenerics1()
     {
@@ -47,33 +47,33 @@ class InputMethodParamPad
 
         int init = 9;
 
-        /*ok*/ for (Map.Entry<String, String> entry :
-            map.entrySet())
+        /*ok*/ for (Map.Entry<String, String> entry
+            : map.entrySet())
         {
-            int i = flag == true ?
-                    1 : 2;
+            int i = flag == true
+                    ? 1 : 2;
         }
 
-         if (init !=
-                9)
-        {
-
-        }
-
-         while (init ==
-                10)
+         if (init
+                != 9)
         {
 
         }
 
-         if (init >
-                10)
+         while (init
+                == 10)
         {
 
-        } else {}
+        }
 
-         while (init < 10 ||
-                !flag) {
+         if (init
+                > 10)
+        {
+
+        } else { }
+
+         while (init < 10
+                || !flag) {
 
         }
     }
@@ -92,40 +92,40 @@ class InputMethodParamPad
 
             int init = 9;
 
-            /*ok*/ for (Map.Entry<String, String> entry :
-                map.entrySet())
+            /*ok*/ for (Map.Entry<String, String> entry
+                : map.entrySet())
             {
-                int i = flag == true ?
-                        1 : 2;
+                int i = flag == true
+                        ? 1 : 2;
             }
 
-             if (init !=
-                    9)
-            {
-
-            }
-
-             while (init ==
-                    10)
+             if (init
+                    != 9)
             {
 
             }
 
-             if (init >
-                    10)
+             while (init
+                    == 10)
             {
 
-            } else {}
+            }
 
-             while (init < 10 ||
-                    !flag) {
+             if (init
+                    > 10)
+            {
+
+            } else { }
+
+             while (init < 10
+                    || !flag) {
 
             }
         }
     }
 
     Inner anon = new Inner
-            (){  //warn
+            () {  //warn
         void testGenerics1
         () //warn
         {
@@ -138,33 +138,33 @@ class InputMethodParamPad
             boolean flag = false;
             int init = 9;
 
-            /*ok*/ for (Map.Entry<String, String> entry :
-                map.entrySet())
+            /*ok*/ for (Map.Entry<String, String> entry
+                : map.entrySet())
             {
-                int i = flag == true ?
-                        1 : 2;
+                int i = flag == true
+                        ? 1 : 2;
             }
 
-             if (init !=
-                    9)
-            {
-
-            }
-
-             while (init ==
-                    10)
+             if (init
+                    != 9)
             {
 
             }
 
-             if (init >
-                    10)
+             while (init
+                    == 10)
             {
 
-            } else {}
+            }
 
-             while (init < 10 ||
-                    !flag) {
+             if (init
+                    > 10)
+            {
+
+            } else { }
+
+             while (init < 10
+                    || !flag) {
 
             }
         }
@@ -182,9 +182,9 @@ class AsInput1 {
 class Ternary2 {
     void foo() {
         boolean flag = true;
-        int i = flag == true ?
-                1 :
-                2;
+        int i = flag == true
+                ? 1
+                : 2;
         int i2 = flag == true
                 ?
                 1
@@ -350,7 +350,7 @@ class AssignClass3 {
     };
 
     enum TestEnum {
-        FIRST () // warn
+        FIRST() // warn
             {
             },
 

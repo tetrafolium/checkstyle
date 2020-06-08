@@ -2,50 +2,50 @@ package com.puppycrawl.tools.checkstyle.checks.javadoc.singlelinejavadoc;
 class InputSingleLineJavadoc {
 
         /** As of JDK 1.1, replaced by {@link #setBounds(int,int,int,int)} */
-    void foo() {}
+    void foo() { }
 
     /**
      * As of JDK 1.1, replaced by {@link #setBounds(int,int,int,int)}
      */
-    void foo1() {}
+    void foo1() { }
 
     /** @throws CheckstyleException if an problem occurs */
-    void foo2() {}
+    void foo2() { }
 
     /**
      * @throws CheckstyleException if an problem occurs
      */
-    void foo3() {}
+    void foo3() { }
 
     /** An especially short bit of Javadoc. */
-    void foo4() {}
+    void foo4() { }
 
     /**
      * An especially short bit of Javadoc.
      */
-    void foo5() {}
+    void foo5() { }
 
     /** @inheritDoc */
-    void foo6() {}
+    void foo6() { }
 
     /** {@inheritDoc} */
-    void foo7() {}
+    void foo7() { }
 
     /** {@inheritDoc}  {@code bar} */
-    void foo8() {}
+    void foo8() { }
 
     /** {@inheritDoc}  {@link #bar} */
-    void foo9() {}
+    void foo9() { }
 
     /** @customTag */
-    void bar() {}
+    void bar() { }
 
     /** @ignoredCustomTag */
-    void bar1() {}
+    void bar1() { }
 
     /** <h1> Some header </h1> {@inheritDoc} {@code bar1} text*/
-    void bar2() {}
+    void bar2() { }
 
     /** @customTag <a> href="https://github.com/checkstyle/checkstyle/"</a> text*/
-    void bar3() {}
+    void bar3() { }
 }

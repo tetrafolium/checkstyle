@@ -4,7 +4,7 @@ public class InputNeedBracesSingleLineStatements
 {
     private static class SomeClass {
         boolean flag = true;
-        private static boolean test(boolean k) {
+        private static boolean test(final boolean k) {
             return k;
         }
     }
@@ -30,16 +30,16 @@ public class InputNeedBracesSingleLineStatements
         return 0;
     }
 
-    private void foo(Object o) {
+    private void foo(final Object o) {
         if (o != null) this.notify();
     }
 
-    private void foo2(Object o) {
+    private void foo2(final Object o) {
         if (o != null)
             this.notify();
     }
 
-    private void loopTest(Object o) {
+    private void loopTest(final Object o) {
         while (o != null) {
             this.notify();
         }
@@ -64,7 +64,7 @@ public class InputNeedBracesSingleLineStatements
         for (int i = 0; ; ) this.notify();
     }
 
-    private int getSmth(int num)
+    private int getSmth(final int num)
     {
         int counter = 0;
         switch (num) {
@@ -81,7 +81,7 @@ public class InputNeedBracesSingleLineStatements
         return counter;
     }
 
-    private void testElse(int k) {
+    private void testElse(final int k) {
         if (k == 4) System.identityHashCode("yes");
         else System.identityHashCode("no");
         for (;;);
@@ -96,7 +96,7 @@ public class InputNeedBracesSingleLineStatements
             return 2;
     }
 
-    void enhancedForLoop(int[] array) {
+    void enhancedForLoop(final int[] array) {
         for (int value: array) return;
     }
 
@@ -116,8 +116,8 @@ public class InputNeedBracesSingleLineStatements
         for (;;)
         ;
     }
-    private void method(){
-        if(false) {
+    private void method() {
+        if (false) {
             switch (0) {
                 case -1:
                     return;
@@ -125,7 +125,7 @@ public class InputNeedBracesSingleLineStatements
                     return;
             }
         }
-        switch(1){
+        switch (1) {
             case 1: return;
             default: throw new RuntimeException("");
         }

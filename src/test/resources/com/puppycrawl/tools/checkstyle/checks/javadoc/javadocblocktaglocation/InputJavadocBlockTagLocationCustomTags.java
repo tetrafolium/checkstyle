@@ -14,7 +14,7 @@ public class InputJavadocBlockTagLocationCustomTags {
      * text @implSpec  //warn
      * text @since 1.0
      */
-    public void method(int param) {
+    public void method(final int param) {
     }
 
 }

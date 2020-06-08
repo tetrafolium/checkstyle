@@ -8,5 +8,5 @@ public class InputHideUtilityClassConstructor {
         //does nothing
     }
 
-    public static void method() {}
+    public static void method() { }
 }

@@ -16,24 +16,24 @@ package com.puppycrawl.tools.checkstyle.checks.indentation.indentation; //indent
  */                                                                           //indent:1 exp:1
 public class InputIndentationValidArrayInitDefaultIndent { //indent:0 exp:0
 
-    private static char[] sHexChars = { //indent:4 exp:4
+    private static char[] sHexChars = {//indent:4 exp:4
         '0', '1', '2', '3', '4', '5', '6', '7', //indent:8 exp:8
         '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' }; //indent:8 exp:8
 
     int[] array = new int[] {1, 2, 3}; //indent:4 exp:4
 
-    int[] array2 = new int[] { //indent:4 exp:4
+    int[] array2 = new int[] {//indent:4 exp:4
         1, 2, 3 //indent:8 exp:8
     }; //indent:4 exp:4
 
-    int[] array3 = new int[] { //indent:4 exp:4
+    int[] array3 = new int[] {//indent:4 exp:4
         1, //indent:8 exp:8
         2, //indent:8 exp:8
         3 //indent:8 exp:8
     }; //indent:4 exp:4
 
     int[] array4 = new int[] //indent:4 exp:4
-    { //indent:4 exp:4
+    {//indent:4 exp:4
         1, //indent:8 exp:8
         2, //indent:8 exp:8
         3 //indent:8 exp:8
@@ -43,57 +43,57 @@ public class InputIndentationValidArrayInitDefaultIndent { //indent:0 exp:0
     {1, 2, 3}; //indent:4 exp:4
 
     // check nesting on first line //indent:4 exp:4
-    int[] array6 = new int[] { 1, 2, //indent:4 exp:4
+    int[] array6 = new int[] {1, 2, //indent:4 exp:4
         3 //indent:8 exp:8
     }; //indent:4 exp:4
 
-    int[] array6a = new int[] { 1, 2, //indent:4 exp:4
+    int[] array6a = new int[] {1, 2, //indent:4 exp:4
                                 3, 4}; //indent:32 exp:32
 
     // nesting //indent:4 exp:4
-    int[] array7 = new int[] { //indent:4 exp:4
+    int[] array7 = new int[] {//indent:4 exp:4
         1, 2, //indent:8 exp:8
         3 //indent:8 exp:8
     }; //indent:4 exp:4
 
-    String[][] mStuff = new String[][] { //indent:4 exp:4
-        { "key", "value" } //indent:8 exp:8
+    String[][] mStuff = new String[][] {//indent:4 exp:4
+        {"key", "value" } //indent:8 exp:8
     }; //indent:4 exp:4
 
     String[][] mStuff1 = new String[][] //indent:4 exp:4
-    { //indent:4 exp:4
-        { "key", "value" } //indent:8 exp:8
+    {//indent:4 exp:4
+        {"key", "value" } //indent:8 exp:8
     }; //indent:4 exp:4
 
-    int[] array8 = new int[] { }; //indent:4 exp:4
+    int[] array8 = new int[] {}; //indent:4 exp:4
 
-    int[] array9 = new int[] { //indent:4 exp:4
+    int[] array9 = new int[] {//indent:4 exp:4
     }; //indent:4 exp:4
 
-    int[][] array10 = new int[][] { //indent:4 exp:4
-        new int[] { 1, 2, 3}, //indent:8 exp:8
-        new int[] { 1, 2, 3}, //indent:8 exp:8
+    int[][] array10 = new int[][] {//indent:4 exp:4
+        new int[] {1, 2, 3}, //indent:8 exp:8
+        new int[] {1, 2, 3}, //indent:8 exp:8
     }; //indent:4 exp:4
 
     int[][] array10b //indent:4 exp:4
-        = new int[][] { //indent:8 exp:8
-            new int[] { 1, 2, 3}, //indent:12 exp:12
-            new int[] { 1, 2, 3}, //indent:12 exp:12
+        = new int[][] {//indent:8 exp:8
+            new int[] {1, 2, 3}, //indent:12 exp:12
+            new int[] {1, 2, 3}, //indent:12 exp:12
         }; //indent:8 exp:8
 
-    private void func1(int[] arg) { //indent:4 exp:4
+    private void func1(final int[] arg) { //indent:4 exp:4
 
-        char[] sHexChars2 = { //indent:8 exp:8
+        char[] sHexChars2 = {//indent:8 exp:8
             '0', '1', '2', '3', '4', '5', '6', '7', //indent:12 exp:12
             '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' }; //indent:12 exp:12
 
-        char[] sHexChars3 = { //indent:8 exp:8
+        char[] sHexChars3 = {//indent:8 exp:8
             '0', '1', '2', '3', '4', '5', '6', '7', //indent:12 exp:12
             '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' //indent:12 exp:12
         }; //indent:8 exp:8
 
         char[] sHexChars4 = //indent:8 exp:8
-        { //indent:8 exp:8
+        {//indent:8 exp:8
             '0', '1', '2', '3', '4', '5', '6', '7', //indent:12 exp:12
             '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' //indent:12 exp:12
         }; //indent:8 exp:8
@@ -105,7 +105,7 @@ public class InputIndentationValidArrayInitDefaultIndent { //indent:0 exp:0
 
         func1(new int[] {1, 2}); //indent:8 exp:8
         func1(new int[] {}); //indent:8 exp:8
-        func1(new int[] { //indent:8 exp:8
+        func1(new int[] {//indent:8 exp:8
             1, 2, 3 //indent:12 exp:12
         }); //indent:8 exp:8
     } //indent:4 exp:4

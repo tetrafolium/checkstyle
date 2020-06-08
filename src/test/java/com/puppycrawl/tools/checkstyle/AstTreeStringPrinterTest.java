@@ -58,8 +58,7 @@ public class AstTreeStringPrinterTest extends AbstractTreeTestSupport {
         try {
             AstTreeStringPrinter.printFileAst(input, JavaParser.Options.WITHOUT_COMMENTS);
             fail("exception expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             assertSame(NoViableAltException.class, ex.getCause().getClass(), "Invalid class");
             assertEquals(input.getAbsolutePath() + ":2:1: unexpected token: classD",
                     ex.getCause().toString(), "Invalid exception message");

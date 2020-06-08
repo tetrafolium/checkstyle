@@ -17,13 +17,13 @@ package com.puppycrawl.tools.checkstyle.checks.indentation.indentation;    //ind
 
 public class InputIndentationChainedMethodWithBracketOnNewLine {           //indent:0 exp:0
 
-  InputIndentationChainedMethodWithBracketOnNewLine indentation(           //indent:2 exp:2
-      Object... args) {                                                    //indent:6 exp:6
+  InputIndentationChainedMethodWithBracketOnNewLine indentation(//indent:2 exp:2
+      final Object... args) {                                                    //indent:6 exp:6
     return this;                                                           //indent:4 exp:4
   }                                                                        //indent:2 exp:2
 
-  InputIndentationChainedMethodWithBracketOnNewLine thenReturn(            //indent:2 exp:2
-      InnerClass innerClass) {                                             //indent:6 exp:6
+  InputIndentationChainedMethodWithBracketOnNewLine thenReturn(//indent:2 exp:2
+      final InnerClass innerClass) {                                             //indent:6 exp:6
     return this;                                                           //indent:4 exp:4
   }                                                                        //indent:2 exp:2
 
@@ -31,28 +31,28 @@ public class InputIndentationChainedMethodWithBracketOnNewLine {           //ind
     return new InputIndentationChainedMethodWithBracketOnNewLine();        //indent:4 exp:4
   }                                                                        //indent:2 exp:2
 
-  public static void main(String[] args) {                                 //indent:2 exp:2
+  public static void main(final String[] args) {                                 //indent:2 exp:2
     InputIndentationChainedMethodWithBracketOnNewLine i =                  //indent:4 exp:4
         new InputIndentationChainedMethodWithBracketOnNewLine();           //indent:8 exp:8
     i.indentation()                                                        //indent:4 exp:4
-        .indentation(                                                      //indent:8 exp:8
+        .indentation(//indent:8 exp:8
             "a",                                                           //indent:12 exp:12
             "b"                                                            //indent:12 exp:12
         );                                                                 //indent:8 exp:8
 
     i.indentation()                                                        //indent:4 exp:4
-      .indentation(                                                        //indent:6 exp:8 warn
+      .indentation(//indent:6 exp:8 warn
         "a",                                                               //indent:8 exp:10 warn
           "b"                                                              //indent:10 exp:10
       );                                                                   //indent:6 exp:8 warn
     when()                                                                 //indent:4 exp:4
-        .thenReturn(                                                       //indent:8 exp:8
+        .thenReturn(//indent:8 exp:8
             new InnerClass("response", "{\n" +                             //indent:12 exp:12
                                        "  \"query\": \"someValue\"\n" +    //indent:39 exp:39
                                        "}")                                //indent:39 exp:39
         );                                                                 //indent:8 exp:8
     when()                                                                 //indent:4 exp:4
-        .thenReturn(                                                       //indent:8 exp:8
+        .thenReturn(//indent:8 exp:8
             new InnerClass("response", "")                                 //indent:12 exp:12
         );                                                                 //indent:8 exp:8
     String string1 =                                                       //indent:4 exp:4
@@ -61,15 +61,15 @@ public class InputIndentationChainedMethodWithBracketOnNewLine {           //ind
      foo("fooooooooooooooo", 0, false);                                 //indent:5 exp:>=8 warn
     when().indentation(new String("foo"),                                  //indent:4 exp:4
                        "bar");                                             //indent:23 exp:>=8
-    when().                                                                //indent:4 exp:4
-        indentation("a","b");                                              //indent:8 exp:8
+    when().//indent:4 exp:4
+        indentation("a", "b");                                              //indent:8 exp:8
     when().indentation("a")                                                //indent:4 exp:4
         .indentation("b")                                                  //indent:8 exp:8
         .indentation("c");                                                 //indent:8 exp:8
   }                                                                        //indent:2 exp:2
 
-  static String foo (String aStr,                                          //indent:2 exp:2
-        int aNnum, boolean aFlag) {                                        //indent:8 exp:>=6
+  static String foo(final String aStr,                                          //indent:2 exp:2
+        final int aNnum, final boolean aFlag) {                                        //indent:8 exp:>=6
 
     if (true && true &&                                                    //indent:4 exp:4
              true && true) {                                               //indent:13 exp:>=8
@@ -85,7 +85,7 @@ public class InputIndentationChainedMethodWithBracketOnNewLine {           //ind
   }                                                                        //indent:2 exp:2
 
   public static class InnerClass {                                         //indent:2 exp:2
-    public InnerClass(String param1, String param2) {                      //indent:4 exp:4
+    public InnerClass(final String param1, final String param2) {                      //indent:4 exp:4
     }                                                                      //indent:4 exp:4
   }                                                                        //indent:2 exp:2
 }                                                                          //indent:0 exp:0

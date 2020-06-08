@@ -70,14 +70,14 @@ enum Direction {
     int _package = 0;
     int _private = 0;
 
-    Direction(int code){
-        this.code=code;
+    Direction(final int code) {
+        this.code = code;
     }
     protected int code;
     public int getCode() {
           return this.code;
     }
-    static Direction getOppositeDirection(Direction d){
+    static Direction getOppositeDirection(final Direction d) {
           return null;
     }
 }

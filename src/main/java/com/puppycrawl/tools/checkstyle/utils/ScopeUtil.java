@@ -39,7 +39,7 @@ public final class ScopeUtil {
      * @param aMods root node of a modifier set
      * @return a {@code Scope} value
      */
-    public static Scope getScopeFromMods(DetailAST aMods) {
+    public static Scope getScopeFromMods(final DetailAST aMods) {
         // default scope
         Scope returnValue = Scope.PACKAGE;
         for (DetailAST token = aMods.getFirstChild(); token != null
@@ -47,11 +47,9 @@ public final class ScopeUtil {
                 token = token.getNextSibling()) {
             if ("public".equals(token.getText())) {
                 returnValue = Scope.PUBLIC;
-            }
-            else if ("protected".equals(token.getText())) {
+            } else if ("protected".equals(token.getText())) {
                 returnValue = Scope.PROTECTED;
-            }
-            else if ("private".equals(token.getText())) {
+            } else if ("private".equals(token.getText())) {
                 returnValue = Scope.PRIVATE;
             }
         }
@@ -63,7 +61,7 @@ public final class ScopeUtil {
      * @param node the node to return the scope for
      * @return the Scope of the surrounding block
      */
-    public static Scope getSurroundingScope(DetailAST node) {
+    public static Scope getSurroundingScope(final DetailAST node) {
         Scope returnValue = null;
         for (DetailAST token = node.getParent();
              token != null;
@@ -79,8 +77,7 @@ public final class ScopeUtil {
                 if (returnValue == null || returnValue.isIn(modScope)) {
                     returnValue = modScope;
                 }
-            }
-            else if (type == TokenTypes.LITERAL_NEW) {
+            } else if (type == TokenTypes.LITERAL_NEW) {
                 returnValue = Scope.ANONINNER;
                 // because Scope.ANONINNER is not in any other Scope
                 break;
@@ -96,7 +93,7 @@ public final class ScopeUtil {
      * @param node the node to check if directly contained within a class block.
      * @return a {@code boolean} value
      */
-    public static boolean isInClassBlock(DetailAST node) {
+    public static boolean isInClassBlock(final DetailAST node) {
         return isInBlockOf(node, TokenTypes.CLASS_DEF);
     }
 
@@ -106,7 +103,7 @@ public final class ScopeUtil {
      * @param node the node to check if directly contained within an interface block.
      * @return a {@code boolean} value
      */
-    public static boolean isInInterfaceBlock(DetailAST node) {
+    public static boolean isInInterfaceBlock(final DetailAST node) {
         return isInBlockOf(node, TokenTypes.INTERFACE_DEF);
     }
 
@@ -116,7 +113,7 @@ public final class ScopeUtil {
      * @param node the node to check if directly contained within an annotation block.
      * @return a {@code boolean} value
      */
-    public static boolean isInAnnotationBlock(DetailAST node) {
+    public static boolean isInAnnotationBlock(final DetailAST node) {
         return isInBlockOf(node, TokenTypes.ANNOTATION_DEF);
     }
 
@@ -127,7 +124,7 @@ public final class ScopeUtil {
      * @param tokenType type of token.
      * @return a {@code boolean} value
      */
-    private static boolean isInBlockOf(DetailAST node, int tokenType) {
+    private static boolean isInBlockOf(final DetailAST node, final int tokenType) {
         boolean returnValue = false;
 
         // Loop up looking for a containing interface block
@@ -137,8 +134,7 @@ public final class ScopeUtil {
             final int type = token.getType();
             if (type == tokenType) {
                 returnValue = true;
-            }
-            else if (type == TokenTypes.CLASS_DEF
+            } else if (type == TokenTypes.CLASS_DEF
                 || type == TokenTypes.ENUM_DEF
                 || type == TokenTypes.INTERFACE_DEF
                 || type == TokenTypes.ANNOTATION_DEF
@@ -158,7 +154,7 @@ public final class ScopeUtil {
      *     or annotation block.
      * @return a {@code boolean} value
      */
-    public static boolean isInInterfaceOrAnnotationBlock(DetailAST node) {
+    public static boolean isInInterfaceOrAnnotationBlock(final DetailAST node) {
         return isInInterfaceBlock(node) || isInAnnotationBlock(node);
     }
 
@@ -168,7 +164,7 @@ public final class ScopeUtil {
      * @param node the node to check if directly contained within an enum block.
      * @return a {@code boolean} value
      */
-    public static boolean isInEnumBlock(DetailAST node) {
+    public static boolean isInEnumBlock(final DetailAST node) {
         boolean returnValue = false;
 
         // Loop up looking for a containing interface block
@@ -178,8 +174,7 @@ public final class ScopeUtil {
             final int type = token.getType();
             if (type == TokenTypes.ENUM_DEF) {
                 returnValue = true;
-            }
-            else if (type == TokenTypes.INTERFACE_DEF
+            } else if (type == TokenTypes.INTERFACE_DEF
                 || type == TokenTypes.ANNOTATION_DEF
                 || type == TokenTypes.CLASS_DEF
                 || type == TokenTypes.LITERAL_NEW) {
@@ -197,7 +192,7 @@ public final class ScopeUtil {
      * @param node the node to check
      * @return a {@code boolean} value
      */
-    public static boolean isInCodeBlock(DetailAST node) {
+    public static boolean isInCodeBlock(final DetailAST node) {
         boolean returnValue = false;
 
         // Loop up looking for a containing code block
@@ -224,7 +219,7 @@ public final class ScopeUtil {
      * @param node the node to check
      * @return a {@code boolean} value
      */
-    public static boolean isOuterMostType(DetailAST node) {
+    public static boolean isOuterMostType(final DetailAST node) {
         boolean returnValue = true;
         for (DetailAST parent = node.getParent();
              parent != null;
@@ -248,7 +243,7 @@ public final class ScopeUtil {
      * @param node the node to check.
      * @return whether aAST is a local variable definition.
      */
-    public static boolean isLocalVariableDef(DetailAST node) {
+    public static boolean isLocalVariableDef(final DetailAST node) {
         boolean localVariableDef = false;
         // variable declaration?
         if (node.getType() == TokenTypes.VARIABLE_DEF) {
@@ -277,7 +272,7 @@ public final class ScopeUtil {
      * @param node the node to check.
      * @return whether a node is a class field definition.
      */
-    public static boolean isClassFieldDef(DetailAST node) {
+    public static boolean isClassFieldDef(final DetailAST node) {
         return node.getType() == TokenTypes.VARIABLE_DEF && !isLocalVariableDef(node);
     }
 
@@ -287,7 +282,7 @@ public final class ScopeUtil {
      * @param scope a {@code Scope} value.
      * @return true if the ast node is in the scope.
      */
-    public static boolean isInScope(DetailAST ast, Scope scope) {
+    public static boolean isInScope(final DetailAST ast, final Scope scope) {
         final Scope surroundingScopeOfAstToken = getSurroundingScope(ast);
         return surroundingScopeOfAstToken == scope;
     }

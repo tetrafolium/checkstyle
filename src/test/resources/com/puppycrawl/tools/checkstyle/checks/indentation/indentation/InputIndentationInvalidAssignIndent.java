@@ -16,7 +16,7 @@ package com.puppycrawl.tools.checkstyle.checks.indentation.indentation; //indent
  */                                                                           //indent:1 exp:1
 public class InputIndentationInvalidAssignIndent //indent:0 exp:0
 { //indent:0 exp:0
-    void foo(String[] args) //indent:4 exp:4
+    void foo(final String[] args) //indent:4 exp:4
     { //indent:4 exp:4
         String line = mIndentCheck[ //indent:8 exp:8
           getLineNo()]; //indent:10 exp:12 warn

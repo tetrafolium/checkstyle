@@ -70,14 +70,14 @@ public final class FileContents implements CommentListener {
      *
      * @param text the contents of the file
      */
-    public FileContents(FileText text) {
+    public FileContents(final FileText text) {
         fileName = text.getFile().toString();
         this.text = new FileText(text);
     }
 
     @Override
-    public void reportSingleLineComment(String type, int startLineNo,
-            int startColNo) {
+    public void reportSingleLineComment(final String type, final int startLineNo,
+            final int startColNo) {
         reportSingleLineComment(startLineNo, startColNo);
     }
 
@@ -86,7 +86,7 @@ public final class FileContents implements CommentListener {
      * @param startLineNo the starting line number
      * @param startColNo the starting column number
      **/
-    public void reportSingleLineComment(int startLineNo, int startColNo) {
+    public void reportSingleLineComment(final int startLineNo, final int startColNo) {
         final String line = line(startLineNo - 1);
         final String[] txt = {line.substring(startColNo)};
         final Comment comment = new Comment(txt, startColNo, startLineNo,
@@ -95,8 +95,8 @@ public final class FileContents implements CommentListener {
     }
 
     @Override
-    public void reportBlockComment(String type, int startLineNo,
-            int startColNo, int endLineNo, int endColNo) {
+    public void reportBlockComment(final String type, final int startLineNo,
+            final int startColNo, final int endLineNo, final int endColNo) {
         reportBlockComment(startLineNo, startColNo, endLineNo, endColNo);
     }
 
@@ -107,8 +107,8 @@ public final class FileContents implements CommentListener {
      * @param endLineNo the ending line number
      * @param endColNo the ending column number
      **/
-    public void reportBlockComment(int startLineNo, int startColNo,
-            int endLineNo, int endColNo) {
+    public void reportBlockComment(final int startLineNo, final int startColNo,
+            final int endLineNo, final int endColNo) {
         final String[] cComment = extractBlockComment(startLineNo, startColNo,
                 endLineNo, endColNo);
         final Comment comment = new Comment(cComment, startColNo, endLineNo,
@@ -118,8 +118,7 @@ public final class FileContents implements CommentListener {
         if (clangComments.containsKey(startLineNo)) {
             final List<TextBlock> entries = clangComments.get(startLineNo);
             entries.add(comment);
-        }
-        else {
+        } else {
             final List<TextBlock> entries = new ArrayList<>();
             entries.add(comment);
             clangComments.put(startLineNo, entries);
@@ -159,15 +158,14 @@ public final class FileContents implements CommentListener {
      * @param endColNo the ending column number
      * @return block comment as an array
      **/
-    private String[] extractBlockComment(int startLineNo, int startColNo,
-            int endLineNo, int endColNo) {
+    private String[] extractBlockComment(final int startLineNo, final int startColNo,
+            final int endLineNo, final int endColNo) {
         final String[] returnValue;
         if (startLineNo == endLineNo) {
             returnValue = new String[1];
             returnValue[0] = line(startLineNo - 1).substring(startColNo,
                     endColNo + 1);
-        }
-        else {
+        } else {
             returnValue = new String[endLineNo - startLineNo + 1];
             returnValue[0] = line(startLineNo - 1).substring(startColNo);
             for (int i = startLineNo; i < endLineNo; i++) {
@@ -185,7 +183,7 @@ public final class FileContents implements CommentListener {
      * @param lineNoBefore the line number to check before
      * @return the Javadoc comment, or {@code null} if none
      **/
-    public TextBlock getJavadocBefore(int lineNoBefore) {
+    public TextBlock getJavadocBefore(final int lineNoBefore) {
         // Lines start at 1 to the callers perspective, so need to take off 2
         int lineNo = lineNoBefore - 2;
 
@@ -205,7 +203,7 @@ public final class FileContents implements CommentListener {
      * @return the corresponding line, without terminator
      * @throws IndexOutOfBoundsException if lineNo is invalid
      */
-    private String line(int lineNo) {
+    private String line(final int lineNo) {
         return text.get(lineNo);
     }
 
@@ -230,7 +228,7 @@ public final class FileContents implements CommentListener {
      * @param index index of the line
      * @return line from text of the file
      */
-    public String getLine(int index) {
+    public String getLine(final int index) {
         return text.get(index);
     }
 
@@ -247,7 +245,7 @@ public final class FileContents implements CommentListener {
      * @param lineNo the line number to check
      * @return if the specified line consists only of tabs and spaces.
      **/
-    public boolean lineIsBlank(int lineNo) {
+    public boolean lineIsBlank(final int lineNo) {
         return CommonUtil.isBlank(line(lineNo));
     }
 
@@ -257,7 +255,7 @@ public final class FileContents implements CommentListener {
      * @return if the specified line consists of only a single line comment
      *         without code.
      **/
-    public boolean lineIsComment(int lineNo) {
+    public boolean lineIsComment(final int lineNo) {
         return MATCH_SINGLELINE_COMMENT.matcher(line(lineNo)).matches();
     }
 
@@ -269,8 +267,8 @@ public final class FileContents implements CommentListener {
      * @param endColNo the ending column number
      * @return true if the positions intersects with a comment.
      **/
-    public boolean hasIntersectionWithComment(int startLineNo,
-            int startColNo, int endLineNo, int endColNo) {
+    public boolean hasIntersectionWithComment(final int startLineNo,
+            final int startColNo, final int endLineNo, final int endColNo) {
         return hasIntersectionWithBlockComment(startLineNo, startColNo, endLineNo, endColNo)
                 || hasIntersectionWithSingleLineComment(startLineNo, startColNo, endLineNo,
                         endColNo);
@@ -292,8 +290,8 @@ public final class FileContents implements CommentListener {
      * @param endColNo the ending column number
      * @return true if the positions intersects with a block comment.
      */
-    private boolean hasIntersectionWithBlockComment(int startLineNo, int startColNo,
-            int endLineNo, int endColNo) {
+    private boolean hasIntersectionWithBlockComment(final int startLineNo, final int startColNo,
+            final int endLineNo, final int endColNo) {
         boolean hasIntersection = false;
         // Check C comments (all comments should be checked)
         final Collection<List<TextBlock>> values = clangComments.values();
@@ -319,8 +317,8 @@ public final class FileContents implements CommentListener {
      * @param endColNo the ending column number
      * @return true if the positions intersects with a single line comment.
      */
-    private boolean hasIntersectionWithSingleLineComment(int startLineNo, int startColNo,
-            int endLineNo, int endColNo) {
+    private boolean hasIntersectionWithSingleLineComment(final int startLineNo, final int startColNo,
+            final int endLineNo, final int endColNo) {
         boolean hasIntersection = false;
         // Check CPP comments (line searching is possible)
         for (int lineNumber = startLineNo; lineNumber <= endLineNo;

@@ -5,14 +5,14 @@ import java.util.Arrays;
 public class InputSeparatorWrapMethodRef {
 
     void goodCase() {
-        String[] stringArray = { "Barbara", "James", "Mary", "John",
+        String[] stringArray = {"Barbara", "James", "Mary", "John",
             "Patricia", "Robert", "Michael", "Linda" };
         Arrays.sort(stringArray, String
                 ::compareToIgnoreCase);
     }
 
     void badCase() {
-        String[] stringArray = { "Barbara", "James", "Mary", "John",
+        String[] stringArray = {"Barbara", "James", "Mary", "John",
             "Patricia", "Robert", "Michael", "Linda" };
         /*warn*/ Arrays.sort(stringArray, String::
                 compareToIgnoreCase);

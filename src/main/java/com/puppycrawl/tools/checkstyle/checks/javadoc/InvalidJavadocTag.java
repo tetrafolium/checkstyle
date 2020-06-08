@@ -37,7 +37,7 @@ public final class InvalidJavadocTag {
      * @param col the column of the tag
      * @param name the name of the invalid tag
      */
-    public InvalidJavadocTag(int line, int col, String name) {
+    public InvalidJavadocTag(final int line, final int col, final String name) {
         this.line = line;
         this.col = col;
         this.name = name;

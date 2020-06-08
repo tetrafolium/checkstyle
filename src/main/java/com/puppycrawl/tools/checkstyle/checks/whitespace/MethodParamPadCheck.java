@@ -141,12 +141,11 @@ public class MethodParamPadCheck
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         final DetailAST parenAST;
         if (ast.getType() == TokenTypes.METHOD_CALL) {
             parenAST = ast;
-        }
-        else {
+        } else {
             parenAST = ast.findFirstToken(TokenTypes.LPAREN);
             // array construction => parenAST == null
         }
@@ -157,14 +156,12 @@ public class MethodParamPadCheck
                 if (!allowLineBreaks) {
                     log(parenAST, MSG_LINE_PREVIOUS, parenAST.getText());
                 }
-            }
-            else {
+            } else {
                 final int before = parenAST.getColumnNo() - 1;
                 if (option == PadOption.NOSPACE
                     && Character.isWhitespace(line.charAt(before))) {
                     log(parenAST, MSG_WS_PRECEDED, parenAST.getText());
-                }
-                else if (option == PadOption.SPACE
+                } else if (option == PadOption.SPACE
                          && !Character.isWhitespace(line.charAt(before))) {
                     log(parenAST, MSG_WS_NOT_PRECEDED, parenAST.getText());
                 }
@@ -177,7 +174,7 @@ public class MethodParamPadCheck
      * @param allowLineBreaks whether whitespace should be
      *     flagged at line breaks.
      */
-    public void setAllowLineBreaks(boolean allowLineBreaks) {
+    public void setAllowLineBreaks(final boolean allowLineBreaks) {
         this.allowLineBreaks = allowLineBreaks;
     }
 
@@ -186,7 +183,7 @@ public class MethodParamPadCheck
      * @param optionStr string to decode option from
      * @throws IllegalArgumentException if unable to decode
      */
-    public void setOption(String optionStr) {
+    public void setOption(final String optionStr) {
         option = PadOption.valueOf(optionStr.trim().toUpperCase(Locale.ENGLISH));
     }
 

@@ -34,13 +34,13 @@ public class InputMissingJavadocMethodScopeAnonInner
     */
     InputMissingJavadocMethodScopeAnonInner()
     {
-        mButton.addMouseListener( new MouseAdapter()
+        mButton.addMouseListener(new MouseAdapter()
             {
-                public void mouseClicked( MouseEvent aEv )
+                public void mouseClicked(final MouseEvent aEv)
                 {
                     System.identityHashCode("click");
                 }
-            } );
+            });
     }
 
     /**
@@ -48,12 +48,12 @@ public class InputMissingJavadocMethodScopeAnonInner
     */
     public void addInputAnonInner()
     {
-        mButton.addMouseListener( new MouseAdapter()
+        mButton.addMouseListener(new MouseAdapter()
             {
-                public void mouseClicked( MouseEvent aEv )
+                public void mouseClicked(final MouseEvent aEv)
                 {
                     System.identityHashCode("click");
                 }
-            } );
+            });
     }
 }

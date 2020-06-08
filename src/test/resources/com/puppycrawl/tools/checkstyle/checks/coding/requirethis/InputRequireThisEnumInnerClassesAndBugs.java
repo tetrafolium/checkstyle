@@ -11,14 +11,13 @@ public class InputRequireThisEnumInnerClassesAndBugs {
         i = 3;
     }
 
-    void method2(int i) {
+    void method2(final int i) {
         i++;
         this.i = i;
         method1();
         try {
             this.method1();
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             e.toString();
         }
         this.i--;
@@ -36,7 +35,7 @@ public class InputRequireThisEnumInnerClassesAndBugs {
         this.<I>method3();
     }
     int I = 0;
-    private class I {}
+    private class I { }
 }
 //  enum
 enum MyEnum
@@ -100,8 +99,7 @@ class Issue257 {
     public void foo() {
         try (final InputStream foo = new ByteArrayInputStream(new byte[512])) {
             foo.read();
-        }
-        catch (final IOException e) {
+        } catch (final IOException e) {
             e.getCause();
         }
     }
@@ -114,7 +112,7 @@ class Issue2240 {
         i++; int i = 1; i++;
         instanceMethod();
     }
-    void instanceMethod() {};
+    void instanceMethod() { };
 
     class Nested {
         void bar() {
@@ -124,10 +122,10 @@ class Issue2240 {
     }
 }
 
-class Issue2539{
-    void foo(int i) {}
-    static void foo(double i) {}
-    void foo() {}
+class Issue2539 {
+    void foo(final int i) { }
+    static void foo(final double i) { }
+    void foo() { }
 
     void bar() {
         foo(1);

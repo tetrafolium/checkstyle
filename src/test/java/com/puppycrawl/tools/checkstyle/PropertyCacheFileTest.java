@@ -64,16 +64,14 @@ public class PropertyCacheFileTest extends AbstractPathTestSupport {
         try {
             final Object test = new PropertyCacheFile(null, "");
             fail("exception expected but got " + test);
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertEquals("config can not be null", ex.getMessage(), "Invalid exception message");
         }
         try {
             final Configuration config = new DefaultConfiguration("myName");
             final Object test = new PropertyCacheFile(config, null);
             fail("exception expected but got " + test);
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertEquals("fileName can not be null", ex.getMessage(), "Invalid exception message");
         }
     }

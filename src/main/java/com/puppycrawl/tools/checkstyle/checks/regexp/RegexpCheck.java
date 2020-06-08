@@ -520,11 +520,10 @@ public class RegexpCheck extends AbstractCheck {
      *
      * @param message custom message which should be used in report.
      */
-    public void setMessage(String message) {
+    public void setMessage(final String message) {
         if (message == null) {
             this.message = "";
-        }
-        else {
+        } else {
             this.message = message;
         }
     }
@@ -534,7 +533,7 @@ public class RegexpCheck extends AbstractCheck {
      *
      * @param ignoreComments True if comments should be ignored.
      */
-    public void setIgnoreComments(boolean ignoreComments) {
+    public void setIgnoreComments(final boolean ignoreComments) {
         this.ignoreComments = ignoreComments;
     }
 
@@ -543,7 +542,7 @@ public class RegexpCheck extends AbstractCheck {
      *
      * @param illegalPattern True if pattern is not allowed.
      */
-    public void setIllegalPattern(boolean illegalPattern) {
+    public void setIllegalPattern(final boolean illegalPattern) {
         this.illegalPattern = illegalPattern;
     }
 
@@ -552,7 +551,7 @@ public class RegexpCheck extends AbstractCheck {
      *
      * @param errorLimit the number of errors to report.
      */
-    public void setErrorLimit(int errorLimit) {
+    public void setErrorLimit(final int errorLimit) {
         this.errorLimit = errorLimit;
     }
 
@@ -565,7 +564,7 @@ public class RegexpCheck extends AbstractCheck {
      * @param duplicateLimit negative values mean no duplicate checking,
      *     any positive value is used as the limit.
      */
-    public void setDuplicateLimit(int duplicateLimit) {
+    public void setDuplicateLimit(final int duplicateLimit) {
         this.duplicateLimit = duplicateLimit;
         checkForDuplicates = duplicateLimit > DEFAULT_DUPLICATE_LIMIT;
     }
@@ -575,7 +574,7 @@ public class RegexpCheck extends AbstractCheck {
      *
      * @param pattern the new pattern
      */
-    public final void setFormat(Pattern pattern) {
+    public final void setFormat(final Pattern pattern) {
         format = CommonUtil.createPattern(pattern.pattern(), Pattern.MULTILINE);
     }
 
@@ -595,7 +594,7 @@ public class RegexpCheck extends AbstractCheck {
     }
 
     @Override
-    public void beginTree(DetailAST rootAST) {
+    public void beginTree(final DetailAST rootAST) {
         matcher = format.matcher(getFileContents().getText().getFullText());
         matchCount = 0;
         errorCount = 0;
@@ -623,8 +622,7 @@ public class RegexpCheck extends AbstractCheck {
             if (canContinueValidation(ignore)) {
                 findMatch();
             }
-        }
-        else if (!illegalPattern && matchCount == 0) {
+        } else if (!illegalPattern && matchCount == 0) {
             logMessage(0);
         }
     }
@@ -634,7 +632,7 @@ public class RegexpCheck extends AbstractCheck {
      * @param ignore flag
      * @return true is we can continue
      */
-    private boolean canContinueValidation(boolean ignore) {
+    private boolean canContinueValidation(final boolean ignore) {
         return errorCount <= errorLimit - 1
                 && (ignore || illegalPattern || checkForDuplicates);
     }
@@ -646,12 +644,11 @@ public class RegexpCheck extends AbstractCheck {
      * @param start line column
      * @return true is that need to be ignored
      */
-    private boolean isIgnore(int startLine, FileText text, LineColumn start) {
+    private boolean isIgnore(final int startLine, final FileText text, final LineColumn start) {
         final LineColumn end;
         if (matcher.end() == 0) {
             end = text.lineColumn(0);
-        }
-        else {
+        } else {
             end = text.lineColumn(matcher.end() - 1);
         }
         boolean ignore = false;
@@ -670,13 +667,12 @@ public class RegexpCheck extends AbstractCheck {
      * Displays the right message.
      * @param lineNumber the line number the message relates to.
      */
-    private void logMessage(int lineNumber) {
+    private void logMessage(final int lineNumber) {
         String msg;
 
         if (message == null || message.isEmpty()) {
             msg = format.pattern();
-        }
-        else {
+        } else {
             msg = message;
         }
 
@@ -686,12 +682,10 @@ public class RegexpCheck extends AbstractCheck {
 
         if (illegalPattern) {
             log(lineNumber, MSG_ILLEGAL_REGEXP, msg);
-        }
-        else {
+        } else {
             if (lineNumber > 0) {
                 log(lineNumber, MSG_DUPLICATE_REGEXP, msg);
-            }
-            else {
+            } else {
                 log(lineNumber, MSG_REQUIRED_REGEXP, msg);
             }
         }

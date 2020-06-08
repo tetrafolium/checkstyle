@@ -85,8 +85,7 @@ public class HeaderCheckTest extends AbstractModuleTestSupport {
         try {
             createChecker(checkConfig);
             fail("CheckstyleException is expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             final String messageStart = "cannot initialize module"
                 + " com.puppycrawl.tools.checkstyle.checks.header.HeaderCheck"
                 + " - illegal value ";
@@ -108,8 +107,7 @@ public class HeaderCheckTest extends AbstractModuleTestSupport {
         try {
             createChecker(checkConfig);
             fail("CheckstyleException is expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             assertEquals("cannot initialize module"
                     + " com.puppycrawl.tools.checkstyle.checks.header.HeaderCheck"
                     + " - Cannot set property 'charset' to 'XSO-8859-1'",
@@ -126,8 +124,7 @@ public class HeaderCheckTest extends AbstractModuleTestSupport {
         try {
             createChecker(checkConfig);
             fail("Checker creation should not succeed with invalid headerFile");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             assertEquals("cannot initialize module"
                     + " com.puppycrawl.tools.checkstyle.checks.header.HeaderCheck"
                     + " - Cannot set property 'headerFile' to ''",
@@ -145,8 +142,7 @@ public class HeaderCheckTest extends AbstractModuleTestSupport {
         try {
             createChecker(checkConfig);
             fail("Checker creation should not succeed with null headerFile");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             assertEquals("cannot initialize module"
                     + " com.puppycrawl.tools.checkstyle.checks.header.HeaderCheck"
                     + " - Cannot set property 'headerFile' to 'null'",
@@ -182,8 +178,7 @@ public class HeaderCheckTest extends AbstractModuleTestSupport {
         try {
             check.setHeader("Header2");
             fail("ConversionException is expected");
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertEquals("header has already been set - "
                     + "set either header or headerFile, not both", ex.getMessage(),
                     "Invalid exception message");
@@ -198,8 +193,7 @@ public class HeaderCheckTest extends AbstractModuleTestSupport {
         try {
             Whitebox.invokeMethod(check, "loadHeaderFile");
             fail("Exception expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             assertTrue(ex.getMessage().startsWith("unable to load header file "),
                     "Invalid exception cause message");
         }
@@ -255,8 +249,7 @@ public class HeaderCheckTest extends AbstractModuleTestSupport {
         try {
             Whitebox.invokeMethod(check, "loadHeaderFile");
             fail("ConversionException is expected");
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertEquals("header has already been set - "
                     + "set either header or headerFile, not both", ex.getMessage(),
                     "Invalid exception message");

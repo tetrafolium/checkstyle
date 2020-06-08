@@ -263,15 +263,15 @@ public class SuppressionCommentFilterTest
         verifySuppressed(filterConfig, suppressed);
     }
 
-    private void verifySuppressed(Configuration moduleConfig,
-            String... aSuppressed)
+    private void verifySuppressed(final Configuration moduleConfig,
+            final String... aSuppressed)
             throws Exception {
         verifySuppressed(moduleConfig, getPath("InputSuppressionCommentFilter.java"),
                ALL_MESSAGES, aSuppressed);
     }
 
-    private void verifySuppressed(Configuration moduleConfig, String fileName,
-            String[] expectedViolations, String... suppressedViolations) throws Exception {
+    private void verifySuppressed(final Configuration moduleConfig, final String fileName,
+            final String[] expectedViolations, final String... suppressedViolations) throws Exception {
         final DefaultConfiguration memberNameCheckConfig =
                 createModuleConfig(MemberNameCheck.class);
         memberNameCheckConfig.addAttribute("id", "ignore");
@@ -295,7 +295,7 @@ public class SuppressionCommentFilterTest
                 removeSuppressed(expectedViolations, suppressedViolations));
     }
 
-    private static String[] removeSuppressed(String[] from, String... remove) {
+    private static String[] removeSuppressed(final String[] from, final String... remove) {
         final Collection<String> coll = Arrays.stream(from).collect(Collectors.toList());
         coll.removeAll(Arrays.asList(remove));
         return coll.toArray(CommonUtil.EMPTY_STRING_ARRAY);
@@ -363,8 +363,7 @@ public class SuppressionCommentFilterTest
             final String[] suppressed = CommonUtil.EMPTY_STRING_ARRAY;
             verifySuppressed(filterConfig, suppressed);
             fail("Exception is expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             final IllegalArgumentException cause = (IllegalArgumentException) ex.getCause();
             assertEquals("unable to parse expanded comment e[l", cause.getMessage(),
                     "Invalid exception message");
@@ -381,8 +380,7 @@ public class SuppressionCommentFilterTest
             final String[] suppressed = CommonUtil.EMPTY_STRING_ARRAY;
             verifySuppressed(filterConfig, suppressed);
             fail("Exception is expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             final IllegalArgumentException cause = (IllegalArgumentException) ex.getCause();
             assertEquals("unable to parse expanded comment e[l", cause.getMessage(),
                     "Invalid exception message");
@@ -630,7 +628,7 @@ public class SuppressionCommentFilterTest
         assertEquals(0, tags2.size(), "Invalid tags size");
     }
 
-    private static List<Comparable<Object>> getTagsAfterExecutionOnDefaultFilter(String... lines) {
+    private static List<Comparable<Object>> getTagsAfterExecutionOnDefaultFilter(final String... lines) {
         return getTagsAfterExecution(new SuppressionCommentFilter(), "filename", lines);
     }
 
@@ -643,8 +641,8 @@ public class SuppressionCommentFilterTest
      *
      * @return {@code Tag} list
      */
-    private static List<Comparable<Object>> getTagsAfterExecution(SuppressionCommentFilter filter,
-            String filename, String... lines) {
+    private static List<Comparable<Object>> getTagsAfterExecution(final SuppressionCommentFilter filter,
+            final String filename, final String... lines) {
         final FileContents contents = new FileContents(
                 new FileText(new File(filename), Arrays.asList(lines)));
         for (int lineNo = 0; lineNo < lines.length; lineNo++) {

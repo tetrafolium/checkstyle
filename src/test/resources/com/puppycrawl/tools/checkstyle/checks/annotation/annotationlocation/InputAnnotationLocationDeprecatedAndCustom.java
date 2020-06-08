@@ -8,7 +8,7 @@ public class InputAnnotationLocationDeprecatedAndCustom {
     public class Annotation
     {
         @Deprecated // <--method, separate line
-        public void test(@MyAnnotation String s) { // <--parameter, same line
+        public void test(final @MyAnnotation String s) { // <--parameter, same line
             @MyAnnotation // <--variable, separate line
             Integer i;
             for (@MyAnnotation char c : s.toCharArray()) { // <--variable in for each, same line
@@ -20,8 +20,7 @@ public class InputAnnotationLocationDeprecatedAndCustom {
         public void foo1() {
             try {
                 // some code
-            }
-            catch (@MyAnnotation Exception ex) {
+            } catch (@MyAnnotation Exception ex) {
 
             }
         }
@@ -36,9 +35,9 @@ public class InputAnnotationLocationDeprecatedAndCustom {
             MathOperation c = (@MyAnnotation int a, @MyAnnotation int b) -> a + b;
         }
 
-        public void foo4(@MyAnnotation int a, @MyAnnotation int b) {}
+        public void foo4(final @MyAnnotation int a, final @MyAnnotation int b) { }
 
-        public void foo5(@SuppressWarnings("unchecked") int a) {}
+        public void foo5(final @SuppressWarnings("unchecked") int a) { }
     }
 
     interface MathOperation {
@@ -46,5 +45,5 @@ public class InputAnnotationLocationDeprecatedAndCustom {
     }
 
     @Target(ElementType.TYPE_USE)
-    public @interface MyAnnotation {}
+    public @interface MyAnnotation { }
 }

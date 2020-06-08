@@ -55,8 +55,8 @@ class HtmlTag {
      * @param incomplete is the tag is incomplete.
      * @param text the line of comment text for this tag.
      */
-    /* package */ HtmlTag(String id, int lineNo, int position, boolean closedTag,
-            boolean incomplete, String text) {
+    /* package */ HtmlTag(final String id, final int lineNo, final int position, final boolean closedTag,
+            final boolean incomplete, final String text) {
         this.id = id;
         this.lineNo = lineNo;
         this.position = position;

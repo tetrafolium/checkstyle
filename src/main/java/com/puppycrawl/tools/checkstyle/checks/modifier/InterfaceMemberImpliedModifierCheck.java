@@ -259,7 +259,7 @@ public class InterfaceMemberImpliedModifierCheck
      * @param violateImpliedPublicField
      *        True to perform the check, false to turn the check off.
      */
-    public void setViolateImpliedPublicField(boolean violateImpliedPublicField) {
+    public void setViolateImpliedPublicField(final boolean violateImpliedPublicField) {
         this.violateImpliedPublicField = violateImpliedPublicField;
     }
 
@@ -269,7 +269,7 @@ public class InterfaceMemberImpliedModifierCheck
      * @param violateImpliedStaticField
      *        True to perform the check, false to turn the check off.
      */
-    public void setViolateImpliedStaticField(boolean violateImpliedStaticField) {
+    public void setViolateImpliedStaticField(final boolean violateImpliedStaticField) {
         this.violateImpliedStaticField = violateImpliedStaticField;
     }
 
@@ -279,7 +279,7 @@ public class InterfaceMemberImpliedModifierCheck
      * @param violateImpliedFinalField
      *        True to perform the check, false to turn the check off.
      */
-    public void setViolateImpliedFinalField(boolean violateImpliedFinalField) {
+    public void setViolateImpliedFinalField(final boolean violateImpliedFinalField) {
         this.violateImpliedFinalField = violateImpliedFinalField;
     }
 
@@ -289,7 +289,7 @@ public class InterfaceMemberImpliedModifierCheck
      * @param violateImpliedPublicMethod
      *        True to perform the check, false to turn the check off.
      */
-    public void setViolateImpliedPublicMethod(boolean violateImpliedPublicMethod) {
+    public void setViolateImpliedPublicMethod(final boolean violateImpliedPublicMethod) {
         this.violateImpliedPublicMethod = violateImpliedPublicMethod;
     }
 
@@ -299,7 +299,7 @@ public class InterfaceMemberImpliedModifierCheck
      * @param violateImpliedAbstractMethod
      *        True to perform the check, false to turn the check off.
      */
-    public void setViolateImpliedAbstractMethod(boolean violateImpliedAbstractMethod) {
+    public void setViolateImpliedAbstractMethod(final boolean violateImpliedAbstractMethod) {
         this.violateImpliedAbstractMethod = violateImpliedAbstractMethod;
     }
 
@@ -309,7 +309,7 @@ public class InterfaceMemberImpliedModifierCheck
      * @param violateImpliedPublicNested
      *        True to perform the check, false to turn the check off.
      */
-    public void setViolateImpliedPublicNested(boolean violateImpliedPublicNested) {
+    public void setViolateImpliedPublicNested(final boolean violateImpliedPublicNested) {
         this.violateImpliedPublicNested = violateImpliedPublicNested;
     }
 
@@ -319,7 +319,7 @@ public class InterfaceMemberImpliedModifierCheck
      * @param violateImpliedStaticNested
      *        True to perform the check, false to turn the check off.
      */
-    public void setViolateImpliedStaticNested(boolean violateImpliedStaticNested) {
+    public void setViolateImpliedStaticNested(final boolean violateImpliedStaticNested) {
         this.violateImpliedStaticNested = violateImpliedStaticNested;
     }
 
@@ -345,7 +345,7 @@ public class InterfaceMemberImpliedModifierCheck
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         if (ScopeUtil.isInInterfaceBlock(ast) && !ScopeUtil.isInCodeBlock(ast)) {
             switch (ast.getType()) {
                 case TokenTypes.METHOD_DEF:
@@ -369,7 +369,7 @@ public class InterfaceMemberImpliedModifierCheck
      * Check method in interface.
      * @param ast the method AST
      */
-    private void processMethod(DetailAST ast) {
+    private void processMethod(final DetailAST ast) {
         final DetailAST modifiers = ast.findFirstToken(TokenTypes.MODIFIERS);
         if (violateImpliedPublicMethod
                 && modifiers.findFirstToken(TokenTypes.LITERAL_PRIVATE) == null
@@ -389,7 +389,7 @@ public class InterfaceMemberImpliedModifierCheck
      * Check field in interface.
      * @param ast the field AST
      */
-    private void processField(DetailAST ast) {
+    private void processField(final DetailAST ast) {
         final DetailAST modifiers = ast.findFirstToken(TokenTypes.MODIFIERS);
         if (violateImpliedPublicField
                 && modifiers.findFirstToken(TokenTypes.LITERAL_PUBLIC) == null) {
@@ -409,7 +409,7 @@ public class InterfaceMemberImpliedModifierCheck
      * Check nested types in interface.
      * @param ast the nested type AST
      */
-    private void processNestedType(DetailAST ast) {
+    private void processNestedType(final DetailAST ast) {
         final DetailAST modifiers = ast.findFirstToken(TokenTypes.MODIFIERS);
         if (violateImpliedPublicNested
                 && modifiers.findFirstToken(TokenTypes.LITERAL_PUBLIC) == null) {

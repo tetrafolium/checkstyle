@@ -12,7 +12,7 @@ public class InputVariableDeclarationUsageDistanceAnonymous {
         nothing();
         nothing();
         prefs.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
             }
         });
     }

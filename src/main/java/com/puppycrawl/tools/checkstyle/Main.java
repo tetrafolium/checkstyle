@@ -102,7 +102,7 @@ public final class Main {
      * @throws IOException if there is a problem with files access
      * @noinspection UseOfSystemOutOrSystemErr, CallToPrintStackTrace, CallToSystemExit
      **/
-    public static void main(String... args) throws IOException {
+    public static void main(final String... args) throws IOException {
 
         final CliOptions cliOptions = new CliOptions();
         final CommandLine commandLine = new CommandLine(cliOptions);
@@ -116,27 +116,22 @@ public final class Main {
             final ParseResult parseResult = commandLine.parseArgs(args);
             if (parseResult.isVersionHelpRequested()) {
                 System.out.println(getVersionString());
-            }
-            else if (parseResult.isUsageHelpRequested()) {
+            } else if (parseResult.isUsageHelpRequested()) {
                 commandLine.usage(System.out);
-            }
-            else {
+            } else {
                 exitStatus = execute(parseResult, cliOptions);
                 errorCounter = exitStatus;
             }
-        }
-        catch (ParameterException ex) {
+        } catch (ParameterException ex) {
             exitStatus = EXIT_WITH_INVALID_USER_INPUT_CODE;
             System.err.println(ex.getMessage());
             System.err.println("Usage: checkstyle [OPTIONS]... FILES...");
             System.err.println("Try 'checkstyle --help' for more information.");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             exitStatus = EXIT_WITH_CHECKSTYLE_EXCEPTION_CODE;
             errorCounter = 1;
             ex.printStackTrace();
-        }
-        finally {
+        } finally {
             // return exit code base on validation of Checker
             if (errorCounter > 0) {
                 final LocalizedMessage errorCounterMessage = new LocalizedMessage(1,
@@ -170,7 +165,7 @@ public final class Main {
      * @throws CheckstyleException if something happens processing the files.
      * @noinspection UseOfSystemOutOrSystemErr
      */
-    private static int execute(ParseResult parseResult, CliOptions options)
+    private static int execute(final ParseResult parseResult, final CliOptions options)
             throws IOException, CheckstyleException {
 
         final int exitStatus;
@@ -182,8 +177,7 @@ public final class Main {
         if (hasMessages) {
             messages.forEach(System.out::println);
             exitStatus = EXIT_WITH_INVALID_USER_INPUT_CODE;
-        }
-        else {
+        } else {
             exitStatus = runCli(options, filesToProcess);
         }
         return exitStatus;
@@ -194,7 +188,7 @@ public final class Main {
      * @param options the user-specified options
      * @return list of files to process
      */
-    private static List<File> getFilesToProcess(CliOptions options) {
+    private static List<File> getFilesToProcess(final CliOptions options) {
         final List<Pattern> patternsToExclude = options.getExclusions();
 
         final List<File> result = new LinkedList<>();
@@ -213,7 +207,7 @@ public final class Main {
      *        files.
      * @return found files
      */
-    private static List<File> listFiles(File node, List<Pattern> patternsToExclude) {
+    private static List<File> listFiles(final File node, final List<Pattern> patternsToExclude) {
         // could be replaced with org.apache.commons.io.FileUtils.list() method
         // if only we add commons-io library
         final List<File> result = new LinkedList<>();
@@ -227,8 +221,7 @@ public final class Main {
                         result.addAll(listFiles(element, patternsToExclude));
                     }
                 }
-            }
-            else if (node.isFile()) {
+            } else if (node.isFile()) {
                 result.add(node);
             }
         }
@@ -243,7 +236,7 @@ public final class Main {
      *        files.
      * @return True if the directory/file matches one of the patterns.
      */
-    private static boolean isPathExcluded(String path, List<Pattern> patternsToExclude) {
+    private static boolean isPathExcluded(final String path, final List<Pattern> patternsToExclude) {
         boolean result = false;
 
         for (Pattern pattern : patternsToExclude) {
@@ -265,7 +258,7 @@ public final class Main {
      * @throws CheckstyleException if something happens processing the files.
      * @noinspection UseOfSystemOutOrSystemErr
      */
-    private static int runCli(CliOptions options, List<File> filesToProcess)
+    private static int runCli(final CliOptions options, final List<File> filesToProcess)
             throws IOException, CheckstyleException {
         int result = 0;
         final boolean hasSuppressionLineColumnNumber = options.suppressionLineColumnNumber != null;
@@ -277,35 +270,29 @@ public final class Main {
             final String stringAst = AstTreeStringPrinter.printFileAst(file,
                     JavaParser.Options.WITHOUT_COMMENTS);
             System.out.print(stringAst);
-        }
-        else if (Objects.nonNull(options.xpath)) {
+        } else if (Objects.nonNull(options.xpath)) {
             final String branch = XpathUtil.printXpathBranch(options.xpath, filesToProcess.get(0));
             System.out.print(branch);
-        }
-        else if (options.printAstWithComments) {
+        } else if (options.printAstWithComments) {
             final File file = filesToProcess.get(0);
             final String stringAst = AstTreeStringPrinter.printFileAst(file,
                     JavaParser.Options.WITH_COMMENTS);
             System.out.print(stringAst);
-        }
-        else if (options.printJavadocTree) {
+        } else if (options.printJavadocTree) {
             final File file = filesToProcess.get(0);
             final String stringAst = DetailNodeTreeStringPrinter.printFileAst(file);
             System.out.print(stringAst);
-        }
-        else if (options.printTreeWithJavadoc) {
+        } else if (options.printTreeWithJavadoc) {
             final File file = filesToProcess.get(0);
             final String stringAst = AstTreeStringPrinter.printJavaAndJavadocTree(file);
             System.out.print(stringAst);
-        }
-        else if (hasSuppressionLineColumnNumber) {
+        } else if (hasSuppressionLineColumnNumber) {
             final File file = filesToProcess.get(0);
             final String stringSuppressions =
                     SuppressionsStringPrinter.printSuppressions(file,
                             options.suppressionLineColumnNumber, options.tabWidth);
             System.out.print(stringSuppressions);
-        }
-        else {
+        } else {
             if (options.debug) {
                 final Logger parentLogger = Logger.getLogger(Main.class.getName()).getParent();
                 final ConsoleHandler handler = new ConsoleHandler();
@@ -337,15 +324,14 @@ public final class Main {
      * @throws CheckstyleException
      *         when properties file could not be loaded
      */
-    private static int runCheckstyle(CliOptions options, List<File> filesToProcess)
+    private static int runCheckstyle(final CliOptions options, final List<File> filesToProcess)
             throws CheckstyleException, IOException {
         // setup the properties
         final Properties props;
 
         if (options.propertiesFile == null) {
             props = System.getProperties();
-        }
-        else {
+        } else {
             props = loadProperties(options.propertiesFile);
         }
 
@@ -357,8 +343,7 @@ public final class Main {
         final ConfigurationLoader.IgnoredModulesOptions ignoredModulesOptions;
         if (options.executeIgnoredModules) {
             ignoredModulesOptions = ConfigurationLoader.IgnoredModulesOptions.EXECUTE;
-        }
-        else {
+        } else {
             ignoredModulesOptions = ConfigurationLoader.IgnoredModulesOptions.OMIT;
         }
 
@@ -387,8 +372,7 @@ public final class Main {
 
                 listener = new XpathFileGeneratorAuditListener(getOutputStream(options.outputPath),
                         getOutputStreamOptions(options.outputPath));
-            }
-            else {
+            } else {
                 listener = createListener(options.format, options.outputPath);
             }
 
@@ -398,8 +382,7 @@ public final class Main {
 
             // run RootModule
             errorCounter = rootModule.process(filesToProcess);
-        }
-        finally {
+        } finally {
             rootModule.destroy();
         }
 
@@ -414,14 +397,13 @@ public final class Main {
      * @throws CheckstyleException
      *         when could not load properties file
      */
-    private static Properties loadProperties(File file)
+    private static Properties loadProperties(final File file)
             throws CheckstyleException {
         final Properties properties = new Properties();
 
         try (InputStream stream = Files.newInputStream(file.toPath())) {
             properties.load(stream);
-        }
-        catch (final IOException ex) {
+        } catch (final IOException ex) {
             final LocalizedMessage loadPropertiesExceptionMessage = new LocalizedMessage(1,
                     Definitions.CHECKSTYLE_BUNDLE, LOAD_PROPERTIES_EXCEPTION,
                     new String[] {file.getAbsolutePath()}, null, Main.class, null);
@@ -440,7 +422,7 @@ public final class Main {
      * @return The new instance of the root module.
      * @throws CheckstyleException if no module can be instantiated from name
      */
-    private static RootModule getRootModule(String name, ClassLoader moduleClassLoader)
+    private static RootModule getRootModule(final String name, final ClassLoader moduleClassLoader)
             throws CheckstyleException {
         final ModuleFactory factory = new PackageObjectFactory(
                 Checker.class.getPackage().getName(), moduleClassLoader);
@@ -453,7 +435,7 @@ public final class Main {
      * @param config The configuration object.
      * @return The {@code TreeWalker} module configuration.
      */
-    private static Configuration getTreeWalkerConfig(Configuration config) {
+    private static Configuration getTreeWalkerConfig(final Configuration config) {
         Configuration result = null;
 
         final Configuration[] children = config.getChildren();
@@ -475,7 +457,7 @@ public final class Main {
      * @return a fresh new {@code AuditListener}
      * @exception IOException when provided output location is not found
      */
-    private static AuditListener createListener(OutputFormat format, Path outputLocation)
+    private static AuditListener createListener(final OutputFormat format, final Path outputLocation)
             throws IOException {
         final OutputStream out = getOutputStream(outputLocation);
         final AutomaticBean.OutputStreamOptions closeOutputStreamOption =
@@ -491,12 +473,11 @@ public final class Main {
      * @noinspection UseOfSystemOutOrSystemErr
      */
     @SuppressWarnings("resource")
-    private static OutputStream getOutputStream(Path outputPath) throws IOException {
+    private static OutputStream getOutputStream(final Path outputPath) throws IOException {
         final OutputStream result;
         if (outputPath == null) {
             result = System.out;
-        }
-        else {
+        } else {
             result = Files.newOutputStream(outputPath);
         }
         return result;
@@ -507,12 +488,11 @@ public final class Main {
      * @param outputPath output location
      * @return output stream options
      */
-    private static AutomaticBean.OutputStreamOptions getOutputStreamOptions(Path outputPath) {
+    private static AutomaticBean.OutputStreamOptions getOutputStreamOptions(final Path outputPath) {
         final AutomaticBean.OutputStreamOptions result;
         if (outputPath == null) {
             result = AutomaticBean.OutputStreamOptions.NONE;
-        }
-        else {
+        } else {
             result = AutomaticBean.OutputStreamOptions.CLOSE;
         }
         return result;
@@ -536,13 +516,12 @@ public final class Main {
          * @param options the output stream options
          * @return a new AuditListener for this OutputFormat
          */
-        public AuditListener createListener(OutputStream out,
-                                            AutomaticBean.OutputStreamOptions options) {
+        public AuditListener createListener(final OutputStream out,
+                                            final AutomaticBean.OutputStreamOptions options) {
             final AuditListener result;
             if (this == XML) {
                 result = new XMLLogger(out, options);
-            }
-            else {
+            } else {
                 result = new DefaultLogger(out, options);
             }
             return result;
@@ -570,7 +549,7 @@ public final class Main {
          * @return true if the logger name is in the package of this class or a subpackage
          */
         @Override
-        public boolean isLoggable(LogRecord record) {
+        public boolean isLoggable(final LogRecord record) {
             return record.getLoggerName().startsWith(packageName);
         }
     }
@@ -747,48 +726,41 @@ public final class Main {
          * @return list of violations
          */
         // -@cs[CyclomaticComplexity] Breaking apart will damage encapsulation
-        private List<String> validateCli(ParseResult parseResult, List<File> filesToProcess) {
+        private List<String> validateCli(final ParseResult parseResult, final List<File> filesToProcess) {
             final List<String> result = new ArrayList<>();
             final boolean hasConfigurationFile = configurationFile != null;
             final boolean hasSuppressionLineColumnNumber = suppressionLineColumnNumber != null;
 
             if (filesToProcess.isEmpty()) {
                 result.add("Files to process must be specified, found 0.");
-            }
-            // ensure there is no conflicting options
+            } // ensure there is no conflicting options
             else if (printAst || printAstWithComments || printJavadocTree || printTreeWithJavadoc
                 || xpath != null) {
                 if (suppressionLineColumnNumber != null || configurationFile != null
                         || propertiesFile != null || outputPath != null
                         || parseResult.hasMatchedOption(OUTPUT_FORMAT_OPTION)) {
                     result.add("Option '-t' cannot be used with other options.");
-                }
-                else if (filesToProcess.size() > 1) {
+                } else if (filesToProcess.size() > 1) {
                     result.add("Printing AST is allowed for only one file.");
                 }
-            }
-            else if (hasSuppressionLineColumnNumber) {
+            } else if (hasSuppressionLineColumnNumber) {
                 if (configurationFile != null || propertiesFile != null
                         || outputPath != null
                         || parseResult.hasMatchedOption(OUTPUT_FORMAT_OPTION)) {
                     result.add("Option '-s' cannot be used with other options.");
-                }
-                else if (filesToProcess.size() > 1) {
+                } else if (filesToProcess.size() > 1) {
                     result.add("Printing xpath suppressions is allowed for only one file.");
                 }
-            }
-            else if (hasConfigurationFile) {
+            } else if (hasConfigurationFile) {
                 try {
                     // test location only
                     CommonUtil.getUriByFilename(configurationFile);
-                }
-                catch (CheckstyleException ignored) {
+                } catch (CheckstyleException ignored) {
                     final String msg = "Could not find config XML file '%s'.";
                     result.add(String.format(Locale.ROOT, msg, configurationFile));
                 }
                 result.addAll(validateOptionalCliParametersIfConfigDefined());
-            }
-            else {
+            } else {
                 result.add("Must specify a config XML file.");
             }
 

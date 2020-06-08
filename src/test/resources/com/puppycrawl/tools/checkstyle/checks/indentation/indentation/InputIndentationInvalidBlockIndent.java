@@ -92,8 +92,10 @@ public class InputIndentationInvalidBlockIndent { //indent:0 exp:0
 //  static init at beginning of line is broken for now //indent:0 exp:0
 
 
-  static { int var = 4; } //indent:2 exp:4 warn
-      static { int var = 4; } //indent:6 exp:4 warn
+  static {
+      int var = 4; } //indent:2 exp:4 warn
+      static {
+          int var = 4; } //indent:6 exp:4 warn
 
 
     static { //indent:4 exp:4

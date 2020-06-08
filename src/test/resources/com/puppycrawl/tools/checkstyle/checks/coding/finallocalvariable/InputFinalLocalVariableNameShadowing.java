@@ -1,11 +1,11 @@
 package com.puppycrawl.tools.checkstyle.checks.coding.finallocalvariable;
 
 class InputFinalLocalVariableNameShadowing {
-    public void foo(String text) {
+    public void foo(final String text) {
         System.identityHashCode(text);
 
         class Bar {
-            void bar (String text) {
+            void bar(final String text) {
                 text = "xxx";
             }
         }
@@ -16,7 +16,7 @@ class Foo2 {
     public void foo() {
         int x;
         class Bar {
-            void bar () {
+            void bar() {
                 int x = 1;
                 x++;
                 x++;
@@ -25,7 +25,7 @@ class Foo2 {
     }
 }
 
-enum InputFinalLocalVariableNameShadowingEnum{
+enum InputFinalLocalVariableNameShadowingEnum {
     test;
     final String foo1 = "error";
     InputFinalLocalVariableNameShadowingEnum()

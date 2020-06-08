@@ -11,12 +11,12 @@ public class InputSeparatorWrapForTestComma<T extends FooForTestComma
         s.isEmpty();
         try {
             foo(i, s);
-        } catch (FooException4TC |
-                BarException4TC e) {}
+        } catch (FooException4TC
+                | BarException4TC e) { }
         foo(i,
                 s); //good wrapping
     }
-    public static void foo(int i, String s) throws FooException4TC, BarException4TC
+    public static void foo(final int i, final String s) throws FooException4TC, BarException4TC
     {
 
     }
@@ -25,7 +25,7 @@ public class InputSeparatorWrapForTestComma<T extends FooForTestComma
 class badCaseForTestComma<T extends FooForTestComma &  BarForTestComma> {
 
 
-    public void goodCaseForTestComma(int... aFoo) throws FooException4TC, BarException4TC
+    public void goodCaseForTestComma(final int... aFoo) throws FooException4TC, BarException4TC
     {
         String s = "ffffooooString";
         s.
@@ -33,13 +33,13 @@ class badCaseForTestComma<T extends FooForTestComma &  BarForTestComma> {
         try {
             foo(1, s);
         } catch (FooException4TC
-                | BarException4TC e) {}
+                | BarException4TC e) { }
 
         foo(1
-                ,s);  //bad wrapping
+, s);  //bad wrapping
         int[] i;
     }
-    public static String foo(int i, String s) throws FooException4TC, BarException4TC
+    public static String foo(final int i, final String s) throws FooException4TC, BarException4TC
     {
         return new StringBuilder("")
                 .append("", 0, 1)

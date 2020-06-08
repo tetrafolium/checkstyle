@@ -21,26 +21,26 @@ public class InputIndentationValidForIndent { //indent:0 exp:0
     } //indent:4 exp:4
 
 
-    private void method1(int[] indices) //indent:4 exp:4
+    private void method1(final int[] indices) //indent:4 exp:4
     { //indent:4 exp:4
-        for (int i=0; i<10; i++) //indent:8 exp:8
+        for (int i = 0; i < 10; i++) //indent:8 exp:8
             System.getProperty("foo"); //indent:12 exp:12
 
-        for (int i=0; i<10; i++) System.getProperty("foo"); //indent:8 exp:8
+        for (int i = 0; i < 10; i++) System.getProperty("foo"); //indent:8 exp:8
 
-        for (int i=0; i<10; i++) { //indent:8 exp:8
+        for (int i = 0; i < 10; i++) { //indent:8 exp:8
         } //indent:8 exp:8
 
-        for (int i=0; i<10; i++) //indent:8 exp:8
+        for (int i = 0; i < 10; i++) //indent:8 exp:8
         { //indent:8 exp:8
         } //indent:8 exp:8
 
-        for (int i=0; i<10; i++) //indent:8 exp:8
+        for (int i = 0; i < 10; i++) //indent:8 exp:8
         { //indent:8 exp:8
             System.getProperty("foo"); //indent:12 exp:12
         } //indent:8 exp:8
 
-        for (int i=0; i<10; i++) //indent:8 exp:8
+        for (int i = 0; i < 10; i++) //indent:8 exp:8
         { //indent:8 exp:8
             boolean test = true; //indent:12 exp:12
             if (test) { // mixed styles are OK //indent:12 exp:12
@@ -48,40 +48,40 @@ public class InputIndentationValidForIndent { //indent:0 exp:0
             } //indent:12 exp:12
         } //indent:8 exp:8
 
-        for ( //indent:8 exp:8
-            int i=0; //indent:12 exp:12
-            i<10; //indent:12 exp:12
+        for (//indent:8 exp:8
+            int i = 0; //indent:12 exp:12
+            i < 10; //indent:12 exp:12
             i++) //indent:12 exp:12
         { //indent:8 exp:8
         } //indent:8 exp:8
 
-        for (int i=0; //indent:8 exp:8
-            i<10 && 4<5 //indent:12 exp:12
-                && 7<8; //indent:16 exp:16
+        for (int i = 0; //indent:8 exp:8
+            i < 10 && 4 < 5 //indent:12 exp:12
+                && 7 < 8; //indent:16 exp:16
             i++) //indent:12 exp:12
         { //indent:8 exp:8
         } //indent:8 exp:8
 
-        for (int i=0; i<10 && 4<5 //indent:8 exp:8
-                && 7<8; //indent:16 exp:>=12
+        for (int i = 0; i < 10 && 4 < 5 //indent:8 exp:8
+                && 7 < 8; //indent:16 exp:>=12
             i++) { //indent:12 exp:12
         } //indent:8 exp:8
 
-        for (int i=0; i<10 && 4<5 && 7<8; //indent:8 exp:8
+        for (int i = 0; i < 10 && 4 < 5 && 7 < 8; //indent:8 exp:8
             i++) { //indent:12 exp:12
         } //indent:8 exp:8
 
 
-        for (int i=0; //indent:8 exp:8
-            i<10; i++ //indent:12 exp:12
+        for (int i = 0; //indent:8 exp:8
+            i < 10; i++ //indent:12 exp:12
         ) { //indent:8 exp:8
             System.getProperty("foo"); //indent:12 exp:12
         } //indent:8 exp:8
 
-        for ( final int index : indices ) { //indent:8 exp:8
+        for (final int index : indices) { //indent:8 exp:8
             String.CASE_INSENSITIVE_ORDER.equals(index); //indent:12 exp:12
         } //indent:8 exp:8
-        for ( final int index : indices ) //indent:8 exp:8
+        for (final int index : indices) //indent:8 exp:8
         { //indent:8 exp:8
             String.CASE_INSENSITIVE_ORDER.equals(index); //indent:12 exp:12
         } //indent:8 exp:8

@@ -57,4 +57,4 @@ public abstract class InputEmptyLineSeparatorMultipleEmptyLinesInside
         // 2 empty lines above should cause violations
     }
 }
-class SecondClassReturnWithVeryVeryVeryLongName{}
+class SecondClassReturnWithVeryVeryVeryLongName { }

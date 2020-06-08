@@ -36,8 +36,8 @@ public class ObjectBlockHandler extends BlockParentHandler {
      * @param ast           the abstract syntax tree
      * @param parent        the parent handler
      */
-    public ObjectBlockHandler(IndentationCheck indentCheck,
-        DetailAST ast, AbstractExpressionHandler parent) {
+    public ObjectBlockHandler(final IndentationCheck indentCheck,
+        final DetailAST ast, final AbstractExpressionHandler parent) {
         super(indentCheck, "object def", ast, parent);
     }
 
@@ -67,8 +67,7 @@ public class ObjectBlockHandler extends BlockParentHandler {
         IndentLevel indent = getParent().getIndent();
         if (parentAST.getType() == TokenTypes.LITERAL_NEW) {
             indent = IndentLevel.addAcceptable(indent, super.getIndentImpl());
-        }
-        else if (parentAST.getType() == TokenTypes.ENUM_CONSTANT_DEF) {
+        } else if (parentAST.getType() == TokenTypes.ENUM_CONSTANT_DEF) {
             indent = super.getIndentImpl();
         }
         return indent;

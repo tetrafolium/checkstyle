@@ -16,13 +16,13 @@ package com.puppycrawl.tools.checkstyle.checks.indentation.indentation; //indent
  *                                                                            //indent:1 exp:1
  */                                                                           //indent:1 exp:1
 public class InputIndentationMethodCStyle { //indent:0 exp:0
-    public InputIndentationMethodCStyle(int appleCount, //indent:4 exp:4
-                             int bananaCount, //indent:29 exp:12 warn
-                             int pearsCount) { //indent:29 exp:12 warn
+    public InputIndentationMethodCStyle(final int appleCount, //indent:4 exp:4
+                             final int bananaCount, //indent:29 exp:12 warn
+                             final int pearsCount) { //indent:29 exp:12 warn
     } //indent:4 exp:4
 
-    public InputIndentationMethodCStyle(String appleCount, //indent:4 exp:4
-            int bananaCount, //indent:12 exp:12
-            int pearsCount) { //indent:12 exp:12
-    }//indent:4 exp:4
+    public InputIndentationMethodCStyle(final String appleCount, //indent:4 exp:4
+            final int bananaCount, //indent:12 exp:12
+            final int pearsCount) { //indent:12 exp:12
+    } //indent:4 exp:4
 } //indent:0 exp:0

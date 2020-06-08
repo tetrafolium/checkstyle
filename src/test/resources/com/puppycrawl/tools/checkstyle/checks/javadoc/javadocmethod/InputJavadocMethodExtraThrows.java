@@ -12,7 +12,7 @@ public class InputJavadocMethodExtraThrows {
      * @throws IllegalArgumentException when argument is wrong // ok
      * @throws NullPointerException indicates null was passed // ok
      */
-    public InputJavadocMethodExtraThrows(String properties) {
+    public InputJavadocMethodExtraThrows(final String properties) {
         // here is NPE possible
         if (properties.charAt(0) == 0) {
             throw new IllegalArgumentException("cannot have char with code 0");
@@ -25,7 +25,7 @@ public class InputJavadocMethodExtraThrows {
      * @throws java.lang.IllegalArgumentException when argument is wrong // ok
      * @throws java.lang.NullPointerException indicates null was passed // ok
      */
-    public void doSomething(String properties) throws IllegalArgumentException {
+    public void doSomething(final String properties) throws IllegalArgumentException {
         // here is NPE possible
         if (properties.charAt(0) == 0) {
             throw new IllegalArgumentException("cannot have char with code 0");
@@ -38,7 +38,7 @@ public class InputJavadocMethodExtraThrows {
      * @throws java.lang.IllegalArgumentException when argument is wrong // ok
      * @throws java.lang.NullPointerException indicates null was passed // ok
      */
-    public void doSomething2(String properties) throws IllegalStateException {
+    public void doSomething2(final String properties) throws IllegalStateException {
         // here is NPE possible
         if (properties.charAt(0) == 0) {
             throw new IllegalArgumentException("cannot have char with code 0");
@@ -50,7 +50,7 @@ public class InputJavadocMethodExtraThrows {
      * @param properties some value
      * @throws java.lang.IllegalStateException when argument is wrong // ok
      */
-    public void doSomething3(String properties) throws IllegalStateException {
+    public void doSomething3(final String properties) throws IllegalStateException {
         // here is NPE possible
         if (properties.charAt(0) == 0) {
             throw new IllegalArgumentException("cannot have char with code 0");
@@ -62,7 +62,7 @@ public class InputJavadocMethodExtraThrows {
      * @param properties some value
      * @throws java.lang.IllegalStateException when argument is wrong // ok
      */
-    public void doSomething4(String properties) {
+    public void doSomething4(final String properties) {
         // here is NPE possible
         if (properties.charAt(0) == 0) {
             throw new IllegalArgumentException("cannot have char with code 0");
@@ -74,7 +74,7 @@ public class InputJavadocMethodExtraThrows {
      * @param properties some value
      * @throws java.lang.IllegalStateException when argument is wrong // ok
      */
-    public void doSomething5(String properties) {
+    public void doSomething5(final String properties) {
         // here is NPE possible
         if (properties.charAt(0) == 0) {
             throw new java.lang.IllegalArgumentException("cannot have char with code 0");
@@ -86,7 +86,7 @@ public class InputJavadocMethodExtraThrows {
      * @param properties some value
      * @throws IllegalArgumentException when argument is wrong // ok
      */
-    public void doSomething6(String properties) {
+    public void doSomething6(final String properties) {
         // here is NPE possible
         if (properties.charAt(0) == 0) {
             throw new java.lang.IllegalArgumentException("cannot have char with code 0");
@@ -97,7 +97,7 @@ public class InputJavadocMethodExtraThrows {
      * expicitly throwed  but throwed as variable, we do not catch this for now // ok
      * @param properties some value
      */
-    public void doSomething7(String properties) {
+    public void doSomething7(final String properties) {
         // here is NPE possible
         if (properties.charAt(0) == 0) {
             IllegalArgumentException exception =
@@ -114,7 +114,7 @@ public class InputJavadocMethodExtraThrows {
      * @param file some file
      * @throws IOException if some problem
      */
-    public void doSomething8(File file) throws IOException {
+    public void doSomething8(final File file) throws IOException {
         if (file == null) {
             throw new FileNotFoundException();
         }
@@ -128,7 +128,7 @@ public class InputJavadocMethodExtraThrows {
     * @throws IOException if some problem
     * @throws FileNotFoundException if file is not found
     */
-    public void doSomething9(File file) throws IOException {
+    public void doSomething9(final File file) throws IOException {
         if (file == null) {
             throw new FileNotFoundException();
         }

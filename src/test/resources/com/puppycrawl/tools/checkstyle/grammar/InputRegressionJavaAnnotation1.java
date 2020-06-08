@@ -7,7 +7,7 @@ package com.puppycrawl.tools.checkstyle.grammar;
     String[] m2() default {};
 
     class SomeClass {
-        private SomeClass() {}
+        private SomeClass() { }
     }
 }
 @interface ComplexAnnotation {

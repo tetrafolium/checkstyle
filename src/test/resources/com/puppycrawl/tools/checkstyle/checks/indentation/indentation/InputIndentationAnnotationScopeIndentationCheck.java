@@ -7,7 +7,7 @@ import java.util.Date; //indent:0 exp:0
     @PrimaryKeyJoinColumn(name = "CHANNEL_ID"), //indent:4 exp:4
     @PrimaryKeyJoinColumn(name = "PRESENTER_NAME") //indent:4 exp:4
         }) //indent:8 exp:0 warn
-@AssociationOverrides( { //indent:0 exp:0
+@AssociationOverrides({ //indent:0 exp:0
     @AssociationOverride(name = "id.channel"), //indent:4 exp:4
     @AssociationOverride(name = "id.presenter")}) //indent:4 exp:4
 public class InputIndentationAnnotationScopeIndentationCheck { //indent:0 exp:0
@@ -22,7 +22,7 @@ public class InputIndentationAnnotationScopeIndentationCheck { //indent:0 exp:0
 
 } //indent:0 exp:0
 
-@interface Entity {} //indent:0 exp:0
+@interface Entity { } //indent:0 exp:0
 @interface SecondaryTable { //indent:0 exp:0
     String name(); //indent:4 exp:4
     PrimaryKeyJoinColumn[] pkJoinColumns(); //indent:4 exp:4
@@ -30,7 +30,7 @@ public class InputIndentationAnnotationScopeIndentationCheck { //indent:0 exp:0
 @interface AssociationOverrides { //indent:0 exp:0
     AssociationOverride[] value(); //indent:4 exp:4
 } //indent:0 exp:0
-@interface EmbeddedId {} //indent:0 exp:0
+@interface EmbeddedId { } //indent:0 exp:0
 @interface Temporal { //indent:0 exp:0
     String value(); //indent:4 exp:4
 } //indent:0 exp:0

@@ -18,14 +18,14 @@ class InputAnnotationLocationVariables
 
     @MyAnnotation2
         @MyAnnotation1 // ok - in variables config
-    public InputAnnotationLocationVariables() {}
+    public InputAnnotationLocationVariables() { }
 
     @MyAnnotationWithParam("foo")
-    @MyAnnotation2 void foo1() {}
+    @MyAnnotation2 void foo1() { }
 
     @MyAnnotation1
        @MyAnnotation2 // ok - in variables config
-    void foo2() {}
+    void foo2() { }
 
     @MyAnnotation1
         @MyAnnotation2 // ok - in variables config
@@ -52,11 +52,11 @@ class InputAnnotationLocationVariables
         }
         @MyAnnotation1
             @MyAnnotation2 // ok - in variables config
-        void foo1() {}
+        void foo1() { }
 
         @MyAnnotation1
             @MyAnnotation2 // ok - in variables config
-        void foo2() {}
+        void foo2() { }
     }
 
     @MyAnnotation1
@@ -75,29 +75,29 @@ class InputAnnotationLocationVariables
         public int d;
 
         @MyAnnotation1
-           @MyAnnotation2 void foo1() {} // ok - in variables config
+           @MyAnnotation2 void foo1() { } // ok - in variables config
 
         @MyAnnotation1
           @MyAnnotation2 // ok - in variables config
-        void foo2() {}
+        void foo2() { }
 
-        @MyAnnotation1 void foo42() {}
+        @MyAnnotation1 void foo42() { }
     };
 
 }
 
 @MyAnnotation1
  @MyAnnotation2 // ok - in variables config
-class FooVariables {}
+class FooVariables { }
 
-@interface MyAnnotationVariables1 {}
+@interface MyAnnotationVariables1 { }
 
-@interface MyAnnotationVariables2 {}
+@interface MyAnnotationVariables2 { }
 
-@interface MyAnnotationVariables3 {}
+@interface MyAnnotationVariables3 { }
 
-@interface MyAnnotationVariables4 {}
+@interface MyAnnotationVariables4 { }
 
 @interface MyAnnotationWithParamVariables {
 
-    String value();}
+    String value(); }

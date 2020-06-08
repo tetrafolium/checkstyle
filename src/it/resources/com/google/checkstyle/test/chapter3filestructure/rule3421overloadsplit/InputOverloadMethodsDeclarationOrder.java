@@ -2,17 +2,17 @@ package com.google.checkstyle.test.chapter3filestructure.rule3421overloadsplit;
 
 class InputOverloadMethodsDeclarationOrder
 {
-    public void overloadMethod(int i)
+    public void overloadMethod(final int i)
     {
         //some foo code
     }
 
-    public void overloadMethod(String s)
+    public void overloadMethod(final String s)
     {
         //some foo code
     }
 
-    public void overloadMethod(boolean b)
+    public void overloadMethod(final boolean b)
     {
         //some foo code
     }
@@ -23,24 +23,24 @@ class InputOverloadMethodsDeclarationOrder
     }
 
     //violation because overloads never split
-    public void overloadMethod(String s, Boolean b, int i) //warn
+    public void overloadMethod(final String s, final Boolean b, final int i) //warn
     {
         //some foo code
     }
 
     InputOverloadMethodsDeclarationOrder anonymous = new InputOverloadMethodsDeclarationOrder()
     {
-        public void overloadMethod(int i)
+        public void overloadMethod(final int i)
         {
             //some foo code
         }
 
-        public void overloadMethod(String s)
+        public void overloadMethod(final String s)
         {
             //some foo code
         }
 
-        public void overloadMethod(boolean b)
+        public void overloadMethod(final boolean b)
         {
             //some foo code
         }
@@ -51,7 +51,7 @@ class InputOverloadMethodsDeclarationOrder
         }
 
         //violation because overloads never split
-        public void overloadMethod(String s, Boolean b, int i) //warn
+        public void overloadMethod(final String s, final Boolean b, final int i) //warn
         {
             //some foo code
         }
@@ -73,7 +73,7 @@ enum FooType {
 
     private String description;
 
-    private FooType(String description) {
+    private FooType(final String description) {
         this.description = description;
     }
 
@@ -81,21 +81,21 @@ enum FooType {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
-    public void overloadMethod(int i)
+    public void overloadMethod(final int i)
     {
         //some foo code
     }
 
-    public void overloadMethod(String s)
+    public void overloadMethod(final String s)
     {
         //some foo code
     }
 
-    public void overloadMethod(boolean b)
+    public void overloadMethod(final boolean b)
     {
         //some foo code
     }
@@ -106,7 +106,7 @@ enum FooType {
     }
 
     //violation because overloads never split
-    public void overloadMethod(String s, Boolean b, int i) //warn
+    public void overloadMethod(final String s, final Boolean b, final int i) //warn
     {
         //some foo code
     }

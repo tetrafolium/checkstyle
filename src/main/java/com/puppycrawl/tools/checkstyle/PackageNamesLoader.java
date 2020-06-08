@@ -86,10 +86,10 @@ public final class PackageNamesLoader
     }
 
     @Override
-    public void startElement(String uri,
-                             String localName,
-                             String qName,
-                             Attributes attributes) {
+    public void startElement(final String uri,
+                             final String localName,
+                             final String qName,
+                             final Attributes attributes) {
         if (PACKAGE_ELEMENT_NAME.equals(qName)) {
             // push package name, name is mandatory attribute with not empty value by DTD
             final String name = attributes.getValue("name");
@@ -115,9 +115,9 @@ public final class PackageNamesLoader
     }
 
     @Override
-    public void endElement(String uri,
-                           String localName,
-                           String qName) {
+    public void endElement(final String uri,
+                           final String localName,
+                           final String qName) {
         if (PACKAGE_ELEMENT_NAME.equals(qName)) {
             packageNames.add(getPackageName());
             packageStack.pop();
@@ -133,7 +133,7 @@ public final class PackageNamesLoader
      * @return the set of package names.
      * @throws CheckstyleException if an error occurs.
      */
-    public static Set<String> getPackageNames(ClassLoader classLoader)
+    public static Set<String> getPackageNames(final ClassLoader classLoader)
             throws CheckstyleException {
         final Set<String> result;
         try {
@@ -148,11 +148,9 @@ public final class PackageNamesLoader
             }
 
             result = namesLoader.packageNames;
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             throw new CheckstyleException("unable to get package file resources", ex);
-        }
-        catch (ParserConfigurationException | SAXException ex) {
+        } catch (ParserConfigurationException | SAXException ex) {
             throw new CheckstyleException("unable to open one of package files", ex);
         }
 
@@ -166,13 +164,12 @@ public final class PackageNamesLoader
      * @throws SAXException if an error while parsing occurs
      * @throws CheckstyleException if unable to open file
      */
-    private static void processFile(URL packageFile, PackageNamesLoader namesLoader)
+    private static void processFile(final URL packageFile, final PackageNamesLoader namesLoader)
             throws SAXException, CheckstyleException {
         try (InputStream stream = new BufferedInputStream(packageFile.openStream())) {
             final InputSource source = new InputSource(stream);
             namesLoader.parseInputSource(source);
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             throw new CheckstyleException("unable to open " + packageFile, ex);
         }
     }

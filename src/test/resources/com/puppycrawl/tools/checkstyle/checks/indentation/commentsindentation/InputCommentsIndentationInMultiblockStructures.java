@@ -5,107 +5,102 @@ public class InputCommentsIndentationInMultiblockStructures {
         if (true) {
             assert true;
         // comment for else
-        } else {}
+        } else { }
 
         if (true) {
             assert true;
         // violation
-        }
-        else {}
+        } else { }
 
         if (true) {
             assert true;
                 // violation
-        } else {}
+        } else { }
 
         if (true) {
             assert true;
 // violation
-        } else {}
+        } else { }
 
         try {
             assert true;
         // comment for catch
-        } catch (Exception ex) {}
+        } catch (Exception ex) { }
 
         try {
             assert true;
         // violation
-        }
-        catch (Exception ex) {}
+        } catch (Exception ex) { }
 
         try {
             assert true;
 // violation
-        } catch (Exception ex) {}
+        } catch (Exception ex) { }
 
         try {
             assert true;
                 // violation
-        } catch (Exception ex) {}
+        } catch (Exception ex) { }
 
         try {
             assert true;
         // comment for finally
-        } finally {}
+        } finally { }
 
         try {
             assert true;
         // violation
-        }
-        finally {}
+        } finally { }
 
         try {
             assert true;
 // violation
-        } finally {}
+        } finally { }
 
         try {
             assert true;
                 // violation
-        } finally {}
+        } finally { }
 
-        try {} catch (Exception ex) {
+        try { } catch (Exception ex) {
             assert true;
         // comment for finally
-        } finally {}
+        } finally { }
 
-        try {} catch (Exception ex) {
+        try { } catch (Exception ex) {
             assert true;
         // violation
-        }
-        finally {}
+        } finally { }
 
-        try {} catch (Exception ex) {
+        try { } catch (Exception ex) {
             assert true;
 // violation
-        } finally {}
+        } finally { }
 
-        try {} catch (Exception ex) {
+        try { } catch (Exception ex) {
             assert true;
                 // violation
-        } finally {}
+        } finally { }
 
-        try {} catch (ClassCastException ex) {
+        try { } catch (ClassCastException ex) {
             assert true;
         // comment for catch
-        } catch (Exception ex) {}
+        } catch (Exception ex) { }
 
-        try {} catch (ClassCastException ex) {
+        try { } catch (ClassCastException ex) {
             assert true;
         // violation
-        }
-        catch (Exception ex) {}
+        } catch (Exception ex) { }
 
-        try {} catch (ClassCastException ex) {
+        try { } catch (ClassCastException ex) {
             assert true;
 // violation
-        } catch (Exception ex) {}
+        } catch (Exception ex) { }
 
-        try {} catch (ClassCastException ex) {
+        try { } catch (ClassCastException ex) {
             assert true;
                 // violation
-        } catch (Exception ex) {}
+        } catch (Exception ex) { }
 
         do {
             assert true;

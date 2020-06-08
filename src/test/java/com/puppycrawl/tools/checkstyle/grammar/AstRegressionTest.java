@@ -228,13 +228,13 @@ public class AstRegressionTest extends AbstractTreeTestSupport {
                 '4', '4', '.', '4', 'P', '4', 'D', ';');
     }
 
-    private static void verifyAstRaw(String expectedTextPrintFileName, String actualJava)
+    private static void verifyAstRaw(final String expectedTextPrintFileName, final String actualJava)
             throws Exception {
         verifyAstRaw(expectedTextPrintFileName, actualJava, JavaParser.Options.WITHOUT_COMMENTS);
     }
 
-    private static void verifyAstRaw(String expectedTextPrintFileName, String actualJava,
-            JavaParser.Options withComments) throws Exception {
+    private static void verifyAstRaw(final String expectedTextPrintFileName, final String actualJava,
+            final JavaParser.Options withComments) throws Exception {
         final File expectedFile = new File(expectedTextPrintFileName);
         final String expectedContents = new FileText(expectedFile, System.getProperty(
                 "file.encoding", StandardCharsets.UTF_8.name()))
@@ -258,21 +258,21 @@ public class AstRegressionTest extends AbstractTreeTestSupport {
             super((InputStream) null);
         }
 
-        public static void verifyFailNoGuessing(String methodName, char... laResults)
+        public static void verifyFailNoGuessing(final String methodName, final char... laResults)
                 throws Exception {
             verify(methodName, false, 0, laResults);
         }
 
-        public static void verifyPass(String methodName, char... laResults) throws Exception {
+        public static void verifyPass(final String methodName, final char... laResults) throws Exception {
             verify(methodName, true, 1, laResults);
         }
 
-        public static void verifyFail(String methodName, char... laResults) throws Exception {
+        public static void verifyFail(final String methodName, final char... laResults) throws Exception {
             verify(methodName, false, 1, laResults);
         }
 
-        private static void verify(String methodName, boolean expectPass, int guessing,
-                char... laResults) throws Exception {
+        private static void verify(final String methodName, final boolean expectPass, final int guessing,
+                final char... laResults) throws Exception {
             final AssertGeneratedJavaLexer instance = new AssertGeneratedJavaLexer();
             instance.laPosition = 0;
             instance.laResults = laResults.clone();
@@ -285,8 +285,7 @@ public class AstRegressionTest extends AbstractTreeTestSupport {
             try {
                 method.invoke(instance, true);
                 exception = false;
-            }
-            catch (InvocationTargetException ex) {
+            } catch (InvocationTargetException ex) {
                 if (expectPass) {
                     throw ex;
                 }
@@ -302,15 +301,14 @@ public class AstRegressionTest extends AbstractTreeTestSupport {
             if (expectPass) {
                 assertFalse(exception, "Call to GeneratedJavaLexer." + methodName
                         + " resulted in an exception");
-            }
-            else {
+            } else {
                 assertTrue(exception, "Call to GeneratedJavaLexer." + methodName
                         + " did not result in an exception");
             }
         }
 
         @Override
-        public char LA(int i) {
+        public char LA(final int i) {
             return laResults[laPosition + i - 1];
         }
 

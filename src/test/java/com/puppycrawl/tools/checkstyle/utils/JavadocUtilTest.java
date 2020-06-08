@@ -269,8 +269,7 @@ public class JavadocUtilTest {
         try {
             JavadocUtil.getTokenName(30073);
             fail("exception expected");
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertEquals("Unknown javadoc token id. Given id: 30073", ex.getMessage(),
                     "Invalid exception message");
         }
@@ -281,8 +280,7 @@ public class JavadocUtilTest {
         try {
             JavadocUtil.getTokenName(110);
             fail("exception expected");
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertEquals("Unknown javadoc token id. Given id: 110", ex.getMessage(),
                     "Invalid exception message");
         }
@@ -293,8 +291,7 @@ public class JavadocUtilTest {
         try {
             JavadocUtil.getTokenName(10095);
             fail("exception expected");
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertEquals("Unknown javadoc token id. Given id: 10095", ex.getMessage(),
                     "Invalid exception message");
         }
@@ -305,8 +302,7 @@ public class JavadocUtilTest {
         try {
             JavadocUtil.getTokenId("");
             fail("exception expected");
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             assertEquals("Unknown javadoc token name. Given name ", ex.getMessage(),
                     "Invalid exception message");
         }
@@ -379,15 +375,15 @@ public class JavadocUtilTest {
                 JavadocUtil.escapeAllControlChars("1\\r2\\n3\\t"), "invalid result");
     }
 
-    private static void assertTag(String message, InvalidJavadocTag expected,
-            InvalidJavadocTag actual) {
+    private static void assertTag(final String message, final InvalidJavadocTag expected,
+            final InvalidJavadocTag actual) {
         assertEquals(expected.getLine(), actual.getLine(), message + " line");
         assertEquals(expected.getCol(), actual.getCol(), message + " column");
         assertEquals(expected.getName(), actual.getName(), message + " name");
     }
 
-    private static void assertTag(String message, JavadocTag expected,
-            JavadocTag actual) {
+    private static void assertTag(final String message, final JavadocTag expected,
+            final JavadocTag actual) {
         assertEquals(expected.getLineNo(), actual.getLineNo(), message + " line");
         assertEquals(expected.getColumnNo(), actual.getColumnNo(), message + " column");
         assertEquals(expected.getFirstArg(), actual.getFirstArg(), message + " first arg");

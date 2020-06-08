@@ -6,7 +6,7 @@ public class InputSuppressWithPlainTextCommentFilterSuppressById {
     private int A1;
 
     // @cs-: ignore (reason)
-	private static final int a1 = 5; // contains tab character
+        private static final int a1 = 5; // contains tab character
 
     int a2 = 100;
     //CSON ignore

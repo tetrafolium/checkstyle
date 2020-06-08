@@ -17,7 +17,7 @@ public class InputEmptyCatchBlockViolationsByComment
         try {
             throw new RuntimeException();
         } catch (Exception e) //warn
-        {}
+        { }
 
     }
 

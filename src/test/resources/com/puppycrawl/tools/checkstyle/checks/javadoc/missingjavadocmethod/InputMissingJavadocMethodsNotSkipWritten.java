@@ -28,7 +28,7 @@ public class InputMissingJavadocMethodsNotSkipWritten {
 
     /** Description. */
     @MyAnnotation
-    public String test3(int a) throws Exception {
+    public String test3(final int a) throws Exception {
         return "";
     }
 }

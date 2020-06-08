@@ -37,11 +37,11 @@ public class JavadocParseTreeTest extends AbstractTreeTestSupport {
         return "com/puppycrawl/tools/checkstyle/grammar/javadoc/";
     }
 
-    private String getHtmlPath(String filename) throws IOException {
+    private String getHtmlPath(final String filename) throws IOException {
         return getPath("htmlTags" + File.separator + filename);
     }
 
-    private String getDocPath(String filename) throws IOException {
+    private String getDocPath(final String filename) throws IOException {
         return getPath("javadocTags" + File.separator + filename);
     }
 

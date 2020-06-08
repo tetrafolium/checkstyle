@@ -3,29 +3,29 @@ package com.puppycrawl.tools.checkstyle.checks.whitespace.whitespaceafter;
 @SuppressWarnings({"this", "that"})
 public class InputWhitespaceAfterAround
 {
-    protected InputWhitespaceAfterAround ( int i )
+    protected InputWhitespaceAfterAround(final int i)
     {
         this (); //whitespace
-        toString ();
+        toString();
     }
-    protected InputWhitespaceAfterAround ()
+    protected InputWhitespaceAfterAround()
     {
-        super ();
+        super();
     }
 
-    public void enhancedFor ()
+    public void enhancedFor()
     {
         int[] i = new int[2];
-        for ( int j: i ) {
-            System.identityHashCode ( j );
+        for (int j: i) {
+            System.identityHashCode(j);
         }
     }
 }
 
 @interface CronExpression {
-	Class<?>[] groups() default {};
+        Class<?>[] groups() default {};
 }
 
 @interface CronExpression1 {
-	Class<?>[] groups() default { }; // extra space
+        Class<?>[] groups() default { }; // extra space
 }

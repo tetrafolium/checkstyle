@@ -88,8 +88,8 @@ public class BlockTagUtilTest {
         assertEquals("1.0", tags.get(0).getValue(), "Invalid tag value");
     }
 
-    private static void assertTagEquals(TagInfo tag, String name, String value,
-            int line, int column) {
+    private static void assertTagEquals(final TagInfo tag, final String name, final String value,
+            final int line, final int column) {
         assertEquals(name, tag.getName(), "Invalid tag name");
         assertEquals(value, tag.getValue(), "Invalid tag value");
         assertEquals(line, tag.getPosition().getLine(), "Invalid tag line");

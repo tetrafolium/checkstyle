@@ -10,14 +10,14 @@ import java.awt.Color;
 
 class InputEmptyBlockCatch {
     boolean flag;
-    void doSm() {}
+    void doSm() { }
     void foo() {
         try {
            if (!flag) {
                doSm();
            }
         } catch (Exception e) { /* ignore */ } //ok
-        finally {/* ignore */} //ok
+        finally { /* ignore */ } //ok
     }
 
     void foo2() {
@@ -25,20 +25,20 @@ class InputEmptyBlockCatch {
            if (!flag) {
                doSm();
            }
-        } catch (Exception e) {} //warn
-        finally {}
+        } catch (Exception e) { } //warn
+        finally { }
     }
 
     class Inner {
         boolean flag;
-        void doSm() {}
+        void doSm() { }
         void foo() {
             try {
                if (!flag) {
                    doSm();
                }
             } catch (Exception e) { /* ignore */ } //ok
-            finally {/* ignore */} //ok
+            finally { /* ignore */ } //ok
         }
 
         void foo2() {
@@ -46,21 +46,21 @@ class InputEmptyBlockCatch {
                if (!flag) {
                    doSm();
                }
-            } catch (Exception e) {} //warn
-            finally {}
+            } catch (Exception e) { } //warn
+            finally { }
         }
     }
 
-    Inner anon = new Inner(){
+    Inner anon = new Inner() {
         boolean flag;
-        void doSm() {}
+        void doSm() { }
         void foo() {
             try {
                if (!flag) {
                    doSm();
                }
             } catch (Exception e) { /* ignore */ } //ok
-            finally {/* ignore */} //ok
+            finally { /* ignore */ } //ok
         }
 
         void foo2() {
@@ -68,15 +68,15 @@ class InputEmptyBlockCatch {
                if (!flag) {
                    doSm();
                }
-            } catch (Exception e) {} //warn
-            finally {}
+            } catch (Exception e) { } //warn
+            finally { }
         }
     };
 
     void foo3() {
         try {
             foo();
-        } catch (Exception e) {} //warn
+        } catch (Exception e) { } //warn
 
         try {
             foo();

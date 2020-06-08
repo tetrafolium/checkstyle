@@ -48,50 +48,39 @@ class InputRegexpMultilineSemantic
     {
         try {
             ; // do stuff and don't handle exceptions in some cases
-        }
-        catch (IllegalStateException emptyCatchIsAlwaysAnError) {
-        }
-        catch (NullPointerException ex) {
+        } catch (IllegalStateException emptyCatchIsAlwaysAnError) {
+        } catch (NullPointerException ex) {
             // can never happen, but only commenting this is currently a problem
             // Possible future enhancement: allowEmptyCatch="commented"
-        }
-        catch (ArrayIndexOutOfBoundsException ex) {
+        } catch (ArrayIndexOutOfBoundsException ex) {
             ;
             // can never happen, semicolon makes checkstyle happy
             // this is a workaround for above problem
-        }
-        catch (NegativeArraySizeException ex) {
+        } catch (NegativeArraySizeException ex) {
             {
             }
             // can never happen, empty compound statement is another workaround
-        }
-        catch (UnsupportedOperationException handledException) {
+        } catch (UnsupportedOperationException handledException) {
             System.out.println(handledException.getMessage());
-        }
-        catch (SecurityException ex) { /* hello */ }
-        catch (StringIndexOutOfBoundsException ex) {}
-        catch (IllegalArgumentException ex) { }
+        } catch (SecurityException ex) { /* hello */ } catch (StringIndexOutOfBoundsException ex) { } catch (IllegalArgumentException ex) { }
 
         try {
-        }
-        finally {
+        } finally {
         }
         try {
         // something
-        }
-        finally {
+        } finally {
             // something
         }
         try {
             ; // something
-        }
-        finally {
+        } finally {
             ; // statement
         }
     }
 
     /** test **/
-    private static final long IGNORE = 666l + 666L;
+    private static final long IGNORE = 666L + 666L;
 
 
 
@@ -115,7 +104,7 @@ class InputRegexpMultilineSemantic
 
     public class EqualsVsHashCode1
     {
-        public boolean equals(int a) // wrong arg type, don't flag
+        public boolean equals(final int a) // wrong arg type, don't flag
         {
             return a == 1;
         }
@@ -123,7 +112,7 @@ class InputRegexpMultilineSemantic
 
     public class EqualsVsHashCode2
     {
-        public boolean equals(String a) // flag
+        public boolean equals(final String a) // flag
         {
             return true;
         }
@@ -131,7 +120,7 @@ class InputRegexpMultilineSemantic
 
     public class EqualsVsHashCode3
     {
-        public boolean equals(Object a) // don't flag
+        public boolean equals(final Object a) // don't flag
         {
             return true;
         }
@@ -147,7 +136,7 @@ class InputRegexpMultilineSemantic
         // in anon inner class
         ByteArrayOutputStream bos1 = new ByteArrayOutputStream()
         {
-            public boolean equals(Object a) // don't flag
+            public boolean equals(final Object a) // don't flag
             {
                 return true;
             }
@@ -160,7 +149,7 @@ class InputRegexpMultilineSemantic
 
         ByteArrayOutputStream bos2 = new ByteArrayOutputStream()
         {
-            public boolean equals(Object a) // flag
+            public boolean equals(final Object a) // flag
             {
                 return true;
             }
@@ -180,7 +169,7 @@ class InputRegexpMultilineSemantic
 
     public class EqualsVsHashCode5
     {
-        public <A> boolean equals(int a) // wrong arg type, don't flag even with generics
+        public <A> boolean equals(final int a) // wrong arg type, don't flag even with generics
         {
             return a == 1;
         }
@@ -188,7 +177,7 @@ class InputRegexpMultilineSemantic
 
     public class EqualsVsHashCode6
     {
-        public <A> boolean equals(Comparable<A> a) // flag, weven with generics
+        public <A> boolean equals(final Comparable<A> a) // flag, weven with generics
         {
             return true;
         }
@@ -203,7 +192,7 @@ class InputRegexpMultilineSemantic
     }
 
     synchronized void foo() {
-        synchronized (this) {} // not OK
+        synchronized (this) { } // not OK
         synchronized (Class.class) { // OK
             synchronized (new Object()) {
                 // not OK if checking statements
@@ -214,7 +203,7 @@ class InputRegexpMultilineSemantic
 
     static {
 
-    int a = 0;}
+    int a = 0; }
 
     static {
 

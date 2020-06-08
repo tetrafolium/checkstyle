@@ -62,7 +62,7 @@ public enum SeverityLevel {
      * @return the {@code SeverityLevel}
      *     associated with {@code securityLevelName}
      */
-    public static SeverityLevel getInstance(String securityLevelName) {
+    public static SeverityLevel getInstance(final String securityLevelName) {
         return valueOf(SeverityLevel.class, securityLevelName.trim()
                 .toUpperCase(Locale.ENGLISH));
     }

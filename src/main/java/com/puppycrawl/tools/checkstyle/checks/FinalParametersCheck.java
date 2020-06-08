@@ -118,7 +118,7 @@ public class FinalParametersCheck extends AbstractCheck {
      * Setter to ignore primitive types as parameters.
      * @param ignorePrimitiveTypes true or false.
      */
-    public void setIgnorePrimitiveTypes(boolean ignorePrimitiveTypes) {
+    public void setIgnorePrimitiveTypes(final boolean ignorePrimitiveTypes) {
         this.ignorePrimitiveTypes = ignorePrimitiveTypes;
     }
 
@@ -146,17 +146,15 @@ public class FinalParametersCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST ast) {
+    public void visitToken(final DetailAST ast) {
         // don't flag interfaces
         final DetailAST container = ast.getParent().getParent();
         if (container.getType() != TokenTypes.INTERFACE_DEF) {
             if (ast.getType() == TokenTypes.LITERAL_CATCH) {
                 visitCatch(ast);
-            }
-            else if (ast.getType() == TokenTypes.FOR_EACH_CLAUSE) {
+            } else if (ast.getType() == TokenTypes.FOR_EACH_CLAUSE) {
                 visitForEachClause(ast);
-            }
-            else {
+            } else {
                 visitMethod(ast);
             }
         }
@@ -222,7 +220,7 @@ public class FinalParametersCheck extends AbstractCheck {
      * @param paramDef {@link TokenTypes#PARAMETER_DEF PARAMETER_DEF}
      * @return true if param has to be skipped.
      */
-    private boolean isIgnoredParam(DetailAST paramDef) {
+    private boolean isIgnoredParam(final DetailAST paramDef) {
         boolean result = false;
         if (ignorePrimitiveTypes) {
             final DetailAST parameterType = paramDef

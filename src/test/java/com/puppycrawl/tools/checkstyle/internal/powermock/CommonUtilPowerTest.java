@@ -55,8 +55,7 @@ public class CommonUtilPowerTest {
         try {
             CommonUtil.getUriByFilename(fileName);
             fail("Exception is expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             assertTrue("Invalid exception cause", ex.getCause() instanceof URISyntaxException);
             assertEquals("Invalid exception message",
                 "Unable to find: " + fileName, ex.getMessage());

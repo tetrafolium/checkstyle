@@ -39,7 +39,7 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
 
     /////////////////////////////// (a single line border to separate a group of methods)
 
-    public void foo8() {}
+    public void foo8() { }
 
     public class TestClass {
         public void test() {
@@ -211,18 +211,18 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
     public void foo30() {
         // comment
         int a = 5;
-//		violation
+//              violation
     }
 
     public void foo31() {
-        String s = new String ("A"
+        String s = new String("A"
             + "B"
             + "C");
         // comment
     }
 
     public void foo32() {
-        String s = new String ("A"
+        String s = new String("A"
             + "B"
             + "C");
             // violation
@@ -231,7 +231,7 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
     public void foo33() {
         // comment
         this.foo22();
-//		violation
+//              violation
     }
 
     public void foo34() throws Exception {
@@ -288,7 +288,7 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
         if (a == 5) {
             int b;
             // comment
-        } else if (a ==6) {
+        } else if (a == 6) {
 
         }
     }
@@ -423,8 +423,7 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
     void foo62() {
         if (true) {
             String.CASE_INSENSITIVE_ORDER.equals("");
-          }
-        else {
+          } else {
 
           }
         /*
@@ -438,8 +437,7 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
     void foo63() {
         try {
             String.CASE_INSENSITIVE_ORDER.equals("");
-          }
-        catch (Exception e){
+          } catch (Exception e) {
 
           }
 
@@ -508,7 +506,7 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
     }
 
     void foo71() {
-        switch("") {
+        switch ("") {
             case "!":
                 break;
             default:
@@ -563,9 +561,9 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
         // comment
     }
 
-    void InputCommentsIndentationCommentIsAtTheEndOfBlock(String s) {
-        assert(s == null ||
-                s != null);
+    void InputCommentsIndentationCommentIsAtTheEndOfBlock(final String s) {
+        assert (s == null
+                || s != null);
          // comment
          //comment
     }
@@ -579,7 +577,7 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
 
     void foo77() {
         try {
-        /* CHECKSTYLE:OFF */} catch(Exception e) {
+        /* CHECKSTYLE:OFF */ } catch (Exception e) {
         }
     }
 

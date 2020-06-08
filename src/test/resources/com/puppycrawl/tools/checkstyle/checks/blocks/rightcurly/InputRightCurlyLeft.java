@@ -22,11 +22,9 @@ class InputRightCurlyLeft
                 if (x > 0)
                 {
                     break;
-                }
-                else if (x < 0) {
+                } else if (x < 0) {
                     ;
-                }
-                else
+                } else
                 {
                     break;
                 }
@@ -37,12 +35,10 @@ class InputRightCurlyLeft
                 default:
                     break;
                 }
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 break;
-            }
-            finally
+            } finally
             {
                 break;
             }
@@ -90,11 +86,15 @@ class InputRightCurlyLeft
         boolean flag = true;
         if (flag) {
             System.identityHashCode("heh");
-            flag = !flag; } String.CASE_INSENSITIVE_ORDER.
+            flag = !flag;
+        }
+        String.CASE_INSENSITIVE_ORDER.
               equals("Xe-xe");
         // it is ok to have rcurly on the same line as previous
         // statement if lcurly on the same line.
-        if (flag) { String.CASE_INSENSITIVE_ORDER.equals("it is ok."); }
+        if (flag) {
+            String.CASE_INSENSITIVE_ORDER.equals("it is ok.");
+        }
     }
 }
 
@@ -129,7 +129,7 @@ class FooInner
 {
         class InnerFoo
     {
-                public void fooInnerMethod ()
+                public void fooInnerMethod()
         {
 
                 }
@@ -141,24 +141,24 @@ class FooInner
  */
 class Absent_CustomFieldSerializer3 {
 
-    public static void serialize() {} //empty body - violation
+    public static void serialize() { } //empty body - violation
 }
 
 class Absent_CustomFieldSerializer4
 {
-    public Absent_CustomFieldSerializer4() {} //empty body - violation
+    public Absent_CustomFieldSerializer4() { } //empty body - violation
 }
 
-class EmptyClass2 {} //empty body - violation
+class EmptyClass2 { } //empty body - violation
 
-interface EmptyInterface3 {}
+interface EmptyInterface3 { }
 
 class ClassWithStaticInitializers
 {
     static {
     }
     static
-    {}
+    { }
 
     static class Inner
     {
@@ -186,7 +186,8 @@ class ClassWithStaticInitializers
     public void codeAfterLastRightCurly() {
         while (new Object().equals(new Object())) {
         }; // violation
-        for (int i = 0; i < 1; i++) { new Object(); }; // violation
+        for (int i = 0; i < 1; i++) {
+            new Object(); }; // violation
     }
 
     static final java.util.concurrent.ThreadFactory threadFactory

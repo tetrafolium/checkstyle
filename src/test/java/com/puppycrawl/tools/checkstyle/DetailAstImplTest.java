@@ -264,7 +264,7 @@ public class DetailAstImplTest extends AbstractModuleTestSupport {
         assertFalse(root.branchContains(TokenTypes.OBJBLOCK), "invalid result");
     }
 
-    private static DetailAstImpl createToken(DetailAstImpl root, int type) {
+    private static DetailAstImpl createToken(final DetailAstImpl root, final int type) {
         final DetailAstImpl result = new DetailAstImpl();
         result.setType(type);
         if (root != null) {
@@ -288,8 +288,7 @@ public class DetailAstImplTest extends AbstractModuleTestSupport {
             ast -> {
                 try {
                     Whitebox.invokeMethod(child, "setParent", ast);
-                }
-                // -@cs[IllegalCatch] Cannot avoid catching it.
+                } // -@cs[IllegalCatch] Cannot avoid catching it.
                 catch (Exception exception) {
                     throw new IllegalStateException(exception);
                 }
@@ -498,14 +497,13 @@ public class DetailAstImplTest extends AbstractModuleTestSupport {
         assertEquals("text[0x0]", ast.toString(), "Invalid text");
     }
 
-    private static List<File> getAllFiles(File dir) {
+    private static List<File> getAllFiles(final File dir) {
         final List<File> result = new ArrayList<>();
 
         dir.listFiles(file -> {
             if (file.isDirectory()) {
                 result.addAll(getAllFiles(file));
-            }
-            else if (file.getName().endsWith(".java")
+            } else if (file.getName().endsWith(".java")
                     // fails with unexpected character
                     && !file.getName().endsWith("InputGrammar.java")
                     // comment only files, no root
@@ -535,14 +533,12 @@ public class DetailAstImplTest extends AbstractModuleTestSupport {
                         if (curNode != null) {
                             parent = curNode.getParent();
                         }
-                    }
-                    else {
+                    } else {
                         prev = curNode;
                         curNode = toVisit;
                     }
                 }
-            }
-            else {
+            } else {
                 parent = curNode;
                 curNode = toVisit;
                 prev = null;

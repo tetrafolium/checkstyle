@@ -80,14 +80,14 @@ class InputIllegalImportDefault
     /**
      * method comment with JavaDoc-only import {@link BitSet#aMethod()}
      */
-    public void Label() {}
+    public void Label() { }
 
     /**
      * Renders to a {@linkplain Graphics2D graphics context}.
      * @throws HeadlessException if no graphis environment can be found.
      * @exception HeadlessException if no graphis environment can be found.
      */
-    public void render() {}
+    public void render() { }
 
     /**
      * First is a class with a method with arguments {@link TestClass1#method1(TestClass2)}.
@@ -97,5 +97,5 @@ class InputIllegalImportDefault
      * @throws TestClass7 when broken
      * @deprecated in 1 for removal in 2. Use {@link TestClass8}
      */
-    public void aMethodWithManyLinks() {}
+    public void aMethodWithManyLinks() { }
 }

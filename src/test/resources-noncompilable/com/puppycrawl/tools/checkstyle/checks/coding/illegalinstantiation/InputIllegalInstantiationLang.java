@@ -6,9 +6,9 @@ class InputIllegalInstantiationLang {
     Integer obj2 = new Integer();
 }
 
-class Boolean{}
-class Integer{}
+class Boolean { }
+class Integer { }
 
 class Input2 {
-	String a = new String();
+        String a = new String();
 }

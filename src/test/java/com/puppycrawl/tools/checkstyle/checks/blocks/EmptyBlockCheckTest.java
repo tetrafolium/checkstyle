@@ -146,8 +146,7 @@ public class EmptyBlockCheckTest
 
             verify(checkConfig, getPath("InputEmptyBlockSemantic.java"), expected);
             fail("exception expected");
-        }
-        catch (CheckstyleException ex) {
+        } catch (CheckstyleException ex) {
             assertEquals("cannot initialize module com.puppycrawl.tools.checkstyle.TreeWalker - "
                         + "cannot initialize module com.puppycrawl.tools.checkstyle.checks."
                         + "blocks.EmptyBlockCheck - "

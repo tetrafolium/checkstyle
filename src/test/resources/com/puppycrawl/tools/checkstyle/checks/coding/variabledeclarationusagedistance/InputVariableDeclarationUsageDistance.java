@@ -2,18 +2,18 @@ package com.puppycrawl.tools.checkstyle.checks.coding.variabledeclarationusagedi
 import java.util.*;
 public class InputVariableDeclarationUsageDistance {
 
-	private static int test1 = 0;
+        private static int test1 = 0;
 
-	static {
-		int b = 0;
-		int d = 0;
-		{
-			d = ++b;
-		}
-	}
+        static {
+                int b = 0;
+                int d = 0;
+                {
+                        d = ++b;
+                }
+        }
 
-	static {
-		int c = 0;
+        static {
+                int c = 0;
 		int a = 3;
 		int b = 2;
 		{
@@ -34,7 +34,7 @@ public class InputVariableDeclarationUsageDistance {
 		a = b; // DECLARATION OF VARIABLE 'a' SHOULD BE HERE (distance = 2)
 	}
 
-	public InputVariableDeclarationUsageDistance(int test1) {
+	public InputVariableDeclarationUsageDistance(final int test1) {
 		int temp = -1;
 		this.test1 = test1;
 		temp = test1; // DECLARATION OF VARIABLE 'temp' SHOULD BE HERE (distance = 2)
@@ -77,7 +77,7 @@ public class InputVariableDeclarationUsageDistance {
 		count = b; // DECLARATION OF VARIABLE 'count' SHOULD BE HERE (distance = 4)
 	}
 
-	public void testMethod4(int arg) {
+	public void testMethod4(final int arg) {
 		int d = 0;
 		for (int i = 0; i < 10; i++) {
 			d++;
@@ -86,7 +86,7 @@ public class InputVariableDeclarationUsageDistance {
 			}
 		}
 
-		String ar[] = { "1", "2" };
+		String ar[] = {"1", "2" };
 		for (String st : ar) {
 			System.identityHashCode(st);
 		}
@@ -126,7 +126,7 @@ public class InputVariableDeclarationUsageDistance {
 		}
 	}
 
-	public boolean testMethod7(int a) {
+	public boolean testMethod7(final int a) {
 		boolean res;
 		switch (a) {
 		case 1:
@@ -232,7 +232,7 @@ public class InputVariableDeclarationUsageDistance {
 		s.close();
 	}
 
-	public boolean isCheckBoxEnabled(int path) {
+	public boolean isCheckBoxEnabled(final int path) {
 		String model = "";
 		if (true) {
 			for (int index = 0; index < path; ++index) {
@@ -250,7 +250,7 @@ public class InputVariableDeclarationUsageDistance {
 		return true;
 	}
 
-	public Object readObject(String in) throws Exception {
+	public Object readObject(final String in) throws Exception {
 		String startDay = new String("");
 		String endDay = new String("");
 		return new String(startDay + endDay);
@@ -324,13 +324,13 @@ public class InputVariableDeclarationUsageDistance {
 		}
 	}
 
-	protected JMenuItem createSubMenuItem(LogLevel level) {
+	protected JMenuItem createSubMenuItem(final LogLevel level) {
 	    final JMenuItem result = new JMenuItem(level.toString());
 	    final LogLevel logLevel = level;
 	    result.setMnemonic(level.toString().charAt(0));
 	    result.addActionListener(new ActionListener() {
-	      public void actionPerformed(ActionEvent e) {
-	        showLogLevelColorChangeDialog(result, logLevel);//'logLevel' SHOULD BE HERE (distance=2)
+	      public void actionPerformed(final ActionEvent e) {
+	        showLogLevelColorChangeDialog(result, logLevel); //'logLevel' SHOULD BE HERE (distance=2)
 	      }
 	    });
 
@@ -338,7 +338,7 @@ public class InputVariableDeclarationUsageDistance {
 
 	  }
 
-	public static Color darker(Color color, double fraction) {
+	public static Color darker(final Color color, final double fraction) {
         int red = (int) Math.round(color.getRed() * (1.0 - fraction));
         int green = (int) Math.round(color.getGreen() * (1.0 - fraction));
         int blue = (int) Math.round(color.getBlue() * (1.0 - fraction));
@@ -368,13 +368,13 @@ public class InputVariableDeclarationUsageDistance {
 		Object authCheckUrl = null, authInfo = null;
         task = new AuthUpdateTask(authCheckUrl, authInfo, new IAuthListener() {
             @Override
-            public void authTokenChanged(String cookie, String token) {
+            public void authTokenChanged(final String cookie, final String token) {
                 fireAuthTokenChanged(cookie, token);
             }
         });
 
         Timer timer = new Timer("Auth Guard", true);
-        timer.schedule(task, intervalMs / 2, intervalMs);//'intervalMs' SHOULD BE HERE(distance = 2)
+        timer.schedule(task, intervalMs / 2, intervalMs); //'intervalMs' SHOULD BE HERE(distance = 2)
 	}
 
 	public void testForCycle() {
@@ -416,9 +416,9 @@ public class InputVariableDeclarationUsageDistance {
         cal.set(Calendar.MINUTE, mm); // distance=1
     }
 
-    public void testIssue32_3(MyObject[] objects) {
+    public void testIssue32_3(final MyObject[] objects) {
         Calendar cal = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
-        for(int i=0; i<objects.length; i++) {
+        for (int i = 0; i < objects.length; i++) {
             objects[i].setEnabled(true);
             objects[i].setColor(0x121212);
             objects[i].setUrl("http://google.com");
@@ -427,12 +427,12 @@ public class InputVariableDeclarationUsageDistance {
         }
     }
 
-    public String testIssue32_4(boolean flag) {
+    public String testIssue32_4(final boolean flag) {
         StringBuilder builder = new StringBuilder();
         builder.append("flag is ");
         builder.append(flag);
         final String line = "";
-        if(flag) {
+        if (flag) {
             builder.append("line of AST is:");
             builder.append("\n");
             builder.append(String.valueOf(line)); //distance=1
@@ -467,8 +467,8 @@ public class InputVariableDeclarationUsageDistance {
         test(line, line, line);
     }
 
-    public void testIssue32_8(Writer w1, Writer w2, Writer w3) {
-        String l1="1", l2="2", l3="3";
+    public void testIssue32_8(final Writer w1, final Writer w2, final Writer w3) {
+        String l1 = "1", l2 = "2", l3 = "3";
         w1.write(l3); //distance=1
         w2.write(l2); //distance=2
         w3.write(l1); //distance=3
@@ -498,7 +498,7 @@ public class InputVariableDeclarationUsageDistance {
     }
 
 
-    public int testIssue32_11(String toDir)
+    public int testIssue32_11(final String toDir)
             throws Exception
     {
         int count = 0;
@@ -510,8 +510,7 @@ public class InputVariableDeclarationUsageDistance {
 
         if (files == null || files.length == 0) {
             System.identityHashCode("No files on a remote site");
-        }
-        else {
+        } else {
             System.identityHashCode("Files on remote site: " + files.length);
 
             for (String ftpFile : files) {
@@ -531,7 +530,7 @@ public class InputVariableDeclarationUsageDistance {
     //////////////////////////////////////////////////
     // False positive. Will be fixed in future.
     //////////////////////////////////////////////////
-    private TreeMapNode buildTree(Object[][] tree)
+    private TreeMapNode buildTree(final Object[][] tree)
     {
         int k = 0;
         tree.notify();
@@ -549,17 +548,15 @@ public class InputVariableDeclarationUsageDistance {
                         weight != null ? weight.doubleValue() : 0.0,
                         new DefaultValue(value != null ? value.doubleValue()
                                 : 0.0));
-            }
-            else {
+            } else {
                 node = new TreeMapNode(label);
             }
             System.identityHashCode(id.toString() + node);
             System.identityHashCode(node.toString() + id);
             if (parentId == null || parentId == -1) { ///!!!!!!!
                 root = node;
-            }
-            else {
-                System.identityHashCode(parentId.toString() +node);
+            } else {
+                System.identityHashCode(parentId.toString() + node);
             }
         }
         return root;
@@ -579,11 +576,11 @@ public class InputVariableDeclarationUsageDistance {
         public void close() {
         }
 
-        public Serializable save(E d2) {
+        public Serializable save(final E d2) {
             return null;
         }
 
-        public Serializable save(A a) {
+        public Serializable save(final A a) {
             return null;
         }
 
@@ -599,7 +596,7 @@ public class InputVariableDeclarationUsageDistance {
 
     class A {
 
-        public void setForward(E d1) {
+        public void setForward(final E d1) {
 
         }
 
@@ -607,11 +604,11 @@ public class InputVariableDeclarationUsageDistance {
 
     class E {
 
-        public void setReverse(C1 c) {
+        public void setReverse(final C1 c) {
 
         }
 
-        public void setReverse(A a) {
+        public void setReverse(final A a) {
 
         }
 
@@ -619,7 +616,7 @@ public class InputVariableDeclarationUsageDistance {
 
     class C1 {
 
-        public void setForward(E d2) {
+        public void setForward(final E d2) {
 
         }
 
@@ -631,14 +628,14 @@ public class InputVariableDeclarationUsageDistance {
 
     class JMenuItem {
 
-        public JMenuItem(String string) {
+        public JMenuItem(final String string) {
         }
 
-        public void addActionListener(ActionListener actionListener) {
+        public void addActionListener(final ActionListener actionListener) {
 
         }
 
-        public void setMnemonic(char charAt) {
+        public void setMnemonic(final char charAt) {
 
         }
 
@@ -656,11 +653,11 @@ public class InputVariableDeclarationUsageDistance {
 
     }
 
-    private void showLogLevelColorChangeDialog(JMenuItem j, LogLevel l) {   }
+    private void showLogLevelColorChangeDialog(final JMenuItem j, final LogLevel l) {   }
 
     static class Color {
 
-        public Color(int red, int green, int blue, int alpha) {
+        public Color(final int red, final int green, final int blue, final int alpha) {
         }
 
         public double getRed() {
@@ -683,8 +680,8 @@ public class InputVariableDeclarationUsageDistance {
 
     class AuthUpdateTask {
 
-        public AuthUpdateTask(Object authCheckUrl, Object authInfo,
-                IAuthListener iAuthListener) {
+        public AuthUpdateTask(final Object authCheckUrl, final Object authInfo,
+                final IAuthListener iAuthListener) {
         }
 
     }
@@ -695,32 +692,32 @@ public class InputVariableDeclarationUsageDistance {
 
     }
 
-    void fireAuthTokenChanged(String s, String s1) {}
+    void fireAuthTokenChanged(final String s, final String s1) { }
 
     class Timer {
 
-        public Timer(String string, boolean b) {
+        public Timer(final String string, final boolean b) {
         }
 
-        public void schedule(AuthUpdateTask authUpdateTask, long l,
-                long intervalMs) {
+        public void schedule(final AuthUpdateTask authUpdateTask, final long l,
+                final long intervalMs) {
         }
 
     }
 
     class Option {
 
-        public void setArgName(String string) {
+        public void setArgName(final String string) {
         }
 
     }
 
-    boolean isNull(Option o) {
-		return false;}
+    boolean isNull(final Option o) {
+		return false; }
 
     class Writer {
 
-        public void write(String l3) {
+        public void write(final String l3) {
 
         }
 
@@ -728,12 +725,12 @@ public class InputVariableDeclarationUsageDistance {
 
     class Options {
 
-        public void addBindFile(Object object) {
+        public void addBindFile(final Object object) {
 
         }
 
 		public void
-				addOption(Option srcDdlFile, Option logDdlFile, Option help)
+				addOption(final Option srcDdlFile, final Option logDdlFile, final Option help)
 		{
 
 		}
@@ -747,29 +744,29 @@ public class InputVariableDeclarationUsageDistance {
 
     class TreeMapNode {
 
-        public TreeMapNode(String label, double d, DefaultValue defaultValue) {
+        public TreeMapNode(final String label, final double d, final DefaultValue defaultValue) {
         }
 
-        public TreeMapNode(String label) {
+        public TreeMapNode(final String label) {
         }
 
     }
 
     class DefaultValue {
 
-        public DefaultValue(double d) {
+        public DefaultValue(final double d) {
         }
 
     }
 
     static class LogLog {
 
-		public static void warn(String string)
+		public static void warn(final String string)
 		{
 
 		}
 
-		public static void setInternalDebugging(String confDebug, boolean b)
+		public static void setInternalDebugging(final String confDebug, final boolean b)
 		{
 
 		}
@@ -778,7 +775,7 @@ public class InputVariableDeclarationUsageDistance {
 
     static class OptionBuilder {
 
-		public static Option create(String string)
+		public static Option create(final String string)
 		{
 			return null;
 		}
@@ -787,27 +784,27 @@ public class InputVariableDeclarationUsageDistance {
 
     class MyObject {
 
-		public void setEnabled(boolean b)
+		public void setEnabled(final boolean b)
 		{
 
 		}
 
-		public void setCalendar(Calendar cal)
+		public void setCalendar(final Calendar cal)
 		{
 
 		}
 
-		public void setSize(int i)
+		public void setSize(final int i)
 		{
 
 		}
 
-		public void setUrl(String string)
+		public void setUrl(final String string)
 		{
 
 		}
 
-		public void setColor(int i)
+		public void setColor(final int i)
 		{
 
 		}
@@ -816,20 +813,20 @@ public class InputVariableDeclarationUsageDistance {
 
     static class otherWriter {
 
-		public static void write(String line)
+		public static void write(final String line)
 		{
 
 		}
 
     }
 
-    void test(String s, String s1, String s2) {
+    void test(final String s, final String s1, final String s2) {
 
     }
 
     static class builder {
 
-		public static void append(String line)
+		public static void append(final String line)
 		{
 
 		}
@@ -881,7 +878,7 @@ class New {
         System.lineSeparator();
         System.lineSeparator();
         System.lineSeparator();
-        for (int i: new int[]{1,2,3}) {
+        for (int i: new int[]{1, 2, 3}) {
             System.lineSeparator();
             System.identityHashCode(a);
         }
@@ -951,7 +948,7 @@ class New {
         int a = 1;
 
         while (true) {
-            switch (hashCode()){}
+            switch (hashCode()) { }
             switch (Math.max(1, 2)) {
             case 1:
                 System.identityHashCode(a);
@@ -970,8 +967,7 @@ class New {
         System.lineSeparator();
         try {
             a = 2;
-        }
-        catch(Exception e){}
+        } catch (Exception e) { }
     }
 
     void m() {
@@ -994,8 +990,7 @@ class New {
         for (int i = 0; i < 10; i++) {
             if (true) {
                 System.identityHashCode(a);
-            }
-            else {
+            } else {
                 System.identityHashCode(a);
             }
         }
@@ -1013,11 +1008,9 @@ class New {
 
             System.lineSeparator();
             System.lineSeparator();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.lineSeparator();
-        }
-        finally {
+        } finally {
             System.identityHashCode(b);
         }
 
@@ -1028,21 +1021,19 @@ class New {
 
         if (false) {
 
-        }
-        else if (c == 1) {
+        } else if (c == 1) {
             if (c != 2) {
                 System.lineSeparator();
             }
 
             System.identityHashCode(c);
-        }
-        else if (c == 2) {
+        } else if (c == 2) {
             System.identityHashCode(c);
         }
     }
 
-    private void launch(Integer number ) {
-        String myInt = ( number.toString() + '\0' );
+    private void launch(final Integer number) {
+        String myInt = (number.toString() + '\0');
         boolean result = false;
         if (number == 123)
             result = true;
@@ -1056,7 +1047,7 @@ class New {
         New.field = 1;
         New.field = 2;
         New.field = 3;
-        New.field = (int)a;
+        New.field = (int) a;
     }
 
 }

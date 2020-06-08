@@ -35,7 +35,7 @@ public abstract class AbstractTreeTestSupport extends AbstractPathTestSupport {
      * @return canonical path for the file with the given file name.
      * @throws IOException if I/O exception occurs while forming the path.
      */
-    protected final String getNonCompilablePath(String filename) throws IOException {
+    protected final String getNonCompilablePath(final String filename) throws IOException {
         return new File("src/test/resources-noncompilable/" + getPackageLocation() + "/"
                 + filename).getCanonicalPath();
     }
@@ -47,8 +47,8 @@ public abstract class AbstractTreeTestSupport extends AbstractPathTestSupport {
      * @param withComments whether to perform verification of comment nodes in tree.
      * @throws Exception if exception occurs during verification.
      */
-    protected static void verifyAst(String expectedTextPrintFileName, String actualJavaFileName,
-                                    JavaParser.Options withComments)
+    protected static void verifyAst(final String expectedTextPrintFileName, final String actualJavaFileName,
+                                    final JavaParser.Options withComments)
             throws Exception {
         final String expectedContents = readFile(expectedTextPrintFileName);
 
@@ -68,7 +68,7 @@ public abstract class AbstractTreeTestSupport extends AbstractPathTestSupport {
      * @param actualJavaFileName actual text ast tree representation.
      * @throws Exception if exception occurs during verification.
      */
-    protected static void verifyAst(String expectedTextPrintFileName, String actualJavaFileName)
+    protected static void verifyAst(final String expectedTextPrintFileName, final String actualJavaFileName)
             throws Exception {
         verifyAst(expectedTextPrintFileName, actualJavaFileName,
                 JavaParser.Options.WITHOUT_COMMENTS);
@@ -81,8 +81,8 @@ public abstract class AbstractTreeTestSupport extends AbstractPathTestSupport {
      * @param actualJavaFilename name of the java file.
      * @throws Exception if exception occurs during verification.
      */
-    protected static void verifyJavaAndJavadocAst(String expectedTextPrintFilename,
-                                                  String actualJavaFilename) throws Exception {
+    protected static void verifyJavaAndJavadocAst(final String expectedTextPrintFilename,
+                                                  final String actualJavaFilename) throws Exception {
         final String expectedContents = readFile(expectedTextPrintFilename);
 
         final String actualContents = toLfLineEnding(AstTreeStringPrinter.printJavaAndJavadocTree(
@@ -99,8 +99,8 @@ public abstract class AbstractTreeTestSupport extends AbstractPathTestSupport {
      * @param actualJavadocFilename name of the file containing the javadoc.
      * @throws Exception if exception occurs during verification.
      */
-    protected static void verifyJavadocTree(String expectedTextPrintFilename,
-                                            String actualJavadocFilename) throws Exception {
+    protected static void verifyJavadocTree(final String expectedTextPrintFilename,
+                                            final String actualJavadocFilename) throws Exception {
         final String expectedContents = readFile(expectedTextPrintFilename);
 
         final String actualContents = toLfLineEnding(DetailNodeTreeStringPrinter.printFileAst(

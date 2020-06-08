@@ -19,7 +19,7 @@ public class InputMissingJavadocMethodSetterGetter
         mNumber = mNumber;
     }
 
-    public void setNumber2(int number)
+    public void setNumber2(final int number)
     {
         mNumber = number;
         firePropertyChanged();
@@ -29,7 +29,7 @@ public class InputMissingJavadocMethodSetterGetter
     {
     }
 
-    public int getCost1(int forMe)
+    public int getCost1(final int forMe)
     {
         return 666;
     }
@@ -50,9 +50,9 @@ public class InputMissingJavadocMethodSetterGetter
         return false;
     }
 
-    private void firePropertyChanged(){}
+    private void firePropertyChanged() { }
 
-    Object setObject(Object object) {
+    Object setObject(final Object object) {
         return new Object();
     }
 
@@ -60,13 +60,13 @@ public class InputMissingJavadocMethodSetterGetter
         throw new UnsupportedOperationException();
     }
 
-    public void setWithoutAssignment(Object object) {
+    public void setWithoutAssignment(final Object object) {
         object.notify();
     }
 
-    InputMissingJavadocMethodSetterGetter() {}
+    InputMissingJavadocMethodSetterGetter() { }
 
-    public InputMissingJavadocMethodSetterGetter(Object object) throws Exception {}
+    public InputMissingJavadocMethodSetterGetter(final Object object) throws Exception { }
 
 }
 
