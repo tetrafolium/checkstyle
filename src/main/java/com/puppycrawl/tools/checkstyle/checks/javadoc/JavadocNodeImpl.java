@@ -32,151 +32,151 @@ import com.puppycrawl.tools.checkstyle.utils.JavadocUtil;
  */
 public class JavadocNodeImpl implements DetailNode {
 
-    /**
-     * Empty array of {@link DetailNode} type.
-     */
-    public static final JavadocNodeImpl[] EMPTY_DETAIL_NODE_ARRAY = new JavadocNodeImpl[0];
+/**
+ * Empty array of {@link DetailNode} type.
+ */
+public static final JavadocNodeImpl[] EMPTY_DETAIL_NODE_ARRAY = new JavadocNodeImpl[0];
 
-    /**
-     * Node index among parent's children.
-     */
-    private int index;
+/**
+ * Node index among parent's children.
+ */
+private int index;
 
-    /**
-     * Node type.
-     */
-    private int type;
+/**
+ * Node type.
+ */
+private int type;
 
-    /**
-     * Node's text content.
-     */
-    private String text;
+/**
+ * Node's text content.
+ */
+private String text;
 
-    /**
-     * Line number.
-     */
-    private int lineNumber;
+/**
+ * Line number.
+ */
+private int lineNumber;
 
-    /**
-     * Column number.
-     */
-    private int columnNumber;
+/**
+ * Column number.
+ */
+private int columnNumber;
 
-    /**
-     * Array of child nodes.
-     */
-    private DetailNode[] children;
+/**
+ * Array of child nodes.
+ */
+private DetailNode[] children;
 
-    /**
-     * Parent node.
-     */
-    private DetailNode parent;
+/**
+ * Parent node.
+ */
+private DetailNode parent;
 
-    @Override
-    public int getType() {
-        return type;
-    }
+@Override
+public int getType() {
+	return type;
+}
 
-    @Override
-    public String getText() {
-        return text;
-    }
+@Override
+public String getText() {
+	return text;
+}
 
-    @Override
-    public int getLineNumber() {
-        return lineNumber;
-    }
+@Override
+public int getLineNumber() {
+	return lineNumber;
+}
 
-    @Override
-    public int getColumnNumber() {
-        return columnNumber;
-    }
+@Override
+public int getColumnNumber() {
+	return columnNumber;
+}
 
-    @Override
-    public DetailNode[] getChildren() {
-        DetailNode[] nodeChildren = EMPTY_DETAIL_NODE_ARRAY;
-        if (children != null) {
-            nodeChildren = Arrays.copyOf(children, children.length);
-        }
-        return nodeChildren;
-    }
+@Override
+public DetailNode[] getChildren() {
+	DetailNode[] nodeChildren = EMPTY_DETAIL_NODE_ARRAY;
+	if (children != null) {
+		nodeChildren = Arrays.copyOf(children, children.length);
+	}
+	return nodeChildren;
+}
 
-    @Override
-    public DetailNode getParent() {
-        return parent;
-    }
+@Override
+public DetailNode getParent() {
+	return parent;
+}
 
-    @Override
-    public int getIndex() {
-        return index;
-    }
+@Override
+public int getIndex() {
+	return index;
+}
 
-    /**
-     * Sets node's type.
-     * @param type Node's type.
-     */
-    public void setType(int type) {
-        this.type = type;
-    }
+/**
+ * Sets node's type.
+ * @param type Node's type.
+ */
+public void setType(int type) {
+	this.type = type;
+}
 
-    /**
-     * Sets node's text content.
-     * @param text Node's text content.
-     */
-    public void setText(String text) {
-        this.text = text;
-    }
+/**
+ * Sets node's text content.
+ * @param text Node's text content.
+ */
+public void setText(String text) {
+	this.text = text;
+}
 
-    /**
-     * Sets line number.
-     * @param lineNumber Line number.
-     */
-    public void setLineNumber(int lineNumber) {
-        this.lineNumber = lineNumber;
-    }
+/**
+ * Sets line number.
+ * @param lineNumber Line number.
+ */
+public void setLineNumber(int lineNumber) {
+	this.lineNumber = lineNumber;
+}
 
-    /**
-     * Sets column number.
-     * @param columnNumber Column number.
-     */
-    public void setColumnNumber(int columnNumber) {
-        this.columnNumber = columnNumber;
-    }
+/**
+ * Sets column number.
+ * @param columnNumber Column number.
+ */
+public void setColumnNumber(int columnNumber) {
+	this.columnNumber = columnNumber;
+}
 
-    /**
-     * Sets array of child nodes.
-     * @param children Array of child nodes.
-     */
-    public void setChildren(DetailNode... children) {
-        this.children = Arrays.copyOf(children, children.length);
-    }
+/**
+ * Sets array of child nodes.
+ * @param children Array of child nodes.
+ */
+public void setChildren(DetailNode... children) {
+	this.children = Arrays.copyOf(children, children.length);
+}
 
-    /**
-     * Sets parent node.
-     * @param parent Parent node.
-     */
-    public void setParent(DetailNode parent) {
-        this.parent = parent;
-    }
+/**
+ * Sets parent node.
+ * @param parent Parent node.
+ */
+public void setParent(DetailNode parent) {
+	this.parent = parent;
+}
 
-    /**
-     * Sets node's index among parent's children.
-     * @param index Node's index among parent's children.
-     */
-    public void setIndex(int index) {
-        this.index = index;
-    }
+/**
+ * Sets node's index among parent's children.
+ * @param index Node's index among parent's children.
+ */
+public void setIndex(int index) {
+	this.index = index;
+}
 
-    @Override
-    public String toString() {
-        return "JavadocNodeImpl["
-               + "index=" + index
-               + ", type=" + JavadocUtil.getTokenName(type)
-               + ", text='" + text + '\''
-               + ", lineNumber=" + lineNumber
-               + ", columnNumber=" + columnNumber
-               + ", children=" + Objects.hashCode(children)
-               + ", parent=" + parent + ']';
-    }
+@Override
+public String toString() {
+	return "JavadocNodeImpl["
+	       + "index=" + index
+	       + ", type=" + JavadocUtil.getTokenName(type)
+	       + ", text='" + text + '\''
+	       + ", lineNumber=" + lineNumber
+	       + ", columnNumber=" + columnNumber
+	       + ", children=" + Objects.hashCode(children)
+	       + ", parent=" + parent + ']';
+}
 
 }

@@ -25,27 +25,27 @@ package com.puppycrawl.tools.checkstyle.checks.blocks;
  */
 public enum BlockOption {
 
-    /**
-     * Represents the policy that there is some text in the block. For example:
-     *
-     * <pre>
-     * catch (Exception ex) {
-     *     // This is a bad coding practice
-     * }
-     * </pre>
-     */
-    TEXT,
+	/**
+	 * Represents the policy that there is some text in the block. For example:
+	 *
+	 * <pre>
+	 * catch (Exception ex) {
+	 *     // This is a bad coding practice
+	 * }
+	 * </pre>
+	 */
+	TEXT,
 
-    /**
-     * Represents the policy that there is a statement in the block. For
-     * example:
-     *
-     * <pre>
-     * finally {
-     *     lock.release();
-     * }
-     * </pre>
-     */
-    STATEMENT,
+	/**
+	 * Represents the policy that there is a statement in the block. For
+	 * example:
+	 *
+	 * <pre>
+	 * finally {
+	 *     lock.release();
+	 * }
+	 * </pre>
+	 */
+	STATEMENT,
 
 }

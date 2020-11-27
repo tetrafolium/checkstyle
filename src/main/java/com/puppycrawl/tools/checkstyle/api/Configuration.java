@@ -29,37 +29,37 @@ import java.util.Map;
  */
 public interface Configuration extends Serializable {
 
-    /**
-     * The set of attribute names.
-     * @return The set of attribute names, never null.
-     */
-    String[] getAttributeNames();
+/**
+ * The set of attribute names.
+ * @return The set of attribute names, never null.
+ */
+String[] getAttributeNames();
 
-    /**
-     * The attribute value for an attribute name.
-     * @param name the attribute name
-     * @return the value that is associated with name
-     * @throws CheckstyleException if name is not a valid attribute name
-     */
-    String getAttribute(String name) throws CheckstyleException;
+/**
+ * The attribute value for an attribute name.
+ * @param name the attribute name
+ * @return the value that is associated with name
+ * @throws CheckstyleException if name is not a valid attribute name
+ */
+String getAttribute(String name) throws CheckstyleException;
 
-    /**
-     * The set of child configurations.
-     * @return The set of child configurations, never null.
-     */
-    Configuration[] getChildren();
+/**
+ * The set of child configurations.
+ * @return The set of child configurations, never null.
+ */
+Configuration[] getChildren();
 
-    /**
-     * The name of this configuration.
-     * @return The name of this configuration.
-     */
-    String getName();
+/**
+ * The name of this configuration.
+ * @return The name of this configuration.
+ */
+String getName();
 
-    /**
-     * Returns an unmodifiable map instance containing the custom messages
-     * for this configuration.
-     * @return unmodifiable map containing custom messages
-     */
-    Map<String, String> getMessages();
+/**
+ * Returns an unmodifiable map instance containing the custom messages
+ * for this configuration.
+ * @return unmodifiable map containing custom messages
+ */
+Map<String, String> getMessages();
 
 }

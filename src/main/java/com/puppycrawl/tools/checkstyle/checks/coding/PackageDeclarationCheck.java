@@ -88,91 +88,91 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 @FileStatefulCheck
 public final class PackageDeclarationCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY_MISSING = "missing.package.declaration";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY_MISSING = "missing.package.declaration";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY_MISMATCH = "mismatch.package.directory";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY_MISMATCH = "mismatch.package.directory";
 
-    /** Line number used to log violation when no AST nodes are present in file. */
-    private static final int DEFAULT_LINE_NUMBER = 1;
+/** Line number used to log violation when no AST nodes are present in file. */
+private static final int DEFAULT_LINE_NUMBER = 1;
 
-    /** Is package defined. */
-    private boolean defined;
+/** Is package defined. */
+private boolean defined;
 
-    /** Control whether to check for directory and package name match. */
-    private boolean matchDirectoryStructure = true;
+/** Control whether to check for directory and package name match. */
+private boolean matchDirectoryStructure = true;
 
-    /**
-     * Setter to control whether to check for directory and package name match.
-     * @param matchDirectoryStructure the new value.
-     */
-    public void setMatchDirectoryStructure(boolean matchDirectoryStructure) {
-        this.matchDirectoryStructure = matchDirectoryStructure;
-    }
+/**
+ * Setter to control whether to check for directory and package name match.
+ * @param matchDirectoryStructure the new value.
+ */
+public void setMatchDirectoryStructure(boolean matchDirectoryStructure) {
+	this.matchDirectoryStructure = matchDirectoryStructure;
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.PACKAGE_DEF};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.PACKAGE_DEF};
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public void beginTree(DetailAST ast) {
-        defined = false;
-    }
+@Override
+public void beginTree(DetailAST ast) {
+	defined = false;
+}
 
-    @Override
-    public void finishTree(DetailAST ast) {
-        if (!defined) {
-            int lineNumber = DEFAULT_LINE_NUMBER;
-            if (ast != null) {
-                lineNumber = ast.getLineNo();
-            }
-            log(lineNumber, MSG_KEY_MISSING);
-        }
-    }
+@Override
+public void finishTree(DetailAST ast) {
+	if (!defined) {
+		int lineNumber = DEFAULT_LINE_NUMBER;
+		if (ast != null) {
+			lineNumber = ast.getLineNo();
+		}
+		log(lineNumber, MSG_KEY_MISSING);
+	}
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        defined = true;
+@Override
+public void visitToken(DetailAST ast) {
+	defined = true;
 
-        if (matchDirectoryStructure) {
-            final DetailAST packageNameAst = ast.getLastChild().getPreviousSibling();
-            final FullIdent fullIdent = FullIdent.createFullIdent(packageNameAst);
-            final String packageName = fullIdent.getText().replace('.', File.separatorChar);
+	if (matchDirectoryStructure) {
+		final DetailAST packageNameAst = ast.getLastChild().getPreviousSibling();
+		final FullIdent fullIdent = FullIdent.createFullIdent(packageNameAst);
+		final String packageName = fullIdent.getText().replace('.', File.separatorChar);
 
-            final String directoryName = getDirectoryName();
+		final String directoryName = getDirectoryName();
 
-            if (!directoryName.endsWith(packageName)) {
-                log(fullIdent.getLineNo(), MSG_KEY_MISMATCH, packageName);
-            }
-        }
-    }
+		if (!directoryName.endsWith(packageName)) {
+			log(fullIdent.getLineNo(), MSG_KEY_MISMATCH, packageName);
+		}
+	}
+}
 
-    /**
-     * Returns the directory name this file is in.
-     * @return Directory name.
-     */
-    private String getDirectoryName() {
-        final String fileName = getFileContents().getFileName();
-        final int lastSeparatorPos = fileName.lastIndexOf(File.separatorChar);
-        return fileName.substring(0, lastSeparatorPos);
-    }
+/**
+ * Returns the directory name this file is in.
+ * @return Directory name.
+ */
+private String getDirectoryName() {
+	final String fileName = getFileContents().getFileName();
+	final int lastSeparatorPos = fileName.lastIndexOf(File.separatorChar);
+	return fileName.substring(0, lastSeparatorPos);
+}
 
 }

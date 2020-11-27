@@ -29,37 +29,37 @@ import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
 import com.puppycrawl.tools.checkstyle.checks.coding.AvoidNoArgumentSuperConstructorCallCheck;
 
 public class XpathRegressionAvoidNoArgumentSuperConstructorCallTest
-    extends AbstractXpathTestSupport {
+	extends AbstractXpathTestSupport {
 
-    private static final Class<AvoidNoArgumentSuperConstructorCallCheck> CLASS =
-        AvoidNoArgumentSuperConstructorCallCheck.class;
+private static final Class<AvoidNoArgumentSuperConstructorCallCheck> CLASS =
+	AvoidNoArgumentSuperConstructorCallCheck.class;
 
-    @Override
-    protected String getCheckName() {
-        return CLASS.getSimpleName();
-    }
+@Override
+protected String getCheckName() {
+	return CLASS.getSimpleName();
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess = new File(getPath(
-                                                "SuppressionXpathRegressionAvoidNoArgumentSuperConstructorCall.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess = new File(getPath(
+						    "SuppressionXpathRegressionAvoidNoArgumentSuperConstructorCall.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(CLASS);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(CLASS);
 
-        final String[] expectedViolation = {
-            "5:9: " + getCheckMessage(CLASS,
-                                      AvoidNoArgumentSuperConstructorCallCheck.MSG_CTOR),
-        };
+	final String[] expectedViolation = {
+		"5:9: " + getCheckMessage(CLASS,
+		                          AvoidNoArgumentSuperConstructorCallCheck.MSG_CTOR),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT"
-                    + "[@text='SuppressionXpathRegressionAvoidNoArgumentSuperConstructorCall']]"
-                    + "/OBJBLOCK/CTOR_DEF[./IDENT["
-                    + "@text='SuppressionXpathRegressionAvoidNoArgumentSuperConstructorCall']]"
-                    + "/SLIST/SUPER_CTOR_CALL"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT"
+		+ "[@text='SuppressionXpathRegressionAvoidNoArgumentSuperConstructorCall']]"
+		+ "/OBJBLOCK/CTOR_DEF[./IDENT["
+		+ "@text='SuppressionXpathRegressionAvoidNoArgumentSuperConstructorCall']]"
+		+ "/SLIST/SUPER_CTOR_CALL"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
+}
 }

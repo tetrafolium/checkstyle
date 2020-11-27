@@ -29,34 +29,34 @@ import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
 import com.puppycrawl.tools.checkstyle.checks.coding.UnnecessarySemicolonInTryWithResourcesCheck;
 
 public class XpathRegressionUnnecessarySemicolonInTryWithResourcesTest
-    extends AbstractXpathTestSupport {
+	extends AbstractXpathTestSupport {
 
-    private final String checkName =
-        UnnecessarySemicolonInTryWithResourcesCheck.class.getSimpleName();
+private final String checkName =
+	UnnecessarySemicolonInTryWithResourcesCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess = new File(
-            getPath("SuppressionXpathRegressionUnnecessarySemicolonInTryWithResources.java"));
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(UnnecessarySemicolonInTryWithResourcesCheck.class);
-        final String[] expectedViolation = {
-            "11:43: " + getCheckMessage(UnnecessarySemicolonInTryWithResourcesCheck.class,
-                                        UnnecessarySemicolonInTryWithResourcesCheck.MSG_SEMI),
-            "12:76: " + getCheckMessage(UnnecessarySemicolonInTryWithResourcesCheck.class,
-                                        UnnecessarySemicolonInTryWithResourcesCheck.MSG_SEMI),
-        };
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text="
-                    + "'SuppressionXpathRegressionUnnecessarySemicolonInTryWithResources']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='m']]/SLIST/LITERAL_TRY"
-                    + "/RESOURCE_SPECIFICATION/SEMI"
-                );
-        runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
-    }
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess = new File(
+		getPath("SuppressionXpathRegressionUnnecessarySemicolonInTryWithResources.java"));
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(UnnecessarySemicolonInTryWithResourcesCheck.class);
+	final String[] expectedViolation = {
+		"11:43: " + getCheckMessage(UnnecessarySemicolonInTryWithResourcesCheck.class,
+		                            UnnecessarySemicolonInTryWithResourcesCheck.MSG_SEMI),
+		"12:76: " + getCheckMessage(UnnecessarySemicolonInTryWithResourcesCheck.class,
+		                            UnnecessarySemicolonInTryWithResourcesCheck.MSG_SEMI),
+	};
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text="
+		+ "'SuppressionXpathRegressionUnnecessarySemicolonInTryWithResources']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='m']]/SLIST/LITERAL_TRY"
+		+ "/RESOURCE_SPECIFICATION/SEMI"
+		);
+	runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
+}
 }

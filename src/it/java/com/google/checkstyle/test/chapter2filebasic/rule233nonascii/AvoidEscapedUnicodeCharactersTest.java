@@ -29,27 +29,27 @@ import com.puppycrawl.tools.checkstyle.checks.AvoidEscapedUnicodeCharactersCheck
 
 public class AvoidEscapedUnicodeCharactersTest extends AbstractGoogleModuleTestSupport {
 
-    @Override
-    protected String getPackageLocation() {
-        return "com/google/checkstyle/test/chapter2filebasic/rule233nonascii";
-    }
+@Override
+protected String getPackageLocation() {
+	return "com/google/checkstyle/test/chapter2filebasic/rule233nonascii";
+}
 
-    @Test
-    public void testUnicodeEscapes() throws Exception {
-        final String[] expected = {
-            "5: " + getCheckMessage(AvoidEscapedUnicodeCharactersCheck.class, MSG_KEY),
-            "15: " + getCheckMessage(AvoidEscapedUnicodeCharactersCheck.class, MSG_KEY),
-            "25: " + getCheckMessage(AvoidEscapedUnicodeCharactersCheck.class, MSG_KEY),
-            "33: " + getCheckMessage(AvoidEscapedUnicodeCharactersCheck.class, MSG_KEY),
-            "35: " + getCheckMessage(AvoidEscapedUnicodeCharactersCheck.class, MSG_KEY),
-            "36: " + getCheckMessage(AvoidEscapedUnicodeCharactersCheck.class, MSG_KEY),
-        };
+@Test
+public void testUnicodeEscapes() throws Exception {
+	final String[] expected = {
+		"5: " + getCheckMessage(AvoidEscapedUnicodeCharactersCheck.class, MSG_KEY),
+		"15: " + getCheckMessage(AvoidEscapedUnicodeCharactersCheck.class, MSG_KEY),
+		"25: " + getCheckMessage(AvoidEscapedUnicodeCharactersCheck.class, MSG_KEY),
+		"33: " + getCheckMessage(AvoidEscapedUnicodeCharactersCheck.class, MSG_KEY),
+		"35: " + getCheckMessage(AvoidEscapedUnicodeCharactersCheck.class, MSG_KEY),
+		"36: " + getCheckMessage(AvoidEscapedUnicodeCharactersCheck.class, MSG_KEY),
+	};
 
-        final Configuration checkConfig = getModuleConfig("AvoidEscapedUnicodeCharacters");
-        final String filePath = getPath("InputAvoidEscapedUnicodeCharacters.java");
+	final Configuration checkConfig = getModuleConfig("AvoidEscapedUnicodeCharacters");
+	final String filePath = getPath("InputAvoidEscapedUnicodeCharacters.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
 }

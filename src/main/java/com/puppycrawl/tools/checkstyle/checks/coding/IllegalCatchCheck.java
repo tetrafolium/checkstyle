@@ -62,83 +62,82 @@ import com.puppycrawl.tools.checkstyle.utils.CheckUtil;
 @StatelessCheck
 public final class IllegalCatchCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "illegal.catch";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "illegal.catch";
 
-    /** Specify exception class names to reject. */
-    private final Set<String> illegalClassNames = Arrays.stream(new String[] {"Exception", "Error",
-            "RuntimeException", "Throwable", "java.lang.Error", "java.lang.Exception",
-            "java.lang.RuntimeException", "java.lang.Throwable",
-                                                                             }).collect(Collectors.toSet());
+/** Specify exception class names to reject. */
+private final Set<String> illegalClassNames = Arrays.stream(new String[] {"Exception", "Error",
+                                                                          "RuntimeException", "Throwable", "java.lang.Error", "java.lang.Exception",
+                                                                          "java.lang.RuntimeException", "java.lang.Throwable",             }).collect(Collectors.toSet());
 
-    /**
-     * Setter to specify exception class names to reject.
-     *
-     * @param classNames
-     *            array of illegal exception classes
-     */
-    public void setIllegalClassNames(final String... classNames) {
-        illegalClassNames.clear();
-        illegalClassNames.addAll(
-            CheckUtil.parseClassNames(classNames));
-    }
+/**
+ * Setter to specify exception class names to reject.
+ *
+ * @param classNames
+ *            array of illegal exception classes
+ */
+public void setIllegalClassNames(final String... classNames) {
+	illegalClassNames.clear();
+	illegalClassNames.addAll(
+		CheckUtil.parseClassNames(classNames));
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.LITERAL_CATCH};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.LITERAL_CATCH};
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public void visitToken(DetailAST detailAST) {
-        final DetailAST parameterDef =
-            detailAST.findFirstToken(TokenTypes.PARAMETER_DEF);
-        final DetailAST excTypeParent =
-            parameterDef.findFirstToken(TokenTypes.TYPE);
-        final List<DetailAST> excTypes = getAllExceptionTypes(excTypeParent);
+@Override
+public void visitToken(DetailAST detailAST) {
+	final DetailAST parameterDef =
+		detailAST.findFirstToken(TokenTypes.PARAMETER_DEF);
+	final DetailAST excTypeParent =
+		parameterDef.findFirstToken(TokenTypes.TYPE);
+	final List<DetailAST> excTypes = getAllExceptionTypes(excTypeParent);
 
-        for (DetailAST excType : excTypes) {
-            final FullIdent ident = FullIdent.createFullIdent(excType);
+	for (DetailAST excType : excTypes) {
+		final FullIdent ident = FullIdent.createFullIdent(excType);
 
-            if (illegalClassNames.contains(ident.getText())) {
-                log(detailAST, MSG_KEY, ident.getText());
-            }
-        }
-    }
+		if (illegalClassNames.contains(ident.getText())) {
+			log(detailAST, MSG_KEY, ident.getText());
+		}
+	}
+}
 
-    /**
-     * Finds all exception types in current catch.
-     * We need it till we can have few different exception types into one catch.
-     * @param parentToken - parent node for types (TYPE or BOR)
-     * @return list, that contains all exception types in current catch
-     */
-    private static List<DetailAST> getAllExceptionTypes(DetailAST parentToken) {
-        DetailAST currentNode = parentToken.getFirstChild();
-        final List<DetailAST> exceptionTypes = new LinkedList<>();
-        if (currentNode.getType() == TokenTypes.BOR) {
-            exceptionTypes.addAll(getAllExceptionTypes(currentNode));
-            currentNode = currentNode.getNextSibling();
-            exceptionTypes.add(currentNode);
-        }
-        else {
-            do {
-                exceptionTypes.add(currentNode);
-                currentNode = currentNode.getNextSibling();
-            } while (currentNode != null);
-        }
-        return exceptionTypes;
-    }
+/**
+ * Finds all exception types in current catch.
+ * We need it till we can have few different exception types into one catch.
+ * @param parentToken - parent node for types (TYPE or BOR)
+ * @return list, that contains all exception types in current catch
+ */
+private static List<DetailAST> getAllExceptionTypes(DetailAST parentToken) {
+	DetailAST currentNode = parentToken.getFirstChild();
+	final List<DetailAST> exceptionTypes = new LinkedList<>();
+	if (currentNode.getType() == TokenTypes.BOR) {
+		exceptionTypes.addAll(getAllExceptionTypes(currentNode));
+		currentNode = currentNode.getNextSibling();
+		exceptionTypes.add(currentNode);
+	}
+	else {
+		do {
+			exceptionTypes.add(currentNode);
+			currentNode = currentNode.getNextSibling();
+		} while (currentNode != null);
+	}
+	return exceptionTypes;
+}
 
 }

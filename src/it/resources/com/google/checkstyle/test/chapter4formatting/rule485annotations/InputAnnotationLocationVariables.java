@@ -4,85 +4,93 @@ package com.google.checkstyle.test.chapter4formatting.rule485annotations;
 class InputAnnotationLocationVariables
 {
 
-    @MyAnnotation2 @MyAnnotation1
-    public int a;
+@MyAnnotation2 @MyAnnotation1
+public int a;
 
-    @MyAnnotation1 public int b;
+@MyAnnotation1 public int b;
 
-    @MyAnnotation2
-    @MyAnnotation1
-    public int c;
+@MyAnnotation2
+@MyAnnotation1
+public int c;
 
-    @MyAnnotation1
-    public int d;
+@MyAnnotation1
+public int d;
 
-    @MyAnnotation2
-    @MyAnnotation1 // ok - in variables config
-    public InputAnnotationLocationVariables() {}
+@MyAnnotation2
+@MyAnnotation1     // ok - in variables config
+public InputAnnotationLocationVariables() {
+}
 
-    @MyAnnotationWithParam("foo")
-    @MyAnnotation2 void foo1() {}
+@MyAnnotationWithParam("foo")
+@MyAnnotation2 void foo1() {
+}
 
-    @MyAnnotation1
-    @MyAnnotation2 // ok - in variables config
-    void foo2() {}
+@MyAnnotation1
+@MyAnnotation2     // ok - in variables config
+void foo2() {
+}
 
-    @MyAnnotation1
-    @MyAnnotation2 // ok - in variables config
-    @MyAnnotation3 // ok - in variables configwarn
-    @MyAnnotation4 // ok - in variables config
-    class InnerClass
-    {
-        @MyAnnotation2 @MyAnnotation1
-        public int a;
+@MyAnnotation1
+@MyAnnotation2     // ok - in variables config
+@MyAnnotation3     // ok - in variables configwarn
+@MyAnnotation4     // ok - in variables config
+class InnerClass
+{
+@MyAnnotation2 @MyAnnotation1
+public int a;
 
-        @MyAnnotation1 public int b;
+@MyAnnotation1 public int b;
 
-        @MyAnnotation2
-        @MyAnnotation1
-        public int c;
+@MyAnnotation2
+@MyAnnotation1
+public int c;
 
-        @MyAnnotation1
-        public int d;
+@MyAnnotation1
+public int d;
 
-        @MyAnnotation2
-        @MyAnnotation1 public InnerClass()
-        {
-            // OOOO Auto-generated constructor stub
-        }
-        @MyAnnotation1
-        @MyAnnotation2 // ok - in variables config
-        void foo1() {}
+@MyAnnotation2
+@MyAnnotation1 public InnerClass()
+{
+	// OOOO Auto-generated constructor stub
+}
+@MyAnnotation1
+@MyAnnotation2         // ok - in variables config
+void foo1() {
+}
 
-        @MyAnnotation1
-        @MyAnnotation2 // ok - in variables config
-        void foo2() {}
-    }
+@MyAnnotation1
+@MyAnnotation2         // ok - in variables config
+void foo2() {
+}
+}
 
-    @MyAnnotation1
-    @MyAnnotation2 //warn
-    InnerClass anon = new InnerClass()
-    {
-        @MyAnnotation2 @MyAnnotation1 public int a;
+@MyAnnotation1
+@MyAnnotation2     //warn
+InnerClass anon = new InnerClass()
+{
+	@MyAnnotation2 @MyAnnotation1 public int a;
 
-        @MyAnnotation1 public int b;
+	@MyAnnotation1 public int b;
 
-        @MyAnnotation2
-        @MyAnnotation1
-        public int c;
+	@MyAnnotation2
+	@MyAnnotation1
+	public int c;
 
-        @MyAnnotation1
-        public int d;
+	@MyAnnotation1
+	public int d;
 
-        @MyAnnotation1
-        @MyAnnotation2 void foo1() {} // ok - in variables config
+	@MyAnnotation1
+	@MyAnnotation2 void foo1() {
+	}                             // ok - in variables config
 
-        @MyAnnotation1
-        @MyAnnotation2 // ok - in variables config
-        void foo2() {}
+	@MyAnnotation1
+	@MyAnnotation2 // ok - in variables config
+	void foo2() {
+	}
 
-        @MyAnnotation1 void foo42() {}
-    };
+	@MyAnnotation1 void foo42() {
+	}
+};
 
 }
 
@@ -100,5 +108,5 @@ class FooVariables {}
 
 @interface MyAnnotationWithParamVariables {
 
-    String value();
+String value();
 }

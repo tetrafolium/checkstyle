@@ -91,84 +91,84 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  */
 @StatelessCheck
 public class ParameterNumberCheck
-    extends AbstractCheck {
+	extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "maxParam";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "maxParam";
 
-    /** {@link Override Override} annotation name. */
-    private static final String OVERRIDE = "Override";
+/** {@link Override Override} annotation name. */
+private static final String OVERRIDE = "Override";
 
-    /** Canonical {@link Override Override} annotation name. */
-    private static final String CANONICAL_OVERRIDE = "java.lang." + OVERRIDE;
+/** Canonical {@link Override Override} annotation name. */
+private static final String CANONICAL_OVERRIDE = "java.lang." + OVERRIDE;
 
-    /** Default maximum number of allowed parameters. */
-    private static final int DEFAULT_MAX_PARAMETERS = 7;
+/** Default maximum number of allowed parameters. */
+private static final int DEFAULT_MAX_PARAMETERS = 7;
 
-    /** Specify the maximum number of parameters allowed. */
-    private int max = DEFAULT_MAX_PARAMETERS;
+/** Specify the maximum number of parameters allowed. */
+private int max = DEFAULT_MAX_PARAMETERS;
 
-    /** Ignore number of parameters for methods with {@code @Override} annotation. */
-    private boolean ignoreOverriddenMethods;
+/** Ignore number of parameters for methods with {@code @Override} annotation. */
+private boolean ignoreOverriddenMethods;
 
-    /**
-     * Setter to specify the maximum number of parameters allowed.
-     *
-     * @param max the max allowed parameters
-     */
-    public void setMax(int max) {
-        this.max = max;
-    }
+/**
+ * Setter to specify the maximum number of parameters allowed.
+ *
+ * @param max the max allowed parameters
+ */
+public void setMax(int max) {
+	this.max = max;
+}
 
-    /**
-     * Setter to ignore number of parameters for methods with {@code @Override} annotation.
-     *
-     * @param ignoreOverriddenMethods set ignore overridden methods
-     */
-    public void setIgnoreOverriddenMethods(boolean ignoreOverriddenMethods) {
-        this.ignoreOverriddenMethods = ignoreOverriddenMethods;
-    }
+/**
+ * Setter to ignore number of parameters for methods with {@code @Override} annotation.
+ *
+ * @param ignoreOverriddenMethods set ignore overridden methods
+ */
+public void setIgnoreOverriddenMethods(boolean ignoreOverriddenMethods) {
+	this.ignoreOverriddenMethods = ignoreOverriddenMethods;
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getAcceptableTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getAcceptableTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return new int[] {TokenTypes.METHOD_DEF, TokenTypes.CTOR_DEF};
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return new int[] {TokenTypes.METHOD_DEF, TokenTypes.CTOR_DEF};
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return CommonUtil.EMPTY_INT_ARRAY;
-    }
+@Override
+public int[] getRequiredTokens() {
+	return CommonUtil.EMPTY_INT_ARRAY;
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        final DetailAST params = ast.findFirstToken(TokenTypes.PARAMETERS);
-        final int count = params.getChildCount(TokenTypes.PARAMETER_DEF);
-        if (count > max && !shouldIgnoreNumberOfParameters(ast)) {
-            final DetailAST name = ast.findFirstToken(TokenTypes.IDENT);
-            log(name, MSG_KEY, max, count);
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	final DetailAST params = ast.findFirstToken(TokenTypes.PARAMETERS);
+	final int count = params.getChildCount(TokenTypes.PARAMETER_DEF);
+	if (count > max && !shouldIgnoreNumberOfParameters(ast)) {
+		final DetailAST name = ast.findFirstToken(TokenTypes.IDENT);
+		log(name, MSG_KEY, max, count);
+	}
+}
 
-    /**
-     * Determine whether to ignore number of parameters for the method.
-     *
-     * @param ast the token to process
-     * @return true if this is overridden method and number of parameters should be ignored
-     *         false otherwise
-     */
-    private boolean shouldIgnoreNumberOfParameters(DetailAST ast) {
-        // if you override a method, you have no power over the number of parameters
-        return ignoreOverriddenMethods
-               && (AnnotationUtil.containsAnnotation(ast, OVERRIDE)
-                   || AnnotationUtil.containsAnnotation(ast, CANONICAL_OVERRIDE));
-    }
+/**
+ * Determine whether to ignore number of parameters for the method.
+ *
+ * @param ast the token to process
+ * @return true if this is overridden method and number of parameters should be ignored
+ *         false otherwise
+ */
+private boolean shouldIgnoreNumberOfParameters(DetailAST ast) {
+	// if you override a method, you have no power over the number of parameters
+	return ignoreOverriddenMethods
+	       && (AnnotationUtil.containsAnnotation(ast, OVERRIDE)
+	           || AnnotationUtil.containsAnnotation(ast, CANONICAL_OVERRIDE));
+}
 
 }

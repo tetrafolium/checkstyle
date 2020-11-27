@@ -30,78 +30,78 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
 public class PackageNameTest extends AbstractGoogleModuleTestSupport {
 
-    private static final String MSG_KEY = "name.invalidPattern";
+private static final String MSG_KEY = "name.invalidPattern";
 
-    @Override
-    protected String getPackageLocation() {
-        return "com/google/checkstyle/test/chapter5naming";
-    }
+@Override
+protected String getPackageLocation() {
+	return "com/google/checkstyle/test/chapter5naming";
+}
 
-    private String getPath(String packageName, String fileName) throws IOException {
-        return getPath("rule521" + packageName + File.separator + fileName);
-    }
+private String getPath(String packageName, String fileName) throws IOException {
+	return getPath("rule521" + packageName + File.separator + fileName);
+}
 
-    @Test
-    public void testGoodPackageName() throws Exception {
-        final Configuration checkConfig = getModuleConfig("PackageName");
-        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
+@Test
+public void testGoodPackageName() throws Exception {
+	final Configuration checkConfig = getModuleConfig("PackageName");
+	final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
 
-        final String filePath = getPath("packagenames", "InputPackageNameGood.java");
+	final String filePath = getPath("packagenames", "InputPackageNameGood.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
-    @Test
-    public void testBadPackageName() throws Exception {
-        final String packagePath =
-            "com.google.checkstyle.test.chapter5naming.rule521packageNamesCamelCase";
-        final Configuration checkConfig = getModuleConfig("PackageName");
-        final String format = checkConfig.getAttribute("format");
-        final String msg = getCheckMessage(checkConfig.getMessages(), MSG_KEY, packagePath, format);
+@Test
+public void testBadPackageName() throws Exception {
+	final String packagePath =
+		"com.google.checkstyle.test.chapter5naming.rule521packageNamesCamelCase";
+	final Configuration checkConfig = getModuleConfig("PackageName");
+	final String format = checkConfig.getAttribute("format");
+	final String msg = getCheckMessage(checkConfig.getMessages(), MSG_KEY, packagePath, format);
 
-        final String[] expected = {
-            "1:9: " + msg,
-        };
+	final String[] expected = {
+		"1:9: " + msg,
+	};
 
-        final String filePath = getPath("packageNamesCamelCase", "InputPackageNameBad.java");
+	final String filePath = getPath("packageNamesCamelCase", "InputPackageNameBad.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
-    @Test
-    public void testBadPackageName2() throws Exception {
-        final String packagePath = "com.google.checkstyle.test.chapter5naming.rule521_packagenames";
-        final Configuration checkConfig = getModuleConfig("PackageName");
-        final String format = checkConfig.getAttribute("format");
-        final String msg = getCheckMessage(checkConfig.getMessages(), MSG_KEY, packagePath, format);
+@Test
+public void testBadPackageName2() throws Exception {
+	final String packagePath = "com.google.checkstyle.test.chapter5naming.rule521_packagenames";
+	final Configuration checkConfig = getModuleConfig("PackageName");
+	final String format = checkConfig.getAttribute("format");
+	final String msg = getCheckMessage(checkConfig.getMessages(), MSG_KEY, packagePath, format);
 
-        final String[] expected = {
-            "1:9: " + msg,
-        };
+	final String[] expected = {
+		"1:9: " + msg,
+	};
 
-        final String filePath = getPath("_packagenames", "InputBadPackageName2.java");
+	final String filePath = getPath("_packagenames", "InputBadPackageName2.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
-    @Test
-    public void testBadPackageName3() throws Exception {
-        final String packagePath = "com.google.checkstyle.test.chapter5naming.rule521$packagenames";
-        final Configuration checkConfig = getModuleConfig("PackageName");
-        final String format = checkConfig.getAttribute("format");
-        final String msg = getCheckMessage(checkConfig.getMessages(), MSG_KEY, packagePath, format);
+@Test
+public void testBadPackageName3() throws Exception {
+	final String packagePath = "com.google.checkstyle.test.chapter5naming.rule521$packagenames";
+	final Configuration checkConfig = getModuleConfig("PackageName");
+	final String format = checkConfig.getAttribute("format");
+	final String msg = getCheckMessage(checkConfig.getMessages(), MSG_KEY, packagePath, format);
 
-        final String[] expected = {
-            "1:9: " + msg,
-        };
+	final String[] expected = {
+		"1:9: " + msg,
+	};
 
-        final String filePath = getPath("$packagenames", "InputPackageBadName3.java");
+	final String filePath = getPath("$packagenames", "InputPackageBadName3.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
 }

@@ -62,70 +62,70 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  */
 @StatelessCheck
 public class EmptyForInitializerPadCheck
-    extends AbstractCheck {
+	extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_PRECEDED = "ws.preceded";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_PRECEDED = "ws.preceded";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_NOT_PRECEDED = "ws.notPreceded";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_NOT_PRECEDED = "ws.notPreceded";
 
-    /** Semicolon literal. */
-    private static final String SEMICOLON = ";";
+/** Semicolon literal. */
+private static final String SEMICOLON = ";";
 
-    /** Specify policy on how to pad an empty for iterator. */
-    private PadOption option = PadOption.NOSPACE;
+/** Specify policy on how to pad an empty for iterator. */
+private PadOption option = PadOption.NOSPACE;
 
-    /**
-     * Setter to specify policy on how to pad an empty for iterator.
-     * @param optionStr string to decode option from
-     * @throws IllegalArgumentException if unable to decode
-     */
-    public void setOption(String optionStr) {
-        option = PadOption.valueOf(optionStr.trim().toUpperCase(Locale.ENGLISH));
-    }
+/**
+ * Setter to specify policy on how to pad an empty for iterator.
+ * @param optionStr string to decode option from
+ * @throws IllegalArgumentException if unable to decode
+ */
+public void setOption(String optionStr) {
+	option = PadOption.valueOf(optionStr.trim().toUpperCase(Locale.ENGLISH));
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.FOR_INIT};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.FOR_INIT};
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        if (!ast.hasChildren()) {
-            // empty for initializer. test pad before semi.
-            final DetailAST semi = ast.getNextSibling();
-            final int semiLineIdx = semi.getLineNo() - 1;
-            final String line = getLines()[semiLineIdx];
-            final int before = semi.getColumnNo() - 1;
-            // don't check if semi at beginning of line
-            if (!CommonUtil.hasWhitespaceBefore(before, line)) {
-                if (option == PadOption.NOSPACE
-                        && Character.isWhitespace(line.charAt(before))) {
-                    log(ast, MSG_PRECEDED, SEMICOLON);
-                }
-                else if (option == PadOption.SPACE
-                         && !Character.isWhitespace(line.charAt(before))) {
-                    log(ast, MSG_NOT_PRECEDED, SEMICOLON);
-                }
-            }
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	if (!ast.hasChildren()) {
+		// empty for initializer. test pad before semi.
+		final DetailAST semi = ast.getNextSibling();
+		final int semiLineIdx = semi.getLineNo() - 1;
+		final String line = getLines()[semiLineIdx];
+		final int before = semi.getColumnNo() - 1;
+		// don't check if semi at beginning of line
+		if (!CommonUtil.hasWhitespaceBefore(before, line)) {
+			if (option == PadOption.NOSPACE
+			    && Character.isWhitespace(line.charAt(before))) {
+				log(ast, MSG_PRECEDED, SEMICOLON);
+			}
+			else if (option == PadOption.SPACE
+			         && !Character.isWhitespace(line.charAt(before))) {
+				log(ast, MSG_NOT_PRECEDED, SEMICOLON);
+			}
+		}
+	}
+}
 
 }

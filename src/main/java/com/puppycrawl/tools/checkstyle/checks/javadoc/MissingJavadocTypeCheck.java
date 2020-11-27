@@ -142,104 +142,104 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
 @StatelessCheck
 public class MissingJavadocTypeCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_JAVADOC_MISSING = "javadoc.missing";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_JAVADOC_MISSING = "javadoc.missing";
 
-    /** Specify the visibility scope where Javadoc comments are checked. */
-    private Scope scope = Scope.PUBLIC;
-    /** Specify the visibility scope where Javadoc comments are not checked. */
-    private Scope excludeScope;
+/** Specify the visibility scope where Javadoc comments are checked. */
+private Scope scope = Scope.PUBLIC;
+/** Specify the visibility scope where Javadoc comments are not checked. */
+private Scope excludeScope;
 
-    /**
-     * Specify the list of annotations that allow missed documentation.
-     * Only short names are allowed, e.g. {@code Generated}.
-     */
-    private List<String> skipAnnotations = Collections.singletonList("Generated");
+/**
+ * Specify the list of annotations that allow missed documentation.
+ * Only short names are allowed, e.g. {@code Generated}.
+ */
+private List<String> skipAnnotations = Collections.singletonList("Generated");
 
-    /**
-     * Setter to specify the visibility scope where Javadoc comments are checked.
-     * @param scope a scope.
-     */
-    public void setScope(Scope scope) {
-        this.scope = scope;
-    }
+/**
+ * Setter to specify the visibility scope where Javadoc comments are checked.
+ * @param scope a scope.
+ */
+public void setScope(Scope scope) {
+	this.scope = scope;
+}
 
-    /**
-     * Setter to specify the visibility scope where Javadoc comments are not checked.
-     * @param excludeScope a scope.
-     */
-    public void setExcludeScope(Scope excludeScope) {
-        this.excludeScope = excludeScope;
-    }
+/**
+ * Setter to specify the visibility scope where Javadoc comments are not checked.
+ * @param excludeScope a scope.
+ */
+public void setExcludeScope(Scope excludeScope) {
+	this.excludeScope = excludeScope;
+}
 
-    /**
-     * Setter to specify the list of annotations that allow missed documentation.
-     * Only short names are allowed, e.g. {@code Generated}.
-     * @param userAnnotations user's value.
-     */
-    public void setSkipAnnotations(String... userAnnotations) {
-        skipAnnotations = Arrays.asList(userAnnotations);
-    }
+/**
+ * Setter to specify the list of annotations that allow missed documentation.
+ * Only short names are allowed, e.g. {@code Generated}.
+ * @param userAnnotations user's value.
+ */
+public void setSkipAnnotations(String... userAnnotations) {
+	skipAnnotations = Arrays.asList(userAnnotations);
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getAcceptableTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getAcceptableTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return new int[] {
-                   TokenTypes.INTERFACE_DEF,
-                   TokenTypes.CLASS_DEF,
-                   TokenTypes.ENUM_DEF,
-                   TokenTypes.ANNOTATION_DEF,
-               };
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return new int[] {
+		       TokenTypes.INTERFACE_DEF,
+		       TokenTypes.CLASS_DEF,
+		       TokenTypes.ENUM_DEF,
+		       TokenTypes.ANNOTATION_DEF,
+	};
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return CommonUtil.EMPTY_INT_ARRAY;
-    }
+@Override
+public int[] getRequiredTokens() {
+	return CommonUtil.EMPTY_INT_ARRAY;
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        if (shouldCheck(ast)) {
-            final FileContents contents = getFileContents();
-            final int lineNo = ast.getLineNo();
-            final TextBlock textBlock = contents.getJavadocBefore(lineNo);
-            if (textBlock == null) {
-                log(lineNo, MSG_JAVADOC_MISSING);
-            }
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	if (shouldCheck(ast)) {
+		final FileContents contents = getFileContents();
+		final int lineNo = ast.getLineNo();
+		final TextBlock textBlock = contents.getJavadocBefore(lineNo);
+		if (textBlock == null) {
+			log(lineNo, MSG_JAVADOC_MISSING);
+		}
+	}
+}
 
-    /**
-     * Whether we should check this node.
-     * @param ast a given node.
-     * @return whether we should check a given node.
-     */
-    private boolean shouldCheck(final DetailAST ast) {
-        final Scope customScope;
+/**
+ * Whether we should check this node.
+ * @param ast a given node.
+ * @return whether we should check a given node.
+ */
+private boolean shouldCheck(final DetailAST ast) {
+	final Scope customScope;
 
-        if (ScopeUtil.isInInterfaceOrAnnotationBlock(ast)) {
-            customScope = Scope.PUBLIC;
-        }
-        else {
-            final DetailAST mods = ast.findFirstToken(TokenTypes.MODIFIERS);
-            customScope = ScopeUtil.getScopeFromMods(mods);
-        }
-        final Scope surroundingScope = ScopeUtil.getSurroundingScope(ast);
+	if (ScopeUtil.isInInterfaceOrAnnotationBlock(ast)) {
+		customScope = Scope.PUBLIC;
+	}
+	else {
+		final DetailAST mods = ast.findFirstToken(TokenTypes.MODIFIERS);
+		customScope = ScopeUtil.getScopeFromMods(mods);
+	}
+	final Scope surroundingScope = ScopeUtil.getSurroundingScope(ast);
 
-        return customScope.isIn(scope)
-               && (surroundingScope == null || surroundingScope.isIn(scope))
-               && (excludeScope == null
-                   || !customScope.isIn(excludeScope)
-                   || surroundingScope != null
-                   && !surroundingScope.isIn(excludeScope))
-               && !AnnotationUtil.containsAnnotation(ast, skipAnnotations);
-    }
+	return customScope.isIn(scope)
+	       && (surroundingScope == null || surroundingScope.isIn(scope))
+	       && (excludeScope == null
+	           || !customScope.isIn(excludeScope)
+	           || surroundingScope != null
+	           && !surroundingScope.isIn(excludeScope))
+	       && !AnnotationUtil.containsAnnotation(ast, skipAnnotations);
+}
 
 }

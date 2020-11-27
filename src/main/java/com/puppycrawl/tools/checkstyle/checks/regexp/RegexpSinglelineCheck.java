@@ -100,86 +100,86 @@ import com.puppycrawl.tools.checkstyle.api.FileText;
 @StatelessCheck
 public class RegexpSinglelineCheck extends AbstractFileSetCheck {
 
-    /** Specify the format of the regular expression to match. */
-    private String format = "$.";
-    /**
-     * Specify the message which is used to notify about violations,
-     * if empty then default (hard-coded) message is used.
-     */
-    private String message;
-    /** Specify the minimum number of matches required in each file. */
-    private int minimum;
-    /** Specify the maximum number of matches required in each file. */
-    private int maximum;
-    /** Control whether to ignore case when searching. */
-    private boolean ignoreCase;
+/** Specify the format of the regular expression to match. */
+private String format = "$.";
+/**
+ * Specify the message which is used to notify about violations,
+ * if empty then default (hard-coded) message is used.
+ */
+private String message;
+/** Specify the minimum number of matches required in each file. */
+private int minimum;
+/** Specify the maximum number of matches required in each file. */
+private int maximum;
+/** Control whether to ignore case when searching. */
+private boolean ignoreCase;
 
-    /** The detector to use. */
-    private SinglelineDetector detector;
+/** The detector to use. */
+private SinglelineDetector detector;
 
-    @Override
-    public void beginProcessing(String charset) {
-        final DetectorOptions options = DetectorOptions.newBuilder()
-                                        .reporter(this)
-                                        .compileFlags(0)
-                                        .format(format)
-                                        .message(message)
-                                        .minimum(minimum)
-                                        .maximum(maximum)
-                                        .ignoreCase(ignoreCase)
-                                        .build();
-        detector = new SinglelineDetector(options);
-    }
+@Override
+public void beginProcessing(String charset) {
+	final DetectorOptions options = DetectorOptions.newBuilder()
+	                                .reporter(this)
+	                                .compileFlags(0)
+	                                .format(format)
+	                                .message(message)
+	                                .minimum(minimum)
+	                                .maximum(maximum)
+	                                .ignoreCase(ignoreCase)
+	                                .build();
+	detector = new SinglelineDetector(options);
+}
 
-    @Override
-    protected void processFiltered(File file, FileText fileText) {
-        detector.processLines(fileText);
-    }
+@Override
+protected void processFiltered(File file, FileText fileText) {
+	detector.processLines(fileText);
+}
 
-    /**
-     * Setter to specify the format of the regular expression to match.
-     *
-     * @param format the format of the regular expression to match.
-     */
-    public void setFormat(String format) {
-        this.format = format;
-    }
+/**
+ * Setter to specify the format of the regular expression to match.
+ *
+ * @param format the format of the regular expression to match.
+ */
+public void setFormat(String format) {
+	this.format = format;
+}
 
-    /**
-     * Setter to specify the message which is used to notify about violations,
-     * if empty then default (hard-coded) message is used.
-     *
-     * @param message the message to report for a match.
-     */
-    public void setMessage(String message) {
-        this.message = message;
-    }
+/**
+ * Setter to specify the message which is used to notify about violations,
+ * if empty then default (hard-coded) message is used.
+ *
+ * @param message the message to report for a match.
+ */
+public void setMessage(String message) {
+	this.message = message;
+}
 
-    /**
-     * Setter to specify the minimum number of matches required in each file.
-     *
-     * @param minimum the minimum number of matches required in each file.
-     */
-    public void setMinimum(int minimum) {
-        this.minimum = minimum;
-    }
+/**
+ * Setter to specify the minimum number of matches required in each file.
+ *
+ * @param minimum the minimum number of matches required in each file.
+ */
+public void setMinimum(int minimum) {
+	this.minimum = minimum;
+}
 
-    /**
-     * Setter to specify the maximum number of matches required in each file.
-     *
-     * @param maximum the maximum number of matches required in each file.
-     */
-    public void setMaximum(int maximum) {
-        this.maximum = maximum;
-    }
+/**
+ * Setter to specify the maximum number of matches required in each file.
+ *
+ * @param maximum the maximum number of matches required in each file.
+ */
+public void setMaximum(int maximum) {
+	this.maximum = maximum;
+}
 
-    /**
-     * Setter to control whether to ignore case when searching.
-     *
-     * @param ignoreCase whether to ignore case when searching.
-     */
-    public void setIgnoreCase(boolean ignoreCase) {
-        this.ignoreCase = ignoreCase;
-    }
+/**
+ * Setter to control whether to ignore case when searching.
+ *
+ * @param ignoreCase whether to ignore case when searching.
+ */
+public void setIgnoreCase(boolean ignoreCase) {
+	this.ignoreCase = ignoreCase;
+}
 
 }

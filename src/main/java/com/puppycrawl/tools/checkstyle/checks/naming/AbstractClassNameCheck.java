@@ -72,117 +72,117 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 @StatelessCheck
 public final class AbstractClassNameCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_ILLEGAL_ABSTRACT_CLASS_NAME = "illegal.abstract.class.name";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_ILLEGAL_ABSTRACT_CLASS_NAME = "illegal.abstract.class.name";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_NO_ABSTRACT_CLASS_MODIFIER = "no.abstract.class.modifier";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_NO_ABSTRACT_CLASS_MODIFIER = "no.abstract.class.modifier";
 
-    /**
-     * Control whether to ignore checking for the {@code abstract} modifier on
-     * classes that match the name.
-     */
-    private boolean ignoreModifier;
+/**
+ * Control whether to ignore checking for the {@code abstract} modifier on
+ * classes that match the name.
+ */
+private boolean ignoreModifier;
 
-    /**
-     * Control whether to ignore checking the name. Realistically only useful
-     * if using the check to identify that match name and do not have the
-     * {@code abstract} modifier.
-     */
-    private boolean ignoreName;
+/**
+ * Control whether to ignore checking the name. Realistically only useful
+ * if using the check to identify that match name and do not have the
+ * {@code abstract} modifier.
+ */
+private boolean ignoreName;
 
-    /** Specify valid identifiers. */
-    private Pattern format = Pattern.compile("^Abstract.+$");
+/** Specify valid identifiers. */
+private Pattern format = Pattern.compile("^Abstract.+$");
 
-    /**
-     * Setter to control whether to ignore checking for the {@code abstract} modifier on
-     * classes that match the name.
-     * @param value new value
-     */
-    public void setIgnoreModifier(boolean value) {
-        ignoreModifier = value;
-    }
+/**
+ * Setter to control whether to ignore checking for the {@code abstract} modifier on
+ * classes that match the name.
+ * @param value new value
+ */
+public void setIgnoreModifier(boolean value) {
+	ignoreModifier = value;
+}
 
-    /**
-     * Setter to control whether to ignore checking the name. Realistically only useful if
-     * using the check to identify that match name and do not have the {@code abstract} modifier.
-     * @param value new value.
-     */
-    public void setIgnoreName(boolean value) {
-        ignoreName = value;
-    }
+/**
+ * Setter to control whether to ignore checking the name. Realistically only useful if
+ * using the check to identify that match name and do not have the {@code abstract} modifier.
+ * @param value new value.
+ */
+public void setIgnoreName(boolean value) {
+	ignoreName = value;
+}
 
-    /**
-     * Setter to specify valid identifiers.
-     * @param pattern the new pattern
-     */
-    public void setFormat(Pattern pattern) {
-        format = pattern;
-    }
+/**
+ * Setter to specify valid identifiers.
+ * @param pattern the new pattern
+ */
+public void setFormat(Pattern pattern) {
+	format = pattern;
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.CLASS_DEF};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.CLASS_DEF};
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        visitClassDef(ast);
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	visitClassDef(ast);
+}
 
-    /**
-     * Checks class definition.
-     * @param ast class definition for check.
-     */
-    private void visitClassDef(DetailAST ast) {
-        final String className =
-            ast.findFirstToken(TokenTypes.IDENT).getText();
-        if (isAbstract(ast)) {
-            // if class has abstract modifier
-            if (!ignoreName && !isMatchingClassName(className)) {
-                log(ast, MSG_ILLEGAL_ABSTRACT_CLASS_NAME, className, format.pattern());
-            }
-        }
-        else if (!ignoreModifier && isMatchingClassName(className)) {
-            log(ast, MSG_NO_ABSTRACT_CLASS_MODIFIER, className);
-        }
-    }
+/**
+ * Checks class definition.
+ * @param ast class definition for check.
+ */
+private void visitClassDef(DetailAST ast) {
+	final String className =
+		ast.findFirstToken(TokenTypes.IDENT).getText();
+	if (isAbstract(ast)) {
+		// if class has abstract modifier
+		if (!ignoreName && !isMatchingClassName(className)) {
+			log(ast, MSG_ILLEGAL_ABSTRACT_CLASS_NAME, className, format.pattern());
+		}
+	}
+	else if (!ignoreModifier && isMatchingClassName(className)) {
+		log(ast, MSG_NO_ABSTRACT_CLASS_MODIFIER, className);
+	}
+}
 
-    /**
-     * Checks if declared class is abstract or not.
-     * @param ast class definition for check.
-     * @return true if a given class declared as abstract.
-     */
-    private static boolean isAbstract(DetailAST ast) {
-        final DetailAST abstractAST = ast.findFirstToken(TokenTypes.MODIFIERS)
-                                      .findFirstToken(TokenTypes.ABSTRACT);
+/**
+ * Checks if declared class is abstract or not.
+ * @param ast class definition for check.
+ * @return true if a given class declared as abstract.
+ */
+private static boolean isAbstract(DetailAST ast) {
+	final DetailAST abstractAST = ast.findFirstToken(TokenTypes.MODIFIERS)
+	                              .findFirstToken(TokenTypes.ABSTRACT);
 
-        return abstractAST != null;
-    }
+	return abstractAST != null;
+}
 
-    /**
-     * Returns true if class name matches format of abstract class names.
-     * @param className class name for check.
-     * @return true if class name matches format of abstract class names.
-     */
-    private boolean isMatchingClassName(String className) {
-        return format.matcher(className).find();
-    }
+/**
+ * Returns true if class name matches format of abstract class names.
+ * @param className class name for check.
+ * @return true if class name matches format of abstract class names.
+ */
+private boolean isMatchingClassName(String className) {
+	return format.matcher(className).find();
+}
 
 }

@@ -33,106 +33,106 @@ import com.puppycrawl.tools.checkstyle.checks.whitespace.TypecastParenPadCheck;
 
 public class XpathRegressionTypecastParenPadTest extends AbstractXpathTestSupport {
 
-    private final String checkName = TypecastParenPadCheck.class.getSimpleName();
+private final String checkName = TypecastParenPadCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testLeftFollowed() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionTypecastParenPadLeftFollowed.java"));
+@Test
+public void testLeftFollowed() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionTypecastParenPadLeftFollowed.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(TypecastParenPadCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(TypecastParenPadCheck.class);
 
-        final String[] expectedViolation = {
-            "4:18: " + getCheckMessage(TypecastParenPadCheck.class,
-                                       AbstractParenPadCheck.MSG_WS_FOLLOWED, "("),
-        };
+	final String[] expectedViolation = {
+		"4:18: " + getCheckMessage(TypecastParenPadCheck.class,
+		                           AbstractParenPadCheck.MSG_WS_FOLLOWED, "("),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionTypecastParenPadLeftFollowed']]"
-                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionTypecastParenPadLeftFollowed']]"
-                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR/TYPECAST"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionTypecastParenPadLeftFollowed']]"
+		+ "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionTypecastParenPadLeftFollowed']]"
+		+ "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR/TYPECAST"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testLeftNotFollowed() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionTypecastParenPadLeftNotFollowed.java"));
+@Test
+public void testLeftNotFollowed() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionTypecastParenPadLeftNotFollowed.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(TypecastParenPadCheck.class);
-        moduleConfig.addAttribute("option", PadOption.SPACE.toString());
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(TypecastParenPadCheck.class);
+	moduleConfig.addAttribute("option", PadOption.SPACE.toString());
 
-        final String[] expectedViolation = {
-            "4:18: " + getCheckMessage(TypecastParenPadCheck.class,
-                                       AbstractParenPadCheck.MSG_WS_NOT_FOLLOWED, "("),
-        };
+	final String[] expectedViolation = {
+		"4:18: " + getCheckMessage(TypecastParenPadCheck.class,
+		                           AbstractParenPadCheck.MSG_WS_NOT_FOLLOWED, "("),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionTypecastParenPadLeftNotFollowed']]"
-                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionTypecastParenPadLeftNotFollowed']]"
-                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR/TYPECAST"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionTypecastParenPadLeftNotFollowed']]"
+		+ "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionTypecastParenPadLeftNotFollowed']]"
+		+ "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR/TYPECAST"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testRightPreceded() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionTypecastParenPadRightPreceded.java"));
+@Test
+public void testRightPreceded() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionTypecastParenPadRightPreceded.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(TypecastParenPadCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(TypecastParenPadCheck.class);
 
-        final String[] expectedViolation = {
-            "4:26: " + getCheckMessage(TypecastParenPadCheck.class,
-                                       AbstractParenPadCheck.MSG_WS_PRECEDED, ")"),
-        };
+	final String[] expectedViolation = {
+		"4:26: " + getCheckMessage(TypecastParenPadCheck.class,
+		                           AbstractParenPadCheck.MSG_WS_PRECEDED, ")"),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionTypecastParenPadRightPreceded']]"
-                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR/TYPECAST/RPAREN"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionTypecastParenPadRightPreceded']]"
+		+ "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR/TYPECAST/RPAREN"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testRightNotPreceded() throws Exception {
-        final File fileToProcess = new File(
-            getPath("SuppressionXpathRegressionTypecastParenPadRightNotPreceded.java"));
+@Test
+public void testRightNotPreceded() throws Exception {
+	final File fileToProcess = new File(
+		getPath("SuppressionXpathRegressionTypecastParenPadRightNotPreceded.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(TypecastParenPadCheck.class);
-        moduleConfig.addAttribute("option", PadOption.SPACE.toString());
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(TypecastParenPadCheck.class);
+	moduleConfig.addAttribute("option", PadOption.SPACE.toString());
 
-        final String[] expectedViolation = {
-            "4:26: " + getCheckMessage(TypecastParenPadCheck.class,
-                                       AbstractParenPadCheck.MSG_WS_NOT_PRECEDED, ")"),
-        };
+	final String[] expectedViolation = {
+		"4:26: " + getCheckMessage(TypecastParenPadCheck.class,
+		                           AbstractParenPadCheck.MSG_WS_NOT_PRECEDED, ")"),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT["
-                    + "@text='SuppressionXpathRegressionTypecastParenPadRightNotPreceded']]"
-                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR/TYPECAST/RPAREN"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT["
+		+ "@text='SuppressionXpathRegressionTypecastParenPadRightNotPreceded']]"
+		+ "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR/TYPECAST/RPAREN"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
 }

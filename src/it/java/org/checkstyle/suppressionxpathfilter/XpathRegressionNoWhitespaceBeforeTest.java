@@ -30,33 +30,33 @@ import com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceBeforeCheck
 
 public class XpathRegressionNoWhitespaceBeforeTest extends AbstractXpathTestSupport {
 
-    private final String checkName = NoWhitespaceBeforeCheck.class.getSimpleName();
+private final String checkName = NoWhitespaceBeforeCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testNoWhitespaceBefore() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionNoWhitespaceBefore.java"));
+@Test
+public void testNoWhitespaceBefore() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionNoWhitespaceBefore.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(NoWhitespaceBeforeCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(NoWhitespaceBeforeCheck.class);
 
-        final String[] expectedViolation = {
-            "4:13: " + getCheckMessage(NoWhitespaceBeforeCheck.class,
-                                       NoWhitespaceBeforeCheck.MSG_KEY, ";"),
-        };
+	final String[] expectedViolation = {
+		"4:13: " + getCheckMessage(NoWhitespaceBeforeCheck.class,
+		                           NoWhitespaceBeforeCheck.MSG_KEY, ";"),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceBefore']]/OBJBLOCK"
-                    + "/VARIABLE_DEF[./IDENT[@text='bad']]/SEMI"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceBefore']]/OBJBLOCK"
+		+ "/VARIABLE_DEF[./IDENT[@text='bad']]/SEMI"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
 }

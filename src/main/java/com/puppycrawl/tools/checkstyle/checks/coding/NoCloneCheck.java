@@ -139,41 +139,41 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 @StatelessCheck
 public class NoCloneCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "avoid.clone.method";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "avoid.clone.method";
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.METHOD_DEF};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.METHOD_DEF};
+}
 
-    @Override
-    public void visitToken(DetailAST aAST) {
-        final DetailAST mid = aAST.findFirstToken(TokenTypes.IDENT);
-        final String name = mid.getText();
+@Override
+public void visitToken(DetailAST aAST) {
+	final DetailAST mid = aAST.findFirstToken(TokenTypes.IDENT);
+	final String name = mid.getText();
 
-        if ("clone".equals(name)) {
-            final DetailAST params = aAST.findFirstToken(TokenTypes.PARAMETERS);
-            final boolean hasEmptyParamList =
-                params.findFirstToken(TokenTypes.PARAMETER_DEF) == null;
+	if ("clone".equals(name)) {
+		final DetailAST params = aAST.findFirstToken(TokenTypes.PARAMETERS);
+		final boolean hasEmptyParamList =
+			params.findFirstToken(TokenTypes.PARAMETER_DEF) == null;
 
-            if (hasEmptyParamList) {
-                log(aAST.getLineNo(), MSG_KEY);
-            }
-        }
-    }
+		if (hasEmptyParamList) {
+			log(aAST.getLineNo(), MSG_KEY);
+		}
+	}
+}
 
 }

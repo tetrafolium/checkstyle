@@ -27,21 +27,21 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
 public class JavadocMethodTest extends AbstractGoogleModuleTestSupport {
 
-    @Override
-    protected String getPackageLocation() {
-        return "com/google/checkstyle/test/chapter7javadoc/rule731selfexplanatory";
-    }
+@Override
+protected String getPackageLocation() {
+	return "com/google/checkstyle/test/chapter7javadoc/rule731selfexplanatory";
+}
 
-    @Test
-    public void testJavadocMethod() throws Exception {
+@Test
+public void testJavadocMethod() throws Exception {
 
-        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
+	final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
 
-        final Configuration checkConfig = getModuleConfig("JavadocMethod");
-        final String filePath = getPath("InputJavadocMethodCheck.java");
+	final Configuration checkConfig = getModuleConfig("JavadocMethod");
+	final String filePath = getPath("InputJavadocMethodCheck.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
 }

@@ -31,62 +31,62 @@ import com.puppycrawl.tools.checkstyle.checks.whitespace.PadOption;
 
 public class XpathRegressionEmptyForInitializerPadTest extends AbstractXpathTestSupport {
 
-    private final String checkName = EmptyForInitializerPadCheck.class.getSimpleName();
+private final String checkName = EmptyForInitializerPadCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testPreceded() throws Exception {
-        final File fileToProcess = new File(
-            getPath("SuppressionXpathRegressionEmptyForInitializerPadPreceded.java"));
+@Test
+public void testPreceded() throws Exception {
+	final File fileToProcess = new File(
+		getPath("SuppressionXpathRegressionEmptyForInitializerPadPreceded.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(EmptyForInitializerPadCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(EmptyForInitializerPadCheck.class);
 
-        final String[] expectedViolation = {
-            "5:15: " + getCheckMessage(EmptyForInitializerPadCheck.class,
-                                       EmptyForInitializerPadCheck.MSG_PRECEDED, ";"),
-        };
+	final String[] expectedViolation = {
+		"5:15: " + getCheckMessage(EmptyForInitializerPadCheck.class,
+		                           EmptyForInitializerPadCheck.MSG_PRECEDED, ";"),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionEmptyForInitializerPadPreceded']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='method']]/SLIST/LITERAL_FOR/FOR_INIT",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionEmptyForInitializerPadPreceded']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='method']]/SLIST/LITERAL_FOR/SEMI[1]"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionEmptyForInitializerPadPreceded']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='method']]/SLIST/LITERAL_FOR/FOR_INIT",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionEmptyForInitializerPadPreceded']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='method']]/SLIST/LITERAL_FOR/SEMI[1]"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testNotPreceded() throws Exception {
-        final File fileToProcess = new File(
-            getPath("SuppressionXpathRegressionEmptyForInitializerPadNotPreceded.java"));
+@Test
+public void testNotPreceded() throws Exception {
+	final File fileToProcess = new File(
+		getPath("SuppressionXpathRegressionEmptyForInitializerPadNotPreceded.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(EmptyForInitializerPadCheck.class);
-        moduleConfig.addAttribute("option", PadOption.SPACE.toString());
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(EmptyForInitializerPadCheck.class);
+	moduleConfig.addAttribute("option", PadOption.SPACE.toString());
 
-        final String[] expectedViolation = {
-            "5:14: " + getCheckMessage(EmptyForInitializerPadCheck.class,
-                                       EmptyForInitializerPadCheck.MSG_NOT_PRECEDED, ";"),
-        };
+	final String[] expectedViolation = {
+		"5:14: " + getCheckMessage(EmptyForInitializerPadCheck.class,
+		                           EmptyForInitializerPadCheck.MSG_NOT_PRECEDED, ";"),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT["
-                    + "@text='SuppressionXpathRegressionEmptyForInitializerPadNotPreceded']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='method']]/SLIST/LITERAL_FOR/FOR_INIT",
-                    "/CLASS_DEF[./IDENT["
-                    + "@text='SuppressionXpathRegressionEmptyForInitializerPadNotPreceded']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='method']]/SLIST/LITERAL_FOR/SEMI[1]"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT["
+		+ "@text='SuppressionXpathRegressionEmptyForInitializerPadNotPreceded']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='method']]/SLIST/LITERAL_FOR/FOR_INIT",
+		"/CLASS_DEF[./IDENT["
+		+ "@text='SuppressionXpathRegressionEmptyForInitializerPadNotPreceded']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='method']]/SLIST/LITERAL_FOR/SEMI[1]"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
 }

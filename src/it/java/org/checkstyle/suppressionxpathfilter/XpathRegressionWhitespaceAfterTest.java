@@ -30,57 +30,57 @@ import com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck;
 
 public class XpathRegressionWhitespaceAfterTest extends AbstractXpathTestSupport {
 
-    private final String checkName = WhitespaceAfterCheck.class.getSimpleName();
+private final String checkName = WhitespaceAfterCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testWhitespaceAfterTypecast() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionWhitespaceAfterTypecast.java"));
+@Test
+public void testWhitespaceAfterTypecast() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionWhitespaceAfterTypecast.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(WhitespaceAfterCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(WhitespaceAfterCheck.class);
 
-        final String[] expectedViolation = {
-            "4:25: " + getCheckMessage(WhitespaceAfterCheck.class,
-                                       WhitespaceAfterCheck.MSG_WS_TYPECAST, "-"),
-        };
+	final String[] expectedViolation = {
+		"4:25: " + getCheckMessage(WhitespaceAfterCheck.class,
+		                           WhitespaceAfterCheck.MSG_WS_TYPECAST, "-"),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT["
-                    + "@text='SuppressionXpathRegressionWhitespaceAfterTypecast']]/OBJBLOCK"
-                    + "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR/TYPECAST/RPAREN"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT["
+		+ "@text='SuppressionXpathRegressionWhitespaceAfterTypecast']]/OBJBLOCK"
+		+ "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR/TYPECAST/RPAREN"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testWhitespaceAfterNotFollowed() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionWhitespaceAfterNotFollowed.java"));
+@Test
+public void testWhitespaceAfterNotFollowed() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionWhitespaceAfterNotFollowed.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(WhitespaceAfterCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(WhitespaceAfterCheck.class);
 
-        final String[] expectedViolation = {
-            "4:19: " + getCheckMessage(WhitespaceAfterCheck.class,
-                                       WhitespaceAfterCheck.MSG_WS_NOT_FOLLOWED, ","),
-        };
+	final String[] expectedViolation = {
+		"4:19: " + getCheckMessage(WhitespaceAfterCheck.class,
+		                           WhitespaceAfterCheck.MSG_WS_NOT_FOLLOWED, ","),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT["
-                    + "@text='SuppressionXpathRegressionWhitespaceAfterNotFollowed']]/OBJBLOCK"
-                    + "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/ARRAY_INIT/COMMA"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT["
+		+ "@text='SuppressionXpathRegressionWhitespaceAfterNotFollowed']]/OBJBLOCK"
+		+ "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/ARRAY_INIT/COMMA"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
 }

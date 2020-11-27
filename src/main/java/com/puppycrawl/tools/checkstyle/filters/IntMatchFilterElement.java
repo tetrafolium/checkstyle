@@ -24,39 +24,39 @@ package com.puppycrawl.tools.checkstyle.filters;
  */
 class IntMatchFilterElement implements IntFilterElement {
 
-    /** The matching Integer. */
-    private final int matchValue;
+/** The matching Integer. */
+private final int matchValue;
 
-    /**
-     * Constructs a MatchFilter for an int.
-     * @param matchValue the matching int.
-     */
-    /* package */ IntMatchFilterElement(int matchValue) {
-        this.matchValue = matchValue;
-    }
+/**
+ * Constructs a MatchFilter for an int.
+ * @param matchValue the matching int.
+ */
+/* package */ IntMatchFilterElement(int matchValue) {
+	this.matchValue = matchValue;
+}
 
-    @Override
-    public boolean accept(int intValue) {
-        return matchValue == intValue;
-    }
+@Override
+public boolean accept(int intValue) {
+	return matchValue == intValue;
+}
 
-    @Override
-    public String toString() {
-        return "IntMatchFilterElement[" + matchValue + "]";
-    }
+@Override
+public String toString() {
+	return "IntMatchFilterElement[" + matchValue + "]";
+}
 
-    @Override
-    public final int hashCode() {
-        return Integer.valueOf(matchValue).hashCode();
-    }
+@Override
+public final int hashCode() {
+	return Integer.valueOf(matchValue).hashCode();
+}
 
-    @Override
-    public final boolean equals(Object object) {
-        if (object instanceof IntMatchFilterElement) {
-            final IntMatchFilterElement other = (IntMatchFilterElement) object;
-            return matchValue == other.matchValue;
-        }
-        return false;
-    }
+@Override
+public final boolean equals(Object object) {
+	if (object instanceof IntMatchFilterElement) {
+		final IntMatchFilterElement other = (IntMatchFilterElement) object;
+		return matchValue == other.matchValue;
+	}
+	return false;
+}
 
 }

@@ -30,36 +30,36 @@ import com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceAfterCheck;
 
 public class XpathRegressionNoWhitespaceAfterTest extends AbstractXpathTestSupport {
 
-    private final String checkName = NoWhitespaceAfterCheck.class.getSimpleName();
+private final String checkName = NoWhitespaceAfterCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testNoWhitespaceAfter() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionNoWhitespaceAfter.java"));
+@Test
+public void testNoWhitespaceAfter() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionNoWhitespaceAfter.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(NoWhitespaceAfterCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(NoWhitespaceAfterCheck.class);
 
-        final String[] expectedViolation = {
-            "4:15: " + getCheckMessage(NoWhitespaceAfterCheck.class,
-                                       NoWhitespaceAfterCheck.MSG_KEY, "-"),
-        };
+	final String[] expectedViolation = {
+		"4:15: " + getCheckMessage(NoWhitespaceAfterCheck.class,
+		                           NoWhitespaceAfterCheck.MSG_KEY, "-"),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceAfter']]/OBJBLOCK"
-                    + "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceAfter']]/OBJBLOCK"
-                    + "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR/UNARY_MINUS["
-                    + "./NUM_INT[@text='1']]"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceAfter']]/OBJBLOCK"
+		+ "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceAfter']]/OBJBLOCK"
+		+ "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR/UNARY_MINUS["
+		+ "./NUM_INT[@text='1']]"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
 }

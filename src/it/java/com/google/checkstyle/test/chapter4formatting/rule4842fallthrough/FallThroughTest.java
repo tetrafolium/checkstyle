@@ -27,39 +27,39 @@ import com.puppycrawl.tools.checkstyle.checks.coding.FallThroughCheck;
 
 public class FallThroughTest extends AbstractGoogleModuleTestSupport {
 
-    @Override
-    protected String getPackageLocation() {
-        return "com/google/checkstyle/test/chapter4formatting/rule4842fallthrough";
-    }
+@Override
+protected String getPackageLocation() {
+	return "com/google/checkstyle/test/chapter4formatting/rule4842fallthrough";
+}
 
-    @Test
-    public void testFallThrough() throws Exception {
-        final String msg = getCheckMessage(FallThroughCheck.class, "fall.through");
+@Test
+public void testFallThrough() throws Exception {
+	final String msg = getCheckMessage(FallThroughCheck.class, "fall.through");
 
-        final String[] expected = {
-            "14:13: " + msg,
-            "38:13: " + msg,
-            "47:13: " + msg,
-            "53:13: " + msg,
-            "70:13: " + msg,
-            "87:13: " + msg,
-            "123:13: " + msg,
-            "179:11: " + msg,
-            "369:11: " + msg,
-            "372:11: " + msg,
-            "374:41: " + msg,
-            "440:15: " + msg,
-            "442:15: " + msg,
-            "444:15: " + msg,
-            "446:15: " + msg,
-            "448:15: " + msg,
-        };
+	final String[] expected = {
+		"14:13: " + msg,
+		"38:13: " + msg,
+		"47:13: " + msg,
+		"53:13: " + msg,
+		"70:13: " + msg,
+		"87:13: " + msg,
+		"123:13: " + msg,
+		"179:11: " + msg,
+		"369:11: " + msg,
+		"372:11: " + msg,
+		"374:41: " + msg,
+		"440:15: " + msg,
+		"442:15: " + msg,
+		"444:15: " + msg,
+		"446:15: " + msg,
+		"448:15: " + msg,
+	};
 
-        final Configuration checkConfig = getModuleConfig("FallThrough");
-        final String filePath = getPath("InputFallThrough.java");
+	final Configuration checkConfig = getModuleConfig("FallThrough");
+	final String filePath = getPath("InputFallThrough.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
 }

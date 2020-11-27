@@ -71,48 +71,48 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  */
 public class LambdaParameterNameCheck extends AbstractNameCheck {
 
-    /** Creates new instance of {@code LambdaParameterNameCheck}. */
-    public LambdaParameterNameCheck() {
-        super("^[a-z][a-zA-Z0-9]*$");
-    }
+/** Creates new instance of {@code LambdaParameterNameCheck}. */
+public LambdaParameterNameCheck() {
+	super("^[a-z][a-zA-Z0-9]*$");
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {
-                   TokenTypes.LAMBDA,
-               };
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {
+		       TokenTypes.LAMBDA,
+	};
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        final DetailAST parametersNode = ast.findFirstToken(TokenTypes.PARAMETERS);
-        if (parametersNode == null) {
-            super.visitToken(ast);
-        }
-        else {
-            for (DetailAST parameterDef = parametersNode.getFirstChild();
-                    parameterDef != null;
-                    parameterDef = parameterDef.getNextSibling()) {
-                if (parameterDef.getType() == TokenTypes.PARAMETER_DEF) {
-                    super.visitToken(parameterDef);
-                }
-            }
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	final DetailAST parametersNode = ast.findFirstToken(TokenTypes.PARAMETERS);
+	if (parametersNode == null) {
+		super.visitToken(ast);
+	}
+	else {
+		for (DetailAST parameterDef = parametersNode.getFirstChild();
+		     parameterDef != null;
+		     parameterDef = parameterDef.getNextSibling()) {
+			if (parameterDef.getType() == TokenTypes.PARAMETER_DEF) {
+				super.visitToken(parameterDef);
+			}
+		}
+	}
+}
 
-    @Override
-    protected boolean mustCheckName(DetailAST ast) {
-        return true;
-    }
+@Override
+protected boolean mustCheckName(DetailAST ast) {
+	return true;
+}
 
 }

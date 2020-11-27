@@ -33,38 +33,38 @@ import java.util.Locale;
  */
 public enum SeverityLevel {
 
-    /** Severity level ignore. */
-    IGNORE,
-    /** Severity level info. */
-    INFO,
-    /** Severity level warning. */
-    WARNING,
-    /** Severity level error. */
-    ERROR;
+	/** Severity level ignore. */
+	IGNORE,
+	/** Severity level info. */
+	INFO,
+	/** Severity level warning. */
+	WARNING,
+	/** Severity level error. */
+	ERROR;
 
-    @Override
-    public String toString() {
-        return getName();
-    }
+	@Override
+	public String toString() {
+		return getName();
+	}
 
-    /**
-     * Returns name of severity level.
-     * @return the name of this severity level.
-     */
-    public String getName() {
-        return name().toLowerCase(Locale.ENGLISH);
-    }
+	/**
+	 * Returns name of severity level.
+	 * @return the name of this severity level.
+	 */
+	public String getName() {
+		return name().toLowerCase(Locale.ENGLISH);
+	}
 
-    /**
-     * SeverityLevel factory method.
-     *
-     * @param securityLevelName level name, such as "ignore", "info", etc.
-     * @return the {@code SeverityLevel}
-     *     associated with {@code securityLevelName}
-     */
-    public static SeverityLevel getInstance(String securityLevelName) {
-        return valueOf(SeverityLevel.class, securityLevelName.trim()
-                       .toUpperCase(Locale.ENGLISH));
-    }
+	/**
+	 * SeverityLevel factory method.
+	 *
+	 * @param securityLevelName level name, such as "ignore", "info", etc.
+	 * @return the {@code SeverityLevel}
+	 *     associated with {@code securityLevelName}
+	 */
+	public static SeverityLevel getInstance(String securityLevelName) {
+		return valueOf(SeverityLevel.class, securityLevelName.trim()
+		               .toUpperCase(Locale.ENGLISH));
+	}
 
 }

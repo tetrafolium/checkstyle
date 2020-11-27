@@ -30,40 +30,40 @@ import com.puppycrawl.tools.checkstyle.checks.sizes.AnonInnerLengthCheck;
 
 public class XpathRegressionAnonInnerLengthTest extends AbstractXpathTestSupport {
 
-    private final String checkName = AnonInnerLengthCheck.class.getSimpleName();
+private final String checkName = AnonInnerLengthCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testMaxLength() throws Exception {
-        final int maxLen = 5;
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionAnonInnerLength.java"));
+@Test
+public void testMaxLength() throws Exception {
+	final int maxLen = 5;
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionAnonInnerLength.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(AnonInnerLengthCheck.class);
-        moduleConfig.addAttribute("max", String.valueOf(maxLen));
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(AnonInnerLengthCheck.class);
+	moduleConfig.addAttribute("max", String.valueOf(maxLen));
 
-        final String[] expectedViolation = {
-            "7:41: " + getCheckMessage(AnonInnerLengthCheck.class,
-                                       AnonInnerLengthCheck.MSG_KEY, 6, maxLen),
-        };
+	final String[] expectedViolation = {
+		"7:41: " + getCheckMessage(AnonInnerLengthCheck.class,
+		                           AnonInnerLengthCheck.MSG_KEY, 6, maxLen),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnonInnerLength']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='compare']]/SLIST"
-                    + "/VARIABLE_DEF[./IDENT[@text='comparator']]/ASSIGN/EXPR",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnonInnerLength']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='compare']]/SLIST"
-                    + "/VARIABLE_DEF[./IDENT[@text='comparator']]/ASSIGN/EXPR"
-                    + "/LITERAL_NEW[./IDENT[@text='Comparator']]"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnonInnerLength']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='compare']]/SLIST"
+		+ "/VARIABLE_DEF[./IDENT[@text='comparator']]/ASSIGN/EXPR",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnonInnerLength']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='compare']]/SLIST"
+		+ "/VARIABLE_DEF[./IDENT[@text='comparator']]/ASSIGN/EXPR"
+		+ "/LITERAL_NEW[./IDENT[@text='Comparator']]"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
 }

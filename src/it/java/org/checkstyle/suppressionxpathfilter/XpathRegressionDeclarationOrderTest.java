@@ -30,62 +30,62 @@ import com.puppycrawl.tools.checkstyle.checks.coding.DeclarationOrderCheck;
 
 public class XpathRegressionDeclarationOrderTest extends AbstractXpathTestSupport {
 
-    private final String checkName = DeclarationOrderCheck.class.getSimpleName();
+private final String checkName = DeclarationOrderCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionDeclarationOrderOne.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionDeclarationOrderOne.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(DeclarationOrderCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(DeclarationOrderCheck.class);
 
-        final String[] expectedViolation = {
-            "5:5: " + getCheckMessage(DeclarationOrderCheck.class,
-                                      DeclarationOrderCheck.MSG_ACCESS),
-        };
+	final String[] expectedViolation = {
+		"5:5: " + getCheckMessage(DeclarationOrderCheck.class,
+		                          DeclarationOrderCheck.MSG_ACCESS),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionDeclarationOrderOne']]"
-                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='name']]",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionDeclarationOrderOne']]"
-                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='name']]/MODIFIERS",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionDeclarationOrderOne']]"
-                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='name']]/MODIFIERS/LITERAL_PUBLIC"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionDeclarationOrderOne']]"
+		+ "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='name']]",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionDeclarationOrderOne']]"
+		+ "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='name']]/MODIFIERS",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionDeclarationOrderOne']]"
+		+ "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='name']]/MODIFIERS/LITERAL_PUBLIC"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionDeclarationOrderTwo.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionDeclarationOrderTwo.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(DeclarationOrderCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(DeclarationOrderCheck.class);
 
-        final String[] expectedViolation = {
-            "5:5: " + getCheckMessage(DeclarationOrderCheck.class,
-                                      DeclarationOrderCheck.MSG_STATIC),
-        };
+	final String[] expectedViolation = {
+		"5:5: " + getCheckMessage(DeclarationOrderCheck.class,
+		                          DeclarationOrderCheck.MSG_STATIC),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionDeclarationOrderTwo']]"
-                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='MAX']]",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionDeclarationOrderTwo']]"
-                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='MAX']]/MODIFIERS",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionDeclarationOrderTwo']]"
-                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='MAX']]/MODIFIERS/LITERAL_PUBLIC"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionDeclarationOrderTwo']]"
+		+ "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='MAX']]",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionDeclarationOrderTwo']]"
+		+ "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='MAX']]/MODIFIERS",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionDeclarationOrderTwo']]"
+		+ "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='MAX']]/MODIFIERS/LITERAL_PUBLIC"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 }

@@ -27,31 +27,31 @@ import com.puppycrawl.tools.checkstyle.checks.whitespace.MethodParamPadCheck;
 
 public class MethodParamPadTest extends AbstractGoogleModuleTestSupport {
 
-    @Override
-    protected String getPackageLocation() {
-        return "com/google/checkstyle/test/chapter4formatting/rule462horizontalwhitespace";
-    }
+@Override
+protected String getPackageLocation() {
+	return "com/google/checkstyle/test/chapter4formatting/rule462horizontalwhitespace";
+}
 
-    @Test
-    public void testOperatorWrap() throws Exception {
-        final Class<MethodParamPadCheck> clazz = MethodParamPadCheck.class;
-        final String messageKeyPreceded = "ws.preceded";
+@Test
+public void testOperatorWrap() throws Exception {
+	final Class<MethodParamPadCheck> clazz = MethodParamPadCheck.class;
+	final String messageKeyPreceded = "ws.preceded";
 
-        final String[] expected = {
-            "11:32: " + getCheckMessage(clazz, messageKeyPreceded, "("),
-            "13:15: " + getCheckMessage(clazz, messageKeyPreceded, "("),
-            "20:24: " + getCheckMessage(clazz, messageKeyPreceded, "("),
-            "29:39: " + getCheckMessage(clazz, messageKeyPreceded, "("),
-            "35:16: " + getCheckMessage(clazz, messageKeyPreceded, "("),
-            "41:21: " + getCheckMessage(clazz, messageKeyPreceded, "("),
-            "47:18: " + getCheckMessage(clazz, messageKeyPreceded, "("),
-            "52:36: " + getCheckMessage(clazz, messageKeyPreceded, "("),
-        };
-        final Configuration checkConfig = getModuleConfig("MethodParamPad");
-        final String filePath = getPath("InputMethodParamPad.java");
+	final String[] expected = {
+		"11:32: " + getCheckMessage(clazz, messageKeyPreceded, "("),
+		"13:15: " + getCheckMessage(clazz, messageKeyPreceded, "("),
+		"20:24: " + getCheckMessage(clazz, messageKeyPreceded, "("),
+		"29:39: " + getCheckMessage(clazz, messageKeyPreceded, "("),
+		"35:16: " + getCheckMessage(clazz, messageKeyPreceded, "("),
+		"41:21: " + getCheckMessage(clazz, messageKeyPreceded, "("),
+		"47:18: " + getCheckMessage(clazz, messageKeyPreceded, "("),
+		"52:36: " + getCheckMessage(clazz, messageKeyPreceded, "("),
+	};
+	final Configuration checkConfig = getModuleConfig("MethodParamPad");
+	final String filePath = getPath("InputMethodParamPad.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
 }

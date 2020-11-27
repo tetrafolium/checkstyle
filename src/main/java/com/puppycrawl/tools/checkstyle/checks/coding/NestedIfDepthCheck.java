@@ -55,60 +55,60 @@ import com.puppycrawl.tools.checkstyle.utils.CheckUtil;
 @FileStatefulCheck
 public final class NestedIfDepthCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "nested.if.depth";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "nested.if.depth";
 
-    /** Specify maximum allowed nesting depth. */
-    private int max = 1;
-    /** Current nesting depth. */
-    private int depth;
+/** Specify maximum allowed nesting depth. */
+private int max = 1;
+/** Current nesting depth. */
+private int depth;
 
-    /**
-     * Setter to specify maximum allowed nesting depth.
-     * @param max maximum allowed nesting depth.
-     */
-    public void setMax(int max) {
-        this.max = max;
-    }
+/**
+ * Setter to specify maximum allowed nesting depth.
+ * @param max maximum allowed nesting depth.
+ */
+public void setMax(int max) {
+	this.max = max;
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.LITERAL_IF};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.LITERAL_IF};
+}
 
-    @Override
-    public void beginTree(DetailAST rootAST) {
-        depth = 0;
-    }
+@Override
+public void beginTree(DetailAST rootAST) {
+	depth = 0;
+}
 
-    @Override
-    public void visitToken(DetailAST literalIf) {
-        if (!CheckUtil.isElseIf(literalIf)) {
-            if (depth > max) {
-                log(literalIf, MSG_KEY, depth, max);
-            }
-            ++depth;
-        }
-    }
+@Override
+public void visitToken(DetailAST literalIf) {
+	if (!CheckUtil.isElseIf(literalIf)) {
+		if (depth > max) {
+			log(literalIf, MSG_KEY, depth, max);
+		}
+		++depth;
+	}
+}
 
-    @Override
-    public void leaveToken(DetailAST literalIf) {
-        if (!CheckUtil.isElseIf(literalIf)) {
-            --depth;
-        }
-    }
+@Override
+public void leaveToken(DetailAST literalIf) {
+	if (!CheckUtil.isElseIf(literalIf)) {
+		--depth;
+	}
+}
 
 }

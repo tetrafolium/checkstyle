@@ -27,57 +27,57 @@ import com.puppycrawl.tools.checkstyle.api.LineColumn;
  */
 public final class TagInfo {
 
-    /**
-     * Name of the tag ("link", "see", etc).
-     */
-    private final String name;
+/**
+ * Name of the tag ("link", "see", etc).
+ */
+private final String name;
 
-    /**
-     * Value of the tag.
-     */
-    private final String value;
+/**
+ * Value of the tag.
+ */
+private final String value;
 
-    /**
-     * Position of the tag in the given comment.
-     */
-    private final LineColumn position;
+/**
+ * Position of the tag in the given comment.
+ */
+private final LineColumn position;
 
-    /**
-     * Constructor.
-     *
-     * @param name The name of the tag.
-     * @param value The value of the tag.
-     * @param position The position of the tag in the comment.
-     */
-    public TagInfo(String name, String value, LineColumn position) {
-        this.name = name;
-        this.value = value;
-        this.position = position;
-    }
+/**
+ * Constructor.
+ *
+ * @param name The name of the tag.
+ * @param value The value of the tag.
+ * @param position The position of the tag in the comment.
+ */
+public TagInfo(String name, String value, LineColumn position) {
+	this.name = name;
+	this.value = value;
+	this.position = position;
+}
 
-    /**
-     * Return name of tag.
-     * @return Name of the tag.
-     */
-    public String getName() {
-        return name;
-    }
+/**
+ * Return name of tag.
+ * @return Name of the tag.
+ */
+public String getName() {
+	return name;
+}
 
-    /**
-     * Return value of tag.
-     * @return Value of the tag.
-     */
-    public String getValue() {
-        return value;
-    }
+/**
+ * Return value of tag.
+ * @return Value of the tag.
+ */
+public String getValue() {
+	return value;
+}
 
-    /**
-     * Return position of tag.
-     * @return Value of the tag.
-     */
-    public LineColumn getPosition() {
-        return position;
-    }
+/**
+ * Return position of tag.
+ * @return Value of the tag.
+ */
+public LineColumn getPosition() {
+	return position;
+}
 
 }
 

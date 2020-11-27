@@ -53,37 +53,37 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 @StatelessCheck
 public class StringLiteralEqualityCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "string.literal.equality";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "string.literal.equality";
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.EQUAL, TokenTypes.NOT_EQUAL};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.EQUAL, TokenTypes.NOT_EQUAL};
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        // no need to check for nulls here, == and != always have two children
-        final DetailAST firstChild = ast.getFirstChild();
-        final DetailAST secondChild = firstChild.getNextSibling();
+@Override
+public void visitToken(DetailAST ast) {
+	// no need to check for nulls here, == and != always have two children
+	final DetailAST firstChild = ast.getFirstChild();
+	final DetailAST secondChild = firstChild.getNextSibling();
 
-        if (firstChild.getType() == TokenTypes.STRING_LITERAL
-                || secondChild.getType() == TokenTypes.STRING_LITERAL) {
-            log(ast, MSG_KEY, ast.getText());
-        }
-    }
+	if (firstChild.getType() == TokenTypes.STRING_LITERAL
+	    || secondChild.getType() == TokenTypes.STRING_LITERAL) {
+		log(ast, MSG_KEY, ast.getText());
+	}
+}
 
 }

@@ -27,71 +27,71 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
  */
 public class LambdaHandler extends AbstractExpressionHandler {
 
-    /**
-     * Construct an instance of this handler with the given indentation check,
-     * abstract syntax tree, and parent handler.
-     *
-     * @param indentCheck the indentation check
-     * @param ast the abstract syntax tree
-     * @param parent the parent handler
-     */
-    public LambdaHandler(IndentationCheck indentCheck,
-                         DetailAST ast, AbstractExpressionHandler parent) {
-        super(indentCheck, "lambda", ast, parent);
-    }
+/**
+ * Construct an instance of this handler with the given indentation check,
+ * abstract syntax tree, and parent handler.
+ *
+ * @param indentCheck the indentation check
+ * @param ast the abstract syntax tree
+ * @param parent the parent handler
+ */
+public LambdaHandler(IndentationCheck indentCheck,
+                     DetailAST ast, AbstractExpressionHandler parent) {
+	super(indentCheck, "lambda", ast, parent);
+}
 
-    @Override
-    public IndentLevel getSuggestedChildIndent(AbstractExpressionHandler child) {
-        return getIndent();
-    }
+@Override
+public IndentLevel getSuggestedChildIndent(AbstractExpressionHandler child) {
+	return getIndent();
+}
 
-    /**
-     * {@inheritDoc}.
-     * @noinspection MethodWithMultipleReturnPoints
-     */
-    @Override
-    protected IndentLevel getIndentImpl() {
-        if (getParent() instanceof MethodCallHandler) {
-            return getParent().getSuggestedChildIndent(this);
-        }
+/**
+ * {@inheritDoc}.
+ * @noinspection MethodWithMultipleReturnPoints
+ */
+@Override
+protected IndentLevel getIndentImpl() {
+	if (getParent() instanceof MethodCallHandler) {
+		return getParent().getSuggestedChildIndent(this);
+	}
 
-        DetailAST parent = getMainAst().getParent();
-        if (getParent() instanceof NewHandler) {
-            parent = parent.getParent();
-        }
+	DetailAST parent = getMainAst().getParent();
+	if (getParent() instanceof NewHandler) {
+		parent = parent.getParent();
+	}
 
-        // Use the start of the parent's line as the reference indentation level.
-        IndentLevel level = new IndentLevel(getLineStart(parent));
+	// Use the start of the parent's line as the reference indentation level.
+	IndentLevel level = new IndentLevel(getLineStart(parent));
 
-        // If the start of the lambda is the first element on the line;
-        // assume line wrapping with respect to its parent.
-        final DetailAST firstChild = getMainAst().getFirstChild();
-        if (getLineStart(firstChild) == firstChild.getColumnNo()) {
-            level = new IndentLevel(level, getIndentCheck().getLineWrappingIndentation());
-        }
+	// If the start of the lambda is the first element on the line;
+	// assume line wrapping with respect to its parent.
+	final DetailAST firstChild = getMainAst().getFirstChild();
+	if (getLineStart(firstChild) == firstChild.getColumnNo()) {
+		level = new IndentLevel(level, getIndentCheck().getLineWrappingIndentation());
+	}
 
-        return level;
-    }
+	return level;
+}
 
-    @Override
-    public void checkIndentation() {
-        // If the argument list is the first element on the line
-        final DetailAST firstChild = getMainAst().getFirstChild();
-        if (getLineStart(firstChild) == firstChild.getColumnNo()) {
-            final IndentLevel level = getIndent();
-            if (!level.isAcceptable(firstChild.getColumnNo())) {
-                logError(firstChild, "arguments", firstChild.getColumnNo(), level);
-            }
-        }
+@Override
+public void checkIndentation() {
+	// If the argument list is the first element on the line
+	final DetailAST firstChild = getMainAst().getFirstChild();
+	if (getLineStart(firstChild) == firstChild.getColumnNo()) {
+		final IndentLevel level = getIndent();
+		if (!level.isAcceptable(firstChild.getColumnNo())) {
+			logError(firstChild, "arguments", firstChild.getColumnNo(), level);
+		}
+	}
 
-        // If the "->" is the first element on the line, assume line wrapping.
-        if (getLineStart(getMainAst()) == getMainAst().getColumnNo()) {
-            final IndentLevel level =
-                new IndentLevel(getIndent(), getIndentCheck().getLineWrappingIndentation());
-            if (!level.isAcceptable(getMainAst().getColumnNo())) {
-                logError(getMainAst(), "", getMainAst().getColumnNo(), level);
-            }
-        }
-    }
+	// If the "->" is the first element on the line, assume line wrapping.
+	if (getLineStart(getMainAst()) == getMainAst().getColumnNo()) {
+		final IndentLevel level =
+			new IndentLevel(getIndent(), getIndentCheck().getLineWrappingIndentation());
+		if (!level.isAcceptable(getMainAst().getColumnNo())) {
+			logError(getMainAst(), "", getMainAst().getColumnNo(), level);
+		}
+	}
+}
 
 }

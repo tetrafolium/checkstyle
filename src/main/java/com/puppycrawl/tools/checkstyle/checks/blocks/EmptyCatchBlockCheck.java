@@ -153,164 +153,164 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 @StatelessCheck
 public class EmptyCatchBlockCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY_CATCH_BLOCK_EMPTY = "catch.block.empty";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY_CATCH_BLOCK_EMPTY = "catch.block.empty";
 
-    /**
-     * A pattern to split on line ends.
-     */
-    private static final Pattern LINE_END_PATTERN = Pattern.compile("\\r?+\\n|\\r");
+/**
+ * A pattern to split on line ends.
+ */
+private static final Pattern LINE_END_PATTERN = Pattern.compile("\\r?+\\n|\\r");
 
-    /**
-     * Specify the RegExp for the name of the variable associated with exception.
-     * If check meets variable name matching specified value - empty block is suppressed.
-     */
-    private Pattern exceptionVariableName = Pattern.compile("^$");
+/**
+ * Specify the RegExp for the name of the variable associated with exception.
+ * If check meets variable name matching specified value - empty block is suppressed.
+ */
+private Pattern exceptionVariableName = Pattern.compile("^$");
 
-    /**
-     * Specify the RegExp for the first comment inside empty catch block.
-     * If check meets comment inside empty catch block matching specified format - empty
-     * block is suppressed. If it is multi-line comment - only its first line is analyzed.
-     */
-    private Pattern commentFormat = Pattern.compile(".*");
+/**
+ * Specify the RegExp for the first comment inside empty catch block.
+ * If check meets comment inside empty catch block matching specified format - empty
+ * block is suppressed. If it is multi-line comment - only its first line is analyzed.
+ */
+private Pattern commentFormat = Pattern.compile(".*");
 
-    /**
-     * Setter to specify the RegExp for the name of the variable associated with exception.
-     * If check meets variable name matching specified value - empty block is suppressed.
-     * @param exceptionVariablePattern
-     *        pattern of exception's variable name.
-     */
-    public void setExceptionVariableName(Pattern exceptionVariablePattern) {
-        exceptionVariableName = exceptionVariablePattern;
-    }
+/**
+ * Setter to specify the RegExp for the name of the variable associated with exception.
+ * If check meets variable name matching specified value - empty block is suppressed.
+ * @param exceptionVariablePattern
+ *        pattern of exception's variable name.
+ */
+public void setExceptionVariableName(Pattern exceptionVariablePattern) {
+	exceptionVariableName = exceptionVariablePattern;
+}
 
-    /**
-     * Setter to specify the RegExp for the first comment inside empty catch block.
-     * If check meets comment inside empty catch block matching specified format - empty
-     * block is suppressed. If it is multi-line comment - only its first line is analyzed.
-     * @param commentPattern
-     *        pattern of comment.
-     */
-    public void setCommentFormat(Pattern commentPattern) {
-        commentFormat = commentPattern;
-    }
+/**
+ * Setter to specify the RegExp for the first comment inside empty catch block.
+ * If check meets comment inside empty catch block matching specified format - empty
+ * block is suppressed. If it is multi-line comment - only its first line is analyzed.
+ * @param commentPattern
+ *        pattern of comment.
+ */
+public void setCommentFormat(Pattern commentPattern) {
+	commentFormat = commentPattern;
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {
-                   TokenTypes.LITERAL_CATCH,
-               };
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {
+		       TokenTypes.LITERAL_CATCH,
+	};
+}
 
-    @Override
-    public boolean isCommentNodesRequired() {
-        return true;
-    }
+@Override
+public boolean isCommentNodesRequired() {
+	return true;
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        visitCatchBlock(ast);
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	visitCatchBlock(ast);
+}
 
-    /**
-     * Visits catch ast node, if it is empty catch block - checks it according to
-     *  Check's options. If exception's variable name or comment inside block are matching
-     *   specified regexp - skips from consideration, else - puts violation.
-     * @param catchAst {@link TokenTypes#LITERAL_CATCH LITERAL_CATCH}
-     */
-    private void visitCatchBlock(DetailAST catchAst) {
-        if (isEmptyCatchBlock(catchAst)) {
-            final String commentContent = getCommentFirstLine(catchAst);
-            if (isVerifiable(catchAst, commentContent)) {
-                log(catchAst.getLineNo(), MSG_KEY_CATCH_BLOCK_EMPTY);
-            }
-        }
-    }
+/**
+ * Visits catch ast node, if it is empty catch block - checks it according to
+ *  Check's options. If exception's variable name or comment inside block are matching
+ *   specified regexp - skips from consideration, else - puts violation.
+ * @param catchAst {@link TokenTypes#LITERAL_CATCH LITERAL_CATCH}
+ */
+private void visitCatchBlock(DetailAST catchAst) {
+	if (isEmptyCatchBlock(catchAst)) {
+		final String commentContent = getCommentFirstLine(catchAst);
+		if (isVerifiable(catchAst, commentContent)) {
+			log(catchAst.getLineNo(), MSG_KEY_CATCH_BLOCK_EMPTY);
+		}
+	}
+}
 
-    /**
-     * Gets the first line of comment in catch block. If comment is single-line -
-     *  returns it fully, else if comment is multi-line - returns the first line.
-     * @param catchAst {@link TokenTypes#LITERAL_CATCH LITERAL_CATCH}
-     * @return the first line of comment in catch block, "" if no comment was found.
-     */
-    private static String getCommentFirstLine(DetailAST catchAst) {
-        final DetailAST slistToken = catchAst.getLastChild();
-        final DetailAST firstElementInBlock = slistToken.getFirstChild();
-        String commentContent = "";
-        if (firstElementInBlock.getType() == TokenTypes.SINGLE_LINE_COMMENT) {
-            commentContent = firstElementInBlock.getFirstChild().getText();
-        }
-        else if (firstElementInBlock.getType() == TokenTypes.BLOCK_COMMENT_BEGIN) {
-            commentContent = firstElementInBlock.getFirstChild().getText();
-            final String[] lines = LINE_END_PATTERN.split(commentContent);
-            for (String line : lines) {
-                if (!line.isEmpty()) {
-                    commentContent = line;
-                    break;
-                }
-            }
-        }
-        return commentContent;
-    }
+/**
+ * Gets the first line of comment in catch block. If comment is single-line -
+ *  returns it fully, else if comment is multi-line - returns the first line.
+ * @param catchAst {@link TokenTypes#LITERAL_CATCH LITERAL_CATCH}
+ * @return the first line of comment in catch block, "" if no comment was found.
+ */
+private static String getCommentFirstLine(DetailAST catchAst) {
+	final DetailAST slistToken = catchAst.getLastChild();
+	final DetailAST firstElementInBlock = slistToken.getFirstChild();
+	String commentContent = "";
+	if (firstElementInBlock.getType() == TokenTypes.SINGLE_LINE_COMMENT) {
+		commentContent = firstElementInBlock.getFirstChild().getText();
+	}
+	else if (firstElementInBlock.getType() == TokenTypes.BLOCK_COMMENT_BEGIN) {
+		commentContent = firstElementInBlock.getFirstChild().getText();
+		final String[] lines = LINE_END_PATTERN.split(commentContent);
+		for (String line : lines) {
+			if (!line.isEmpty()) {
+				commentContent = line;
+				break;
+			}
+		}
+	}
+	return commentContent;
+}
 
-    /**
-     * Checks if current empty catch block is verifiable according to Check's options
-     *  (exception's variable name and comment format are both in consideration).
-     * @param emptyCatchAst empty catch {@link TokenTypes#LITERAL_CATCH LITERAL_CATCH} block.
-     * @param commentContent text of comment.
-     * @return true if empty catch block is verifiable by Check.
-     */
-    private boolean isVerifiable(DetailAST emptyCatchAst, String commentContent) {
-        final String variableName = getExceptionVariableName(emptyCatchAst);
-        final boolean isMatchingVariableName = exceptionVariableName
-                                               .matcher(variableName).find();
-        final boolean isMatchingCommentContent = !commentContent.isEmpty()
-                && commentFormat.matcher(commentContent).find();
-        return !isMatchingVariableName && !isMatchingCommentContent;
-    }
+/**
+ * Checks if current empty catch block is verifiable according to Check's options
+ *  (exception's variable name and comment format are both in consideration).
+ * @param emptyCatchAst empty catch {@link TokenTypes#LITERAL_CATCH LITERAL_CATCH} block.
+ * @param commentContent text of comment.
+ * @return true if empty catch block is verifiable by Check.
+ */
+private boolean isVerifiable(DetailAST emptyCatchAst, String commentContent) {
+	final String variableName = getExceptionVariableName(emptyCatchAst);
+	final boolean isMatchingVariableName = exceptionVariableName
+	                                       .matcher(variableName).find();
+	final boolean isMatchingCommentContent = !commentContent.isEmpty()
+	                                         && commentFormat.matcher(commentContent).find();
+	return !isMatchingVariableName && !isMatchingCommentContent;
+}
 
-    /**
-     * Checks if catch block is empty or contains only comments.
-     * @param catchAst {@link TokenTypes#LITERAL_CATCH LITERAL_CATCH}
-     * @return true if catch block is empty.
-     */
-    private static boolean isEmptyCatchBlock(DetailAST catchAst) {
-        boolean result = true;
-        final DetailAST slistToken = catchAst.findFirstToken(TokenTypes.SLIST);
-        DetailAST catchBlockStmt = slistToken.getFirstChild();
-        while (catchBlockStmt.getType() != TokenTypes.RCURLY) {
-            if (catchBlockStmt.getType() != TokenTypes.SINGLE_LINE_COMMENT
-                    && catchBlockStmt.getType() != TokenTypes.BLOCK_COMMENT_BEGIN) {
-                result = false;
-                break;
-            }
-            catchBlockStmt = catchBlockStmt.getNextSibling();
-        }
-        return result;
-    }
+/**
+ * Checks if catch block is empty or contains only comments.
+ * @param catchAst {@link TokenTypes#LITERAL_CATCH LITERAL_CATCH}
+ * @return true if catch block is empty.
+ */
+private static boolean isEmptyCatchBlock(DetailAST catchAst) {
+	boolean result = true;
+	final DetailAST slistToken = catchAst.findFirstToken(TokenTypes.SLIST);
+	DetailAST catchBlockStmt = slistToken.getFirstChild();
+	while (catchBlockStmt.getType() != TokenTypes.RCURLY) {
+		if (catchBlockStmt.getType() != TokenTypes.SINGLE_LINE_COMMENT
+		    && catchBlockStmt.getType() != TokenTypes.BLOCK_COMMENT_BEGIN) {
+			result = false;
+			break;
+		}
+		catchBlockStmt = catchBlockStmt.getNextSibling();
+	}
+	return result;
+}
 
-    /**
-     * Gets variable's name associated with exception.
-     * @param catchAst {@link TokenTypes#LITERAL_CATCH LITERAL_CATCH}
-     * @return Variable's name associated with exception.
-     */
-    private static String getExceptionVariableName(DetailAST catchAst) {
-        final DetailAST parameterDef = catchAst.findFirstToken(TokenTypes.PARAMETER_DEF);
-        final DetailAST variableName = parameterDef.findFirstToken(TokenTypes.IDENT);
-        return variableName.getText();
-    }
+/**
+ * Gets variable's name associated with exception.
+ * @param catchAst {@link TokenTypes#LITERAL_CATCH LITERAL_CATCH}
+ * @return Variable's name associated with exception.
+ */
+private static String getExceptionVariableName(DetailAST catchAst) {
+	final DetailAST parameterDef = catchAst.findFirstToken(TokenTypes.PARAMETER_DEF);
+	final DetailAST variableName = parameterDef.findFirstToken(TokenTypes.IDENT);
+	return variableName.getText();
+}
 
 }

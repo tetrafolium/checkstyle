@@ -96,100 +96,100 @@ import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
 @StatelessCheck
 public final class MissingDeprecatedCheck extends AbstractJavadocCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY_ANNOTATION_MISSING_DEPRECATED =
-        "annotation.missing.deprecated";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY_ANNOTATION_MISSING_DEPRECATED =
+	"annotation.missing.deprecated";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY_JAVADOC_DUPLICATE_TAG =
-        "javadoc.duplicateTag";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY_JAVADOC_DUPLICATE_TAG =
+	"javadoc.duplicateTag";
 
-    /** {@link Deprecated Deprecated} annotation name. */
-    private static final String DEPRECATED = "Deprecated";
+/** {@link Deprecated Deprecated} annotation name. */
+private static final String DEPRECATED = "Deprecated";
 
-    /** Fully-qualified {@link Deprecated Deprecated} annotation name. */
-    private static final String FQ_DEPRECATED = "java.lang." + DEPRECATED;
+/** Fully-qualified {@link Deprecated Deprecated} annotation name. */
+private static final String FQ_DEPRECATED = "java.lang." + DEPRECATED;
 
-    @Override
-    public int[] getDefaultJavadocTokens() {
-        return getRequiredJavadocTokens();
-    }
+@Override
+public int[] getDefaultJavadocTokens() {
+	return getRequiredJavadocTokens();
+}
 
-    @Override
-    public int[] getRequiredJavadocTokens() {
-        return new int[] {
-                   JavadocTokenTypes.JAVADOC,
-               };
-    }
+@Override
+public int[] getRequiredJavadocTokens() {
+	return new int[] {
+		       JavadocTokenTypes.JAVADOC,
+	};
+}
 
-    @Override
-    public void visitJavadocToken(DetailNode ast) {
-        final DetailAST parentAst = getParent(getBlockCommentAst());
+@Override
+public void visitJavadocToken(DetailNode ast) {
+	final DetailAST parentAst = getParent(getBlockCommentAst());
 
-        final boolean containsAnnotation =
-            AnnotationUtil.containsAnnotation(parentAst, DEPRECATED)
-            || AnnotationUtil.containsAnnotation(parentAst, FQ_DEPRECATED);
+	final boolean containsAnnotation =
+		AnnotationUtil.containsAnnotation(parentAst, DEPRECATED)
+		|| AnnotationUtil.containsAnnotation(parentAst, FQ_DEPRECATED);
 
-        final boolean containsJavadocTag = containsDeprecatedTag(ast);
+	final boolean containsJavadocTag = containsDeprecatedTag(ast);
 
-        if (containsAnnotation ^ containsJavadocTag) {
-            log(parentAst.getLineNo(), MSG_KEY_ANNOTATION_MISSING_DEPRECATED);
-        }
-    }
+	if (containsAnnotation ^ containsJavadocTag) {
+		log(parentAst.getLineNo(), MSG_KEY_ANNOTATION_MISSING_DEPRECATED);
+	}
+}
 
-    /**
-     * Checks to see if the javadoc contains a deprecated tag.
-     *
-     * @param javadoc the javadoc of the AST
-     * @return true if contains the tag
-     */
-    private boolean containsDeprecatedTag(DetailNode javadoc) {
-        boolean found = false;
-        for (DetailNode child : javadoc.getChildren()) {
-            if (child.getType() == JavadocTokenTypes.JAVADOC_TAG
-                    && child.getChildren()[0].getType() == JavadocTokenTypes.DEPRECATED_LITERAL) {
-                if (found) {
-                    log(child.getLineNumber(), MSG_KEY_JAVADOC_DUPLICATE_TAG,
-                        JavadocTagInfo.DEPRECATED.getText());
-                }
-                found = true;
-            }
-        }
-        return found;
-    }
+/**
+ * Checks to see if the javadoc contains a deprecated tag.
+ *
+ * @param javadoc the javadoc of the AST
+ * @return true if contains the tag
+ */
+private boolean containsDeprecatedTag(DetailNode javadoc) {
+	boolean found = false;
+	for (DetailNode child : javadoc.getChildren()) {
+		if (child.getType() == JavadocTokenTypes.JAVADOC_TAG
+		    && child.getChildren()[0].getType() == JavadocTokenTypes.DEPRECATED_LITERAL) {
+			if (found) {
+				log(child.getLineNumber(), MSG_KEY_JAVADOC_DUPLICATE_TAG,
+				    JavadocTagInfo.DEPRECATED.getText());
+			}
+			found = true;
+		}
+	}
+	return found;
+}
 
-    /**
-     * Returns the parent node of the comment.
-     * @param commentBlock child node.
-     * @return parent node.
-     */
-    private static DetailAST getParent(DetailAST commentBlock) {
-        DetailAST result = commentBlock.getParent();
+/**
+ * Returns the parent node of the comment.
+ * @param commentBlock child node.
+ * @return parent node.
+ */
+private static DetailAST getParent(DetailAST commentBlock) {
+	DetailAST result = commentBlock.getParent();
 
-        if (result == null) {
-            result = commentBlock.getNextSibling();
-        }
+	if (result == null) {
+		result = commentBlock.getNextSibling();
+	}
 
-        while (true) {
-            final int type = result.getType();
-            if (type == TokenTypes.TYPE || type == TokenTypes.MODIFIERS
-                    || type == TokenTypes.ANNOTATION || type == TokenTypes.ANNOTATIONS
-                    || type == TokenTypes.ARRAY_DECLARATOR || type == TokenTypes.TYPE_PARAMETERS
-                    || type == TokenTypes.DOT) {
-                result = result.getParent();
-            }
-            else {
-                break;
-            }
-        }
+	while (true) {
+		final int type = result.getType();
+		if (type == TokenTypes.TYPE || type == TokenTypes.MODIFIERS
+		    || type == TokenTypes.ANNOTATION || type == TokenTypes.ANNOTATIONS
+		    || type == TokenTypes.ARRAY_DECLARATOR || type == TokenTypes.TYPE_PARAMETERS
+		    || type == TokenTypes.DOT) {
+			result = result.getParent();
+		}
+		else {
+			break;
+		}
+	}
 
-        return result;
-    }
+	return result;
+}
 
 }

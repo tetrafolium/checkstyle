@@ -9,67 +9,70 @@ import java.awt.Dimension;
 import java.awt.Color;
 
 class InputEmptyBlock {
-    boolean flag;
-    void doSm() {}
-    void foo() {
-        try {
-            if (!flag) {
-                doSm();
-            }
-        } catch (Exception e) { /* ignore */ } //ok
-        finally {/* ignore */} //ok
-    }
+boolean flag;
+void doSm() {
+}
+void foo() {
+	try {
+		if (!flag) {
+			doSm();
+		}
+	} catch (Exception e) { /* ignore */ } //ok
+	finally { /* ignore */} //ok
+}
 
-    void foo2() {
-        try {
-            if (!flag) {
-                doSm();
-            }
-        } catch (Exception e) {}
-        finally {} //warn
-    }
+void foo2() {
+	try {
+		if (!flag) {
+			doSm();
+		}
+	} catch (Exception e) {}
+	finally {} //warn
+}
 
-    class Inner {
-        boolean flag;
-        void doSm() {}
-        void foo() {
-            try {
-                if (!flag) {
-                    doSm();
-                }
-            } catch (Exception e) { /* ignore */ } //ok
-            finally {/* ignore */} //ok
-        }
+class Inner {
+boolean flag;
+void doSm() {
+}
+void foo() {
+	try {
+		if (!flag) {
+			doSm();
+		}
+	} catch (Exception e) { /* ignore */ }     //ok
+	finally { /* ignore */}    //ok
+}
 
-        void foo2() {
-            try {
-                if (!flag) {
-                    doSm();
-                }
-            } catch (Exception e) {}
-            finally {} //warn
-        }
-    }
+void foo2() {
+	try {
+		if (!flag) {
+			doSm();
+		}
+	} catch (Exception e) {}
+	finally {}     //warn
+}
+}
 
-    Inner anon = new Inner() {
-        boolean flag;
-        void doSm() {}
-        void foo() {
-            try {
-                if (!flag) {
-                    doSm();
-                }
-            } catch (Exception e) { /* ignore */ } //ok
-            finally {/* ignore */} //ok
-        }
+Inner anon = new Inner() {
+	boolean flag;
+	void doSm() {
+	}
+	void foo() {
+		try {
+			if (!flag) {
+				doSm();
+			}
+		} catch (Exception e) { /* ignore */ } //ok
+		finally { /* ignore */} //ok
+	}
 
-        void foo2() {
-            try {
-                if (!flag) {
-                    doSm();
-                }
-            } catch (Exception e) {}
-            finally {} //warn
-        }
-    };
+	void foo2() {
+		try {
+			if (!flag) {
+				doSm();
+			}
+		} catch (Exception e) {}
+		finally {} //warn
+	}
+};
 }

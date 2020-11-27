@@ -49,84 +49,84 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 @StatelessCheck
 public class MultipleVariableDeclarationsCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_MULTIPLE = "multiple.variable.declarations";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_MULTIPLE = "multiple.variable.declarations";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_MULTIPLE_COMMA = "multiple.variable.declarations.comma";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_MULTIPLE_COMMA = "multiple.variable.declarations.comma";
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.VARIABLE_DEF};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.VARIABLE_DEF};
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        DetailAST nextNode = ast.getNextSibling();
+@Override
+public void visitToken(DetailAST ast) {
+	DetailAST nextNode = ast.getNextSibling();
 
-        if (nextNode != null) {
-            final boolean isCommaSeparated = nextNode.getType() == TokenTypes.COMMA;
+	if (nextNode != null) {
+		final boolean isCommaSeparated = nextNode.getType() == TokenTypes.COMMA;
 
-            if (isCommaSeparated
-                    || nextNode.getType() == TokenTypes.SEMI) {
-                nextNode = nextNode.getNextSibling();
-            }
+		if (isCommaSeparated
+		    || nextNode.getType() == TokenTypes.SEMI) {
+			nextNode = nextNode.getNextSibling();
+		}
 
-            if (nextNode != null
-                    && nextNode.getType() == TokenTypes.VARIABLE_DEF) {
-                final DetailAST firstNode = CheckUtil.getFirstNode(ast);
-                if (isCommaSeparated) {
-                    // Check if the multiple variable declarations are in a
-                    // for loop initializer. If they are, then no warning
-                    // should be displayed. Declaring multiple variables in
-                    // a for loop initializer is a good way to minimize
-                    // variable scope. Refer Feature Request Id - 2895985
-                    // for more details
-                    if (ast.getParent().getType() != TokenTypes.FOR_INIT) {
-                        log(firstNode, MSG_MULTIPLE_COMMA);
-                    }
-                }
-                else {
-                    final DetailAST lastNode = getLastNode(ast);
-                    final DetailAST firstNextNode = CheckUtil.getFirstNode(nextNode);
+		if (nextNode != null
+		    && nextNode.getType() == TokenTypes.VARIABLE_DEF) {
+			final DetailAST firstNode = CheckUtil.getFirstNode(ast);
+			if (isCommaSeparated) {
+				// Check if the multiple variable declarations are in a
+				// for loop initializer. If they are, then no warning
+				// should be displayed. Declaring multiple variables in
+				// a for loop initializer is a good way to minimize
+				// variable scope. Refer Feature Request Id - 2895985
+				// for more details
+				if (ast.getParent().getType() != TokenTypes.FOR_INIT) {
+					log(firstNode, MSG_MULTIPLE_COMMA);
+				}
+			}
+			else {
+				final DetailAST lastNode = getLastNode(ast);
+				final DetailAST firstNextNode = CheckUtil.getFirstNode(nextNode);
 
-                    if (TokenUtil.areOnSameLine(firstNextNode, lastNode)) {
-                        log(firstNode, MSG_MULTIPLE);
-                    }
-                }
-            }
-        }
-    }
+				if (TokenUtil.areOnSameLine(firstNextNode, lastNode)) {
+					log(firstNode, MSG_MULTIPLE);
+				}
+			}
+		}
+	}
+}
 
-    /**
-     * Finds sub-node for given node maximum (line, column) pair.
-     * @param node the root of tree for search.
-     * @return sub-node with maximum (line, column) pair.
-     */
-    private static DetailAST getLastNode(final DetailAST node) {
-        DetailAST currentNode = node;
-        final DetailAST child = node.getLastChild();
-        if (child != null) {
-            currentNode = getLastNode(child);
-        }
+/**
+ * Finds sub-node for given node maximum (line, column) pair.
+ * @param node the root of tree for search.
+ * @return sub-node with maximum (line, column) pair.
+ */
+private static DetailAST getLastNode(final DetailAST node) {
+	DetailAST currentNode = node;
+	final DetailAST child = node.getLastChild();
+	if (child != null) {
+		currentNode = getLastNode(child);
+	}
 
-        return currentNode;
-    }
+	return currentNode;
+}
 
 }

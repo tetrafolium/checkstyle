@@ -35,114 +35,114 @@ import com.puppycrawl.tools.checkstyle.api.AutomaticBean;
  */
 public class XpathFileGeneratorAuditListener extends AutomaticBean implements AuditListener {
 
-    /** The " quote character. */
-    private static final String QUOTE_CHAR = "\"";
+/** The " quote character. */
+private static final String QUOTE_CHAR = "\"";
 
-    /**
-     * Helper writer that allows easy encoding and printing.
-     */
-    private final PrintWriter writer;
+/**
+ * Helper writer that allows easy encoding and printing.
+ */
+private final PrintWriter writer;
 
-    /** Close output stream in auditFinished. */
-    private final boolean closeStream;
+/** Close output stream in auditFinished. */
+private final boolean closeStream;
 
-    /** Determines if xml header is printed. */
-    private boolean isXmlHeaderPrinted;
+/** Determines if xml header is printed. */
+private boolean isXmlHeaderPrinted;
 
-    /**
-     * Creates a new {@code SuppressionFileGenerator} instance.
-     * Sets the output to a defined stream.
-     * @param out the output stream
-     * @param outputStreamOptions if {@code CLOSE} stream should be closed in auditFinished()
-     */
-    public XpathFileGeneratorAuditListener(OutputStream out,
-                                           OutputStreamOptions outputStreamOptions) {
-        writer = new PrintWriter(new OutputStreamWriter(out, StandardCharsets.UTF_8));
-        closeStream = outputStreamOptions == OutputStreamOptions.CLOSE;
-    }
+/**
+ * Creates a new {@code SuppressionFileGenerator} instance.
+ * Sets the output to a defined stream.
+ * @param out the output stream
+ * @param outputStreamOptions if {@code CLOSE} stream should be closed in auditFinished()
+ */
+public XpathFileGeneratorAuditListener(OutputStream out,
+                                       OutputStreamOptions outputStreamOptions) {
+	writer = new PrintWriter(new OutputStreamWriter(out, StandardCharsets.UTF_8));
+	closeStream = outputStreamOptions == OutputStreamOptions.CLOSE;
+}
 
-    @Override
-    public void auditStarted(AuditEvent event) {
-        // No code by default
-    }
+@Override
+public void auditStarted(AuditEvent event) {
+	// No code by default
+}
 
-    @Override
-    public void auditFinished(AuditEvent event) {
-        if (isXmlHeaderPrinted) {
-            writer.println("</suppressions>");
-        }
+@Override
+public void auditFinished(AuditEvent event) {
+	if (isXmlHeaderPrinted) {
+		writer.println("</suppressions>");
+	}
 
-        writer.flush();
-        if (closeStream) {
-            writer.close();
-        }
-    }
+	writer.flush();
+	if (closeStream) {
+		writer.close();
+	}
+}
 
-    @Override
-    public void fileStarted(AuditEvent event) {
-        // No code by default
-    }
+@Override
+public void fileStarted(AuditEvent event) {
+	// No code by default
+}
 
-    @Override
-    public void fileFinished(AuditEvent event) {
-        // No code by default
-    }
+@Override
+public void fileFinished(AuditEvent event) {
+	// No code by default
+}
 
-    @Override
-    public void addError(AuditEvent event) {
-        final String xpathQuery = XpathFileGeneratorAstFilter.findCorrespondingXpathQuery(event);
-        if (xpathQuery != null) {
-            printXmlHeader();
+@Override
+public void addError(AuditEvent event) {
+	final String xpathQuery = XpathFileGeneratorAstFilter.findCorrespondingXpathQuery(event);
+	if (xpathQuery != null) {
+		printXmlHeader();
 
-            final File file = new File(event.getFileName());
+		final File file = new File(event.getFileName());
 
-            writer.println("<suppress-xpath");
-            writer.print("       files=\"");
-            writer.print(file.getName());
-            writer.println(QUOTE_CHAR);
+		writer.println("<suppress-xpath");
+		writer.print("       files=\"");
+		writer.print(file.getName());
+		writer.println(QUOTE_CHAR);
 
-            if (event.getModuleId() == null) {
-                final String checkName =
-                    PackageObjectFactory.getShortFromFullModuleNames(event.getSourceName());
-                writer.print("       checks=\"");
-                writer.print(checkName);
-            }
-            else {
-                writer.print("       id=\"");
-                writer.print(event.getModuleId());
-            }
-            writer.println(QUOTE_CHAR);
+		if (event.getModuleId() == null) {
+			final String checkName =
+				PackageObjectFactory.getShortFromFullModuleNames(event.getSourceName());
+			writer.print("       checks=\"");
+			writer.print(checkName);
+		}
+		else {
+			writer.print("       id=\"");
+			writer.print(event.getModuleId());
+		}
+		writer.println(QUOTE_CHAR);
 
-            writer.print("       query=\"");
-            writer.print(xpathQuery);
+		writer.print("       query=\"");
+		writer.print(xpathQuery);
 
-            writer.println("\"/>");
-        }
-    }
+		writer.println("\"/>");
+	}
+}
 
-    @Override
-    public void addException(AuditEvent event, Throwable throwable) {
-        throw new UnsupportedOperationException("Operation is not supported");
-    }
+@Override
+public void addException(AuditEvent event, Throwable throwable) {
+	throw new UnsupportedOperationException("Operation is not supported");
+}
 
-    /**
-     * Prints XML header if only it was not printed before.
-     */
-    private void printXmlHeader() {
-        if (!isXmlHeaderPrinted) {
-            writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-            writer.println("<!DOCTYPE suppressions PUBLIC");
-            writer.println("    \"-//Checkstyle//DTD SuppressionXpathFilter Experimental "
-                           + "Configuration 1.2//EN\"");
-            writer.println("    \"https://checkstyle.org/dtds/"
-                           + "suppressions_1_2_xpath_experimental.dtd\">");
-            writer.println("<suppressions>");
-            isXmlHeaderPrinted = true;
-        }
-    }
+/**
+ * Prints XML header if only it was not printed before.
+ */
+private void printXmlHeader() {
+	if (!isXmlHeaderPrinted) {
+		writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+		writer.println("<!DOCTYPE suppressions PUBLIC");
+		writer.println("    \"-//Checkstyle//DTD SuppressionXpathFilter Experimental "
+		               + "Configuration 1.2//EN\"");
+		writer.println("    \"https://checkstyle.org/dtds/"
+		               + "suppressions_1_2_xpath_experimental.dtd\">");
+		writer.println("<suppressions>");
+		isXmlHeaderPrinted = true;
+	}
+}
 
-    @Override
-    protected void finishLocalSetup() {
-        // No code by default
-    }
+@Override
+protected void finishLocalSetup() {
+	// No code by default
+}
 }

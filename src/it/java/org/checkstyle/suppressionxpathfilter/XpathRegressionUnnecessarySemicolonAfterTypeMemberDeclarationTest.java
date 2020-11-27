@@ -29,31 +29,31 @@ import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
 import com.puppycrawl.tools.checkstyle.checks.coding.UnnecessarySemicolonAfterTypeMemberDeclarationCheck;
 
 public class XpathRegressionUnnecessarySemicolonAfterTypeMemberDeclarationTest
-    extends AbstractXpathTestSupport {
+	extends AbstractXpathTestSupport {
 
-    private static final Class<UnnecessarySemicolonAfterTypeMemberDeclarationCheck> CLASS =
-        UnnecessarySemicolonAfterTypeMemberDeclarationCheck.class;
+private static final Class<UnnecessarySemicolonAfterTypeMemberDeclarationCheck> CLASS =
+	UnnecessarySemicolonAfterTypeMemberDeclarationCheck.class;
 
-    @Override
-    protected String getCheckName() {
-        return CLASS.getSimpleName();
-    }
+@Override
+protected String getCheckName() {
+	return CLASS.getSimpleName();
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess = new File(getPath(
-                                                "SuppressionXpathRegressionUnnecessarySemicolonAfterTypeMemberDeclaration.java"));
-        final DefaultConfiguration moduleConfig = createModuleConfig(CLASS);
-        final String[] expectedViolation = {
-            "4:20: " + getCheckMessage(CLASS,
-                                       UnnecessarySemicolonAfterTypeMemberDeclarationCheck.MSG_SEMI),
-        };
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess = new File(getPath(
+						    "SuppressionXpathRegressionUnnecessarySemicolonAfterTypeMemberDeclaration.java"));
+	final DefaultConfiguration moduleConfig = createModuleConfig(CLASS);
+	final String[] expectedViolation = {
+		"4:20: " + getCheckMessage(CLASS,
+		                           UnnecessarySemicolonAfterTypeMemberDeclarationCheck.MSG_SEMI),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList("/CLASS_DEF[./IDENT"
-                + "[@text='SuppressionXpathRegressionUnnecessarySemicolonAfterTypeMemberDeclaration']]"
-                + "/OBJBLOCK/SEMI"
-                                                                           );
+	final List<String> expectedXpathQueries = Collections.singletonList("/CLASS_DEF[./IDENT"
+	                                                                    + "[@text='SuppressionXpathRegressionUnnecessarySemicolonAfterTypeMemberDeclaration']]"
+	                                                                    + "/OBJBLOCK/SEMI"
+	                                                                    );
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
+}
 }

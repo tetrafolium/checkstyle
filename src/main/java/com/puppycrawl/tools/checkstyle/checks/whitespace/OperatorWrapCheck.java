@@ -109,132 +109,132 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  */
 @StatelessCheck
 public class OperatorWrapCheck
-    extends AbstractCheck {
+	extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_LINE_NEW = "line.new";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_LINE_NEW = "line.new";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_LINE_PREVIOUS = "line.previous";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_LINE_PREVIOUS = "line.previous";
 
-    /** Specify policy on how to wrap lines. */
-    private WrapOption option = WrapOption.NL;
+/** Specify policy on how to wrap lines. */
+private WrapOption option = WrapOption.NL;
 
-    /**
-     * Setter to specify policy on how to wrap lines.
-     * @param optionStr string to decode option from
-     * @throws IllegalArgumentException if unable to decode
-     */
-    public void setOption(String optionStr) {
-        option = WrapOption.valueOf(optionStr.trim().toUpperCase(Locale.ENGLISH));
-    }
+/**
+ * Setter to specify policy on how to wrap lines.
+ * @param optionStr string to decode option from
+ * @throws IllegalArgumentException if unable to decode
+ */
+public void setOption(String optionStr) {
+	option = WrapOption.valueOf(optionStr.trim().toUpperCase(Locale.ENGLISH));
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return new int[] {
-                   TokenTypes.QUESTION,          // '?'
-                   TokenTypes.COLON,             // ':' (not reported for a case)
-                   TokenTypes.EQUAL,             // "=="
-                   TokenTypes.NOT_EQUAL,         // "!="
-                   TokenTypes.DIV,               // '/'
-                   TokenTypes.PLUS,              // '+' (unary plus is UNARY_PLUS)
-                   TokenTypes.MINUS,             // '-' (unary minus is UNARY_MINUS)
-                   TokenTypes.STAR,              // '*'
-                   TokenTypes.MOD,               // '%'
-                   TokenTypes.SR,                // ">>"
-                   TokenTypes.BSR,               // ">>>"
-                   TokenTypes.GE,                // ">="
-                   TokenTypes.GT,                // ">"
-                   TokenTypes.SL,                // "<<"
-                   TokenTypes.LE,                // "<="
-                   TokenTypes.LT,                // '<'
-                   TokenTypes.BXOR,              // '^'
-                   TokenTypes.BOR,               // '|'
-                   TokenTypes.LOR,               // "||"
-                   TokenTypes.BAND,              // '&'
-                   TokenTypes.LAND,              // "&&"
-                   TokenTypes.TYPE_EXTENSION_AND,
-                   TokenTypes.LITERAL_INSTANCEOF,
-               };
-    }
+@Override
+public int[] getDefaultTokens() {
+	return new int[] {
+		       TokenTypes.QUESTION,      // '?'
+		       TokenTypes.COLON,         // ':' (not reported for a case)
+		       TokenTypes.EQUAL,         // "=="
+		       TokenTypes.NOT_EQUAL,     // "!="
+		       TokenTypes.DIV,           // '/'
+		       TokenTypes.PLUS,          // '+' (unary plus is UNARY_PLUS)
+		       TokenTypes.MINUS,         // '-' (unary minus is UNARY_MINUS)
+		       TokenTypes.STAR,          // '*'
+		       TokenTypes.MOD,           // '%'
+		       TokenTypes.SR,            // ">>"
+		       TokenTypes.BSR,           // ">>>"
+		       TokenTypes.GE,            // ">="
+		       TokenTypes.GT,            // ">"
+		       TokenTypes.SL,            // "<<"
+		       TokenTypes.LE,            // "<="
+		       TokenTypes.LT,            // '<'
+		       TokenTypes.BXOR,          // '^'
+		       TokenTypes.BOR,           // '|'
+		       TokenTypes.LOR,           // "||"
+		       TokenTypes.BAND,          // '&'
+		       TokenTypes.LAND,          // "&&"
+		       TokenTypes.TYPE_EXTENSION_AND,
+		       TokenTypes.LITERAL_INSTANCEOF,
+	};
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return new int[] {
-                   TokenTypes.QUESTION,          // '?'
-                   TokenTypes.COLON,             // ':' (not reported for a case)
-                   TokenTypes.EQUAL,             // "=="
-                   TokenTypes.NOT_EQUAL,         // "!="
-                   TokenTypes.DIV,               // '/'
-                   TokenTypes.PLUS,              // '+' (unary plus is UNARY_PLUS)
-                   TokenTypes.MINUS,             // '-' (unary minus is UNARY_MINUS)
-                   TokenTypes.STAR,              // '*'
-                   TokenTypes.MOD,               // '%'
-                   TokenTypes.SR,                // ">>"
-                   TokenTypes.BSR,               // ">>>"
-                   TokenTypes.GE,                // ">="
-                   TokenTypes.GT,                // ">"
-                   TokenTypes.SL,                // "<<"
-                   TokenTypes.LE,                // "<="
-                   TokenTypes.LT,                // '<'
-                   TokenTypes.BXOR,              // '^'
-                   TokenTypes.BOR,               // '|'
-                   TokenTypes.LOR,               // "||"
-                   TokenTypes.BAND,              // '&'
-                   TokenTypes.LAND,              // "&&"
-                   TokenTypes.LITERAL_INSTANCEOF,
-                   TokenTypes.TYPE_EXTENSION_AND,
-                   TokenTypes.ASSIGN,            // '='
-                   TokenTypes.DIV_ASSIGN,        // "/="
-                   TokenTypes.PLUS_ASSIGN,       // "+="
-                   TokenTypes.MINUS_ASSIGN,      // "-="
-                   TokenTypes.STAR_ASSIGN,       // "*="
-                   TokenTypes.MOD_ASSIGN,        // "%="
-                   TokenTypes.SR_ASSIGN,         // ">>="
-                   TokenTypes.BSR_ASSIGN,        // ">>>="
-                   TokenTypes.SL_ASSIGN,         // "<<="
-                   TokenTypes.BXOR_ASSIGN,       // "^="
-                   TokenTypes.BOR_ASSIGN,        // "|="
-                   TokenTypes.BAND_ASSIGN,       // "&="
-                   TokenTypes.METHOD_REF,        // "::"
-               };
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return new int[] {
+		       TokenTypes.QUESTION,      // '?'
+		       TokenTypes.COLON,         // ':' (not reported for a case)
+		       TokenTypes.EQUAL,         // "=="
+		       TokenTypes.NOT_EQUAL,     // "!="
+		       TokenTypes.DIV,           // '/'
+		       TokenTypes.PLUS,          // '+' (unary plus is UNARY_PLUS)
+		       TokenTypes.MINUS,         // '-' (unary minus is UNARY_MINUS)
+		       TokenTypes.STAR,          // '*'
+		       TokenTypes.MOD,           // '%'
+		       TokenTypes.SR,            // ">>"
+		       TokenTypes.BSR,           // ">>>"
+		       TokenTypes.GE,            // ">="
+		       TokenTypes.GT,            // ">"
+		       TokenTypes.SL,            // "<<"
+		       TokenTypes.LE,            // "<="
+		       TokenTypes.LT,            // '<'
+		       TokenTypes.BXOR,          // '^'
+		       TokenTypes.BOR,           // '|'
+		       TokenTypes.LOR,           // "||"
+		       TokenTypes.BAND,          // '&'
+		       TokenTypes.LAND,          // "&&"
+		       TokenTypes.LITERAL_INSTANCEOF,
+		       TokenTypes.TYPE_EXTENSION_AND,
+		       TokenTypes.ASSIGN,        // '='
+		       TokenTypes.DIV_ASSIGN,    // "/="
+		       TokenTypes.PLUS_ASSIGN,   // "+="
+		       TokenTypes.MINUS_ASSIGN,  // "-="
+		       TokenTypes.STAR_ASSIGN,   // "*="
+		       TokenTypes.MOD_ASSIGN,    // "%="
+		       TokenTypes.SR_ASSIGN,     // ">>="
+		       TokenTypes.BSR_ASSIGN,    // ">>>="
+		       TokenTypes.SL_ASSIGN,     // "<<="
+		       TokenTypes.BXOR_ASSIGN,   // "^="
+		       TokenTypes.BOR_ASSIGN,    // "|="
+		       TokenTypes.BAND_ASSIGN,   // "&="
+		       TokenTypes.METHOD_REF,    // "::"
+	};
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return CommonUtil.EMPTY_INT_ARRAY;
-    }
+@Override
+public int[] getRequiredTokens() {
+	return CommonUtil.EMPTY_INT_ARRAY;
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        final DetailAST parent = ast.getParent();
-        // we do not want to check colon for cases and defaults
-        if (parent.getType() != TokenTypes.LITERAL_DEFAULT
-                && parent.getType() != TokenTypes.LITERAL_CASE) {
-            final String text = ast.getText();
-            final int colNo = ast.getColumnNo();
-            final int lineNo = ast.getLineNo();
-            final String currentLine = getLine(lineNo - 1);
+@Override
+public void visitToken(DetailAST ast) {
+	final DetailAST parent = ast.getParent();
+	// we do not want to check colon for cases and defaults
+	if (parent.getType() != TokenTypes.LITERAL_DEFAULT
+	    && parent.getType() != TokenTypes.LITERAL_CASE) {
+		final String text = ast.getText();
+		final int colNo = ast.getColumnNo();
+		final int lineNo = ast.getLineNo();
+		final String currentLine = getLine(lineNo - 1);
 
-            // Check if rest of line is whitespace, and not just the operator
-            // by itself. This last bit is to handle the operator on a line by
-            // itself.
-            if (option == WrapOption.NL
-                    && !text.equals(currentLine.trim())
-                    && CommonUtil.isBlank(currentLine.substring(colNo + text.length()))) {
-                log(ast, MSG_LINE_NEW, text);
-            }
-            else if (option == WrapOption.EOL
-                     && CommonUtil.hasWhitespaceBefore(colNo - 1, currentLine)) {
-                log(ast, MSG_LINE_PREVIOUS, text);
-            }
-        }
-    }
+		// Check if rest of line is whitespace, and not just the operator
+		// by itself. This last bit is to handle the operator on a line by
+		// itself.
+		if (option == WrapOption.NL
+		    && !text.equals(currentLine.trim())
+		    && CommonUtil.isBlank(currentLine.substring(colNo + text.length()))) {
+			log(ast, MSG_LINE_NEW, text);
+		}
+		else if (option == WrapOption.EOL
+		         && CommonUtil.hasWhitespaceBefore(colNo - 1, currentLine)) {
+			log(ast, MSG_LINE_PREVIOUS, text);
+		}
+	}
+}
 
 }

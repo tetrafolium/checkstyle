@@ -58,54 +58,54 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  */
 @StatelessCheck
 public final class InterfaceIsTypeCheck
-    extends AbstractCheck {
+	extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "interface.type";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "interface.type";
 
-    /** Control whether marker interfaces like Serializable are allowed. */
-    private boolean allowMarkerInterfaces = true;
+/** Control whether marker interfaces like Serializable are allowed. */
+private boolean allowMarkerInterfaces = true;
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.INTERFACE_DEF};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.INTERFACE_DEF};
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        final DetailAST objBlock =
-            ast.findFirstToken(TokenTypes.OBJBLOCK);
-        final DetailAST methodDef =
-            objBlock.findFirstToken(TokenTypes.METHOD_DEF);
-        final DetailAST variableDef =
-            objBlock.findFirstToken(TokenTypes.VARIABLE_DEF);
-        final boolean methodRequired =
-            !allowMarkerInterfaces || variableDef != null;
+@Override
+public void visitToken(DetailAST ast) {
+	final DetailAST objBlock =
+		ast.findFirstToken(TokenTypes.OBJBLOCK);
+	final DetailAST methodDef =
+		objBlock.findFirstToken(TokenTypes.METHOD_DEF);
+	final DetailAST variableDef =
+		objBlock.findFirstToken(TokenTypes.VARIABLE_DEF);
+	final boolean methodRequired =
+		!allowMarkerInterfaces || variableDef != null;
 
-        if (methodDef == null && methodRequired) {
-            log(ast.getLineNo(), MSG_KEY);
-        }
-    }
+	if (methodDef == null && methodRequired) {
+		log(ast.getLineNo(), MSG_KEY);
+	}
+}
 
-    /**
-     * Setter to control whether marker interfaces like Serializable are allowed.
-     * @param flag whether to allow marker interfaces or not
-     */
-    public void setAllowMarkerInterfaces(boolean flag) {
-        allowMarkerInterfaces = flag;
-    }
+/**
+ * Setter to control whether marker interfaces like Serializable are allowed.
+ * @param flag whether to allow marker interfaces or not
+ */
+public void setAllowMarkerInterfaces(boolean flag) {
+	allowMarkerInterfaces = flag;
+}
 
 }

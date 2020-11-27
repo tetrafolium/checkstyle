@@ -85,31 +85,31 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  */
 public class CatchParameterNameCheck extends AbstractNameCheck {
 
-    /**
-     * Creates a new {@code CatchParameterNameCheck} instance.
-     */
-    public CatchParameterNameCheck() {
-        super("^(e|t|ex|[a-z][a-z][a-zA-Z]+)$");
-    }
+/**
+ * Creates a new {@code CatchParameterNameCheck} instance.
+ */
+public CatchParameterNameCheck() {
+	super("^(e|t|ex|[a-z][a-z][a-zA-Z]+)$");
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.PARAMETER_DEF};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.PARAMETER_DEF};
+}
 
-    @Override
-    protected boolean mustCheckName(DetailAST ast) {
-        return ast.getParent().getType() == TokenTypes.LITERAL_CATCH;
-    }
+@Override
+protected boolean mustCheckName(DetailAST ast) {
+	return ast.getParent().getType() == TokenTypes.LITERAL_CATCH;
+}
 
 }

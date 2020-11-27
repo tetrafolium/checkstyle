@@ -27,71 +27,71 @@ import com.puppycrawl.tools.checkstyle.checks.javadoc.NonEmptyAtclauseDescriptio
 
 public class NonEmptyAtclauseDescriptionTest extends AbstractGoogleModuleTestSupport {
 
-    @Override
-    protected String getPackageLocation() {
-        return "com/google/checkstyle/test/chapter7javadoc/rule713atclauses";
-    }
+@Override
+protected String getPackageLocation() {
+	return "com/google/checkstyle/test/chapter7javadoc/rule713atclauses";
+}
 
-    @Test
-    public void testDefaultConfiguration() throws Exception {
-        final String msg = getCheckMessage(NonEmptyAtclauseDescriptionCheck.class,
-                                           "non.empty.atclause");
+@Test
+public void testDefaultConfiguration() throws Exception {
+	final String msg = getCheckMessage(NonEmptyAtclauseDescriptionCheck.class,
+	                                   "non.empty.atclause");
 
-        final String[] expected = {
-            "34: " + msg,
-            "35: " + msg,
-            "36: " + msg,
-            "37: " + msg,
-            "38: " + msg,
-            "39: " + msg,
-            "48: " + msg,
-            "49: " + msg,
-            "50: " + msg,
-            "51: " + msg,
-            "52: " + msg,
-        };
+	final String[] expected = {
+		"34: " + msg,
+		"35: " + msg,
+		"36: " + msg,
+		"37: " + msg,
+		"38: " + msg,
+		"39: " + msg,
+		"48: " + msg,
+		"49: " + msg,
+		"50: " + msg,
+		"51: " + msg,
+		"52: " + msg,
+	};
 
-        final Configuration checkConfig = getModuleConfig("NonEmptyAtclauseDescription");
-        final String filePath = getPath("InputNonEmptyAtclauseDescriptionCheck.java");
+	final Configuration checkConfig = getModuleConfig("NonEmptyAtclauseDescription");
+	final String filePath = getPath("InputNonEmptyAtclauseDescriptionCheck.java");
 
-        final Integer[] warnList = getLineNumbersFromExpected(expected);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLineNumbersFromExpected(expected);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
-    @Test
-    public void testSpaceSequence() throws Exception {
-        final String msg = getCheckMessage(NonEmptyAtclauseDescriptionCheck.class,
-                                           "non.empty.atclause");
+@Test
+public void testSpaceSequence() throws Exception {
+	final String msg = getCheckMessage(NonEmptyAtclauseDescriptionCheck.class,
+	                                   "non.empty.atclause");
 
-        final String[] expected = {
-            "27: " + msg,
-            "28: " + msg,
-            "29: " + msg,
-            "38: " + msg,
-            "39: " + msg,
-            "40: " + msg,
-        };
+	final String[] expected = {
+		"27: " + msg,
+		"28: " + msg,
+		"29: " + msg,
+		"38: " + msg,
+		"39: " + msg,
+		"40: " + msg,
+	};
 
-        final Configuration checkConfig = getModuleConfig("NonEmptyAtclauseDescription");
-        final String filePath = getPath("InputNonEmptyAtclauseDescriptionCheckSpaceSeq.java");
+	final Configuration checkConfig = getModuleConfig("NonEmptyAtclauseDescription");
+	final String filePath = getPath("InputNonEmptyAtclauseDescriptionCheckSpaceSeq.java");
 
-        final Integer[] warnList = getLineNumbersFromExpected(expected);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLineNumbersFromExpected(expected);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
-    /**
-     * Gets line numbers with violations from an array with expected messages.
-     * This is used as using "warn" comments in input files would affects the work
-     * of the Check.
-     * @param expected an array with expected messages.
-     * @return Integer array with numbers of lines with violations.
-     */
-    private static Integer[] getLineNumbersFromExpected(String... expected) {
-        final Integer[] result = new Integer[expected.length];
-        for (int i = 0; i < expected.length; i++) {
-            result[i] = Integer.valueOf(expected[i].substring(0, expected[i].indexOf(':')));
-        }
-        return result;
-    }
+/**
+ * Gets line numbers with violations from an array with expected messages.
+ * This is used as using "warn" comments in input files would affects the work
+ * of the Check.
+ * @param expected an array with expected messages.
+ * @return Integer array with numbers of lines with violations.
+ */
+private static Integer[] getLineNumbersFromExpected(String... expected) {
+	final Integer[] result = new Integer[expected.length];
+	for (int i = 0; i < expected.length; i++) {
+		result[i] = Integer.valueOf(expected[i].substring(0, expected[i].indexOf(':')));
+	}
+	return result;
+}
 
 }

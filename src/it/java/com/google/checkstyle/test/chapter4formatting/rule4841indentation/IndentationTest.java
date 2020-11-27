@@ -31,113 +31,113 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
 public class IndentationTest extends AbstractIndentationTestSupport {
 
-    @Override
-    protected String getPackageLocation() {
-        return "com/google/checkstyle/test/chapter4formatting/rule4841indentation";
-    }
+@Override
+protected String getPackageLocation() {
+	return "com/google/checkstyle/test/chapter4formatting/rule4841indentation";
+}
 
-    @Test
-    public void testCorrectClass() throws Exception {
-        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
+@Test
+public void testCorrectClass() throws Exception {
+	final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
 
-        final Configuration checkConfig = getModuleConfig("Indentation");
-        final String filePath = getPath("InputIndentationCorrectClass.java");
+	final Configuration checkConfig = getModuleConfig("Indentation");
+	final String filePath = getPath("InputIndentationCorrectClass.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
-    @Test
-    public void testCorrectField() throws Exception {
-        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
+@Test
+public void testCorrectField() throws Exception {
+	final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
 
-        final Configuration checkConfig = getModuleConfig("Indentation");
-        final String filePath = getPath("InputIndentationCorrectFieldAndParameter.java");
+	final Configuration checkConfig = getModuleConfig("Indentation");
+	final String filePath = getPath("InputIndentationCorrectFieldAndParameter.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
-    @Test
-    public void testCorrectFor() throws Exception {
-        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
+@Test
+public void testCorrectFor() throws Exception {
+	final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
 
-        final Configuration checkConfig = getModuleConfig("Indentation");
-        final String filePath = getPath("InputIndentationCorrectForAndParameter.java");
+	final Configuration checkConfig = getModuleConfig("Indentation");
+	final String filePath = getPath("InputIndentationCorrectForAndParameter.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
-    @Test
-    public void testCorrectIf() throws Exception {
-        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
+@Test
+public void testCorrectIf() throws Exception {
+	final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
 
-        final Configuration checkConfig = getModuleConfig("Indentation");
-        final String filePath = getPath("InputIndentationCorrectIfAndParameter.java");
+	final Configuration checkConfig = getModuleConfig("Indentation");
+	final String filePath = getPath("InputIndentationCorrectIfAndParameter.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
-    @Test
-    public void testCorrect() throws Exception {
-        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
+@Test
+public void testCorrect() throws Exception {
+	final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
 
-        final Configuration checkConfig = getModuleConfig("Indentation");
-        final String filePath = getPath("InputIndentationCorrect.java");
+	final Configuration checkConfig = getModuleConfig("Indentation");
+	final String filePath = getPath("InputIndentationCorrect.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
-    @Test
-    public void testCorrectReturn() throws Exception {
-        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
+@Test
+public void testCorrectReturn() throws Exception {
+	final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
 
-        final Configuration checkConfig = getModuleConfig("Indentation");
-        final String filePath = getPath("InputIndentationCorrectReturnAndParameter.java");
+	final Configuration checkConfig = getModuleConfig("Indentation");
+	final String filePath = getPath("InputIndentationCorrectReturnAndParameter.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
-    @Test
-    public void testCorrectWhile() throws Exception {
-        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
+@Test
+public void testCorrectWhile() throws Exception {
+	final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
 
-        final Configuration checkConfig = getModuleConfig("Indentation");
-        final String filePath = getPath("InputIndentationCorrectWhileDoWhileAndParameter.java");
+	final Configuration checkConfig = getModuleConfig("Indentation");
+	final String filePath = getPath("InputIndentationCorrectWhileDoWhileAndParameter.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
-    @Test
-    public void testCorrectChained() throws Exception {
-        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
+@Test
+public void testCorrectChained() throws Exception {
+	final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
 
-        final Configuration checkConfig = getModuleConfig("Indentation");
-        final String filePath = getPath("ClassWithChainedMethodsCorrect.java");
+	final Configuration checkConfig = getModuleConfig("Indentation");
+	final String filePath = getPath("ClassWithChainedMethodsCorrect.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
-    @Test
-    public void testWarnChained() throws Exception {
-        final String[] expected = {
-            "18: " + getCheckMessage(IndentationCheck.class, MSG_CHILD_ERROR, "method call", 4, 8),
-            "23: " + getCheckMessage(IndentationCheck.class, MSG_ERROR, ".", 4, 8),
-            "24: " + getCheckMessage(IndentationCheck.class, MSG_ERROR, ".", 4, 8),
-            "27: " + getCheckMessage(IndentationCheck.class, MSG_ERROR, "new", 4, 8),
-        };
+@Test
+public void testWarnChained() throws Exception {
+	final String[] expected = {
+		"18: " + getCheckMessage(IndentationCheck.class, MSG_CHILD_ERROR, "method call", 4, 8),
+		"23: " + getCheckMessage(IndentationCheck.class, MSG_ERROR, ".", 4, 8),
+		"24: " + getCheckMessage(IndentationCheck.class, MSG_ERROR, ".", 4, 8),
+		"27: " + getCheckMessage(IndentationCheck.class, MSG_ERROR, "new", 4, 8),
+	};
 
-        final Configuration checkConfig = getModuleConfig("Indentation");
-        final String filePath = getPath("ClassWithChainedMethods.java");
+	final Configuration checkConfig = getModuleConfig("Indentation");
+	final String filePath = getPath("ClassWithChainedMethods.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
 }

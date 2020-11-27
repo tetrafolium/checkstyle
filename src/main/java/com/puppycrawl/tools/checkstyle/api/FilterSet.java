@@ -29,55 +29,55 @@ import java.util.Set;
  * AuditEvent is rejected. Otherwise, the AuditEvent is accepted.
  */
 public class FilterSet
-    implements Filter {
+	implements Filter {
 
-    /** Filter set. */
-    private final Set<Filter> filters = new HashSet<>();
+/** Filter set. */
+private final Set<Filter> filters = new HashSet<>();
 
-    /**
-     * Adds a Filter to the set.
-     * @param filter the Filter to add.
-     */
-    public void addFilter(Filter filter) {
-        filters.add(filter);
-    }
+/**
+ * Adds a Filter to the set.
+ * @param filter the Filter to add.
+ */
+public void addFilter(Filter filter) {
+	filters.add(filter);
+}
 
-    /**
-     * Removes filter.
-     * @param filter filter to remove.
-     */
-    public void removeFilter(Filter filter) {
-        filters.remove(filter);
-    }
+/**
+ * Removes filter.
+ * @param filter filter to remove.
+ */
+public void removeFilter(Filter filter) {
+	filters.remove(filter);
+}
 
-    /**
-     * Returns the Filters of the filter set.
-     * @return the Filters of the filter set.
-     */
-    public Set<Filter> getFilters() {
-        return Collections.unmodifiableSet(filters);
-    }
+/**
+ * Returns the Filters of the filter set.
+ * @return the Filters of the filter set.
+ */
+public Set<Filter> getFilters() {
+	return Collections.unmodifiableSet(filters);
+}
 
-    @Override
-    public String toString() {
-        return filters.toString();
-    }
+@Override
+public String toString() {
+	return filters.toString();
+}
 
-    @Override
-    public boolean accept(AuditEvent event) {
-        boolean result = true;
-        for (Filter filter : filters) {
-            if (!filter.accept(event)) {
-                result = false;
-                break;
-            }
-        }
-        return result;
-    }
+@Override
+public boolean accept(AuditEvent event) {
+	boolean result = true;
+	for (Filter filter : filters) {
+		if (!filter.accept(event)) {
+			result = false;
+			break;
+		}
+	}
+	return result;
+}
 
-    /** Clears the FilterSet. */
-    public void clear() {
-        filters.clear();
-    }
+/** Clears the FilterSet. */
+public void clear() {
+	filters.clear();
+}
 
 }

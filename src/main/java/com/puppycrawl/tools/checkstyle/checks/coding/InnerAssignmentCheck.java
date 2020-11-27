@@ -62,236 +62,236 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  */
 @StatelessCheck
 public class InnerAssignmentCheck
-    extends AbstractCheck {
+	extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "assignment.inner.avoid";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "assignment.inner.avoid";
 
-    /**
-     * List of allowed AST types from an assignment AST node
-     * towards the root.
-     */
-    private static final int[][] ALLOWED_ASSIGNMENT_CONTEXT = {
-        {TokenTypes.EXPR, TokenTypes.SLIST},
-        {TokenTypes.VARIABLE_DEF},
-        {TokenTypes.EXPR, TokenTypes.ELIST, TokenTypes.FOR_INIT},
-        {TokenTypes.EXPR, TokenTypes.ELIST, TokenTypes.FOR_ITERATOR},
-        {TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR}, {
-            TokenTypes.RESOURCE,
-            TokenTypes.RESOURCES,
-            TokenTypes.RESOURCE_SPECIFICATION,
-        },
-        {TokenTypes.EXPR, TokenTypes.LAMBDA},
-    };
+/**
+ * List of allowed AST types from an assignment AST node
+ * towards the root.
+ */
+private static final int[][] ALLOWED_ASSIGNMENT_CONTEXT = {
+	{TokenTypes.EXPR, TokenTypes.SLIST},
+	{TokenTypes.VARIABLE_DEF},
+	{TokenTypes.EXPR, TokenTypes.ELIST, TokenTypes.FOR_INIT},
+	{TokenTypes.EXPR, TokenTypes.ELIST, TokenTypes.FOR_ITERATOR},
+	{TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR}, {
+		TokenTypes.RESOURCE,
+		TokenTypes.RESOURCES,
+		TokenTypes.RESOURCE_SPECIFICATION,
+	},
+	{TokenTypes.EXPR, TokenTypes.LAMBDA},
+};
 
-    /**
-     * List of allowed AST types from an assignment AST node
-     * towards the root.
-     */
-    private static final int[][] CONTROL_CONTEXT = {
-        {TokenTypes.EXPR, TokenTypes.LITERAL_DO},
-        {TokenTypes.EXPR, TokenTypes.LITERAL_FOR},
-        {TokenTypes.EXPR, TokenTypes.LITERAL_WHILE},
-        {TokenTypes.EXPR, TokenTypes.LITERAL_IF},
-        {TokenTypes.EXPR, TokenTypes.LITERAL_ELSE},
-    };
+/**
+ * List of allowed AST types from an assignment AST node
+ * towards the root.
+ */
+private static final int[][] CONTROL_CONTEXT = {
+	{TokenTypes.EXPR, TokenTypes.LITERAL_DO},
+	{TokenTypes.EXPR, TokenTypes.LITERAL_FOR},
+	{TokenTypes.EXPR, TokenTypes.LITERAL_WHILE},
+	{TokenTypes.EXPR, TokenTypes.LITERAL_IF},
+	{TokenTypes.EXPR, TokenTypes.LITERAL_ELSE},
+};
 
-    /**
-     * List of allowed AST types from a comparison node (above an assignment)
-     * towards the root.
-     */
-    private static final int[][] ALLOWED_ASSIGNMENT_IN_COMPARISON_CONTEXT = {
-        {TokenTypes.EXPR, TokenTypes.LITERAL_WHILE, },
-    };
+/**
+ * List of allowed AST types from a comparison node (above an assignment)
+ * towards the root.
+ */
+private static final int[][] ALLOWED_ASSIGNMENT_IN_COMPARISON_CONTEXT = {
+	{TokenTypes.EXPR, TokenTypes.LITERAL_WHILE, },
+};
 
-    /**
-     * The token types that identify comparison operators.
-     */
-    private static final int[] COMPARISON_TYPES = {
-        TokenTypes.EQUAL,
-        TokenTypes.GE,
-        TokenTypes.GT,
-        TokenTypes.LE,
-        TokenTypes.LT,
-        TokenTypes.NOT_EQUAL,
-    };
+/**
+ * The token types that identify comparison operators.
+ */
+private static final int[] COMPARISON_TYPES = {
+	TokenTypes.EQUAL,
+	TokenTypes.GE,
+	TokenTypes.GT,
+	TokenTypes.LE,
+	TokenTypes.LT,
+	TokenTypes.NOT_EQUAL,
+};
 
-    /**
-     * The token types that are ignored while checking "while-idiom".
-     */
-    private static final int[] WHILE_IDIOM_IGNORED_PARENTS = {
-        TokenTypes.LAND,
-        TokenTypes.LOR,
-        TokenTypes.LNOT,
-        TokenTypes.BOR,
-        TokenTypes.BAND,
-    };
+/**
+ * The token types that are ignored while checking "while-idiom".
+ */
+private static final int[] WHILE_IDIOM_IGNORED_PARENTS = {
+	TokenTypes.LAND,
+	TokenTypes.LOR,
+	TokenTypes.LNOT,
+	TokenTypes.BOR,
+	TokenTypes.BAND,
+};
 
-    static {
-        Arrays.sort(COMPARISON_TYPES);
-        Arrays.sort(WHILE_IDIOM_IGNORED_PARENTS);
-    }
+static {
+	Arrays.sort(COMPARISON_TYPES);
+	Arrays.sort(WHILE_IDIOM_IGNORED_PARENTS);
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {
-                   TokenTypes.ASSIGN,            // '='
-                   TokenTypes.DIV_ASSIGN,        // "/="
-                   TokenTypes.PLUS_ASSIGN,       // "+="
-                   TokenTypes.MINUS_ASSIGN,      // "-="
-                   TokenTypes.STAR_ASSIGN,       // "*="
-                   TokenTypes.MOD_ASSIGN,        // "%="
-                   TokenTypes.SR_ASSIGN,         // ">>="
-                   TokenTypes.BSR_ASSIGN,        // ">>>="
-                   TokenTypes.SL_ASSIGN,         // "<<="
-                   TokenTypes.BXOR_ASSIGN,       // "^="
-                   TokenTypes.BOR_ASSIGN,        // "|="
-                   TokenTypes.BAND_ASSIGN,       // "&="
-               };
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {
+		       TokenTypes.ASSIGN,        // '='
+		       TokenTypes.DIV_ASSIGN,    // "/="
+		       TokenTypes.PLUS_ASSIGN,   // "+="
+		       TokenTypes.MINUS_ASSIGN,  // "-="
+		       TokenTypes.STAR_ASSIGN,   // "*="
+		       TokenTypes.MOD_ASSIGN,    // "%="
+		       TokenTypes.SR_ASSIGN,     // ">>="
+		       TokenTypes.BSR_ASSIGN,    // ">>>="
+		       TokenTypes.SL_ASSIGN,     // "<<="
+		       TokenTypes.BXOR_ASSIGN,   // "^="
+		       TokenTypes.BOR_ASSIGN,    // "|="
+		       TokenTypes.BAND_ASSIGN,   // "&="
+	};
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        if (!isInContext(ast, ALLOWED_ASSIGNMENT_CONTEXT)
-                && !isInNoBraceControlStatement(ast)
-                && !isInWhileIdiom(ast)) {
-            log(ast, MSG_KEY);
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	if (!isInContext(ast, ALLOWED_ASSIGNMENT_CONTEXT)
+	    && !isInNoBraceControlStatement(ast)
+	    && !isInWhileIdiom(ast)) {
+		log(ast, MSG_KEY);
+	}
+}
 
-    /**
-     * Determines if ast is in the body of a flow control statement without
-     * braces. An example of such a statement would be
-     * <p>
-     * <pre>
-     * if (y < 0)
-     *     x = y;
-     * </pre>
-     * </p>
-     * <p>
-     * This leads to the following AST structure:
-     * </p>
-     * <p>
-     * <pre>
-     * LITERAL_IF
-     *     LPAREN
-     *     EXPR // test
-     *     RPAREN
-     *     EXPR // body
-     *     SEMI
-     * </pre>
-     * </p>
-     * <p>
-     * We need to ensure that ast is in the body and not in the test.
-     * </p>
-     *
-     * @param ast an assignment operator AST
-     * @return whether ast is in the body of a flow control statement
-     */
-    private static boolean isInNoBraceControlStatement(DetailAST ast) {
-        boolean result = false;
-        if (isInContext(ast, CONTROL_CONTEXT)) {
-            final DetailAST expr = ast.getParent();
-            final DetailAST exprNext = expr.getNextSibling();
-            result = exprNext.getType() == TokenTypes.SEMI;
-        }
-        return result;
-    }
+/**
+ * Determines if ast is in the body of a flow control statement without
+ * braces. An example of such a statement would be
+ * <p>
+ * <pre>
+ * if (y < 0)
+ *     x = y;
+ * </pre>
+ * </p>
+ * <p>
+ * This leads to the following AST structure:
+ * </p>
+ * <p>
+ * <pre>
+ * LITERAL_IF
+ *     LPAREN
+ *     EXPR // test
+ *     RPAREN
+ *     EXPR // body
+ *     SEMI
+ * </pre>
+ * </p>
+ * <p>
+ * We need to ensure that ast is in the body and not in the test.
+ * </p>
+ *
+ * @param ast an assignment operator AST
+ * @return whether ast is in the body of a flow control statement
+ */
+private static boolean isInNoBraceControlStatement(DetailAST ast) {
+	boolean result = false;
+	if (isInContext(ast, CONTROL_CONTEXT)) {
+		final DetailAST expr = ast.getParent();
+		final DetailAST exprNext = expr.getNextSibling();
+		result = exprNext.getType() == TokenTypes.SEMI;
+	}
+	return result;
+}
 
-    /**
-     * Tests whether the given AST is used in the "assignment in while" idiom.
-     * <pre>
-     * String line;
-     * while ((line = bufferedReader.readLine()) != null) {
-     *    // process the line
-     * }
-     * </pre>
-     * Assignment inside a condition is not a problem here, as the assignment is surrounded by an
-     * extra pair of parentheses. The comparison is {@code != null} and there is no chance that
-     * intention was to write {@code line == reader.readLine()}.
-     *
-     * @param ast assignment AST
-     * @return whether the context of the assignment AST indicates the idiom
-     */
-    private static boolean isInWhileIdiom(DetailAST ast) {
-        boolean result = false;
-        if (isComparison(ast.getParent())) {
-            result = isInContext(ast.getParent(),
-                                 ALLOWED_ASSIGNMENT_IN_COMPARISON_CONTEXT,
-                                 WHILE_IDIOM_IGNORED_PARENTS
-                                );
-        }
-        return result;
-    }
+/**
+ * Tests whether the given AST is used in the "assignment in while" idiom.
+ * <pre>
+ * String line;
+ * while ((line = bufferedReader.readLine()) != null) {
+ *    // process the line
+ * }
+ * </pre>
+ * Assignment inside a condition is not a problem here, as the assignment is surrounded by an
+ * extra pair of parentheses. The comparison is {@code != null} and there is no chance that
+ * intention was to write {@code line == reader.readLine()}.
+ *
+ * @param ast assignment AST
+ * @return whether the context of the assignment AST indicates the idiom
+ */
+private static boolean isInWhileIdiom(DetailAST ast) {
+	boolean result = false;
+	if (isComparison(ast.getParent())) {
+		result = isInContext(ast.getParent(),
+		                     ALLOWED_ASSIGNMENT_IN_COMPARISON_CONTEXT,
+		                     WHILE_IDIOM_IGNORED_PARENTS
+		                     );
+	}
+	return result;
+}
 
-    /**
-     * Checks if an AST is a comparison operator.
-     * @param ast the AST to check
-     * @return true iff ast is a comparison operator.
-     */
-    private static boolean isComparison(DetailAST ast) {
-        final int astType = ast.getType();
-        return Arrays.binarySearch(COMPARISON_TYPES, astType) >= 0;
-    }
+/**
+ * Checks if an AST is a comparison operator.
+ * @param ast the AST to check
+ * @return true iff ast is a comparison operator.
+ */
+private static boolean isComparison(DetailAST ast) {
+	final int astType = ast.getType();
+	return Arrays.binarySearch(COMPARISON_TYPES, astType) >= 0;
+}
 
-    /**
-     * Tests whether the provided AST is in
-     * one of the given contexts.
-     *
-     * @param ast the AST from which to start walking towards root
-     * @param contextSet the contexts to test against.
-     * @param skipTokens parent token types to ignore
-     *
-     * @return whether the parents nodes of ast match one of the allowed type paths.
-     */
-    private static boolean isInContext(DetailAST ast, int[][] contextSet, int... skipTokens) {
-        boolean found = false;
-        for (int[] element : contextSet) {
-            DetailAST current = ast;
-            for (int anElement : element) {
-                current = getParent(current, skipTokens);
-                if (current.getType() == anElement) {
-                    found = true;
-                }
-                else {
-                    found = false;
-                    break;
-                }
-            }
+/**
+ * Tests whether the provided AST is in
+ * one of the given contexts.
+ *
+ * @param ast the AST from which to start walking towards root
+ * @param contextSet the contexts to test against.
+ * @param skipTokens parent token types to ignore
+ *
+ * @return whether the parents nodes of ast match one of the allowed type paths.
+ */
+private static boolean isInContext(DetailAST ast, int[][] contextSet, int... skipTokens) {
+	boolean found = false;
+	for (int[] element : contextSet) {
+		DetailAST current = ast;
+		for (int anElement : element) {
+			current = getParent(current, skipTokens);
+			if (current.getType() == anElement) {
+				found = true;
+			}
+			else {
+				found = false;
+				break;
+			}
+		}
 
-            if (found) {
-                break;
-            }
-        }
-        return found;
-    }
+		if (found) {
+			break;
+		}
+	}
+	return found;
+}
 
-    /**
-     * Get ast parent, ignoring token types from {@code skipTokens}.
-     *
-     * @param ast token to get parent
-     * @param skipTokens token types to skip
-     * @return first not ignored parent of ast
-     */
-    private static DetailAST getParent(DetailAST ast, int... skipTokens) {
-        DetailAST result = ast.getParent();
-        while (Arrays.binarySearch(skipTokens, result.getType()) > -1) {
-            result = result.getParent();
-        }
-        return result;
-    }
+/**
+ * Get ast parent, ignoring token types from {@code skipTokens}.
+ *
+ * @param ast token to get parent
+ * @param skipTokens token types to skip
+ * @return first not ignored parent of ast
+ */
+private static DetailAST getParent(DetailAST ast, int... skipTokens) {
+	DetailAST result = ast.getParent();
+	while (Arrays.binarySearch(skipTokens, result.getType()) > -1) {
+		result = result.getParent();
+	}
+	return result;
+}
 
 }

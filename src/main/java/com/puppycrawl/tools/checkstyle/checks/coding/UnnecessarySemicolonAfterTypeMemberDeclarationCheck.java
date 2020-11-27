@@ -102,117 +102,117 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
 @StatelessCheck
 public final class UnnecessarySemicolonAfterTypeMemberDeclarationCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_SEMI = "unnecessary.semicolon";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_SEMI = "unnecessary.semicolon";
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getAcceptableTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getAcceptableTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return new int[] {
-                   TokenTypes.CLASS_DEF,
-                   TokenTypes.INTERFACE_DEF,
-                   TokenTypes.ENUM_DEF,
-                   TokenTypes.ANNOTATION_DEF,
-                   TokenTypes.VARIABLE_DEF,
-                   TokenTypes.ANNOTATION_FIELD_DEF,
-                   TokenTypes.STATIC_INIT,
-                   TokenTypes.INSTANCE_INIT,
-                   TokenTypes.CTOR_DEF,
-                   TokenTypes.METHOD_DEF,
-                   TokenTypes.ENUM_CONSTANT_DEF,
-               };
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return new int[] {
+		       TokenTypes.CLASS_DEF,
+		       TokenTypes.INTERFACE_DEF,
+		       TokenTypes.ENUM_DEF,
+		       TokenTypes.ANNOTATION_DEF,
+		       TokenTypes.VARIABLE_DEF,
+		       TokenTypes.ANNOTATION_FIELD_DEF,
+		       TokenTypes.STATIC_INIT,
+		       TokenTypes.INSTANCE_INIT,
+		       TokenTypes.CTOR_DEF,
+		       TokenTypes.METHOD_DEF,
+		       TokenTypes.ENUM_CONSTANT_DEF,
+	};
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return CommonUtil.EMPTY_INT_ARRAY;
-    }
+@Override
+public int[] getRequiredTokens() {
+	return CommonUtil.EMPTY_INT_ARRAY;
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        switch (ast.getType()) {
-        case TokenTypes.CLASS_DEF:
-        case TokenTypes.INTERFACE_DEF:
-        case TokenTypes.ENUM_DEF:
-        case TokenTypes.ANNOTATION_DEF:
-            checkTypeDefinition(ast);
-            break;
-        case TokenTypes.VARIABLE_DEF:
-            checkVariableDefinition(ast);
-            break;
-        case TokenTypes.ENUM_CONSTANT_DEF:
-            checkEnumConstant(ast);
-            break;
-        default:
-            checkTypeMember(ast);
-            break;
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	switch (ast.getType()) {
+	case TokenTypes.CLASS_DEF:
+	case TokenTypes.INTERFACE_DEF:
+	case TokenTypes.ENUM_DEF:
+	case TokenTypes.ANNOTATION_DEF:
+		checkTypeDefinition(ast);
+		break;
+	case TokenTypes.VARIABLE_DEF:
+		checkVariableDefinition(ast);
+		break;
+	case TokenTypes.ENUM_CONSTANT_DEF:
+		checkEnumConstant(ast);
+		break;
+	default:
+		checkTypeMember(ast);
+		break;
+	}
+}
 
-    /**
-     * Checks if type member has unnecessary semicolon.
-     *
-     * @param ast type member
-     */
-    private void checkTypeMember(DetailAST ast) {
-        if (isSemicolon(ast.getNextSibling())) {
-            log(ast.getNextSibling(), MSG_SEMI);
-        }
-    }
+/**
+ * Checks if type member has unnecessary semicolon.
+ *
+ * @param ast type member
+ */
+private void checkTypeMember(DetailAST ast) {
+	if (isSemicolon(ast.getNextSibling())) {
+		log(ast.getNextSibling(), MSG_SEMI);
+	}
+}
 
-    /**
-     * Checks if type definition has unnecessary semicolon.
-     *
-     * @param ast type definition
-     */
-    private void checkTypeDefinition(DetailAST ast) {
-        if (!ScopeUtil.isOuterMostType(ast) && isSemicolon(ast.getNextSibling())) {
-            log(ast.getNextSibling(), MSG_SEMI);
-        }
-        final DetailAST firstMember =
-            ast.findFirstToken(TokenTypes.OBJBLOCK).getFirstChild().getNextSibling();
-        if (isSemicolon(firstMember) && !ScopeUtil.isInEnumBlock(firstMember)) {
-            log(firstMember, MSG_SEMI);
-        }
-    }
+/**
+ * Checks if type definition has unnecessary semicolon.
+ *
+ * @param ast type definition
+ */
+private void checkTypeDefinition(DetailAST ast) {
+	if (!ScopeUtil.isOuterMostType(ast) && isSemicolon(ast.getNextSibling())) {
+		log(ast.getNextSibling(), MSG_SEMI);
+	}
+	final DetailAST firstMember =
+		ast.findFirstToken(TokenTypes.OBJBLOCK).getFirstChild().getNextSibling();
+	if (isSemicolon(firstMember) && !ScopeUtil.isInEnumBlock(firstMember)) {
+		log(firstMember, MSG_SEMI);
+	}
+}
 
-    /**
-     * Checks if variable definition has unnecessary semicolon.
-     *
-     * @param variableDef variable definition
-     */
-    private void checkVariableDefinition(DetailAST variableDef) {
-        if (isSemicolon(variableDef.getLastChild()) && isSemicolon(variableDef.getNextSibling())) {
-            log(variableDef.getNextSibling(), MSG_SEMI);
-        }
-    }
+/**
+ * Checks if variable definition has unnecessary semicolon.
+ *
+ * @param variableDef variable definition
+ */
+private void checkVariableDefinition(DetailAST variableDef) {
+	if (isSemicolon(variableDef.getLastChild()) && isSemicolon(variableDef.getNextSibling())) {
+		log(variableDef.getNextSibling(), MSG_SEMI);
+	}
+}
 
-    /**
-     * Checks if enum constant has unnecessary semicolon.
-     *
-     * @param ast enum constant
-     */
-    private void checkEnumConstant(DetailAST ast) {
-        final DetailAST next = ast.getNextSibling();
-        if (isSemicolon(next) && isSemicolon(next.getNextSibling())) {
-            log(next.getNextSibling(), MSG_SEMI);
-        }
-    }
+/**
+ * Checks if enum constant has unnecessary semicolon.
+ *
+ * @param ast enum constant
+ */
+private void checkEnumConstant(DetailAST ast) {
+	final DetailAST next = ast.getNextSibling();
+	if (isSemicolon(next) && isSemicolon(next.getNextSibling())) {
+		log(next.getNextSibling(), MSG_SEMI);
+	}
+}
 
-    /**
-     * Checks that {@code ast} is a semicolon.
-     *
-     * @param ast token to check
-     * @return true if ast is semicolon, false otherwise
-     */
-    private static boolean isSemicolon(DetailAST ast) {
-        return ast.getType() == TokenTypes.SEMI;
-    }
+/**
+ * Checks that {@code ast} is a semicolon.
+ *
+ * @param ast token to check
+ * @return true if ast is semicolon, false otherwise
+ */
+private static boolean isSemicolon(DetailAST ast) {
+	return ast.getType() == TokenTypes.SEMI;
+}
 }

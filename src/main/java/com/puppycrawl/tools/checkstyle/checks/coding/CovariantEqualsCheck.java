@@ -110,78 +110,78 @@ import com.puppycrawl.tools.checkstyle.utils.CheckUtil;
 @FileStatefulCheck
 public class CovariantEqualsCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "covariant.equals";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "covariant.equals";
 
-    /** Set of equals method definitions. */
-    private final Set<DetailAST> equalsMethods = new HashSet<>();
+/** Set of equals method definitions. */
+private final Set<DetailAST> equalsMethods = new HashSet<>();
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.CLASS_DEF, TokenTypes.LITERAL_NEW, TokenTypes.ENUM_DEF, };
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.CLASS_DEF, TokenTypes.LITERAL_NEW, TokenTypes.ENUM_DEF, };
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        equalsMethods.clear();
+@Override
+public void visitToken(DetailAST ast) {
+	equalsMethods.clear();
 
-        // examine method definitions for equals methods
-        final DetailAST objBlock = ast.findFirstToken(TokenTypes.OBJBLOCK);
-        if (objBlock != null) {
-            DetailAST child = objBlock.getFirstChild();
-            boolean hasEqualsObject = false;
-            while (child != null) {
-                if (CheckUtil.isEqualsMethod(child)) {
-                    if (isFirstParameterObject(child)) {
-                        hasEqualsObject = true;
-                    }
-                    else {
-                        equalsMethods.add(child);
-                    }
-                }
-                child = child.getNextSibling();
-            }
+	// examine method definitions for equals methods
+	final DetailAST objBlock = ast.findFirstToken(TokenTypes.OBJBLOCK);
+	if (objBlock != null) {
+		DetailAST child = objBlock.getFirstChild();
+		boolean hasEqualsObject = false;
+		while (child != null) {
+			if (CheckUtil.isEqualsMethod(child)) {
+				if (isFirstParameterObject(child)) {
+					hasEqualsObject = true;
+				}
+				else {
+					equalsMethods.add(child);
+				}
+			}
+			child = child.getNextSibling();
+		}
 
-            // report equals method definitions
-            if (!hasEqualsObject) {
-                for (DetailAST equalsAST : equalsMethods) {
-                    final DetailAST nameNode = equalsAST
-                                               .findFirstToken(TokenTypes.IDENT);
-                    log(nameNode, MSG_KEY);
-                }
-            }
-        }
-    }
+		// report equals method definitions
+		if (!hasEqualsObject) {
+			for (DetailAST equalsAST : equalsMethods) {
+				final DetailAST nameNode = equalsAST
+				                           .findFirstToken(TokenTypes.IDENT);
+				log(nameNode, MSG_KEY);
+			}
+		}
+	}
+}
 
-    /**
-     * Tests whether a method's first parameter is an Object.
-     * @param methodDefAst the method definition AST to test.
-     *     Precondition: ast is a TokenTypes.METHOD_DEF node.
-     * @return true if ast has first parameter of type Object.
-     */
-    private static boolean isFirstParameterObject(DetailAST methodDefAst) {
-        final DetailAST paramsNode = methodDefAst.findFirstToken(TokenTypes.PARAMETERS);
+/**
+ * Tests whether a method's first parameter is an Object.
+ * @param methodDefAst the method definition AST to test.
+ *     Precondition: ast is a TokenTypes.METHOD_DEF node.
+ * @return true if ast has first parameter of type Object.
+ */
+private static boolean isFirstParameterObject(DetailAST methodDefAst) {
+	final DetailAST paramsNode = methodDefAst.findFirstToken(TokenTypes.PARAMETERS);
 
-        // parameter type "Object"?
-        final DetailAST paramNode =
-            paramsNode.findFirstToken(TokenTypes.PARAMETER_DEF);
-        final DetailAST typeNode = paramNode.findFirstToken(TokenTypes.TYPE);
-        final FullIdent fullIdent = FullIdent.createFullIdentBelow(typeNode);
-        final String name = fullIdent.getText();
-        return "Object".equals(name) || "java.lang.Object".equals(name);
-    }
+	// parameter type "Object"?
+	final DetailAST paramNode =
+		paramsNode.findFirstToken(TokenTypes.PARAMETER_DEF);
+	final DetailAST typeNode = paramNode.findFirstToken(TokenTypes.TYPE);
+	final FullIdent fullIdent = FullIdent.createFullIdentBelow(typeNode);
+	final String name = fullIdent.getText();
+	return "Object".equals(name) || "java.lang.Object".equals(name);
+}
 
 }

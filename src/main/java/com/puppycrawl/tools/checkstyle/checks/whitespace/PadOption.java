@@ -27,16 +27,16 @@ package com.puppycrawl.tools.checkstyle.checks.whitespace;
  */
 public enum PadOption {
 
-    /**
-     * Represents no spacing following a left parenthesis
-     * or preceding a right one.
-     */
-    NOSPACE,
+	/**
+	 * Represents no spacing following a left parenthesis
+	 * or preceding a right one.
+	 */
+	NOSPACE,
 
-    /**
-     * Represents mandatory spacing following a left parenthesis
-     * and preceding a right one.
-     */
-    SPACE,
+	/**
+	 * Represents mandatory spacing following a left parenthesis
+	 * and preceding a right one.
+	 */
+	SPACE,
 
 }

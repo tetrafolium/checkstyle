@@ -113,17 +113,17 @@ import com.puppycrawl.tools.checkstyle.checks.SuppressWarningsHolder;
  * @since 5.7
  */
 public class SuppressWarningsFilter
-    extends AutomaticBean
-    implements Filter {
+	extends AutomaticBean
+	implements Filter {
 
-    @Override
-    protected void finishLocalSetup() {
-        // No code by default
-    }
+@Override
+protected void finishLocalSetup() {
+	// No code by default
+}
 
-    @Override
-    public boolean accept(AuditEvent event) {
-        return !SuppressWarningsHolder.isSuppressed(event);
-    }
+@Override
+public boolean accept(AuditEvent event) {
+	return !SuppressWarningsHolder.isSuppressed(event);
+}
 
 }

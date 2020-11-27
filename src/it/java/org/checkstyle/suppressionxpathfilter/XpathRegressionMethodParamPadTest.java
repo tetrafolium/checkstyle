@@ -30,77 +30,77 @@ import com.puppycrawl.tools.checkstyle.checks.whitespace.MethodParamPadCheck;
 
 public class XpathRegressionMethodParamPadTest extends AbstractXpathTestSupport {
 
-    private final String checkName = MethodParamPadCheck.class.getSimpleName();
+private final String checkName = MethodParamPadCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionMethodParamPadOne.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionMethodParamPadOne.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(MethodParamPadCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(MethodParamPadCheck.class);
 
-        final String[] expectedViolation = {
-            "4:37: " + getCheckMessage(MethodParamPadCheck.class,
-                                       MethodParamPadCheck.MSG_WS_PRECEDED, "("),
-        };
+	final String[] expectedViolation = {
+		"4:37: " + getCheckMessage(MethodParamPadCheck.class,
+		                           MethodParamPadCheck.MSG_WS_PRECEDED, "("),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodParamPadOne']]/OBJBLOCK"
-                    + "/METHOD_DEF[./IDENT[@text='InputMethodParamPad']]/LPAREN"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodParamPadOne']]/OBJBLOCK"
+		+ "/METHOD_DEF[./IDENT[@text='InputMethodParamPad']]/LPAREN"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionMethodParamPadTwo.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionMethodParamPadTwo.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(MethodParamPadCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(MethodParamPadCheck.class);
 
-        final String[] expectedViolation = {
-            "5:13: " + getCheckMessage(MethodParamPadCheck.class,
-                                       MethodParamPadCheck.MSG_LINE_PREVIOUS, "("),
-        };
+	final String[] expectedViolation = {
+		"5:13: " + getCheckMessage(MethodParamPadCheck.class,
+		                           MethodParamPadCheck.MSG_LINE_PREVIOUS, "("),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodParamPadTwo']]/OBJBLOCK"
-                    + "/METHOD_DEF[./IDENT[@text='sayHello']]/LPAREN"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodParamPadTwo']]/OBJBLOCK"
+		+ "/METHOD_DEF[./IDENT[@text='sayHello']]/LPAREN"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testThree() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionMethodParamPadThree.java"));
+@Test
+public void testThree() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionMethodParamPadThree.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(MethodParamPadCheck.class);
-        moduleConfig.addAttribute("option", "space");
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(MethodParamPadCheck.class);
+	moduleConfig.addAttribute("option", "space");
 
-        final String[] expectedViolation = {
-            "4:25: " + getCheckMessage(MethodParamPadCheck.class,
-                                       MethodParamPadCheck.MSG_WS_NOT_PRECEDED, "("),
-        };
+	final String[] expectedViolation = {
+		"4:25: " + getCheckMessage(MethodParamPadCheck.class,
+		                           MethodParamPadCheck.MSG_WS_NOT_PRECEDED, "("),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodParamPadThree']]/OBJBLOCK"
-                    + "/METHOD_DEF[./IDENT[@text='sayHello']]/LPAREN"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodParamPadThree']]/OBJBLOCK"
+		+ "/METHOD_DEF[./IDENT[@text='sayHello']]/LPAREN"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 }

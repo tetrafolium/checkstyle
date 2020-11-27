@@ -105,58 +105,58 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 @StatelessCheck
 public class AvoidNestedBlocksCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY_BLOCK_NESTED = "block.nested";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY_BLOCK_NESTED = "block.nested";
 
-    /**
-     * Allow nested blocks if they are the only child of a switch case.
-     */
-    private boolean allowInSwitchCase;
+/**
+ * Allow nested blocks if they are the only child of a switch case.
+ */
+private boolean allowInSwitchCase;
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.SLIST};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.SLIST};
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        final DetailAST parent = ast.getParent();
-        if (parent.getType() == TokenTypes.SLIST
-                && (!allowInSwitchCase || hasSiblings(ast))) {
-            log(ast, MSG_KEY_BLOCK_NESTED);
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	final DetailAST parent = ast.getParent();
+	if (parent.getType() == TokenTypes.SLIST
+	    && (!allowInSwitchCase || hasSiblings(ast))) {
+		log(ast, MSG_KEY_BLOCK_NESTED);
+	}
+}
 
-    /**
-     * Checks whether the AST node has any siblings or not.
-     *
-     * @param ast node to examine
-     * @return {@code true} if the node has one or more siblings
-     */
-    private static boolean hasSiblings(DetailAST ast) {
-        return ast.getPreviousSibling() != null || ast.getNextSibling() != null;
-    }
+/**
+ * Checks whether the AST node has any siblings or not.
+ *
+ * @param ast node to examine
+ * @return {@code true} if the node has one or more siblings
+ */
+private static boolean hasSiblings(DetailAST ast) {
+	return ast.getPreviousSibling() != null || ast.getNextSibling() != null;
+}
 
-    /**
-     * Setter to allow nested blocks if they are the only child of a switch case.
-     * @param allowInSwitchCase whether nested blocks are allowed
-     *                 if they are the only child of a switch case.
-     */
-    public void setAllowInSwitchCase(boolean allowInSwitchCase) {
-        this.allowInSwitchCase = allowInSwitchCase;
-    }
+/**
+ * Setter to allow nested blocks if they are the only child of a switch case.
+ * @param allowInSwitchCase whether nested blocks are allowed
+ *                 if they are the only child of a switch case.
+ */
+public void setAllowInSwitchCase(boolean allowInSwitchCase) {
+	this.allowInSwitchCase = allowInSwitchCase;
+}
 
 }

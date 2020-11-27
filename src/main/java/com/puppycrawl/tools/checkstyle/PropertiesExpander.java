@@ -30,31 +30,31 @@ import java.util.Properties;
  *
  */
 public final class PropertiesExpander
-    implements PropertyResolver {
+	implements PropertyResolver {
 
-    /** The underlying values. */
-    private final Map<String, String> values;
+/** The underlying values. */
+private final Map<String, String> values;
 
-    /**
-     * Creates a new PropertiesExpander.
-     * @param properties the underlying properties to use for
-     *     property resolution.
-     * @throws IllegalArgumentException when properties argument is null
-     */
-    public PropertiesExpander(Properties properties) {
-        if (properties == null) {
-            throw new IllegalArgumentException("cannot pass null");
-        }
-        values = new HashMap<>(properties.size());
-        for (Enumeration<?> e = properties.propertyNames(); e.hasMoreElements();) {
-            final String name = (String) e.nextElement();
-            values.put(name, properties.getProperty(name));
-        }
-    }
+/**
+ * Creates a new PropertiesExpander.
+ * @param properties the underlying properties to use for
+ *     property resolution.
+ * @throws IllegalArgumentException when properties argument is null
+ */
+public PropertiesExpander(Properties properties) {
+	if (properties == null) {
+		throw new IllegalArgumentException("cannot pass null");
+	}
+	values = new HashMap<>(properties.size());
+	for (Enumeration<?> e = properties.propertyNames(); e.hasMoreElements();) {
+		final String name = (String) e.nextElement();
+		values.put(name, properties.getProperty(name));
+	}
+}
 
-    @Override
-    public String resolve(String name) {
-        return values.get(name);
-    }
+@Override
+public String resolve(String name) {
+	return values.get(name);
+}
 
 }

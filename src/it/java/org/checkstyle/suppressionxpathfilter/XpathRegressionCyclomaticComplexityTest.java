@@ -30,65 +30,65 @@ import com.puppycrawl.tools.checkstyle.checks.metrics.CyclomaticComplexityCheck;
 
 public class XpathRegressionCyclomaticComplexityTest extends AbstractXpathTestSupport {
 
-    private final String checkName = CyclomaticComplexityCheck.class.getSimpleName();
+private final String checkName = CyclomaticComplexityCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
+@Test
+public void testOne() throws Exception {
 
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionCyclomaticComplexityOne.java"));
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionCyclomaticComplexityOne.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(CyclomaticComplexityCheck.class);
-        moduleConfig.addAttribute("max", "0");
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(CyclomaticComplexityCheck.class);
+	moduleConfig.addAttribute("max", "0");
 
-        final String[] expectedViolation = {
-            "4:5: " + getCheckMessage(CyclomaticComplexityCheck.class,
-                                      CyclomaticComplexityCheck.MSG_KEY, 2, 0),
-        };
+	final String[] expectedViolation = {
+		"4:5: " + getCheckMessage(CyclomaticComplexityCheck.class,
+		                          CyclomaticComplexityCheck.MSG_KEY, 2, 0),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionCyclomaticComplexityOne']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionCyclomaticComplexityOne']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/MODIFIERS",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionCyclomaticComplexityOne']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/MODIFIERS/LITERAL_PUBLIC"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionCyclomaticComplexityOne']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionCyclomaticComplexityOne']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/MODIFIERS",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionCyclomaticComplexityOne']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/MODIFIERS/LITERAL_PUBLIC"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionCyclomaticComplexityTwo.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionCyclomaticComplexityTwo.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(CyclomaticComplexityCheck.class);
-        moduleConfig.addAttribute("max", "0");
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(CyclomaticComplexityCheck.class);
+	moduleConfig.addAttribute("max", "0");
 
-        final String[] expectedViolation = {
-            "6:5: " + getCheckMessage(CyclomaticComplexityCheck.class,
-                                      CyclomaticComplexityCheck.MSG_KEY, 5, 0),
-        };
+	final String[] expectedViolation = {
+		"6:5: " + getCheckMessage(CyclomaticComplexityCheck.class,
+		                          CyclomaticComplexityCheck.MSG_KEY, 5, 0),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionCyclomaticComplexityTwo']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo2']]",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionCyclomaticComplexityTwo']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo2']]/MODIFIERS",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionCyclomaticComplexityTwo']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo2']]/MODIFIERS/LITERAL_PUBLIC"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionCyclomaticComplexityTwo']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo2']]",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionCyclomaticComplexityTwo']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo2']]/MODIFIERS",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionCyclomaticComplexityTwo']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo2']]/MODIFIERS/LITERAL_PUBLIC"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 }

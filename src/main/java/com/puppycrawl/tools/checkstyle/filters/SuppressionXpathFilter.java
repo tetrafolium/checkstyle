@@ -611,88 +611,88 @@ import com.puppycrawl.tools.checkstyle.utils.FilterUtil;
  * @noinspection NonFinalFieldReferenceInEquals, NonFinalFieldReferencedInHashCode
  */
 public class SuppressionXpathFilter extends AutomaticBean implements
-    TreeWalkerFilter, ExternalResourceHolder {
+	TreeWalkerFilter, ExternalResourceHolder {
 
-    /** Specify the location of the <em>suppressions XML document</em> file. */
-    private String file;
-    /**
-     * Control what to do when the file is not existing.
-     * If optional is set to false the file must exist, or else it ends with error.
-     * On the other hand if optional is true and file is not found,
-     * the filter accepts all audit events.
-     */
-    private boolean optional;
-    /** Set of individual xpath suppresses. */
-    private Set<TreeWalkerFilter> filters = new HashSet<>();
+/** Specify the location of the <em>suppressions XML document</em> file. */
+private String file;
+/**
+ * Control what to do when the file is not existing.
+ * If optional is set to false the file must exist, or else it ends with error.
+ * On the other hand if optional is true and file is not found,
+ * the filter accepts all audit events.
+ */
+private boolean optional;
+/** Set of individual xpath suppresses. */
+private Set<TreeWalkerFilter> filters = new HashSet<>();
 
-    /**
-     * Setter to specify the location of the <em>suppressions XML document</em> file.
-     * @param fileName name of the suppressions file.
-     */
-    public void setFile(String fileName) {
-        file = fileName;
-    }
+/**
+ * Setter to specify the location of the <em>suppressions XML document</em> file.
+ * @param fileName name of the suppressions file.
+ */
+public void setFile(String fileName) {
+	file = fileName;
+}
 
-    /**
-     * Setter to control what to do when the file is not existing.
-     * If optional is set to false the file must exist, or else it ends with error.
-     * On the other hand if optional is true and file is not found,
-     * the filter accepts all audit events.
-     * @param optional tells if config file existence is optional.
-     */
-    public void setOptional(boolean optional) {
-        this.optional = optional;
-    }
+/**
+ * Setter to control what to do when the file is not existing.
+ * If optional is set to false the file must exist, or else it ends with error.
+ * On the other hand if optional is true and file is not found,
+ * the filter accepts all audit events.
+ * @param optional tells if config file existence is optional.
+ */
+public void setOptional(boolean optional) {
+	this.optional = optional;
+}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        final SuppressionXpathFilter suppressionXpathFilter = (SuppressionXpathFilter) obj;
-        return Objects.equals(filters, suppressionXpathFilter.filters);
-    }
+@Override
+public boolean equals(Object obj) {
+	if (this == obj) {
+		return true;
+	}
+	if (obj == null || getClass() != obj.getClass()) {
+		return false;
+	}
+	final SuppressionXpathFilter suppressionXpathFilter = (SuppressionXpathFilter) obj;
+	return Objects.equals(filters, suppressionXpathFilter.filters);
+}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(filters);
-    }
+@Override
+public int hashCode() {
+	return Objects.hash(filters);
+}
 
-    @Override
-    public boolean accept(TreeWalkerAuditEvent treeWalkerAuditEvent) {
-        boolean result = true;
-        for (TreeWalkerFilter filter : filters) {
-            if (!filter.accept(treeWalkerAuditEvent)) {
-                result = false;
-                break;
-            }
-        }
-        return result;
-    }
+@Override
+public boolean accept(TreeWalkerAuditEvent treeWalkerAuditEvent) {
+	boolean result = true;
+	for (TreeWalkerFilter filter : filters) {
+		if (!filter.accept(treeWalkerAuditEvent)) {
+			result = false;
+			break;
+		}
+	}
+	return result;
+}
 
-    @Override
-    public Set<String> getExternalResourceLocations() {
-        return Collections.singleton(file);
-    }
+@Override
+public Set<String> getExternalResourceLocations() {
+	return Collections.singleton(file);
+}
 
-    @Override
-    protected void finishLocalSetup() throws CheckstyleException {
-        if (file != null) {
-            if (optional) {
-                if (FilterUtil.isFileExists(file)) {
-                    filters = SuppressionsLoader.loadXpathSuppressions(file);
-                }
-                else {
-                    filters = new HashSet<>();
-                }
-            }
-            else {
-                filters = SuppressionsLoader.loadXpathSuppressions(file);
-            }
-        }
-    }
+@Override
+protected void finishLocalSetup() throws CheckstyleException {
+	if (file != null) {
+		if (optional) {
+			if (FilterUtil.isFileExists(file)) {
+				filters = SuppressionsLoader.loadXpathSuppressions(file);
+			}
+			else {
+				filters = new HashSet<>();
+			}
+		}
+		else {
+			filters = SuppressionsLoader.loadXpathSuppressions(file);
+		}
+	}
+}
 
 }

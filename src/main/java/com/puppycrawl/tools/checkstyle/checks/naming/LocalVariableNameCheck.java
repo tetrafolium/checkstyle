@@ -164,104 +164,104 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * @since 3.0
  */
 public class LocalVariableNameCheck
-    extends AbstractNameCheck {
+	extends AbstractNameCheck {
 
-    /**
-     * Allow one character variable name in
-     * <a href="https://docs.oracle.com/javase/tutorial/java/nutsandbolts/for.html">
-     * initialization expressions</a>
-     * in FOR loop if one char variable name is prohibited by {@code format} regexp. For example:
-     * <pre>
-     * for (int i = 1; i &lt; 10; i++) { // OK
-     *     int j = 1; // violation
-     * }
-     * for (int K = 1; K &lt; 10; K++) { // OK
-     *     int j = 1; // violation
-     * }
-     * List list = new ArrayList();
-     * for (Object o : list) { // OK
-     *     int j = 1; // violation
-     * }
-     * for (Object O : list) { // OK
-     *     int j = 1; // violation
-     * }
-     * </pre>
-     */
-    private boolean allowOneCharVarInForLoop;
+/**
+ * Allow one character variable name in
+ * <a href="https://docs.oracle.com/javase/tutorial/java/nutsandbolts/for.html">
+ * initialization expressions</a>
+ * in FOR loop if one char variable name is prohibited by {@code format} regexp. For example:
+ * <pre>
+ * for (int i = 1; i &lt; 10; i++) { // OK
+ *     int j = 1; // violation
+ * }
+ * for (int K = 1; K &lt; 10; K++) { // OK
+ *     int j = 1; // violation
+ * }
+ * List list = new ArrayList();
+ * for (Object o : list) { // OK
+ *     int j = 1; // violation
+ * }
+ * for (Object O : list) { // OK
+ *     int j = 1; // violation
+ * }
+ * </pre>
+ */
+private boolean allowOneCharVarInForLoop;
 
-    /** Creates a new {@code LocalVariableNameCheck} instance. */
-    public LocalVariableNameCheck() {
-        super("^[a-z][a-zA-Z0-9]*$");
-    }
+/** Creates a new {@code LocalVariableNameCheck} instance. */
+public LocalVariableNameCheck() {
+	super("^[a-z][a-zA-Z0-9]*$");
+}
 
-    /**
-     * Setter to allow one character variable name in
-     * <a href="https://docs.oracle.com/javase/tutorial/java/nutsandbolts/for.html">
-     * initialization expressions</a>
-     * in FOR loop if one char variable name is prohibited by {@code format} regexp. For example:
-     * <pre>
-     * for (int i = 1; i &lt; 10; i++) { // OK
-     *     int j = 1; // violation
-     * }
-     * for (int K = 1; K &lt; 10; K++) { // OK
-     *     int j = 1; // violation
-     * }
-     * List list = new ArrayList();
-     * for (Object o : list) { // OK
-     *     int j = 1; // violation
-     * }
-     * for (Object O : list) { // OK
-     *     int j = 1; // violation
-     * }
-     * </pre>
-     *
-     * @param allow Flag for allowing or not one character name in FOR loop.
-     */
-    public final void setAllowOneCharVarInForLoop(boolean allow) {
-        allowOneCharVarInForLoop = allow;
-    }
+/**
+ * Setter to allow one character variable name in
+ * <a href="https://docs.oracle.com/javase/tutorial/java/nutsandbolts/for.html">
+ * initialization expressions</a>
+ * in FOR loop if one char variable name is prohibited by {@code format} regexp. For example:
+ * <pre>
+ * for (int i = 1; i &lt; 10; i++) { // OK
+ *     int j = 1; // violation
+ * }
+ * for (int K = 1; K &lt; 10; K++) { // OK
+ *     int j = 1; // violation
+ * }
+ * List list = new ArrayList();
+ * for (Object o : list) { // OK
+ *     int j = 1; // violation
+ * }
+ * for (Object O : list) { // OK
+ *     int j = 1; // violation
+ * }
+ * </pre>
+ *
+ * @param allow Flag for allowing or not one character name in FOR loop.
+ */
+public final void setAllowOneCharVarInForLoop(boolean allow) {
+	allowOneCharVarInForLoop = allow;
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {
-                   TokenTypes.VARIABLE_DEF,
-               };
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {
+		       TokenTypes.VARIABLE_DEF,
+	};
+}
 
-    @Override
-    protected final boolean mustCheckName(DetailAST ast) {
-        final boolean result;
-        if (allowOneCharVarInForLoop && isForLoopVariable(ast)) {
-            final String variableName = ast.findFirstToken(TokenTypes.IDENT).getText();
-            result = variableName.length() != 1;
-        }
-        else {
-            final DetailAST modifiersAST = ast.findFirstToken(TokenTypes.MODIFIERS);
-            final boolean isFinal = modifiersAST.findFirstToken(TokenTypes.FINAL) != null;
-            result = !isFinal && ScopeUtil.isLocalVariableDef(ast);
-        }
-        return result;
-    }
+@Override
+protected final boolean mustCheckName(DetailAST ast) {
+	final boolean result;
+	if (allowOneCharVarInForLoop && isForLoopVariable(ast)) {
+		final String variableName = ast.findFirstToken(TokenTypes.IDENT).getText();
+		result = variableName.length() != 1;
+	}
+	else {
+		final DetailAST modifiersAST = ast.findFirstToken(TokenTypes.MODIFIERS);
+		final boolean isFinal = modifiersAST.findFirstToken(TokenTypes.FINAL) != null;
+		result = !isFinal && ScopeUtil.isLocalVariableDef(ast);
+	}
+	return result;
+}
 
-    /**
-     * Checks if a variable is the loop's one.
-     * @param variableDef variable definition.
-     * @return true if a variable is the loop's one.
-     */
-    private static boolean isForLoopVariable(DetailAST variableDef) {
-        final int parentType = variableDef.getParent().getType();
-        return parentType == TokenTypes.FOR_INIT
-               || parentType == TokenTypes.FOR_EACH_CLAUSE;
-    }
+/**
+ * Checks if a variable is the loop's one.
+ * @param variableDef variable definition.
+ * @return true if a variable is the loop's one.
+ */
+private static boolean isForLoopVariable(DetailAST variableDef) {
+	final int parentType = variableDef.getParent().getType();
+	return parentType == TokenTypes.FOR_INIT
+	       || parentType == TokenTypes.FOR_EACH_CLAUSE;
+}
 
 }

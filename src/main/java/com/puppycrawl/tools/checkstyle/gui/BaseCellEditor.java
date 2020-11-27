@@ -38,78 +38,78 @@ import javax.swing.event.EventListenerList;
  */
 public class BaseCellEditor implements CellEditor {
 
-    /**
-     * A list of event listeners for the cell editor.
-     */
-    private final EventListenerList listenerList = new EventListenerList();
+/**
+ * A list of event listeners for the cell editor.
+ */
+private final EventListenerList listenerList = new EventListenerList();
 
-    @Override
-    public Object getCellEditorValue() {
-        return null;
-    }
+@Override
+public Object getCellEditorValue() {
+	return null;
+}
 
-    @Override
-    public boolean isCellEditable(EventObject event) {
-        return true;
-    }
+@Override
+public boolean isCellEditable(EventObject event) {
+	return true;
+}
 
-    @Override
-    public boolean shouldSelectCell(EventObject anEvent) {
-        return false;
-    }
+@Override
+public boolean shouldSelectCell(EventObject anEvent) {
+	return false;
+}
 
-    @Override
-    public boolean stopCellEditing() {
-        return true;
-    }
+@Override
+public boolean stopCellEditing() {
+	return true;
+}
 
-    @Override
-    public void cancelCellEditing() {
-        // No code, tree is read-only
-    }
+@Override
+public void cancelCellEditing() {
+	// No code, tree is read-only
+}
 
-    @Override
-    public void addCellEditorListener(CellEditorListener listener) {
-        listenerList.add(CellEditorListener.class, listener);
-    }
+@Override
+public void addCellEditorListener(CellEditorListener listener) {
+	listenerList.add(CellEditorListener.class, listener);
+}
 
-    @Override
-    public void removeCellEditorListener(CellEditorListener listener) {
-        listenerList.remove(CellEditorListener.class, listener);
-    }
+@Override
+public void removeCellEditorListener(CellEditorListener listener) {
+	listenerList.remove(CellEditorListener.class, listener);
+}
 
-    /**
-     * Notifies all listeners that have registered interest for
-     * 'editing stopped' event.
-     * @see EventListenerList
-     */
-    protected void fireEditingStopped() {
-        // Guaranteed to return a non-null array
-        final Object[] listeners = listenerList.getListenerList();
-        // Process the listeners last to first, notifying
-        // those that are interested in this event
-        for (int i = listeners.length - 2; i >= 0; i -= 2) {
-            if (listeners[i] == CellEditorListener.class) {
-                ((CellEditorListener) listeners[i + 1]).editingStopped(new ChangeEvent(this));
-            }
-        }
-    }
+/**
+ * Notifies all listeners that have registered interest for
+ * 'editing stopped' event.
+ * @see EventListenerList
+ */
+protected void fireEditingStopped() {
+	// Guaranteed to return a non-null array
+	final Object[] listeners = listenerList.getListenerList();
+	// Process the listeners last to first, notifying
+	// those that are interested in this event
+	for (int i = listeners.length - 2; i >= 0; i -= 2) {
+		if (listeners[i] == CellEditorListener.class) {
+			((CellEditorListener) listeners[i + 1]).editingStopped(new ChangeEvent(this));
+		}
+	}
+}
 
-    /**
-     * Notifies all listeners that have registered interest for
-     * 'editing canceled' event.
-     * @see EventListenerList
-     */
-    protected void fireEditingCanceled() {
-        // Guaranteed to return a non-null array
-        final Object[] listeners = listenerList.getListenerList();
-        // Process the listeners last to first, notifying
-        // those that are interested in this event
-        for (int i = listeners.length - 2; i >= 0; i -= 2) {
-            if (listeners[i] == CellEditorListener.class) {
-                ((CellEditorListener) listeners[i + 1]).editingCanceled(new ChangeEvent(this));
-            }
-        }
-    }
+/**
+ * Notifies all listeners that have registered interest for
+ * 'editing canceled' event.
+ * @see EventListenerList
+ */
+protected void fireEditingCanceled() {
+	// Guaranteed to return a non-null array
+	final Object[] listeners = listenerList.getListenerList();
+	// Process the listeners last to first, notifying
+	// those that are interested in this event
+	for (int i = listeners.length - 2; i >= 0; i -= 2) {
+		if (listeners[i] == CellEditorListener.class) {
+			((CellEditorListener) listeners[i + 1]).editingCanceled(new ChangeEvent(this));
+		}
+	}
+}
 
 }

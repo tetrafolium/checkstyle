@@ -29,208 +29,208 @@ import com.puppycrawl.tools.checkstyle.api.AbstractViolationReporter;
  */
 public final class DetectorOptions {
 
-    /**
-     * Flags to compile a regular expression with.
-     * See {@link Pattern#flags()}.
-     */
-    private int compileFlags;
-    /** Used for reporting violations. */
-    private AbstractViolationReporter reporter;
-    /**
-     * Format of the regular expression to check for.
-     */
-    private String format;
-    /** The message to report on detection. If blank, then use the format. */
-    private String message = "";
-    /** Minimum number of times regular expression should occur in a file. */
-    private int minimum;
-    /** Maximum number of times regular expression should occur in a file. */
-    private int maximum;
-    /** Whether to ignore case when matching. */
-    private boolean ignoreCase;
-    /** Used to determine whether to suppress a detected match. */
-    private MatchSuppressor suppressor;
-    /** Pattern created from format. Lazily initialized. */
-    private Pattern pattern;
+/**
+ * Flags to compile a regular expression with.
+ * See {@link Pattern#flags()}.
+ */
+private int compileFlags;
+/** Used for reporting violations. */
+private AbstractViolationReporter reporter;
+/**
+ * Format of the regular expression to check for.
+ */
+private String format;
+/** The message to report on detection. If blank, then use the format. */
+private String message = "";
+/** Minimum number of times regular expression should occur in a file. */
+private int minimum;
+/** Maximum number of times regular expression should occur in a file. */
+private int maximum;
+/** Whether to ignore case when matching. */
+private boolean ignoreCase;
+/** Used to determine whether to suppress a detected match. */
+private MatchSuppressor suppressor;
+/** Pattern created from format. Lazily initialized. */
+private Pattern pattern;
 
-    /** Default constructor.*/
-    private DetectorOptions() {
-    }
+/** Default constructor.*/
+private DetectorOptions() {
+}
 
-    /**
-     * Returns new Builder object.
-     * @return Builder object.
-     */
-    public static Builder newBuilder() {
-        return new DetectorOptions().new Builder();
-    }
+/**
+ * Returns new Builder object.
+ * @return Builder object.
+ */
+public static Builder newBuilder() {
+	return new DetectorOptions().new Builder();
+}
 
-    /**
-     * Format of the regular expression.
-     * @return format of the regular expression.
-     */
-    public String getFormat() {
-        return format;
-    }
+/**
+ * Format of the regular expression.
+ * @return format of the regular expression.
+ */
+public String getFormat() {
+	return format;
+}
 
-    /**
-     * The violation reporter to use.
-     * @return the violation reporter to use.
-     */
-    public AbstractViolationReporter getReporter() {
-        return reporter;
-    }
+/**
+ * The violation reporter to use.
+ * @return the violation reporter to use.
+ */
+public AbstractViolationReporter getReporter() {
+	return reporter;
+}
 
-    /**
-     * The message to report violations with.
-     * @return the message to report violations with.
-     */
-    public String getMessage() {
-        return message;
-    }
+/**
+ * The message to report violations with.
+ * @return the message to report violations with.
+ */
+public String getMessage() {
+	return message;
+}
 
-    /**
-     * The minimum number of allowed detections.
-     * @return the minimum number of allowed detections.
-     */
-    public int getMinimum() {
-        return minimum;
-    }
+/**
+ * The minimum number of allowed detections.
+ * @return the minimum number of allowed detections.
+ */
+public int getMinimum() {
+	return minimum;
+}
 
-    /**
-     * The maximum number of allowed detections.
-     * @return the maximum number of allowed detections.
-     */
-    public int getMaximum() {
-        return maximum;
-    }
+/**
+ * The maximum number of allowed detections.
+ * @return the maximum number of allowed detections.
+ */
+public int getMaximum() {
+	return maximum;
+}
 
-    /**
-     * The suppressor to use.
-     * @return the suppressor to use.
-     */
-    public MatchSuppressor getSuppressor() {
-        return suppressor;
-    }
+/**
+ * The suppressor to use.
+ * @return the suppressor to use.
+ */
+public MatchSuppressor getSuppressor() {
+	return suppressor;
+}
 
-    /**
-     * The pattern to use when matching.
-     * @return the pattern to use when matching.
-     */
-    public Pattern getPattern() {
-        if (pattern == null) {
-            int options = compileFlags;
+/**
+ * The pattern to use when matching.
+ * @return the pattern to use when matching.
+ */
+public Pattern getPattern() {
+	if (pattern == null) {
+		int options = compileFlags;
 
-            if (ignoreCase) {
-                options |= Pattern.CASE_INSENSITIVE;
-            }
-            pattern = Pattern.compile(format, options);
-        }
-        return pattern;
-    }
+		if (ignoreCase) {
+			options |= Pattern.CASE_INSENSITIVE;
+		}
+		pattern = Pattern.compile(format, options);
+	}
+	return pattern;
+}
 
-    /** Class which implements Builder pattern to build DetectorOptions instance. */
-    public final class Builder {
+/** Class which implements Builder pattern to build DetectorOptions instance. */
+public final class Builder {
 
-        /**
-         * Specifies the violation reporter and returns Builder object.
-         * @param val for reporting violations.
-         * @return Builder object.
-         * @noinspection ReturnOfInnerClass
-         */
-        public Builder reporter(AbstractViolationReporter val) {
-            reporter = val;
-            return this;
-        }
+/**
+ * Specifies the violation reporter and returns Builder object.
+ * @param val for reporting violations.
+ * @return Builder object.
+ * @noinspection ReturnOfInnerClass
+ */
+public Builder reporter(AbstractViolationReporter val) {
+	reporter = val;
+	return this;
+}
 
-        /**
-         * Specifies the compile flags to compile a regular expression with
-         * and returns Builder object.
-         * @param val the format to use when matching lines.
-         * @return Builder object.
-         * @noinspection ReturnOfInnerClass
-         */
-        public Builder compileFlags(int val) {
-            compileFlags = val;
-            return this;
-        }
+/**
+ * Specifies the compile flags to compile a regular expression with
+ * and returns Builder object.
+ * @param val the format to use when matching lines.
+ * @return Builder object.
+ * @noinspection ReturnOfInnerClass
+ */
+public Builder compileFlags(int val) {
+	compileFlags = val;
+	return this;
+}
 
-        /**
-         * Specifies the format to use when matching lines and returns Builder object.
-         * @param val the format to use when matching lines.
-         * @return Builder object.
-         * @noinspection ReturnOfInnerClass
-         */
-        public Builder format(String val) {
-            format = val;
-            return this;
-        }
+/**
+ * Specifies the format to use when matching lines and returns Builder object.
+ * @param val the format to use when matching lines.
+ * @return Builder object.
+ * @noinspection ReturnOfInnerClass
+ */
+public Builder format(String val) {
+	format = val;
+	return this;
+}
 
-        /**
-         * Specifies message to use when reporting a match and returns Builder object.
-         * @param val message to use when reporting a match.
-         * @return Builder object.
-         * @noinspection ReturnOfInnerClass
-         */
-        public Builder message(String val) {
-            message = val;
-            return this;
-        }
+/**
+ * Specifies message to use when reporting a match and returns Builder object.
+ * @param val message to use when reporting a match.
+ * @return Builder object.
+ * @noinspection ReturnOfInnerClass
+ */
+public Builder message(String val) {
+	message = val;
+	return this;
+}
 
-        /**
-         * Specifies the minimum allowed number of detections and returns Builder object.
-         * @param val the minimum allowed number of detections.
-         * @return Builder object.
-         * @noinspection ReturnOfInnerClass
-         */
-        public Builder minimum(int val) {
-            minimum = val;
-            return this;
-        }
+/**
+ * Specifies the minimum allowed number of detections and returns Builder object.
+ * @param val the minimum allowed number of detections.
+ * @return Builder object.
+ * @noinspection ReturnOfInnerClass
+ */
+public Builder minimum(int val) {
+	minimum = val;
+	return this;
+}
 
-        /**
-         * Specifies the maximum allowed number of detections and returns Builder object.
-         * @param val the maximum allowed number of detections.
-         * @return Builder object.
-         * @noinspection ReturnOfInnerClass
-         */
-        public Builder maximum(int val) {
-            maximum = val;
-            return this;
-        }
+/**
+ * Specifies the maximum allowed number of detections and returns Builder object.
+ * @param val the maximum allowed number of detections.
+ * @return Builder object.
+ * @noinspection ReturnOfInnerClass
+ */
+public Builder maximum(int val) {
+	maximum = val;
+	return this;
+}
 
-        /**
-         * Specifies whether to ignore case when matching and returns Builder object.
-         * @param val whether to ignore case when matching.
-         * @return Builder object.
-         * @noinspection ReturnOfInnerClass, BooleanParameter
-         */
-        public Builder ignoreCase(boolean val) {
-            ignoreCase = val;
-            return this;
-        }
+/**
+ * Specifies whether to ignore case when matching and returns Builder object.
+ * @param val whether to ignore case when matching.
+ * @return Builder object.
+ * @noinspection ReturnOfInnerClass, BooleanParameter
+ */
+public Builder ignoreCase(boolean val) {
+	ignoreCase = val;
+	return this;
+}
 
-        /**
-         * Specifies the suppressor to use and returns Builder object.
-         * @param val the suppressor to use.
-         * @return current instance
-         * @noinspection ReturnOfInnerClass
-         */
-        public Builder suppressor(MatchSuppressor val) {
-            suppressor = val;
-            return this;
-        }
+/**
+ * Specifies the suppressor to use and returns Builder object.
+ * @param val the suppressor to use.
+ * @return current instance
+ * @noinspection ReturnOfInnerClass
+ */
+public Builder suppressor(MatchSuppressor val) {
+	suppressor = val;
+	return this;
+}
 
-        /**
-         * Returns new DetectorOptions instance.
-         * @return DetectorOptions instance.
-         */
-        public DetectorOptions build() {
-            message = Optional.ofNullable(message).orElse("");
-            suppressor = Optional.ofNullable(suppressor).orElse(NeverSuppress.INSTANCE);
-            return DetectorOptions.this;
-        }
+/**
+ * Returns new DetectorOptions instance.
+ * @return DetectorOptions instance.
+ */
+public DetectorOptions build() {
+	message = Optional.ofNullable(message).orElse("");
+	suppressor = Optional.ofNullable(suppressor).orElse(NeverSuppress.INSTANCE);
+	return DetectorOptions.this;
+}
 
-    }
+}
 
 }

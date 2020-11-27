@@ -86,41 +86,41 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 @StatelessCheck
 public class NoLineWrapCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "no.line.wrap";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "no.line.wrap";
 
-    @Override
-    public int[] getDefaultTokens() {
-        return new int[] {TokenTypes.PACKAGE_DEF, TokenTypes.IMPORT, TokenTypes.STATIC_IMPORT};
-    }
+@Override
+public int[] getDefaultTokens() {
+	return new int[] {TokenTypes.PACKAGE_DEF, TokenTypes.IMPORT, TokenTypes.STATIC_IMPORT};
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return new int[] {
-                   TokenTypes.IMPORT,
-                   TokenTypes.STATIC_IMPORT,
-                   TokenTypes.PACKAGE_DEF,
-                   TokenTypes.CLASS_DEF,
-                   TokenTypes.METHOD_DEF,
-                   TokenTypes.CTOR_DEF,
-                   TokenTypes.ENUM_DEF,
-                   TokenTypes.INTERFACE_DEF,
-               };
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return new int[] {
+		       TokenTypes.IMPORT,
+		       TokenTypes.STATIC_IMPORT,
+		       TokenTypes.PACKAGE_DEF,
+		       TokenTypes.CLASS_DEF,
+		       TokenTypes.METHOD_DEF,
+		       TokenTypes.CTOR_DEF,
+		       TokenTypes.ENUM_DEF,
+		       TokenTypes.INTERFACE_DEF,
+	};
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return CommonUtil.EMPTY_INT_ARRAY;
-    }
+@Override
+public int[] getRequiredTokens() {
+	return CommonUtil.EMPTY_INT_ARRAY;
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        if (!TokenUtil.areOnSameLine(ast, ast.getLastChild())) {
-            log(ast.getLineNo(), MSG_KEY, ast.getText());
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	if (!TokenUtil.areOnSameLine(ast, ast.getLastChild())) {
+		log(ast.getLineNo(), MSG_KEY, ast.getText());
+	}
+}
 
 }

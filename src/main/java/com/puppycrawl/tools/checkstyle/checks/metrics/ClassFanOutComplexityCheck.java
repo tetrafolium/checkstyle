@@ -160,46 +160,46 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  */
 public final class ClassFanOutComplexityCheck extends AbstractClassCouplingCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "classFanOutComplexity";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "classFanOutComplexity";
 
-    /** Default value of max value. */
-    private static final int DEFAULT_MAX = 20;
+/** Default value of max value. */
+private static final int DEFAULT_MAX = 20;
 
-    /** Creates new instance of this check. */
-    public ClassFanOutComplexityCheck() {
-        super(DEFAULT_MAX);
-    }
+/** Creates new instance of this check. */
+public ClassFanOutComplexityCheck() {
+	super(DEFAULT_MAX);
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {
-                   TokenTypes.PACKAGE_DEF,
-                   TokenTypes.IMPORT,
-                   TokenTypes.CLASS_DEF,
-                   TokenTypes.EXTENDS_CLAUSE,
-                   TokenTypes.IMPLEMENTS_CLAUSE,
-                   TokenTypes.ANNOTATION,
-                   TokenTypes.INTERFACE_DEF,
-                   TokenTypes.ENUM_DEF,
-                   TokenTypes.TYPE,
-                   TokenTypes.LITERAL_NEW,
-                   TokenTypes.LITERAL_THROWS,
-                   TokenTypes.ANNOTATION_DEF,
-               };
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {
+		       TokenTypes.PACKAGE_DEF,
+		       TokenTypes.IMPORT,
+		       TokenTypes.CLASS_DEF,
+		       TokenTypes.EXTENDS_CLAUSE,
+		       TokenTypes.IMPLEMENTS_CLAUSE,
+		       TokenTypes.ANNOTATION,
+		       TokenTypes.INTERFACE_DEF,
+		       TokenTypes.ENUM_DEF,
+		       TokenTypes.TYPE,
+		       TokenTypes.LITERAL_NEW,
+		       TokenTypes.LITERAL_THROWS,
+		       TokenTypes.ANNOTATION_DEF,
+	};
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    protected String getLogMessageId() {
-        return MSG_KEY;
-    }
+@Override
+protected String getLogMessageId() {
+	return MSG_KEY;
+}
 
 }

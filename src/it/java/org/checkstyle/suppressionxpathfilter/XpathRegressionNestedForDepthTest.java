@@ -30,33 +30,33 @@ import com.puppycrawl.tools.checkstyle.checks.coding.NestedForDepthCheck;
 
 public class XpathRegressionNestedForDepthTest extends AbstractXpathTestSupport {
 
-    private final String checkName = NestedForDepthCheck.class.getSimpleName();
+private final String checkName = NestedForDepthCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testCorrect() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionNestedForDepth.java"));
+@Test
+public void testCorrect() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionNestedForDepth.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(NestedForDepthCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(NestedForDepthCheck.class);
 
-        final String[] expectedViolation = {
-            "7:17: " + getCheckMessage(NestedForDepthCheck.class,
-                                       NestedForDepthCheck.MSG_KEY, 2, 1),
-        };
+	final String[] expectedViolation = {
+		"7:17: " + getCheckMessage(NestedForDepthCheck.class,
+		                           NestedForDepthCheck.MSG_KEY, 2, 1),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNestedForDepth']]/OBJBLOCK"
-                    + "/METHOD_DEF[./IDENT[@text='test']]/SLIST/LITERAL_FOR"
-                    + "/SLIST/LITERAL_FOR/SLIST/LITERAL_FOR"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNestedForDepth']]/OBJBLOCK"
+		+ "/METHOD_DEF[./IDENT[@text='test']]/SLIST/LITERAL_FOR"
+		+ "/SLIST/LITERAL_FOR/SLIST/LITERAL_FOR"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 }
