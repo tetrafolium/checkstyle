@@ -37,7 +37,7 @@ public class OneStatementPerLineTest extends AbstractGoogleModuleTestSupport {
     @Test
     public void testOneStatement() throws Exception {
         final String msg = getCheckMessage(OneStatementPerLineCheck.class,
-            "multiple.statements.line");
+                                           "multiple.statements.line");
 
         final String[] expected = {
             "6:59: " + msg,
@@ -73,7 +73,7 @@ public class OneStatementPerLineTest extends AbstractGoogleModuleTestSupport {
     @Test
     public void testOneStatementNonCompilableInput() throws Exception {
         final String msg = getCheckMessage(OneStatementPerLineCheck.class,
-            "multiple.statements.line");
+                                           "multiple.statements.line");
 
         final String[] expected = {
             "32:6: " + msg,
@@ -86,8 +86,8 @@ public class OneStatementPerLineTest extends AbstractGoogleModuleTestSupport {
 
         final Configuration checkConfig = getModuleConfig("OneStatementPerLine");
         final String filePath = new File("src/test/resources-noncompilable/"
-            + "com/puppycrawl/tools/checkstyle/checks/coding/onestatementperline/"
-            + "InputOneStatementPerLine.java").getCanonicalPath();
+                                         + "com/puppycrawl/tools/checkstyle/checks/coding/onestatementperline/"
+                                         + "InputOneStatementPerLine.java").getCanonicalPath();
 
         final Integer[] warnList = getLinesWithWarn(filePath);
         verify(checkConfig, filePath, expected, warnList);

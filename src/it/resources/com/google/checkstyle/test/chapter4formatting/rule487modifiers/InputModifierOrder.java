@@ -115,12 +115,12 @@ interface InnerImplementation
 {
     InnerImplementation inner =
         new InnerImplementation()
+    {
+        /** compiler requires 'public' modifier */
+        public void method()
         {
-            /** compiler requires 'public' modifier */
-            public void method()
-            {
-            }
-        };
+        }
+    };
 
     void method();
 }

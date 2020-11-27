@@ -114,23 +114,23 @@ public class EqualsAvoidNullCheck extends AbstractCheck {
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.METHOD_CALL,
-            TokenTypes.CLASS_DEF,
-            TokenTypes.METHOD_DEF,
-            TokenTypes.LITERAL_FOR,
-            TokenTypes.LITERAL_CATCH,
-            TokenTypes.LITERAL_TRY,
-            TokenTypes.LITERAL_SWITCH,
-            TokenTypes.VARIABLE_DEF,
-            TokenTypes.PARAMETER_DEF,
-            TokenTypes.CTOR_DEF,
-            TokenTypes.SLIST,
-            TokenTypes.OBJBLOCK,
-            TokenTypes.ENUM_DEF,
-            TokenTypes.ENUM_CONSTANT_DEF,
-            TokenTypes.LITERAL_NEW,
-            TokenTypes.LAMBDA,
-        };
+                   TokenTypes.METHOD_CALL,
+                   TokenTypes.CLASS_DEF,
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.LITERAL_FOR,
+                   TokenTypes.LITERAL_CATCH,
+                   TokenTypes.LITERAL_TRY,
+                   TokenTypes.LITERAL_SWITCH,
+                   TokenTypes.VARIABLE_DEF,
+                   TokenTypes.PARAMETER_DEF,
+                   TokenTypes.CTOR_DEF,
+                   TokenTypes.SLIST,
+                   TokenTypes.OBJBLOCK,
+                   TokenTypes.ENUM_DEF,
+                   TokenTypes.ENUM_CONSTANT_DEF,
+                   TokenTypes.LITERAL_NEW,
+                   TokenTypes.LAMBDA,
+               };
     }
 
     /**
@@ -150,27 +150,27 @@ public class EqualsAvoidNullCheck extends AbstractCheck {
     @Override
     public void visitToken(final DetailAST ast) {
         switch (ast.getType()) {
-            case TokenTypes.VARIABLE_DEF:
-            case TokenTypes.PARAMETER_DEF:
-                currentFrame.addField(ast);
-                break;
-            case TokenTypes.METHOD_CALL:
-                processMethodCall(ast);
-                break;
-            case TokenTypes.SLIST:
-                processSlist(ast);
-                break;
-            case TokenTypes.LITERAL_NEW:
-                processLiteralNew(ast);
-                break;
-            case TokenTypes.OBJBLOCK:
-                final int parentType = ast.getParent().getType();
-                if (parentType != TokenTypes.CLASS_DEF && parentType != TokenTypes.ENUM_DEF) {
-                    processFrame(ast);
-                }
-                break;
-            default:
+        case TokenTypes.VARIABLE_DEF:
+        case TokenTypes.PARAMETER_DEF:
+            currentFrame.addField(ast);
+            break;
+        case TokenTypes.METHOD_CALL:
+            processMethodCall(ast);
+            break;
+        case TokenTypes.SLIST:
+            processSlist(ast);
+            break;
+        case TokenTypes.LITERAL_NEW:
+            processLiteralNew(ast);
+            break;
+        case TokenTypes.OBJBLOCK:
+            final int parentType = ast.getParent().getType();
+            if (parentType != TokenTypes.CLASS_DEF && parentType != TokenTypes.ENUM_DEF) {
                 processFrame(ast);
+            }
+            break;
+        default:
+            processFrame(ast);
         }
     }
 
@@ -190,8 +190,8 @@ public class EqualsAvoidNullCheck extends AbstractCheck {
             }
         }
         else if (astType != TokenTypes.VARIABLE_DEF
-                && astType != TokenTypes.PARAMETER_DEF
-                && astType != TokenTypes.METHOD_CALL) {
+                 && astType != TokenTypes.PARAMETER_DEF
+                 && astType != TokenTypes.METHOD_CALL) {
             currentFrame = currentFrame.getParent();
         }
     }
@@ -344,7 +344,7 @@ public class EqualsAvoidNullCheck extends AbstractCheck {
             while (child != null
                     && !argIsNotNull) {
                 argIsNotNull = child.getType() == TokenTypes.STRING_LITERAL
-                        || child.getType() == TokenTypes.IDENT;
+                               || child.getType() == TokenTypes.IDENT;
                 child = child.getNextSibling();
             }
         }
@@ -407,7 +407,7 @@ public class EqualsAvoidNullCheck extends AbstractCheck {
             final DetailAST field = frame.findField(name);
             if (field != null
                     && (frame.isClassOrEnumOrEnumConstDef()
-                            || checkLineNo(field, objCalledOn))) {
+                        || checkLineNo(field, objCalledOn))) {
                 result = STRING.equals(getFieldType(field));
                 break;
             }
@@ -485,7 +485,7 @@ public class EqualsAvoidNullCheck extends AbstractCheck {
     private static String getFieldType(DetailAST field) {
         String fieldType = null;
         final DetailAST identAst = field.findFirstToken(TokenTypes.TYPE)
-                .findFirstToken(TokenTypes.IDENT);
+                                   .findFirstToken(TokenTypes.IDENT);
         if (identAst != null) {
             fieldType = identAst.getText();
         }

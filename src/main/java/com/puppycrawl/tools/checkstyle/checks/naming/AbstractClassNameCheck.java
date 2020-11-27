@@ -171,7 +171,7 @@ public final class AbstractClassNameCheck extends AbstractCheck {
      */
     private static boolean isAbstract(DetailAST ast) {
         final DetailAST abstractAST = ast.findFirstToken(TokenTypes.MODIFIERS)
-            .findFirstToken(TokenTypes.ABSTRACT);
+                                      .findFirstToken(TokenTypes.ABSTRACT);
 
         return abstractAST != null;
     }

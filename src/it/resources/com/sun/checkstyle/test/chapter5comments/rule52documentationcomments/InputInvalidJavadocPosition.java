@@ -32,16 +32,22 @@ class InputInvalidJavadocPosition2 {
     /** valid */
     void method2() {}
     /** valid */
-    <T> T method3() { return null; }
+    <T> T method3() {
+        return null;
+    }
     /** valid */
-    String[] method4() { return null; }
+    String[] method4() {
+        return null;
+    }
 
     void /** warn */ method20() {}
     void method21 /** warn */ () {}
     void method22(/** warn */) {}
     void method23() /** warn */ {}
     void method24() { /** warn */ }
-    void method25() { /** warn */ int variable; }
+    void method25() {
+        /** warn */ int variable;
+    }
 }
 @Deprecated
 /** warn */
@@ -50,5 +56,5 @@ class InputInvalidJavadocPosition3 {}
 @Deprecated
 class InputInvalidJavadocPosition4 {}
 class /** warn */ InputInvalidJavadocPosition5 {}
-class InputInvalidJavadocPosition6 /** warn */ {}
+class InputInvalidJavadocPosition6 { /** warn */ }
 /** warn */

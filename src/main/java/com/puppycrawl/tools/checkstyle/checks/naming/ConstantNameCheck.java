@@ -142,12 +142,12 @@ public class ConstantNameCheck
         if (isStatic && isFinal && shouldCheckInScope(modifiersAST)
                 || ScopeUtil.isInAnnotationBlock(ast)
                 || ScopeUtil.isInInterfaceBlock(ast)
-                        && !ScopeUtil.isInCodeBlock(ast)) {
+                && !ScopeUtil.isInCodeBlock(ast)) {
             // Handle the serialVersionUID and serialPersistentFields constants
             // which are used for Serialization. Cannot enforce rules on it. :-)
             final DetailAST nameAST = ast.findFirstToken(TokenTypes.IDENT);
             if (!"serialVersionUID".equals(nameAST.getText())
-                && !"serialPersistentFields".equals(nameAST.getText())) {
+                    && !"serialPersistentFields".equals(nameAST.getText())) {
                 returnValue = true;
             }
         }

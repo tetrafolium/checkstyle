@@ -171,7 +171,7 @@ public final class Main {
      * @noinspection UseOfSystemOutOrSystemErr
      */
     private static int execute(ParseResult parseResult, CliOptions options)
-            throws IOException, CheckstyleException {
+    throws IOException, CheckstyleException {
 
         final int exitStatus;
 
@@ -266,7 +266,7 @@ public final class Main {
      * @noinspection UseOfSystemOutOrSystemErr
      */
     private static int runCli(CliOptions options, List<File> filesToProcess)
-            throws IOException, CheckstyleException {
+    throws IOException, CheckstyleException {
         int result = 0;
         final boolean hasSuppressionLineColumnNumber = options.suppressionLineColumnNumber != null;
 
@@ -275,7 +275,7 @@ public final class Main {
             // print AST
             final File file = filesToProcess.get(0);
             final String stringAst = AstTreeStringPrinter.printFileAst(file,
-                    JavaParser.Options.WITHOUT_COMMENTS);
+                                     JavaParser.Options.WITHOUT_COMMENTS);
             System.out.print(stringAst);
         }
         else if (Objects.nonNull(options.xpath)) {
@@ -285,7 +285,7 @@ public final class Main {
         else if (options.printAstWithComments) {
             final File file = filesToProcess.get(0);
             final String stringAst = AstTreeStringPrinter.printFileAst(file,
-                    JavaParser.Options.WITH_COMMENTS);
+                                     JavaParser.Options.WITH_COMMENTS);
             System.out.print(stringAst);
         }
         else if (options.printJavadocTree) {
@@ -301,8 +301,8 @@ public final class Main {
         else if (hasSuppressionLineColumnNumber) {
             final File file = filesToProcess.get(0);
             final String stringSuppressions =
-                    SuppressionsStringPrinter.printSuppressions(file,
-                            options.suppressionLineColumnNumber, options.tabWidth);
+                SuppressionsStringPrinter.printSuppressions(file,
+                        options.suppressionLineColumnNumber, options.tabWidth);
             System.out.print(stringSuppressions);
         }
         else {
@@ -317,7 +317,7 @@ public final class Main {
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Checkstyle debug logging enabled");
                 LOG.debug("Running Checkstyle with version: "
-                        + Main.class.getPackage().getImplementationVersion());
+                          + Main.class.getPackage().getImplementationVersion());
             }
 
             // run Checker
@@ -338,7 +338,7 @@ public final class Main {
      *         when properties file could not be loaded
      */
     private static int runCheckstyle(CliOptions options, List<File> filesToProcess)
-            throws CheckstyleException, IOException {
+    throws CheckstyleException, IOException {
         // setup the properties
         final Properties props;
 
@@ -351,8 +351,8 @@ public final class Main {
 
         // create a configuration
         final ThreadModeSettings multiThreadModeSettings =
-                new ThreadModeSettings(options.checkerThreadsNumber,
-                        options.treeWalkerThreadsNumber);
+            new ThreadModeSettings(options.checkerThreadsNumber,
+                                   options.treeWalkerThreadsNumber);
 
         final ConfigurationLoader.IgnoredModulesOptions ignoredModulesOptions;
         if (options.executeIgnoredModules) {
@@ -363,8 +363,8 @@ public final class Main {
         }
 
         final Configuration config = ConfigurationLoader.loadConfiguration(
-                options.configurationFile, new PropertiesExpander(props),
-                ignoredModulesOptions, multiThreadModeSettings);
+                                         options.configurationFile, new PropertiesExpander(props),
+                                         ignoredModulesOptions, multiThreadModeSettings);
 
         // create RootModule object and run it
         final int errorCounter;
@@ -378,10 +378,10 @@ public final class Main {
                 final Configuration treeWalkerConfig = getTreeWalkerConfig(config);
                 if (treeWalkerConfig != null) {
                     final DefaultConfiguration moduleConfig =
-                            new DefaultConfiguration(
-                                    XpathFileGeneratorAstFilter.class.getName());
+                        new DefaultConfiguration(
+                        XpathFileGeneratorAstFilter.class.getName());
                     moduleConfig.addAttribute(CliOptions.ATTRIB_TAB_WIDTH_NAME,
-                            String.valueOf(options.tabWidth));
+                                              String.valueOf(options.tabWidth));
                     ((DefaultConfiguration) treeWalkerConfig).addChild(moduleConfig);
                 }
 
@@ -415,7 +415,7 @@ public final class Main {
      *         when could not load properties file
      */
     private static Properties loadProperties(File file)
-            throws CheckstyleException {
+    throws CheckstyleException {
         final Properties properties = new Properties();
 
         try (InputStream stream = Files.newInputStream(file.toPath())) {
@@ -441,9 +441,9 @@ public final class Main {
      * @throws CheckstyleException if no module can be instantiated from name
      */
     private static RootModule getRootModule(String name, ClassLoader moduleClassLoader)
-            throws CheckstyleException {
+    throws CheckstyleException {
         final ModuleFactory factory = new PackageObjectFactory(
-                Checker.class.getPackage().getName(), moduleClassLoader);
+            Checker.class.getPackage().getName(), moduleClassLoader);
 
         return (RootModule) factory.createModule(name);
     }
@@ -476,10 +476,10 @@ public final class Main {
      * @exception IOException when provided output location is not found
      */
     private static AuditListener createListener(OutputFormat format, Path outputLocation)
-            throws IOException {
+    throws IOException {
         final OutputStream out = getOutputStream(outputLocation);
         final AutomaticBean.OutputStreamOptions closeOutputStreamOption =
-                getOutputStreamOptions(outputLocation);
+            getOutputStreamOptions(outputLocation);
         return format.createListener(out, closeOutputStreamOption);
     }
 
@@ -581,10 +581,10 @@ public final class Main {
      *              MismatchedQueryAndUpdateOfCollection, LocalCanBeFinal
      */
     @Command(name = "checkstyle", description = "Checkstyle verifies that the specified "
-            + "source code files adhere to the specified rules. By default violations are "
-            + "reported to standard out in plain format. Checkstyle requires a configuration "
-            + "XML file that configures the checks to apply.",
-            mixinStandardHelpOptions = true)
+             + "source code files adhere to the specified rules. By default violations are "
+             + "reported to standard out in plain format. Checkstyle requires a configuration "
+             + "XML file that configures the checks to apply.",
+             mixinStandardHelpOptions = true)
     private static class CliOptions {
 
         /** Width of CLI help option. */
@@ -621,8 +621,8 @@ public final class Main {
         /** LineNo and columnNo for the suppression. */
         @Option(names = "-s",
                 description = "Print xpath suppressions at the file's line and column position. "
-                        + "Argument is the line and column number (separated by a : ) in the file "
-                        + "that the suppression should be generated for")
+                              + "Argument is the line and column number (separated by a : ) in the file "
+                              + "that the suppression should be generated for")
         private String suppressionLineColumnNumber;
 
         /**
@@ -638,7 +638,7 @@ public final class Main {
         /** Switch whether to generate suppressions file or not. */
         @Option(names = {"-g", "--generate-xpath-suppression"},
                 description = "Generates to output a suppression xml to use to suppress all"
-                        + " violations from user's config")
+                              + " violations from user's config")
         private boolean generateXpathSuppressionsFile;
 
         /**
@@ -648,7 +648,7 @@ public final class Main {
          * @noinspection CanBeFinal
          */
         @Option(names = "-f", description = "Sets the output format. Valid values: "
-                + "${COMPLETION-CANDIDATES}. Defaults to ${DEFAULT-VALUE}")
+                                            + "${COMPLETION-CANDIDATES}. Defaults to ${DEFAULT-VALUE}")
         private OutputFormat format = DEFAULT_OUTPUT_FORMAT;
 
         /** Option that controls whether to print the AST of the file. */
@@ -723,7 +723,7 @@ public final class Main {
 
         /** Show AST branches that match xpath. */
         @Option(names = {"-b", "--branch-matching-xpath"},
-            description = "Show Abstract Syntax Tree(AST) branches that match XPath")
+                description = "Show Abstract Syntax Tree(AST) branches that match XPath")
         private String xpath;
 
         /**
@@ -732,10 +732,10 @@ public final class Main {
          */
         private List<Pattern> getExclusions() {
             final List<Pattern> result = exclude.stream()
-                    .map(File::getAbsolutePath)
-                    .map(Pattern::quote)
-                    .map(pattern -> Pattern.compile("^" + pattern + "$"))
-                    .collect(Collectors.toCollection(ArrayList::new));
+                                         .map(File::getAbsolutePath)
+                                         .map(Pattern::quote)
+                                         .map(pattern -> Pattern.compile("^" + pattern + "$"))
+                                         .collect(Collectors.toCollection(ArrayList::new));
             result.addAll(excludeRegex);
             return result;
         }
@@ -757,7 +757,7 @@ public final class Main {
             }
             // ensure there is no conflicting options
             else if (printAst || printAstWithComments || printJavadocTree || printTreeWithJavadoc
-                || xpath != null) {
+                     || xpath != null) {
                 if (suppressionLineColumnNumber != null || configurationFile != null
                         || propertiesFile != null || outputPath != null
                         || parseResult.hasMatchedOption(OUTPUT_FORMAT_OPTION)) {
@@ -803,7 +803,7 @@ public final class Main {
             final List<String> result = new ArrayList<>();
             if (propertiesFile != null && !propertiesFile.exists()) {
                 result.add(String.format(Locale.ROOT,
-                        "Could not find file '%s'.", propertiesFile));
+                                         "Could not find file '%s'.", propertiesFile));
             }
             if (checkerThreadsNumber < 1) {
                 result.add("Checker threads number must be greater than zero");

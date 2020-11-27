@@ -69,7 +69,7 @@ public final class DefaultConfiguration implements Configuration {
      * @param threadModeSettings the thread mode configuration.
      */
     public DefaultConfiguration(String name,
-        ThreadModeSettings threadModeSettings) {
+                                ThreadModeSettings threadModeSettings) {
         this.name = name;
         this.threadModeSettings = threadModeSettings;
     }
@@ -84,7 +84,7 @@ public final class DefaultConfiguration implements Configuration {
     public String getAttribute(String attributeName) throws CheckstyleException {
         if (!attributeMap.containsKey(attributeName)) {
             throw new CheckstyleException(
-                    "missing key '" + attributeName + "' in " + name);
+                "missing key '" + attributeName + "' in " + name);
         }
         return attributeMap.get(attributeName);
     }
@@ -92,7 +92,7 @@ public final class DefaultConfiguration implements Configuration {
     @Override
     public Configuration[] getChildren() {
         return children.toArray(
-                EMPTY_CONFIGURATION_ARRAY);
+                   EMPTY_CONFIGURATION_ARRAY);
     }
 
     @Override

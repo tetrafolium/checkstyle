@@ -47,11 +47,11 @@ public class SummaryJavadocTest extends AbstractGoogleModuleTestSupport {
     @Test
     public void testIncorrect() throws Exception {
         final String msgFirstSentence = getCheckMessage(SummaryJavadocCheck.class,
-            "summary.first.sentence");
+                                        "summary.first.sentence");
         final String msgForbiddenFragment = getCheckMessage(SummaryJavadocCheck.class,
-            "summary.javaDoc");
+                                            "summary.javaDoc");
         final String msgMissingDoc = getCheckMessage(SummaryJavadocCheck.class,
-            "summary.javaDoc.missing");
+                                     "summary.javaDoc.missing");
 
         final String[] expected = {
             "14: " + msgMissingDoc,

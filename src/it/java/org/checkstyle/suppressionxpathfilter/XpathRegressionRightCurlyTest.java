@@ -41,91 +41,91 @@ public class XpathRegressionRightCurlyTest extends AbstractXpathTestSupport {
     @Test
     public void testOne() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionRightCurlyOne.java"));
+            new File(getPath("SuppressionXpathRegressionRightCurlyOne.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(RightCurlyCheck.class);
+            createModuleConfig(RightCurlyCheck.class);
 
         final String[] expectedViolation = {
             "8:9: " + getCheckMessage(RightCurlyCheck.class,
-                RightCurlyCheck.MSG_KEY_LINE_SAME, "}", 9),
+                                      RightCurlyCheck.MSG_KEY_LINE_SAME, "}", 9),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionRightCurlyOne']]/OBJBLOCK"
-                + "/METHOD_DEF[./IDENT[@text='test']]/SLIST/LITERAL_IF/SLIST/RCURLY"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionRightCurlyOne']]/OBJBLOCK"
+                    + "/METHOD_DEF[./IDENT[@text='test']]/SLIST/LITERAL_IF/SLIST/RCURLY"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionRightCurlyTwo.java"));
+            new File(getPath("SuppressionXpathRegressionRightCurlyTwo.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(RightCurlyCheck.class);
+            createModuleConfig(RightCurlyCheck.class);
         moduleConfig.addAttribute("option", RightCurlyOption.ALONE.toString());
 
         final String[] expectedViolation = {
             "9:15: " + getCheckMessage(RightCurlyCheck.class,
-                RightCurlyCheck.MSG_KEY_LINE_ALONE, "}", 15),
+                                       RightCurlyCheck.MSG_KEY_LINE_ALONE, "}", 15),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionRightCurlyTwo']]/OBJBLOCK"
-                + "/METHOD_DEF[./IDENT[@text='fooMethod']]/SLIST/LITERAL_TRY/SLIST/RCURLY"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionRightCurlyTwo']]/OBJBLOCK"
+                    + "/METHOD_DEF[./IDENT[@text='fooMethod']]/SLIST/LITERAL_TRY/SLIST/RCURLY"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testThree() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionRightCurlyThree.java"));
+            new File(getPath("SuppressionXpathRegressionRightCurlyThree.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(RightCurlyCheck.class);
+            createModuleConfig(RightCurlyCheck.class);
         moduleConfig.addAttribute("option", RightCurlyOption.ALONE.toString());
 
         final String[] expectedViolation = {
             "5:72: " + getCheckMessage(RightCurlyCheck.class,
-                RightCurlyCheck.MSG_KEY_LINE_ALONE, "}", 72),
+                                       RightCurlyCheck.MSG_KEY_LINE_ALONE, "}", 72),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionRightCurlyThree']]/OBJBLOCK"
-                + "/METHOD_DEF[./IDENT[@text='sample']]/SLIST/LITERAL_IF/SLIST/RCURLY"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionRightCurlyThree']]/OBJBLOCK"
+                    + "/METHOD_DEF[./IDENT[@text='sample']]/SLIST/LITERAL_IF/SLIST/RCURLY"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testFour() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionRightCurlyFour.java"));
+            new File(getPath("SuppressionXpathRegressionRightCurlyFour.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(RightCurlyCheck.class);
+            createModuleConfig(RightCurlyCheck.class);
         moduleConfig.addAttribute("option", RightCurlyOption.SAME.toString());
 
         final String[] expectedViolation = {
             "7:27: " + getCheckMessage(RightCurlyCheck.class,
-                RightCurlyCheck.MSG_KEY_LINE_BREAK_BEFORE, "}", 27),
+                                       RightCurlyCheck.MSG_KEY_LINE_BREAK_BEFORE, "}", 27),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionRightCurlyFour']]/OBJBLOCK"
-                + "/METHOD_DEF[./IDENT[@text='sample']]/SLIST/LITERAL_IF/SLIST/RCURLY"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionRightCurlyFour']]/OBJBLOCK"
+                    + "/METHOD_DEF[./IDENT[@text='sample']]/SLIST/LITERAL_IF/SLIST/RCURLY"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }

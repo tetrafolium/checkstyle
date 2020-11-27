@@ -76,11 +76,15 @@ class InputRightCurlyOtherAlone
         boolean flag = true;
         if (flag) {
             System.identityHashCode("heh");
-            flag = !flag; } System. //ok for alone config
-              identityHashCode("Xe-xe");
+            flag = !flag;
+        }
+        System. //ok for alone config
+        identityHashCode("Xe-xe");
 
 
-        if (flag) { System.identityHashCode("some foo"); }
+        if (flag) {
+            System.identityHashCode("some foo");
+        }
     } //ok
 } //ok
 
@@ -94,7 +98,8 @@ class FooCtorAlone
     public FooCtorAlone()
     {
         i = 1;
-    }} //warn
+    }
+} //warn
 
 /**
 * Test input for closing brace if that brace terminates
@@ -105,7 +110,8 @@ class FooMethodAlone
     public void fooMethod()
     {
         int i = 1;
-    }} //warn
+    }
+} //warn
 
 /**
 * Test input for closing brace if that brace terminates
@@ -119,7 +125,8 @@ class FooInnerAlone
         {
 
         }
-    }} //warn
+    }
+} //warn
 
 class EnumContainerAlone {
     private enum Suit { CLUBS, HEARTS, SPADES, DIAMONDS } // warn
@@ -132,31 +139,35 @@ class WithArraysAlone {
         "foo", "foo",
     }; // ok
     String[] s2 =
-        {
-            "foo", "foo",
-        }; // ok
+    {
+        "foo", "foo",
+    }; // ok
     String[] s3 =
-        {
-            "foo",
-            "foo",
-        }; // ok
+    {
+        "foo",
+        "foo",
+    }; // ok
     String[] s4 =
-        {"foo", "foo"}; // ok
+    {"foo", "foo"}; // ok
 }
 
 class Interface {
     public @interface TestAnnotation {} //warn
 
-    public @interface TestAnnotation1 { String someValue(); } //warn
+    public @interface TestAnnotation1 {
+        String someValue();    //warn
+    }
 
     public @interface TestAnnotation2 {
-        String someValue();} //warn
+        String someValue();
+    } //warn
 
     public @interface TestAnnotation3 {
         String someValue();
     } //ok
 
-    public @interface TestAnnotation4 { String someValue();
+    public @interface TestAnnotation4 {
+        String someValue();
     } //ok
 }
 
@@ -165,11 +176,12 @@ enum TestEnum {} //warn
 enum TestEnum1 { SOME_VALUE; } //warn
 
 enum TestEnum2 {
-    SOME_VALUE;} //warn
+    SOME_VALUE;
+} //warn
 
 enum TestEnum3 {
     SOME_VALUE;
 }
 
 enum TestEnum4 { SOME_VALUE;
-}
+               }

@@ -126,13 +126,13 @@ public class MethodParamPadCheck
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.CTOR_DEF,
-            TokenTypes.LITERAL_NEW,
-            TokenTypes.METHOD_CALL,
-            TokenTypes.METHOD_DEF,
-            TokenTypes.SUPER_CTOR_CALL,
-            TokenTypes.ENUM_CONSTANT_DEF,
-        };
+                   TokenTypes.CTOR_DEF,
+                   TokenTypes.LITERAL_NEW,
+                   TokenTypes.METHOD_CALL,
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.SUPER_CTOR_CALL,
+                   TokenTypes.ENUM_CONSTANT_DEF,
+               };
     }
 
     @Override
@@ -161,7 +161,7 @@ public class MethodParamPadCheck
             else {
                 final int before = parenAST.getColumnNo() - 1;
                 if (option == PadOption.NOSPACE
-                    && Character.isWhitespace(line.charAt(before))) {
+                        && Character.isWhitespace(line.charAt(before))) {
                     log(parenAST, MSG_WS_PRECEDED, parenAST.getText());
                 }
                 else if (option == PadOption.SPACE

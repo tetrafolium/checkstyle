@@ -82,34 +82,34 @@ public class AnnotationOnSameLineCheck extends AbstractCheck {
     @Override
     public int[] getDefaultTokens() {
         return new int[] {
-            TokenTypes.CLASS_DEF,
-            TokenTypes.INTERFACE_DEF,
-            TokenTypes.ENUM_DEF,
-            TokenTypes.METHOD_DEF,
-            TokenTypes.CTOR_DEF,
-            TokenTypes.VARIABLE_DEF,
-        };
+                   TokenTypes.CLASS_DEF,
+                   TokenTypes.INTERFACE_DEF,
+                   TokenTypes.ENUM_DEF,
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.CTOR_DEF,
+                   TokenTypes.VARIABLE_DEF,
+               };
     }
 
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.CLASS_DEF,
-            TokenTypes.INTERFACE_DEF,
-            TokenTypes.ENUM_DEF,
-            TokenTypes.METHOD_DEF,
-            TokenTypes.CTOR_DEF,
-            TokenTypes.VARIABLE_DEF,
-            TokenTypes.PARAMETER_DEF,
-            TokenTypes.ANNOTATION_DEF,
-            TokenTypes.TYPECAST,
-            TokenTypes.LITERAL_THROWS,
-            TokenTypes.IMPLEMENTS_CLAUSE,
-            TokenTypes.TYPE_ARGUMENT,
-            TokenTypes.LITERAL_NEW,
-            TokenTypes.DOT,
-            TokenTypes.ANNOTATION_FIELD_DEF,
-        };
+                   TokenTypes.CLASS_DEF,
+                   TokenTypes.INTERFACE_DEF,
+                   TokenTypes.ENUM_DEF,
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.CTOR_DEF,
+                   TokenTypes.VARIABLE_DEF,
+                   TokenTypes.PARAMETER_DEF,
+                   TokenTypes.ANNOTATION_DEF,
+                   TokenTypes.TYPECAST,
+                   TokenTypes.LITERAL_THROWS,
+                   TokenTypes.IMPLEMENTS_CLAUSE,
+                   TokenTypes.TYPE_ARGUMENT,
+                   TokenTypes.LITERAL_NEW,
+                   TokenTypes.DOT,
+                   TokenTypes.ANNOTATION_FIELD_DEF,
+               };
     }
 
     @Override
@@ -134,7 +134,7 @@ public class AnnotationOnSameLineCheck extends AbstractCheck {
                 if (annotationNode.getType() == TokenTypes.ANNOTATION
                         && !TokenUtil.areOnSameLine(annotationNode, getNextNode(annotationNode))) {
                     log(annotationNode.getLineNo(), MSG_KEY_ANNOTATION_ON_SAME_LINE,
-                          getAnnotationName(annotationNode));
+                        getAnnotationName(annotationNode));
                 }
             }
         }

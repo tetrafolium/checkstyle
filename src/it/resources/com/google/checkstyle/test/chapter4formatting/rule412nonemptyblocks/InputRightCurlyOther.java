@@ -76,11 +76,15 @@ class InputRightCurlyOther
         boolean flag = true;
         if (flag) {
             System.identityHashCode("heh");
-            flag = !flag; } System. //warn
-              identityHashCode("Xe-xe");
+            flag = !flag;
+        }
+        System. //warn
+        identityHashCode("Xe-xe");
 
 
-        if (flag) { System.identityHashCode("some foo"); }
+        if (flag) {
+            System.identityHashCode("some foo");
+        }
     } //ok
 } //ok
 
@@ -94,7 +98,8 @@ class FooCtor
     public FooCtor()
     {
         i = 1;
-    }} //ok
+    }
+} //ok
 
 /**
 * Test input for closing brace if that brace terminates
@@ -105,7 +110,8 @@ class FooMethod
     public void fooMethod()
     {
         int i = 1;
-    }} //ok
+    }
+} //ok
 
 /**
 * Test input for closing brace if that brace terminates
@@ -119,7 +125,8 @@ class FooInner
         {
 
         }
-    }} //ok
+    }
+} //ok
 
 class EnumContainer {
     private enum Suit { CLUBS, HEARTS, SPADES, DIAMONDS } // ok
@@ -132,14 +139,14 @@ class WithArrays {
         "foo", "foo",
     }; // ok
     String[] s2 =
-        {
-            "foo", "foo",
-        }; // ok
+    {
+        "foo", "foo",
+    }; // ok
     String[] s3 =
-        {
-            "foo",
-            "foo",
-        }; // ok
+    {
+        "foo",
+        "foo",
+    }; // ok
     String[] s4 =
-        {"foo", "foo"}; // ok
+    {"foo", "foo"}; // ok
 }

@@ -202,15 +202,15 @@ public class RedundantModifierCheck
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.METHOD_DEF,
-            TokenTypes.VARIABLE_DEF,
-            TokenTypes.ANNOTATION_FIELD_DEF,
-            TokenTypes.INTERFACE_DEF,
-            TokenTypes.CTOR_DEF,
-            TokenTypes.CLASS_DEF,
-            TokenTypes.ENUM_DEF,
-            TokenTypes.RESOURCE,
-        };
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.VARIABLE_DEF,
+                   TokenTypes.ANNOTATION_FIELD_DEF,
+                   TokenTypes.INTERFACE_DEF,
+                   TokenTypes.CTOR_DEF,
+                   TokenTypes.CLASS_DEF,
+                   TokenTypes.ENUM_DEF,
+                   TokenTypes.RESOURCE,
+               };
     }
 
     @Override
@@ -253,7 +253,7 @@ public class RedundantModifierCheck
 
         for (final int tokenType : TOKENS_FOR_INTERFACE_MODIFIERS) {
             final DetailAST modifier =
-                    modifiers.findFirstToken(tokenType);
+                modifiers.findFirstToken(tokenType);
             if (modifier != null) {
                 log(modifier, MSG_KEY, modifier.getText());
             }
@@ -315,12 +315,12 @@ public class RedundantModifierCheck
 
             final int type = modifier.getType();
             if (type == TokenTypes.LITERAL_PUBLIC
-                || type == TokenTypes.LITERAL_STATIC
-                        && ast.getType() != TokenTypes.METHOD_DEF
-                || type == TokenTypes.ABSTRACT
-                        && ast.getType() != TokenTypes.CLASS_DEF
-                || type == TokenTypes.FINAL
-                        && ast.getType() != TokenTypes.CLASS_DEF) {
+                    || type == TokenTypes.LITERAL_STATIC
+                    && ast.getType() != TokenTypes.METHOD_DEF
+                    || type == TokenTypes.ABSTRACT
+                    && ast.getType() != TokenTypes.CLASS_DEF
+                    || type == TokenTypes.FINAL
+                    && ast.getType() != TokenTypes.CLASS_DEF) {
                 log(modifier, MSG_KEY, modifier.getText());
                 break;
             }
@@ -335,7 +335,7 @@ public class RedundantModifierCheck
      */
     private void processMethods(DetailAST ast) {
         final DetailAST modifiers =
-                        ast.findFirstToken(TokenTypes.MODIFIERS);
+            ast.findFirstToken(TokenTypes.MODIFIERS);
         // private method?
         boolean checkFinal =
             modifiers.findFirstToken(TokenTypes.LITERAL_PRIVATE) != null;
@@ -349,7 +349,7 @@ public class RedundantModifierCheck
                 parent = null;
             }
             else if (parent.getType() == TokenTypes.LITERAL_NEW
-                    || parent.getType() == TokenTypes.ENUM_CONSTANT_DEF) {
+                     || parent.getType() == TokenTypes.ENUM_CONSTANT_DEF) {
                 checkFinal = true;
                 parent = null;
             }
@@ -428,7 +428,7 @@ public class RedundantModifierCheck
      */
     private static boolean isClassProtected(DetailAST classDef) {
         final DetailAST classModifiers =
-                classDef.findFirstToken(TokenTypes.MODIFIERS);
+            classDef.findFirstToken(TokenTypes.MODIFIERS);
         return classModifiers.findFirstToken(TokenTypes.LITERAL_PROTECTED) != null;
     }
 
@@ -442,7 +442,7 @@ public class RedundantModifierCheck
         final boolean isMostOuterScope = ast.getParent() == null;
         final DetailAST modifiersAst = ast.findFirstToken(TokenTypes.MODIFIERS);
         final boolean hasPublicModifier =
-                modifiersAst.findFirstToken(TokenTypes.LITERAL_PUBLIC) != null;
+            modifiersAst.findFirstToken(TokenTypes.LITERAL_PUBLIC) != null;
 
         if (isMostOuterScope) {
             isAccessibleFromPublic = hasPublicModifier;
@@ -480,8 +480,8 @@ public class RedundantModifierCheck
             parentTypeDef = parentTypeDef.getParent();
         }
         return parentTypeDef != null
-                && (parentTypeDef.getType() == TokenTypes.INTERFACE_DEF
-                    || parentTypeDef.getType() == TokenTypes.ANNOTATION_DEF);
+               && (parentTypeDef.getType() == TokenTypes.INTERFACE_DEF
+                   || parentTypeDef.getType() == TokenTypes.ANNOTATION_DEF);
     }
 
     /**

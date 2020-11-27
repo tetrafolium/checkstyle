@@ -79,7 +79,7 @@ class InputEmptyLineSeparator //warn
 
         public static final double FOO_PI_INNER = 3.1415;
         private boolean flagInner = true;
-        { //warn
+        {   //warn
             //empty instance initializer
         }
 
@@ -110,13 +110,13 @@ class InputEmptyLineSeparator //warn
 class Clazz { //ok
     private Clazz() {} //ok
 }
-class Class2{ //warn
+class Class2 { //warn
     public int compareTo(InputEmptyLineSeparator aObject) //ok
     {
         int number = 0;
         return 0;
     }
-    Class2 anon = new Class2(){ //warn
+    Class2 anon = new Class2() { //warn
         public int compareTo(InputEmptyLineSeparator aObject) //ok
         {
             int number = 0;

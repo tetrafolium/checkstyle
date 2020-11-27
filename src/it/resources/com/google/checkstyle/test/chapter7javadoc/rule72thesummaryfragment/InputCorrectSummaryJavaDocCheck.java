@@ -34,11 +34,11 @@ class InputCorrectSummaryJavaDocCheck {
      * This is valid.
      * <a href="mailto:vlad@htmlbook.ru"/>
      */
-     class InnerInputCorrectJavaDocParagraphCheck {
+    class InnerInputCorrectJavaDocParagraphCheck {
 
-         /**
-          * foooo@foooo.
-          */
+        /**
+         * foooo@foooo.
+         */
         public static final byte NUL = 0;
 
         /**
@@ -50,7 +50,9 @@ class InputCorrectSummaryJavaDocCheck {
         /**
          * Returns the customer ID. This method returns.
          */
-        int getId() {return 666;}
+        int getId() {
+            return 666;
+        }
 
         /**
          * This is valid.
@@ -83,13 +85,13 @@ class InputCorrectSummaryJavaDocCheck {
         void foo6() {}
     }
 
-     /**
-      * Some
-      * javadoc. A {@code Foo} is a simple Javadoc.
-      *
-      * Some Javadoc. A {@code Foo}
-      * is a simple Javadoc.
-      */
+    /**
+     * Some
+     * javadoc. A {@code Foo} is a simple Javadoc.
+     *
+     * Some Javadoc. A {@code Foo}
+     * is a simple Javadoc.
+     */
     InnerInputCorrectJavaDocParagraphCheck anon = new InnerInputCorrectJavaDocParagraphCheck() {
 
         /**
@@ -101,7 +103,9 @@ class InputCorrectSummaryJavaDocCheck {
          * Returns the current state.
          * This method returns.
          */
-        boolean emulated(String s) {return false;}
+        boolean emulated(String s) {
+            return false;
+        }
 
         /**
          * As of JDK 1.1, replaced by {@link #setBounds(int,int,int,int)}.
@@ -125,17 +129,23 @@ class InputCorrectSummaryJavaDocCheck {
         /**
          * Some Javadoc. This method returns some javadoc.
          */
-        boolean emulated() {return false;}
+        boolean emulated() {
+            return false;
+        }
 
         /**
          * Some Javadoc. This method returns some javadoc. Some Javadoc.
          */
-        boolean emulated1() {return false;}
+        boolean emulated1() {
+            return false;
+        }
 
         /**
          * This is valid.
          * @return Some Javadoc the customer ID.
          */
-        int geId() {return 666;}
+        int geId() {
+            return 666;
+        }
     };
 }

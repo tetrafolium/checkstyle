@@ -92,8 +92,8 @@ public final class TokenUtil {
      */
     public static Map<String, Integer> nameToValueMapFromPublicIntFields(Class<?> cls) {
         final Map<String, Integer> map = Arrays.stream(cls.getDeclaredFields())
-            .filter(fld -> Modifier.isPublic(fld.getModifiers()) && fld.getType() == Integer.TYPE)
-            .collect(Collectors.toMap(Field::getName, fld -> getIntFromField(fld, fld.getName())));
+                                         .filter(fld -> Modifier.isPublic(fld.getModifiers()) && fld.getType() == Integer.TYPE)
+                                         .collect(Collectors.toMap(Field::getName, fld -> getIntFromField(fld, fld.getName())));
         return Collections.unmodifiableMap(map);
     }
 
@@ -195,9 +195,9 @@ public final class TokenUtil {
      */
     public static boolean isCommentType(int type) {
         return type == TokenTypes.SINGLE_LINE_COMMENT
-                || type == TokenTypes.BLOCK_COMMENT_BEGIN
-                || type == TokenTypes.BLOCK_COMMENT_END
-                || type == TokenTypes.COMMENT_CONTENT;
+               || type == TokenTypes.BLOCK_COMMENT_BEGIN
+               || type == TokenTypes.BLOCK_COMMENT_END
+               || type == TokenTypes.COMMENT_CONTENT;
     }
 
     /**
@@ -219,7 +219,7 @@ public final class TokenUtil {
      * @return {@link Optional} of {@link DetailAST} node which matches the predicate.
      */
     public static Optional<DetailAST> findFirstTokenByPredicate(DetailAST root,
-                                                                Predicate<DetailAST> predicate) {
+            Predicate<DetailAST> predicate) {
         Optional<DetailAST> result = Optional.empty();
         for (DetailAST ast = root.getFirstChild(); ast != null; ast = ast.getNextSibling()) {
             if (predicate.test(ast)) {

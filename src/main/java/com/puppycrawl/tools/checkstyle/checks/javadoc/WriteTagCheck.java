@@ -154,7 +154,7 @@ public class WriteTagCheck
                           TokenTypes.CLASS_DEF,
                           TokenTypes.ENUM_DEF,
                           TokenTypes.ANNOTATION_DEF,
-        };
+                         };
     }
 
     @Override
@@ -167,7 +167,7 @@ public class WriteTagCheck
                           TokenTypes.CTOR_DEF,
                           TokenTypes.ENUM_CONSTANT_DEF,
                           TokenTypes.ANNOTATION_FIELD_DEF,
-        };
+                         };
     }
 
     @Override

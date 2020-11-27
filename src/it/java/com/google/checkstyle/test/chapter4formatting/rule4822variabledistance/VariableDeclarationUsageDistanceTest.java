@@ -36,7 +36,7 @@ public class VariableDeclarationUsageDistanceTest extends AbstractGoogleModuleTe
     public void testArrayTypeStyle() throws Exception {
         final String msgExt = "variable.declaration.usage.distance.extend";
         final Class<VariableDeclarationUsageDistanceCheck> clazz =
-                VariableDeclarationUsageDistanceCheck.class;
+            VariableDeclarationUsageDistanceCheck.class;
 
         final String[] expected = {
             "71: " + getCheckMessage(clazz, msgExt, "count", 4, 3),

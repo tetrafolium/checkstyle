@@ -80,12 +80,12 @@ public class NonEmptyAtclauseDescriptionCheck extends AbstractJavadocCheck {
     @Override
     public int[] getDefaultJavadocTokens() {
         return new int[] {
-            JavadocTokenTypes.PARAM_LITERAL,
-            JavadocTokenTypes.RETURN_LITERAL,
-            JavadocTokenTypes.THROWS_LITERAL,
-            JavadocTokenTypes.EXCEPTION_LITERAL,
-            JavadocTokenTypes.DEPRECATED_LITERAL,
-        };
+                   JavadocTokenTypes.PARAM_LITERAL,
+                   JavadocTokenTypes.RETURN_LITERAL,
+                   JavadocTokenTypes.THROWS_LITERAL,
+                   JavadocTokenTypes.EXCEPTION_LITERAL,
+                   JavadocTokenTypes.DEPRECATED_LITERAL,
+               };
     }
 
     @Override
@@ -102,7 +102,7 @@ public class NonEmptyAtclauseDescriptionCheck extends AbstractJavadocCheck {
      */
     private static boolean isEmptyTag(DetailNode tagNode) {
         final DetailNode tagDescription =
-                JavadocUtil.findFirstToken(tagNode, JavadocTokenTypes.DESCRIPTION);
+            JavadocUtil.findFirstToken(tagNode, JavadocTokenTypes.DESCRIPTION);
         return tagDescription == null;
     }
 

@@ -81,8 +81,8 @@ public class InnerTypeLastCheck extends AbstractCheck {
             DetailAST nextSibling = ast.getNextSibling();
             while (nextSibling != null) {
                 if (!ScopeUtil.isInCodeBlock(ast)
-                    && (nextSibling.getType() == TokenTypes.VARIABLE_DEF
-                        || nextSibling.getType() == TokenTypes.METHOD_DEF)) {
+                        && (nextSibling.getType() == TokenTypes.VARIABLE_DEF
+                            || nextSibling.getType() == TokenTypes.METHOD_DEF)) {
                     log(nextSibling, MSG_KEY);
                 }
                 nextSibling = nextSibling.getNextSibling();

@@ -54,7 +54,7 @@ import com.puppycrawl.tools.checkstyle.utils.CheckUtil;
  */
 @FileStatefulCheck
 public class EqualsHashCodeCheck
-        extends AbstractCheck {
+    extends AbstractCheck {
 
     // implementation note: we have to use the following members to
     // keep track of definitions in different inner classes
@@ -119,9 +119,9 @@ public class EqualsHashCodeCheck
         final DetailAST parameters = ast.findFirstToken(TokenTypes.PARAMETERS);
 
         return CheckUtil.isEqualsMethod(ast)
-                && isObjectParam(parameters.getFirstChild())
-                && (ast.findFirstToken(TokenTypes.SLIST) != null
-                        || modifiers.findFirstToken(TokenTypes.LITERAL_NATIVE) != null);
+               && isObjectParam(parameters.getFirstChild())
+               && (ast.findFirstToken(TokenTypes.SLIST) != null
+                   || modifiers.findFirstToken(TokenTypes.LITERAL_NATIVE) != null);
     }
 
     /**
@@ -136,9 +136,9 @@ public class EqualsHashCodeCheck
         final DetailAST parameters = ast.findFirstToken(TokenTypes.PARAMETERS);
 
         return "hashCode".equals(methodName.getText())
-                && parameters.getFirstChild() == null
-                && (ast.findFirstToken(TokenTypes.SLIST) != null
-                        || modifiers.findFirstToken(TokenTypes.LITERAL_NATIVE) != null);
+               && parameters.getFirstChild() == null
+               && (ast.findFirstToken(TokenTypes.SLIST) != null
+                   || modifiers.findFirstToken(TokenTypes.LITERAL_NATIVE) != null);
     }
 
     /**
@@ -156,12 +156,12 @@ public class EqualsHashCodeCheck
     @Override
     public void finishTree(DetailAST rootAST) {
         objBlockWithEquals
-            .entrySet().stream().filter(detailASTDetailASTEntry -> {
-                return objBlockWithHashCode.remove(detailASTDetailASTEntry.getKey()) == null;
-            }).forEach(detailASTDetailASTEntry -> {
-                final DetailAST equalsAST = detailASTDetailASTEntry.getValue();
-                log(equalsAST, MSG_KEY_HASHCODE);
-            });
+        .entrySet().stream().filter(detailASTDetailASTEntry -> {
+            return objBlockWithHashCode.remove(detailASTDetailASTEntry.getKey()) == null;
+        }).forEach(detailASTDetailASTEntry -> {
+            final DetailAST equalsAST = detailASTDetailASTEntry.getValue();
+            log(equalsAST, MSG_KEY_HASHCODE);
+        });
         objBlockWithHashCode.forEach((key, equalsAST) -> log(equalsAST, MSG_KEY_EQUALS));
     }
 

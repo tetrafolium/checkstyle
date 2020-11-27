@@ -109,13 +109,13 @@ public class AtclauseOrderCheck extends AbstractJavadocCheck {
      * Specify the list of targets to check at-clauses.
      */
     private List<Integer> target = Arrays.asList(
-        TokenTypes.CLASS_DEF,
-        TokenTypes.INTERFACE_DEF,
-        TokenTypes.ENUM_DEF,
-        TokenTypes.METHOD_DEF,
-        TokenTypes.CTOR_DEF,
-        TokenTypes.VARIABLE_DEF
-    );
+                                       TokenTypes.CLASS_DEF,
+                                       TokenTypes.INTERFACE_DEF,
+                                       TokenTypes.ENUM_DEF,
+                                       TokenTypes.METHOD_DEF,
+                                       TokenTypes.CTOR_DEF,
+                                       TokenTypes.VARIABLE_DEF
+                                   );
 
     /**
      * Specify the order by tags.
@@ -149,8 +149,8 @@ public class AtclauseOrderCheck extends AbstractJavadocCheck {
     @Override
     public int[] getDefaultJavadocTokens() {
         return new int[] {
-            JavadocTokenTypes.JAVADOC,
-        };
+                   JavadocTokenTypes.JAVADOC,
+               };
     }
 
     @Override

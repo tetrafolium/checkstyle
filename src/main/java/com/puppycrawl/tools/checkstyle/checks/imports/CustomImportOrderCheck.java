@@ -511,10 +511,10 @@ public class CustomImportOrderCheck extends AbstractCheck {
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.IMPORT,
-            TokenTypes.STATIC_IMPORT,
-            TokenTypes.PACKAGE_DEF,
-        };
+                   TokenTypes.IMPORT,
+                   TokenTypes.STATIC_IMPORT,
+                   TokenTypes.PACKAGE_DEF,
+               };
     }
 
     @Override
@@ -527,7 +527,7 @@ public class CustomImportOrderCheck extends AbstractCheck {
         if (ast.getType() == TokenTypes.PACKAGE_DEF) {
             if (customImportOrderRules.contains(SAME_PACKAGE_RULE_GROUP)) {
                 samePackageDomainsRegExp = createSamePackageRegexp(
-                        samePackageMatchingDepth, ast);
+                                               samePackageMatchingDepth, ast);
             }
         }
         else {
@@ -536,8 +536,8 @@ public class CustomImportOrderCheck extends AbstractCheck {
             final int endLineNo = ast.getLastChild().getLineNo();
             final boolean isStatic = ast.getType() == TokenTypes.STATIC_IMPORT;
             importToGroupList.add(new ImportDetails(importFullPath,
-                    lineNo, endLineNo, getImportGroup(isStatic, importFullPath),
-                    isStatic));
+                                                    lineNo, endLineNo, getImportGroup(isStatic, importFullPath),
+                                                    isStatic));
         }
     }
 
@@ -561,10 +561,10 @@ public class CustomImportOrderCheck extends AbstractCheck {
 
             if (importGroup.equals(currentGroup)) {
                 validateExtraEmptyLine(previousImportObjectFromCurrentGroup,
-                        importObject, fullImportIdent);
+                                       importObject, fullImportIdent);
                 if (isAlphabeticalOrderBroken(previousImportFromCurrentGroup, fullImportIdent)) {
                     log(importObject.getStartLineNumber(), MSG_LEX,
-                            fullImportIdent, previousImportFromCurrentGroup);
+                        fullImportIdent, previousImportFromCurrentGroup);
                 }
                 else {
                     previousImportFromCurrentGroup = fullImportIdent;
@@ -577,20 +577,20 @@ public class CustomImportOrderCheck extends AbstractCheck {
                     final String nextGroup = getNextImportGroup(currentGroupNumber + 1);
                     if (importGroup.equals(nextGroup)) {
                         validateMissedEmptyLine(previousImportObjectFromCurrentGroup,
-                                importObject, fullImportIdent);
+                                                importObject, fullImportIdent);
                         currentGroup = nextGroup;
                         currentGroupNumber = customImportOrderRules.indexOf(nextGroup);
                         previousImportFromCurrentGroup = fullImportIdent;
                     }
                     else {
                         logWrongImportGroupOrder(importObject.getStartLineNumber(),
-                                importGroup, nextGroup, fullImportIdent);
+                                                 importGroup, nextGroup, fullImportIdent);
                     }
                     previousImportObjectFromCurrentGroup = importObject;
                 }
                 else {
                     logWrongImportGroupOrder(importObject.getStartLineNumber(),
-                            importGroup, currentGroup, fullImportIdent);
+                                             importGroup, currentGroup, fullImportIdent);
                 }
             }
         }
@@ -631,7 +631,7 @@ public class CustomImportOrderCheck extends AbstractCheck {
     private String getFirstGroup() {
         final ImportDetails firstImport = importToGroupList.get(0);
         return getImportGroup(firstImport.isStaticImport(),
-                firstImport.getImportFullPath());
+                              firstImport.getImportFullPath());
     }
 
     /**
@@ -645,10 +645,10 @@ public class CustomImportOrderCheck extends AbstractCheck {
      *        true, if previous and current import are not in alphabetical order.
      */
     private boolean isAlphabeticalOrderBroken(String previousImport,
-                                              String currentImport) {
+            String currentImport) {
         return sortImportsInGroupAlphabetically
-                && previousImport != null
-                && compareImports(currentImport, previousImport) < 0;
+               && previousImport != null
+               && compareImports(currentImport, previousImport) < 0;
     }
 
     /**
@@ -664,9 +664,9 @@ public class CustomImportOrderCheck extends AbstractCheck {
     private boolean isEmptyLineMissed(ImportDetails previousImportObject,
                                       ImportDetails currentImportObject) {
         return separateLineBetweenGroups
-                && getCountOfEmptyLinesBetween(
-                     previousImportObject.getEndLineNumber(),
-                     currentImportObject.getStartLineNumber()) != 1;
+               && getCountOfEmptyLinesBetween(
+                   previousImportObject.getEndLineNumber(),
+                   currentImportObject.getStartLineNumber()) != 1;
     }
 
     /**
@@ -680,11 +680,11 @@ public class CustomImportOrderCheck extends AbstractCheck {
      *        true, if current import separated from previous by more that one empty line.
      */
     private boolean isSeparatedByExtraEmptyLine(ImportDetails previousImportObject,
-                                                ImportDetails currentImportObject) {
+            ImportDetails currentImportObject) {
         return previousImportObject != null
-                && getCountOfEmptyLinesBetween(
-                     previousImportObject.getEndLineNumber(),
-                     currentImportObject.getStartLineNumber()) > 0;
+               && getCountOfEmptyLinesBetween(
+                   previousImportObject.getEndLineNumber(),
+                   currentImportObject.getStartLineNumber()) > 0;
     }
 
     /**
@@ -699,7 +699,7 @@ public class CustomImportOrderCheck extends AbstractCheck {
      *        full import name.
      */
     private void logWrongImportGroupOrder(int currentImportLine, String importGroup,
-            String currentGroupNumber, String fullImportIdent) {
+                                          String currentGroupNumber, String fullImportIdent) {
         if (NON_GROUP_RULE_GROUP.equals(importGroup)) {
             log(currentImportLine, MSG_NONGROUP_IMPORT, fullImportIdent);
         }
@@ -764,7 +764,7 @@ public class CustomImportOrderCheck extends AbstractCheck {
         }
         else if (customImportOrderRules.contains(SAME_PACKAGE_RULE_GROUP)) {
             final String importPathTrimmedToSamePackageDepth =
-                    getFirstDomainsFromIdent(samePackageMatchingDepth, importPath);
+                getFirstDomainsFromIdent(samePackageMatchingDepth, importPath);
             if (samePackageDomainsRegExp.equals(importPathTrimmedToSamePackageDepth)) {
                 bestMatch.group = SAME_PACKAGE_RULE_GROUP;
                 bestMatch.matchLength = importPath.length();
@@ -774,11 +774,11 @@ public class CustomImportOrderCheck extends AbstractCheck {
             for (String group : customImportOrderRules) {
                 if (STANDARD_JAVA_PACKAGE_RULE_GROUP.equals(group)) {
                     bestMatch = findBetterPatternMatch(importPath,
-                            STANDARD_JAVA_PACKAGE_RULE_GROUP, standardPackageRegExp, bestMatch);
+                                                       STANDARD_JAVA_PACKAGE_RULE_GROUP, standardPackageRegExp, bestMatch);
                 }
                 if (SPECIAL_IMPORTS_RULE_GROUP.equals(group)) {
                     bestMatch = findBetterPatternMatch(importPath,
-                            group, specialImportsRegExp, bestMatch);
+                                                       group, specialImportsRegExp, bestMatch);
                 }
             }
         }
@@ -813,7 +813,7 @@ public class CustomImportOrderCheck extends AbstractCheck {
             final int length = matcher.end() - matcher.start();
             if (length > betterMatchCandidate.matchLength
                     || length == betterMatchCandidate.matchLength
-                        && matcher.start() < betterMatchCandidate.matchPosition) {
+                    && matcher.start() < betterMatchCandidate.matchPosition) {
                 betterMatchCandidate = new RuleMatchForImport(group, length, matcher.start());
             }
         }
@@ -901,11 +901,11 @@ public class CustomImportOrderCheck extends AbstractCheck {
         }
         else if (ruleStr.startsWith(SAME_PACKAGE_RULE_GROUP)) {
             final String rule = ruleStr.substring(ruleStr.indexOf('(') + 1,
-                    ruleStr.indexOf(')'));
+                                                  ruleStr.indexOf(')'));
             samePackageMatchingDepth = Integer.parseInt(rule);
             if (samePackageMatchingDepth <= 0) {
                 throw new IllegalArgumentException(
-                        "SAME_PACKAGE rule parameter should be positive integer: " + ruleStr);
+                    "SAME_PACKAGE rule parameter should be positive integer: " + ruleStr);
             }
             customImportOrderRules.add(SAME_PACKAGE_RULE_GROUP);
         }
@@ -923,7 +923,7 @@ public class CustomImportOrderCheck extends AbstractCheck {
      * @return same package regexp.
      */
     private static String createSamePackageRegexp(int firstPackageDomainsCount,
-             DetailAST packageNode) {
+            DetailAST packageNode) {
         final String packageFullPath = getFullImportIdent(packageNode);
         return getFirstDomainsFromIdent(firstPackageDomainsCount, packageFullPath);
     }
@@ -938,7 +938,7 @@ public class CustomImportOrderCheck extends AbstractCheck {
      *        (if full identifier had less domain than specified)
      */
     private static String getFirstDomainsFromIdent(
-            final int firstPackageDomainsCount, final String packageFullPath) {
+        final int firstPackageDomainsCount, final String packageFullPath) {
         final StringBuilder builder = new StringBuilder(256);
         final StringTokenizer tokens = new StringTokenizer(packageFullPath, ".");
         int count = firstPackageDomainsCount;

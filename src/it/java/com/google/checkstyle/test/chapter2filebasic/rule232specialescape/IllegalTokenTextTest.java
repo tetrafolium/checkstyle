@@ -34,7 +34,7 @@ public class IllegalTokenTextTest extends AbstractGoogleModuleTestSupport {
     @Test
     public void testIllegalTokens() throws Exception {
         final String message = "Consider using special escape sequence instead of octal value or "
-                + "Unicode escaped value.";
+                               + "Unicode escaped value.";
 
         final String[] expected = {
             "18:27: " + message,

@@ -45,8 +45,8 @@ public class InputEmptyCatchBlockNoViolations
             return;
         }
         catch (IllegalStateException ex) {
-                System.identityHashCode(ex);
-                return;
+            System.identityHashCode(ex);
+            return;
         }
     }
 

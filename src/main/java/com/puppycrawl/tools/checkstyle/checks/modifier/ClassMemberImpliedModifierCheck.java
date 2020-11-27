@@ -153,9 +153,9 @@ public class ClassMemberImpliedModifierCheck
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.INTERFACE_DEF,
-            TokenTypes.ENUM_DEF,
-        };
+                   TokenTypes.INTERFACE_DEF,
+                   TokenTypes.ENUM_DEF,
+               };
     }
 
     @Override
@@ -163,20 +163,20 @@ public class ClassMemberImpliedModifierCheck
         if (ScopeUtil.isInClassBlock(ast) || ScopeUtil.isInEnumBlock(ast)) {
             final DetailAST modifiers = ast.findFirstToken(TokenTypes.MODIFIERS);
             switch (ast.getType()) {
-                case TokenTypes.ENUM_DEF:
-                    if (violateImpliedStaticOnNestedEnum
-                            && modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) == null) {
-                        log(ast, MSG_KEY, STATIC_KEYWORD);
-                    }
-                    break;
-                case TokenTypes.INTERFACE_DEF:
-                    if (violateImpliedStaticOnNestedInterface
-                            && modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) == null) {
-                        log(ast, MSG_KEY, STATIC_KEYWORD);
-                    }
-                    break;
-                default:
-                    throw new IllegalStateException(ast.toString());
+            case TokenTypes.ENUM_DEF:
+                if (violateImpliedStaticOnNestedEnum
+                        && modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) == null) {
+                    log(ast, MSG_KEY, STATIC_KEYWORD);
+                }
+                break;
+            case TokenTypes.INTERFACE_DEF:
+                if (violateImpliedStaticOnNestedInterface
+                        && modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) == null) {
+                    log(ast, MSG_KEY, STATIC_KEYWORD);
+                }
+                break;
+            default:
+                throw new IllegalStateException(ast.toString());
             }
         }
     }

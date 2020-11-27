@@ -131,9 +131,9 @@ class TagParser {
         }
         // is this closed tag
         final boolean closedTag =
-                endTag.getLineNo() < nLines
-                 && text[endTag.getLineNo()]
-                 .charAt(endTag.getColumnNo() - 1) == '/';
+            endTag.getLineNo() < nLines
+            && text[endTag.getLineNo()]
+            .charAt(endTag.getColumnNo() - 1) == '/';
         // add new tag
         add(new HtmlTag(tagId,
                         position.getLineNo() + lineNo,
@@ -157,8 +157,8 @@ class TagParser {
         // Character.isJavaIdentifier... may not be a valid HTML
         // identifier but is valid for generics
         return column >= text.length()
-                || Character.isJavaIdentifierStart(text.charAt(column))
-                    || text.charAt(column) == '/';
+               || Character.isJavaIdentifierStart(text.charAt(column))
+               || text.charAt(column) == '/';
     }
 
     /**
@@ -229,7 +229,7 @@ class TagParser {
     private static Point findChar(String[] text, char character, Point from) {
         Point curr = new Point(from.getLineNo(), from.getColumnNo());
         while (curr.getLineNo() < text.length
-               && text[curr.getLineNo()].charAt(curr.getColumnNo()) != character) {
+                && text[curr.getLineNo()].charAt(curr.getColumnNo()) != character) {
             curr = getNextCharPos(text, curr);
         }
 
@@ -254,12 +254,12 @@ class TagParser {
                 // skip beginning spaces and stars
                 final String currentLine = text[line];
                 while (column < currentLine.length()
-                       && (Character.isWhitespace(currentLine.charAt(column))
-                           || currentLine.charAt(column) == '*')) {
+                        && (Character.isWhitespace(currentLine.charAt(column))
+                            || currentLine.charAt(column) == '*')) {
                     column++;
                     if (column < currentLine.length()
-                        && currentLine.charAt(column - 1) == '*'
-                        && currentLine.charAt(column) == '/') {
+                            && currentLine.charAt(column - 1) == '*'
+                            && currentLine.charAt(column) == '/') {
                         // this is end of comment
                         column = currentLine.length();
                     }

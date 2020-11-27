@@ -109,8 +109,8 @@ public class SingleLineJavadocCheck extends AbstractJavadocCheck {
     @Override
     public int[] getDefaultJavadocTokens() {
         return new int[] {
-            JavadocTokenTypes.JAVADOC,
-        };
+                   JavadocTokenTypes.JAVADOC,
+               };
     }
 
     @Override
@@ -150,7 +150,7 @@ public class SingleLineJavadocCheck extends AbstractJavadocCheck {
      */
     private boolean hasJavadocTags(DetailNode javadocRoot) {
         final DetailNode javadocTagSection =
-                JavadocUtil.findFirstToken(javadocRoot, JavadocTokenTypes.JAVADOC_TAG);
+            JavadocUtil.findFirstToken(javadocRoot, JavadocTokenTypes.JAVADOC_TAG);
         return javadocTagSection != null && !isTagIgnored(javadocTagSection);
     }
 
@@ -165,7 +165,7 @@ public class SingleLineJavadocCheck extends AbstractJavadocCheck {
      */
     private boolean hasJavadocInlineTags(DetailNode javadocRoot) {
         DetailNode javadocTagSection =
-                JavadocUtil.findFirstToken(javadocRoot, JavadocTokenTypes.JAVADOC_INLINE_TAG);
+            JavadocUtil.findFirstToken(javadocRoot, JavadocTokenTypes.JAVADOC_INLINE_TAG);
         boolean foundTag = false;
         while (javadocTagSection != null) {
             if (!isTagIgnored(javadocTagSection)) {
@@ -173,7 +173,7 @@ public class SingleLineJavadocCheck extends AbstractJavadocCheck {
                 break;
             }
             javadocTagSection = JavadocUtil.getNextSibling(
-                    javadocTagSection, JavadocTokenTypes.JAVADOC_INLINE_TAG);
+                                    javadocTagSection, JavadocTokenTypes.JAVADOC_INLINE_TAG);
         }
         return foundTag;
     }

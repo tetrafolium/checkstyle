@@ -59,10 +59,10 @@ public class InputVariableDeclarationUsageDistanceCheck {
         int b = 2;
         {
             a = a
-                    + b
-                    - 5
-                    + 2
-                    * a;
+                + b
+                - 5
+                + 2
+                * a;
             count = b; // DECLARATION OF VARIABLE 'count' SHOULD BE HERE (distance = 2)
         }
     }
@@ -224,7 +224,7 @@ public class InputVariableDeclarationUsageDistanceCheck {
         a.setForward(d1);
         d1.setReverse(a);
         c.setForward(d2); // DECLARATION OF VARIABLE 'c' SHOULD BE HERE (distance = 3)
-                            // DECLARATION OF VARIABLE 'd2' SHOULD BE HERE (distance = 3)
+        // DECLARATION OF VARIABLE 'd2' SHOULD BE HERE (distance = 3)
         d2.setReverse(c);
         Serializable aid = s.save(a);
         Serializable d2id = s.save(d2);
@@ -263,9 +263,9 @@ public class InputVariableDeclarationUsageDistanceCheck {
         a++;
         for (int index = 0; index < 5; ++index) {
             sel[index] = Integer.parseInt(model.valueOf(a)); // DECLARATION OF VARIABLE 'sel'
-                                                             // SHOULD BE HERE (distance = 2)
-                                                             // DECLARATION OF VARIABLE 'model'
-                                                             // SHOULD BE HERE (distance = 2)
+            // SHOULD BE HERE (distance = 2)
+            // DECLARATION OF VARIABLE 'model'
+            // SHOULD BE HERE (distance = 2)
         }
         return sel;
     }
@@ -331,15 +331,15 @@ public class InputVariableDeclarationUsageDistanceCheck {
         final LogLevel logLevel = level;
         result.setMnemonic(level.toString().charAt(0));
         result.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            showLogLevelColorChangeDialog(result, logLevel); // DECLARATION OF VARIABLE 'logLevel'
-                                                             // SHOULD BE HERE (distance = 2)
-          }
+            public void actionPerformed(ActionEvent e) {
+                showLogLevelColorChangeDialog(result, logLevel); // DECLARATION OF VARIABLE 'logLevel'
+                // SHOULD BE HERE (distance = 2)
+            }
         });
 
         return result;
 
-      }
+    }
 
     public static Color darker(Color color, double fraction) {
         int red = (int) Math.round(color.getRed() * (1.0 - fraction));
@@ -378,7 +378,7 @@ public class InputVariableDeclarationUsageDistanceCheck {
 
         Timer timer = new Timer("Auth Guard", true);
         timer.schedule(task, intervalMs / 2, intervalMs); // DECLARATION OF VARIABLE 'intervalMs'
-                                                          // SHOULD BE HERE (distance = 2)
+        // SHOULD BE HERE (distance = 2)
     }
 
     public void testForCycle() {
@@ -503,7 +503,7 @@ public class InputVariableDeclarationUsageDistanceCheck {
 
 
     public int testIssue32_11(String toDir)
-            throws Exception
+    throws Exception
     {
         int count = 0;
         String[] files = {};
@@ -651,7 +651,7 @@ public class InputVariableDeclarationUsageDistanceCheck {
     class AuthUpdateTask {
 
         public AuthUpdateTask(Object authCheckUrl, Object authInfo,
-                IAuthListener iAuthListener) {
+                              IAuthListener iAuthListener) {
         }
 
     }
@@ -670,7 +670,7 @@ public class InputVariableDeclarationUsageDistanceCheck {
         }
 
         public void schedule(AuthUpdateTask authUpdateTask, long l,
-                long intervalMs) {
+                             long intervalMs) {
         }
 
     }
@@ -683,7 +683,8 @@ public class InputVariableDeclarationUsageDistanceCheck {
     }
 
     boolean isNull(Option o) {
-        return false;}
+        return false;
+    }
 
     class Writer {
 
@@ -700,7 +701,7 @@ public class InputVariableDeclarationUsageDistanceCheck {
         }
 
         public void
-                addOption(Option srcDdlFile, Option logDdlFile, Option help)
+        addOption(Option srcDdlFile, Option logDdlFile, Option help)
         {
 
         }

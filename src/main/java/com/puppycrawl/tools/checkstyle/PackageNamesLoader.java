@@ -81,7 +81,7 @@ public final class PackageNamesLoader
      * @throws SAXException if an error occurs
      */
     private PackageNamesLoader()
-            throws ParserConfigurationException, SAXException {
+    throws ParserConfigurationException, SAXException {
         super(createIdToResourceNameMap());
     }
 
@@ -134,7 +134,7 @@ public final class PackageNamesLoader
      * @throws CheckstyleException if an error occurs.
      */
     public static Set<String> getPackageNames(ClassLoader classLoader)
-            throws CheckstyleException {
+    throws CheckstyleException {
         final Set<String> result;
         try {
             // create the loader outside the loop to prevent PackageObjectFactory
@@ -167,7 +167,7 @@ public final class PackageNamesLoader
      * @throws CheckstyleException if unable to open file
      */
     private static void processFile(URL packageFile, PackageNamesLoader namesLoader)
-            throws SAXException, CheckstyleException {
+    throws SAXException, CheckstyleException {
         try (InputStream stream = new BufferedInputStream(packageFile.openStream())) {
             final InputSource source = new InputSource(stream);
             namesLoader.parseInputSource(source);

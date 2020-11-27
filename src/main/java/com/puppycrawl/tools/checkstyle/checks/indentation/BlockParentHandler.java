@@ -69,7 +69,7 @@ public class BlockParentHandler extends AbstractExpressionHandler {
      * @noinspection WeakerAccess
      */
     public BlockParentHandler(IndentationCheck indentCheck,
-        String name, DetailAST ast, AbstractExpressionHandler parent) {
+                              String name, DetailAST ast, AbstractExpressionHandler parent) {
         super(indentCheck, name, ast, parent);
     }
 
@@ -241,10 +241,10 @@ public class BlockParentHandler extends AbstractExpressionHandler {
             // NOTE: switch statements usually don't have curlies
             if (!hasCurlies() || !TokenUtil.areOnSameLine(getLeftCurly(), getRightCurly())) {
                 checkChildren(listChild,
-                        getCheckedChildren(),
-                        getChildrenExpectedIndent(),
-                        true,
-                        canChildrenBeNested());
+                              getCheckedChildren(),
+                              getChildrenExpectedIndent(),
+                              true,
+                              canChildrenBeNested());
             }
         }
     }
@@ -261,12 +261,12 @@ public class BlockParentHandler extends AbstractExpressionHandler {
         if (getIndent().isMultiLevel() && hasCurlies()) {
             if (isOnStartOfLine(getLeftCurly())) {
                 indentLevel = new IndentLevel(expandedTabsColumnNo(getLeftCurly())
-                        + getBasicOffset());
+                                              + getBasicOffset());
             }
             else if (isOnStartOfLine(getRightCurly())) {
                 final IndentLevel level = new IndentLevel(curlyIndent(), getBasicOffset());
                 indentLevel = IndentLevel.addAcceptable(level, level.getFirstIndentLevel()
-                        + getLineWrappingIndent());
+                                                        + getLineWrappingIndent());
             }
         }
         return indentLevel;

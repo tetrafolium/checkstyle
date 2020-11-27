@@ -84,7 +84,7 @@ public class InputRightCurlyDoWhileAlone {
 
         while
 
-            (true);
+        (true);
     }
 
     public void foo9() {

@@ -29,10 +29,10 @@ import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
 import com.puppycrawl.tools.checkstyle.checks.coding.UnnecessarySemicolonInEnumerationCheck;
 
 public class XpathRegressionUnnecessarySemicolonInEnumerationTest
-        extends AbstractXpathTestSupport {
+    extends AbstractXpathTestSupport {
 
     private final String checkName =
-            UnnecessarySemicolonInEnumerationCheck.class.getSimpleName();
+        UnnecessarySemicolonInEnumerationCheck.class.getSimpleName();
 
     @Override
     protected String getCheckName() {
@@ -42,19 +42,19 @@ public class XpathRegressionUnnecessarySemicolonInEnumerationTest
     @Test
     public void testOne() throws Exception {
         final File fileToProcess = new File(
-                getPath("SuppressionXpathRegressionUnnecessarySemicolonInEnumeration.java"));
+            getPath("SuppressionXpathRegressionUnnecessarySemicolonInEnumeration.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(UnnecessarySemicolonInEnumerationCheck.class);
+            createModuleConfig(UnnecessarySemicolonInEnumerationCheck.class);
 
         final String[] expectedViolation = {
             "11:10: " + getCheckMessage(UnnecessarySemicolonInEnumerationCheck.class,
-                UnnecessarySemicolonInEnumerationCheck.MSG_SEMI),
+                                        UnnecessarySemicolonInEnumerationCheck.MSG_SEMI),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/ENUM_DEF[./IDENT[@text='Bad']]/OBJBLOCK/SEMI"
-        );
+                    "/ENUM_DEF[./IDENT[@text='Bad']]/OBJBLOCK/SEMI"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
     }

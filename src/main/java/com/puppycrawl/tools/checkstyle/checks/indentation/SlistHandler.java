@@ -63,7 +63,7 @@ public class SlistHandler extends BlockParentHandler {
      * @param parent        the parent handler
      */
     public SlistHandler(IndentationCheck indentCheck,
-        DetailAST ast, AbstractExpressionHandler parent) {
+                        DetailAST ast, AbstractExpressionHandler parent) {
         super(indentCheck, "block", ast, parent);
     }
 
@@ -82,7 +82,7 @@ public class SlistHandler extends BlockParentHandler {
         // if our parent is a block handler we want to be transparent
         if (getParent() instanceof BlockParentHandler
                 && !(getParent() instanceof SlistHandler)
-            || child instanceof SlistHandler
+                || child instanceof SlistHandler
                 && getParent() instanceof CaseHandler) {
             result = getParent().getSuggestedChildIndent(child);
         }
@@ -138,7 +138,7 @@ public class SlistHandler extends BlockParentHandler {
     private boolean isSameLineCaseGroup() {
         final DetailAST parentNode = getMainAst().getParent();
         return parentNode.getType() == TokenTypes.CASE_GROUP
-            && TokenUtil.areOnSameLine(getMainAst(), parentNode);
+               && TokenUtil.areOnSameLine(getMainAst(), parentNode);
     }
 
 }

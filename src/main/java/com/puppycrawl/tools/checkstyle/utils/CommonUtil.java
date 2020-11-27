@@ -168,7 +168,7 @@ public final class CommonUtil {
         blockCommentClose.initialize(TokenTypes.BLOCK_COMMENT_END, BLOCK_MULTIPLE_COMMENT_END);
 
         final Map.Entry<Integer, Integer> linesColumns = countLinesColumns(
-                token.getText(), token.getLine(), token.getColumn());
+                    token.getText(), token.getLine(), token.getColumn());
         blockCommentClose.setLineNo(linesColumns.getKey());
         blockCommentClose.setColumnNo(linesColumns.getValue());
 
@@ -189,7 +189,7 @@ public final class CommonUtil {
      *         counter.
      */
     private static Map.Entry<Integer, Integer> countLinesColumns(
-            String text, int initialLinesCnt, int initialColumnsCnt) {
+        String text, int initialLinesCnt, int initialColumnsCnt) {
         int lines = initialLinesCnt;
         int columns = initialColumnsCnt;
         boolean foundCr = false;
@@ -311,8 +311,8 @@ public final class CommonUtil {
      * @return the length of string.substring(0, toIdx) with tabs expanded.
      */
     public static int lengthExpandedTabs(String inputString,
-            int toIdx,
-            int tabWidth) {
+                                         int toIdx,
+                                         int tabWidth) {
         int len = 0;
         for (int idx = 0; idx < toIdx; idx++) {
             if (inputString.charAt(idx) == '\t') {
@@ -436,7 +436,7 @@ public final class CommonUtil {
      * @see Class#getConstructor(Class[])
      */
     public static <T> Constructor<T> getConstructor(Class<T> targetClass,
-                                                    Class<?>... parameterTypes) {
+            Class<?>... parameterTypes) {
         try {
             return targetClass.getConstructor(parameterTypes);
         }

@@ -636,7 +636,7 @@ public class RegexpCheck extends AbstractCheck {
      */
     private boolean canContinueValidation(boolean ignore) {
         return errorCount <= errorLimit - 1
-                && (ignore || illegalPattern || checkForDuplicates);
+               && (ignore || illegalPattern || checkForDuplicates);
     }
 
     /**
@@ -661,7 +661,7 @@ public class RegexpCheck extends AbstractCheck {
             final int endLine = end.getLine();
             final int endColumn = end.getColumn();
             ignore = theFileContents.hasIntersectionWithComment(startLine,
-                startColumn, endLine, endColumn);
+                     startColumn, endLine, endColumn);
         }
         return ignore;
     }

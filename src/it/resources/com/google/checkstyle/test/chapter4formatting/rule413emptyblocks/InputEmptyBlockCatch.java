@@ -13,18 +13,18 @@ class InputEmptyBlockCatch {
     void doSm() {}
     void foo() {
         try {
-           if (!flag) {
-               doSm();
-           }
+            if (!flag) {
+                doSm();
+            }
         } catch (Exception e) { /* ignore */ } //ok
         finally {/* ignore */} //ok
     }
 
     void foo2() {
         try {
-           if (!flag) {
-               doSm();
-           }
+            if (!flag) {
+                doSm();
+            }
         } catch (Exception e) {} //warn
         finally {}
     }
@@ -34,40 +34,40 @@ class InputEmptyBlockCatch {
         void doSm() {}
         void foo() {
             try {
-               if (!flag) {
-                   doSm();
-               }
+                if (!flag) {
+                    doSm();
+                }
             } catch (Exception e) { /* ignore */ } //ok
             finally {/* ignore */} //ok
         }
 
         void foo2() {
             try {
-               if (!flag) {
-                   doSm();
-               }
+                if (!flag) {
+                    doSm();
+                }
             } catch (Exception e) {} //warn
             finally {}
         }
     }
 
-    Inner anon = new Inner(){
+    Inner anon = new Inner() {
         boolean flag;
         void doSm() {}
         void foo() {
             try {
-               if (!flag) {
-                   doSm();
-               }
+                if (!flag) {
+                    doSm();
+                }
             } catch (Exception e) { /* ignore */ } //ok
             finally {/* ignore */} //ok
         }
 
         void foo2() {
             try {
-               if (!flag) {
-                   doSm();
-               }
+                if (!flag) {
+                    doSm();
+                }
             } catch (Exception e) {} //warn
             finally {}
         }
@@ -80,7 +80,7 @@ class InputEmptyBlockCatch {
 
         try {
             foo();
-        } catch (Exception e) /*warn*/ {
+        } catch (Exception e) { /*warn*/
 
         }
     }

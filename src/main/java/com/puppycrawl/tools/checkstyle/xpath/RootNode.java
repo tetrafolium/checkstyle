@@ -130,51 +130,51 @@ public class RootNode extends AbstractNode {
     public AxisIterator iterateAxis(byte axisNumber) {
         final AxisIterator result;
         switch (axisNumber) {
-            case AxisInfo.ANCESTOR:
-            case AxisInfo.ATTRIBUTE:
-            case AxisInfo.PARENT:
-            case AxisInfo.FOLLOWING:
-            case AxisInfo.FOLLOWING_SIBLING:
-            case AxisInfo.PRECEDING:
-            case AxisInfo.PRECEDING_SIBLING:
+        case AxisInfo.ANCESTOR:
+        case AxisInfo.ATTRIBUTE:
+        case AxisInfo.PARENT:
+        case AxisInfo.FOLLOWING:
+        case AxisInfo.FOLLOWING_SIBLING:
+        case AxisInfo.PRECEDING:
+        case AxisInfo.PRECEDING_SIBLING:
+            result = EmptyIterator.OfNodes.THE_INSTANCE;
+            break;
+        case AxisInfo.ANCESTOR_OR_SELF:
+        case AxisInfo.SELF:
+            try (AxisIterator iterator = SingleNodeIterator.makeIterator(this)) {
+                result = iterator;
+            }
+            break;
+        case AxisInfo.CHILD:
+            if (hasChildNodes()) {
+                try (AxisIterator iterator = new ArrayIterator.OfNodes(
+                        getChildren().toArray(EMPTY_ABSTRACT_NODE_ARRAY))) {
+                    result = iterator;
+                }
+            }
+            else {
                 result = EmptyIterator.OfNodes.THE_INSTANCE;
-                break;
-            case AxisInfo.ANCESTOR_OR_SELF:
-            case AxisInfo.SELF:
-                try (AxisIterator iterator = SingleNodeIterator.makeIterator(this)) {
-                    result = iterator;
-                }
-                break;
-            case AxisInfo.CHILD:
-                if (hasChildNodes()) {
-                    try (AxisIterator iterator = new ArrayIterator.OfNodes(
-                            getChildren().toArray(EMPTY_ABSTRACT_NODE_ARRAY))) {
-                        result = iterator;
-                    }
-                }
-                else {
-                    result = EmptyIterator.OfNodes.THE_INSTANCE;
-                }
-                break;
-            case AxisInfo.DESCENDANT:
-                if (hasChildNodes()) {
-                    try (AxisIterator iterator =
-                                 new Navigator.DescendantEnumeration(this, false, true)) {
-                        result = iterator;
-                    }
-                }
-                else {
-                    result = EmptyIterator.OfNodes.THE_INSTANCE;
-                }
-                break;
-            case AxisInfo.DESCENDANT_OR_SELF:
+            }
+            break;
+        case AxisInfo.DESCENDANT:
+            if (hasChildNodes()) {
                 try (AxisIterator iterator =
-                             new Navigator.DescendantEnumeration(this, true, true)) {
+                                new Navigator.DescendantEnumeration(this, false, true)) {
                     result = iterator;
                 }
-                break;
-            default:
-                throw throwUnsupportedOperationException();
+            }
+            else {
+                result = EmptyIterator.OfNodes.THE_INSTANCE;
+            }
+            break;
+        case AxisInfo.DESCENDANT_OR_SELF:
+            try (AxisIterator iterator =
+                            new Navigator.DescendantEnumeration(this, true, true)) {
+                result = iterator;
+            }
+            break;
+        default:
+            throw throwUnsupportedOperationException();
         }
         return result;
     }

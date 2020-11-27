@@ -77,8 +77,8 @@ public class ClassTypeParameterNameCheck
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.TYPE_PARAMETER,
-        };
+                   TokenTypes.TYPE_PARAMETER,
+               };
     }
 
     @Override

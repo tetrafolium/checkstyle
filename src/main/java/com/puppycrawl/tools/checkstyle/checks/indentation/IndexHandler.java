@@ -36,8 +36,8 @@ public class IndexHandler extends AbstractExpressionHandler {
      * @param parent        the parent handler
      */
     public IndexHandler(IndentationCheck indentCheck,
-                      DetailAST ast,
-                      AbstractExpressionHandler parent) {
+                        DetailAST ast,
+                        AbstractExpressionHandler parent) {
         super(indentCheck, "index op", ast, parent);
     }
 

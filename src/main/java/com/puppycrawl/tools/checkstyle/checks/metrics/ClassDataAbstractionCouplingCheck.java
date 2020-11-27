@@ -282,13 +282,13 @@ public final class ClassDataAbstractionCouplingCheck
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.PACKAGE_DEF,
-            TokenTypes.IMPORT,
-            TokenTypes.CLASS_DEF,
-            TokenTypes.INTERFACE_DEF,
-            TokenTypes.ENUM_DEF,
-            TokenTypes.LITERAL_NEW,
-        };
+                   TokenTypes.PACKAGE_DEF,
+                   TokenTypes.IMPORT,
+                   TokenTypes.CLASS_DEF,
+                   TokenTypes.INTERFACE_DEF,
+                   TokenTypes.ENUM_DEF,
+                   TokenTypes.LITERAL_NEW,
+               };
     }
 
     @Override

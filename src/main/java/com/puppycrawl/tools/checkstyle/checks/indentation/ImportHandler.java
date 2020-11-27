@@ -37,7 +37,7 @@ public class ImportHandler extends AbstractExpressionHandler {
      * @param parent        the parent handler
      */
     public ImportHandler(IndentationCheck indentCheck,
-        DetailAST ast, AbstractExpressionHandler parent) {
+                         DetailAST ast, AbstractExpressionHandler parent) {
         super(indentCheck, "import", ast, parent);
     }
 

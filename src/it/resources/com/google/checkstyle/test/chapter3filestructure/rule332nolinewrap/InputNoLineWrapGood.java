@@ -8,7 +8,7 @@ import javax.accessibility.AccessibleAttributeSequence; //ok
 
 public class InputNoLineWrapGood {
 
-  public void fooMethod() {
-      //
-  }
+    public void fooMethod() {
+        //
+    }
 }

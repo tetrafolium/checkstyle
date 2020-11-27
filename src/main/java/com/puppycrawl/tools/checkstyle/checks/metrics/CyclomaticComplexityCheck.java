@@ -228,78 +228,78 @@ public class CyclomaticComplexityCheck
     @Override
     public int[] getDefaultTokens() {
         return new int[] {
-            TokenTypes.CTOR_DEF,
-            TokenTypes.METHOD_DEF,
-            TokenTypes.INSTANCE_INIT,
-            TokenTypes.STATIC_INIT,
-            TokenTypes.LITERAL_WHILE,
-            TokenTypes.LITERAL_DO,
-            TokenTypes.LITERAL_FOR,
-            TokenTypes.LITERAL_IF,
-            TokenTypes.LITERAL_SWITCH,
-            TokenTypes.LITERAL_CASE,
-            TokenTypes.LITERAL_CATCH,
-            TokenTypes.QUESTION,
-            TokenTypes.LAND,
-            TokenTypes.LOR,
-        };
+                   TokenTypes.CTOR_DEF,
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.INSTANCE_INIT,
+                   TokenTypes.STATIC_INIT,
+                   TokenTypes.LITERAL_WHILE,
+                   TokenTypes.LITERAL_DO,
+                   TokenTypes.LITERAL_FOR,
+                   TokenTypes.LITERAL_IF,
+                   TokenTypes.LITERAL_SWITCH,
+                   TokenTypes.LITERAL_CASE,
+                   TokenTypes.LITERAL_CATCH,
+                   TokenTypes.QUESTION,
+                   TokenTypes.LAND,
+                   TokenTypes.LOR,
+               };
     }
 
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.CTOR_DEF,
-            TokenTypes.METHOD_DEF,
-            TokenTypes.INSTANCE_INIT,
-            TokenTypes.STATIC_INIT,
-            TokenTypes.LITERAL_WHILE,
-            TokenTypes.LITERAL_DO,
-            TokenTypes.LITERAL_FOR,
-            TokenTypes.LITERAL_IF,
-            TokenTypes.LITERAL_SWITCH,
-            TokenTypes.LITERAL_CASE,
-            TokenTypes.LITERAL_CATCH,
-            TokenTypes.QUESTION,
-            TokenTypes.LAND,
-            TokenTypes.LOR,
-        };
+                   TokenTypes.CTOR_DEF,
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.INSTANCE_INIT,
+                   TokenTypes.STATIC_INIT,
+                   TokenTypes.LITERAL_WHILE,
+                   TokenTypes.LITERAL_DO,
+                   TokenTypes.LITERAL_FOR,
+                   TokenTypes.LITERAL_IF,
+                   TokenTypes.LITERAL_SWITCH,
+                   TokenTypes.LITERAL_CASE,
+                   TokenTypes.LITERAL_CATCH,
+                   TokenTypes.QUESTION,
+                   TokenTypes.LAND,
+                   TokenTypes.LOR,
+               };
     }
 
     @Override
     public final int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.CTOR_DEF,
-            TokenTypes.METHOD_DEF,
-            TokenTypes.INSTANCE_INIT,
-            TokenTypes.STATIC_INIT,
-        };
+                   TokenTypes.CTOR_DEF,
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.INSTANCE_INIT,
+                   TokenTypes.STATIC_INIT,
+               };
     }
 
     @Override
     public void visitToken(DetailAST ast) {
         switch (ast.getType()) {
-            case TokenTypes.CTOR_DEF:
-            case TokenTypes.METHOD_DEF:
-            case TokenTypes.INSTANCE_INIT:
-            case TokenTypes.STATIC_INIT:
-                visitMethodDef();
-                break;
-            default:
-                visitTokenHook(ast);
+        case TokenTypes.CTOR_DEF:
+        case TokenTypes.METHOD_DEF:
+        case TokenTypes.INSTANCE_INIT:
+        case TokenTypes.STATIC_INIT:
+            visitMethodDef();
+            break;
+        default:
+            visitTokenHook(ast);
         }
     }
 
     @Override
     public void leaveToken(DetailAST ast) {
         switch (ast.getType()) {
-            case TokenTypes.CTOR_DEF:
-            case TokenTypes.METHOD_DEF:
-            case TokenTypes.INSTANCE_INIT:
-            case TokenTypes.STATIC_INIT:
-                leaveMethodDef(ast);
-                break;
-            default:
-                break;
+        case TokenTypes.CTOR_DEF:
+        case TokenTypes.METHOD_DEF:
+        case TokenTypes.INSTANCE_INIT:
+        case TokenTypes.STATIC_INIT:
+            leaveMethodDef(ast);
+            break;
+        default:
+            break;
         }
     }
 

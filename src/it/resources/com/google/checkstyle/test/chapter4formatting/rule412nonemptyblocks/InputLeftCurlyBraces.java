@@ -1,16 +1,16 @@
 package com.google.checkstyle.test.chapter4formatting.rule412nonemptyblocks;
 
 class InputLeftCurlyBraces
-{ //warn
+{   //warn
     /** @return helper func **/
     boolean condition()
-    { //warn
+    {   //warn
         return false;
     }
 
     /** Test do/while loops **/
     void testDoWhile()
-    { //warn
+    {   //warn
 
         do {
             testDoWhile();
@@ -18,12 +18,13 @@ class InputLeftCurlyBraces
         while (condition());
 
 
-        do testDoWhile(); while (condition());
+        do testDoWhile();
+        while (condition());
     }
 
     /** Test while loops **/
     void testWhile()
-    { //warn
+    {   //warn
 
         while (condition()) {
             testWhile();
@@ -40,25 +41,25 @@ class InputLeftCurlyBraces
 
     /** Test for loops **/
     void testFor()
-    {  //warn
+    {   //warn
 
         for (int i = 1; i < 5; i++) {
             testFor();
         }
 
 
-        for(int i = 1;i < 5;i++);
+        for(int i = 1; i < 5; i++);
         for (int i = 1; i < 5; i++)
             testFor();
         for (int i = 1; i < 5;
-             i++)
+                i++)
             if (i > 2)
                 testFor();
     }
 
     /** Test if constructs **/
     public void testIf()
-    { //warn
+    {   //warn
 
         if (condition()) {
             testIf();
@@ -94,9 +95,10 @@ class InputLeftCurlyBraces
     }
 
     void whitespaceAfterSemi()
-    { //warn
+    {   //warn
 
-        int i = 1;int j = 2;
+        int i = 1;
+        int j = 2;
 
 
         for (;;) {
@@ -121,14 +123,14 @@ class WithArraysLeft { // ok
         "foo", "foo",
     };
     String[] s2 =
-        { // ok
-            "foo", "foo",
-        };
+    {   // ok
+        "foo", "foo",
+    };
     String[] s3 =
-        { // ok
-            "foo",
-            "foo",
-        };
+    {   // ok
+        "foo",
+        "foo",
+    };
     String[] s4 =
-        {"foo", "foo"}; // ok
+    {"foo", "foo"}; // ok
 }

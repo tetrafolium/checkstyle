@@ -60,7 +60,7 @@ public class AuditEventDefaultFormatter implements AuditEventFormatter {
         final StringBuilder sb = new StringBuilder(bufLen);
 
         sb.append('[').append(severityLevelName).append("] ")
-            .append(fileName).append(':').append(event.getLine());
+        .append(fileName).append(':').append(event.getLine());
         if (event.getColumn() > 0) {
             sb.append(':').append(event.getColumn());
         }
@@ -87,8 +87,8 @@ public class AuditEventDefaultFormatter implements AuditEventFormatter {
      */
     private static int calculateBufferLength(AuditEvent event, int severityLevelNameLength) {
         return LENGTH_OF_ALL_SEPARATORS + event.getFileName().length()
-            + event.getMessage().length() + severityLevelNameLength
-            + getCheckShortName(event).length();
+               + event.getMessage().length() + severityLevelNameLength
+               + getCheckShortName(event).length();
     }
 
     /**
@@ -111,7 +111,7 @@ public class AuditEventDefaultFormatter implements AuditEventFormatter {
         else {
             if (checkFullName.endsWith(SUFFIX)) {
                 checkShortName = checkFullName.substring(lastDotIndex + 1,
-                    checkFullName.lastIndexOf(SUFFIX));
+                                 checkFullName.lastIndexOf(SUFFIX));
             }
             else {
                 checkShortName = checkFullName.substring(lastDotIndex + 1);

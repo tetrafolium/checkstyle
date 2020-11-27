@@ -192,11 +192,11 @@ public class MissingJavadocTypeCheck extends AbstractCheck {
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.INTERFACE_DEF,
-            TokenTypes.CLASS_DEF,
-            TokenTypes.ENUM_DEF,
-            TokenTypes.ANNOTATION_DEF,
-        };
+                   TokenTypes.INTERFACE_DEF,
+                   TokenTypes.CLASS_DEF,
+                   TokenTypes.ENUM_DEF,
+                   TokenTypes.ANNOTATION_DEF,
+               };
     }
 
     @Override
@@ -234,12 +234,12 @@ public class MissingJavadocTypeCheck extends AbstractCheck {
         final Scope surroundingScope = ScopeUtil.getSurroundingScope(ast);
 
         return customScope.isIn(scope)
-            && (surroundingScope == null || surroundingScope.isIn(scope))
-            && (excludeScope == null
-                || !customScope.isIn(excludeScope)
-                || surroundingScope != null
-                && !surroundingScope.isIn(excludeScope))
-            && !AnnotationUtil.containsAnnotation(ast, skipAnnotations);
+               && (surroundingScope == null || surroundingScope.isIn(scope))
+               && (excludeScope == null
+                   || !customScope.isIn(excludeScope)
+                   || surroundingScope != null
+                   && !surroundingScope.isIn(excludeScope))
+               && !AnnotationUtil.containsAnnotation(ast, skipAnnotations);
     }
 
 }

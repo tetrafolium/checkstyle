@@ -105,7 +105,7 @@ public class JavadocPackageCheck extends AbstractFileSetCheck {
         }
         catch (IOException ex) {
             throw new CheckstyleException(
-                    "Exception while getting canonical path to file " + file.getPath(), ex);
+                "Exception while getting canonical path to file " + file.getPath(), ex);
         }
         final boolean isDirChecked = !directoriesChecked.add(dir);
         if (!isDirChecked) {

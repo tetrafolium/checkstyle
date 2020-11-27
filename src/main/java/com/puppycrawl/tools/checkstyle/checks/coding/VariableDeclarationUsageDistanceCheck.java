@@ -301,11 +301,11 @@ public class VariableDeclarationUsageDistanceCheck extends AbstractCheck {
                         && !isInitializationSequence(variableUsageAst, variable.getText())) {
                     if (ignoreFinal) {
                         log(variable.getLineNo(),
-                                MSG_KEY_EXT, variable.getText(), dist, allowedDistance);
+                            MSG_KEY_EXT, variable.getText(), dist, allowedDistance);
                     }
                     else {
                         log(variable.getLineNo(),
-                                MSG_KEY, variable.getText(), dist, allowedDistance);
+                            MSG_KEY, variable.getText(), dist, allowedDistance);
                     }
                 }
             }
@@ -320,7 +320,7 @@ public class VariableDeclarationUsageDistanceCheck extends AbstractCheck {
      */
     private static String getInstanceName(DetailAST methodCallAst) {
         final String methodCallName =
-                FullIdent.createFullIdentBelow(methodCallAst).getText();
+            FullIdent.createFullIdentBelow(methodCallAst).getText();
         final int lastDotIndex = methodCallName.lastIndexOf('.');
         String instanceName = "";
         if (lastDotIndex != -1) {
@@ -340,7 +340,7 @@ public class VariableDeclarationUsageDistanceCheck extends AbstractCheck {
      *         initialization methods.
      */
     private static boolean isInitializationSequence(
-            DetailAST variableUsageAst, String variableName) {
+        DetailAST variableUsageAst, String variableName) {
         boolean result = true;
         boolean isUsedVariableDeclarationFound = false;
         DetailAST currentSiblingAst = variableUsageAst;
@@ -350,43 +350,43 @@ public class VariableDeclarationUsageDistanceCheck extends AbstractCheck {
                 && !isUsedVariableDeclarationFound
                 && currentSiblingAst != null) {
             switch (currentSiblingAst.getType()) {
-                case TokenTypes.EXPR:
-                    final DetailAST methodCallAst = currentSiblingAst.getFirstChild();
+            case TokenTypes.EXPR:
+                final DetailAST methodCallAst = currentSiblingAst.getFirstChild();
 
-                    if (methodCallAst.getType() == TokenTypes.METHOD_CALL) {
-                        final String instanceName =
-                            getInstanceName(methodCallAst);
-                        // method is called without instance
-                        if (instanceName.isEmpty()) {
-                            result = false;
-                        }
-                        // differs from previous instance
-                        else if (!instanceName.equals(initInstanceName)) {
-                            if (initInstanceName.isEmpty()) {
-                                initInstanceName = instanceName;
-                            }
-                            else {
-                                result = false;
-                            }
-                        }
-                    }
-                    else {
-                        // is not method call
+                if (methodCallAst.getType() == TokenTypes.METHOD_CALL) {
+                    final String instanceName =
+                        getInstanceName(methodCallAst);
+                    // method is called without instance
+                    if (instanceName.isEmpty()) {
                         result = false;
                     }
-                    break;
-
-                case TokenTypes.VARIABLE_DEF:
-                    final String currentVariableName = currentSiblingAst
-                        .findFirstToken(TokenTypes.IDENT).getText();
-                    isUsedVariableDeclarationFound = variableName.equals(currentVariableName);
-                    break;
-
-                case TokenTypes.SEMI:
-                    break;
-
-                default:
+                    // differs from previous instance
+                    else if (!instanceName.equals(initInstanceName)) {
+                        if (initInstanceName.isEmpty()) {
+                            initInstanceName = instanceName;
+                        }
+                        else {
+                            result = false;
+                        }
+                    }
+                }
+                else {
+                    // is not method call
                     result = false;
+                }
+                break;
+
+            case TokenTypes.VARIABLE_DEF:
+                final String currentVariableName = currentSiblingAst
+                                                   .findFirstToken(TokenTypes.IDENT).getText();
+                isUsedVariableDeclarationFound = variableName.equals(currentVariableName);
+                break;
+
+            case TokenTypes.SEMI:
+                break;
+
+            default:
+                result = false;
             }
 
             currentSiblingAst = currentSiblingAst.getPreviousSibling();
@@ -406,7 +406,7 @@ public class VariableDeclarationUsageDistanceCheck extends AbstractCheck {
      * @return entry which contains expression with variable usage and distance.
      */
     private static Entry<DetailAST, Integer> calculateDistanceInSingleScope(
-            DetailAST semicolonAst, DetailAST variableIdentAst) {
+        DetailAST semicolonAst, DetailAST variableIdentAst) {
         int dist = 0;
         boolean firstUsageFound = false;
         DetailAST currentAst = semicolonAst;
@@ -443,7 +443,7 @@ public class VariableDeclarationUsageDistanceCheck extends AbstractCheck {
      * @return the distance to variable usage for in the child node.
      */
     private static int getDistToVariableUsageInChildNode(DetailAST childNode, DetailAST varIdent,
-                                                         int currentDistToVarUsage) {
+            int currentDistToVarUsage) {
         DetailAST examineNode = childNode;
         if (examineNode.getType() == TokenTypes.LABELED_STAT) {
             examineNode = examineNode.getFirstChild().getNextSibling();
@@ -451,33 +451,33 @@ public class VariableDeclarationUsageDistanceCheck extends AbstractCheck {
 
         int resultDist = currentDistToVarUsage;
         switch (examineNode.getType()) {
-            case TokenTypes.VARIABLE_DEF:
+        case TokenTypes.VARIABLE_DEF:
+            resultDist++;
+            break;
+        case TokenTypes.SLIST:
+            resultDist = 0;
+            break;
+        case TokenTypes.LITERAL_FOR:
+        case TokenTypes.LITERAL_WHILE:
+        case TokenTypes.LITERAL_DO:
+        case TokenTypes.LITERAL_IF:
+        case TokenTypes.LITERAL_SWITCH:
+            if (isVariableInOperatorExpr(examineNode, varIdent)) {
                 resultDist++;
-                break;
-            case TokenTypes.SLIST:
+            }
+            else {
+                // variable usage is in inner scope
+                // reset counters, because we can't determine distance
                 resultDist = 0;
-                break;
-            case TokenTypes.LITERAL_FOR:
-            case TokenTypes.LITERAL_WHILE:
-            case TokenTypes.LITERAL_DO:
-            case TokenTypes.LITERAL_IF:
-            case TokenTypes.LITERAL_SWITCH:
-                if (isVariableInOperatorExpr(examineNode, varIdent)) {
-                    resultDist++;
-                }
-                else {
-                    // variable usage is in inner scope
-                    // reset counters, because we can't determine distance
-                    resultDist = 0;
-                }
-                break;
-            default:
-                if (examineNode.findFirstToken(TokenTypes.SLIST) == null) {
-                    resultDist++;
-                }
-                else {
-                    resultDist = 0;
-                }
+            }
+            break;
+        default:
+            if (examineNode.findFirstToken(TokenTypes.SLIST) == null) {
+                resultDist++;
+            }
+            else {
+                resultDist = 0;
+            }
         }
         return resultDist;
     }
@@ -493,13 +493,13 @@ public class VariableDeclarationUsageDistanceCheck extends AbstractCheck {
      * @return entry which contains expression with variable usage and distance.
      */
     private static Entry<DetailAST, Integer> calculateDistanceBetweenScopes(
-            DetailAST ast, DetailAST variable) {
+        DetailAST ast, DetailAST variable) {
         int dist = 0;
         DetailAST currentScopeAst = ast;
         DetailAST variableUsageAst = null;
         while (currentScopeAst != null) {
             final Entry<List<DetailAST>, Integer> searchResult =
-                    searchVariableUsageExpressions(variable, currentScopeAst);
+                searchVariableUsageExpressions(variable, currentScopeAst);
 
             currentScopeAst = null;
 
@@ -513,31 +513,31 @@ public class VariableDeclarationUsageDistanceCheck extends AbstractCheck {
                         .get(0);
                 DetailAST exprWithVariableUsage = null;
                 switch (blockWithVariableUsage.getType()) {
-                    case TokenTypes.VARIABLE_DEF:
-                    case TokenTypes.EXPR:
-                        dist++;
-                        break;
-                    case TokenTypes.LITERAL_FOR:
-                    case TokenTypes.LITERAL_WHILE:
-                    case TokenTypes.LITERAL_DO:
-                        exprWithVariableUsage = getFirstNodeInsideForWhileDoWhileBlocks(
-                            blockWithVariableUsage, variable);
-                        break;
-                    case TokenTypes.LITERAL_IF:
-                        exprWithVariableUsage = getFirstNodeInsideIfBlock(
-                            blockWithVariableUsage, variable);
-                        break;
-                    case TokenTypes.LITERAL_SWITCH:
-                        exprWithVariableUsage = getFirstNodeInsideSwitchBlock(
-                            blockWithVariableUsage, variable);
-                        break;
-                    case TokenTypes.LITERAL_TRY:
-                        exprWithVariableUsage =
-                            getFirstNodeInsideTryCatchFinallyBlocks(blockWithVariableUsage,
+                case TokenTypes.VARIABLE_DEF:
+                case TokenTypes.EXPR:
+                    dist++;
+                    break;
+                case TokenTypes.LITERAL_FOR:
+                case TokenTypes.LITERAL_WHILE:
+                case TokenTypes.LITERAL_DO:
+                    exprWithVariableUsage = getFirstNodeInsideForWhileDoWhileBlocks(
+                                                blockWithVariableUsage, variable);
+                    break;
+                case TokenTypes.LITERAL_IF:
+                    exprWithVariableUsage = getFirstNodeInsideIfBlock(
+                                                blockWithVariableUsage, variable);
+                    break;
+                case TokenTypes.LITERAL_SWITCH:
+                    exprWithVariableUsage = getFirstNodeInsideSwitchBlock(
+                                                blockWithVariableUsage, variable);
+                    break;
+                case TokenTypes.LITERAL_TRY:
+                    exprWithVariableUsage =
+                        getFirstNodeInsideTryCatchFinallyBlocks(blockWithVariableUsage,
                                 variable);
-                        break;
-                    default:
-                        exprWithVariableUsage = blockWithVariableUsage.getFirstChild();
+                    break;
+                default:
+                    exprWithVariableUsage = blockWithVariableUsage.getFirstChild();
                 }
                 currentScopeAst = exprWithVariableUsage;
                 if (exprWithVariableUsage == null) {
@@ -570,7 +570,7 @@ public class VariableDeclarationUsageDistanceCheck extends AbstractCheck {
      *     and distance from specified statement to first found expression.
      */
     private static Entry<List<DetailAST>, Integer>
-        searchVariableUsageExpressions(final DetailAST variableAst, final DetailAST statementAst) {
+    searchVariableUsageExpressions(final DetailAST variableAst, final DetailAST statementAst) {
         final List<DetailAST> variableUsageExpressions = new ArrayList<>();
         int distance = 0;
         DetailAST currentStatementAst = statementAst;
@@ -583,7 +583,7 @@ public class VariableDeclarationUsageDistanceCheck extends AbstractCheck {
                 // If expression doesn't contain variable and this variable
                 // hasn't been met yet, then distance + 1.
                 else if (variableUsageExpressions.isEmpty()
-                        && currentStatementAst.getType() != TokenTypes.VARIABLE_DEF) {
+                         && currentStatementAst.getType() != TokenTypes.VARIABLE_DEF) {
                     distance++;
                 }
             }
@@ -604,7 +604,7 @@ public class VariableDeclarationUsageDistanceCheck extends AbstractCheck {
      *         of this block, otherwise - null.
      */
     private static DetailAST getFirstNodeInsideForWhileDoWhileBlocks(
-            DetailAST block, DetailAST variable) {
+        DetailAST block, DetailAST variable) {
         DetailAST firstNodeInsideBlock = null;
 
         if (!isVariableInOperatorExpr(block, variable)) {
@@ -646,18 +646,18 @@ public class VariableDeclarationUsageDistanceCheck extends AbstractCheck {
      *         of this block, otherwise - null.
      */
     private static DetailAST getFirstNodeInsideIfBlock(
-            DetailAST block, DetailAST variable) {
+        DetailAST block, DetailAST variable) {
         DetailAST firstNodeInsideBlock = null;
 
         if (!isVariableInOperatorExpr(block, variable)) {
             DetailAST currentNode = block.getLastChild();
             final List<DetailAST> variableUsageExpressions =
-                    new ArrayList<>();
+                new ArrayList<>();
 
             while (currentNode != null
                     && currentNode.getType() == TokenTypes.LITERAL_ELSE) {
                 final DetailAST previousNode =
-                        currentNode.getPreviousSibling();
+                    currentNode.getPreviousSibling();
 
                 // Checking variable usage inside IF block.
                 if (isChild(previousNode, variable)) {
@@ -707,16 +707,16 @@ public class VariableDeclarationUsageDistanceCheck extends AbstractCheck {
      *         of this block, otherwise - null.
      */
     private static DetailAST getFirstNodeInsideSwitchBlock(
-            DetailAST block, DetailAST variable) {
+        DetailAST block, DetailAST variable) {
         DetailAST currentNode = block
-                .findFirstToken(TokenTypes.CASE_GROUP);
+                                .findFirstToken(TokenTypes.CASE_GROUP);
         final List<DetailAST> variableUsageExpressions =
-                new ArrayList<>();
+            new ArrayList<>();
 
         // Checking variable usage inside all CASE blocks.
         while (currentNode.getType() == TokenTypes.CASE_GROUP) {
             final DetailAST lastNodeInCaseGroup =
-                    currentNode.getLastChild();
+                currentNode.getLastChild();
 
             if (isChild(lastNodeInCaseGroup, variable)) {
                 variableUsageExpressions.add(lastNodeInCaseGroup);
@@ -748,10 +748,10 @@ public class VariableDeclarationUsageDistanceCheck extends AbstractCheck {
      *         of this block, otherwise - null.
      */
     private static DetailAST getFirstNodeInsideTryCatchFinallyBlocks(
-            DetailAST block, DetailAST variable) {
+        DetailAST block, DetailAST variable) {
         DetailAST currentNode = block.getFirstChild();
         final List<DetailAST> variableUsageExpressions =
-                new ArrayList<>();
+            new ArrayList<>();
 
         // Checking variable usage inside TRY block.
         if (isChild(currentNode, variable)) {
@@ -809,10 +809,10 @@ public class VariableDeclarationUsageDistanceCheck extends AbstractCheck {
      *         - false.
      */
     private static boolean isVariableInOperatorExpr(
-            DetailAST operator, DetailAST variable) {
+        DetailAST operator, DetailAST variable) {
         boolean isVarInOperatorDeclaration = false;
         final DetailAST openingBracket =
-                operator.findFirstToken(TokenTypes.LPAREN);
+            operator.findFirstToken(TokenTypes.LPAREN);
 
         // Get EXPR between brackets
         DetailAST exprBetweenBrackets = openingBracket.getNextSibling();

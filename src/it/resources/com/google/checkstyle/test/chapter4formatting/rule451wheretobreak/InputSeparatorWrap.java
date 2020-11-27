@@ -6,11 +6,11 @@ public class InputSeparatorWrap {
         int i = 0;
         String s = "ffffooooString";
         s
-            .isEmpty(); //ok
+        .isEmpty(); //ok
         s.isEmpty();
 
         foo(i,
-                s); //ok
+            s); //ok
     }
     public static void foo(int i, String s)
     {
@@ -26,9 +26,9 @@ class badCase {
 
         String s = "ffffooooString";
         /*warn*/boolean b = s.
-            isEmpty();
+                            isEmpty();
         foo(i
-                ,s);
+            ,s);
         int[] j;
     }
     public static String foo(int i, String s)
@@ -38,8 +38,8 @@ class badCase {
         CharSequence seq = null;
         Object truncationIndicator = null;
         return new StringBuilder(maxLength )
-        .append(seq, 0, truncationLength )
-        .append(truncationIndicator)
-        .toString();
+               .append(seq, 0, truncationLength )
+               .append(truncationIndicator)
+               .toString();
     }
 }

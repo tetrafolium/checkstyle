@@ -116,35 +116,35 @@ public abstract class AutomaticBean
         cub.register(new BooleanConverter(), Boolean.TYPE);
         cub.register(new BooleanConverter(), Boolean.class);
         cub.register(new ArrayConverter(
-            boolean[].class, new BooleanConverter()), boolean[].class);
+                         boolean[].class, new BooleanConverter()), boolean[].class);
         cub.register(new ByteConverter(), Byte.TYPE);
         cub.register(new ByteConverter(), Byte.class);
         cub.register(new ArrayConverter(byte[].class, new ByteConverter()),
-            byte[].class);
+                     byte[].class);
         cub.register(new CharacterConverter(), Character.TYPE);
         cub.register(new CharacterConverter(), Character.class);
         cub.register(new ArrayConverter(char[].class, new CharacterConverter()),
-            char[].class);
+                     char[].class);
         cub.register(new DoubleConverter(), Double.TYPE);
         cub.register(new DoubleConverter(), Double.class);
         cub.register(new ArrayConverter(double[].class, new DoubleConverter()),
-            double[].class);
+                     double[].class);
         cub.register(new FloatConverter(), Float.TYPE);
         cub.register(new FloatConverter(), Float.class);
         cub.register(new ArrayConverter(float[].class, new FloatConverter()),
-            float[].class);
+                     float[].class);
         cub.register(new IntegerConverter(), Integer.TYPE);
         cub.register(new IntegerConverter(), Integer.class);
         cub.register(new ArrayConverter(int[].class, new IntegerConverter()),
-            int[].class);
+                     int[].class);
         cub.register(new LongConverter(), Long.TYPE);
         cub.register(new LongConverter(), Long.class);
         cub.register(new ArrayConverter(long[].class, new LongConverter()),
-            long[].class);
+                     long[].class);
         cub.register(new ShortConverter(), Short.TYPE);
         cub.register(new ShortConverter(), Short.class);
         cub.register(new ArrayConverter(short[].class, new ShortConverter()),
-            short[].class);
+                     short[].class);
         cub.register(new RelaxedStringArrayConverter(), String[].class);
 
         // BigDecimal, BigInteger, Class, Date, String, Time, TimeStamp
@@ -180,7 +180,7 @@ public abstract class AutomaticBean
      */
     @Override
     public final void configure(Configuration config)
-            throws CheckstyleException {
+    throws CheckstyleException {
         configuration = config;
 
         final String[] attributes = config.getAttributeNames();
@@ -207,7 +207,7 @@ public abstract class AutomaticBean
      * @throws CheckstyleException when property defined incorrectly
      */
     private void tryCopyProperty(String key, Object value, boolean recheck)
-            throws CheckstyleException {
+    throws CheckstyleException {
         final BeanUtilsBean beanUtils = createBeanUtilsBean();
 
         try {
@@ -216,10 +216,10 @@ public abstract class AutomaticBean
                 // for key, so we have to go through great lengths here to
                 // figure out if the bean property really exists.
                 final PropertyDescriptor descriptor =
-                        PropertyUtils.getPropertyDescriptor(this, key);
+                    PropertyUtils.getPropertyDescriptor(this, key);
                 if (descriptor == null) {
                     final String message = String.format(Locale.ROOT, "Property '%s' "
-                            + "does not exist, please check the documentation", key);
+                                                         + "does not exist, please check the documentation", key);
                     throw new CheckstyleException(message);
                 }
             }
@@ -227,18 +227,18 @@ public abstract class AutomaticBean
             beanUtils.copyProperty(this, key, value);
         }
         catch (final InvocationTargetException | IllegalAccessException
-                | NoSuchMethodException ex) {
+                    | NoSuchMethodException ex) {
             // There is no way to catch IllegalAccessException | NoSuchMethodException
             // as we do PropertyUtils.getPropertyDescriptor before beanUtils.copyProperty
             // so we have to join these exceptions with InvocationTargetException
             // to satisfy UTs coverage
             final String message = String.format(Locale.ROOT,
-                    "Cannot set property '%s' to '%s'", key, value);
+                                                 "Cannot set property '%s' to '%s'", key, value);
             throw new CheckstyleException(message, ex);
         }
         catch (final IllegalArgumentException | ConversionException ex) {
             final String message = String.format(Locale.ROOT, "illegal value '%s' for property "
-                    + "'%s'", value, key);
+                                                 + "'%s'", value, key);
             throw new CheckstyleException(message, ex);
         }
     }
@@ -249,7 +249,7 @@ public abstract class AutomaticBean
      */
     @Override
     public final void contextualize(Context context)
-            throws CheckstyleException {
+    throws CheckstyleException {
         final Collection<String> attributes = context.getAttributeNames();
 
         for (final String key : attributes) {
@@ -280,11 +280,11 @@ public abstract class AutomaticBean
      * @see Configuration#getChildren
      */
     protected void setupChild(Configuration childConf)
-            throws CheckstyleException {
+    throws CheckstyleException {
         if (childConf != null) {
             throw new CheckstyleException(childConf.getName() + " is not allowed as a child in "
-                    + configuration.getName() + ". Please review 'Parent Module' section "
-                    + "for this Check in web documentation if Check is standard.");
+                                          + configuration.getName() + ". Please review 'Parent Module' section "
+                                          + "for this Check in web documentation if Check is standard.");
         }
     }
 

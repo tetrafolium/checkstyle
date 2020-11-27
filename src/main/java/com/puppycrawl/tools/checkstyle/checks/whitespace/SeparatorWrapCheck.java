@@ -132,25 +132,25 @@ public class SeparatorWrapCheck
     @Override
     public int[] getDefaultTokens() {
         return new int[] {
-            TokenTypes.DOT,
-            TokenTypes.COMMA,
-        };
+                   TokenTypes.DOT,
+                   TokenTypes.COMMA,
+               };
     }
 
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.DOT,
-            TokenTypes.COMMA,
-            TokenTypes.SEMI,
-            TokenTypes.ELLIPSIS,
-            TokenTypes.AT,
-            TokenTypes.LPAREN,
-            TokenTypes.RPAREN,
-            TokenTypes.ARRAY_DECLARATOR,
-            TokenTypes.RBRACK,
-            TokenTypes.METHOD_REF,
-        };
+                   TokenTypes.DOT,
+                   TokenTypes.COMMA,
+                   TokenTypes.SEMI,
+                   TokenTypes.ELLIPSIS,
+                   TokenTypes.AT,
+                   TokenTypes.LPAREN,
+                   TokenTypes.RPAREN,
+                   TokenTypes.ARRAY_DECLARATOR,
+                   TokenTypes.RBRACK,
+                   TokenTypes.METHOD_REF,
+               };
     }
 
     @Override
@@ -165,9 +165,9 @@ public class SeparatorWrapCheck
         final int lineNo = ast.getLineNo();
         final String currentLine = getLines()[lineNo - 1];
         final String substringAfterToken =
-                currentLine.substring(colNo + text.length()).trim();
+            currentLine.substring(colNo + text.length()).trim();
         final String substringBeforeToken =
-                currentLine.substring(0, colNo).trim();
+            currentLine.substring(0, colNo).trim();
 
         if (option == WrapOption.EOL
                 && substringBeforeToken.isEmpty()) {

@@ -35,7 +35,7 @@ public class InvalidJavadocPositionTest extends AbstractGoogleModuleTestSupport 
     @Test
     public void testDefault() throws Exception {
         final String message = getCheckMessage(InvalidJavadocPositionCheck.class,
-            "invalid.position");
+                                               "invalid.position");
 
         final String[] expected = {
             "1:9: " + message,

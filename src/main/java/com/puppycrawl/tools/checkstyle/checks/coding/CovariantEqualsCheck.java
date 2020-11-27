@@ -159,7 +159,7 @@ public class CovariantEqualsCheck extends AbstractCheck {
             if (!hasEqualsObject) {
                 for (DetailAST equalsAST : equalsMethods) {
                     final DetailAST nameNode = equalsAST
-                            .findFirstToken(TokenTypes.IDENT);
+                                               .findFirstToken(TokenTypes.IDENT);
                     log(nameNode, MSG_KEY);
                 }
             }

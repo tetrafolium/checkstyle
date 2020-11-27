@@ -105,7 +105,7 @@ public class LineWrappingHandler {
      */
     private void checkIndentation(DetailAST firstNode, DetailAST lastNode, int indentLevel) {
         checkIndentation(firstNode, lastNode, indentLevel,
-                -1, LineWrappingOptions.IGNORE_FIRST_LINE);
+                         -1, LineWrappingOptions.IGNORE_FIRST_LINE);
     }
 
     /**
@@ -118,7 +118,7 @@ public class LineWrappingHandler {
      * @param ignoreFirstLine Test if first line's indentation should be checked or not.
      */
     public void checkIndentation(DetailAST firstNode, DetailAST lastNode, int indentLevel,
-            int startIndent, LineWrappingOptions ignoreFirstLine) {
+                                 int startIndent, LineWrappingOptions ignoreFirstLine) {
         final NavigableMap<Integer, DetailAST> firstNodesOnLines = collectFirstNodes(firstNode,
                 lastNode);
 
@@ -176,7 +176,7 @@ public class LineWrappingHandler {
      * @return the line number of the next line in the map
      */
     private static Integer getNextNodeLine(
-            NavigableMap<Integer, DetailAST> firstNodesOnLines, DetailAST node) {
+        NavigableMap<Integer, DetailAST> firstNodesOnLines, DetailAST node) {
         Integer nextNodeLine = firstNodesOnLines.higherKey(node.getLastChild().getLineNo());
         if (nextNodeLine == null) {
             nextNodeLine = firstNodesOnLines.lastKey();
@@ -208,7 +208,7 @@ public class LineWrappingHandler {
             final DetailAST firstTokenOnLine = result.get(curNode.getLineNo());
 
             if (firstTokenOnLine == null
-                || expandedTabsColumnNo(firstTokenOnLine) >= expandedTabsColumnNo(curNode)) {
+                    || expandedTabsColumnNo(firstTokenOnLine) >= expandedTabsColumnNo(curNode)) {
                 result.put(curNode.getLineNo(), curNode);
             }
             curNode = getNextCurNode(curNode);
@@ -244,7 +244,7 @@ public class LineWrappingHandler {
      * @param indentLevel line wrapping indentation.
      */
     private void checkAnnotationIndentation(DetailAST atNode,
-            NavigableMap<Integer, DetailAST> firstNodesOnLines, int indentLevel) {
+                                            NavigableMap<Integer, DetailAST> firstNodesOnLines, int indentLevel) {
         final int firstNodeIndent = getLineStart(atNode);
         final int currentIndent = firstNodeIndent + indentLevel;
         final Collection<DetailAST> values = firstNodesOnLines.values();
@@ -258,7 +258,7 @@ public class LineWrappingHandler {
             final DetailAST parentNode = node.getParent();
             final boolean isCurrentNodeCloseAnnotationAloneInLine =
                 node.getLineNo() == lastAnnotationLine
-                    && isEndOfScope(lastAnnotationNode, node);
+                && isEndOfScope(lastAnnotationNode, node);
             if (isCurrentNodeCloseAnnotationAloneInLine
                     || node.getType() == TokenTypes.AT
                     && (parentNode.getParent().getType() == TokenTypes.MODIFIERS
@@ -287,15 +287,15 @@ public class LineWrappingHandler {
         boolean endOfScope = true;
         while (endOfScope && !checkNode.equals(lastAnnotationNode)) {
             switch (checkNode.getType()) {
-                case TokenTypes.RCURLY:
-                case TokenTypes.RBRACK:
-                    while (checkNode.getNextSibling() == null) {
-                        checkNode = checkNode.getParent();
-                    }
-                    checkNode = checkNode.getNextSibling();
-                    break;
-                default:
-                    endOfScope = false;
+            case TokenTypes.RCURLY:
+            case TokenTypes.RBRACK:
+                while (checkNode.getNextSibling() == null) {
+                    checkNode = checkNode.getParent();
+                }
+                checkNode = checkNode.getNextSibling();
+                break;
+            default:
+                endOfScope = false;
             }
         }
         return endOfScope;
@@ -314,7 +314,7 @@ public class LineWrappingHandler {
             indentCheck.getLine(ast.getLineNo() - 1);
 
         return CommonUtil.lengthExpandedTabs(line, ast.getColumnNo(),
-            indentCheck.getIndentationTabWidth());
+                                             indentCheck.getIndentationTabWidth());
     }
 
     /**
@@ -355,15 +355,15 @@ public class LineWrappingHandler {
         if (indentCheck.isForceStrictCondition()) {
             if (expandedTabsColumnNo(currentNode) != currentIndent) {
                 indentCheck.indentationLog(currentNode.getLineNo(),
-                        IndentationCheck.MSG_ERROR, currentNode.getText(),
-                        expandedTabsColumnNo(currentNode), currentIndent);
+                                           IndentationCheck.MSG_ERROR, currentNode.getText(),
+                                           expandedTabsColumnNo(currentNode), currentIndent);
             }
         }
         else {
             if (expandedTabsColumnNo(currentNode) < currentIndent) {
                 indentCheck.indentationLog(currentNode.getLineNo(),
-                        IndentationCheck.MSG_ERROR, currentNode.getText(),
-                        expandedTabsColumnNo(currentNode), currentIndent);
+                                           IndentationCheck.MSG_ERROR, currentNode.getText(),
+                                           expandedTabsColumnNo(currentNode), currentIndent);
             }
         }
     }

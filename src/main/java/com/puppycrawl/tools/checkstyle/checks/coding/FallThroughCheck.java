@@ -179,7 +179,7 @@ public class FallThroughCheck extends AbstractCheck {
             final DetailAST slist = ast.findFirstToken(TokenTypes.SLIST);
 
             if (slist != null && !isTerminated(slist, true, true)
-                && !hasFallThroughComment(ast, nextGroup)) {
+                    && !hasFallThroughComment(ast, nextGroup)) {
                 if (isLastGroup) {
                     log(ast, MSG_FALL_THROUGH_LAST);
                 }
@@ -203,38 +203,38 @@ public class FallThroughCheck extends AbstractCheck {
         final boolean terminated;
 
         switch (ast.getType()) {
-            case TokenTypes.LITERAL_RETURN:
-            case TokenTypes.LITERAL_THROW:
-                terminated = true;
-                break;
-            case TokenTypes.LITERAL_BREAK:
-                terminated = useBreak;
-                break;
-            case TokenTypes.LITERAL_CONTINUE:
-                terminated = useContinue;
-                break;
-            case TokenTypes.SLIST:
-                terminated = checkSlist(ast, useBreak, useContinue);
-                break;
-            case TokenTypes.LITERAL_IF:
-                terminated = checkIf(ast, useBreak, useContinue);
-                break;
-            case TokenTypes.LITERAL_FOR:
-            case TokenTypes.LITERAL_WHILE:
-            case TokenTypes.LITERAL_DO:
-                terminated = checkLoop(ast);
-                break;
-            case TokenTypes.LITERAL_TRY:
-                terminated = checkTry(ast, useBreak, useContinue);
-                break;
-            case TokenTypes.LITERAL_SWITCH:
-                terminated = checkSwitch(ast, useContinue);
-                break;
-            case TokenTypes.LITERAL_SYNCHRONIZED:
-                terminated = checkSynchronized(ast, useBreak, useContinue);
-                break;
-            default:
-                terminated = false;
+        case TokenTypes.LITERAL_RETURN:
+        case TokenTypes.LITERAL_THROW:
+            terminated = true;
+            break;
+        case TokenTypes.LITERAL_BREAK:
+            terminated = useBreak;
+            break;
+        case TokenTypes.LITERAL_CONTINUE:
+            terminated = useContinue;
+            break;
+        case TokenTypes.SLIST:
+            terminated = checkSlist(ast, useBreak, useContinue);
+            break;
+        case TokenTypes.LITERAL_IF:
+            terminated = checkIf(ast, useBreak, useContinue);
+            break;
+        case TokenTypes.LITERAL_FOR:
+        case TokenTypes.LITERAL_WHILE:
+        case TokenTypes.LITERAL_DO:
+            terminated = checkLoop(ast);
+            break;
+        case TokenTypes.LITERAL_TRY:
+            terminated = checkTry(ast, useBreak, useContinue);
+            break;
+        case TokenTypes.LITERAL_SWITCH:
+            terminated = checkSwitch(ast, useContinue);
+            break;
+        case TokenTypes.LITERAL_SYNCHRONIZED:
+            terminated = checkSynchronized(ast, useBreak, useContinue);
+            break;
+        default:
+            terminated = false;
         }
         return terminated;
     }
@@ -256,7 +256,7 @@ public class FallThroughCheck extends AbstractCheck {
         }
 
         return lastStmt != null
-            && isTerminated(lastStmt, useBreak, useContinue);
+               && isTerminated(lastStmt, useBreak, useContinue);
     }
 
     /**
@@ -270,12 +270,12 @@ public class FallThroughCheck extends AbstractCheck {
     private boolean checkIf(final DetailAST ast, boolean useBreak,
                             boolean useContinue) {
         final DetailAST thenStmt = ast.findFirstToken(TokenTypes.RPAREN)
-                .getNextSibling();
+                                   .getNextSibling();
         final DetailAST elseStmt = thenStmt.getNextSibling();
 
         return elseStmt != null
-                && isTerminated(thenStmt, useBreak, useContinue)
-                && isTerminated(elseStmt.getFirstChild(), useBreak, useContinue);
+               && isTerminated(thenStmt, useBreak, useContinue)
+               && isTerminated(elseStmt.getFirstChild(), useBreak, useContinue);
     }
 
     /**
@@ -311,7 +311,7 @@ public class FallThroughCheck extends AbstractCheck {
         boolean isTerminated = false;
         if (finalStmt.getType() == TokenTypes.LITERAL_FINALLY) {
             isTerminated = isTerminated(finalStmt.findFirstToken(TokenTypes.SLIST),
-                                useBreak, useContinue);
+                                        useBreak, useContinue);
         }
 
         if (!isTerminated) {
@@ -322,14 +322,14 @@ public class FallThroughCheck extends AbstractCheck {
             }
 
             isTerminated = isTerminated(firstChild,
-                    useBreak, useContinue);
+                                        useBreak, useContinue);
 
             DetailAST catchStmt = ast.findFirstToken(TokenTypes.LITERAL_CATCH);
             while (catchStmt != null
                     && isTerminated
                     && catchStmt.getType() == TokenTypes.LITERAL_CATCH) {
                 final DetailAST catchBody =
-                        catchStmt.findFirstToken(TokenTypes.SLIST);
+                    catchStmt.findFirstToken(TokenTypes.SLIST);
                 isTerminated = isTerminated(catchBody, useBreak, useContinue);
                 catchStmt = catchStmt.getNextSibling();
             }
@@ -367,7 +367,7 @@ public class FallThroughCheck extends AbstractCheck {
     private boolean checkSynchronized(final DetailAST synchronizedAst, boolean useBreak,
                                       boolean useContinue) {
         return isTerminated(
-            synchronizedAst.findFirstToken(TokenTypes.SLIST), useBreak, useContinue);
+                   synchronizedAst.findFirstToken(TokenTypes.SLIST), useBreak, useContinue);
     }
 
     /**
@@ -438,7 +438,7 @@ public class FallThroughCheck extends AbstractCheck {
 
         if (matcher.find()) {
             matches = getFileContents().hasIntersectionWithComment(lineNo, matcher.start(),
-                    lineNo, matcher.end());
+                      lineNo, matcher.end());
         }
         return matches;
     }

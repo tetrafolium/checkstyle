@@ -29,7 +29,7 @@ import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
 import com.puppycrawl.tools.checkstyle.checks.coding.UnnecessarySemicolonAfterTypeMemberDeclarationCheck;
 
 public class XpathRegressionUnnecessarySemicolonAfterTypeMemberDeclarationTest
-        extends AbstractXpathTestSupport {
+    extends AbstractXpathTestSupport {
 
     private static final Class<UnnecessarySemicolonAfterTypeMemberDeclarationCheck> CLASS =
         UnnecessarySemicolonAfterTypeMemberDeclarationCheck.class;
@@ -42,17 +42,17 @@ public class XpathRegressionUnnecessarySemicolonAfterTypeMemberDeclarationTest
     @Test
     public void testOne() throws Exception {
         final File fileToProcess = new File(getPath(
-            "SuppressionXpathRegressionUnnecessarySemicolonAfterTypeMemberDeclaration.java"));
+                                                "SuppressionXpathRegressionUnnecessarySemicolonAfterTypeMemberDeclaration.java"));
         final DefaultConfiguration moduleConfig = createModuleConfig(CLASS);
         final String[] expectedViolation = {
             "4:20: " + getCheckMessage(CLASS,
-                UnnecessarySemicolonAfterTypeMemberDeclarationCheck.MSG_SEMI),
+                                       UnnecessarySemicolonAfterTypeMemberDeclarationCheck.MSG_SEMI),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList("/CLASS_DEF[./IDENT"
-            + "[@text='SuppressionXpathRegressionUnnecessarySemicolonAfterTypeMemberDeclaration']]"
-            + "/OBJBLOCK/SEMI"
-        );
+                + "[@text='SuppressionXpathRegressionUnnecessarySemicolonAfterTypeMemberDeclaration']]"
+                + "/OBJBLOCK/SEMI"
+                                                                           );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
     }

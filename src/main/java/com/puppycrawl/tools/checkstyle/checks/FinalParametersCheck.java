@@ -98,16 +98,17 @@ public class FinalParametersCheck extends AbstractCheck {
      * primitive datatypes</a>.
      */
     private final Set<Integer> primitiveDataTypes = Collections.unmodifiableSet(
-        Arrays.stream(new Integer[] {
-            TokenTypes.LITERAL_BYTE,
-            TokenTypes.LITERAL_SHORT,
-            TokenTypes.LITERAL_INT,
-            TokenTypes.LITERAL_LONG,
-            TokenTypes.LITERAL_FLOAT,
-            TokenTypes.LITERAL_DOUBLE,
-            TokenTypes.LITERAL_BOOLEAN,
-            TokenTypes.LITERAL_CHAR, })
-        .collect(Collectors.toSet()));
+                Arrays.stream(new Integer[] {
+                                  TokenTypes.LITERAL_BYTE,
+                                  TokenTypes.LITERAL_SHORT,
+                                  TokenTypes.LITERAL_INT,
+                                  TokenTypes.LITERAL_LONG,
+                                  TokenTypes.LITERAL_FLOAT,
+                                  TokenTypes.LITERAL_DOUBLE,
+                                  TokenTypes.LITERAL_BOOLEAN,
+                                  TokenTypes.LITERAL_CHAR,
+                              })
+                .collect(Collectors.toSet()));
 
     /**
      * Ignore primitive types as parameters.
@@ -125,19 +126,19 @@ public class FinalParametersCheck extends AbstractCheck {
     @Override
     public int[] getDefaultTokens() {
         return new int[] {
-            TokenTypes.METHOD_DEF,
-            TokenTypes.CTOR_DEF,
-        };
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.CTOR_DEF,
+               };
     }
 
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.METHOD_DEF,
-            TokenTypes.CTOR_DEF,
-            TokenTypes.LITERAL_CATCH,
-            TokenTypes.FOR_EACH_CLAUSE,
-        };
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.CTOR_DEF,
+                   TokenTypes.LITERAL_CATCH,
+                   TokenTypes.FOR_EACH_CLAUSE,
+               };
     }
 
     @Override
@@ -226,7 +227,7 @@ public class FinalParametersCheck extends AbstractCheck {
         boolean result = false;
         if (ignorePrimitiveTypes) {
             final DetailAST parameterType = paramDef
-                .findFirstToken(TokenTypes.TYPE).getFirstChild();
+                                            .findFirstToken(TokenTypes.TYPE).getFirstChild();
             if (primitiveDataTypes.contains(parameterType.getType())) {
                 result = true;
             }

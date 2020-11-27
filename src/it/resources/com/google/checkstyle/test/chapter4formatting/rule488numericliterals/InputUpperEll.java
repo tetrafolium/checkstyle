@@ -19,7 +19,7 @@ class InputUpperEll
 
     private void processUpperEll(long aLong) {
         long bad = (4+5*7^66l/7+890) //warn
-                & (88l + 78 * 4); //warn
+                   & (88l + 78 * 4); //warn
         long good = (4+5*7^66L/7+890) & (88L + 78 * 4); //ok
         long[] array = {
             66l, //warn
@@ -48,14 +48,14 @@ class InputUpperEll
         private void processUpperEll(long aLong)
         {
             long bad = (4+5*7^66l/7+890) //warn
-                    & (88l + 78 * 4); //warn
+                       & (88l + 78 * 4); //warn
             long good = (4+5*7^66L/7+890) & (88L + 78 * 4); //ok
         }
         private void processUpperEll(String s, long l) {
             long[] array = {
-                    66l, //warn
-                    66L, //ok
-                };
+                66l, //warn
+                66L, //ok
+            };
         }
 
         void fooMethod()
@@ -78,7 +78,7 @@ class InputUpperEll
 
                 private void processUpperEll(long aLong) {
                     long bad = (4+5*7^66l/7+890) //warn
-                            & (88l + 78 * 4); //warn
+                               & (88l + 78 * 4); //warn
                     long good = (4+5*7^66L/7+890) & (88L + 78 * 4); //ok
                     long[] array = {
                         66l, //warn
@@ -97,7 +97,7 @@ class InputUpperEll
         public static final long IGNORE = 666l + 666L; //warn
         public static final String notWarn = "666l"; //ok
         long bad = (4+5*7^66l/7+890) //warn
-                & (88l + 78 * 4); //warn
+                   & (88l + 78 * 4); //warn
         long good = (4+5*7^66L/7+890) & (88L + 78 * 4); //ok
     }
 }

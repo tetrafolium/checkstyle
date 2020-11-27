@@ -40,84 +40,84 @@ public class XpathRegressionAbstractClassNameTest extends AbstractXpathTestSuppo
     @Test
     public void testClassNameTop() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionAbstractClassNameTop.java"));
+            new File(getPath("SuppressionXpathRegressionAbstractClassNameTop.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AbstractClassNameCheck.class);
+            createModuleConfig(AbstractClassNameCheck.class);
 
         final String[] expectedViolation = {
             "3:1: " + getCheckMessage(AbstractClassNameCheck.class,
-                AbstractClassNameCheck.MSG_ILLEGAL_ABSTRACT_CLASS_NAME,
-                    "SuppressionXpathRegressionAbstractClassNameTop", "^Abstract.+$"),
+                                      AbstractClassNameCheck.MSG_ILLEGAL_ABSTRACT_CLASS_NAME,
+                                      "SuppressionXpathRegressionAbstractClassNameTop", "^Abstract.+$"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAbstractClassNameTop']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAbstractClassNameTop']]"
-                        + "/MODIFIERS",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAbstractClassNameTop']]"
-                        + "/MODIFIERS/LITERAL_PUBLIC"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAbstractClassNameTop']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAbstractClassNameTop']]"
+                    + "/MODIFIERS",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAbstractClassNameTop']]"
+                    + "/MODIFIERS/LITERAL_PUBLIC"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testClassNameInner() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionAbstractClassNameInner.java"));
+            new File(getPath("SuppressionXpathRegressionAbstractClassNameInner.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AbstractClassNameCheck.class);
+            createModuleConfig(AbstractClassNameCheck.class);
 
         final String[] expectedViolation = {
             "4:5: " + getCheckMessage(AbstractClassNameCheck.class,
-                AbstractClassNameCheck.MSG_ILLEGAL_ABSTRACT_CLASS_NAME,
-                    "MyClass", "^Abstract.+$"),
+                                      AbstractClassNameCheck.MSG_ILLEGAL_ABSTRACT_CLASS_NAME,
+                                      "MyClass", "^Abstract.+$"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAbstractClassNameInner']]"
-                        + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='MyClass']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAbstractClassNameInner']]"
-                        + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='MyClass']]/MODIFIERS",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAbstractClassNameInner']]"
-                        + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='MyClass']]/MODIFIERS/ABSTRACT"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAbstractClassNameInner']]"
+                    + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='MyClass']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAbstractClassNameInner']]"
+                    + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='MyClass']]/MODIFIERS",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAbstractClassNameInner']]"
+                    + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='MyClass']]/MODIFIERS/ABSTRACT"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testClassNameNoModifier() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionAbstractClassNameNoModifier.java"));
+            new File(getPath("SuppressionXpathRegressionAbstractClassNameNoModifier.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AbstractClassNameCheck.class);
+            createModuleConfig(AbstractClassNameCheck.class);
 
         final String[] expectedViolation = {
             "4:5: " + getCheckMessage(AbstractClassNameCheck.class,
-                AbstractClassNameCheck.MSG_NO_ABSTRACT_CLASS_MODIFIER,
-                    "AbstractMyClass"),
+                                      AbstractClassNameCheck.MSG_NO_ABSTRACT_CLASS_MODIFIER,
+                                      "AbstractMyClass"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='"
-                        + "SuppressionXpathRegressionAbstractClassNameNoModifier']]"
-                        + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='AbstractMyClass']]",
-                "/CLASS_DEF[./IDENT[@text='"
-                        + "SuppressionXpathRegressionAbstractClassNameNoModifier']]"
-                        + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='AbstractMyClass']]/MODIFIERS",
-                "/CLASS_DEF[./IDENT[@text='"
-                        + "SuppressionXpathRegressionAbstractClassNameNoModifier']]"
-                        + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='AbstractMyClass']]/LITERAL_CLASS"
-        );
+                    "/CLASS_DEF[./IDENT[@text='"
+                    + "SuppressionXpathRegressionAbstractClassNameNoModifier']]"
+                    + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='AbstractMyClass']]",
+                    "/CLASS_DEF[./IDENT[@text='"
+                    + "SuppressionXpathRegressionAbstractClassNameNoModifier']]"
+                    + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='AbstractMyClass']]/MODIFIERS",
+                    "/CLASS_DEF[./IDENT[@text='"
+                    + "SuppressionXpathRegressionAbstractClassNameNoModifier']]"
+                    + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='AbstractMyClass']]/LITERAL_CLASS"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
 }

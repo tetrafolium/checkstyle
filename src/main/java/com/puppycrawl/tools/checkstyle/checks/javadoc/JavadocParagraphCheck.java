@@ -154,9 +154,9 @@ public class JavadocParagraphCheck extends AbstractJavadocCheck {
     @Override
     public int[] getDefaultJavadocTokens() {
         return new int[] {
-            JavadocTokenTypes.NEWLINE,
-            JavadocTokenTypes.HTML_ELEMENT,
-        };
+                   JavadocTokenTypes.NEWLINE,
+                   JavadocTokenTypes.HTML_ELEMENT,
+               };
     }
 
     @Override
@@ -170,7 +170,7 @@ public class JavadocParagraphCheck extends AbstractJavadocCheck {
             checkEmptyLine(ast);
         }
         else if (ast.getType() == JavadocTokenTypes.HTML_ELEMENT
-                && JavadocUtil.getFirstChild(ast).getType() == JavadocTokenTypes.P_TAG_START) {
+                 && JavadocUtil.getFirstChild(ast).getType() == JavadocTokenTypes.P_TAG_START) {
             checkParagraphTag(ast);
         }
     }
@@ -233,7 +233,7 @@ public class JavadocParagraphCheck extends AbstractJavadocCheck {
                 previousSibling = JavadocUtil.getPreviousSibling(previousSibling);
             }
             result = previousSibling != null
-                    && previousSibling.getType() == JavadocTokenTypes.LEADING_ASTERISK;
+                     && previousSibling.getType() == JavadocTokenTypes.LEADING_ASTERISK;
         }
         return result;
     }
@@ -249,7 +249,7 @@ public class JavadocParagraphCheck extends AbstractJavadocCheck {
         while (previousNode != null) {
             if (previousNode.getType() == JavadocTokenTypes.TEXT
                     && !CommonUtil.isBlank(previousNode.getText())
-                || previousNode.getType() != JavadocTokenTypes.LEADING_ASTERISK
+                    || previousNode.getType() != JavadocTokenTypes.LEADING_ASTERISK
                     && previousNode.getType() != JavadocTokenTypes.NEWLINE
                     && previousNode.getType() != JavadocTokenTypes.TEXT) {
                 result = false;
@@ -285,8 +285,8 @@ public class JavadocParagraphCheck extends AbstractJavadocCheck {
     private static boolean isImmediatelyFollowedByText(DetailNode tag) {
         final DetailNode nextSibling = JavadocUtil.getNextSibling(tag);
         return nextSibling.getType() == JavadocTokenTypes.NEWLINE
-                || nextSibling.getType() == JavadocTokenTypes.EOF
-                || CommonUtil.startsWithChar(nextSibling.getText(), ' ');
+               || nextSibling.getType() == JavadocTokenTypes.EOF
+               || CommonUtil.startsWithChar(nextSibling.getText(), ' ');
     }
 
 }

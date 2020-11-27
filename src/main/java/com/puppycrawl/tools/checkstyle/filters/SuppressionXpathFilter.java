@@ -611,7 +611,7 @@ import com.puppycrawl.tools.checkstyle.utils.FilterUtil;
  * @noinspection NonFinalFieldReferenceInEquals, NonFinalFieldReferencedInHashCode
  */
 public class SuppressionXpathFilter extends AutomaticBean implements
-        TreeWalkerFilter, ExternalResourceHolder {
+    TreeWalkerFilter, ExternalResourceHolder {
 
     /** Specify the location of the <em>suppressions XML document</em> file. */
     private String file;

@@ -155,31 +155,31 @@ public class ParenPadCheck extends AbstractParenPadCheck {
     @Override
     public void visitToken(DetailAST ast) {
         switch (ast.getType()) {
-            case TokenTypes.METHOD_CALL:
-                processLeft(ast);
-                processRight(ast.findFirstToken(TokenTypes.RPAREN));
-                break;
-            case TokenTypes.DOT:
-            case TokenTypes.EXPR:
-            case TokenTypes.QUESTION:
-                processExpression(ast);
-                break;
-            case TokenTypes.LITERAL_FOR:
-                visitLiteralFor(ast);
-                break;
-            case TokenTypes.ANNOTATION:
-            case TokenTypes.ENUM_CONSTANT_DEF:
-            case TokenTypes.LITERAL_NEW:
-            case TokenTypes.LITERAL_SYNCHRONIZED:
-            case TokenTypes.LAMBDA:
-                visitTokenWithOptionalParentheses(ast);
-                break;
-            case TokenTypes.RESOURCE_SPECIFICATION:
-                visitResourceSpecification(ast);
-                break;
-            default:
-                processLeft(ast.findFirstToken(TokenTypes.LPAREN));
-                processRight(ast.findFirstToken(TokenTypes.RPAREN));
+        case TokenTypes.METHOD_CALL:
+            processLeft(ast);
+            processRight(ast.findFirstToken(TokenTypes.RPAREN));
+            break;
+        case TokenTypes.DOT:
+        case TokenTypes.EXPR:
+        case TokenTypes.QUESTION:
+            processExpression(ast);
+            break;
+        case TokenTypes.LITERAL_FOR:
+            visitLiteralFor(ast);
+            break;
+        case TokenTypes.ANNOTATION:
+        case TokenTypes.ENUM_CONSTANT_DEF:
+        case TokenTypes.LITERAL_NEW:
+        case TokenTypes.LITERAL_SYNCHRONIZED:
+        case TokenTypes.LAMBDA:
+            visitTokenWithOptionalParentheses(ast);
+            break;
+        case TokenTypes.RESOURCE_SPECIFICATION:
+            visitResourceSpecification(ast);
+            break;
+        default:
+            processLeft(ast.findFirstToken(TokenTypes.LPAREN));
+            processRight(ast.findFirstToken(TokenTypes.RPAREN));
         }
     }
 
@@ -276,27 +276,27 @@ public class ParenPadCheck extends AbstractParenPadCheck {
      */
     private static int[] makeAcceptableTokens() {
         return new int[] {TokenTypes.ANNOTATION,
-            TokenTypes.ANNOTATION_FIELD_DEF,
-            TokenTypes.CTOR_CALL,
-            TokenTypes.CTOR_DEF,
-            TokenTypes.DOT,
-            TokenTypes.ENUM_CONSTANT_DEF,
-            TokenTypes.EXPR,
-            TokenTypes.LITERAL_CATCH,
-            TokenTypes.LITERAL_DO,
-            TokenTypes.LITERAL_FOR,
-            TokenTypes.LITERAL_IF,
-            TokenTypes.LITERAL_NEW,
-            TokenTypes.LITERAL_SWITCH,
-            TokenTypes.LITERAL_SYNCHRONIZED,
-            TokenTypes.LITERAL_WHILE,
-            TokenTypes.METHOD_CALL,
-            TokenTypes.METHOD_DEF,
-            TokenTypes.QUESTION,
-            TokenTypes.RESOURCE_SPECIFICATION,
-            TokenTypes.SUPER_CTOR_CALL,
-            TokenTypes.LAMBDA,
-        };
+                          TokenTypes.ANNOTATION_FIELD_DEF,
+                          TokenTypes.CTOR_CALL,
+                          TokenTypes.CTOR_DEF,
+                          TokenTypes.DOT,
+                          TokenTypes.ENUM_CONSTANT_DEF,
+                          TokenTypes.EXPR,
+                          TokenTypes.LITERAL_CATCH,
+                          TokenTypes.LITERAL_DO,
+                          TokenTypes.LITERAL_FOR,
+                          TokenTypes.LITERAL_IF,
+                          TokenTypes.LITERAL_NEW,
+                          TokenTypes.LITERAL_SWITCH,
+                          TokenTypes.LITERAL_SYNCHRONIZED,
+                          TokenTypes.LITERAL_WHILE,
+                          TokenTypes.METHOD_CALL,
+                          TokenTypes.METHOD_DEF,
+                          TokenTypes.QUESTION,
+                          TokenTypes.RESOURCE_SPECIFICATION,
+                          TokenTypes.SUPER_CTOR_CALL,
+                          TokenTypes.LAMBDA,
+                         };
     }
 
     /**
@@ -345,7 +345,7 @@ public class ParenPadCheck extends AbstractParenPadCheck {
         // Only traditional for statements are examined, not for-each statements
         if (parent.findFirstToken(TokenTypes.FOR_EACH_CLAUSE) == null) {
             final DetailAST forIterator =
-                    parent.findFirstToken(TokenTypes.FOR_INIT);
+                parent.findFirstToken(TokenTypes.FOR_INIT);
             result = !forIterator.hasChildren();
         }
         return result;

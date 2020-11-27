@@ -97,9 +97,9 @@ public final class JavadocPropertiesGenerator {
      */
     private static void writePropertiesFile(CliOptions options) throws CheckstyleException {
         try (PrintWriter writer = new PrintWriter(options.outputFile,
-                StandardCharsets.UTF_8.name())) {
+                    StandardCharsets.UTF_8.name())) {
             final DetailAST top = JavaParser.parseFile(options.inputFile,
-                    JavaParser.Options.WITH_COMMENTS);
+                                  JavaParser.Options.WITH_COMMENTS);
             final DetailAST objBlock = getClassBody(top);
             if (objBlock != null) {
                 iteratePublicStaticIntFields(objBlock, writer::println);
@@ -107,7 +107,7 @@ public final class JavadocPropertiesGenerator {
         }
         catch (IOException ex) {
             throw new CheckstyleException("Failed to write javadoc properties of '"
-                    + options.inputFile + "' to '" + options.outputFile + "'", ex);
+                                          + options.inputFile + "' to '" + options.outputFile + "'", ex);
         }
     }
 
@@ -119,7 +119,7 @@ public final class JavadocPropertiesGenerator {
      * @throws CheckstyleException if failed to parse a javadoc comment
      */
     private static void iteratePublicStaticIntFields(DetailAST objBlock, Consumer<String> consumer)
-            throws CheckstyleException {
+    throws CheckstyleException {
         for (DetailAST member = objBlock.getFirstChild(); member != null;
                 member = member.getNextSibling()) {
             if (isPublicStaticFinalIntField(member)) {
@@ -162,8 +162,8 @@ public final class JavadocPropertiesGenerator {
             if (result) {
                 final DetailAST modifiers = ast.findFirstToken(TokenTypes.MODIFIERS);
                 result = modifiers.findFirstToken(TokenTypes.LITERAL_PUBLIC) != null
-                    && modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) != null
-                    && modifiers.findFirstToken(TokenTypes.FINAL) != null;
+                         && modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) != null
+                         && modifiers.findFirstToken(TokenTypes.FINAL) != null;
             }
         }
         return result;
@@ -199,7 +199,7 @@ public final class JavadocPropertiesGenerator {
             }
             // Otherwise, the javadoc comment will be right here.
             else if (child.getType() == TokenTypes.BLOCK_COMMENT_BEGIN
-                    && JavadocUtil.isJavadocComment(child)) {
+                     && JavadocUtil.isJavadocComment(child)) {
                 final DetailNode tree = DetailNodeTreeStringPrinter.parseJavadocAsDetailNode(child);
                 firstSentence = getFirstJavadocSentence(tree);
             }
@@ -249,31 +249,31 @@ public final class JavadocPropertiesGenerator {
      * @throws CheckstyleException if the inline javadoc tag is not a literal nor a code tag
      */
     private static void formatInlineCodeTag(StringBuilder builder, DetailNode inlineTag)
-            throws CheckstyleException {
+    throws CheckstyleException {
         boolean wrapWithCodeTag = false;
         for (DetailNode node : inlineTag.getChildren()) {
             switch (node.getType()) {
-                case JavadocTokenTypes.CODE_LITERAL:
-                    wrapWithCodeTag = true;
-                    break;
-                // The text to append.
-                case JavadocTokenTypes.TEXT:
-                    if (wrapWithCodeTag) {
-                        builder.append("<code>").append(node.getText()).append("</code>");
-                    }
-                    else {
-                        builder.append(node.getText());
-                    }
-                    break;
-                // Empty content tags.
-                case JavadocTokenTypes.LITERAL_LITERAL:
-                case JavadocTokenTypes.JAVADOC_INLINE_TAG_START:
-                case JavadocTokenTypes.JAVADOC_INLINE_TAG_END:
-                case JavadocTokenTypes.WS:
-                    break;
-                default:
-                    throw new CheckstyleException("Unsupported inline tag "
-                        + JavadocUtil.getTokenName(node.getType()));
+            case JavadocTokenTypes.CODE_LITERAL:
+                wrapWithCodeTag = true;
+                break;
+            // The text to append.
+            case JavadocTokenTypes.TEXT:
+                if (wrapWithCodeTag) {
+                    builder.append("<code>").append(node.getText()).append("</code>");
+                }
+                else {
+                    builder.append(node.getText());
+                }
+                break;
+            // Empty content tags.
+            case JavadocTokenTypes.LITERAL_LITERAL:
+            case JavadocTokenTypes.JAVADOC_INLINE_TAG_START:
+            case JavadocTokenTypes.JAVADOC_INLINE_TAG_END:
+            case JavadocTokenTypes.WS:
+                break;
+            default:
+                throw new CheckstyleException("Unsupported inline tag "
+                                              + JavadocUtil.getTokenName(node.getType()));
             }
         }
     }
@@ -285,18 +285,18 @@ public final class JavadocPropertiesGenerator {
      */
     private static void formatHtmlElement(StringBuilder builder, DetailNode node) {
         switch (node.getType()) {
-            case JavadocTokenTypes.START:
-            case JavadocTokenTypes.HTML_TAG_NAME:
-            case JavadocTokenTypes.END:
-            case JavadocTokenTypes.TEXT:
-            case JavadocTokenTypes.SLASH:
-                builder.append(node.getText());
-                break;
-            default:
-                for (DetailNode child : node.getChildren()) {
-                    formatHtmlElement(builder, child);
-                }
-                break;
+        case JavadocTokenTypes.START:
+        case JavadocTokenTypes.HTML_TAG_NAME:
+        case JavadocTokenTypes.END:
+        case JavadocTokenTypes.TEXT:
+        case JavadocTokenTypes.SLASH:
+            builder.append(node.getText());
+            break;
+        default:
+            for (DetailNode child : node.getChildren()) {
+                formatHtmlElement(builder, child);
+            }
+            break;
         }
     }
 
@@ -304,7 +304,7 @@ public final class JavadocPropertiesGenerator {
      * Helper class encapsulating the command line options and positional parameters.
      */
     @Command(name = "java com.puppycrawl.tools.checkstyle.JavadocPropertiesGenerator",
-            mixinStandardHelpOptions = true)
+             mixinStandardHelpOptions = true)
     private static class CliOptions {
 
         /**

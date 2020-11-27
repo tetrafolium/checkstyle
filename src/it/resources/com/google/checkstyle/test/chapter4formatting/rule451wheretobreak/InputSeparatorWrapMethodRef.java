@@ -6,15 +6,17 @@ public class InputSeparatorWrapMethodRef {
 
     void goodCase() {
         String[] stringArray = { "Barbara", "James", "Mary", "John",
-            "Patricia", "Robert", "Michael", "Linda" };
+                                 "Patricia", "Robert", "Michael", "Linda"
+                               };
         Arrays.sort(stringArray, String
-                ::compareToIgnoreCase);
+                    ::compareToIgnoreCase);
     }
 
     void badCase() {
         String[] stringArray = { "Barbara", "James", "Mary", "John",
-            "Patricia", "Robert", "Michael", "Linda" };
+                                 "Patricia", "Robert", "Michael", "Linda"
+                               };
         /*warn*/ Arrays.sort(stringArray, String::
-                compareToIgnoreCase);
+                             compareToIgnoreCase);
     }
 }

@@ -73,7 +73,7 @@ public final class TreeTable extends JTable {
 
         // Force the JTable and JTree to share their row selection models.
         final ListToTreeSelectionModelWrapper selectionWrapper = new
-                ListToTreeSelectionModelWrapper(this);
+        ListToTreeSelectionModelWrapper(this);
         tree.setSelectionModel(selectionWrapper);
         setSelectionModel(selectionWrapper.getListSelectionModel());
 
@@ -153,15 +153,15 @@ public final class TreeTable extends JTable {
         // visible in table header.
         final int padding = 10;
         final int widthOfColumnContainingSixCharacterString =
-                widthOfSixCharacterString + padding;
+            widthOfSixCharacterString + padding;
         getColumn("Line").setMaxWidth(widthOfColumnContainingSixCharacterString);
         getColumn("Column").setMaxWidth(widthOfColumnContainingSixCharacterString);
         final int preferredTreeColumnWidth =
-                Math.toIntExact(Math.round(getPreferredSize().getWidth() * 0.6));
+            Math.toIntExact(Math.round(getPreferredSize().getWidth() * 0.6));
         getColumn("Tree").setPreferredWidth(preferredTreeColumnWidth);
         // Twenty eight character string to contain "Type" column
         final int widthOfTwentyEightCharacterString =
-                fontMetrics.stringWidth("XXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+            fontMetrics.stringWidth("XXXXXXXXXXXXXXXXXXXXXXXXXXXX");
         final int preferredTypeColumnWidth = widthOfTwentyEightCharacterString + padding;
         getColumn("Type").setPreferredWidth(preferredTypeColumnWidth);
     }
@@ -180,7 +180,7 @@ public final class TreeTable extends JTable {
         // Use the tree's default foreground and background colors in the
         // table.
         LookAndFeel.installColorsAndFont(this, "Tree.background",
-                "Tree.foreground", "Tree.font");
+                                         "Tree.foreground", "Tree.font");
     }
 
     /* Workaround for BasicTableUI anomaly. Make sure the UI never tries to
@@ -239,7 +239,7 @@ public final class TreeTable extends JTable {
      * JTree.
      */
     private class TreeTableCellEditor extends BaseCellEditor implements
-            TableCellEditor {
+        TableCellEditor {
 
         @Override
         public Component getTableCellEditorComponent(JTable table,
@@ -275,7 +275,7 @@ public final class TreeTable extends JTable {
         public boolean isCellEditable(EventObject event) {
             if (event instanceof MouseEvent) {
                 for (int counter = getColumnCount() - 1; counter >= 0;
-                     counter--) {
+                        counter--) {
                     if (getColumnClass(counter) == ParseTreeTableModel.class) {
                         final MouseEvent mouseEvent = (MouseEvent) event;
                         final MouseEvent newMouseEvent = new MouseEvent(tree, mouseEvent.getID(),

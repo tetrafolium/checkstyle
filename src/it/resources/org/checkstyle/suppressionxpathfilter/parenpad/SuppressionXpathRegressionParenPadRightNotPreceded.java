@@ -1,6 +1,6 @@
 package org.checkstyle.suppressionxpathfilter.parenpad;
 
-public class SuppressionXpathRegressionParenPadRightNotPreceded{
+public class SuppressionXpathRegressionParenPadRightNotPreceded {
     void method() {
         if ( false) {//warn
         }

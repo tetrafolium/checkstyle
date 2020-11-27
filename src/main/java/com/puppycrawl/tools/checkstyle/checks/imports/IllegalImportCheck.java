@@ -371,7 +371,7 @@ public class IllegalImportCheck
         }
         else {
             imp = FullIdent.createFullIdent(
-                ast.getFirstChild().getNextSibling());
+                      ast.getFirstChild().getNextSibling());
         }
         if (isIllegalImport(imp.getText())) {
             log(ast,

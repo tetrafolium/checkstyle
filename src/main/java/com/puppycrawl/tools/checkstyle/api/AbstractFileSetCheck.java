@@ -57,7 +57,7 @@ public abstract class AbstractFileSetCheck
      * @throws CheckstyleException if error condition within Checkstyle occurs.
      */
     protected abstract void processFiltered(File file, FileText fileText)
-            throws CheckstyleException;
+    throws CheckstyleException;
 
     @Override
     public void init() {
@@ -76,7 +76,7 @@ public abstract class AbstractFileSetCheck
 
     @Override
     public final SortedSet<LocalizedMessage> process(File file, FileText fileText)
-            throws CheckstyleException {
+    throws CheckstyleException {
         final SortedSet<LocalizedMessage> messages = context.get().messages;
         context.get().fileContents = new FileContents(fileText);
         messages.clear();
@@ -193,31 +193,31 @@ public abstract class AbstractFileSetCheck
     @Override
     public final void log(int line, String key, Object... args) {
         context.get().messages.add(
-                new LocalizedMessage(line,
-                        getMessageBundle(),
-                        key,
-                        args,
-                        getSeverityLevel(),
-                        getId(),
-                        getClass(),
-                        getCustomMessages().get(key)));
+            new LocalizedMessage(line,
+                                 getMessageBundle(),
+                                 key,
+                                 args,
+                                 getSeverityLevel(),
+                                 getId(),
+                                 getClass(),
+                                 getCustomMessages().get(key)));
     }
 
     @Override
     public final void log(int lineNo, int colNo, String key,
-            Object... args) {
+                          Object... args) {
         final int col = 1 + CommonUtil.lengthExpandedTabs(
-                context.get().fileContents.getLine(lineNo - 1), colNo, tabWidth);
+                            context.get().fileContents.getLine(lineNo - 1), colNo, tabWidth);
         context.get().messages.add(
-                new LocalizedMessage(lineNo,
-                        col,
-                        getMessageBundle(),
-                        key,
-                        args,
-                        getSeverityLevel(),
-                        getId(),
-                        getClass(),
-                        getCustomMessages().get(key)));
+            new LocalizedMessage(lineNo,
+                                 col,
+                                 getMessageBundle(),
+                                 key,
+                                 args,
+                                 getSeverityLevel(),
+                                 getId(),
+                                 getClass(),
+                                 getCustomMessages().get(key)));
     }
 
     /**

@@ -42,67 +42,67 @@ public class XpathRegressionLeftCurlyTest extends AbstractXpathTestSupport {
     @Test
     public void testOne() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionLeftCurlyOne.java"));
+            new File(getPath("SuppressionXpathRegressionLeftCurlyOne.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(LeftCurlyCheck.class);
+            createModuleConfig(LeftCurlyCheck.class);
 
         final String[] expectedViolation = {
             "4:1: " + getCheckMessage(LeftCurlyCheck.class,
-                LeftCurlyCheck.MSG_KEY_LINE_PREVIOUS, "{", 1),
+                                      LeftCurlyCheck.MSG_KEY_LINE_PREVIOUS, "{", 1),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionLeftCurlyOne']]/OBJBLOCK",
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionLeftCurlyOne']]/OBJBLOCK/LCURLY"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionLeftCurlyOne']]/OBJBLOCK",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionLeftCurlyOne']]/OBJBLOCK/LCURLY"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionLeftCurlyTwo.java"));
+            new File(getPath("SuppressionXpathRegressionLeftCurlyTwo.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(LeftCurlyCheck.class);
+            createModuleConfig(LeftCurlyCheck.class);
         moduleConfig.addAttribute("option", LeftCurlyOption.NL.toString());
 
         final String[] expectedViolation = {
             "3:53: " + getCheckMessage(LeftCurlyCheck.class,
-                LeftCurlyCheck.MSG_KEY_LINE_NEW, "{", 53),
+                                       LeftCurlyCheck.MSG_KEY_LINE_NEW, "{", 53),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionLeftCurlyTwo']]/OBJBLOCK",
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionLeftCurlyTwo']]/OBJBLOCK/LCURLY"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionLeftCurlyTwo']]/OBJBLOCK",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionLeftCurlyTwo']]/OBJBLOCK/LCURLY"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testThree() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionLeftCurlyThree.java"));
+            new File(getPath("SuppressionXpathRegressionLeftCurlyThree.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(LeftCurlyCheck.class);
+            createModuleConfig(LeftCurlyCheck.class);
 
         final String[] expectedViolation = {
             "5:19: " + getCheckMessage(LeftCurlyCheck.class,
-                LeftCurlyCheck.MSG_KEY_LINE_BREAK_AFTER, "{", 19),
+                                       LeftCurlyCheck.MSG_KEY_LINE_BREAK_AFTER, "{", 19),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionLeftCurlyThree']]/OBJBLOCK"
-                + "/METHOD_DEF[./IDENT[@text='sample']]/SLIST/LITERAL_IF/SLIST"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionLeftCurlyThree']]/OBJBLOCK"
+                    + "/METHOD_DEF[./IDENT[@text='sample']]/SLIST/LITERAL_IF/SLIST"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }

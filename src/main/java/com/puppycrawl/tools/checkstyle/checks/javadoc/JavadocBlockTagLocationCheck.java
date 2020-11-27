@@ -191,8 +191,8 @@ public class JavadocBlockTagLocationCheck extends AbstractJavadocCheck {
     @Override
     public int[] getRequiredJavadocTokens() {
         return new int[] {
-            JavadocTokenTypes.TEXT,
-        };
+                   JavadocTokenTypes.TEXT,
+               };
     }
 
     @Override
@@ -226,7 +226,7 @@ public class JavadocBlockTagLocationCheck extends AbstractJavadocCheck {
      */
     private static boolean isCommentOrInlineTag(DetailNode node) {
         return node.getType() == JavadocTokenTypes.JAVADOC_INLINE_TAG
-                || node.getType() == JavadocTokenTypes.HTML_COMMENT;
+               || node.getType() == JavadocTokenTypes.HTML_COMMENT;
     }
 
 }

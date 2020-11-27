@@ -22,7 +22,8 @@ final class InputMemberNameSimple
 
 
     private int[] m$nts = new int[] {1,2, 3, //warn
-                                     4};
+                                     4
+                                    };
 
 
     public static int sTest1;
@@ -87,7 +88,8 @@ final class InputMemberNameSimple
 
 
         private int[] m$nts = new int[] {1,2, 3, //warn
-                                         4};
+                                         4
+                                        };
 
 
         int mTest1; //warn
@@ -104,33 +106,34 @@ final class InputMemberNameSimple
         {
             Foo foo = new Foo() {
 
-                    int bad$Static = 2; //warn
+                int bad$Static = 2; //warn
 
-                    int sum_Created = 0; //warn
-
-
-                    int bad_Member = 2; //warn
-
-                    int m = 0; //warn
-
-                    int m_M = 0; //warn
+                int sum_Created = 0; //warn
 
 
-                    int[] m$nts = new int[] {1,2, 3, //warn
-                                                     4};
+                int bad_Member = 2; //warn
+
+                int m = 0; //warn
+
+                int m_M = 0; //warn
 
 
-                    int mTest1; //warn
+                int[] m$nts = new int[] {1,2, 3, //warn
+                                         4
+                                        };
 
-                    int mTest2; //warn
 
-                    int $mTest2; //warn
+                int mTest1; //warn
 
-                    int mTes$t2; //warn
+                int mTest2; //warn
 
-                    int mTest2$; //warn
+                int $mTest2; //warn
 
-                    public void greet() {}
+                int mTes$t2; //warn
+
+                int mTest2$; //warn
+
+                public void greet() {}
             };
         }
     }

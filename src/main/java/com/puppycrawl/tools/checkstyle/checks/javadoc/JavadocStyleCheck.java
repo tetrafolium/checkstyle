@@ -198,8 +198,8 @@ public class JavadocStyleCheck
 
     /** HTML tags that do not require a close tag. */
     private static final Set<String> SINGLE_TAGS = Collections.unmodifiableSortedSet(
-        Arrays.stream(new String[] {"br", "li", "dt", "dd", "hr", "img", "p", "td", "tr", "th", })
-            .collect(Collectors.toCollection(TreeSet::new)));
+                Arrays.stream(new String[] {"br", "li", "dt", "dd", "hr", "img", "p", "td", "tr", "th", })
+                .collect(Collectors.toCollection(TreeSet::new)));
 
     /**
      * HTML tags that are allowed in java docs.
@@ -207,15 +207,16 @@ public class JavadocStyleCheck
      * The forms and structure tags are not allowed
      */
     private static final Set<String> ALLOWED_TAGS = Collections.unmodifiableSortedSet(
-        Arrays.stream(new String[] {
-            "a", "abbr", "acronym", "address", "area", "b", "bdo", "big",
-            "blockquote", "br", "caption", "cite", "code", "colgroup", "dd",
-            "del", "div", "dfn", "dl", "dt", "em", "fieldset", "font", "h1",
-            "h2", "h3", "h4", "h5", "h6", "hr", "i", "img", "ins", "kbd",
-            "li", "ol", "p", "pre", "q", "samp", "small", "span", "strong",
-            "style", "sub", "sup", "table", "tbody", "td", "tfoot", "th",
-            "thead", "tr", "tt", "u", "ul", "var", })
-        .collect(Collectors.toCollection(TreeSet::new)));
+                Arrays.stream(new String[] {
+                                  "a", "abbr", "acronym", "address", "area", "b", "bdo", "big",
+                                  "blockquote", "br", "caption", "cite", "code", "colgroup", "dd",
+                                  "del", "div", "dfn", "dl", "dt", "em", "fieldset", "font", "h1",
+                                  "h2", "h3", "h4", "h5", "h6", "hr", "i", "img", "ins", "kbd",
+                                  "li", "ol", "p", "pre", "q", "samp", "small", "span", "strong",
+                                  "style", "sub", "sup", "table", "tbody", "td", "tfoot", "th",
+                                  "thead", "tr", "tt", "u", "ul", "var",
+                              })
+                .collect(Collectors.toCollection(TreeSet::new)));
 
     /** Specify the visibility scope where Javadoc comments are checked. */
     private Scope scope = Scope.PRIVATE;
@@ -249,17 +250,17 @@ public class JavadocStyleCheck
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.ANNOTATION_DEF,
-            TokenTypes.ANNOTATION_FIELD_DEF,
-            TokenTypes.CLASS_DEF,
-            TokenTypes.CTOR_DEF,
-            TokenTypes.ENUM_CONSTANT_DEF,
-            TokenTypes.ENUM_DEF,
-            TokenTypes.INTERFACE_DEF,
-            TokenTypes.METHOD_DEF,
-            TokenTypes.PACKAGE_DEF,
-            TokenTypes.VARIABLE_DEF,
-        };
+                   TokenTypes.ANNOTATION_DEF,
+                   TokenTypes.ANNOTATION_FIELD_DEF,
+                   TokenTypes.CLASS_DEF,
+                   TokenTypes.CTOR_DEF,
+                   TokenTypes.ENUM_CONSTANT_DEF,
+                   TokenTypes.ENUM_DEF,
+                   TokenTypes.INTERFACE_DEF,
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.PACKAGE_DEF,
+                   TokenTypes.VARIABLE_DEF,
+               };
     }
 
     @Override
@@ -309,7 +310,7 @@ public class JavadocStyleCheck
                     && (excludeScope == null
                         || !customScope.isIn(excludeScope)
                         || surroundingScope != null
-                            && !surroundingScope.isIn(excludeScope));
+                        && !surroundingScope.isIn(excludeScope));
         }
         return check;
     }
@@ -362,9 +363,9 @@ public class JavadocStyleCheck
         final String commentText = getCommentText(comment.getText());
 
         if (!commentText.isEmpty()
-            && !endOfSentenceFormat.matcher(commentText).find()
-            && !(commentText.startsWith("{@inheritDoc}")
-            && JavadocTagInfo.INHERIT_DOC.isValidOn(ast))) {
+                && !endOfSentenceFormat.matcher(commentText).find()
+                && !(commentText.startsWith("{@inheritDoc}")
+                     && JavadocTagInfo.INHERIT_DOC.isValidOn(ast))) {
             log(comment.getStartLineNo(), MSG_NO_PERIOD);
         }
     }
@@ -446,7 +447,7 @@ public class JavadocStyleCheck
                 builder.deleteCharAt(index);
             }
             else if (index > 0 && builder.charAt(index) == '/'
-                    && builder.charAt(index - 1) == '*') {
+                     && builder.charAt(index - 1) == '*') {
                 builder.deleteCharAt(index);
                 builder.deleteCharAt(index - 1);
                 index--;
@@ -521,10 +522,10 @@ public class JavadocStyleCheck
         final List<String> typeParameters = CheckUtil.getTypeParameterNames(ast);
         for (final HtmlTag htmlTag : htmlStack) {
             if (!isSingleTag(htmlTag)
-                && !htmlTag.getId().equals(lastFound)
-                && !typeParameters.contains(htmlTag.getId())) {
+                    && !htmlTag.getId().equals(lastFound)
+                    && !typeParameters.contains(htmlTag.getId())) {
                 log(htmlTag.getLineNo(), htmlTag.getPosition(),
-                        MSG_UNCLOSED_HTML, htmlTag.getText());
+                    MSG_UNCLOSED_HTML, htmlTag.getText());
                 lastFound = htmlTag.getId();
             }
         }

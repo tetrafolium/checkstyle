@@ -40,26 +40,26 @@ public class XpathRegressionNoWhitespaceAfterTest extends AbstractXpathTestSuppo
     @Test
     public void testNoWhitespaceAfter() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionNoWhitespaceAfter.java"));
+            new File(getPath("SuppressionXpathRegressionNoWhitespaceAfter.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(NoWhitespaceAfterCheck.class);
+            createModuleConfig(NoWhitespaceAfterCheck.class);
 
         final String[] expectedViolation = {
             "4:15: " + getCheckMessage(NoWhitespaceAfterCheck.class,
-                    NoWhitespaceAfterCheck.MSG_KEY, "-"),
+                                       NoWhitespaceAfterCheck.MSG_KEY, "-"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceAfter']]/OBJBLOCK"
-                + "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR",
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceAfter']]/OBJBLOCK"
-                + "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR/UNARY_MINUS["
-                + "./NUM_INT[@text='1']]"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceAfter']]/OBJBLOCK"
+                    + "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceAfter']]/OBJBLOCK"
+                    + "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR/UNARY_MINUS["
+                    + "./NUM_INT[@text='1']]"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
 }

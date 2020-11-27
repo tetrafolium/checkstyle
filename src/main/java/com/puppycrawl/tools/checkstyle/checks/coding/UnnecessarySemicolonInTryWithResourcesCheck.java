@@ -108,8 +108,8 @@ public final class UnnecessarySemicolonInTryWithResourcesCheck extends AbstractC
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.RESOURCE_SPECIFICATION,
-        };
+                   TokenTypes.RESOURCE_SPECIFICATION,
+               };
     }
 
     /**
@@ -125,8 +125,8 @@ public final class UnnecessarySemicolonInTryWithResourcesCheck extends AbstractC
         final DetailAST closingParen = ast.getLastChild();
         final DetailAST tokenBeforeCloseParen = closingParen.getPreviousSibling();
         if (tokenBeforeCloseParen.getType() == TokenTypes.SEMI
-            && (!allowWhenNoBraceAfterSemicolon
-                || TokenUtil.areOnSameLine(closingParen, tokenBeforeCloseParen))) {
+                && (!allowWhenNoBraceAfterSemicolon
+                    || TokenUtil.areOnSameLine(closingParen, tokenBeforeCloseParen))) {
             log(tokenBeforeCloseParen, MSG_SEMI);
         }
     }

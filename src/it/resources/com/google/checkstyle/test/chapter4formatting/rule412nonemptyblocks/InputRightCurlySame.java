@@ -4,6 +4,8 @@ public class InputRightCurlySame {
     public static void main(String[] args) {
         boolean after = false;
         try {
-        } finally { after = true; }
+        } finally {
+            after = true;
+        }
     }
 }

@@ -228,20 +228,20 @@ public abstract class AbstractCheck extends AbstractViolationReporter {
         // is increased by one.
 
         final int col = 1 + CommonUtil.lengthExpandedTabs(
-                getLines()[ast.getLineNo() - 1], ast.getColumnNo(), tabWidth);
+                            getLines()[ast.getLineNo() - 1], ast.getColumnNo(), tabWidth);
         context.get().messages.add(
-                new LocalizedMessage(
-                        ast.getLineNo(),
-                        col,
-                        ast.getColumnNo(),
-                        ast.getType(),
-                        getMessageBundle(),
-                        key,
-                        args,
-                        getSeverityLevel(),
-                        getId(),
-                        getClass(),
-                        getCustomMessages().get(key)));
+            new LocalizedMessage(
+                ast.getLineNo(),
+                col,
+                ast.getColumnNo(),
+                ast.getType(),
+                getMessageBundle(),
+                key,
+                args,
+                getSeverityLevel(),
+                getId(),
+                getClass(),
+                getCustomMessages().get(key)));
     }
 
     @Override
@@ -260,9 +260,9 @@ public abstract class AbstractCheck extends AbstractViolationReporter {
 
     @Override
     public final void log(int lineNo, int colNo, String key,
-            Object... args) {
+                          Object... args) {
         final int col = 1 + CommonUtil.lengthExpandedTabs(
-            getLines()[lineNo - 1], colNo, tabWidth);
+                            getLines()[lineNo - 1], colNo, tabWidth);
         context.get().messages.add(
             new LocalizedMessage(
                 lineNo,

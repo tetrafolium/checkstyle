@@ -68,8 +68,8 @@ public class InvalidJavadocPositionCheck extends AbstractCheck {
     @Override
     public int[] getDefaultTokens() {
         return new int[] {
-            TokenTypes.BLOCK_COMMENT_BEGIN,
-        };
+                   TokenTypes.BLOCK_COMMENT_BEGIN,
+               };
     }
 
     @Override

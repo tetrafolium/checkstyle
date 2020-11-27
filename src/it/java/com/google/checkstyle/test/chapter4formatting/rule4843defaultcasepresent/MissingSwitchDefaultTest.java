@@ -35,7 +35,7 @@ public class MissingSwitchDefaultTest extends AbstractGoogleModuleTestSupport {
     @Test
     public void testMissingSwitchDefault() throws Exception {
         final String msg = getCheckMessage(MissingSwitchDefaultCheck.class,
-            "missing.switch.default");
+                                           "missing.switch.default");
 
         final String[] expected = {
             "11: " + msg,

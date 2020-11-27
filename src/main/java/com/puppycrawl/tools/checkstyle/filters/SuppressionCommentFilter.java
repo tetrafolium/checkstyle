@@ -486,7 +486,7 @@ public class SuppressionCommentFilter
         Tag result = null;
         for (Tag tag : tags) {
             if (tag.getLine() > event.getLine()
-                || tag.getLine() == event.getLine()
+                    || tag.getLine() == event.getLine()
                     && tag.getColumn() > event.getColumn()) {
                 break;
             }
@@ -601,7 +601,7 @@ public class SuppressionCommentFilter
          * @throws IllegalArgumentException if unable to parse expanded text.
          */
         /* package */ Tag(int line, int column, String text, TagType tagType,
-                   SuppressionCommentFilter filter) {
+                          SuppressionCommentFilter filter) {
             this.line = line;
             this.column = column;
             this.text = text;
@@ -620,7 +620,7 @@ public class SuppressionCommentFilter
             String format = "";
             try {
                 format = CommonUtil.fillTemplateWithStringsByRegexp(
-                        filter.checkFormat, text, commentFormat);
+                             filter.checkFormat, text, commentFormat);
                 tagCheckRegexp = Pattern.compile(format);
 
                 if (filter.messageFormat == null) {
@@ -628,7 +628,7 @@ public class SuppressionCommentFilter
                 }
                 else {
                     format = CommonUtil.fillTemplateWithStringsByRegexp(
-                            filter.messageFormat, text, commentFormat);
+                                 filter.messageFormat, text, commentFormat);
                     tagMessageRegexp = Pattern.compile(format);
                 }
 
@@ -637,7 +637,7 @@ public class SuppressionCommentFilter
                 }
                 else {
                     format = CommonUtil.fillTemplateWithStringsByRegexp(
-                            filter.idFormat, text, commentFormat);
+                                 filter.idFormat, text, commentFormat);
                     tagIdRegexp = Pattern.compile(format);
                 }
             }
@@ -709,18 +709,18 @@ public class SuppressionCommentFilter
             }
             final Tag tag = (Tag) other;
             return Objects.equals(line, tag.line)
-                    && Objects.equals(column, tag.column)
-                    && Objects.equals(tagType, tag.tagType)
-                    && Objects.equals(text, tag.text)
-                    && Objects.equals(tagCheckRegexp, tag.tagCheckRegexp)
-                    && Objects.equals(tagMessageRegexp, tag.tagMessageRegexp)
-                    && Objects.equals(tagIdRegexp, tag.tagIdRegexp);
+                   && Objects.equals(column, tag.column)
+                   && Objects.equals(tagType, tag.tagType)
+                   && Objects.equals(text, tag.text)
+                   && Objects.equals(tagCheckRegexp, tag.tagCheckRegexp)
+                   && Objects.equals(tagMessageRegexp, tag.tagMessageRegexp)
+                   && Objects.equals(tagIdRegexp, tag.tagIdRegexp);
         }
 
         @Override
         public int hashCode() {
             return Objects.hash(text, line, column, tagType, tagCheckRegexp, tagMessageRegexp,
-                    tagIdRegexp);
+                                tagIdRegexp);
         }
 
         /**
@@ -779,12 +779,12 @@ public class SuppressionCommentFilter
         @Override
         public String toString() {
             return "Tag[text='" + text + '\''
-                    + ", line=" + line
-                    + ", column=" + column
-                    + ", type=" + tagType
-                    + ", tagCheckRegexp=" + tagCheckRegexp
-                    + ", tagMessageRegexp=" + tagMessageRegexp
-                    + ", tagIdRegexp=" + tagIdRegexp + ']';
+                   + ", line=" + line
+                   + ", column=" + column
+                   + ", type=" + tagType
+                   + ", tagCheckRegexp=" + tagCheckRegexp
+                   + ", tagMessageRegexp=" + tagMessageRegexp
+                   + ", tagIdRegexp=" + tagIdRegexp + ']';
         }
 
     }

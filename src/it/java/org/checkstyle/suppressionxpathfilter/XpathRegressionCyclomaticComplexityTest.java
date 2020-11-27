@@ -41,54 +41,54 @@ public class XpathRegressionCyclomaticComplexityTest extends AbstractXpathTestSu
     public void testOne() throws Exception {
 
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionCyclomaticComplexityOne.java"));
+            new File(getPath("SuppressionXpathRegressionCyclomaticComplexityOne.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(CyclomaticComplexityCheck.class);
+            createModuleConfig(CyclomaticComplexityCheck.class);
         moduleConfig.addAttribute("max", "0");
 
         final String[] expectedViolation = {
             "4:5: " + getCheckMessage(CyclomaticComplexityCheck.class,
-                    CyclomaticComplexityCheck.MSG_KEY, 2, 0),
+                                      CyclomaticComplexityCheck.MSG_KEY, 2, 0),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionCyclomaticComplexityOne']]"
-                + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]",
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionCyclomaticComplexityOne']]"
-                + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/MODIFIERS",
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionCyclomaticComplexityOne']]"
-                + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/MODIFIERS/LITERAL_PUBLIC"
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionCyclomaticComplexityOne']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionCyclomaticComplexityOne']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/MODIFIERS",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionCyclomaticComplexityOne']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/MODIFIERS/LITERAL_PUBLIC"
                 );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionCyclomaticComplexityTwo.java"));
+            new File(getPath("SuppressionXpathRegressionCyclomaticComplexityTwo.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(CyclomaticComplexityCheck.class);
+            createModuleConfig(CyclomaticComplexityCheck.class);
         moduleConfig.addAttribute("max", "0");
 
         final String[] expectedViolation = {
             "6:5: " + getCheckMessage(CyclomaticComplexityCheck.class,
-                    CyclomaticComplexityCheck.MSG_KEY, 5, 0),
+                                      CyclomaticComplexityCheck.MSG_KEY, 5, 0),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionCyclomaticComplexityTwo']]"
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionCyclomaticComplexityTwo']]"
                     + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo2']]",
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionCyclomaticComplexityTwo']]"
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionCyclomaticComplexityTwo']]"
                     + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo2']]/MODIFIERS",
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionCyclomaticComplexityTwo']]"
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionCyclomaticComplexityTwo']]"
                     + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo2']]/MODIFIERS/LITERAL_PUBLIC"
-        );
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }

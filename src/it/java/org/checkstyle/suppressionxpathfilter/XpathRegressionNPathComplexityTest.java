@@ -42,50 +42,50 @@ public class XpathRegressionNPathComplexityTest extends AbstractXpathTestSupport
     @Test
     public void testOne() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionNPathComplexityOne.java"));
+            new File(getPath("SuppressionXpathRegressionNPathComplexityOne.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(NPathComplexityCheck.class);
+            createModuleConfig(NPathComplexityCheck.class);
         moduleConfig.addAttribute("max", "0");
 
         final String[] expectedViolation = {
             "4:5: " + getCheckMessage(NPathComplexityCheck.class,
-                NPathComplexityCheck.MSG_KEY, 3, 0),
+                                      NPathComplexityCheck.MSG_KEY, 3, 0),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNPathComplexityOne']]/OBJBLOCK"
-                + "/METHOD_DEF[./IDENT[@text='test']]",
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNPathComplexityOne']]/OBJBLOCK"
-                + "/METHOD_DEF[./IDENT[@text='test']]/MODIFIERS",
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNPathComplexityOne']]/OBJBLOCK"
-                + "/METHOD_DEF[./IDENT[@text='test']]/MODIFIERS/LITERAL_PUBLIC"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNPathComplexityOne']]/OBJBLOCK"
+                    + "/METHOD_DEF[./IDENT[@text='test']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNPathComplexityOne']]/OBJBLOCK"
+                    + "/METHOD_DEF[./IDENT[@text='test']]/MODIFIERS",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNPathComplexityOne']]/OBJBLOCK"
+                    + "/METHOD_DEF[./IDENT[@text='test']]/MODIFIERS/LITERAL_PUBLIC"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionNPathComplexityTwo.java"));
+            new File(getPath("SuppressionXpathRegressionNPathComplexityTwo.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(NPathComplexityCheck.class);
+            createModuleConfig(NPathComplexityCheck.class);
         moduleConfig.addAttribute("max", "0");
 
         final String[] expectedViolation = {
             "4:5: " + getCheckMessage(NPathComplexityCheck.class,
-                NPathComplexityCheck.MSG_KEY, 3, 0),
+                                      NPathComplexityCheck.MSG_KEY, 3, 0),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNPathComplexityTwo']]"
-                + "/OBJBLOCK/STATIC_INIT"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNPathComplexityTwo']]"
+                    + "/OBJBLOCK/STATIC_INIT"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }

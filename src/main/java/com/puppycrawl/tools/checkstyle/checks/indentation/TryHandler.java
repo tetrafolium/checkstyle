@@ -37,7 +37,7 @@ public class TryHandler extends BlockParentHandler {
      * @param parent        the parent handler
      */
     public TryHandler(IndentationCheck indentCheck,
-        DetailAST ast, AbstractExpressionHandler parent) {
+                      DetailAST ast, AbstractExpressionHandler parent) {
         super(indentCheck, "try", ast, parent);
     }
 
@@ -63,7 +63,7 @@ public class TryHandler extends BlockParentHandler {
     public IndentLevel getSuggestedChildIndent(AbstractExpressionHandler child) {
         final IndentLevel result;
         if (child instanceof CatchHandler
-            || child instanceof FinallyHandler) {
+                || child instanceof FinallyHandler) {
             result = getIndent();
         }
         else {
@@ -91,10 +91,10 @@ public class TryHandler extends BlockParentHandler {
      * @param subType       name to be used in log message
      */
     private void checkTryResParen(final DetailAST parenAst,
-                                    final String subType) {
+                                  final String subType) {
         if (isOnStartOfLine(parenAst)) {
             final IndentLevel expectedIdent = new IndentLevel(getIndent(), 0,
-                getIndentCheck().getLineWrappingIndentation());
+                    getIndentCheck().getLineWrappingIndentation());
 
             checkChildIndentation(parenAst, subType, expectedIdent);
         }
@@ -130,7 +130,7 @@ public class TryHandler extends BlockParentHandler {
     private void checkTryResources(final DetailAST resourcesSpecAst) {
         final DetailAST resourcesAst = resourcesSpecAst.findFirstToken(TokenTypes.RESOURCES);
         final int indentation = getIndent().getFirstIndentLevel()
-            + getIndentCheck().getLineWrappingIndentation();
+                                + getIndentCheck().getLineWrappingIndentation();
         final IndentLevel expectedResourceIndent = new IndentLevel(indentation);
 
         final String subType = "resource";

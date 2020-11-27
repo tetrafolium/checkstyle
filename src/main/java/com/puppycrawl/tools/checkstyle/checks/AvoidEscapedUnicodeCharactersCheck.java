@@ -322,11 +322,11 @@ public class AvoidEscapedUnicodeCharactersCheck
         final String literal = ast.getText();
 
         if (hasUnicodeChar(literal) && !(allowByTailComment && hasTrailComment(ast)
-                || isAllCharactersEscaped(literal)
-                || allowEscapesForControlCharacters
-                        && isOnlyUnicodeValidChars(literal, UNICODE_CONTROL)
-                || allowNonPrintableEscapes
-                        && isOnlyUnicodeValidChars(literal, NON_PRINTABLE_CHARS))) {
+                                         || isAllCharactersEscaped(literal)
+                                         || allowEscapesForControlCharacters
+                                         && isOnlyUnicodeValidChars(literal, UNICODE_CONTROL)
+                                         || allowNonPrintableEscapes
+                                         && isOnlyUnicodeValidChars(literal, NON_PRINTABLE_CHARS))) {
             log(ast.getLineNo(), MSG_KEY);
         }
     }
@@ -338,7 +338,7 @@ public class AvoidEscapedUnicodeCharactersCheck
      */
     private static boolean hasUnicodeChar(String literal) {
         final String literalWithoutEscapedBackslashes =
-                ESCAPED_BACKSLASH.matcher(literal).replaceAll("");
+            ESCAPED_BACKSLASH.matcher(literal).replaceAll("");
         return UNICODE_REGEXP.matcher(literalWithoutEscapedBackslashes).find();
     }
 
@@ -350,9 +350,9 @@ public class AvoidEscapedUnicodeCharactersCheck
      */
     private static boolean isOnlyUnicodeValidChars(String literal, Pattern pattern) {
         final int unicodeMatchesCounter =
-                countMatches(UNICODE_REGEXP, literal);
+            countMatches(UNICODE_REGEXP, literal);
         final int unicodeValidMatchesCounter =
-                countMatches(pattern, literal);
+            countMatches(pattern, literal);
         return unicodeMatchesCounter - unicodeValidMatchesCounter == 0;
     }
 
@@ -386,7 +386,7 @@ public class AvoidEscapedUnicodeCharactersCheck
      */
     private static boolean isTrailingBlockComment(TextBlock comment, String line) {
         return comment.getText().length != 1
-            || CommonUtil.isBlank(line.substring(comment.getEndColNo() + 1));
+               || CommonUtil.isBlank(line.substring(comment.getEndColNo() + 1));
     }
 
     /**
@@ -411,8 +411,8 @@ public class AvoidEscapedUnicodeCharactersCheck
      */
     private boolean isAllCharactersEscaped(String literal) {
         return allowIfAllCharactersEscaped
-                && ALL_ESCAPED_CHARS.matcher(literal.substring(1,
-                        literal.length() - 1)).find();
+               && ALL_ESCAPED_CHARS.matcher(literal.substring(1,
+                                            literal.length() - 1)).find();
     }
 
 }

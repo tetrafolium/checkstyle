@@ -126,15 +126,15 @@ public class RegexpSinglelineJavaCheck extends AbstractCheck {
         }
 
         final DetectorOptions options = DetectorOptions.newBuilder()
-            .reporter(this)
-            .compileFlags(0)
-            .suppressor(suppressor)
-            .format(format)
-            .message(message)
-            .minimum(minimum)
-            .maximum(maximum)
-            .ignoreCase(ignoreCase)
-            .build();
+                                        .reporter(this)
+                                        .compileFlags(0)
+                                        .suppressor(suppressor)
+                                        .format(format)
+                                        .message(message)
+                                        .minimum(minimum)
+                                        .maximum(maximum)
+                                        .ignoreCase(ignoreCase)
+                                        .build();
         final SinglelineDetector detector = new SinglelineDetector(options);
         detector.processLines(getFileContents().getText());
     }

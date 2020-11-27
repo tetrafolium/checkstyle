@@ -62,7 +62,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  */
 @StatelessCheck
 public class InnerAssignmentCheck
-        extends AbstractCheck {
+    extends AbstractCheck {
 
     /**
      * A key is pointing to the warning message text in "messages.properties"
@@ -148,19 +148,19 @@ public class InnerAssignmentCheck
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.ASSIGN,            // '='
-            TokenTypes.DIV_ASSIGN,        // "/="
-            TokenTypes.PLUS_ASSIGN,       // "+="
-            TokenTypes.MINUS_ASSIGN,      // "-="
-            TokenTypes.STAR_ASSIGN,       // "*="
-            TokenTypes.MOD_ASSIGN,        // "%="
-            TokenTypes.SR_ASSIGN,         // ">>="
-            TokenTypes.BSR_ASSIGN,        // ">>>="
-            TokenTypes.SL_ASSIGN,         // "<<="
-            TokenTypes.BXOR_ASSIGN,       // "^="
-            TokenTypes.BOR_ASSIGN,        // "|="
-            TokenTypes.BAND_ASSIGN,       // "&="
-        };
+                   TokenTypes.ASSIGN,            // '='
+                   TokenTypes.DIV_ASSIGN,        // "/="
+                   TokenTypes.PLUS_ASSIGN,       // "+="
+                   TokenTypes.MINUS_ASSIGN,      // "-="
+                   TokenTypes.STAR_ASSIGN,       // "*="
+                   TokenTypes.MOD_ASSIGN,        // "%="
+                   TokenTypes.SR_ASSIGN,         // ">>="
+                   TokenTypes.BSR_ASSIGN,        // ">>>="
+                   TokenTypes.SL_ASSIGN,         // "<<="
+                   TokenTypes.BXOR_ASSIGN,       // "^="
+                   TokenTypes.BOR_ASSIGN,        // "|="
+                   TokenTypes.BAND_ASSIGN,       // "&="
+               };
     }
 
     @Override
@@ -230,9 +230,9 @@ public class InnerAssignmentCheck
         boolean result = false;
         if (isComparison(ast.getParent())) {
             result = isInContext(ast.getParent(),
-                ALLOWED_ASSIGNMENT_IN_COMPARISON_CONTEXT,
-                WHILE_IDIOM_IGNORED_PARENTS
-            );
+                                 ALLOWED_ASSIGNMENT_IN_COMPARISON_CONTEXT,
+                                 WHILE_IDIOM_IGNORED_PARENTS
+                                );
         }
         return result;
     }

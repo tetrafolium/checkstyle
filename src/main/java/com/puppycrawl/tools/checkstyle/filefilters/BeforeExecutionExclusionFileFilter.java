@@ -64,7 +64,7 @@ import com.puppycrawl.tools.checkstyle.api.BeforeExecutionFileFilter;
  * @since 7.2
  */
 public final class BeforeExecutionExclusionFileFilter extends AutomaticBean
-        implements BeforeExecutionFileFilter {
+    implements BeforeExecutionFileFilter {
 
     /** Define regular expression to match the file name against. */
     private Pattern fileNamePattern;
