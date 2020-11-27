@@ -21,7 +21,7 @@ class InputWhitespaceAroundBasic
         b= 1; // warn
         b +=1; // warn
         b -=- 1 + (+ b); // warn
-        b = b ++ + b --; // ok
+        b = b++ + b--; // ok
         b = ++ b - -- b; // ok
     }
 
@@ -80,7 +80,7 @@ class InputWhitespaceAroundBasic
     {
         Object o = (Object) new Object(); // ok
         o = (Object)o; // ok
-        o = ( Object ) o; // ok
+        o = (Object) o; // ok
         o = (Object)
             o; // ok
     }
@@ -167,18 +167,18 @@ class InputWhitespaceAroundBasic
     /** rfe 521323, detect whitespace before ';' */
     void rfe521323()
     {
-        doStuff() ;
+        doStuff();
         //       ^ whitespace
-        for (int i = 0 ; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {
             //        ^ whitespace
         }
     }
 
 
     /** bug  806243 (NoWhitespaceBeforeCheck violation for anonymous inner class) */
-    private int i ;
+    private int i;
     //           ^ whitespace
-    private int i1, i2, i3 ;
+    private int i1, i2, i3;
     //                    ^ whitespace
     private int i4, i5, i6;
 
@@ -186,7 +186,7 @@ class InputWhitespaceAroundBasic
     void bug806243()
     {
         Object o = new InputWhitespaceAroundBasic() {
-            private int j ;
+            private int j;
             //           ^ whitespace
         };
     }
@@ -202,7 +202,7 @@ class InputWhitespaceAroundBasic
  */
 interface IFoo
 {
-    void foo() ;
+    void foo();
     //        ^ whitespace
 }
 

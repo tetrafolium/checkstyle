@@ -57,7 +57,7 @@ public class InputParenPad
                 } while ( status); // warning
             } catch ( IOException e) { // warning
                 while ( status) { // warning
-                    for ( int i = 0; i < ( long) ( 2 * ( 4 / 2)); i++) { // warning
+                    for ( int i = 0; i < (long) ( 2 * ( 4 / 2)); i++) { // warning
                         if ( i > 2) { // warning
                             synchronized ( this) { // warning
                                 switch ( i) { // warning
@@ -91,7 +91,7 @@ public class InputParenPad
                 } while (status ); // warning
             } catch (IOException e ) { // warning
                 while (status ) { // warning
-                    for (int i = 0; i < (long ) (2 * (4 / 2 ) ); i++ ) { // warning
+                    for (int i = 0; i < (long) (2 * (4 / 2 ) ); i++ ) { // warning
                         if (i > 2 ) { // warning
                             synchronized (this ) { // warning
                                 switch (i ) { // warning
@@ -183,7 +183,7 @@ enum MyEnum {
 
     public String testing() {
         return ( this.exam != null ) // warning
-               ? ( ( Enum )this.exam ).name() // warning
+               ? ( (Enum)this.exam ).name() // warning
                : null;
     }
 

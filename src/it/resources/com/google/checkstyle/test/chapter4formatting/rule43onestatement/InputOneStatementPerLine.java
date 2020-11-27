@@ -77,7 +77,7 @@ public class InputOneStatementPerLine {
      */
     public void doIllegal2() {
         one = 1
-              ;
+;
         two = 2; //warn
     }
 
@@ -187,7 +187,7 @@ public class InputOneStatementPerLine {
     int w = 1,
         x = 2,
         y = 5
-            ;
+;
 
     /**
      * Two multiline  assignment (declaration) statements
@@ -203,7 +203,7 @@ public class InputOneStatementPerLine {
      */
     int four = 1,
         five = 5
-               ;
+;
     int seven = 2;
 
     /**
@@ -234,7 +234,7 @@ public class InputOneStatementPerLine {
         toString(
 
         );
-        toString (
+        toString(
 
         ); //warn
     }
@@ -245,7 +245,7 @@ public class InputOneStatementPerLine {
      * of 2 statements on one line.
      */
     int var9 = 1, var10 = 5
-                          ;
+;
     int var11 = 2; //warn
 
 
@@ -324,8 +324,8 @@ public class InputOneStatementPerLine {
     private void foo7() {
         for(int n = 0,
                 k = 1
-                    ; n<5
-                ;
+; n<5
+;
                 n++, k--) {
             var1++;    //legal
         }
@@ -338,8 +338,8 @@ public class InputOneStatementPerLine {
     private void foo8() {
         for(int n = 0,
                 k = 1
-                    ; n<5
-                ;
+; n<5
+;
                 n++, k--) {
             var1++;    //warn
             var2++;

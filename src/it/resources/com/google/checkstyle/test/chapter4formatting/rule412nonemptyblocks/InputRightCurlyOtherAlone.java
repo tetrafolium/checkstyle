@@ -121,7 +121,7 @@ class FooInnerAlone
 {
     class InnerFoo
     {
-        public void fooInnerMethod ()
+        public void fooInnerMethod()
         {
 
         }

@@ -41,7 +41,7 @@ class InputInvalidJavadocPosition2 {
     }
 
     void /** warn */ method20() {}
-    void method21 /** warn */ () {}
+    void method21 /** warn */() {}
     void method22(/** warn */) {}
     void method23() /** warn */ {}
     void method24() { /** warn */ }

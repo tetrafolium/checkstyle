@@ -2,7 +2,7 @@ package com.google.checkstyle.test.chapter5naming.rule528typevariablenames;
 
 import java.io.Serializable;
 
-class InputMethodTypeParameterName <t>
+class InputMethodTypeParameterName<t>
 {
     public <TT> void foo() { }
 
@@ -10,7 +10,7 @@ class InputMethodTypeParameterName <t>
     }
 }
 
-class Other2 <foo extends Serializable & Cloneable> {
+class Other2<foo extends Serializable & Cloneable> {
 
     foo getOne() {
         return null;
@@ -24,13 +24,13 @@ class Other2 <foo extends Serializable & Cloneable> {
         return null;
     }
 
-    static class Junk <$foo> {
+    static class Junk<$foo> {
         <_abc extends $foo> void getMoreFoo() { //warn
         }
     }
 }
 
-class MoreOther3 <T extends Cloneable> {
+class MoreOther3<T extends Cloneable> {
 
     <E extends T> void getMore() {
         new Other2() {
