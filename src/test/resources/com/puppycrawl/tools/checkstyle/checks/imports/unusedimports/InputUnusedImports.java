@@ -92,8 +92,8 @@ class InputUnusedImports
 
     /**
      * Renders to a {@linkplain Graphics2D graphics context}.
-     * @throws HeadlessException if no graphis environment can be found.
-     * @exception HeadlessException if no graphis environment can be found.
+     * @throws HeadlessException if no graphics environment can be found.
+     * @exception HeadlessException if no graphics environment can be found.
      */
     public void render() {}
 

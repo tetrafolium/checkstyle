@@ -67,7 +67,7 @@ public class InputCommentsIndentationSurroundingCode
 
     private void foo4() {
         if (!Arrays.equals(new String[]{""}, new String[]{""})
-              /* wierd trailing comment */) {
+              /* weird trailing comment */) {
         }
     }
     /**
