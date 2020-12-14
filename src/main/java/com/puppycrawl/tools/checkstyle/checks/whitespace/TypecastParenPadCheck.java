@@ -53,32 +53,32 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  */
 public class TypecastParenPadCheck extends AbstractParenPadCheck {
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.RPAREN, TokenTypes.TYPECAST};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.RPAREN, TokenTypes.TYPECAST};
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        // Strange logic in this method to guard against checking RPAREN tokens
-        // that are not associated with a TYPECAST token.
-        if (ast.getType() == TokenTypes.TYPECAST) {
-            processLeft(ast);
-        }
-        else if (ast.getParent().getType() == TokenTypes.TYPECAST
-                 && ast.getParent().findFirstToken(TokenTypes.RPAREN) == ast) {
-            processRight(ast);
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	// Strange logic in this method to guard against checking RPAREN tokens
+	// that are not associated with a TYPECAST token.
+	if (ast.getType() == TokenTypes.TYPECAST) {
+		processLeft(ast);
+	}
+	else if (ast.getParent().getType() == TokenTypes.TYPECAST
+	         && ast.getParent().findFirstToken(TokenTypes.RPAREN) == ast) {
+		processRight(ast);
+	}
+}
 
 }

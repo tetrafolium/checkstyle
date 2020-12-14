@@ -30,64 +30,64 @@ import com.puppycrawl.tools.checkstyle.checks.coding.FallThroughCheck;
 
 public class XpathRegressionFallThroughTest extends AbstractXpathTestSupport {
 
-    private final String checkName = FallThroughCheck.class.getSimpleName();
+private final String checkName = FallThroughCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionFallThroughOne.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionFallThroughOne.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(FallThroughCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(FallThroughCheck.class);
 
-        final String[] expectedViolation = {
-            "11:13: " + getCheckMessage(FallThroughCheck.class,
-                                        FallThroughCheck.MSG_FALL_THROUGH),
-        };
+	final String[] expectedViolation = {
+		"11:13: " + getCheckMessage(FallThroughCheck.class,
+		                            FallThroughCheck.MSG_FALL_THROUGH),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionFallThroughOne']]/OBJBLOCK"
-                    + "/METHOD_DEF[./IDENT[@text='test']]/SLIST/LITERAL_SWITCH/CASE_GROUP["
-                    + "./LITERAL_CASE/EXPR/NUM_INT[@text='2']]",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionFallThroughOne']]/OBJBLOCK"
-                    + "/METHOD_DEF[./IDENT[@text='test']]/SLIST/LITERAL_SWITCH/CASE_GROUP/LITERAL_CASE"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionFallThroughOne']]/OBJBLOCK"
+		+ "/METHOD_DEF[./IDENT[@text='test']]/SLIST/LITERAL_SWITCH/CASE_GROUP["
+		+ "./LITERAL_CASE/EXPR/NUM_INT[@text='2']]",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionFallThroughOne']]/OBJBLOCK"
+		+ "/METHOD_DEF[./IDENT[@text='test']]/SLIST/LITERAL_SWITCH/CASE_GROUP/LITERAL_CASE"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionFallThroughTwo.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionFallThroughTwo.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(FallThroughCheck.class);
-        moduleConfig.addAttribute("checkLastCaseGroup", "true");
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(FallThroughCheck.class);
+	moduleConfig.addAttribute("checkLastCaseGroup", "true");
 
-        final String[] expectedViolation = {
-            "10:17: " + getCheckMessage(FallThroughCheck.class,
-                                        FallThroughCheck.MSG_FALL_THROUGH_LAST),
-        };
+	final String[] expectedViolation = {
+		"10:17: " + getCheckMessage(FallThroughCheck.class,
+		                            FallThroughCheck.MSG_FALL_THROUGH_LAST),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionFallThroughTwo']]/OBJBLOCK"
-                    + "/METHOD_DEF["
-                    + "./IDENT[@text='methodFallThruCustomWords']]/SLIST/LITERAL_WHILE/SLIST"
-                    + "/LITERAL_SWITCH/CASE_GROUP[./SLIST/EXPR/POST_INC/IDENT[@text='i']]",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionFallThroughTwo']]/OBJBLOCK"
-                    + "/METHOD_DEF["
-                    + "./IDENT[@text='methodFallThruCustomWords']]/SLIST/LITERAL_WHILE/SLIST"
-                    + "/LITERAL_SWITCH/CASE_GROUP/LITERAL_DEFAULT"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionFallThroughTwo']]/OBJBLOCK"
+		+ "/METHOD_DEF["
+		+ "./IDENT[@text='methodFallThruCustomWords']]/SLIST/LITERAL_WHILE/SLIST"
+		+ "/LITERAL_SWITCH/CASE_GROUP[./SLIST/EXPR/POST_INC/IDENT[@text='i']]",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionFallThroughTwo']]/OBJBLOCK"
+		+ "/METHOD_DEF["
+		+ "./IDENT[@text='methodFallThruCustomWords']]/SLIST/LITERAL_WHILE/SLIST"
+		+ "/LITERAL_SWITCH/CASE_GROUP/LITERAL_DEFAULT"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 }

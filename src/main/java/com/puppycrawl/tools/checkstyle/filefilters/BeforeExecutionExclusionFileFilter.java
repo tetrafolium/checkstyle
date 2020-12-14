@@ -64,28 +64,28 @@ import com.puppycrawl.tools.checkstyle.api.BeforeExecutionFileFilter;
  * @since 7.2
  */
 public final class BeforeExecutionExclusionFileFilter extends AutomaticBean
-    implements BeforeExecutionFileFilter {
+	implements BeforeExecutionFileFilter {
 
-    /** Define regular expression to match the file name against. */
-    private Pattern fileNamePattern;
+/** Define regular expression to match the file name against. */
+private Pattern fileNamePattern;
 
-    /**
-     * Setter to define regular expression to match the file name against.
-     *
-     * @param fileNamePattern regular expression of the excluded file.
-     */
-    public void setFileNamePattern(Pattern fileNamePattern) {
-        this.fileNamePattern = fileNamePattern;
-    }
+/**
+ * Setter to define regular expression to match the file name against.
+ *
+ * @param fileNamePattern regular expression of the excluded file.
+ */
+public void setFileNamePattern(Pattern fileNamePattern) {
+	this.fileNamePattern = fileNamePattern;
+}
 
-    @Override
-    protected void finishLocalSetup() {
-        // No code by default
-    }
+@Override
+protected void finishLocalSetup() {
+	// No code by default
+}
 
-    @Override
-    public boolean accept(String uri) {
-        return fileNamePattern == null || !fileNamePattern.matcher(uri).find();
-    }
+@Override
+public boolean accept(String uri) {
+	return fileNamePattern == null || !fileNamePattern.matcher(uri).find();
+}
 
 }

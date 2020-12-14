@@ -33,16 +33,16 @@ import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 @FunctionalInterface
 public interface ModuleFactory {
 
-    /**
-     * Creates a new instance of a class from a given name.
-     * If the provided module name is a class name an instance of that class
-     * is returned. If the name is not a class name the ModuleFactory uses
-     * heuristics to find the corresponding class.
-     *
-     * @param name the name of the module, might be a short name
-     * @return the created module
-     * @throws CheckstyleException if no module can be instantiated from name
-     */
-    Object createModule(String name) throws CheckstyleException;
+/**
+ * Creates a new instance of a class from a given name.
+ * If the provided module name is a class name an instance of that class
+ * is returned. If the name is not a class name the ModuleFactory uses
+ * heuristics to find the corresponding class.
+ *
+ * @param name the name of the module, might be a short name
+ * @return the created module
+ * @throws CheckstyleException if no module can be instantiated from name
+ */
+Object createModule(String name) throws CheckstyleException;
 
 }

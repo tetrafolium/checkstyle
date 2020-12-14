@@ -52,155 +52,155 @@ import com.puppycrawl.tools.checkstyle.gui.MainFrameModel.ParseMode;
  */
 public class MainFrame extends JFrame {
 
-    private static final long serialVersionUID = 7970053543351871890L;
+private static final long serialVersionUID = 7970053543351871890L;
 
-    /** Checkstyle frame model. */
-    private final transient MainFrameModel model = new MainFrameModel();
-    /** Reload action. */
-    private final ReloadAction reloadAction = new ReloadAction();
-    /** Code text area. */
-    private JTextArea textArea;
-    /** Tree table. */
-    private TreeTable treeTable;
+/** Checkstyle frame model. */
+private final transient MainFrameModel model = new MainFrameModel();
+/** Reload action. */
+private final ReloadAction reloadAction = new ReloadAction();
+/** Code text area. */
+private JTextArea textArea;
+/** Tree table. */
+private TreeTable treeTable;
 
-    /** Create a new MainFrame. */
-    public MainFrame() {
-        createContent();
-    }
+/** Create a new MainFrame. */
+public MainFrame() {
+	createContent();
+}
 
-    /** Create content of this MainFrame. */
-    private void createContent() {
-        setLayout(new BorderLayout());
+/** Create content of this MainFrame. */
+private void createContent() {
+	setLayout(new BorderLayout());
 
-        textArea = new JTextArea(20, 15);
-        textArea.setEditable(false);
-        final JScrollPane textAreaScrollPane = new JScrollPane(textArea);
+	textArea = new JTextArea(20, 15);
+	textArea.setEditable(false);
+	final JScrollPane textAreaScrollPane = new JScrollPane(textArea);
 
-        treeTable = new TreeTable(model.getParseTreeTableModel());
-        treeTable.setEditor(textArea);
-        treeTable.setLinePositionMap(model.getLinesToPosition());
-        final JScrollPane treeTableScrollPane = new JScrollPane(treeTable);
+	treeTable = new TreeTable(model.getParseTreeTableModel());
+	treeTable.setEditor(textArea);
+	treeTable.setLinePositionMap(model.getLinesToPosition());
+	final JScrollPane treeTableScrollPane = new JScrollPane(treeTable);
 
-        final JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, treeTableScrollPane,
-                textAreaScrollPane);
-        add(splitPane, BorderLayout.CENTER);
-        splitPane.setResizeWeight(0.7);
+	final JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, treeTableScrollPane,
+	                                            textAreaScrollPane);
+	add(splitPane, BorderLayout.CENTER);
+	splitPane.setResizeWeight(0.7);
 
-        add(createButtonsPanel(), BorderLayout.PAGE_END);
+	add(createButtonsPanel(), BorderLayout.PAGE_END);
 
-        pack();
-    }
+	pack();
+}
 
-    /**
-     * Create buttons panel.
-     * @return buttons panel.
-     */
-    private JPanel createButtonsPanel() {
-        final JButton openFileButton = new JButton(new FileSelectionAction());
-        openFileButton.setMnemonic(KeyEvent.VK_S);
-        openFileButton.setText("Open File");
+/**
+ * Create buttons panel.
+ * @return buttons panel.
+ */
+private JPanel createButtonsPanel() {
+	final JButton openFileButton = new JButton(new FileSelectionAction());
+	openFileButton.setMnemonic(KeyEvent.VK_S);
+	openFileButton.setText("Open File");
 
-        reloadAction.setEnabled(false);
-        final JButton reloadFileButton = new JButton(reloadAction);
-        reloadFileButton.setMnemonic(KeyEvent.VK_R);
-        reloadFileButton.setText("Reload File");
+	reloadAction.setEnabled(false);
+	final JButton reloadFileButton = new JButton(reloadAction);
+	reloadFileButton.setMnemonic(KeyEvent.VK_R);
+	reloadFileButton.setText("Reload File");
 
-        final JComboBox<ParseMode> modesCombobox = new JComboBox<>(ParseMode.values());
-        modesCombobox.setSelectedIndex(0);
-        modesCombobox.addActionListener(event -> {
-            model.setParseMode((ParseMode) modesCombobox.getSelectedItem());
-            reloadAction.actionPerformed(null);
-        });
+	final JComboBox<ParseMode> modesCombobox = new JComboBox<>(ParseMode.values());
+	modesCombobox.setSelectedIndex(0);
+	modesCombobox.addActionListener(event->{
+			model.setParseMode((ParseMode) modesCombobox.getSelectedItem());
+			reloadAction.actionPerformed(null);
+		});
 
-        final JLabel modesLabel = new JLabel("Modes:", SwingConstants.RIGHT);
-        final int leftIndentation = 10;
-        modesLabel.setBorder(BorderFactory.createEmptyBorder(0, leftIndentation, 0, 0));
+	final JLabel modesLabel = new JLabel("Modes:", SwingConstants.RIGHT);
+	final int leftIndentation = 10;
+	modesLabel.setBorder(BorderFactory.createEmptyBorder(0, leftIndentation, 0, 0));
 
-        final JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(1, 2));
-        buttonPanel.add(openFileButton);
-        buttonPanel.add(reloadFileButton);
+	final JPanel buttonPanel = new JPanel();
+	buttonPanel.setLayout(new GridLayout(1, 2));
+	buttonPanel.add(openFileButton);
+	buttonPanel.add(reloadFileButton);
 
-        final JPanel modesPanel = new JPanel();
-        modesPanel.add(modesLabel);
-        modesPanel.add(modesCombobox);
+	final JPanel modesPanel = new JPanel();
+	modesPanel.add(modesLabel);
+	modesPanel.add(modesCombobox);
 
-        final JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout());
-        mainPanel.add(buttonPanel);
-        mainPanel.add(modesPanel, BorderLayout.LINE_END);
+	final JPanel mainPanel = new JPanel();
+	mainPanel.setLayout(new BorderLayout());
+	mainPanel.add(buttonPanel);
+	mainPanel.add(modesPanel, BorderLayout.LINE_END);
 
-        return mainPanel;
-    }
+	return mainPanel;
+}
 
-    /**
-     * Open file and load it.
-     * @param sourceFile the file to open.
-     */
-    public void openFile(File sourceFile) {
-        try {
-            model.openFile(sourceFile);
-            setTitle(model.getTitle());
-            reloadAction.setEnabled(model.isReloadActionEnabled());
-            textArea.setText(model.getText());
-            treeTable.setLinePositionMap(model.getLinesToPosition());
-        }
-        catch (final CheckstyleException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-        }
-    }
+/**
+ * Open file and load it.
+ * @param sourceFile the file to open.
+ */
+public void openFile(File sourceFile) {
+	try {
+		model.openFile(sourceFile);
+		setTitle(model.getTitle());
+		reloadAction.setEnabled(model.isReloadActionEnabled());
+		textArea.setText(model.getText());
+		treeTable.setLinePositionMap(model.getLinesToPosition());
+	}
+	catch (final CheckstyleException ex) {
+		JOptionPane.showMessageDialog(this, ex.getMessage());
+	}
+}
 
-    /**
-     * Handler for file selection action events.
-     */
-    private class FileSelectionAction extends AbstractAction {
+/**
+ * Handler for file selection action events.
+ */
+private class FileSelectionAction extends AbstractAction {
 
-        private static final long serialVersionUID = 1762396148873280589L;
+private static final long serialVersionUID = 1762396148873280589L;
 
-        @Override
-        public void actionPerformed(ActionEvent event) {
-            final JFileChooser fileChooser = new JFileChooser(model.getLastDirectory());
-            final FileFilter filter = new JavaFileFilter();
-            fileChooser.setFileFilter(filter);
+@Override
+public void actionPerformed(ActionEvent event) {
+	final JFileChooser fileChooser = new JFileChooser(model.getLastDirectory());
+	final FileFilter filter = new JavaFileFilter();
+	fileChooser.setFileFilter(filter);
 
-            final int returnCode = fileChooser.showOpenDialog(MainFrame.this);
-            if (returnCode == JFileChooser.APPROVE_OPTION) {
-                final File file = fileChooser.getSelectedFile();
-                openFile(file);
-            }
-        }
+	final int returnCode = fileChooser.showOpenDialog(MainFrame.this);
+	if (returnCode == JFileChooser.APPROVE_OPTION) {
+		final File file = fileChooser.getSelectedFile();
+		openFile(file);
+	}
+}
 
-    }
+}
 
-    /**
-     * Handler for reload action events.
-     */
-    private class ReloadAction extends AbstractAction {
+/**
+ * Handler for reload action events.
+ */
+private class ReloadAction extends AbstractAction {
 
-        private static final long serialVersionUID = -890320994114628011L;
+private static final long serialVersionUID = -890320994114628011L;
 
-        @Override
-        public void actionPerformed(ActionEvent event) {
-            openFile(model.getCurrentFile());
-        }
+@Override
+public void actionPerformed(ActionEvent event) {
+	openFile(model.getCurrentFile());
+}
 
-    }
+}
 
-    /**
-     * Filter for Java files.
-     */
-    private static class JavaFileFilter extends FileFilter {
+/**
+ * Filter for Java files.
+ */
+private static class JavaFileFilter extends FileFilter {
 
-        @Override
-        public boolean accept(File file) {
-            return MainFrameModel.shouldAcceptFile(file);
-        }
+@Override
+public boolean accept(File file) {
+	return MainFrameModel.shouldAcceptFile(file);
+}
 
-        @Override
-        public String getDescription() {
-            return "Java Source File";
-        }
+@Override
+public String getDescription() {
+	return "Java Source File";
+}
 
-    }
+}
 
 }

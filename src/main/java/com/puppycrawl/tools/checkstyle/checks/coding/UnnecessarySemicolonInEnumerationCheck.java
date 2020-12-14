@@ -77,44 +77,44 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 @StatelessCheck
 public final class UnnecessarySemicolonInEnumerationCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_SEMI = "unnecessary.semicolon";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_SEMI = "unnecessary.semicolon";
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {
-                   TokenTypes.ENUM_DEF,
-               };
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {
+		       TokenTypes.ENUM_DEF,
+	};
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        final DetailAST enumBlock = ast.findFirstToken(TokenTypes.OBJBLOCK);
-        final DetailAST semicolon = enumBlock.findFirstToken(TokenTypes.SEMI);
-        if (semicolon != null && isEndOfEnumerationAfter(semicolon)) {
-            log(semicolon, MSG_SEMI);
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	final DetailAST enumBlock = ast.findFirstToken(TokenTypes.OBJBLOCK);
+	final DetailAST semicolon = enumBlock.findFirstToken(TokenTypes.SEMI);
+	if (semicolon != null && isEndOfEnumerationAfter(semicolon)) {
+		log(semicolon, MSG_SEMI);
+	}
+}
 
-    /**
-     * Checks if enum body has no code elements after enum constants semicolon.
-     * @param ast semicolon in enum constants definition end
-     * @return true if there is no code elements, false otherwise.
-     */
-    private static boolean isEndOfEnumerationAfter(DetailAST ast) {
-        return ast.getNextSibling().getType() == TokenTypes.RCURLY;
-    }
+/**
+ * Checks if enum body has no code elements after enum constants semicolon.
+ * @param ast semicolon in enum constants definition end
+ * @return true if there is no code elements, false otherwise.
+ */
+private static boolean isEndOfEnumerationAfter(DetailAST ast) {
+	return ast.getNextSibling().getType() == TokenTypes.RCURLY;
+}
 }

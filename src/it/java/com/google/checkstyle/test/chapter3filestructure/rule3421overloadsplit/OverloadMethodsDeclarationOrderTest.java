@@ -27,29 +27,29 @@ import com.puppycrawl.tools.checkstyle.checks.coding.OverloadMethodsDeclarationO
 
 public class OverloadMethodsDeclarationOrderTest extends AbstractGoogleModuleTestSupport {
 
-    @Override
-    protected String getPackageLocation() {
-        return "com/google/checkstyle/test/chapter3filestructure/rule3421overloadsplit";
-    }
+@Override
+protected String getPackageLocation() {
+	return "com/google/checkstyle/test/chapter3filestructure/rule3421overloadsplit";
+}
 
-    @Test
-    public void testOverloadMethods() throws Exception {
-        final Class<OverloadMethodsDeclarationOrderCheck> clazz =
-            OverloadMethodsDeclarationOrderCheck.class;
-        final String messageKey = "overload.methods.declaration";
+@Test
+public void testOverloadMethods() throws Exception {
+	final Class<OverloadMethodsDeclarationOrderCheck> clazz =
+		OverloadMethodsDeclarationOrderCheck.class;
+	final String messageKey = "overload.methods.declaration";
 
-        final String[] expected = {
-            "26: " + getCheckMessage(clazz, messageKey, 15),
-            "54: " + getCheckMessage(clazz, messageKey, 43),
-            "66: " + getCheckMessage(clazz, messageKey, 64),
-            "109: " + getCheckMessage(clazz, messageKey, 98),
-        };
+	final String[] expected = {
+		"26: " + getCheckMessage(clazz, messageKey, 15),
+		"54: " + getCheckMessage(clazz, messageKey, 43),
+		"66: " + getCheckMessage(clazz, messageKey, 64),
+		"109: " + getCheckMessage(clazz, messageKey, 98),
+	};
 
-        final Configuration checkConfig = getModuleConfig("OverloadMethodsDeclarationOrder");
-        final String filePath = getPath("InputOverloadMethodsDeclarationOrder.java");
+	final Configuration checkConfig = getModuleConfig("OverloadMethodsDeclarationOrder");
+	final String filePath = getPath("InputOverloadMethodsDeclarationOrder.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
 }

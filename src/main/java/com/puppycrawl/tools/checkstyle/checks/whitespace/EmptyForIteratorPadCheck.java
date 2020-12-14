@@ -62,69 +62,69 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  */
 @StatelessCheck
 public class EmptyForIteratorPadCheck
-    extends AbstractCheck {
+	extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_WS_FOLLOWED = "ws.followed";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_WS_FOLLOWED = "ws.followed";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_WS_NOT_FOLLOWED = "ws.notFollowed";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_WS_NOT_FOLLOWED = "ws.notFollowed";
 
-    /** Semicolon literal. */
-    private static final String SEMICOLON = ";";
+/** Semicolon literal. */
+private static final String SEMICOLON = ";";
 
-    /** Specify policy on how to pad an empty for iterator. */
-    private PadOption option = PadOption.NOSPACE;
+/** Specify policy on how to pad an empty for iterator. */
+private PadOption option = PadOption.NOSPACE;
 
-    /**
-     * Setter to specify policy on how to pad an empty for iterator.
-     * @param optionStr string to decode option from
-     * @throws IllegalArgumentException if unable to decode
-     */
-    public void setOption(String optionStr) {
-        option = PadOption.valueOf(optionStr.trim().toUpperCase(Locale.ENGLISH));
-    }
+/**
+ * Setter to specify policy on how to pad an empty for iterator.
+ * @param optionStr string to decode option from
+ * @throws IllegalArgumentException if unable to decode
+ */
+public void setOption(String optionStr) {
+	option = PadOption.valueOf(optionStr.trim().toUpperCase(Locale.ENGLISH));
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.FOR_ITERATOR};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.FOR_ITERATOR};
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        if (!ast.hasChildren()) {
-            // empty for iterator. test pad after semi.
-            final DetailAST semi = ast.getPreviousSibling();
-            final String line = getLines()[semi.getLineNo() - 1];
-            final int after = semi.getColumnNo() + 1;
-            // don't check if at end of line
-            if (after < line.length()) {
-                if (option == PadOption.NOSPACE
-                        && Character.isWhitespace(line.charAt(after))) {
-                    log(ast, MSG_WS_FOLLOWED, SEMICOLON);
-                }
-                else if (option == PadOption.SPACE
-                         && !Character.isWhitespace(line.charAt(after))) {
-                    log(ast, MSG_WS_NOT_FOLLOWED, SEMICOLON);
-                }
-            }
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	if (!ast.hasChildren()) {
+		// empty for iterator. test pad after semi.
+		final DetailAST semi = ast.getPreviousSibling();
+		final String line = getLines()[semi.getLineNo() - 1];
+		final int after = semi.getColumnNo() + 1;
+		// don't check if at end of line
+		if (after < line.length()) {
+			if (option == PadOption.NOSPACE
+			    && Character.isWhitespace(line.charAt(after))) {
+				log(ast, MSG_WS_FOLLOWED, SEMICOLON);
+			}
+			else if (option == PadOption.SPACE
+			         && !Character.isWhitespace(line.charAt(after))) {
+				log(ast, MSG_WS_NOT_FOLLOWED, SEMICOLON);
+			}
+		}
+	}
+}
 
 }

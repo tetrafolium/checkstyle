@@ -57,69 +57,68 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 @FileStatefulCheck
 public class OuterTypeNumberCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "maxOuterTypes";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "maxOuterTypes";
 
-    /** Specify the maximum number of outer types allowed. */
-    private int max = 1;
-    /** Tracks the current depth in types. */
-    private int currentDepth;
-    /** Tracks the number of outer types found. */
-    private int outerNum;
+/** Specify the maximum number of outer types allowed. */
+private int max = 1;
+/** Tracks the current depth in types. */
+private int currentDepth;
+/** Tracks the number of outer types found. */
+private int outerNum;
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.CLASS_DEF, TokenTypes.INTERFACE_DEF,
-                          TokenTypes.ENUM_DEF, TokenTypes.ANNOTATION_DEF,
-                         };
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.CLASS_DEF, TokenTypes.INTERFACE_DEF,
+		          TokenTypes.ENUM_DEF, TokenTypes.ANNOTATION_DEF,};
+}
 
-    @Override
-    public void beginTree(DetailAST ast) {
-        currentDepth = 0;
-        outerNum = 0;
-    }
+@Override
+public void beginTree(DetailAST ast) {
+	currentDepth = 0;
+	outerNum = 0;
+}
 
-    @Override
-    public void finishTree(DetailAST ast) {
-        if (max < outerNum) {
-            log(ast, MSG_KEY, outerNum, max);
-        }
-    }
+@Override
+public void finishTree(DetailAST ast) {
+	if (max < outerNum) {
+		log(ast, MSG_KEY, outerNum, max);
+	}
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        if (currentDepth == 0) {
-            outerNum++;
-        }
-        currentDepth++;
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	if (currentDepth == 0) {
+		outerNum++;
+	}
+	currentDepth++;
+}
 
-    @Override
-    public void leaveToken(DetailAST ast) {
-        currentDepth--;
-    }
+@Override
+public void leaveToken(DetailAST ast) {
+	currentDepth--;
+}
 
-    /**
-     * Setter to specify the maximum number of outer types allowed.
-     *
-     * @param max the new number.
-     */
-    public void setMax(int max) {
-        this.max = max;
-    }
+/**
+ * Setter to specify the maximum number of outer types allowed.
+ *
+ * @param max the new number.
+ */
+public void setMax(int max) {
+	this.max = max;
+}
 
 }

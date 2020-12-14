@@ -25,9 +25,9 @@ package com.puppycrawl.tools.checkstyle.checks.whitespace;
  */
 public enum WrapOption {
 
-    /** Require that the token is on a new line. */
-    NL,
-    /** Require that the token is at the end of the line. */
-    EOL,
+	/** Require that the token is on a new line. */
+	NL,
+	/** Require that the token is at the end of the line. */
+	EOL,
 
 }

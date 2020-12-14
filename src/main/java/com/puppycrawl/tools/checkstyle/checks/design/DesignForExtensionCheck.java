@@ -212,257 +212,256 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 @StatelessCheck
 public class DesignForExtensionCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "design.forExtension";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "design.forExtension";
 
-    /**
-     * Specify annotations which allow the check to skip the method from validation.
-     */
-    private Set<String> ignoredAnnotations = Arrays.stream(new String[] {"Test", "Before", "After",
-            "BeforeClass", "AfterClass",
-                                                                        }).collect(Collectors.toSet());
+/**
+ * Specify annotations which allow the check to skip the method from validation.
+ */
+private Set<String> ignoredAnnotations = Arrays.stream(new String[] {"Test", "Before", "After",
+                                                                     "BeforeClass", "AfterClass",                                }).collect(Collectors.toSet());
 
-    /**
-     * Setter to specify annotations which allow the check to skip the method from validation.
-     * @param ignoredAnnotations method annotations.
-     */
-    public void setIgnoredAnnotations(String... ignoredAnnotations) {
-        this.ignoredAnnotations = Arrays.stream(ignoredAnnotations).collect(Collectors.toSet());
-    }
+/**
+ * Setter to specify annotations which allow the check to skip the method from validation.
+ * @param ignoredAnnotations method annotations.
+ */
+public void setIgnoredAnnotations(String... ignoredAnnotations) {
+	this.ignoredAnnotations = Arrays.stream(ignoredAnnotations).collect(Collectors.toSet());
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        // The check does not subscribe to CLASS_DEF token as now it is stateless. If the check
-        // subscribes to CLASS_DEF token it will become stateful, since we need to have additional
-        // stack to hold CLASS_DEF tokens.
-        return new int[] {TokenTypes.METHOD_DEF};
-    }
+@Override
+public int[] getRequiredTokens() {
+	// The check does not subscribe to CLASS_DEF token as now it is stateless. If the check
+	// subscribes to CLASS_DEF token it will become stateful, since we need to have additional
+	// stack to hold CLASS_DEF tokens.
+	return new int[] {TokenTypes.METHOD_DEF};
+}
 
-    @Override
-    public boolean isCommentNodesRequired() {
-        return true;
-    }
+@Override
+public boolean isCommentNodesRequired() {
+	return true;
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        if (!hasJavadocComment(ast)
-                && canBeOverridden(ast)
-                && (isNativeMethod(ast)
-                    || !hasEmptyImplementation(ast))
-                && !hasIgnoredAnnotation(ast, ignoredAnnotations)) {
-            final DetailAST classDef = getNearestClassOrEnumDefinition(ast);
-            if (canBeSubclassed(classDef)) {
-                final String className = classDef.findFirstToken(TokenTypes.IDENT).getText();
-                final String methodName = ast.findFirstToken(TokenTypes.IDENT).getText();
-                log(ast, MSG_KEY, className, methodName);
-            }
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	if (!hasJavadocComment(ast)
+	    && canBeOverridden(ast)
+	    && (isNativeMethod(ast)
+	        || !hasEmptyImplementation(ast))
+	    && !hasIgnoredAnnotation(ast, ignoredAnnotations)) {
+		final DetailAST classDef = getNearestClassOrEnumDefinition(ast);
+		if (canBeSubclassed(classDef)) {
+			final String className = classDef.findFirstToken(TokenTypes.IDENT).getText();
+			final String methodName = ast.findFirstToken(TokenTypes.IDENT).getText();
+			log(ast, MSG_KEY, className, methodName);
+		}
+	}
+}
 
-    /**
-     * Checks whether a method has a javadoc comment.
-     * @param methodDef method definition token.
-     * @return true if a method has a javadoc comment.
-     */
-    private static boolean hasJavadocComment(DetailAST methodDef) {
-        return hasJavadocCommentOnToken(methodDef, TokenTypes.MODIFIERS)
-               || hasJavadocCommentOnToken(methodDef, TokenTypes.TYPE);
-    }
+/**
+ * Checks whether a method has a javadoc comment.
+ * @param methodDef method definition token.
+ * @return true if a method has a javadoc comment.
+ */
+private static boolean hasJavadocComment(DetailAST methodDef) {
+	return hasJavadocCommentOnToken(methodDef, TokenTypes.MODIFIERS)
+	       || hasJavadocCommentOnToken(methodDef, TokenTypes.TYPE);
+}
 
-    /**
-     * Checks whether a token has a javadoc comment.
-     *
-     * @param methodDef method definition token.
-     * @param tokenType token type.
-     * @return true if a token has a javadoc comment.
-     */
-    private static boolean hasJavadocCommentOnToken(DetailAST methodDef, int tokenType) {
-        final DetailAST token = methodDef.findFirstToken(tokenType);
-        return branchContainsJavadocComment(token);
-    }
+/**
+ * Checks whether a token has a javadoc comment.
+ *
+ * @param methodDef method definition token.
+ * @param tokenType token type.
+ * @return true if a token has a javadoc comment.
+ */
+private static boolean hasJavadocCommentOnToken(DetailAST methodDef, int tokenType) {
+	final DetailAST token = methodDef.findFirstToken(tokenType);
+	return branchContainsJavadocComment(token);
+}
 
-    /**
-     * Checks whether a javadoc comment exists under the token.
-     *
-     * @param token tree token.
-     * @return true if a javadoc comment exists under the token.
-     */
-    private static boolean branchContainsJavadocComment(DetailAST token) {
-        boolean result = false;
-        DetailAST curNode = token;
-        while (curNode != null) {
-            if (curNode.getType() == TokenTypes.BLOCK_COMMENT_BEGIN
-                    && JavadocUtil.isJavadocComment(curNode)) {
-                result = true;
-                break;
-            }
+/**
+ * Checks whether a javadoc comment exists under the token.
+ *
+ * @param token tree token.
+ * @return true if a javadoc comment exists under the token.
+ */
+private static boolean branchContainsJavadocComment(DetailAST token) {
+	boolean result = false;
+	DetailAST curNode = token;
+	while (curNode != null) {
+		if (curNode.getType() == TokenTypes.BLOCK_COMMENT_BEGIN
+		    && JavadocUtil.isJavadocComment(curNode)) {
+			result = true;
+			break;
+		}
 
-            DetailAST toVisit = curNode.getFirstChild();
-            while (toVisit == null) {
-                if (curNode == token) {
-                    break;
-                }
+		DetailAST toVisit = curNode.getFirstChild();
+		while (toVisit == null) {
+			if (curNode == token) {
+				break;
+			}
 
-                toVisit = curNode.getNextSibling();
-                curNode = curNode.getParent();
-            }
-            curNode = toVisit;
-        }
+			toVisit = curNode.getNextSibling();
+			curNode = curNode.getParent();
+		}
+		curNode = toVisit;
+	}
 
-        return result;
-    }
+	return result;
+}
 
-    /**
-     * Checks whether a methods is native.
-     * @param ast method definition token.
-     * @return true if a methods is native.
-     */
-    private static boolean isNativeMethod(DetailAST ast) {
-        final DetailAST mods = ast.findFirstToken(TokenTypes.MODIFIERS);
-        return mods.findFirstToken(TokenTypes.LITERAL_NATIVE) != null;
-    }
+/**
+ * Checks whether a methods is native.
+ * @param ast method definition token.
+ * @return true if a methods is native.
+ */
+private static boolean isNativeMethod(DetailAST ast) {
+	final DetailAST mods = ast.findFirstToken(TokenTypes.MODIFIERS);
+	return mods.findFirstToken(TokenTypes.LITERAL_NATIVE) != null;
+}
 
-    /**
-     * Checks whether a method has only comments in the body (has an empty implementation).
-     * Method is OK if its implementation is empty.
-     * @param ast method definition token.
-     * @return true if a method has only comments in the body.
-     */
-    private static boolean hasEmptyImplementation(DetailAST ast) {
-        boolean hasEmptyBody = true;
-        final DetailAST methodImplOpenBrace = ast.findFirstToken(TokenTypes.SLIST);
-        final DetailAST methodImplCloseBrace = methodImplOpenBrace.getLastChild();
-        final Predicate<DetailAST> predicate = currentNode -> {
-            return currentNode != methodImplCloseBrace
-            && !TokenUtil.isCommentType(currentNode.getType());
-        };
-        final Optional<DetailAST> methodBody =
-            TokenUtil.findFirstTokenByPredicate(methodImplOpenBrace, predicate);
-        if (methodBody.isPresent()) {
-            hasEmptyBody = false;
-        }
-        return hasEmptyBody;
-    }
+/**
+ * Checks whether a method has only comments in the body (has an empty implementation).
+ * Method is OK if its implementation is empty.
+ * @param ast method definition token.
+ * @return true if a method has only comments in the body.
+ */
+private static boolean hasEmptyImplementation(DetailAST ast) {
+	boolean hasEmptyBody = true;
+	final DetailAST methodImplOpenBrace = ast.findFirstToken(TokenTypes.SLIST);
+	final DetailAST methodImplCloseBrace = methodImplOpenBrace.getLastChild();
+	final Predicate<DetailAST> predicate = currentNode->{
+		return currentNode != methodImplCloseBrace
+		       && !TokenUtil.isCommentType(currentNode.getType());
+	};
+	final Optional<DetailAST> methodBody =
+		TokenUtil.findFirstTokenByPredicate(methodImplOpenBrace, predicate);
+	if (methodBody.isPresent()) {
+		hasEmptyBody = false;
+	}
+	return hasEmptyBody;
+}
 
-    /**
-     * Checks whether a method can be overridden.
-     * Method can be overridden if it is not private, abstract, final or static.
-     * Note that the check has nothing to do for interfaces.
-     * @param methodDef method definition token.
-     * @return true if a method can be overridden in a subclass.
-     */
-    private static boolean canBeOverridden(DetailAST methodDef) {
-        final DetailAST modifiers = methodDef.findFirstToken(TokenTypes.MODIFIERS);
-        return ScopeUtil.getSurroundingScope(methodDef).isIn(Scope.PROTECTED)
-               && !ScopeUtil.isInInterfaceOrAnnotationBlock(methodDef)
-               && modifiers.findFirstToken(TokenTypes.LITERAL_PRIVATE) == null
-               && modifiers.findFirstToken(TokenTypes.ABSTRACT) == null
-               && modifiers.findFirstToken(TokenTypes.FINAL) == null
-               && modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) == null;
-    }
+/**
+ * Checks whether a method can be overridden.
+ * Method can be overridden if it is not private, abstract, final or static.
+ * Note that the check has nothing to do for interfaces.
+ * @param methodDef method definition token.
+ * @return true if a method can be overridden in a subclass.
+ */
+private static boolean canBeOverridden(DetailAST methodDef) {
+	final DetailAST modifiers = methodDef.findFirstToken(TokenTypes.MODIFIERS);
+	return ScopeUtil.getSurroundingScope(methodDef).isIn(Scope.PROTECTED)
+	       && !ScopeUtil.isInInterfaceOrAnnotationBlock(methodDef)
+	       && modifiers.findFirstToken(TokenTypes.LITERAL_PRIVATE) == null
+	       && modifiers.findFirstToken(TokenTypes.ABSTRACT) == null
+	       && modifiers.findFirstToken(TokenTypes.FINAL) == null
+	       && modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) == null;
+}
 
-    /**
-     * Checks whether a method has any of ignored annotations.
-     * @param methodDef method definition token.
-     * @param annotations a set of ignored annotations.
-     * @return true if a method has any of ignored annotations.
-     */
-    private static boolean hasIgnoredAnnotation(DetailAST methodDef, Set<String> annotations) {
-        final DetailAST modifiers = methodDef.findFirstToken(TokenTypes.MODIFIERS);
-        final Optional<DetailAST> annotation = TokenUtil.findFirstTokenByPredicate(modifiers,
-        currentToken -> {
-            return currentToken.getType() == TokenTypes.ANNOTATION
-            && annotations.contains(getAnnotationName(currentToken));
-        });
-        return annotation.isPresent();
-    }
+/**
+ * Checks whether a method has any of ignored annotations.
+ * @param methodDef method definition token.
+ * @param annotations a set of ignored annotations.
+ * @return true if a method has any of ignored annotations.
+ */
+private static boolean hasIgnoredAnnotation(DetailAST methodDef, Set<String> annotations) {
+	final DetailAST modifiers = methodDef.findFirstToken(TokenTypes.MODIFIERS);
+	final Optional<DetailAST> annotation = TokenUtil.findFirstTokenByPredicate(modifiers,
+	                                                                           currentToken->{
+			return currentToken.getType() == TokenTypes.ANNOTATION
+			&& annotations.contains(getAnnotationName(currentToken));
+		});
+	return annotation.isPresent();
+}
 
-    /**
-     * Gets the name of the annotation.
-     * @param annotation to get name of.
-     * @return the name of the annotation.
-     */
-    private static String getAnnotationName(DetailAST annotation) {
-        final DetailAST dotAst = annotation.findFirstToken(TokenTypes.DOT);
-        final String name;
-        if (dotAst == null) {
-            name = annotation.findFirstToken(TokenTypes.IDENT).getText();
-        }
-        else {
-            name = dotAst.findFirstToken(TokenTypes.IDENT).getText();
-        }
-        return name;
-    }
+/**
+ * Gets the name of the annotation.
+ * @param annotation to get name of.
+ * @return the name of the annotation.
+ */
+private static String getAnnotationName(DetailAST annotation) {
+	final DetailAST dotAst = annotation.findFirstToken(TokenTypes.DOT);
+	final String name;
+	if (dotAst == null) {
+		name = annotation.findFirstToken(TokenTypes.IDENT).getText();
+	}
+	else {
+		name = dotAst.findFirstToken(TokenTypes.IDENT).getText();
+	}
+	return name;
+}
 
-    /**
-     * Returns CLASS_DEF or ENUM_DEF token which is the nearest to the given ast node.
-     * Searches the tree towards the root until it finds a CLASS_DEF or ENUM_DEF node.
-     * @param ast the start node for searching.
-     * @return the CLASS_DEF or ENUM_DEF token.
-     */
-    private static DetailAST getNearestClassOrEnumDefinition(DetailAST ast) {
-        DetailAST searchAST = ast;
-        while (searchAST.getType() != TokenTypes.CLASS_DEF
-                && searchAST.getType() != TokenTypes.ENUM_DEF) {
-            searchAST = searchAST.getParent();
-        }
-        return searchAST;
-    }
+/**
+ * Returns CLASS_DEF or ENUM_DEF token which is the nearest to the given ast node.
+ * Searches the tree towards the root until it finds a CLASS_DEF or ENUM_DEF node.
+ * @param ast the start node for searching.
+ * @return the CLASS_DEF or ENUM_DEF token.
+ */
+private static DetailAST getNearestClassOrEnumDefinition(DetailAST ast) {
+	DetailAST searchAST = ast;
+	while (searchAST.getType() != TokenTypes.CLASS_DEF
+	       && searchAST.getType() != TokenTypes.ENUM_DEF) {
+		searchAST = searchAST.getParent();
+	}
+	return searchAST;
+}
 
-    /**
-     * Checks if the given class (given CLASS_DEF node) can be subclassed.
-     * @param classDef class definition token.
-     * @return true if the containing class can be subclassed.
-     */
-    private static boolean canBeSubclassed(DetailAST classDef) {
-        final DetailAST modifiers = classDef.findFirstToken(TokenTypes.MODIFIERS);
-        return classDef.getType() != TokenTypes.ENUM_DEF
-               && modifiers.findFirstToken(TokenTypes.FINAL) == null
-               && hasDefaultOrExplicitNonPrivateCtor(classDef);
-    }
+/**
+ * Checks if the given class (given CLASS_DEF node) can be subclassed.
+ * @param classDef class definition token.
+ * @return true if the containing class can be subclassed.
+ */
+private static boolean canBeSubclassed(DetailAST classDef) {
+	final DetailAST modifiers = classDef.findFirstToken(TokenTypes.MODIFIERS);
+	return classDef.getType() != TokenTypes.ENUM_DEF
+	       && modifiers.findFirstToken(TokenTypes.FINAL) == null
+	       && hasDefaultOrExplicitNonPrivateCtor(classDef);
+}
 
-    /**
-     * Checks whether a class has default or explicit non-private constructor.
-     * @param classDef class ast token.
-     * @return true if a class has default or explicit non-private constructor.
-     */
-    private static boolean hasDefaultOrExplicitNonPrivateCtor(DetailAST classDef) {
-        // check if subclassing is prevented by having only private ctors
-        final DetailAST objBlock = classDef.findFirstToken(TokenTypes.OBJBLOCK);
+/**
+ * Checks whether a class has default or explicit non-private constructor.
+ * @param classDef class ast token.
+ * @return true if a class has default or explicit non-private constructor.
+ */
+private static boolean hasDefaultOrExplicitNonPrivateCtor(DetailAST classDef) {
+	// check if subclassing is prevented by having only private ctors
+	final DetailAST objBlock = classDef.findFirstToken(TokenTypes.OBJBLOCK);
 
-        boolean hasDefaultConstructor = true;
-        boolean hasExplicitNonPrivateCtor = false;
+	boolean hasDefaultConstructor = true;
+	boolean hasExplicitNonPrivateCtor = false;
 
-        DetailAST candidate = objBlock.getFirstChild();
+	DetailAST candidate = objBlock.getFirstChild();
 
-        while (candidate != null) {
-            if (candidate.getType() == TokenTypes.CTOR_DEF) {
-                hasDefaultConstructor = false;
+	while (candidate != null) {
+		if (candidate.getType() == TokenTypes.CTOR_DEF) {
+			hasDefaultConstructor = false;
 
-                final DetailAST ctorMods =
-                    candidate.findFirstToken(TokenTypes.MODIFIERS);
-                if (ctorMods.findFirstToken(TokenTypes.LITERAL_PRIVATE) == null) {
-                    hasExplicitNonPrivateCtor = true;
-                    break;
-                }
-            }
-            candidate = candidate.getNextSibling();
-        }
+			final DetailAST ctorMods =
+				candidate.findFirstToken(TokenTypes.MODIFIERS);
+			if (ctorMods.findFirstToken(TokenTypes.LITERAL_PRIVATE) == null) {
+				hasExplicitNonPrivateCtor = true;
+				break;
+			}
+		}
+		candidate = candidate.getNextSibling();
+	}
 
-        return hasDefaultConstructor || hasExplicitNonPrivateCtor;
-    }
+	return hasDefaultConstructor || hasExplicitNonPrivateCtor;
+}
 
 }

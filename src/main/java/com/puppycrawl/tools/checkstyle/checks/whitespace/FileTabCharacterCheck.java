@@ -74,47 +74,47 @@ import com.puppycrawl.tools.checkstyle.api.FileText;
 @StatelessCheck
 public class FileTabCharacterCheck extends AbstractFileSetCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_CONTAINS_TAB = "containsTab";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_CONTAINS_TAB = "containsTab";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_FILE_CONTAINS_TAB = "file.containsTab";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_FILE_CONTAINS_TAB = "file.containsTab";
 
-    /** Control whether to report on each line containing a tab, or just the first instance. */
-    private boolean eachLine;
+/** Control whether to report on each line containing a tab, or just the first instance. */
+private boolean eachLine;
 
-    @Override
-    protected void processFiltered(File file, FileText fileText) {
-        int lineNum = 0;
-        for (int index = 0; index < fileText.size(); index++) {
-            final String line = fileText.get(index);
-            lineNum++;
-            final int tabPosition = line.indexOf('\t');
-            if (tabPosition != -1) {
-                if (eachLine) {
-                    log(lineNum, tabPosition, MSG_CONTAINS_TAB);
-                }
-                else {
-                    log(lineNum, tabPosition, MSG_FILE_CONTAINS_TAB);
-                    break;
-                }
-            }
-        }
-    }
+@Override
+protected void processFiltered(File file, FileText fileText) {
+	int lineNum = 0;
+	for (int index = 0; index < fileText.size(); index++) {
+		final String line = fileText.get(index);
+		lineNum++;
+		final int tabPosition = line.indexOf('\t');
+		if (tabPosition != -1) {
+			if (eachLine) {
+				log(lineNum, tabPosition, MSG_CONTAINS_TAB);
+			}
+			else {
+				log(lineNum, tabPosition, MSG_FILE_CONTAINS_TAB);
+				break;
+			}
+		}
+	}
+}
 
-    /**
-     * Setter to control whether to report on each line containing a tab, or just the first
-     * instance.
-     * @param eachLine Whether report on each line containing a tab.
-     */
-    public void setEachLine(boolean eachLine) {
-        this.eachLine = eachLine;
-    }
+/**
+ * Setter to control whether to report on each line containing a tab, or just the first
+ * instance.
+ * @param eachLine Whether report on each line containing a tab.
+ */
+public void setEachLine(boolean eachLine) {
+	this.eachLine = eachLine;
+}
 
 }

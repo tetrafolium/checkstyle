@@ -31,11 +31,11 @@ package com.puppycrawl.tools.checkstyle.api;
 @FunctionalInterface
 public interface Configurable {
 
-    /**
-     * Configures this component.
-     * @param configuration the configuration to use.
-     * @throws CheckstyleException if there is a configuration error.
-     */
-    void configure(Configuration configuration) throws CheckstyleException;
+/**
+ * Configures this component.
+ * @param configuration the configuration to use.
+ * @throws CheckstyleException if there is a configuration error.
+ */
+void configure(Configuration configuration) throws CheckstyleException;
 
 }

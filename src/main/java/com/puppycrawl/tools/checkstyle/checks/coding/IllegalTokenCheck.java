@@ -64,65 +64,65 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  */
 @StatelessCheck
 public class IllegalTokenCheck
-    extends AbstractCheck {
+	extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "illegal.token";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "illegal.token";
 
-    @Override
-    public int[] getDefaultTokens() {
-        return new int[] {
-                   TokenTypes.LABELED_STAT,
-               };
-    }
+@Override
+public int[] getDefaultTokens() {
+	return new int[] {
+		       TokenTypes.LABELED_STAT,
+	};
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return TokenUtil.getAllTokenIds();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return TokenUtil.getAllTokenIds();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return CommonUtil.EMPTY_INT_ARRAY;
-    }
+@Override
+public int[] getRequiredTokens() {
+	return CommonUtil.EMPTY_INT_ARRAY;
+}
 
-    @Override
-    public boolean isCommentNodesRequired() {
-        return true;
-    }
+@Override
+public boolean isCommentNodesRequired() {
+	return true;
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        log(
-            ast,
-            MSG_KEY,
-            convertToString(ast)
-        );
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	log(
+		ast,
+		MSG_KEY,
+		convertToString(ast)
+		);
+}
 
-    /**
-     * Converts given AST node to string representation.
-     * @param ast node to be represented as string
-     * @return string representation of AST node
-     */
-    private static String convertToString(DetailAST ast) {
-        final String tokenText;
-        switch (ast.getType()) {
-        case TokenTypes.LABELED_STAT:
-            tokenText = ast.getFirstChild().getText() + ast.getText();
-            break;
-        // multiline tokens need to become singlelined
-        case TokenTypes.COMMENT_CONTENT:
-            tokenText = JavadocUtil.escapeAllControlChars(ast.getText());
-            break;
-        default:
-            tokenText = ast.getText();
-            break;
-        }
-        return tokenText;
-    }
+/**
+ * Converts given AST node to string representation.
+ * @param ast node to be represented as string
+ * @return string representation of AST node
+ */
+private static String convertToString(DetailAST ast) {
+	final String tokenText;
+	switch (ast.getType()) {
+	case TokenTypes.LABELED_STAT:
+		tokenText = ast.getFirstChild().getText() + ast.getText();
+		break;
+	// multiline tokens need to become singlelined
+	case TokenTypes.COMMENT_CONTENT:
+		tokenText = JavadocUtil.escapeAllControlChars(ast.getText());
+		break;
+	default:
+		tokenText = ast.getText();
+		break;
+	}
+	return tokenText;
+}
 
 }

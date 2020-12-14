@@ -41,125 +41,125 @@ import javax.swing.tree.TreePath;
  */
 public class TreeTableModelAdapter extends AbstractTableModel {
 
-    private static final long serialVersionUID = 8269213416115369275L;
+private static final long serialVersionUID = 8269213416115369275L;
 
-    /** JTree component. */
-    private final JTree tree;
-    /** Tree table model. */
-    private final transient ParseTreeTableModel treeTableModel;
+/** JTree component. */
+private final JTree tree;
+/** Tree table model. */
+private final transient ParseTreeTableModel treeTableModel;
 
-    /**
-     * Initialise tree and treeTableModel class attributes.
-     * @param treeTableModel Tree table model.
-     * @param tree JTree component.
-     */
-    public TreeTableModelAdapter(ParseTreeTableModel treeTableModel, JTree tree) {
-        this.tree = tree;
-        this.treeTableModel = treeTableModel;
+/**
+ * Initialise tree and treeTableModel class attributes.
+ * @param treeTableModel Tree table model.
+ * @param tree JTree component.
+ */
+public TreeTableModelAdapter(ParseTreeTableModel treeTableModel, JTree tree) {
+	this.tree = tree;
+	this.treeTableModel = treeTableModel;
 
-        tree.addTreeExpansionListener(new UpdatingTreeExpansionListener());
+	tree.addTreeExpansionListener(new UpdatingTreeExpansionListener());
 
-        // Install a TreeModelListener that can update the table when
-        // mTree changes. We use delayedFireTableDataChanged as we can
-        // not be guaranteed the mTree will have finished processing
-        // the event before us.
-        treeTableModel.addTreeModelListener(new UpdatingTreeModelListener());
-    }
+	// Install a TreeModelListener that can update the table when
+	// mTree changes. We use delayedFireTableDataChanged as we can
+	// not be guaranteed the mTree will have finished processing
+	// the event before us.
+	treeTableModel.addTreeModelListener(new UpdatingTreeModelListener());
+}
 
-    // Wrappers, implementing TableModel interface.
+// Wrappers, implementing TableModel interface.
 
-    @Override
-    public int getColumnCount() {
-        return treeTableModel.getColumnCount();
-    }
+@Override
+public int getColumnCount() {
+	return treeTableModel.getColumnCount();
+}
 
-    @Override
-    public String getColumnName(int column) {
-        return treeTableModel.getColumnName(column);
-    }
+@Override
+public String getColumnName(int column) {
+	return treeTableModel.getColumnName(column);
+}
 
-    @Override
-    public Class<?> getColumnClass(int column) {
-        return treeTableModel.getColumnClass(column);
-    }
+@Override
+public Class<?> getColumnClass(int column) {
+	return treeTableModel.getColumnClass(column);
+}
 
-    @Override
-    public int getRowCount() {
-        return tree.getRowCount();
-    }
+@Override
+public int getRowCount() {
+	return tree.getRowCount();
+}
 
-    @Override
-    public Object getValueAt(int row, int column) {
-        return treeTableModel.getValueAt(nodeForRow(row), column);
-    }
+@Override
+public Object getValueAt(int row, int column) {
+	return treeTableModel.getValueAt(nodeForRow(row), column);
+}
 
-    @Override
-    public boolean isCellEditable(int row, int column) {
-        return treeTableModel.isCellEditable(column);
-    }
+@Override
+public boolean isCellEditable(int row, int column) {
+	return treeTableModel.isCellEditable(column);
+}
 
-    /**
-     * Finds node for a given row.
-     * @param row Row for which to find a related node.
-     * @return Node for a given row.
-     */
-    private Object nodeForRow(int row) {
-        final TreePath treePath = tree.getPathForRow(row);
-        return treePath.getLastPathComponent();
-    }
+/**
+ * Finds node for a given row.
+ * @param row Row for which to find a related node.
+ * @return Node for a given row.
+ */
+private Object nodeForRow(int row) {
+	final TreePath treePath = tree.getPathForRow(row);
+	return treePath.getLastPathComponent();
+}
 
-    /**
-     * TreeExpansionListener that can update the table when tree changes.
-     */
-    private class UpdatingTreeExpansionListener implements TreeExpansionListener {
+/**
+ * TreeExpansionListener that can update the table when tree changes.
+ */
+private class UpdatingTreeExpansionListener implements TreeExpansionListener {
 
-        // Don't use fireTableRowsInserted() here; the selection model
-        // would get updated twice.
-        @Override
-        public void treeExpanded(TreeExpansionEvent event) {
-            fireTableDataChanged();
-        }
+// Don't use fireTableRowsInserted() here; the selection model
+// would get updated twice.
+@Override
+public void treeExpanded(TreeExpansionEvent event) {
+	fireTableDataChanged();
+}
 
-        @Override
-        public void treeCollapsed(TreeExpansionEvent event) {
-            fireTableDataChanged();
-        }
+@Override
+public void treeCollapsed(TreeExpansionEvent event) {
+	fireTableDataChanged();
+}
 
-    }
+}
 
-    /**
-     * TreeModelListener that can update the table when tree changes.
-     */
-    private class UpdatingTreeModelListener implements TreeModelListener {
+/**
+ * TreeModelListener that can update the table when tree changes.
+ */
+private class UpdatingTreeModelListener implements TreeModelListener {
 
-        @Override
-        public void treeNodesChanged(TreeModelEvent event) {
-            delayedFireTableDataChanged();
-        }
+@Override
+public void treeNodesChanged(TreeModelEvent event) {
+	delayedFireTableDataChanged();
+}
 
-        @Override
-        public void treeNodesInserted(TreeModelEvent event) {
-            delayedFireTableDataChanged();
-        }
+@Override
+public void treeNodesInserted(TreeModelEvent event) {
+	delayedFireTableDataChanged();
+}
 
-        @Override
-        public void treeNodesRemoved(TreeModelEvent event) {
-            delayedFireTableDataChanged();
-        }
+@Override
+public void treeNodesRemoved(TreeModelEvent event) {
+	delayedFireTableDataChanged();
+}
 
-        @Override
-        public void treeStructureChanged(TreeModelEvent event) {
-            delayedFireTableDataChanged();
-        }
+@Override
+public void treeStructureChanged(TreeModelEvent event) {
+	delayedFireTableDataChanged();
+}
 
-        /**
-         * Invokes fireTableDataChanged after all the pending events have been
-         * processed. SwingUtilities.invokeLater is used to handle this.
-         */
-        private void delayedFireTableDataChanged() {
-            SwingUtilities.invokeLater(TreeTableModelAdapter.this::fireTableDataChanged);
-        }
+/**
+ * Invokes fireTableDataChanged after all the pending events have been
+ * processed. SwingUtilities.invokeLater is used to handle this.
+ */
+private void delayedFireTableDataChanged() {
+	SwingUtilities.invokeLater(TreeTableModelAdapter.this::fireTableDataChanged);
+}
 
-    }
+}
 
 }

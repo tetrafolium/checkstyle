@@ -27,56 +27,56 @@ import java.util.SortedSet;
  *
  */
 public interface FileSetCheck
-    extends Configurable, Contextualizable {
+	extends Configurable, Contextualizable {
 
-    /**
-     * Sets the MessageDispatcher that is used to dispatch audit events
-     * to AuditListeners during processing.
-     * @param dispatcher the dispatcher
-     */
-    void setMessageDispatcher(MessageDispatcher dispatcher);
+/**
+ * Sets the MessageDispatcher that is used to dispatch audit events
+ * to AuditListeners during processing.
+ * @param dispatcher the dispatcher
+ */
+void setMessageDispatcher(MessageDispatcher dispatcher);
 
-    /**
-     * Initialise the instance. This is the time to verify that everything
-     * required to perform it job.
-     */
-    void init();
+/**
+ * Initialise the instance. This is the time to verify that everything
+ * required to perform it job.
+ */
+void init();
 
-    /** Cleans up the object. **/
-    void destroy();
+/** Cleans up the object. **/
+void destroy();
 
-    /**
-     * Called when about to be called to process a set of files.
-     * @param charset the character set used to read the files.
-     */
-    void beginProcessing(String charset);
+/**
+ * Called when about to be called to process a set of files.
+ * @param charset the character set used to read the files.
+ */
+void beginProcessing(String charset);
 
-    /**
-     * Request to process a file. The implementation should use the supplied
-     * contents and not read the contents again. This reduces the amount of
-     * file I/O.
-     * <p>
-     * The file set to process might contain files that are not
-     * interesting to the FileSetCheck. Such files should be ignored,
-     * no audit event should be fired for them. For example a FileSetCheck
-     * that checks java files should ignore HTML or properties files.
-     * </p>
-     * <p>
-     * The method should return the set of messages to be logged.
-     * </p>
-     *
-     * @param file the file to be processed
-     * @param fileText the contents of the file.
-     * @return the sorted set of messages to be logged.
-     * @throws CheckstyleException if error condition within Checkstyle occurs
-     */
-    SortedSet<LocalizedMessage> process(File file, FileText fileText) throws CheckstyleException;
+/**
+ * Request to process a file. The implementation should use the supplied
+ * contents and not read the contents again. This reduces the amount of
+ * file I/O.
+ * <p>
+ * The file set to process might contain files that are not
+ * interesting to the FileSetCheck. Such files should be ignored,
+ * no audit event should be fired for them. For example a FileSetCheck
+ * that checks java files should ignore HTML or properties files.
+ * </p>
+ * <p>
+ * The method should return the set of messages to be logged.
+ * </p>
+ *
+ * @param file the file to be processed
+ * @param fileText the contents of the file.
+ * @return the sorted set of messages to be logged.
+ * @throws CheckstyleException if error condition within Checkstyle occurs
+ */
+SortedSet<LocalizedMessage> process(File file, FileText fileText) throws CheckstyleException;
 
-    /**
-     * Called when all the files have been processed. This is the time to
-     * perform any checks that need to be done across a set of files. In this
-     * method, the implementation is responsible for the logging of messages.
-     */
-    void finishProcessing();
+/**
+ * Called when all the files have been processed. This is the time to
+ * perform any checks that need to be done across a set of files. In this
+ * method, the implementation is responsible for the logging of messages.
+ */
+void finishProcessing();
 
 }

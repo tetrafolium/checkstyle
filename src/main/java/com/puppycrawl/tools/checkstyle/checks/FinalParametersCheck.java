@@ -86,153 +86,153 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 @StatelessCheck
 public class FinalParametersCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "final.parameter";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "final.parameter";
 
-    /**
-     * Contains
-     * <a href="https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html">
-     * primitive datatypes</a>.
-     */
-    private final Set<Integer> primitiveDataTypes = Collections.unmodifiableSet(
-                Arrays.stream(new Integer[] {
-                                  TokenTypes.LITERAL_BYTE,
-                                  TokenTypes.LITERAL_SHORT,
-                                  TokenTypes.LITERAL_INT,
-                                  TokenTypes.LITERAL_LONG,
-                                  TokenTypes.LITERAL_FLOAT,
-                                  TokenTypes.LITERAL_DOUBLE,
-                                  TokenTypes.LITERAL_BOOLEAN,
-                                  TokenTypes.LITERAL_CHAR,
-                              })
-                .collect(Collectors.toSet()));
+/**
+ * Contains
+ * <a href="https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html">
+ * primitive datatypes</a>.
+ */
+private final Set<Integer> primitiveDataTypes = Collections.unmodifiableSet(
+	Arrays.stream(new Integer[] {
+		TokenTypes.LITERAL_BYTE,
+		TokenTypes.LITERAL_SHORT,
+		TokenTypes.LITERAL_INT,
+		TokenTypes.LITERAL_LONG,
+		TokenTypes.LITERAL_FLOAT,
+		TokenTypes.LITERAL_DOUBLE,
+		TokenTypes.LITERAL_BOOLEAN,
+		TokenTypes.LITERAL_CHAR,
+	})
+	.collect(Collectors.toSet()));
 
-    /**
-     * Ignore primitive types as parameters.
-     */
-    private boolean ignorePrimitiveTypes;
+/**
+ * Ignore primitive types as parameters.
+ */
+private boolean ignorePrimitiveTypes;
 
-    /**
-     * Setter to ignore primitive types as parameters.
-     * @param ignorePrimitiveTypes true or false.
-     */
-    public void setIgnorePrimitiveTypes(boolean ignorePrimitiveTypes) {
-        this.ignorePrimitiveTypes = ignorePrimitiveTypes;
-    }
+/**
+ * Setter to ignore primitive types as parameters.
+ * @param ignorePrimitiveTypes true or false.
+ */
+public void setIgnorePrimitiveTypes(boolean ignorePrimitiveTypes) {
+	this.ignorePrimitiveTypes = ignorePrimitiveTypes;
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return new int[] {
-                   TokenTypes.METHOD_DEF,
-                   TokenTypes.CTOR_DEF,
-               };
-    }
+@Override
+public int[] getDefaultTokens() {
+	return new int[] {
+		       TokenTypes.METHOD_DEF,
+		       TokenTypes.CTOR_DEF,
+	};
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return new int[] {
-                   TokenTypes.METHOD_DEF,
-                   TokenTypes.CTOR_DEF,
-                   TokenTypes.LITERAL_CATCH,
-                   TokenTypes.FOR_EACH_CLAUSE,
-               };
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return new int[] {
+		       TokenTypes.METHOD_DEF,
+		       TokenTypes.CTOR_DEF,
+		       TokenTypes.LITERAL_CATCH,
+		       TokenTypes.FOR_EACH_CLAUSE,
+	};
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return CommonUtil.EMPTY_INT_ARRAY;
-    }
+@Override
+public int[] getRequiredTokens() {
+	return CommonUtil.EMPTY_INT_ARRAY;
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        // don't flag interfaces
-        final DetailAST container = ast.getParent().getParent();
-        if (container.getType() != TokenTypes.INTERFACE_DEF) {
-            if (ast.getType() == TokenTypes.LITERAL_CATCH) {
-                visitCatch(ast);
-            }
-            else if (ast.getType() == TokenTypes.FOR_EACH_CLAUSE) {
-                visitForEachClause(ast);
-            }
-            else {
-                visitMethod(ast);
-            }
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	// don't flag interfaces
+	final DetailAST container = ast.getParent().getParent();
+	if (container.getType() != TokenTypes.INTERFACE_DEF) {
+		if (ast.getType() == TokenTypes.LITERAL_CATCH) {
+			visitCatch(ast);
+		}
+		else if (ast.getType() == TokenTypes.FOR_EACH_CLAUSE) {
+			visitForEachClause(ast);
+		}
+		else {
+			visitMethod(ast);
+		}
+	}
+}
 
-    /**
-     * Checks parameters of the method or ctor.
-     * @param method method or ctor to check.
-     */
-    private void visitMethod(final DetailAST method) {
-        final DetailAST modifiers =
-            method.findFirstToken(TokenTypes.MODIFIERS);
+/**
+ * Checks parameters of the method or ctor.
+ * @param method method or ctor to check.
+ */
+private void visitMethod(final DetailAST method) {
+	final DetailAST modifiers =
+		method.findFirstToken(TokenTypes.MODIFIERS);
 
-        // ignore abstract and native methods
-        if (modifiers.findFirstToken(TokenTypes.ABSTRACT) == null
-                && modifiers.findFirstToken(TokenTypes.LITERAL_NATIVE) == null) {
-            final DetailAST parameters =
-                method.findFirstToken(TokenTypes.PARAMETERS);
-            DetailAST child = parameters.getFirstChild();
-            while (child != null) {
-                // children are PARAMETER_DEF and COMMA
-                if (child.getType() == TokenTypes.PARAMETER_DEF) {
-                    checkParam(child);
-                }
-                child = child.getNextSibling();
-            }
-        }
-    }
+	// ignore abstract and native methods
+	if (modifiers.findFirstToken(TokenTypes.ABSTRACT) == null
+	    && modifiers.findFirstToken(TokenTypes.LITERAL_NATIVE) == null) {
+		final DetailAST parameters =
+			method.findFirstToken(TokenTypes.PARAMETERS);
+		DetailAST child = parameters.getFirstChild();
+		while (child != null) {
+			// children are PARAMETER_DEF and COMMA
+			if (child.getType() == TokenTypes.PARAMETER_DEF) {
+				checkParam(child);
+			}
+			child = child.getNextSibling();
+		}
+	}
+}
 
-    /**
-     * Checks parameter of the catch block.
-     * @param catchClause catch block to check.
-     */
-    private void visitCatch(final DetailAST catchClause) {
-        checkParam(catchClause.findFirstToken(TokenTypes.PARAMETER_DEF));
-    }
+/**
+ * Checks parameter of the catch block.
+ * @param catchClause catch block to check.
+ */
+private void visitCatch(final DetailAST catchClause) {
+	checkParam(catchClause.findFirstToken(TokenTypes.PARAMETER_DEF));
+}
 
-    /**
-     * Checks parameter of the for each clause.
-     * @param forEachClause for each clause to check.
-     */
-    private void visitForEachClause(final DetailAST forEachClause) {
-        checkParam(forEachClause.findFirstToken(TokenTypes.VARIABLE_DEF));
-    }
+/**
+ * Checks parameter of the for each clause.
+ * @param forEachClause for each clause to check.
+ */
+private void visitForEachClause(final DetailAST forEachClause) {
+	checkParam(forEachClause.findFirstToken(TokenTypes.VARIABLE_DEF));
+}
 
-    /**
-     * Checks if the given parameter is final.
-     * @param param parameter to check.
-     */
-    private void checkParam(final DetailAST param) {
-        if (param.findFirstToken(TokenTypes.MODIFIERS).findFirstToken(TokenTypes.FINAL) == null
-                && !isIgnoredParam(param)
-                && !CheckUtil.isReceiverParameter(param)) {
-            final DetailAST paramName = param.findFirstToken(TokenTypes.IDENT);
-            final DetailAST firstNode = CheckUtil.getFirstNode(param);
-            log(firstNode,
-                MSG_KEY, paramName.getText());
-        }
-    }
+/**
+ * Checks if the given parameter is final.
+ * @param param parameter to check.
+ */
+private void checkParam(final DetailAST param) {
+	if (param.findFirstToken(TokenTypes.MODIFIERS).findFirstToken(TokenTypes.FINAL) == null
+	    && !isIgnoredParam(param)
+	    && !CheckUtil.isReceiverParameter(param)) {
+		final DetailAST paramName = param.findFirstToken(TokenTypes.IDENT);
+		final DetailAST firstNode = CheckUtil.getFirstNode(param);
+		log(firstNode,
+		    MSG_KEY, paramName.getText());
+	}
+}
 
-    /**
-     * Checks for skip current param due to <b>ignorePrimitiveTypes</b> option.
-     * @param paramDef {@link TokenTypes#PARAMETER_DEF PARAMETER_DEF}
-     * @return true if param has to be skipped.
-     */
-    private boolean isIgnoredParam(DetailAST paramDef) {
-        boolean result = false;
-        if (ignorePrimitiveTypes) {
-            final DetailAST parameterType = paramDef
-                                            .findFirstToken(TokenTypes.TYPE).getFirstChild();
-            if (primitiveDataTypes.contains(parameterType.getType())) {
-                result = true;
-            }
-        }
-        return result;
-    }
+/**
+ * Checks for skip current param due to <b>ignorePrimitiveTypes</b> option.
+ * @param paramDef {@link TokenTypes#PARAMETER_DEF PARAMETER_DEF}
+ * @return true if param has to be skipped.
+ */
+private boolean isIgnoredParam(DetailAST paramDef) {
+	boolean result = false;
+	if (ignorePrimitiveTypes) {
+		final DetailAST parameterType = paramDef
+		                                .findFirstToken(TokenTypes.TYPE).getFirstChild();
+		if (primitiveDataTypes.contains(parameterType.getType())) {
+			result = true;
+		}
+	}
+	return result;
+}
 
 }

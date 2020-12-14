@@ -49,55 +49,55 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 @StatelessCheck
 public class MissingSwitchDefaultCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "missing.switch.default";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "missing.switch.default";
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.LITERAL_SWITCH};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.LITERAL_SWITCH};
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        final DetailAST firstCaseGroupAst = ast.findFirstToken(TokenTypes.CASE_GROUP);
+@Override
+public void visitToken(DetailAST ast) {
+	final DetailAST firstCaseGroupAst = ast.findFirstToken(TokenTypes.CASE_GROUP);
 
-        if (!containsDefaultSwitch(firstCaseGroupAst)) {
-            log(ast.getLineNo(), MSG_KEY);
-        }
-    }
+	if (!containsDefaultSwitch(firstCaseGroupAst)) {
+		log(ast.getLineNo(), MSG_KEY);
+	}
+}
 
-    /**
-     * Checks if the case group or its sibling contain the 'default' switch.
-     * @param caseGroupAst first case group to check.
-     * @return true if 'default' switch found.
-     */
-    private static boolean containsDefaultSwitch(DetailAST caseGroupAst) {
-        DetailAST nextAst = caseGroupAst;
-        boolean found = false;
+/**
+ * Checks if the case group or its sibling contain the 'default' switch.
+ * @param caseGroupAst first case group to check.
+ * @return true if 'default' switch found.
+ */
+private static boolean containsDefaultSwitch(DetailAST caseGroupAst) {
+	DetailAST nextAst = caseGroupAst;
+	boolean found = false;
 
-        while (nextAst != null) {
-            if (nextAst.findFirstToken(TokenTypes.LITERAL_DEFAULT) != null) {
-                found = true;
-                break;
-            }
+	while (nextAst != null) {
+		if (nextAst.findFirstToken(TokenTypes.LITERAL_DEFAULT) != null) {
+			found = true;
+			break;
+		}
 
-            nextAst = nextAst.getNextSibling();
-        }
+		nextAst = nextAst.getNextSibling();
+	}
 
-        return found;
-    }
+	return found;
+}
 
 }

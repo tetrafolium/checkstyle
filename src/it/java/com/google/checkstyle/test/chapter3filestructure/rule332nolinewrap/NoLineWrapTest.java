@@ -29,50 +29,50 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
 public class NoLineWrapTest extends AbstractGoogleModuleTestSupport {
 
-    @Override
-    protected String getPackageLocation() {
-        return "com/google/checkstyle/test/chapter3filestructure/rule332nolinewrap";
-    }
+@Override
+protected String getPackageLocation() {
+	return "com/google/checkstyle/test/chapter3filestructure/rule332nolinewrap";
+}
 
-    @Test
-    public void testBadLineWrap() throws Exception {
-        final String[] expected = {
-            "1: " + getCheckMessage(NoLineWrapCheck.class, "no.line.wrap", "package"),
-            "6: " + getCheckMessage(NoLineWrapCheck.class, "no.line.wrap", "import"),
-            "10: " + getCheckMessage(NoLineWrapCheck.class, "no.line.wrap", "import"),
-        };
+@Test
+public void testBadLineWrap() throws Exception {
+	final String[] expected = {
+		"1: " + getCheckMessage(NoLineWrapCheck.class, "no.line.wrap", "package"),
+		"6: " + getCheckMessage(NoLineWrapCheck.class, "no.line.wrap", "import"),
+		"10: " + getCheckMessage(NoLineWrapCheck.class, "no.line.wrap", "import"),
+	};
 
-        final Configuration checkConfig = getModuleConfig("NoLineWrap");
-        final String filePath = getPath("InputNoLineWrapBad.java");
+	final Configuration checkConfig = getModuleConfig("NoLineWrap");
+	final String filePath = getPath("InputNoLineWrapBad.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
-    @Test
-    public void testGoodLineWrap() throws Exception {
-        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
+@Test
+public void testGoodLineWrap() throws Exception {
+	final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
 
-        final Configuration checkConfig = getModuleConfig("NoLineWrap");
-        final String filePath = getPath("InputNoLineWrapGood.java");
+	final Configuration checkConfig = getModuleConfig("NoLineWrap");
+	final String filePath = getPath("InputNoLineWrapGood.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
-    @Test
-    public void goodLineLength() throws Exception {
-        final int maxLineLength = 100;
-        final String[] expected = {
-            "5: " + getCheckMessage(LineLengthCheck.class, "maxLineLen", maxLineLength, 112),
-            "29: " + getCheckMessage(LineLengthCheck.class, "maxLineLen", maxLineLength, 113),
-        };
+@Test
+public void goodLineLength() throws Exception {
+	final int maxLineLength = 100;
+	final String[] expected = {
+		"5: " + getCheckMessage(LineLengthCheck.class, "maxLineLen", maxLineLength, 112),
+		"29: " + getCheckMessage(LineLengthCheck.class, "maxLineLen", maxLineLength, 113),
+	};
 
-        final Configuration checkConfig = getModuleConfig("LineLength");
-        final String filePath = getPath("InputLineLength.java");
+	final Configuration checkConfig = getModuleConfig("LineLength");
+	final String filePath = getPath("InputLineLength.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
 }

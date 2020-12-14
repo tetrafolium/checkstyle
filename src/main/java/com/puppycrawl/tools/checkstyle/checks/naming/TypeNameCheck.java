@@ -115,37 +115,36 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * @since 3.0
  */
 public class TypeNameCheck
-    extends AbstractAccessControlNameCheck {
+	extends AbstractAccessControlNameCheck {
 
-    /**
-     * Default pattern for type name.
-     */
-    public static final String DEFAULT_PATTERN = "^[A-Z][a-zA-Z0-9]*$";
+/**
+ * Default pattern for type name.
+ */
+public static final String DEFAULT_PATTERN = "^[A-Z][a-zA-Z0-9]*$";
 
-    /**
-     * Creates a new {@code TypeNameCheck} instance.
-     */
-    public TypeNameCheck() {
-        super(DEFAULT_PATTERN);
-    }
+/**
+ * Creates a new {@code TypeNameCheck} instance.
+ */
+public TypeNameCheck() {
+	super(DEFAULT_PATTERN);
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getAcceptableTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getAcceptableTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return new int[] {TokenTypes.CLASS_DEF,
-                          TokenTypes.INTERFACE_DEF,
-                          TokenTypes.ENUM_DEF,
-                          TokenTypes.ANNOTATION_DEF,
-                         };
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return new int[] {TokenTypes.CLASS_DEF,
+		          TokenTypes.INTERFACE_DEF,
+		          TokenTypes.ENUM_DEF,
+		          TokenTypes.ANNOTATION_DEF,};
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return CommonUtil.EMPTY_INT_ARRAY;
-    }
+@Override
+public int[] getRequiredTokens() {
+	return CommonUtil.EMPTY_INT_ARRAY;
+}
 
 }

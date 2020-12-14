@@ -24,14 +24,14 @@ package com.puppycrawl.tools.checkstyle;
  **/
 public final class Definitions {
 
-    /** Name of resource bundle for Checkstyle. */
-    public static final String CHECKSTYLE_BUNDLE =
-        "com.puppycrawl.tools.checkstyle.messages";
+/** Name of resource bundle for Checkstyle. */
+public static final String CHECKSTYLE_BUNDLE =
+	"com.puppycrawl.tools.checkstyle.messages";
 
-    /**
-     * Do no allow {@code Definitions} instances to be created.
-     **/
-    private Definitions() {
-    }
+/**
+ * Do no allow {@code Definitions} instances to be created.
+ **/
+private Definitions() {
+}
 
 }

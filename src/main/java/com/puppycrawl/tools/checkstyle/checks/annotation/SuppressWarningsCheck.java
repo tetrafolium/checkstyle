@@ -125,246 +125,246 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 @StatelessCheck
 public class SuppressWarningsCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY_SUPPRESSED_WARNING_NOT_ALLOWED =
-        "suppressed.warning.not.allowed";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY_SUPPRESSED_WARNING_NOT_ALLOWED =
+	"suppressed.warning.not.allowed";
 
-    /** {@link SuppressWarnings SuppressWarnings} annotation name. */
-    private static final String SUPPRESS_WARNINGS = "SuppressWarnings";
+/** {@link SuppressWarnings SuppressWarnings} annotation name. */
+private static final String SUPPRESS_WARNINGS = "SuppressWarnings";
 
-    /**
-     * Fully-qualified {@link SuppressWarnings SuppressWarnings}
-     * annotation name.
-     */
-    private static final String FQ_SUPPRESS_WARNINGS =
-        "java.lang." + SUPPRESS_WARNINGS;
+/**
+ * Fully-qualified {@link SuppressWarnings SuppressWarnings}
+ * annotation name.
+ */
+private static final String FQ_SUPPRESS_WARNINGS =
+	"java.lang." + SUPPRESS_WARNINGS;
 
-    /**
-     * Specify the RegExp to match against warnings. Any warning
-     * being suppressed matching this pattern will be flagged.
-     */
-    private Pattern format = Pattern.compile("^\\s*+$");
+/**
+ * Specify the RegExp to match against warnings. Any warning
+ * being suppressed matching this pattern will be flagged.
+ */
+private Pattern format = Pattern.compile("^\\s*+$");
 
-    /**
-     * Setter to specify the RegExp to match against warnings. Any warning
-     * being suppressed matching this pattern will be flagged.
-     * @param pattern the new pattern
-     */
-    public final void setFormat(Pattern pattern) {
-        format = pattern;
-    }
+/**
+ * Setter to specify the RegExp to match against warnings. Any warning
+ * being suppressed matching this pattern will be flagged.
+ * @param pattern the new pattern
+ */
+public final void setFormat(Pattern pattern) {
+	format = pattern;
+}
 
-    @Override
-    public final int[] getDefaultTokens() {
-        return getAcceptableTokens();
-    }
+@Override
+public final int[] getDefaultTokens() {
+	return getAcceptableTokens();
+}
 
-    @Override
-    public final int[] getAcceptableTokens() {
-        return new int[] {
-                   TokenTypes.CLASS_DEF,
-                   TokenTypes.INTERFACE_DEF,
-                   TokenTypes.ENUM_DEF,
-                   TokenTypes.ANNOTATION_DEF,
-                   TokenTypes.ANNOTATION_FIELD_DEF,
-                   TokenTypes.ENUM_CONSTANT_DEF,
-                   TokenTypes.PARAMETER_DEF,
-                   TokenTypes.VARIABLE_DEF,
-                   TokenTypes.METHOD_DEF,
-                   TokenTypes.CTOR_DEF,
-               };
-    }
+@Override
+public final int[] getAcceptableTokens() {
+	return new int[] {
+		       TokenTypes.CLASS_DEF,
+		       TokenTypes.INTERFACE_DEF,
+		       TokenTypes.ENUM_DEF,
+		       TokenTypes.ANNOTATION_DEF,
+		       TokenTypes.ANNOTATION_FIELD_DEF,
+		       TokenTypes.ENUM_CONSTANT_DEF,
+		       TokenTypes.PARAMETER_DEF,
+		       TokenTypes.VARIABLE_DEF,
+		       TokenTypes.METHOD_DEF,
+		       TokenTypes.CTOR_DEF,
+	};
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return CommonUtil.EMPTY_INT_ARRAY;
-    }
+@Override
+public int[] getRequiredTokens() {
+	return CommonUtil.EMPTY_INT_ARRAY;
+}
 
-    @Override
-    public void visitToken(final DetailAST ast) {
-        final DetailAST annotation = getSuppressWarnings(ast);
+@Override
+public void visitToken(final DetailAST ast) {
+	final DetailAST annotation = getSuppressWarnings(ast);
 
-        if (annotation != null) {
-            final DetailAST warningHolder =
-                findWarningsHolder(annotation);
+	if (annotation != null) {
+		final DetailAST warningHolder =
+			findWarningsHolder(annotation);
 
-            final DetailAST token =
-                warningHolder.findFirstToken(TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR);
-            DetailAST warning;
+		final DetailAST token =
+			warningHolder.findFirstToken(TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR);
+		DetailAST warning;
 
-            if (token == null) {
-                warning = warningHolder.findFirstToken(TokenTypes.EXPR);
-            }
-            else {
-                // case like '@SuppressWarnings(value = UNUSED)'
-                warning = token.findFirstToken(TokenTypes.EXPR);
-            }
+		if (token == null) {
+			warning = warningHolder.findFirstToken(TokenTypes.EXPR);
+		}
+		else {
+			// case like '@SuppressWarnings(value = UNUSED)'
+			warning = token.findFirstToken(TokenTypes.EXPR);
+		}
 
-            // rare case with empty array ex: @SuppressWarnings({})
-            if (warning == null) {
-                // check to see if empty warnings are forbidden -- are by default
-                logMatch(warningHolder, "");
-            }
-            else {
-                while (warning != null) {
-                    if (warning.getType() == TokenTypes.EXPR) {
-                        final DetailAST fChild = warning.getFirstChild();
-                        switch (fChild.getType()) {
-                        // typical case
-                        case TokenTypes.STRING_LITERAL:
-                            final String warningText =
-                                removeQuotes(warning.getFirstChild().getText());
-                            logMatch(warning, warningText);
-                            break;
-                        // conditional case
-                        // ex:
-                        // @SuppressWarnings((false) ? (true) ? "unchecked" : "foo" : "unused")
-                        case TokenTypes.QUESTION:
-                            walkConditional(fChild);
-                            break;
-                        // param in constant case
-                        // ex: public static final String UNCHECKED = "unchecked";
-                        // @SuppressWarnings(UNCHECKED)
-                        // or
-                        // @SuppressWarnings(SomeClass.UNCHECKED)
-                        case TokenTypes.IDENT:
-                        case TokenTypes.DOT:
-                            break;
-                        default:
-                            // Known limitation: cases like @SuppressWarnings("un" + "used") or
-                            // @SuppressWarnings((String) "unused") are not properly supported,
-                            // but they should not cause exceptions.
-                        }
-                    }
-                    warning = warning.getNextSibling();
-                }
-            }
-        }
-    }
+		// rare case with empty array ex: @SuppressWarnings({})
+		if (warning == null) {
+			// check to see if empty warnings are forbidden -- are by default
+			logMatch(warningHolder, "");
+		}
+		else {
+			while (warning != null) {
+				if (warning.getType() == TokenTypes.EXPR) {
+					final DetailAST fChild = warning.getFirstChild();
+					switch (fChild.getType()) {
+					// typical case
+					case TokenTypes.STRING_LITERAL:
+						final String warningText =
+							removeQuotes(warning.getFirstChild().getText());
+						logMatch(warning, warningText);
+						break;
+					// conditional case
+					// ex:
+					// @SuppressWarnings((false) ? (true) ? "unchecked" : "foo" : "unused")
+					case TokenTypes.QUESTION:
+						walkConditional(fChild);
+						break;
+					// param in constant case
+					// ex: public static final String UNCHECKED = "unchecked";
+					// @SuppressWarnings(UNCHECKED)
+					// or
+					// @SuppressWarnings(SomeClass.UNCHECKED)
+					case TokenTypes.IDENT:
+					case TokenTypes.DOT:
+						break;
+					default:
+						// Known limitation: cases like @SuppressWarnings("un" + "used") or
+						// @SuppressWarnings((String) "unused") are not properly supported,
+						// but they should not cause exceptions.
+					}
+				}
+				warning = warning.getNextSibling();
+			}
+		}
+	}
+}
 
-    /**
-     * Gets the {@link SuppressWarnings SuppressWarnings} annotation
-     * that is annotating the AST.  If the annotation does not exist
-     * this method will return {@code null}.
-     *
-     * @param ast the AST
-     * @return the {@link SuppressWarnings SuppressWarnings} annotation
-     */
-    private static DetailAST getSuppressWarnings(DetailAST ast) {
-        DetailAST annotation = AnnotationUtil.getAnnotation(ast, SUPPRESS_WARNINGS);
+/**
+ * Gets the {@link SuppressWarnings SuppressWarnings} annotation
+ * that is annotating the AST.  If the annotation does not exist
+ * this method will return {@code null}.
+ *
+ * @param ast the AST
+ * @return the {@link SuppressWarnings SuppressWarnings} annotation
+ */
+private static DetailAST getSuppressWarnings(DetailAST ast) {
+	DetailAST annotation = AnnotationUtil.getAnnotation(ast, SUPPRESS_WARNINGS);
 
-        if (annotation == null) {
-            annotation = AnnotationUtil.getAnnotation(ast, FQ_SUPPRESS_WARNINGS);
-        }
-        return annotation;
-    }
+	if (annotation == null) {
+		annotation = AnnotationUtil.getAnnotation(ast, FQ_SUPPRESS_WARNINGS);
+	}
+	return annotation;
+}
 
-    /**
-     * This method looks for a warning that matches a configured expression.
-     * If found it logs a violation at the given AST.
-     *
-     * @param ast the location to place the violation
-     * @param warningText the warning.
-     */
-    private void logMatch(DetailAST ast, final String warningText) {
-        final Matcher matcher = format.matcher(warningText);
-        if (matcher.matches()) {
-            log(ast,
-                MSG_KEY_SUPPRESSED_WARNING_NOT_ALLOWED, warningText);
-        }
-    }
+/**
+ * This method looks for a warning that matches a configured expression.
+ * If found it logs a violation at the given AST.
+ *
+ * @param ast the location to place the violation
+ * @param warningText the warning.
+ */
+private void logMatch(DetailAST ast, final String warningText) {
+	final Matcher matcher = format.matcher(warningText);
+	if (matcher.matches()) {
+		log(ast,
+		    MSG_KEY_SUPPRESSED_WARNING_NOT_ALLOWED, warningText);
+	}
+}
 
-    /**
-     * Find the parent (holder) of the of the warnings (Expr).
-     *
-     * @param annotation the annotation
-     * @return a Token representing the expr.
-     */
-    private static DetailAST findWarningsHolder(final DetailAST annotation) {
-        final DetailAST annValuePair =
-            annotation.findFirstToken(TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR);
-        final DetailAST annArrayInit;
+/**
+ * Find the parent (holder) of the of the warnings (Expr).
+ *
+ * @param annotation the annotation
+ * @return a Token representing the expr.
+ */
+private static DetailAST findWarningsHolder(final DetailAST annotation) {
+	final DetailAST annValuePair =
+		annotation.findFirstToken(TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR);
+	final DetailAST annArrayInit;
 
-        if (annValuePair == null) {
-            annArrayInit =
-                annotation.findFirstToken(TokenTypes.ANNOTATION_ARRAY_INIT);
-        }
-        else {
-            annArrayInit =
-                annValuePair.findFirstToken(TokenTypes.ANNOTATION_ARRAY_INIT);
-        }
+	if (annValuePair == null) {
+		annArrayInit =
+			annotation.findFirstToken(TokenTypes.ANNOTATION_ARRAY_INIT);
+	}
+	else {
+		annArrayInit =
+			annValuePair.findFirstToken(TokenTypes.ANNOTATION_ARRAY_INIT);
+	}
 
-        DetailAST warningsHolder = annotation;
-        if (annArrayInit != null) {
-            warningsHolder = annArrayInit;
-        }
+	DetailAST warningsHolder = annotation;
+	if (annArrayInit != null) {
+		warningsHolder = annArrayInit;
+	}
 
-        return warningsHolder;
-    }
+	return warningsHolder;
+}
 
-    /**
-     * Strips a single double quote from the front and back of a string.
-     *
-     * <p>For example:
-     * <br/>
-     * Input String = "unchecked"
-     * <br/>
-     * Output String = unchecked
-     *
-     * @param warning the warning string
-     * @return the string without two quotes
-     */
-    private static String removeQuotes(final String warning) {
-        return warning.substring(1, warning.length() - 1);
-    }
+/**
+ * Strips a single double quote from the front and back of a string.
+ *
+ * <p>For example:
+ * <br/>
+ * Input String = "unchecked"
+ * <br/>
+ * Output String = unchecked
+ *
+ * @param warning the warning string
+ * @return the string without two quotes
+ */
+private static String removeQuotes(final String warning) {
+	return warning.substring(1, warning.length() - 1);
+}
 
-    /**
-     * Recursively walks a conditional expression checking the left
-     * and right sides, checking for matches and
-     * logging violations.
-     *
-     * @param cond a Conditional type
-     * {@link TokenTypes#QUESTION QUESTION}
-     */
-    private void walkConditional(final DetailAST cond) {
-        if (cond.getType() == TokenTypes.QUESTION) {
-            walkConditional(getCondLeft(cond));
-            walkConditional(getCondRight(cond));
-        }
-        else {
-            final String warningText =
-                removeQuotes(cond.getText());
-            logMatch(cond, warningText);
-        }
-    }
+/**
+ * Recursively walks a conditional expression checking the left
+ * and right sides, checking for matches and
+ * logging violations.
+ *
+ * @param cond a Conditional type
+ * {@link TokenTypes#QUESTION QUESTION}
+ */
+private void walkConditional(final DetailAST cond) {
+	if (cond.getType() == TokenTypes.QUESTION) {
+		walkConditional(getCondLeft(cond));
+		walkConditional(getCondRight(cond));
+	}
+	else {
+		final String warningText =
+			removeQuotes(cond.getText());
+		logMatch(cond, warningText);
+	}
+}
 
-    /**
-     * Retrieves the left side of a conditional.
-     *
-     * @param cond cond a conditional type
-     * {@link TokenTypes#QUESTION QUESTION}
-     * @return either the value
-     *     or another conditional
-     */
-    private static DetailAST getCondLeft(final DetailAST cond) {
-        final DetailAST colon = cond.findFirstToken(TokenTypes.COLON);
-        return colon.getPreviousSibling();
-    }
+/**
+ * Retrieves the left side of a conditional.
+ *
+ * @param cond cond a conditional type
+ * {@link TokenTypes#QUESTION QUESTION}
+ * @return either the value
+ *     or another conditional
+ */
+private static DetailAST getCondLeft(final DetailAST cond) {
+	final DetailAST colon = cond.findFirstToken(TokenTypes.COLON);
+	return colon.getPreviousSibling();
+}
 
-    /**
-     * Retrieves the right side of a conditional.
-     *
-     * @param cond a conditional type
-     * {@link TokenTypes#QUESTION QUESTION}
-     * @return either the value
-     *     or another conditional
-     */
-    private static DetailAST getCondRight(final DetailAST cond) {
-        final DetailAST colon = cond.findFirstToken(TokenTypes.COLON);
-        return colon.getNextSibling();
-    }
+/**
+ * Retrieves the right side of a conditional.
+ *
+ * @param cond a conditional type
+ * {@link TokenTypes#QUESTION QUESTION}
+ * @return either the value
+ *     or another conditional
+ */
+private static DetailAST getCondRight(final DetailAST cond) {
+	final DetailAST colon = cond.findFirstToken(TokenTypes.COLON);
+	return colon.getNextSibling();
+}
 
 }

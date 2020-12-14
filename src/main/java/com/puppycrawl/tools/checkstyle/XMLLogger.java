@@ -46,327 +46,326 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 // -@cs[AbbreviationAsWordInName] We can not change it as,
 // check's name is part of API (used in configurations).
 public class XMLLogger
-    extends AutomaticBean
-    implements AuditListener {
+	extends AutomaticBean
+	implements AuditListener {
 
-    /** Decimal radix. */
-    private static final int BASE_10 = 10;
+/** Decimal radix. */
+private static final int BASE_10 = 10;
 
-    /** Hex radix. */
-    private static final int BASE_16 = 16;
+/** Hex radix. */
+private static final int BASE_16 = 16;
 
-    /** Some known entities to detect. */
-    private static final String[] ENTITIES = {"gt", "amp", "lt", "apos",
-                                              "quot",
-                                             };
+/** Some known entities to detect. */
+private static final String[] ENTITIES = {"gt", "amp", "lt", "apos",
+	                                  "quot",};
 
-    /** Close output stream in auditFinished. */
-    private final boolean closeStream;
+/** Close output stream in auditFinished. */
+private final boolean closeStream;
 
-    /** The writer lock object. */
-    private final Object writerLock = new Object();
+/** The writer lock object. */
+private final Object writerLock = new Object();
 
-    /** Holds all messages for the given file. */
-    private final Map<String, FileMessages> fileMessages =
-        new ConcurrentHashMap<>();
+/** Holds all messages for the given file. */
+private final Map<String, FileMessages> fileMessages =
+	new ConcurrentHashMap<>();
 
-    /**
-     * Helper writer that allows easy encoding and printing.
-     */
-    private final PrintWriter writer;
+/**
+ * Helper writer that allows easy encoding and printing.
+ */
+private final PrintWriter writer;
 
-    /**
-     * Creates a new {@code XMLLogger} instance.
-     * Sets the output to a defined stream.
-     * @param outputStream the stream to write logs to.
-     * @param outputStreamOptions if {@code CLOSE} stream should be closed in auditFinished()
-     */
-    public XMLLogger(OutputStream outputStream, OutputStreamOptions outputStreamOptions) {
-        writer = new PrintWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
-        if (outputStreamOptions == null) {
-            throw new IllegalArgumentException("Parameter outputStreamOptions can not be null");
-        }
-        closeStream = outputStreamOptions == OutputStreamOptions.CLOSE;
-    }
+/**
+ * Creates a new {@code XMLLogger} instance.
+ * Sets the output to a defined stream.
+ * @param outputStream the stream to write logs to.
+ * @param outputStreamOptions if {@code CLOSE} stream should be closed in auditFinished()
+ */
+public XMLLogger(OutputStream outputStream, OutputStreamOptions outputStreamOptions) {
+	writer = new PrintWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
+	if (outputStreamOptions == null) {
+		throw new IllegalArgumentException("Parameter outputStreamOptions can not be null");
+	}
+	closeStream = outputStreamOptions == OutputStreamOptions.CLOSE;
+}
 
-    @Override
-    protected void finishLocalSetup() {
-        // No code by default
-    }
+@Override
+protected void finishLocalSetup() {
+	// No code by default
+}
 
-    @Override
-    public void auditStarted(AuditEvent event) {
-        writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+@Override
+public void auditStarted(AuditEvent event) {
+	writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 
-        final String version = XMLLogger.class.getPackage().getImplementationVersion();
+	final String version = XMLLogger.class.getPackage().getImplementationVersion();
 
-        writer.println("<checkstyle version=\"" + version + "\">");
-    }
+	writer.println("<checkstyle version=\"" + version + "\">");
+}
 
-    @Override
-    public void auditFinished(AuditEvent event) {
-        writer.println("</checkstyle>");
-        if (closeStream) {
-            writer.close();
-        }
-        else {
-            writer.flush();
-        }
-    }
+@Override
+public void auditFinished(AuditEvent event) {
+	writer.println("</checkstyle>");
+	if (closeStream) {
+		writer.close();
+	}
+	else {
+		writer.flush();
+	}
+}
 
-    @Override
-    public void fileStarted(AuditEvent event) {
-        fileMessages.put(event.getFileName(), new FileMessages());
-    }
+@Override
+public void fileStarted(AuditEvent event) {
+	fileMessages.put(event.getFileName(), new FileMessages());
+}
 
-    @Override
-    public void fileFinished(AuditEvent event) {
-        final String fileName = event.getFileName();
-        final FileMessages messages = fileMessages.get(fileName);
+@Override
+public void fileFinished(AuditEvent event) {
+	final String fileName = event.getFileName();
+	final FileMessages messages = fileMessages.get(fileName);
 
-        synchronized (writerLock) {
-            writeFileMessages(fileName, messages);
-        }
+	synchronized (writerLock) {
+		writeFileMessages(fileName, messages);
+	}
 
-        fileMessages.remove(fileName);
-    }
+	fileMessages.remove(fileName);
+}
 
-    /**
-     * Prints the file section with all file errors and exceptions.
-     * @param fileName The file name, as should be printed in the opening file tag.
-     * @param messages The file messages.
-     */
-    private void writeFileMessages(String fileName, FileMessages messages) {
-        writeFileOpeningTag(fileName);
-        if (messages != null) {
-            for (AuditEvent errorEvent : messages.getErrors()) {
-                writeFileError(errorEvent);
-            }
-            for (Throwable exception : messages.getExceptions()) {
-                writeException(exception);
-            }
-        }
-        writeFileClosingTag();
-    }
+/**
+ * Prints the file section with all file errors and exceptions.
+ * @param fileName The file name, as should be printed in the opening file tag.
+ * @param messages The file messages.
+ */
+private void writeFileMessages(String fileName, FileMessages messages) {
+	writeFileOpeningTag(fileName);
+	if (messages != null) {
+		for (AuditEvent errorEvent : messages.getErrors()) {
+			writeFileError(errorEvent);
+		}
+		for (Throwable exception : messages.getExceptions()) {
+			writeException(exception);
+		}
+	}
+	writeFileClosingTag();
+}
 
-    /**
-     * Prints the "file" opening tag with the given filename.
-     * @param fileName The filename to output.
-     */
-    private void writeFileOpeningTag(String fileName) {
-        writer.println("<file name=\"" + encode(fileName) + "\">");
-    }
+/**
+ * Prints the "file" opening tag with the given filename.
+ * @param fileName The filename to output.
+ */
+private void writeFileOpeningTag(String fileName) {
+	writer.println("<file name=\"" + encode(fileName) + "\">");
+}
 
-    /**
-     * Prints the "file" closing tag.
-     */
-    private void writeFileClosingTag() {
-        writer.println("</file>");
-    }
+/**
+ * Prints the "file" closing tag.
+ */
+private void writeFileClosingTag() {
+	writer.println("</file>");
+}
 
-    @Override
-    public void addError(AuditEvent event) {
-        if (event.getSeverityLevel() != SeverityLevel.IGNORE) {
-            final String fileName = event.getFileName();
-            if (fileName == null || !fileMessages.containsKey(fileName)) {
-                synchronized (writerLock) {
-                    writeFileError(event);
-                }
-            }
-            else {
-                final FileMessages messages = fileMessages.get(fileName);
-                messages.addError(event);
-            }
-        }
-    }
+@Override
+public void addError(AuditEvent event) {
+	if (event.getSeverityLevel() != SeverityLevel.IGNORE) {
+		final String fileName = event.getFileName();
+		if (fileName == null || !fileMessages.containsKey(fileName)) {
+			synchronized (writerLock) {
+				writeFileError(event);
+			}
+		}
+		else {
+			final FileMessages messages = fileMessages.get(fileName);
+			messages.addError(event);
+		}
+	}
+}
 
-    /**
-     * Outputs the given event to the writer.
-     * @param event An event to print.
-     */
-    private void writeFileError(AuditEvent event) {
-        writer.print("<error" + " line=\"" + event.getLine() + "\"");
-        if (event.getColumn() > 0) {
-            writer.print(" column=\"" + event.getColumn() + "\"");
-        }
-        writer.print(" severity=\""
-                     + event.getSeverityLevel().getName()
-                     + "\"");
-        writer.print(" message=\""
-                     + encode(event.getMessage())
-                     + "\"");
-        writer.print(" source=\"");
-        if (event.getModuleId() == null) {
-            writer.print(encode(event.getSourceName()));
-        }
-        else {
-            writer.print(encode(event.getModuleId()));
-        }
-        writer.println("\"/>");
-    }
+/**
+ * Outputs the given event to the writer.
+ * @param event An event to print.
+ */
+private void writeFileError(AuditEvent event) {
+	writer.print("<error" + " line=\"" + event.getLine() + "\"");
+	if (event.getColumn() > 0) {
+		writer.print(" column=\"" + event.getColumn() + "\"");
+	}
+	writer.print(" severity=\""
+	             + event.getSeverityLevel().getName()
+	             + "\"");
+	writer.print(" message=\""
+	             + encode(event.getMessage())
+	             + "\"");
+	writer.print(" source=\"");
+	if (event.getModuleId() == null) {
+		writer.print(encode(event.getSourceName()));
+	}
+	else {
+		writer.print(encode(event.getModuleId()));
+	}
+	writer.println("\"/>");
+}
 
-    @Override
-    public void addException(AuditEvent event, Throwable throwable) {
-        final String fileName = event.getFileName();
-        if (fileName == null || !fileMessages.containsKey(fileName)) {
-            synchronized (writerLock) {
-                writeException(throwable);
-            }
-        }
-        else {
-            final FileMessages messages = fileMessages.get(fileName);
-            messages.addException(throwable);
-        }
-    }
+@Override
+public void addException(AuditEvent event, Throwable throwable) {
+	final String fileName = event.getFileName();
+	if (fileName == null || !fileMessages.containsKey(fileName)) {
+		synchronized (writerLock) {
+			writeException(throwable);
+		}
+	}
+	else {
+		final FileMessages messages = fileMessages.get(fileName);
+		messages.addException(throwable);
+	}
+}
 
-    /**
-     * Writes the exception event to the print writer.
-     * @param throwable The
-     */
-    private void writeException(Throwable throwable) {
-        writer.println("<exception>");
-        writer.println("<![CDATA[");
+/**
+ * Writes the exception event to the print writer.
+ * @param throwable The
+ */
+private void writeException(Throwable throwable) {
+	writer.println("<exception>");
+	writer.println("<![CDATA[");
 
-        final StringWriter stringWriter = new StringWriter();
-        final PrintWriter printer = new PrintWriter(stringWriter);
-        throwable.printStackTrace(printer);
-        writer.println(encode(stringWriter.toString()));
+	final StringWriter stringWriter = new StringWriter();
+	final PrintWriter printer = new PrintWriter(stringWriter);
+	throwable.printStackTrace(printer);
+	writer.println(encode(stringWriter.toString()));
 
-        writer.println("]]>");
-        writer.println("</exception>");
-    }
+	writer.println("]]>");
+	writer.println("</exception>");
+}
 
-    /**
-     * Escape &lt;, &gt; &amp; &#39; and &quot; as their entities.
-     * @param value the value to escape.
-     * @return the escaped value if necessary.
-     */
-    public static String encode(String value) {
-        final StringBuilder sb = new StringBuilder(256);
-        for (int i = 0; i < value.length(); i++) {
-            final char chr = value.charAt(i);
-            switch (chr) {
-            case '<':
-                sb.append("&lt;");
-                break;
-            case '>':
-                sb.append("&gt;");
-                break;
-            case '\'':
-                sb.append("&apos;");
-                break;
-            case '\"':
-                sb.append("&quot;");
-                break;
-            case '&':
-                sb.append("&amp;");
-                break;
-            case '\r':
-                break;
-            case '\n':
-                sb.append("&#10;");
-                break;
-            default:
-                if (Character.isISOControl(chr)) {
-                    // true escape characters need '&' before but it also requires XML 1.1
-                    // until https://github.com/checkstyle/checkstyle/issues/5168
-                    sb.append("#x");
-                    sb.append(Integer.toHexString(chr));
-                    sb.append(';');
-                }
-                else {
-                    sb.append(chr);
-                }
-                break;
-            }
-        }
-        return sb.toString();
-    }
+/**
+ * Escape &lt;, &gt; &amp; &#39; and &quot; as their entities.
+ * @param value the value to escape.
+ * @return the escaped value if necessary.
+ */
+public static String encode(String value) {
+	final StringBuilder sb = new StringBuilder(256);
+	for (int i = 0; i < value.length(); i++) {
+		final char chr = value.charAt(i);
+		switch (chr) {
+		case '<':
+			sb.append("&lt;");
+			break;
+		case '>':
+			sb.append("&gt;");
+			break;
+		case '\'':
+			sb.append("&apos;");
+			break;
+		case '\"':
+			sb.append("&quot;");
+			break;
+		case '&':
+			sb.append("&amp;");
+			break;
+		case '\r':
+			break;
+		case '\n':
+			sb.append("&#10;");
+			break;
+		default:
+			if (Character.isISOControl(chr)) {
+				// true escape characters need '&' before but it also requires XML 1.1
+				// until https://github.com/checkstyle/checkstyle/issues/5168
+				sb.append("#x");
+				sb.append(Integer.toHexString(chr));
+				sb.append(';');
+			}
+			else {
+				sb.append(chr);
+			}
+			break;
+		}
+	}
+	return sb.toString();
+}
 
-    /**
-     * Finds whether the given argument is character or entity reference.
-     * @param ent the possible entity to look for.
-     * @return whether the given argument a character or entity reference
-     */
-    public static boolean isReference(String ent) {
-        boolean reference = false;
+/**
+ * Finds whether the given argument is character or entity reference.
+ * @param ent the possible entity to look for.
+ * @return whether the given argument a character or entity reference
+ */
+public static boolean isReference(String ent) {
+	boolean reference = false;
 
-        if (ent.charAt(0) == '&' && CommonUtil.endsWithChar(ent, ';')) {
-            if (ent.charAt(1) == '#') {
-                // prefix is "&#"
-                int prefixLength = 2;
+	if (ent.charAt(0) == '&' && CommonUtil.endsWithChar(ent, ';')) {
+		if (ent.charAt(1) == '#') {
+			// prefix is "&#"
+			int prefixLength = 2;
 
-                int radix = BASE_10;
-                if (ent.charAt(2) == 'x') {
-                    prefixLength++;
-                    radix = BASE_16;
-                }
-                try {
-                    Integer.parseInt(
-                        ent.substring(prefixLength, ent.length() - 1), radix);
-                    reference = true;
-                }
-                catch (final NumberFormatException ignored) {
-                    reference = false;
-                }
-            }
-            else {
-                final String name = ent.substring(1, ent.length() - 1);
-                for (String element : ENTITIES) {
-                    if (name.equals(element)) {
-                        reference = true;
-                        break;
-                    }
-                }
-            }
-        }
+			int radix = BASE_10;
+			if (ent.charAt(2) == 'x') {
+				prefixLength++;
+				radix = BASE_16;
+			}
+			try {
+				Integer.parseInt(
+					ent.substring(prefixLength, ent.length() - 1), radix);
+				reference = true;
+			}
+			catch (final NumberFormatException ignored) {
+				reference = false;
+			}
+		}
+		else {
+			final String name = ent.substring(1, ent.length() - 1);
+			for (String element : ENTITIES) {
+				if (name.equals(element)) {
+					reference = true;
+					break;
+				}
+			}
+		}
+	}
 
-        return reference;
-    }
+	return reference;
+}
 
-    /**
-     * The registered file messages.
-     */
-    private static class FileMessages {
+/**
+ * The registered file messages.
+ */
+private static class FileMessages {
 
-        /** The file error events. */
-        private final List<AuditEvent> errors = Collections.synchronizedList(new ArrayList<>());
+/** The file error events. */
+private final List<AuditEvent> errors = Collections.synchronizedList(new ArrayList<>());
 
-        /** The file exceptions. */
-        private final List<Throwable> exceptions = Collections.synchronizedList(new ArrayList<>());
+/** The file exceptions. */
+private final List<Throwable> exceptions = Collections.synchronizedList(new ArrayList<>());
 
-        /**
-         * Returns the file error events.
-         * @return the file error events.
-         */
-        public List<AuditEvent> getErrors() {
-            return Collections.unmodifiableList(errors);
-        }
+/**
+ * Returns the file error events.
+ * @return the file error events.
+ */
+public List<AuditEvent> getErrors() {
+	return Collections.unmodifiableList(errors);
+}
 
-        /**
-         * Adds the given error event to the messages.
-         * @param event the error event.
-         */
-        public void addError(AuditEvent event) {
-            errors.add(event);
-        }
+/**
+ * Adds the given error event to the messages.
+ * @param event the error event.
+ */
+public void addError(AuditEvent event) {
+	errors.add(event);
+}
 
-        /**
-         * Returns the file exceptions.
-         * @return the file exceptions.
-         */
-        public List<Throwable> getExceptions() {
-            return Collections.unmodifiableList(exceptions);
-        }
+/**
+ * Returns the file exceptions.
+ * @return the file exceptions.
+ */
+public List<Throwable> getExceptions() {
+	return Collections.unmodifiableList(exceptions);
+}
 
-        /**
-         * Adds the given exception to the messages.
-         * @param throwable the file exception
-         */
-        public void addException(Throwable throwable) {
-            exceptions.add(throwable);
-        }
+/**
+ * Adds the given exception to the messages.
+ * @param throwable the file exception
+ */
+public void addException(Throwable throwable) {
+	exceptions.add(throwable);
+}
 
-    }
+}
 
 }

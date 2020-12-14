@@ -27,30 +27,30 @@ import com.puppycrawl.tools.checkstyle.checks.javadoc.SingleLineJavadocCheck;
 
 public class SingleLineJavadocTest extends AbstractGoogleModuleTestSupport {
 
-    @Override
-    protected String getPackageLocation() {
-        return "com/google/checkstyle/test/chapter7javadoc/rule711generalform";
-    }
+@Override
+protected String getPackageLocation() {
+	return "com/google/checkstyle/test/chapter7javadoc/rule711generalform";
+}
 
-    @Test
-    public void testSingleLineJavadoc() throws Exception {
-        final String msg = getCheckMessage(SingleLineJavadocCheck.class, "singleline.javadoc");
+@Test
+public void testSingleLineJavadoc() throws Exception {
+	final String msg = getCheckMessage(SingleLineJavadocCheck.class, "singleline.javadoc");
 
-        final String[] expected = {
-            "5: " + msg,
-            "13: " + msg,
-            "29: " + msg,
-            "32: " + msg,
-            "35: " + msg,
-            "38: " + msg,
-            "41: " + msg,
-        };
+	final String[] expected = {
+		"5: " + msg,
+		"13: " + msg,
+		"29: " + msg,
+		"32: " + msg,
+		"35: " + msg,
+		"38: " + msg,
+		"41: " + msg,
+	};
 
-        final Configuration checkConfig = getModuleConfig("SingleLineJavadoc");
-        final String filePath = getPath("InputSingleLineJavadocCheck.java");
+	final Configuration checkConfig = getModuleConfig("SingleLineJavadoc");
+	final String filePath = getPath("InputSingleLineJavadocCheck.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
 }

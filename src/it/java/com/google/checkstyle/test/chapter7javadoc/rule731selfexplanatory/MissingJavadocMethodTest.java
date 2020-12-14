@@ -27,24 +27,24 @@ import com.puppycrawl.tools.checkstyle.checks.javadoc.MissingJavadocMethodCheck;
 
 public class MissingJavadocMethodTest extends AbstractGoogleModuleTestSupport {
 
-    @Override
-    protected String getPackageLocation() {
-        return "com/google/checkstyle/test/chapter7javadoc/rule731selfexplanatory";
-    }
+@Override
+protected String getPackageLocation() {
+	return "com/google/checkstyle/test/chapter7javadoc/rule731selfexplanatory";
+}
 
-    @Test
-    public void testJavadocMethod() throws Exception {
-        final String msg = getCheckMessage(MissingJavadocMethodCheck.class, "javadoc.missing");
+@Test
+public void testJavadocMethod() throws Exception {
+	final String msg = getCheckMessage(MissingJavadocMethodCheck.class, "javadoc.missing");
 
-        final String[] expected = {
-            "57:5: " + msg,
-        };
+	final String[] expected = {
+		"57:5: " + msg,
+	};
 
-        final Configuration checkConfig = getModuleConfig("MissingJavadocMethod");
-        final String filePath = getPath("InputMissingJavadocMethodCheck.java");
+	final Configuration checkConfig = getModuleConfig("MissingJavadocMethod");
+	final String filePath = getPath("InputMissingJavadocMethodCheck.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
 }

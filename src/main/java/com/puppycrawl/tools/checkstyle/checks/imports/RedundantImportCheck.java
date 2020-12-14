@@ -52,105 +52,105 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  */
 @FileStatefulCheck
 public class RedundantImportCheck
-    extends AbstractCheck {
+	extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_LANG = "import.lang";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_LANG = "import.lang";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_SAME = "import.same";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_SAME = "import.same";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_DUPLICATE = "import.duplicate";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_DUPLICATE = "import.duplicate";
 
-    /** Set of the imports. */
-    private final Set<FullIdent> imports = new HashSet<>();
-    /** Set of static imports. */
-    private final Set<FullIdent> staticImports = new HashSet<>();
+/** Set of the imports. */
+private final Set<FullIdent> imports = new HashSet<>();
+/** Set of static imports. */
+private final Set<FullIdent> staticImports = new HashSet<>();
 
-    /** Name of package in file. */
-    private String pkgName;
+/** Name of package in file. */
+private String pkgName;
 
-    @Override
-    public void beginTree(DetailAST aRootAST) {
-        pkgName = null;
-        imports.clear();
-        staticImports.clear();
-    }
+@Override
+public void beginTree(DetailAST aRootAST) {
+	pkgName = null;
+	imports.clear();
+	staticImports.clear();
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {
-                   TokenTypes.IMPORT, TokenTypes.STATIC_IMPORT, TokenTypes.PACKAGE_DEF,
-               };
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {
+		       TokenTypes.IMPORT, TokenTypes.STATIC_IMPORT, TokenTypes.PACKAGE_DEF,
+	};
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        if (ast.getType() == TokenTypes.PACKAGE_DEF) {
-            pkgName = FullIdent.createFullIdent(
-                          ast.getLastChild().getPreviousSibling()).getText();
-        }
-        else if (ast.getType() == TokenTypes.IMPORT) {
-            final FullIdent imp = FullIdent.createFullIdentBelow(ast);
-            if (isFromPackage(imp.getText(), "java.lang")) {
-                log(ast, MSG_LANG, imp.getText());
-            }
-            // imports from unnamed package are not allowed,
-            // so we are checking SAME rule only for named packages
-            else if (pkgName != null && isFromPackage(imp.getText(), pkgName)) {
-                log(ast, MSG_SAME, imp.getText());
-            }
-            // Check for a duplicate import
-            imports.stream().filter(full -> imp.getText().equals(full.getText()))
-            .forEach(full -> log(ast, MSG_DUPLICATE, full.getLineNo(), imp.getText()));
+@Override
+public void visitToken(DetailAST ast) {
+	if (ast.getType() == TokenTypes.PACKAGE_DEF) {
+		pkgName = FullIdent.createFullIdent(
+			ast.getLastChild().getPreviousSibling()).getText();
+	}
+	else if (ast.getType() == TokenTypes.IMPORT) {
+		final FullIdent imp = FullIdent.createFullIdentBelow(ast);
+		if (isFromPackage(imp.getText(), "java.lang")) {
+			log(ast, MSG_LANG, imp.getText());
+		}
+		// imports from unnamed package are not allowed,
+		// so we are checking SAME rule only for named packages
+		else if (pkgName != null && isFromPackage(imp.getText(), pkgName)) {
+			log(ast, MSG_SAME, imp.getText());
+		}
+		// Check for a duplicate import
+		imports.stream().filter(full->imp.getText().equals(full.getText()))
+		.forEach(full->log(ast, MSG_DUPLICATE, full.getLineNo(), imp.getText()));
 
-            imports.add(imp);
-        }
-        else {
-            // Check for a duplicate static import
-            final FullIdent imp =
-                FullIdent.createFullIdent(
-                    ast.getLastChild().getPreviousSibling());
-            staticImports.stream().filter(full -> imp.getText().equals(full.getText()))
-            .forEach(full -> log(ast, MSG_DUPLICATE, full.getLineNo(), imp.getText()));
+		imports.add(imp);
+	}
+	else {
+		// Check for a duplicate static import
+		final FullIdent imp =
+			FullIdent.createFullIdent(
+				ast.getLastChild().getPreviousSibling());
+		staticImports.stream().filter(full->imp.getText().equals(full.getText()))
+		.forEach(full->log(ast, MSG_DUPLICATE, full.getLineNo(), imp.getText()));
 
-            staticImports.add(imp);
-        }
-    }
+		staticImports.add(imp);
+	}
+}
 
-    /**
-     * Determines if an import statement is for types from a specified package.
-     * @param importName the import name
-     * @param pkg the package name
-     * @return whether from the package
-     */
-    private static boolean isFromPackage(String importName, String pkg) {
-        // imports from unnamed package are not allowed:
-        // https://docs.oracle.com/javase/specs/jls/se7/html/jls-7.html#jls-7.5
-        // So '.' must be present in member name and we are not checking for it
-        final int index = importName.lastIndexOf('.');
-        final String front = importName.substring(0, index);
-        return front.equals(pkg);
-    }
+/**
+ * Determines if an import statement is for types from a specified package.
+ * @param importName the import name
+ * @param pkg the package name
+ * @return whether from the package
+ */
+private static boolean isFromPackage(String importName, String pkg) {
+	// imports from unnamed package are not allowed:
+	// https://docs.oracle.com/javase/specs/jls/se7/html/jls-7.html#jls-7.5
+	// So '.' must be present in member name and we are not checking for it
+	final int index = importName.lastIndexOf('.');
+	final String front = importName.substring(0, index);
+	return front.equals(pkg);
+}
 
 }

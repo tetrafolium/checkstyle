@@ -33,52 +33,52 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  */
 @StatelessCheck
 public abstract class AbstractNameCheck
-    extends AbstractCheck {
+	extends AbstractCheck {
 
-    /**
-     * Message key for invalid pattern violation.
-     */
-    public static final String MSG_INVALID_PATTERN = "name.invalidPattern";
+/**
+ * Message key for invalid pattern violation.
+ */
+public static final String MSG_INVALID_PATTERN = "name.invalidPattern";
 
-    /** The regexp to match against. */
-    private Pattern format;
+/** The regexp to match against. */
+private Pattern format;
 
-    /**
-     * Creates a new {@code AbstractNameCheck} instance.
-     * @param format format to check with
-     */
-    protected AbstractNameCheck(String format) {
-        this.format = CommonUtil.createPattern(format);
-    }
+/**
+ * Creates a new {@code AbstractNameCheck} instance.
+ * @param format format to check with
+ */
+protected AbstractNameCheck(String format) {
+	this.format = CommonUtil.createPattern(format);
+}
 
-    /**
-     * Decides whether the name of an AST should be checked against
-     * the format regexp.
-     * @param ast the AST to check.
-     * @return true if the IDENT subnode of ast should be checked against
-     *     the format regexp.
-     */
-    protected abstract boolean mustCheckName(DetailAST ast);
+/**
+ * Decides whether the name of an AST should be checked against
+ * the format regexp.
+ * @param ast the AST to check.
+ * @return true if the IDENT subnode of ast should be checked against
+ *     the format regexp.
+ */
+protected abstract boolean mustCheckName(DetailAST ast);
 
-    /**
-     * Set the format for the specified regular expression.
-     * @param pattern the new pattern
-     */
-    public final void setFormat(Pattern pattern) {
-        format = pattern;
-    }
+/**
+ * Set the format for the specified regular expression.
+ * @param pattern the new pattern
+ */
+public final void setFormat(Pattern pattern) {
+	format = pattern;
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        if (mustCheckName(ast)) {
-            final DetailAST nameAST = ast.findFirstToken(TokenTypes.IDENT);
-            if (!format.matcher(nameAST.getText()).find()) {
-                log(nameAST,
-                    MSG_INVALID_PATTERN,
-                    nameAST.getText(),
-                    format.pattern());
-            }
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	if (mustCheckName(ast)) {
+		final DetailAST nameAST = ast.findFirstToken(TokenTypes.IDENT);
+		if (!format.matcher(nameAST.getText()).find()) {
+			log(nameAST,
+			    MSG_INVALID_PATTERN,
+			    nameAST.getText(),
+			    format.pattern());
+		}
+	}
+}
 
 }

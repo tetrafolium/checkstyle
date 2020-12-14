@@ -62,57 +62,57 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  */
 @StatelessCheck
 public class TodoCommentCheck
-    extends AbstractCheck {
+	extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "todo.match";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "todo.match";
 
-    /**
-     * Specify pattern to match comments against.
-     */
-    private Pattern format = Pattern.compile("TODO:");
+/**
+ * Specify pattern to match comments against.
+ */
+private Pattern format = Pattern.compile("TODO:");
 
-    @Override
-    public boolean isCommentNodesRequired() {
-        return true;
-    }
+@Override
+public boolean isCommentNodesRequired() {
+	return true;
+}
 
-    /**
-     * Setter to specify pattern to match comments against.
-     * @param pattern
-     *        pattern of 'todo' comment.
-     */
-    public void setFormat(Pattern pattern) {
-        format = pattern;
-    }
+/**
+ * Setter to specify pattern to match comments against.
+ * @param pattern
+ *        pattern of 'todo' comment.
+ */
+public void setFormat(Pattern pattern) {
+	format = pattern;
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.COMMENT_CONTENT };
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.COMMENT_CONTENT };
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        final String[] lines = ast.getText().split("\n");
+@Override
+public void visitToken(DetailAST ast) {
+	final String[] lines = ast.getText().split("\n");
 
-        for (int i = 0; i < lines.length; i++) {
-            if (format.matcher(lines[i]).find()) {
-                log(ast.getLineNo() + i, MSG_KEY, format.pattern());
-            }
-        }
-    }
+	for (int i = 0; i < lines.length; i++) {
+		if (format.matcher(lines[i]).find()) {
+			log(ast.getLineNo() + i, MSG_KEY, format.pattern());
+		}
+	}
+}
 
 }

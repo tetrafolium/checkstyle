@@ -29,30 +29,30 @@ import com.puppycrawl.tools.checkstyle.checks.ArrayTypeStyleCheck;
 
 public class ArrayTypeStyleTest extends AbstractGoogleModuleTestSupport {
 
-    @Override
-    protected String getPackageLocation() {
-        return "com/google/checkstyle/test/chapter4formatting/rule4832nocstylearray";
-    }
+@Override
+protected String getPackageLocation() {
+	return "com/google/checkstyle/test/chapter4formatting/rule4832nocstylearray";
+}
 
-    @Test
-    public void testArrayTypeStyle() throws Exception {
-        final String[] expected = {
-            "9:23: " + getCheckMessage(ArrayTypeStyleCheck.class, MSG_KEY),
-            "15:44: " + getCheckMessage(ArrayTypeStyleCheck.class, MSG_KEY),
-            "21:20: " + getCheckMessage(ArrayTypeStyleCheck.class, MSG_KEY),
-            "22:23: " + getCheckMessage(ArrayTypeStyleCheck.class, MSG_KEY),
-            "41:33: " + getCheckMessage(ArrayTypeStyleCheck.class, MSG_KEY),
-            "46:36: " + getCheckMessage(ArrayTypeStyleCheck.class, MSG_KEY),
-            "52:27: " + getCheckMessage(ArrayTypeStyleCheck.class, MSG_KEY),
-            "62:16: " + getCheckMessage(ArrayTypeStyleCheck.class, MSG_KEY),
-            "63:19: " + getCheckMessage(ArrayTypeStyleCheck.class, MSG_KEY),
-        };
+@Test
+public void testArrayTypeStyle() throws Exception {
+	final String[] expected = {
+		"9:23: " + getCheckMessage(ArrayTypeStyleCheck.class, MSG_KEY),
+		"15:44: " + getCheckMessage(ArrayTypeStyleCheck.class, MSG_KEY),
+		"21:20: " + getCheckMessage(ArrayTypeStyleCheck.class, MSG_KEY),
+		"22:23: " + getCheckMessage(ArrayTypeStyleCheck.class, MSG_KEY),
+		"41:33: " + getCheckMessage(ArrayTypeStyleCheck.class, MSG_KEY),
+		"46:36: " + getCheckMessage(ArrayTypeStyleCheck.class, MSG_KEY),
+		"52:27: " + getCheckMessage(ArrayTypeStyleCheck.class, MSG_KEY),
+		"62:16: " + getCheckMessage(ArrayTypeStyleCheck.class, MSG_KEY),
+		"63:19: " + getCheckMessage(ArrayTypeStyleCheck.class, MSG_KEY),
+	};
 
-        final Configuration checkConfig = getModuleConfig("ArrayTypeStyle");
-        final String filePath = getPath("InputArrayTypeStyle.java");
+	final Configuration checkConfig = getModuleConfig("ArrayTypeStyle");
+	final String filePath = getPath("InputArrayTypeStyle.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
 }

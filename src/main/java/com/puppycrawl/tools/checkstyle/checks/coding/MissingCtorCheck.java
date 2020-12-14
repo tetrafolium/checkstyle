@@ -41,35 +41,35 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 @StatelessCheck
 public class MissingCtorCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "missing.ctor";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "missing.ctor";
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.CLASS_DEF};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.CLASS_DEF};
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        final DetailAST modifiers = ast.findFirstToken(TokenTypes.MODIFIERS);
-        if (modifiers.findFirstToken(TokenTypes.ABSTRACT) == null
-                && ast.findFirstToken(TokenTypes.OBJBLOCK)
-                .findFirstToken(TokenTypes.CTOR_DEF) == null) {
-            log(ast.getLineNo(), MSG_KEY);
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	final DetailAST modifiers = ast.findFirstToken(TokenTypes.MODIFIERS);
+	if (modifiers.findFirstToken(TokenTypes.ABSTRACT) == null
+	    && ast.findFirstToken(TokenTypes.OBJBLOCK)
+	    .findFirstToken(TokenTypes.CTOR_DEF) == null) {
+		log(ast.getLineNo(), MSG_KEY);
+	}
+}
 
 }

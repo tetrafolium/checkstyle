@@ -30,52 +30,52 @@ import com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck;
 
 public class XpathRegressionUnusedImportsTest extends AbstractXpathTestSupport {
 
-    private final String checkName = UnusedImportsCheck.class.getSimpleName();
+private final String checkName = UnusedImportsCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionUnusedImportsOne.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionUnusedImportsOne.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(UnusedImportsCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(UnusedImportsCheck.class);
 
-        final String[] expectedViolation = {
-            "3:8: " + getCheckMessage(UnusedImportsCheck.class,
-                                      UnusedImportsCheck.MSG_KEY, "java.util.List"),
-        };
+	final String[] expectedViolation = {
+		"3:8: " + getCheckMessage(UnusedImportsCheck.class,
+		                          UnusedImportsCheck.MSG_KEY, "java.util.List"),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/IMPORT/DOT[./IDENT[@text='List']]/DOT/IDENT[@text='java']");
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/IMPORT/DOT[./IDENT[@text='List']]/DOT/IDENT[@text='java']");
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionUnusedImportsTwo.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionUnusedImportsTwo.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(UnusedImportsCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(UnusedImportsCheck.class);
 
-        final String[] expectedViolation = {
-            "3:15: " + getCheckMessage(UnusedImportsCheck.class,
-                                       UnusedImportsCheck.MSG_KEY, "java.util.Map.Entry"),
-        };
+	final String[] expectedViolation = {
+		"3:15: " + getCheckMessage(UnusedImportsCheck.class,
+		                           UnusedImportsCheck.MSG_KEY, "java.util.Map.Entry"),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/STATIC_IMPORT/DOT[./IDENT[@text='Entry']]/DOT[./IDENT[@text='Map']]"
-                    + "/DOT/IDENT[@text='java']");
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/STATIC_IMPORT/DOT[./IDENT[@text='Entry']]/DOT[./IDENT[@text='Map']]"
+		+ "/DOT/IDENT[@text='java']");
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
 }

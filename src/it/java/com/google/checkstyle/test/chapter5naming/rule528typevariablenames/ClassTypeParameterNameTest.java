@@ -28,29 +28,29 @@ import com.puppycrawl.tools.checkstyle.api.Configuration;
 
 public class ClassTypeParameterNameTest extends AbstractGoogleModuleTestSupport {
 
-    private static final String MSG_KEY = "name.invalidPattern";
+private static final String MSG_KEY = "name.invalidPattern";
 
-    @Override
-    protected String getPackageLocation() {
-        return "com/google/checkstyle/test/chapter5naming/rule528typevariablenames";
-    }
+@Override
+protected String getPackageLocation() {
+	return "com/google/checkstyle/test/chapter5naming/rule528typevariablenames";
+}
 
-    @Test
-    public void testClassDefault() throws Exception {
-        final Configuration configuration = getModuleConfig("ClassTypeParameterName");
-        final String format = configuration.getAttribute("format");
-        final Map<String, String> messages = configuration.getMessages();
+@Test
+public void testClassDefault() throws Exception {
+	final Configuration configuration = getModuleConfig("ClassTypeParameterName");
+	final String format = configuration.getAttribute("format");
+	final Map<String, String> messages = configuration.getMessages();
 
-        final String[] expected = {
-            "5:36: " + getCheckMessage(messages, MSG_KEY, "t", format),
-            "13:14: " + getCheckMessage(messages, MSG_KEY, "foo", format),
-            "27:24: " + getCheckMessage(messages, MSG_KEY, "$foo", format),
-        };
+	final String[] expected = {
+		"5:36: " + getCheckMessage(messages, MSG_KEY, "t", format),
+		"13:14: " + getCheckMessage(messages, MSG_KEY, "foo", format),
+		"27:24: " + getCheckMessage(messages, MSG_KEY, "$foo", format),
+	};
 
-        final String filePath = getPath("InputClassTypeParameterName.java");
+	final String filePath = getPath("InputClassTypeParameterName.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(configuration, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(configuration, filePath, expected, warnList);
+}
 
 }

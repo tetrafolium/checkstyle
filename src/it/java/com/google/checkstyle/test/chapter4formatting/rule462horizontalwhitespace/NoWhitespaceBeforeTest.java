@@ -27,26 +27,26 @@ import com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceBeforeCheck
 
 public class NoWhitespaceBeforeTest extends AbstractGoogleModuleTestSupport {
 
-    @Override
-    protected String getPackageLocation() {
-        return "com/google/checkstyle/test/chapter4formatting/rule462horizontalwhitespace";
-    }
+@Override
+protected String getPackageLocation() {
+	return "com/google/checkstyle/test/chapter4formatting/rule462horizontalwhitespace";
+}
 
-    @Test
-    public void testEmptyForLoop() throws Exception {
-        final Class<NoWhitespaceBeforeCheck> clazz = NoWhitespaceBeforeCheck.class;
-        final String messageKeyPreceded = "ws.preceded";
+@Test
+public void testEmptyForLoop() throws Exception {
+	final Class<NoWhitespaceBeforeCheck> clazz = NoWhitespaceBeforeCheck.class;
+	final String messageKeyPreceded = "ws.preceded";
 
-        final String[] expected = {
-            "12:24: " + getCheckMessage(clazz, messageKeyPreceded, ";"),
-            "18:32: " + getCheckMessage(clazz, messageKeyPreceded, ";"),
-        };
-        final Configuration checkConfig = getModuleConfig("NoWhitespaceBefore");
-        final String filePath = getPath("InputNoWhitespaceBeforeEmptyForLoop.java");
+	final String[] expected = {
+		"12:24: " + getCheckMessage(clazz, messageKeyPreceded, ";"),
+		"18:32: " + getCheckMessage(clazz, messageKeyPreceded, ";"),
+	};
+	final Configuration checkConfig = getModuleConfig("NoWhitespaceBefore");
+	final String filePath = getPath("InputNoWhitespaceBeforeEmptyForLoop.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
 }
 

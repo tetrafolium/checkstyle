@@ -54,115 +54,115 @@ import com.puppycrawl.tools.checkstyle.utils.CheckUtil;
  */
 @FileStatefulCheck
 public class EqualsHashCodeCheck
-    extends AbstractCheck {
+	extends AbstractCheck {
 
-    // implementation note: we have to use the following members to
-    // keep track of definitions in different inner classes
+// implementation note: we have to use the following members to
+// keep track of definitions in different inner classes
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY_HASHCODE = "equals.noHashCode";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY_HASHCODE = "equals.noHashCode";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY_EQUALS = "equals.noEquals";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY_EQUALS = "equals.noEquals";
 
-    /** Maps OBJ_BLOCK to the method definition of equals(). */
-    private final Map<DetailAST, DetailAST> objBlockWithEquals = new HashMap<>();
+/** Maps OBJ_BLOCK to the method definition of equals(). */
+private final Map<DetailAST, DetailAST> objBlockWithEquals = new HashMap<>();
 
-    /** Maps OBJ_BLOCKs to the method definition of hashCode(). */
-    private final Map<DetailAST, DetailAST> objBlockWithHashCode = new HashMap<>();
+/** Maps OBJ_BLOCKs to the method definition of hashCode(). */
+private final Map<DetailAST, DetailAST> objBlockWithHashCode = new HashMap<>();
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.METHOD_DEF};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.METHOD_DEF};
+}
 
-    @Override
-    public void beginTree(DetailAST rootAST) {
-        objBlockWithEquals.clear();
-        objBlockWithHashCode.clear();
-    }
+@Override
+public void beginTree(DetailAST rootAST) {
+	objBlockWithEquals.clear();
+	objBlockWithHashCode.clear();
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        if (isEqualsMethod(ast)) {
-            objBlockWithEquals.put(ast.getParent(), ast);
-        }
-        else if (isHashCodeMethod(ast)) {
-            objBlockWithHashCode.put(ast.getParent(), ast);
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	if (isEqualsMethod(ast)) {
+		objBlockWithEquals.put(ast.getParent(), ast);
+	}
+	else if (isHashCodeMethod(ast)) {
+		objBlockWithHashCode.put(ast.getParent(), ast);
+	}
+}
 
-    /**
-     * Determines if an AST is a valid Equals method implementation.
-     *
-     * @param ast the AST to check
-     * @return true if the {code ast} is a Equals method.
-     */
-    private static boolean isEqualsMethod(DetailAST ast) {
-        final DetailAST modifiers = ast.getFirstChild();
-        final DetailAST parameters = ast.findFirstToken(TokenTypes.PARAMETERS);
+/**
+ * Determines if an AST is a valid Equals method implementation.
+ *
+ * @param ast the AST to check
+ * @return true if the {code ast} is a Equals method.
+ */
+private static boolean isEqualsMethod(DetailAST ast) {
+	final DetailAST modifiers = ast.getFirstChild();
+	final DetailAST parameters = ast.findFirstToken(TokenTypes.PARAMETERS);
 
-        return CheckUtil.isEqualsMethod(ast)
-               && isObjectParam(parameters.getFirstChild())
-               && (ast.findFirstToken(TokenTypes.SLIST) != null
-                   || modifiers.findFirstToken(TokenTypes.LITERAL_NATIVE) != null);
-    }
+	return CheckUtil.isEqualsMethod(ast)
+	       && isObjectParam(parameters.getFirstChild())
+	       && (ast.findFirstToken(TokenTypes.SLIST) != null
+	           || modifiers.findFirstToken(TokenTypes.LITERAL_NATIVE) != null);
+}
 
-    /**
-     * Determines if an AST is a valid HashCode method implementation.
-     *
-     * @param ast the AST to check
-     * @return true if the {code ast} is a HashCode method.
-     */
-    private static boolean isHashCodeMethod(DetailAST ast) {
-        final DetailAST modifiers = ast.getFirstChild();
-        final DetailAST methodName = ast.findFirstToken(TokenTypes.IDENT);
-        final DetailAST parameters = ast.findFirstToken(TokenTypes.PARAMETERS);
+/**
+ * Determines if an AST is a valid HashCode method implementation.
+ *
+ * @param ast the AST to check
+ * @return true if the {code ast} is a HashCode method.
+ */
+private static boolean isHashCodeMethod(DetailAST ast) {
+	final DetailAST modifiers = ast.getFirstChild();
+	final DetailAST methodName = ast.findFirstToken(TokenTypes.IDENT);
+	final DetailAST parameters = ast.findFirstToken(TokenTypes.PARAMETERS);
 
-        return "hashCode".equals(methodName.getText())
-               && parameters.getFirstChild() == null
-               && (ast.findFirstToken(TokenTypes.SLIST) != null
-                   || modifiers.findFirstToken(TokenTypes.LITERAL_NATIVE) != null);
-    }
+	return "hashCode".equals(methodName.getText())
+	       && parameters.getFirstChild() == null
+	       && (ast.findFirstToken(TokenTypes.SLIST) != null
+	           || modifiers.findFirstToken(TokenTypes.LITERAL_NATIVE) != null);
+}
 
-    /**
-     * Determines if an AST is a formal param of type Object.
-     * @param paramNode the AST to check
-     * @return true if firstChild is a parameter of an Object type.
-     */
-    private static boolean isObjectParam(DetailAST paramNode) {
-        final DetailAST typeNode = paramNode.findFirstToken(TokenTypes.TYPE);
-        final FullIdent fullIdent = FullIdent.createFullIdentBelow(typeNode);
-        final String name = fullIdent.getText();
-        return "Object".equals(name) || "java.lang.Object".equals(name);
-    }
+/**
+ * Determines if an AST is a formal param of type Object.
+ * @param paramNode the AST to check
+ * @return true if firstChild is a parameter of an Object type.
+ */
+private static boolean isObjectParam(DetailAST paramNode) {
+	final DetailAST typeNode = paramNode.findFirstToken(TokenTypes.TYPE);
+	final FullIdent fullIdent = FullIdent.createFullIdentBelow(typeNode);
+	final String name = fullIdent.getText();
+	return "Object".equals(name) || "java.lang.Object".equals(name);
+}
 
-    @Override
-    public void finishTree(DetailAST rootAST) {
-        objBlockWithEquals
-        .entrySet().stream().filter(detailASTDetailASTEntry -> {
-            return objBlockWithHashCode.remove(detailASTDetailASTEntry.getKey()) == null;
-        }).forEach(detailASTDetailASTEntry -> {
-            final DetailAST equalsAST = detailASTDetailASTEntry.getValue();
-            log(equalsAST, MSG_KEY_HASHCODE);
-        });
-        objBlockWithHashCode.forEach((key, equalsAST) -> log(equalsAST, MSG_KEY_EQUALS));
-    }
+@Override
+public void finishTree(DetailAST rootAST) {
+	objBlockWithEquals
+	.entrySet().stream().filter(detailASTDetailASTEntry->{
+			return objBlockWithHashCode.remove(detailASTDetailASTEntry.getKey()) == null;
+		}).forEach(detailASTDetailASTEntry->{
+			final DetailAST equalsAST = detailASTDetailASTEntry.getValue();
+			log(equalsAST, MSG_KEY_HASHCODE);
+		});
+	objBlockWithHashCode.forEach((key, equalsAST)->log(equalsAST, MSG_KEY_EQUALS));
+}
 
 }

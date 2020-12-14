@@ -137,38 +137,38 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 @StatelessCheck
 public class ArrayTrailingCommaCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "array.trailing.comma";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "array.trailing.comma";
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.ARRAY_INIT};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.ARRAY_INIT};
+}
 
-    @Override
-    public void visitToken(DetailAST arrayInit) {
-        final DetailAST rcurly = arrayInit.findFirstToken(TokenTypes.RCURLY);
-        final DetailAST previousSibling = rcurly.getPreviousSibling();
+@Override
+public void visitToken(DetailAST arrayInit) {
+	final DetailAST rcurly = arrayInit.findFirstToken(TokenTypes.RCURLY);
+	final DetailAST previousSibling = rcurly.getPreviousSibling();
 
-        if (arrayInit.getChildCount() != 1
-                && !TokenUtil.areOnSameLine(rcurly, previousSibling)
-                && !TokenUtil.areOnSameLine(arrayInit, previousSibling)
-                && previousSibling.getType() != TokenTypes.COMMA) {
-            log(rcurly.getLineNo(), MSG_KEY);
-        }
-    }
+	if (arrayInit.getChildCount() != 1
+	    && !TokenUtil.areOnSameLine(rcurly, previousSibling)
+	    && !TokenUtil.areOnSameLine(arrayInit, previousSibling)
+	    && previousSibling.getType() != TokenTypes.COMMA) {
+		log(rcurly.getLineNo(), MSG_KEY);
+	}
+}
 
 }

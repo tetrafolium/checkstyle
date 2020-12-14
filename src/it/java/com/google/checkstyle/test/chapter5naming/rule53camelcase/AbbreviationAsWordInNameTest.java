@@ -29,37 +29,37 @@ import com.puppycrawl.tools.checkstyle.checks.naming.AbbreviationAsWordInNameChe
 
 public class AbbreviationAsWordInNameTest extends AbstractGoogleModuleTestSupport {
 
-    private static final String MSG_KEY = "abbreviation.as.word";
-    private final Class<AbbreviationAsWordInNameCheck> clazz = AbbreviationAsWordInNameCheck.class;
+private static final String MSG_KEY = "abbreviation.as.word";
+private final Class<AbbreviationAsWordInNameCheck> clazz = AbbreviationAsWordInNameCheck.class;
 
-    @Override
-    protected String getPackageLocation() {
-        return "com/google/checkstyle/test/chapter5naming/rule53camelcase";
-    }
+@Override
+protected String getPackageLocation() {
+	return "com/google/checkstyle/test/chapter5naming/rule53camelcase";
+}
 
-    @Test
-    public void testAbbreviationAsWordInName() throws Exception {
-        final int maxCapitalCount = 2;
+@Test
+public void testAbbreviationAsWordInName() throws Exception {
+	final int maxCapitalCount = 2;
 
-        final String[] expected = {
-            "53:13: " + getWarningMessage("supportsIPv6OnIOS", maxCapitalCount),
-            "55:10: " + getWarningMessage("XMLHTTPRequest", maxCapitalCount),
-            "61:17: " + getWarningMessage("supportsIPv6OnIOS", maxCapitalCount),
-            "63:14: " + getWarningMessage("XMLHTTPRequest", maxCapitalCount),
-            "71:21: " + getWarningMessage("supportsIPv6OnIOS", maxCapitalCount),
-            "73:18: " + getWarningMessage("XMLHTTPRequest", maxCapitalCount),
-        };
+	final String[] expected = {
+		"53:13: " + getWarningMessage("supportsIPv6OnIOS", maxCapitalCount),
+		"55:10: " + getWarningMessage("XMLHTTPRequest", maxCapitalCount),
+		"61:17: " + getWarningMessage("supportsIPv6OnIOS", maxCapitalCount),
+		"63:14: " + getWarningMessage("XMLHTTPRequest", maxCapitalCount),
+		"71:21: " + getWarningMessage("supportsIPv6OnIOS", maxCapitalCount),
+		"73:18: " + getWarningMessage("XMLHTTPRequest", maxCapitalCount),
+	};
 
-        final String filePath = getPath("InputAbbreviationAsWordInTypeNameCheck.java");
+	final String filePath = getPath("InputAbbreviationAsWordInTypeNameCheck.java");
 
-        final Configuration checkConfig = getModuleConfig("AbbreviationAsWordInName");
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Configuration checkConfig = getModuleConfig("AbbreviationAsWordInName");
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
-    private String getWarningMessage(String typeName, int expectedCapitalCount)
-    throws IOException {
-        return getCheckMessage(clazz, MSG_KEY, typeName, expectedCapitalCount);
-    }
+private String getWarningMessage(String typeName, int expectedCapitalCount)
+throws IOException {
+	return getCheckMessage(clazz, MSG_KEY, typeName, expectedCapitalCount);
+}
 
 }

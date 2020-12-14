@@ -86,84 +86,84 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 @FileStatefulCheck
 public class OneTopLevelClassCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "one.top.level.class";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "one.top.level.class";
 
-    /**
-     * True if a java source file contains a type
-     * with a public access level modifier.
-     */
-    private boolean publicTypeFound;
+/**
+ * True if a java source file contains a type
+ * with a public access level modifier.
+ */
+private boolean publicTypeFound;
 
-    /** Mapping between type names and line numbers of the type declarations.*/
-    private final SortedMap<Integer, String> lineNumberTypeMap = new TreeMap<>();
+/** Mapping between type names and line numbers of the type declarations.*/
+private final SortedMap<Integer, String> lineNumberTypeMap = new TreeMap<>();
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    // ZERO tokens as Check do Traverse of Tree himself, he does not need to subscribed to Tokens
-    @Override
-    public int[] getRequiredTokens() {
-        return CommonUtil.EMPTY_INT_ARRAY;
-    }
+// ZERO tokens as Check do Traverse of Tree himself, he does not need to subscribed to Tokens
+@Override
+public int[] getRequiredTokens() {
+	return CommonUtil.EMPTY_INT_ARRAY;
+}
 
-    @Override
-    public void beginTree(DetailAST rootAST) {
-        publicTypeFound = false;
-        lineNumberTypeMap.clear();
+@Override
+public void beginTree(DetailAST rootAST) {
+	publicTypeFound = false;
+	lineNumberTypeMap.clear();
 
-        DetailAST currentNode = rootAST;
-        while (currentNode != null) {
-            if (currentNode.getType() == TokenTypes.CLASS_DEF
-                    || currentNode.getType() == TokenTypes.ENUM_DEF
-                    || currentNode.getType() == TokenTypes.INTERFACE_DEF) {
-                if (isPublic(currentNode)) {
-                    publicTypeFound = true;
-                }
-                else {
-                    final String typeName = currentNode
-                                            .findFirstToken(TokenTypes.IDENT).getText();
-                    lineNumberTypeMap.put(currentNode.getLineNo(), typeName);
-                }
-            }
-            currentNode = currentNode.getNextSibling();
-        }
-    }
+	DetailAST currentNode = rootAST;
+	while (currentNode != null) {
+		if (currentNode.getType() == TokenTypes.CLASS_DEF
+		    || currentNode.getType() == TokenTypes.ENUM_DEF
+		    || currentNode.getType() == TokenTypes.INTERFACE_DEF) {
+			if (isPublic(currentNode)) {
+				publicTypeFound = true;
+			}
+			else {
+				final String typeName = currentNode
+				                        .findFirstToken(TokenTypes.IDENT).getText();
+				lineNumberTypeMap.put(currentNode.getLineNo(), typeName);
+			}
+		}
+		currentNode = currentNode.getNextSibling();
+	}
+}
 
-    @Override
-    public void finishTree(DetailAST rootAST) {
-        if (!lineNumberTypeMap.isEmpty()) {
-            if (!publicTypeFound) {
-                // skip first top-level type.
-                lineNumberTypeMap.remove(lineNumberTypeMap.firstKey());
-            }
+@Override
+public void finishTree(DetailAST rootAST) {
+	if (!lineNumberTypeMap.isEmpty()) {
+		if (!publicTypeFound) {
+			// skip first top-level type.
+			lineNumberTypeMap.remove(lineNumberTypeMap.firstKey());
+		}
 
-            for (Map.Entry<Integer, String> entry
-                    : lineNumberTypeMap.entrySet()) {
-                log(entry.getKey(), MSG_KEY, entry.getValue());
-            }
-        }
-    }
+		for (Map.Entry<Integer, String> entry
+		     : lineNumberTypeMap.entrySet()) {
+			log(entry.getKey(), MSG_KEY, entry.getValue());
+		}
+	}
+}
 
-    /**
-     * Checks if a type is public.
-     * @param typeDef type definition node.
-     * @return true if a type has a public access level modifier.
-     */
-    private static boolean isPublic(DetailAST typeDef) {
-        final DetailAST modifiers =
-            typeDef.findFirstToken(TokenTypes.MODIFIERS);
-        return modifiers.findFirstToken(TokenTypes.LITERAL_PUBLIC) != null;
-    }
+/**
+ * Checks if a type is public.
+ * @param typeDef type definition node.
+ * @return true if a type has a public access level modifier.
+ */
+private static boolean isPublic(DetailAST typeDef) {
+	final DetailAST modifiers =
+		typeDef.findFirstToken(TokenTypes.MODIFIERS);
+	return modifiers.findFirstToken(TokenTypes.LITERAL_PUBLIC) != null;
+}
 
 }

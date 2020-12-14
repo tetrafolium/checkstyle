@@ -27,47 +27,47 @@ import com.puppycrawl.tools.checkstyle.checks.coding.NoFinalizerCheck;
 
 public class NoFinalizerTest extends AbstractGoogleModuleTestSupport {
 
-    @Override
-    protected String getPackageLocation() {
-        return "com/google/checkstyle/test/chapter6programpractice/rule64finalizers";
-    }
+@Override
+protected String getPackageLocation() {
+	return "com/google/checkstyle/test/chapter6programpractice/rule64finalizers";
+}
 
-    @Test
-    public void testNoFinalizerBasic() throws Exception {
-        final String msg = getCheckMessage(NoFinalizerCheck.class, "avoid.finalizer.method");
+@Test
+public void testNoFinalizerBasic() throws Exception {
+	final String msg = getCheckMessage(NoFinalizerCheck.class, "avoid.finalizer.method");
 
-        final String[] expected = {
-            "5: " + msg,
-        };
+	final String[] expected = {
+		"5: " + msg,
+	};
 
-        final Configuration checkConfig = getModuleConfig("NoFinalizer");
-        final String filePath = getPath("InputNoFinalizer.java");
+	final Configuration checkConfig = getModuleConfig("NoFinalizer");
+	final String filePath = getPath("InputNoFinalizer.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
-    @Test
-    public void testNoFinalizerExtended() throws Exception {
-        final String msg = getCheckMessage(NoFinalizerCheck.class, "avoid.finalizer.method");
+@Test
+public void testNoFinalizerExtended() throws Exception {
+	final String msg = getCheckMessage(NoFinalizerCheck.class, "avoid.finalizer.method");
 
-        final String[] expected = {
-            "9: " + msg,
-            "21: " + msg,
-            "33: " + msg,
-            "45: " + msg,
-            "57: " + msg,
-            "69: " + msg,
-            "79: " + msg,
-            "119: " + msg,
-            "136: " + msg,
-        };
+	final String[] expected = {
+		"9: " + msg,
+		"21: " + msg,
+		"33: " + msg,
+		"45: " + msg,
+		"57: " + msg,
+		"69: " + msg,
+		"79: " + msg,
+		"119: " + msg,
+		"136: " + msg,
+	};
 
-        final Configuration checkConfig = getModuleConfig("NoFinalizer");
-        final String filePath = getPath("InputNoFinalizeExtend.java");
+	final Configuration checkConfig = getModuleConfig("NoFinalizer");
+	final String filePath = getPath("InputNoFinalizeExtend.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
 }

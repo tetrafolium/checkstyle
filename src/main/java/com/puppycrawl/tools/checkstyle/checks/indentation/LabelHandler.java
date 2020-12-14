@@ -28,49 +28,49 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  */
 public class LabelHandler extends AbstractExpressionHandler {
 
-    /**
-     * The types of expressions that are children of a label.
-     */
-    private static final int[] LABEL_CHILDREN = {
-        TokenTypes.IDENT,
-    };
+/**
+ * The types of expressions that are children of a label.
+ */
+private static final int[] LABEL_CHILDREN = {
+	TokenTypes.IDENT,
+};
 
-    /**
-     * Construct an instance of this handler with the given indentation check,
-     * abstract syntax tree, and parent handler.
-     *
-     * @param indentCheck   the indentation check
-     * @param expr          the abstract syntax tree
-     * @param parent        the parent handler
-     */
-    public LabelHandler(IndentationCheck indentCheck,
-                        DetailAST expr, AbstractExpressionHandler parent) {
-        super(indentCheck, "label", expr, parent);
-    }
+/**
+ * Construct an instance of this handler with the given indentation check,
+ * abstract syntax tree, and parent handler.
+ *
+ * @param indentCheck   the indentation check
+ * @param expr          the abstract syntax tree
+ * @param parent        the parent handler
+ */
+public LabelHandler(IndentationCheck indentCheck,
+                    DetailAST expr, AbstractExpressionHandler parent) {
+	super(indentCheck, "label", expr, parent);
+}
 
-    @Override
-    protected IndentLevel getIndentImpl() {
-        final IndentLevel level = new IndentLevel(super.getIndentImpl(), -getBasicOffset());
-        return IndentLevel.addAcceptable(level, super.getIndentImpl());
-    }
+@Override
+protected IndentLevel getIndentImpl() {
+	final IndentLevel level = new IndentLevel(super.getIndentImpl(), -getBasicOffset());
+	return IndentLevel.addAcceptable(level, super.getIndentImpl());
+}
 
-    /**
-     * Check the indentation of the label.
-     */
-    private void checkLabel() {
-        checkChildren(getMainAst(), LABEL_CHILDREN, getIndent(), true, false);
-    }
+/**
+ * Check the indentation of the label.
+ */
+private void checkLabel() {
+	checkChildren(getMainAst(), LABEL_CHILDREN, getIndent(), true, false);
+}
 
-    @Override
-    public void checkIndentation() {
-        checkLabel();
-        // need to check children (like 'block' parents do)
-        final DetailAST parent = getMainAst().getFirstChild().getNextSibling();
+@Override
+public void checkIndentation() {
+	checkLabel();
+	// need to check children (like 'block' parents do)
+	final DetailAST parent = getMainAst().getFirstChild().getNextSibling();
 
-        final IndentLevel expected =
-            new IndentLevel(getIndent(), getBasicOffset());
+	final IndentLevel expected =
+		new IndentLevel(getIndent(), getBasicOffset());
 
-        checkExpressionSubtree(parent, expected, true, false);
-    }
+	checkExpressionSubtree(parent, expected, true, false);
+}
 
 }

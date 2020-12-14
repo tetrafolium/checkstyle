@@ -25,50 +25,50 @@ package com.puppycrawl.tools.checkstyle.checks.blocks;
  */
 public enum LeftCurlyOption {
 
-    /**
-     * Represents the policy for placing the brace at the end of line. For
-     * example:
-     * <pre>
-     * if (condition) {
-     *     ...
-     * </pre>
-     **/
-    EOL,
+	/**
+	 * Represents the policy for placing the brace at the end of line. For
+	 * example:
+	 * <pre>
+	 * if (condition) {
+	 *     ...
+	 * </pre>
+	 **/
+	EOL,
 
-    /**
-     * Represents the policy that if the brace will fit on the first line of
-     * the statement, then apply {@code EOL} rule.
-     * Otherwise apply the {@code NL} rule.
-     * {@code NLOW} is a mnemonic for "new line on wrap".
-     *
-     * <p>For the example above Checkstyle will enforce:
-     *
-     * <pre>
-     * if (condition) {
-     *     ...
-     * </pre>
-     *
-     * <p>But for a statement spanning multiple lines, Checkstyle will enforce:
-     *
-     * <pre>
-     * if (condition1 &amp;&amp; condition2 &amp;&amp;
-     *     condition3 &amp;&amp; condition4)
-     * {
-     *     ...
-     * </pre>
-     *
-     **/
-    NLOW,
+	/**
+	 * Represents the policy that if the brace will fit on the first line of
+	 * the statement, then apply {@code EOL} rule.
+	 * Otherwise apply the {@code NL} rule.
+	 * {@code NLOW} is a mnemonic for "new line on wrap".
+	 *
+	 * <p>For the example above Checkstyle will enforce:
+	 *
+	 * <pre>
+	 * if (condition) {
+	 *     ...
+	 * </pre>
+	 *
+	 * <p>But for a statement spanning multiple lines, Checkstyle will enforce:
+	 *
+	 * <pre>
+	 * if (condition1 &amp;&amp; condition2 &amp;&amp;
+	 *     condition3 &amp;&amp; condition4)
+	 * {
+	 *     ...
+	 * </pre>
+	 *
+	 **/
+	NLOW,
 
-    /**
-     * Represents the policy that the brace must always be on a new line. For
-     * example:
-     * <pre>
-     * if (condition)
-     * {
-     *     ...
-     * </pre>
-     */
-    NL,
+	/**
+	 * Represents the policy that the brace must always be on a new line. For
+	 * example:
+	 * <pre>
+	 * if (condition)
+	 * {
+	 *     ...
+	 * </pre>
+	 */
+	NL,
 
 }

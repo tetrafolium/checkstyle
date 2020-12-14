@@ -29,267 +29,267 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  */
 public final class ScopeUtil {
 
-    /** Prevent instantiation. */
-    private ScopeUtil() {
-    }
+/** Prevent instantiation. */
+private ScopeUtil() {
+}
 
-    /**
-     * Returns the Scope specified by the modifier set.
-     *
-     * @param aMods root node of a modifier set
-     * @return a {@code Scope} value
-     */
-    public static Scope getScopeFromMods(DetailAST aMods) {
-        // default scope
-        Scope returnValue = Scope.PACKAGE;
-        for (DetailAST token = aMods.getFirstChild(); token != null
-                && returnValue == Scope.PACKAGE;
-                token = token.getNextSibling()) {
-            if ("public".equals(token.getText())) {
-                returnValue = Scope.PUBLIC;
-            }
-            else if ("protected".equals(token.getText())) {
-                returnValue = Scope.PROTECTED;
-            }
-            else if ("private".equals(token.getText())) {
-                returnValue = Scope.PRIVATE;
-            }
-        }
-        return returnValue;
-    }
+/**
+ * Returns the Scope specified by the modifier set.
+ *
+ * @param aMods root node of a modifier set
+ * @return a {@code Scope} value
+ */
+public static Scope getScopeFromMods(DetailAST aMods) {
+	// default scope
+	Scope returnValue = Scope.PACKAGE;
+	for (DetailAST token = aMods.getFirstChild(); token != null
+	     && returnValue == Scope.PACKAGE;
+	     token = token.getNextSibling()) {
+		if ("public".equals(token.getText())) {
+			returnValue = Scope.PUBLIC;
+		}
+		else if ("protected".equals(token.getText())) {
+			returnValue = Scope.PROTECTED;
+		}
+		else if ("private".equals(token.getText())) {
+			returnValue = Scope.PRIVATE;
+		}
+	}
+	return returnValue;
+}
 
-    /**
-     * Returns the scope of the surrounding "block".
-     * @param node the node to return the scope for
-     * @return the Scope of the surrounding block
-     */
-    public static Scope getSurroundingScope(DetailAST node) {
-        Scope returnValue = null;
-        for (DetailAST token = node.getParent();
-                token != null;
-                token = token.getParent()) {
-            final int type = token.getType();
-            if (type == TokenTypes.CLASS_DEF
-                    || type == TokenTypes.INTERFACE_DEF
-                    || type == TokenTypes.ANNOTATION_DEF
-                    || type == TokenTypes.ENUM_DEF) {
-                final DetailAST mods =
-                    token.findFirstToken(TokenTypes.MODIFIERS);
-                final Scope modScope = getScopeFromMods(mods);
-                if (returnValue == null || returnValue.isIn(modScope)) {
-                    returnValue = modScope;
-                }
-            }
-            else if (type == TokenTypes.LITERAL_NEW) {
-                returnValue = Scope.ANONINNER;
-                // because Scope.ANONINNER is not in any other Scope
-                break;
-            }
-        }
+/**
+ * Returns the scope of the surrounding "block".
+ * @param node the node to return the scope for
+ * @return the Scope of the surrounding block
+ */
+public static Scope getSurroundingScope(DetailAST node) {
+	Scope returnValue = null;
+	for (DetailAST token = node.getParent();
+	     token != null;
+	     token = token.getParent()) {
+		final int type = token.getType();
+		if (type == TokenTypes.CLASS_DEF
+		    || type == TokenTypes.INTERFACE_DEF
+		    || type == TokenTypes.ANNOTATION_DEF
+		    || type == TokenTypes.ENUM_DEF) {
+			final DetailAST mods =
+				token.findFirstToken(TokenTypes.MODIFIERS);
+			final Scope modScope = getScopeFromMods(mods);
+			if (returnValue == null || returnValue.isIn(modScope)) {
+				returnValue = modScope;
+			}
+		}
+		else if (type == TokenTypes.LITERAL_NEW) {
+			returnValue = Scope.ANONINNER;
+			// because Scope.ANONINNER is not in any other Scope
+			break;
+		}
+	}
 
-        return returnValue;
-    }
+	return returnValue;
+}
 
-    /**
-     * Returns whether a node is directly contained within a class block.
-     *
-     * @param node the node to check if directly contained within a class block.
-     * @return a {@code boolean} value
-     */
-    public static boolean isInClassBlock(DetailAST node) {
-        return isInBlockOf(node, TokenTypes.CLASS_DEF);
-    }
+/**
+ * Returns whether a node is directly contained within a class block.
+ *
+ * @param node the node to check if directly contained within a class block.
+ * @return a {@code boolean} value
+ */
+public static boolean isInClassBlock(DetailAST node) {
+	return isInBlockOf(node, TokenTypes.CLASS_DEF);
+}
 
-    /**
-     * Returns whether a node is directly contained within an interface block.
-     *
-     * @param node the node to check if directly contained within an interface block.
-     * @return a {@code boolean} value
-     */
-    public static boolean isInInterfaceBlock(DetailAST node) {
-        return isInBlockOf(node, TokenTypes.INTERFACE_DEF);
-    }
+/**
+ * Returns whether a node is directly contained within an interface block.
+ *
+ * @param node the node to check if directly contained within an interface block.
+ * @return a {@code boolean} value
+ */
+public static boolean isInInterfaceBlock(DetailAST node) {
+	return isInBlockOf(node, TokenTypes.INTERFACE_DEF);
+}
 
-    /**
-     * Returns whether a node is directly contained within an annotation block.
-     *
-     * @param node the node to check if directly contained within an annotation block.
-     * @return a {@code boolean} value
-     */
-    public static boolean isInAnnotationBlock(DetailAST node) {
-        return isInBlockOf(node, TokenTypes.ANNOTATION_DEF);
-    }
+/**
+ * Returns whether a node is directly contained within an annotation block.
+ *
+ * @param node the node to check if directly contained within an annotation block.
+ * @return a {@code boolean} value
+ */
+public static boolean isInAnnotationBlock(DetailAST node) {
+	return isInBlockOf(node, TokenTypes.ANNOTATION_DEF);
+}
 
-    /**
-     * Returns whether a node is directly contained within a specified block.
-     *
-     * @param node the node to check if directly contained within a specified block.
-     * @param tokenType type of token.
-     * @return a {@code boolean} value
-     */
-    private static boolean isInBlockOf(DetailAST node, int tokenType) {
-        boolean returnValue = false;
+/**
+ * Returns whether a node is directly contained within a specified block.
+ *
+ * @param node the node to check if directly contained within a specified block.
+ * @param tokenType type of token.
+ * @return a {@code boolean} value
+ */
+private static boolean isInBlockOf(DetailAST node, int tokenType) {
+	boolean returnValue = false;
 
-        // Loop up looking for a containing interface block
-        for (DetailAST token = node.getParent();
-                token != null && !returnValue;
-                token = token.getParent()) {
-            final int type = token.getType();
-            if (type == tokenType) {
-                returnValue = true;
-            }
-            else if (type == TokenTypes.CLASS_DEF
-                     || type == TokenTypes.ENUM_DEF
-                     || type == TokenTypes.INTERFACE_DEF
-                     || type == TokenTypes.ANNOTATION_DEF
-                     || type == TokenTypes.LITERAL_NEW) {
-                break;
-            }
-        }
+	// Loop up looking for a containing interface block
+	for (DetailAST token = node.getParent();
+	     token != null && !returnValue;
+	     token = token.getParent()) {
+		final int type = token.getType();
+		if (type == tokenType) {
+			returnValue = true;
+		}
+		else if (type == TokenTypes.CLASS_DEF
+		         || type == TokenTypes.ENUM_DEF
+		         || type == TokenTypes.INTERFACE_DEF
+		         || type == TokenTypes.ANNOTATION_DEF
+		         || type == TokenTypes.LITERAL_NEW) {
+			break;
+		}
+	}
 
-        return returnValue;
-    }
+	return returnValue;
+}
 
-    /**
-     * Returns whether a node is directly contained within an interface or
-     * annotation block.
-     *
-     * @param node the node to check if directly contained within an interface
-     *     or annotation block.
-     * @return a {@code boolean} value
-     */
-    public static boolean isInInterfaceOrAnnotationBlock(DetailAST node) {
-        return isInInterfaceBlock(node) || isInAnnotationBlock(node);
-    }
+/**
+ * Returns whether a node is directly contained within an interface or
+ * annotation block.
+ *
+ * @param node the node to check if directly contained within an interface
+ *     or annotation block.
+ * @return a {@code boolean} value
+ */
+public static boolean isInInterfaceOrAnnotationBlock(DetailAST node) {
+	return isInInterfaceBlock(node) || isInAnnotationBlock(node);
+}
 
-    /**
-     * Returns whether a node is directly contained within an enum block.
-     *
-     * @param node the node to check if directly contained within an enum block.
-     * @return a {@code boolean} value
-     */
-    public static boolean isInEnumBlock(DetailAST node) {
-        boolean returnValue = false;
+/**
+ * Returns whether a node is directly contained within an enum block.
+ *
+ * @param node the node to check if directly contained within an enum block.
+ * @return a {@code boolean} value
+ */
+public static boolean isInEnumBlock(DetailAST node) {
+	boolean returnValue = false;
 
-        // Loop up looking for a containing interface block
-        for (DetailAST token = node.getParent();
-                token != null && !returnValue;
-                token = token.getParent()) {
-            final int type = token.getType();
-            if (type == TokenTypes.ENUM_DEF) {
-                returnValue = true;
-            }
-            else if (type == TokenTypes.INTERFACE_DEF
-                     || type == TokenTypes.ANNOTATION_DEF
-                     || type == TokenTypes.CLASS_DEF
-                     || type == TokenTypes.LITERAL_NEW) {
-                break;
-            }
-        }
+	// Loop up looking for a containing interface block
+	for (DetailAST token = node.getParent();
+	     token != null && !returnValue;
+	     token = token.getParent()) {
+		final int type = token.getType();
+		if (type == TokenTypes.ENUM_DEF) {
+			returnValue = true;
+		}
+		else if (type == TokenTypes.INTERFACE_DEF
+		         || type == TokenTypes.ANNOTATION_DEF
+		         || type == TokenTypes.CLASS_DEF
+		         || type == TokenTypes.LITERAL_NEW) {
+			break;
+		}
+	}
 
-        return returnValue;
-    }
+	return returnValue;
+}
 
-    /**
-     * Returns whether the scope of a node is restricted to a code block.
-     * A code block is a method or constructor body, an initializer block, or lambda body.
-     *
-     * @param node the node to check
-     * @return a {@code boolean} value
-     */
-    public static boolean isInCodeBlock(DetailAST node) {
-        boolean returnValue = false;
+/**
+ * Returns whether the scope of a node is restricted to a code block.
+ * A code block is a method or constructor body, an initializer block, or lambda body.
+ *
+ * @param node the node to check
+ * @return a {@code boolean} value
+ */
+public static boolean isInCodeBlock(DetailAST node) {
+	boolean returnValue = false;
 
-        // Loop up looking for a containing code block
-        for (DetailAST token = node.getParent();
-                token != null;
-                token = token.getParent()) {
-            final int type = token.getType();
-            if (type == TokenTypes.METHOD_DEF
-                    || type == TokenTypes.CTOR_DEF
-                    || type == TokenTypes.INSTANCE_INIT
-                    || type == TokenTypes.STATIC_INIT
-                    || type == TokenTypes.LAMBDA) {
-                returnValue = true;
-                break;
-            }
-        }
+	// Loop up looking for a containing code block
+	for (DetailAST token = node.getParent();
+	     token != null;
+	     token = token.getParent()) {
+		final int type = token.getType();
+		if (type == TokenTypes.METHOD_DEF
+		    || type == TokenTypes.CTOR_DEF
+		    || type == TokenTypes.INSTANCE_INIT
+		    || type == TokenTypes.STATIC_INIT
+		    || type == TokenTypes.LAMBDA) {
+			returnValue = true;
+			break;
+		}
+	}
 
-        return returnValue;
-    }
+	return returnValue;
+}
 
-    /**
-     * Returns whether a node is contained in the outer most type block.
-     *
-     * @param node the node to check
-     * @return a {@code boolean} value
-     */
-    public static boolean isOuterMostType(DetailAST node) {
-        boolean returnValue = true;
-        for (DetailAST parent = node.getParent();
-                parent != null;
-                parent = parent.getParent()) {
-            if (parent.getType() == TokenTypes.CLASS_DEF
-                    || parent.getType() == TokenTypes.INTERFACE_DEF
-                    || parent.getType() == TokenTypes.ANNOTATION_DEF
-                    || parent.getType() == TokenTypes.ENUM_DEF) {
-                returnValue = false;
-                break;
-            }
-        }
+/**
+ * Returns whether a node is contained in the outer most type block.
+ *
+ * @param node the node to check
+ * @return a {@code boolean} value
+ */
+public static boolean isOuterMostType(DetailAST node) {
+	boolean returnValue = true;
+	for (DetailAST parent = node.getParent();
+	     parent != null;
+	     parent = parent.getParent()) {
+		if (parent.getType() == TokenTypes.CLASS_DEF
+		    || parent.getType() == TokenTypes.INTERFACE_DEF
+		    || parent.getType() == TokenTypes.ANNOTATION_DEF
+		    || parent.getType() == TokenTypes.ENUM_DEF) {
+			returnValue = false;
+			break;
+		}
+	}
 
-        return returnValue;
-    }
+	return returnValue;
+}
 
-    /**
-     * Determines whether a node is a local variable definition.
-     * I.e. if it is declared in a code block, a for initializer,
-     * or a catch parameter.
-     * @param node the node to check.
-     * @return whether aAST is a local variable definition.
-     */
-    public static boolean isLocalVariableDef(DetailAST node) {
-        boolean localVariableDef = false;
-        // variable declaration?
-        if (node.getType() == TokenTypes.VARIABLE_DEF) {
-            final DetailAST parent = node.getParent();
-            final int type = parent.getType();
-            localVariableDef = type == TokenTypes.SLIST
-                               || type == TokenTypes.FOR_INIT
-                               || type == TokenTypes.FOR_EACH_CLAUSE;
-        }
-        // catch parameter?
-        if (node.getType() == TokenTypes.PARAMETER_DEF) {
-            final DetailAST parent = node.getParent();
-            localVariableDef = parent.getType() == TokenTypes.LITERAL_CATCH;
-        }
+/**
+ * Determines whether a node is a local variable definition.
+ * I.e. if it is declared in a code block, a for initializer,
+ * or a catch parameter.
+ * @param node the node to check.
+ * @return whether aAST is a local variable definition.
+ */
+public static boolean isLocalVariableDef(DetailAST node) {
+	boolean localVariableDef = false;
+	// variable declaration?
+	if (node.getType() == TokenTypes.VARIABLE_DEF) {
+		final DetailAST parent = node.getParent();
+		final int type = parent.getType();
+		localVariableDef = type == TokenTypes.SLIST
+		                   || type == TokenTypes.FOR_INIT
+		                   || type == TokenTypes.FOR_EACH_CLAUSE;
+	}
+	// catch parameter?
+	if (node.getType() == TokenTypes.PARAMETER_DEF) {
+		final DetailAST parent = node.getParent();
+		localVariableDef = parent.getType() == TokenTypes.LITERAL_CATCH;
+	}
 
-        if (node.getType() == TokenTypes.RESOURCE) {
-            localVariableDef = true;
-        }
-        return localVariableDef;
-    }
+	if (node.getType() == TokenTypes.RESOURCE) {
+		localVariableDef = true;
+	}
+	return localVariableDef;
+}
 
-    /**
-     * Determines whether a node is a class field definition.
-     * I.e. if a variable is not declared in a code block, a for initializer,
-     * or a catch parameter.
-     * @param node the node to check.
-     * @return whether a node is a class field definition.
-     */
-    public static boolean isClassFieldDef(DetailAST node) {
-        return node.getType() == TokenTypes.VARIABLE_DEF && !isLocalVariableDef(node);
-    }
+/**
+ * Determines whether a node is a class field definition.
+ * I.e. if a variable is not declared in a code block, a for initializer,
+ * or a catch parameter.
+ * @param node the node to check.
+ * @return whether a node is a class field definition.
+ */
+public static boolean isClassFieldDef(DetailAST node) {
+	return node.getType() == TokenTypes.VARIABLE_DEF && !isLocalVariableDef(node);
+}
 
-    /**
-     * Checks whether ast node is in a specific scope.
-     * @param ast the node to check.
-     * @param scope a {@code Scope} value.
-     * @return true if the ast node is in the scope.
-     */
-    public static boolean isInScope(DetailAST ast, Scope scope) {
-        final Scope surroundingScopeOfAstToken = getSurroundingScope(ast);
-        return surroundingScopeOfAstToken == scope;
-    }
+/**
+ * Checks whether ast node is in a specific scope.
+ * @param ast the node to check.
+ * @param scope a {@code Scope} value.
+ * @return true if the ast node is in the scope.
+ */
+public static boolean isInScope(DetailAST ast, Scope scope) {
+	final Scope surroundingScopeOfAstToken = getSurroundingScope(ast);
+	return surroundingScopeOfAstToken == scope;
+}
 
 }

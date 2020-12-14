@@ -87,114 +87,114 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 @StatelessCheck
 public final class MissingOverrideCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY_TAG_NOT_VALID_ON = "tag.not.valid.on";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY_TAG_NOT_VALID_ON = "tag.not.valid.on";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY_ANNOTATION_MISSING_OVERRIDE =
-        "annotation.missing.override";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY_ANNOTATION_MISSING_OVERRIDE =
+	"annotation.missing.override";
 
-    /** {@link Override Override} annotation name. */
-    private static final String OVERRIDE = "Override";
+/** {@link Override Override} annotation name. */
+private static final String OVERRIDE = "Override";
 
-    /** Fully-qualified {@link Override Override} annotation name. */
-    private static final String FQ_OVERRIDE = "java.lang." + OVERRIDE;
+/** Fully-qualified {@link Override Override} annotation name. */
+private static final String FQ_OVERRIDE = "java.lang." + OVERRIDE;
 
-    /** Compiled regexp to match Javadoc tags with no argument and {}. */
-    private static final Pattern MATCH_INHERIT_DOC =
-        CommonUtil.createPattern("\\{\\s*@(inheritDoc)\\s*\\}");
+/** Compiled regexp to match Javadoc tags with no argument and {}. */
+private static final Pattern MATCH_INHERIT_DOC =
+	CommonUtil.createPattern("\\{\\s*@(inheritDoc)\\s*\\}");
 
-    /**
-     * Enable java 5 compatibility mode.
-     */
-    private boolean javaFiveCompatibility;
+/**
+ * Enable java 5 compatibility mode.
+ */
+private boolean javaFiveCompatibility;
 
-    /**
-     * Setter to enable java 5 compatibility mode.
-     * @param compatibility compatibility or not
-     */
-    public void setJavaFiveCompatibility(final boolean compatibility) {
-        javaFiveCompatibility = compatibility;
-    }
+/**
+ * Setter to enable java 5 compatibility mode.
+ * @param compatibility compatibility or not
+ */
+public void setJavaFiveCompatibility(final boolean compatibility) {
+	javaFiveCompatibility = compatibility;
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[]
-               {TokenTypes.METHOD_DEF, };
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[]
+	       {TokenTypes.METHOD_DEF, };
+}
 
-    // -@cs[CyclomaticComplexity] Too complex to break apart.
-    @Override
-    public void visitToken(final DetailAST ast) {
-        final TextBlock javadoc =
-            getFileContents().getJavadocBefore(ast.getLineNo());
+// -@cs[CyclomaticComplexity] Too complex to break apart.
+@Override
+public void visitToken(final DetailAST ast) {
+	final TextBlock javadoc =
+		getFileContents().getJavadocBefore(ast.getLineNo());
 
-        final boolean containsTag = containsJavadocTag(javadoc);
-        if (containsTag && !JavadocTagInfo.INHERIT_DOC.isValidOn(ast)) {
-            log(ast.getLineNo(), MSG_KEY_TAG_NOT_VALID_ON,
-                JavadocTagInfo.INHERIT_DOC.getText());
-        }
-        else {
-            boolean check = true;
+	final boolean containsTag = containsJavadocTag(javadoc);
+	if (containsTag && !JavadocTagInfo.INHERIT_DOC.isValidOn(ast)) {
+		log(ast.getLineNo(), MSG_KEY_TAG_NOT_VALID_ON,
+		    JavadocTagInfo.INHERIT_DOC.getText());
+	}
+	else {
+		boolean check = true;
 
-            if (javaFiveCompatibility) {
-                final DetailAST defOrNew = ast.getParent().getParent();
+		if (javaFiveCompatibility) {
+			final DetailAST defOrNew = ast.getParent().getParent();
 
-                if (defOrNew.findFirstToken(TokenTypes.EXTENDS_CLAUSE) != null
-                        || defOrNew.findFirstToken(TokenTypes.IMPLEMENTS_CLAUSE) != null
-                        || defOrNew.getType() == TokenTypes.LITERAL_NEW) {
-                    check = false;
-                }
-            }
+			if (defOrNew.findFirstToken(TokenTypes.EXTENDS_CLAUSE) != null
+			    || defOrNew.findFirstToken(TokenTypes.IMPLEMENTS_CLAUSE) != null
+			    || defOrNew.getType() == TokenTypes.LITERAL_NEW) {
+				check = false;
+			}
+		}
 
-            if (check
-                    && containsTag
-                    && !AnnotationUtil.containsAnnotation(ast, OVERRIDE)
-                    && !AnnotationUtil.containsAnnotation(ast, FQ_OVERRIDE)) {
-                log(ast.getLineNo(), MSG_KEY_ANNOTATION_MISSING_OVERRIDE);
-            }
-        }
-    }
+		if (check
+		    && containsTag
+		    && !AnnotationUtil.containsAnnotation(ast, OVERRIDE)
+		    && !AnnotationUtil.containsAnnotation(ast, FQ_OVERRIDE)) {
+			log(ast.getLineNo(), MSG_KEY_ANNOTATION_MISSING_OVERRIDE);
+		}
+	}
+}
 
-    /**
-     * Checks to see if the text block contains a inheritDoc tag.
-     *
-     * @param javadoc the javadoc of the AST
-     * @return true if contains the tag
-     */
-    private static boolean containsJavadocTag(final TextBlock javadoc) {
-        boolean javadocTag = false;
+/**
+ * Checks to see if the text block contains a inheritDoc tag.
+ *
+ * @param javadoc the javadoc of the AST
+ * @return true if contains the tag
+ */
+private static boolean containsJavadocTag(final TextBlock javadoc) {
+	boolean javadocTag = false;
 
-        if (javadoc != null) {
-            final String[] lines = javadoc.getText();
+	if (javadoc != null) {
+		final String[] lines = javadoc.getText();
 
-            for (final String line : lines) {
-                final Matcher matchInheritDoc =
-                    MATCH_INHERIT_DOC.matcher(line);
+		for (final String line : lines) {
+			final Matcher matchInheritDoc =
+				MATCH_INHERIT_DOC.matcher(line);
 
-                if (matchInheritDoc.find()) {
-                    javadocTag = true;
-                    break;
-                }
-            }
-        }
-        return javadocTag;
-    }
+			if (matchInheritDoc.find()) {
+				javadocTag = true;
+				break;
+			}
+		}
+	}
+	return javadocTag;
+}
 
 }

@@ -74,107 +74,107 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  */
 @StatelessCheck
 public class AvoidStaticImportCheck
-    extends AbstractCheck {
+	extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "import.avoidStatic";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "import.avoidStatic";
 
-    /**
-     * Control whether to allow for certain classes via a star notation to be
-     * excluded such as {@code java.lang.Math.*} or specific static members
-     * to be excluded like {@code java.lang.System.out} for a variable or
-     * {@code java.lang.Math.random} for a method. See notes section for details.
-     */
-    private String[] excludes = CommonUtil.EMPTY_STRING_ARRAY;
+/**
+ * Control whether to allow for certain classes via a star notation to be
+ * excluded such as {@code java.lang.Math.*} or specific static members
+ * to be excluded like {@code java.lang.System.out} for a variable or
+ * {@code java.lang.Math.random} for a method. See notes section for details.
+ */
+private String[] excludes = CommonUtil.EMPTY_STRING_ARRAY;
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.STATIC_IMPORT};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.STATIC_IMPORT};
+}
 
-    /**
-     * Setter to control whether to allow for certain classes via a star notation
-     * to be excluded such as {@code java.lang.Math.*} or specific static members
-     * to be excluded like {@code java.lang.System.out} for a variable or
-     * {@code java.lang.Math.random} for a method. See notes section for details.
-     *
-     * @param excludes a list of fully-qualified class names/specific
-     *     static members where static imports are ok
-     */
-    public void setExcludes(String... excludes) {
-        this.excludes = excludes.clone();
-    }
+/**
+ * Setter to control whether to allow for certain classes via a star notation
+ * to be excluded such as {@code java.lang.Math.*} or specific static members
+ * to be excluded like {@code java.lang.System.out} for a variable or
+ * {@code java.lang.Math.random} for a method. See notes section for details.
+ *
+ * @param excludes a list of fully-qualified class names/specific
+ *     static members where static imports are ok
+ */
+public void setExcludes(String... excludes) {
+	this.excludes = excludes.clone();
+}
 
-    @Override
-    public void visitToken(final DetailAST ast) {
-        final DetailAST startingDot =
-            ast.getFirstChild().getNextSibling();
-        final FullIdent name = FullIdent.createFullIdent(startingDot);
+@Override
+public void visitToken(final DetailAST ast) {
+	final DetailAST startingDot =
+		ast.getFirstChild().getNextSibling();
+	final FullIdent name = FullIdent.createFullIdent(startingDot);
 
-        if (!isExempt(name.getText())) {
-            log(startingDot.getLineNo(), MSG_KEY, name.getText());
-        }
-    }
+	if (!isExempt(name.getText())) {
+		log(startingDot.getLineNo(), MSG_KEY, name.getText());
+	}
+}
 
-    /**
-     * Checks if a class or static member is exempt from known excludes.
-     *
-     * @param classOrStaticMember
-     *                the class or static member
-     * @return true if except false if not
-     */
-    private boolean isExempt(String classOrStaticMember) {
-        boolean exempt = false;
+/**
+ * Checks if a class or static member is exempt from known excludes.
+ *
+ * @param classOrStaticMember
+ *                the class or static member
+ * @return true if except false if not
+ */
+private boolean isExempt(String classOrStaticMember) {
+	boolean exempt = false;
 
-        for (String exclude : excludes) {
-            if (classOrStaticMember.equals(exclude)
-                    || isStarImportOfPackage(classOrStaticMember, exclude)) {
-                exempt = true;
-                break;
-            }
-        }
-        return exempt;
-    }
+	for (String exclude : excludes) {
+		if (classOrStaticMember.equals(exclude)
+		    || isStarImportOfPackage(classOrStaticMember, exclude)) {
+			exempt = true;
+			break;
+		}
+	}
+	return exempt;
+}
 
-    /**
-     * Returns true if classOrStaticMember is a starred name of package,
-     *  not just member name.
-     * @param classOrStaticMember - full name of member
-     * @param exclude - current exclusion
-     * @return true if member in exclusion list
-     */
-    private static boolean isStarImportOfPackage(String classOrStaticMember, String exclude) {
-        boolean result = false;
-        if (exclude.endsWith(".*")) {
-            // this section allows explicit imports
-            // to be exempt when configured using
-            // a starred import
-            final String excludeMinusDotStar =
-                exclude.substring(0, exclude.length() - 2);
-            if (classOrStaticMember.startsWith(excludeMinusDotStar)
-                    && !classOrStaticMember.equals(excludeMinusDotStar)) {
-                final String member = classOrStaticMember.substring(
-                                          excludeMinusDotStar.length() + 1);
-                // if it contains a dot then it is not a member but a package
-                if (member.indexOf('.') == -1) {
-                    result = true;
-                }
-            }
-        }
-        return result;
-    }
+/**
+ * Returns true if classOrStaticMember is a starred name of package,
+ *  not just member name.
+ * @param classOrStaticMember - full name of member
+ * @param exclude - current exclusion
+ * @return true if member in exclusion list
+ */
+private static boolean isStarImportOfPackage(String classOrStaticMember, String exclude) {
+	boolean result = false;
+	if (exclude.endsWith(".*")) {
+		// this section allows explicit imports
+		// to be exempt when configured using
+		// a starred import
+		final String excludeMinusDotStar =
+			exclude.substring(0, exclude.length() - 2);
+		if (classOrStaticMember.startsWith(excludeMinusDotStar)
+		    && !classOrStaticMember.equals(excludeMinusDotStar)) {
+			final String member = classOrStaticMember.substring(
+				excludeMinusDotStar.length() + 1);
+			// if it contains a dot then it is not a member but a package
+			if (member.indexOf('.') == -1) {
+				result = true;
+			}
+		}
+	}
+	return result;
+}
 
 }

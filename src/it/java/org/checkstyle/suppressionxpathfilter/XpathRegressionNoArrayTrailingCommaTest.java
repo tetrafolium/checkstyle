@@ -30,56 +30,56 @@ import com.puppycrawl.tools.checkstyle.checks.coding.NoArrayTrailingCommaCheck;
 
 public class XpathRegressionNoArrayTrailingCommaTest extends AbstractXpathTestSupport {
 
-    private final String checkName = NoArrayTrailingCommaCheck.class.getSimpleName();
+private final String checkName = NoArrayTrailingCommaCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionNoArrayTrailingCommaOne.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionNoArrayTrailingCommaOne.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(NoArrayTrailingCommaCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(NoArrayTrailingCommaCheck.class);
 
-        final String[] expectedViolation = {
-            "5:37: " + getCheckMessage(NoArrayTrailingCommaCheck.class,
-                                       NoArrayTrailingCommaCheck.MSG_KEY),
-        };
+	final String[] expectedViolation = {
+		"5:37: " + getCheckMessage(NoArrayTrailingCommaCheck.class,
+		                           NoArrayTrailingCommaCheck.MSG_KEY),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoArrayTrailingCommaOne']]"
-                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='t1']]/ASSIGN/EXPR"
-                    + "/LITERAL_NEW/ARRAY_INIT/COMMA[4]"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoArrayTrailingCommaOne']]"
+		+ "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='t1']]/ASSIGN/EXPR"
+		+ "/LITERAL_NEW/ARRAY_INIT/COMMA[4]"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionNoArrayTrailingCommaTwo.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionNoArrayTrailingCommaTwo.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(NoArrayTrailingCommaCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(NoArrayTrailingCommaCheck.class);
 
-        final String[] expectedViolation = {
-            "4:28: " + getCheckMessage(NoArrayTrailingCommaCheck.class,
-                                       NoArrayTrailingCommaCheck.MSG_KEY),
-        };
+	final String[] expectedViolation = {
+		"4:28: " + getCheckMessage(NoArrayTrailingCommaCheck.class,
+		                           NoArrayTrailingCommaCheck.MSG_KEY),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoArrayTrailingCommaTwo']]"
-                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='t4']]"
-                    + "/ASSIGN/EXPR/LITERAL_NEW/ARRAY_INIT/COMMA"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoArrayTrailingCommaTwo']]"
+		+ "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='t4']]"
+		+ "/ASSIGN/EXPR/LITERAL_NEW/ARRAY_INIT/COMMA"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 }

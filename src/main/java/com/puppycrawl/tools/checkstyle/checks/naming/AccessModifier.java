@@ -29,36 +29,36 @@ import java.util.Locale;
  */
 public enum AccessModifier {
 
-    /** Public access modifier. */
-    PUBLIC,
-    /** Protected access modifier. */
-    PROTECTED,
-    /** Package access modifier. */
-    PACKAGE,
-    /** Private access modifier. */
-    PRIVATE;
+	/** Public access modifier. */
+	PUBLIC,
+	/** Protected access modifier. */
+	PROTECTED,
+	/** Package access modifier. */
+	PACKAGE,
+	/** Private access modifier. */
+	PRIVATE;
 
-    @Override
-    public String toString() {
-        return getName();
-    }
+	@Override
+	public String toString() {
+		return getName();
+	}
 
-    private String getName() {
-        return name().toLowerCase(Locale.ENGLISH);
-    }
+	private String getName() {
+		return name().toLowerCase(Locale.ENGLISH);
+	}
 
-    /**
-     * Factory method which returns an AccessModifier instance that corresponds to the
-     * given access modifier name represented as a {@link String}.
-     * The access modifier name can be formatted both as lower case or upper case string.
-     * For example, passing PACKAGE or package as a modifier name
-     * will return {@link AccessModifier#PACKAGE}.
-     *
-     * @param modifierName access modifier name represented as a {@link String}.
-     * @return the AccessModifier associated with given access modifier name.
-     */
-    public static AccessModifier getInstance(String modifierName) {
-        return valueOf(AccessModifier.class, modifierName.trim().toUpperCase(Locale.ENGLISH));
-    }
+	/**
+	 * Factory method which returns an AccessModifier instance that corresponds to the
+	 * given access modifier name represented as a {@link String}.
+	 * The access modifier name can be formatted both as lower case or upper case string.
+	 * For example, passing PACKAGE or package as a modifier name
+	 * will return {@link AccessModifier#PACKAGE}.
+	 *
+	 * @param modifierName access modifier name represented as a {@link String}.
+	 * @return the AccessModifier associated with given access modifier name.
+	 */
+	public static AccessModifier getInstance(String modifierName) {
+		return valueOf(AccessModifier.class, modifierName.trim().toUpperCase(Locale.ENGLISH));
+	}
 
 }

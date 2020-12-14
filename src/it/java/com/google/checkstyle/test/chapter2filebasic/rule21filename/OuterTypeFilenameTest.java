@@ -30,44 +30,44 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
 public class OuterTypeFilenameTest extends AbstractGoogleModuleTestSupport {
 
-    @Override
-    protected String getPackageLocation() {
-        return "com/google/checkstyle/test/chapter2filebasic/rule21filename";
-    }
+@Override
+protected String getPackageLocation() {
+	return "com/google/checkstyle/test/chapter2filebasic/rule21filename";
+}
 
-    @Test
-    public void testOuterTypeFilename1() throws Exception {
-        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
+@Test
+public void testOuterTypeFilename1() throws Exception {
+	final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
 
-        final Configuration checkConfig = getModuleConfig("OuterTypeFilename");
-        final String filePath = getPath("InputOuterTypeFilename1.java");
+	final Configuration checkConfig = getModuleConfig("OuterTypeFilename");
+	final String filePath = getPath("InputOuterTypeFilename1.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
-    @Test
-    public void testOuterTypeFilename2() throws Exception {
-        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
+@Test
+public void testOuterTypeFilename2() throws Exception {
+	final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
 
-        final Configuration checkConfig = getModuleConfig("OuterTypeFilename");
-        final String filePath = getPath("InputOuterTypeFilename2.java");
+	final Configuration checkConfig = getModuleConfig("OuterTypeFilename");
+	final String filePath = getPath("InputOuterTypeFilename2.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
-    @Test
-    public void testOuterTypeFilename3() throws Exception {
-        final String[] expected = {
-            "3: " + getCheckMessage(OuterTypeFilenameCheck.class, MSG_KEY),
-        };
+@Test
+public void testOuterTypeFilename3() throws Exception {
+	final String[] expected = {
+		"3: " + getCheckMessage(OuterTypeFilenameCheck.class, MSG_KEY),
+	};
 
-        final Configuration checkConfig = getModuleConfig("OuterTypeFilename");
-        final String filePath = getPath("InputOuterTypeFilename3.java");
+	final Configuration checkConfig = getModuleConfig("OuterTypeFilename");
+	final String filePath = getPath("InputOuterTypeFilename3.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
 }

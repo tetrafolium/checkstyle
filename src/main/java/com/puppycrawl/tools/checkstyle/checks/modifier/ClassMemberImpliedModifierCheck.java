@@ -98,87 +98,87 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  */
 @StatelessCheck
 public class ClassMemberImpliedModifierCheck
-    extends AbstractCheck {
+	extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties" file.
-     */
-    public static final String MSG_KEY = "class.implied.modifier";
+/**
+ * A key is pointing to the warning message text in "messages.properties" file.
+ */
+public static final String MSG_KEY = "class.implied.modifier";
 
-    /** Name for 'static' keyword. */
-    private static final String STATIC_KEYWORD = "static";
+/** Name for 'static' keyword. */
+private static final String STATIC_KEYWORD = "static";
 
-    /**
-     * Control whether to enforce that {@code static} is explicitly coded
-     * on nested enums in classes.
-     */
-    private boolean violateImpliedStaticOnNestedEnum = true;
+/**
+ * Control whether to enforce that {@code static} is explicitly coded
+ * on nested enums in classes.
+ */
+private boolean violateImpliedStaticOnNestedEnum = true;
 
-    /**
-     * Control whether to enforce that {@code static} is explicitly coded
-     * on nested interfaces in classes.
-     */
-    private boolean violateImpliedStaticOnNestedInterface = true;
+/**
+ * Control whether to enforce that {@code static} is explicitly coded
+ * on nested interfaces in classes.
+ */
+private boolean violateImpliedStaticOnNestedInterface = true;
 
-    /**
-     * Setter to control whether to enforce that {@code static} is explicitly coded
-     * on nested enums in classes.
-     * @param violateImplied
-     *        True to perform the check, false to turn the check off.
-     */
-    public void setViolateImpliedStaticOnNestedEnum(boolean violateImplied) {
-        violateImpliedStaticOnNestedEnum = violateImplied;
-    }
+/**
+ * Setter to control whether to enforce that {@code static} is explicitly coded
+ * on nested enums in classes.
+ * @param violateImplied
+ *        True to perform the check, false to turn the check off.
+ */
+public void setViolateImpliedStaticOnNestedEnum(boolean violateImplied) {
+	violateImpliedStaticOnNestedEnum = violateImplied;
+}
 
-    /**
-     * Setter to control whether to enforce that {@code static} is explicitly coded
-     * on nested interfaces in classes.
-     * @param violateImplied
-     *        True to perform the check, false to turn the check off.
-     */
-    public void setViolateImpliedStaticOnNestedInterface(boolean violateImplied) {
-        violateImpliedStaticOnNestedInterface = violateImplied;
-    }
+/**
+ * Setter to control whether to enforce that {@code static} is explicitly coded
+ * on nested interfaces in classes.
+ * @param violateImplied
+ *        True to perform the check, false to turn the check off.
+ */
+public void setViolateImpliedStaticOnNestedInterface(boolean violateImplied) {
+	violateImpliedStaticOnNestedInterface = violateImplied;
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getAcceptableTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getAcceptableTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return getAcceptableTokens();
-    }
+@Override
+public int[] getRequiredTokens() {
+	return getAcceptableTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return new int[] {
-                   TokenTypes.INTERFACE_DEF,
-                   TokenTypes.ENUM_DEF,
-               };
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return new int[] {
+		       TokenTypes.INTERFACE_DEF,
+		       TokenTypes.ENUM_DEF,
+	};
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        if (ScopeUtil.isInClassBlock(ast) || ScopeUtil.isInEnumBlock(ast)) {
-            final DetailAST modifiers = ast.findFirstToken(TokenTypes.MODIFIERS);
-            switch (ast.getType()) {
-            case TokenTypes.ENUM_DEF:
-                if (violateImpliedStaticOnNestedEnum
-                        && modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) == null) {
-                    log(ast, MSG_KEY, STATIC_KEYWORD);
-                }
-                break;
-            case TokenTypes.INTERFACE_DEF:
-                if (violateImpliedStaticOnNestedInterface
-                        && modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) == null) {
-                    log(ast, MSG_KEY, STATIC_KEYWORD);
-                }
-                break;
-            default:
-                throw new IllegalStateException(ast.toString());
-            }
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	if (ScopeUtil.isInClassBlock(ast) || ScopeUtil.isInEnumBlock(ast)) {
+		final DetailAST modifiers = ast.findFirstToken(TokenTypes.MODIFIERS);
+		switch (ast.getType()) {
+		case TokenTypes.ENUM_DEF:
+			if (violateImpliedStaticOnNestedEnum
+			    && modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) == null) {
+				log(ast, MSG_KEY, STATIC_KEYWORD);
+			}
+			break;
+		case TokenTypes.INTERFACE_DEF:
+			if (violateImpliedStaticOnNestedInterface
+			    && modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) == null) {
+				log(ast, MSG_KEY, STATIC_KEYWORD);
+			}
+			break;
+		default:
+			throw new IllegalStateException(ast.toString());
+		}
+	}
+}
 
 }

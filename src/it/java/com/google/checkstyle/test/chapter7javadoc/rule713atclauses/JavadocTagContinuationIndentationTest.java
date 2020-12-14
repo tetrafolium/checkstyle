@@ -27,36 +27,36 @@ import com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTagContinuationInde
 
 public class JavadocTagContinuationIndentationTest extends AbstractGoogleModuleTestSupport {
 
-    @Override
-    protected String getPackageLocation() {
-        return "com/google/checkstyle/test/chapter7javadoc/rule713atclauses";
-    }
+@Override
+protected String getPackageLocation() {
+	return "com/google/checkstyle/test/chapter7javadoc/rule713atclauses";
+}
 
-    @Test
-    public void testWithDefaultConfiguration() throws Exception {
-        final String msg = getCheckMessage(JavadocTagContinuationIndentationCheck.class,
-                                           "tag.continuation.indent", 4);
+@Test
+public void testWithDefaultConfiguration() throws Exception {
+	final String msg = getCheckMessage(JavadocTagContinuationIndentationCheck.class,
+	                                   "tag.continuation.indent", 4);
 
-        final String[] expected = {
-            "47: " + msg,
-            "109: " + msg,
-            "112: " + msg,
-            "203: " + msg,
-            "206: " + msg,
-            "221: " + msg,
-            "223: " + msg,
-            "285: " + msg,
-            "288: " + msg,
-            "290: " + msg,
-            "310: " + msg,
-            "322: " + msg,
-        };
+	final String[] expected = {
+		"47: " + msg,
+		"109: " + msg,
+		"112: " + msg,
+		"203: " + msg,
+		"206: " + msg,
+		"221: " + msg,
+		"223: " + msg,
+		"285: " + msg,
+		"288: " + msg,
+		"290: " + msg,
+		"310: " + msg,
+		"322: " + msg,
+	};
 
-        final Configuration checkConfig = getModuleConfig("JavadocTagContinuationIndentation");
-        final String filePath = getPath("InputJavaDocTagContinuationIndentation.java");
+	final Configuration checkConfig = getModuleConfig("JavadocTagContinuationIndentation");
+	final String filePath = getPath("InputJavaDocTagContinuationIndentation.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
 }

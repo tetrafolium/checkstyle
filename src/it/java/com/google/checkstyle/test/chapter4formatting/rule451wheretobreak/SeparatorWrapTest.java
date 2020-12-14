@@ -29,75 +29,75 @@ import com.puppycrawl.tools.checkstyle.checks.whitespace.SeparatorWrapCheck;
 
 public class SeparatorWrapTest extends AbstractGoogleModuleTestSupport {
 
-    @Override
-    protected String getPackageLocation() {
-        return "com/google/checkstyle/test/chapter4formatting/rule451wheretobreak";
-    }
+@Override
+protected String getPackageLocation() {
+	return "com/google/checkstyle/test/chapter4formatting/rule451wheretobreak";
+}
 
-    @Test
-    public void testSeparatorWrapDot() throws Exception {
-        final String[] expected = {
-            "28:30: " + getCheckMessage(SeparatorWrapCheck.class, "line.new", "."),
-        };
+@Test
+public void testSeparatorWrapDot() throws Exception {
+	final String[] expected = {
+		"28:30: " + getCheckMessage(SeparatorWrapCheck.class, "line.new", "."),
+	};
 
-        final Configuration checkConfig = getModuleConfig("SeparatorWrap", "SeparatorWrapDot");
-        final String filePath = getPath("InputSeparatorWrap.java");
+	final Configuration checkConfig = getModuleConfig("SeparatorWrap", "SeparatorWrapDot");
+	final String filePath = getPath("InputSeparatorWrap.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
-    @Test
-    public void testSeparatorWrapComma() throws Exception {
-        final String[] expected = {
-            "31:17: " + getCheckMessage(SeparatorWrapCheck.class, "line.previous", ","),
-        };
+@Test
+public void testSeparatorWrapComma() throws Exception {
+	final String[] expected = {
+		"31:17: " + getCheckMessage(SeparatorWrapCheck.class, "line.previous", ","),
+	};
 
-        final Configuration checkConfig = getModuleConfig("SeparatorWrap", "SeparatorWrapComma");
-        final String filePath = getPath("InputSeparatorWrapComma.java");
+	final Configuration checkConfig = getModuleConfig("SeparatorWrap", "SeparatorWrapComma");
+	final String filePath = getPath("InputSeparatorWrapComma.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
-    @Test
-    public void testSeparatorWrapMethodRef() throws Exception {
-        final String[] expected = {
-            "17:49: " + getCheckMessage(SeparatorWrapCheck.class, MSG_LINE_NEW, "::"),
-        };
+@Test
+public void testSeparatorWrapMethodRef() throws Exception {
+	final String[] expected = {
+		"17:49: " + getCheckMessage(SeparatorWrapCheck.class, MSG_LINE_NEW, "::"),
+	};
 
-        final Configuration checkConfig = getModuleConfig("SeparatorWrap",
-                                          "SeparatorWrapMethodRef");
-        final String filePath = getPath("InputSeparatorWrapMethodRef.java");
+	final Configuration checkConfig = getModuleConfig("SeparatorWrap",
+	                                                  "SeparatorWrapMethodRef");
+	final String filePath = getPath("InputSeparatorWrapMethodRef.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
-    @Test
-    public void testEllipsis() throws Exception {
-        final String[] expected = {
-            "11:13: " + getCheckMessage(SeparatorWrapCheck.class, "line.previous", "..."),
-        };
+@Test
+public void testEllipsis() throws Exception {
+	final String[] expected = {
+		"11:13: " + getCheckMessage(SeparatorWrapCheck.class, "line.previous", "..."),
+	};
 
-        final Configuration checkConfig = getModuleConfig("SeparatorWrap", "SeparatorWrapEllipsis");
-        final String filePath = getPath("InputSeparatorWrapEllipsis.java");
+	final Configuration checkConfig = getModuleConfig("SeparatorWrap", "SeparatorWrapEllipsis");
+	final String filePath = getPath("InputSeparatorWrapEllipsis.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
-    @Test
-    public void testArrayDeclarator() throws Exception {
-        final String[] expected = {
-            "9:13: " + getCheckMessage(SeparatorWrapCheck.class, "line.previous", "["),
-        };
-        final Configuration checkConfig = getModuleConfig("SeparatorWrap",
-                                          "SeparatorWrapArrayDeclarator");
-        final String filePath = getPath("InputSeparatorWrapArrayDeclarator.java");
+@Test
+public void testArrayDeclarator() throws Exception {
+	final String[] expected = {
+		"9:13: " + getCheckMessage(SeparatorWrapCheck.class, "line.previous", "["),
+	};
+	final Configuration checkConfig = getModuleConfig("SeparatorWrap",
+	                                                  "SeparatorWrapArrayDeclarator");
+	final String filePath = getPath("InputSeparatorWrapArrayDeclarator.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
 }

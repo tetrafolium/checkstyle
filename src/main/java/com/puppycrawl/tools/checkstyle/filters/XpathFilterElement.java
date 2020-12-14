@@ -42,230 +42,230 @@ import net.sf.saxon.trans.XPathException;
  */
 public class XpathFilterElement implements TreeWalkerFilter {
 
-    /** The regexp to match file names against. */
-    private final Pattern fileRegexp;
+/** The regexp to match file names against. */
+private final Pattern fileRegexp;
 
-    /** The pattern for file names. */
-    private final String filePattern;
+/** The pattern for file names. */
+private final String filePattern;
 
-    /** The regexp to match check names against. */
-    private final Pattern checkRegexp;
+/** The regexp to match check names against. */
+private final Pattern checkRegexp;
 
-    /** The pattern for check class names. */
-    private final String checkPattern;
+/** The pattern for check class names. */
+private final String checkPattern;
 
-    /** The regexp to match message names against. */
-    private final Pattern messageRegexp;
+/** The regexp to match message names against. */
+private final Pattern messageRegexp;
 
-    /** The pattern for message names. */
-    private final String messagePattern;
+/** The pattern for message names. */
+private final String messagePattern;
 
-    /** Module id filter. */
-    private final String moduleId;
+/** Module id filter. */
+private final String moduleId;
 
-    /** Xpath expression. */
-    private final XPathExpression xpathExpression;
+/** Xpath expression. */
+private final XPathExpression xpathExpression;
 
-    /** Xpath query. */
-    private final String xpathQuery;
+/** Xpath query. */
+private final String xpathQuery;
 
-    /**
-     * Creates a {@code XpathElement} instance.
-     * @param files regular expression for names of filtered files
-     * @param checks regular expression for filtered check classes
-     * @param message regular expression for messages.
-     * @param moduleId the module id
-     * @param query the xpath query
-     */
-    public XpathFilterElement(String files, String checks,
-                              String message, String moduleId, String query) {
-        filePattern = files;
-        if (files == null) {
-            fileRegexp = null;
-        }
-        else {
-            fileRegexp = Pattern.compile(files);
-        }
-        checkPattern = checks;
-        if (checks == null) {
-            checkRegexp = null;
-        }
-        else {
-            checkRegexp = CommonUtil.createPattern(checks);
-        }
-        messagePattern = message;
-        if (message == null) {
-            messageRegexp = null;
-        }
-        else {
-            messageRegexp = Pattern.compile(message);
-        }
-        this.moduleId = moduleId;
-        xpathQuery = query;
-        if (xpathQuery == null) {
-            xpathExpression = null;
-        }
-        else {
-            final XPathEvaluator xpathEvaluator = new XPathEvaluator();
-            try {
-                xpathExpression = xpathEvaluator.createExpression(xpathQuery);
-            }
-            catch (XPathException ex) {
-                throw new IllegalArgumentException("Unexpected xpath query: " + xpathQuery, ex);
-            }
-        }
-    }
+/**
+ * Creates a {@code XpathElement} instance.
+ * @param files regular expression for names of filtered files
+ * @param checks regular expression for filtered check classes
+ * @param message regular expression for messages.
+ * @param moduleId the module id
+ * @param query the xpath query
+ */
+public XpathFilterElement(String files, String checks,
+                          String message, String moduleId, String query) {
+	filePattern = files;
+	if (files == null) {
+		fileRegexp = null;
+	}
+	else {
+		fileRegexp = Pattern.compile(files);
+	}
+	checkPattern = checks;
+	if (checks == null) {
+		checkRegexp = null;
+	}
+	else {
+		checkRegexp = CommonUtil.createPattern(checks);
+	}
+	messagePattern = message;
+	if (message == null) {
+		messageRegexp = null;
+	}
+	else {
+		messageRegexp = Pattern.compile(message);
+	}
+	this.moduleId = moduleId;
+	xpathQuery = query;
+	if (xpathQuery == null) {
+		xpathExpression = null;
+	}
+	else {
+		final XPathEvaluator xpathEvaluator = new XPathEvaluator();
+		try {
+			xpathExpression = xpathEvaluator.createExpression(xpathQuery);
+		}
+		catch (XPathException ex) {
+			throw new IllegalArgumentException("Unexpected xpath query: " + xpathQuery, ex);
+		}
+	}
+}
 
-    /**
-     * Creates a {@code XpathElement} instance.
-     * @param files regular expression for names of filtered files
-     * @param checks regular expression for filtered check classes
-     * @param message regular expression for messages.
-     * @param moduleId the module id
-     * @param query the xpath query
-     */
-    public XpathFilterElement(Pattern files, Pattern checks, Pattern message,
-                              String moduleId, String query) {
-        if (files == null) {
-            filePattern = null;
-            fileRegexp = null;
-        }
-        else {
-            filePattern = files.pattern();
-            fileRegexp = files;
-        }
-        if (checks == null) {
-            checkPattern = null;
-            checkRegexp = null;
-        }
-        else {
-            checkPattern = checks.pattern();
-            checkRegexp = checks;
-        }
-        if (message == null) {
-            messagePattern = null;
-            messageRegexp = null;
-        }
-        else {
-            messagePattern = message.pattern();
-            messageRegexp = message;
-        }
-        this.moduleId = moduleId;
-        xpathQuery = query;
-        if (xpathQuery == null) {
-            xpathExpression = null;
-        }
-        else {
-            final XPathEvaluator xpathEvaluator = new XPathEvaluator();
-            try {
-                xpathExpression = xpathEvaluator.createExpression(xpathQuery);
-            }
-            catch (XPathException ex) {
-                throw new IllegalArgumentException("Incorrect xpath query: " + xpathQuery, ex);
-            }
-        }
-    }
+/**
+ * Creates a {@code XpathElement} instance.
+ * @param files regular expression for names of filtered files
+ * @param checks regular expression for filtered check classes
+ * @param message regular expression for messages.
+ * @param moduleId the module id
+ * @param query the xpath query
+ */
+public XpathFilterElement(Pattern files, Pattern checks, Pattern message,
+                          String moduleId, String query) {
+	if (files == null) {
+		filePattern = null;
+		fileRegexp = null;
+	}
+	else {
+		filePattern = files.pattern();
+		fileRegexp = files;
+	}
+	if (checks == null) {
+		checkPattern = null;
+		checkRegexp = null;
+	}
+	else {
+		checkPattern = checks.pattern();
+		checkRegexp = checks;
+	}
+	if (message == null) {
+		messagePattern = null;
+		messageRegexp = null;
+	}
+	else {
+		messagePattern = message.pattern();
+		messageRegexp = message;
+	}
+	this.moduleId = moduleId;
+	xpathQuery = query;
+	if (xpathQuery == null) {
+		xpathExpression = null;
+	}
+	else {
+		final XPathEvaluator xpathEvaluator = new XPathEvaluator();
+		try {
+			xpathExpression = xpathEvaluator.createExpression(xpathQuery);
+		}
+		catch (XPathException ex) {
+			throw new IllegalArgumentException("Incorrect xpath query: " + xpathQuery, ex);
+		}
+	}
+}
 
-    @Override
-    public boolean accept(TreeWalkerAuditEvent event) {
-        return !isFileNameAndModuleAndModuleNameMatching(event)
-               || !isMessageNameMatching(event)
-               || !isXpathQueryMatching(event);
-    }
+@Override
+public boolean accept(TreeWalkerAuditEvent event) {
+	return !isFileNameAndModuleAndModuleNameMatching(event)
+	       || !isMessageNameMatching(event)
+	       || !isXpathQueryMatching(event);
+}
 
-    /**
-     * Is matching by file name, module id and Check name.
-     * @param event event
-     * @return true if it is matching
-     */
-    private boolean isFileNameAndModuleAndModuleNameMatching(TreeWalkerAuditEvent event) {
-        return event.getFileName() != null
-               && (fileRegexp == null || fileRegexp.matcher(event.getFileName()).find())
-               && event.getLocalizedMessage() != null
-               && (moduleId == null || moduleId.equals(event.getModuleId()))
-               && (checkRegexp == null || checkRegexp.matcher(event.getSourceName()).find());
-    }
+/**
+ * Is matching by file name, module id and Check name.
+ * @param event event
+ * @return true if it is matching
+ */
+private boolean isFileNameAndModuleAndModuleNameMatching(TreeWalkerAuditEvent event) {
+	return event.getFileName() != null
+	       && (fileRegexp == null || fileRegexp.matcher(event.getFileName()).find())
+	       && event.getLocalizedMessage() != null
+	       && (moduleId == null || moduleId.equals(event.getModuleId()))
+	       && (checkRegexp == null || checkRegexp.matcher(event.getSourceName()).find());
+}
 
-    /**
-     * Is matching by message.
-     * @param event event
-     * @return true if it is matching or not set.
-     */
-    private boolean isMessageNameMatching(TreeWalkerAuditEvent event) {
-        return messageRegexp == null || messageRegexp.matcher(event.getMessage()).find();
-    }
+/**
+ * Is matching by message.
+ * @param event event
+ * @return true if it is matching or not set.
+ */
+private boolean isMessageNameMatching(TreeWalkerAuditEvent event) {
+	return messageRegexp == null || messageRegexp.matcher(event.getMessage()).find();
+}
 
-    /**
-     * Is matching by xpath query.
-     * @param event event
-     * @return true if it is matching or not set.
-     */
-    private boolean isXpathQueryMatching(TreeWalkerAuditEvent event) {
-        boolean isMatching;
-        if (xpathExpression == null) {
-            isMatching = true;
-        }
-        else {
-            isMatching = false;
-            final List<AbstractNode> nodes = getItems(event)
-                                             .stream().map(item -> (AbstractNode) item).collect(Collectors.toList());
-            for (AbstractNode abstractNode : nodes) {
-                isMatching = abstractNode.getTokenType() == event.getTokenType()
-                             && abstractNode.getLineNumber() == event.getLine()
-                             && abstractNode.getColumnNumber() == event.getColumnCharIndex();
-                if (isMatching) {
-                    break;
-                }
-            }
-        }
-        return isMatching;
-    }
+/**
+ * Is matching by xpath query.
+ * @param event event
+ * @return true if it is matching or not set.
+ */
+private boolean isXpathQueryMatching(TreeWalkerAuditEvent event) {
+	boolean isMatching;
+	if (xpathExpression == null) {
+		isMatching = true;
+	}
+	else {
+		isMatching = false;
+		final List<AbstractNode> nodes = getItems(event)
+		                                 .stream().map(item->(AbstractNode) item).collect(Collectors.toList());
+		for (AbstractNode abstractNode : nodes) {
+			isMatching = abstractNode.getTokenType() == event.getTokenType()
+			             && abstractNode.getLineNumber() == event.getLine()
+			             && abstractNode.getColumnNumber() == event.getColumnCharIndex();
+			if (isMatching) {
+				break;
+			}
+		}
+	}
+	return isMatching;
+}
 
-    /**
-     * Returns list of nodes matching xpath expression given event.
-     * @param event {@code TreeWalkerAuditEvent} object
-     * @return list of nodes matching xpath expression given event
-     */
-    private List<Item<?>> getItems(TreeWalkerAuditEvent event) {
-        final RootNode rootNode;
-        if (event.getRootAst() == null) {
-            rootNode = null;
-        }
-        else {
-            rootNode = new RootNode(event.getRootAst());
-        }
-        final List<Item<?>> items;
-        try {
-            final XPathDynamicContext xpathDynamicContext =
-                xpathExpression.createDynamicContext(rootNode);
-            items = xpathExpression.evaluate(xpathDynamicContext);
-        }
-        catch (XPathException ex) {
-            throw new IllegalStateException("Cannot initialize context and evaluate query: "
-                                            + xpathQuery, ex);
-        }
-        return items;
-    }
+/**
+ * Returns list of nodes matching xpath expression given event.
+ * @param event {@code TreeWalkerAuditEvent} object
+ * @return list of nodes matching xpath expression given event
+ */
+private List<Item<?> > getItems(TreeWalkerAuditEvent event) {
+	final RootNode rootNode;
+	if (event.getRootAst() == null) {
+		rootNode = null;
+	}
+	else {
+		rootNode = new RootNode(event.getRootAst());
+	}
+	final List<Item<?> > items;
+	try {
+		final XPathDynamicContext xpathDynamicContext =
+			xpathExpression.createDynamicContext(rootNode);
+		items = xpathExpression.evaluate(xpathDynamicContext);
+	}
+	catch (XPathException ex) {
+		throw new IllegalStateException("Cannot initialize context and evaluate query: "
+		                                + xpathQuery, ex);
+	}
+	return items;
+}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(filePattern, checkPattern, messagePattern, moduleId, xpathQuery);
-    }
+@Override
+public int hashCode() {
+	return Objects.hash(filePattern, checkPattern, messagePattern, moduleId, xpathQuery);
+}
 
-    @Override
-    public boolean equals(Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final XpathFilterElement xpathFilter = (XpathFilterElement) other;
-        return Objects.equals(filePattern, xpathFilter.filePattern)
-               && Objects.equals(checkPattern, xpathFilter.checkPattern)
-               && Objects.equals(messagePattern, xpathFilter.messagePattern)
-               && Objects.equals(moduleId, xpathFilter.moduleId)
-               && Objects.equals(xpathQuery, xpathFilter.xpathQuery);
-    }
+@Override
+public boolean equals(Object other) {
+	if (this == other) {
+		return true;
+	}
+	if (other == null || getClass() != other.getClass()) {
+		return false;
+	}
+	final XpathFilterElement xpathFilter = (XpathFilterElement) other;
+	return Objects.equals(filePattern, xpathFilter.filePattern)
+	       && Objects.equals(checkPattern, xpathFilter.checkPattern)
+	       && Objects.equals(messagePattern, xpathFilter.messagePattern)
+	       && Objects.equals(moduleId, xpathFilter.moduleId)
+	       && Objects.equals(xpathQuery, xpathFilter.xpathQuery);
+}
 
 }

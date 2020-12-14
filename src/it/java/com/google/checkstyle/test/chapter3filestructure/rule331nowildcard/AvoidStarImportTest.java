@@ -26,25 +26,25 @@ import com.puppycrawl.tools.checkstyle.api.Configuration;
 
 public class AvoidStarImportTest extends AbstractGoogleModuleTestSupport {
 
-    @Override
-    protected String getPackageLocation() {
-        return "com/google/checkstyle/test/chapter3filestructure/rule331nowildcard";
-    }
+@Override
+protected String getPackageLocation() {
+	return "com/google/checkstyle/test/chapter3filestructure/rule331nowildcard";
+}
 
-    @Test
-    public void testStarImport() throws Exception {
-        final String[] expected = {
-            "3: Using the '.*' form of import should be avoided - java.io.*.",
-            "4: Using the '.*' form of import should be avoided - java.lang.*.",
-            "18: Using the '.*' form of import should be avoided - javax.swing.WindowConstants.*.",
-            "19: Using the '.*' form of import should be avoided - javax.swing.WindowConstants.*.",
-        };
+@Test
+public void testStarImport() throws Exception {
+	final String[] expected = {
+		"3: Using the '.*' form of import should be avoided - java.io.*.",
+		"4: Using the '.*' form of import should be avoided - java.lang.*.",
+		"18: Using the '.*' form of import should be avoided - javax.swing.WindowConstants.*.",
+		"19: Using the '.*' form of import should be avoided - javax.swing.WindowConstants.*.",
+	};
 
-        final Configuration checkConfig = getModuleConfig("AvoidStarImport");
-        final String filePath = getPath("InputAvoidStarImport.java");
+	final Configuration checkConfig = getModuleConfig("AvoidStarImport");
+	final String filePath = getPath("InputAvoidStarImport.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
 }

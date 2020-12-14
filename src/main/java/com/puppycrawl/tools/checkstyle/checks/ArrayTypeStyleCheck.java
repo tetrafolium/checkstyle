@@ -98,57 +98,57 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 @StatelessCheck
 public class ArrayTypeStyleCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "array.type.style";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "array.type.style";
 
-    /** Control whether to enforce Java style (true) or C style (false). */
-    private boolean javaStyle = true;
+/** Control whether to enforce Java style (true) or C style (false). */
+private boolean javaStyle = true;
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.ARRAY_DECLARATOR};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.ARRAY_DECLARATOR};
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        final DetailAST typeAST = ast.getParent();
-        if (typeAST.getType() == TokenTypes.TYPE) {
-            final DetailAST variableAST = typeAST.getNextSibling();
-            if (variableAST != null) {
-                final boolean isMethod = typeAST.getParent().getType() == TokenTypes.METHOD_DEF;
-                final boolean isJavaStyle = variableAST.getLineNo() > ast.getLineNo()
-                                            || variableAST.getColumnNo() - ast.getColumnNo() > -1;
+@Override
+public void visitToken(DetailAST ast) {
+	final DetailAST typeAST = ast.getParent();
+	if (typeAST.getType() == TokenTypes.TYPE) {
+		final DetailAST variableAST = typeAST.getNextSibling();
+		if (variableAST != null) {
+			final boolean isMethod = typeAST.getParent().getType() == TokenTypes.METHOD_DEF;
+			final boolean isJavaStyle = variableAST.getLineNo() > ast.getLineNo()
+			                            || variableAST.getColumnNo() - ast.getColumnNo() > -1;
 
-                // force all methods to be Java style (see note in top Javadoc)
-                final boolean isMethodViolation = isMethod && !isJavaStyle;
-                final boolean isVariableViolation = !isMethod && isJavaStyle != javaStyle;
+			// force all methods to be Java style (see note in top Javadoc)
+			final boolean isMethodViolation = isMethod && !isJavaStyle;
+			final boolean isVariableViolation = !isMethod && isJavaStyle != javaStyle;
 
-                if (isMethodViolation || isVariableViolation) {
-                    log(ast, MSG_KEY);
-                }
-            }
-        }
-    }
+			if (isMethodViolation || isVariableViolation) {
+				log(ast, MSG_KEY);
+			}
+		}
+	}
+}
 
-    /**
-     * Setter to control whether to enforce Java style (true) or C style (false).
-     * @param javaStyle true if Java style should be used.
-     */
-    public void setJavaStyle(boolean javaStyle) {
-        this.javaStyle = javaStyle;
-    }
+/**
+ * Setter to control whether to enforce Java style (true) or C style (false).
+ * @param javaStyle true if Java style should be used.
+ */
+public void setJavaStyle(boolean javaStyle) {
+	this.javaStyle = javaStyle;
+}
 
 }

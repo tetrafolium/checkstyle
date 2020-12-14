@@ -154,101 +154,101 @@ import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
  * @since 3.0
  */
 public class MethodNameCheck
-    extends AbstractAccessControlNameCheck {
+	extends AbstractAccessControlNameCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "method.name.equals.class.name";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "method.name.equals.class.name";
 
-    /**
-     * {@link Override Override} annotation name.
-     */
-    private static final String OVERRIDE = "Override";
+/**
+ * {@link Override Override} annotation name.
+ */
+private static final String OVERRIDE = "Override";
 
-    /**
-     * Canonical {@link Override Override} annotation name.
-     */
-    private static final String CANONICAL_OVERRIDE = "java.lang." + OVERRIDE;
+/**
+ * Canonical {@link Override Override} annotation name.
+ */
+private static final String CANONICAL_OVERRIDE = "java.lang." + OVERRIDE;
 
-    /**
-     * Controls whether to allow a method name to have the same name as the residing class name.
-     * This is not to be confused with a constructor. An easy mistake is to place a return type on
-     * a constructor declaration which turns it into a method. For example:
-     * <pre>
-     * class MyClass {
-     *     public void MyClass() {} //this is a method
-     *     public MyClass() {} //this is a constructor
-     * }
-     * </pre>
-     */
-    private boolean allowClassName;
+/**
+ * Controls whether to allow a method name to have the same name as the residing class name.
+ * This is not to be confused with a constructor. An easy mistake is to place a return type on
+ * a constructor declaration which turns it into a method. For example:
+ * <pre>
+ * class MyClass {
+ *     public void MyClass() {} //this is a method
+ *     public MyClass() {} //this is a constructor
+ * }
+ * </pre>
+ */
+private boolean allowClassName;
 
-    /** Creates a new {@code MethodNameCheck} instance. */
-    public MethodNameCheck() {
-        super("^[a-z][a-zA-Z0-9]*$");
-    }
+/** Creates a new {@code MethodNameCheck} instance. */
+public MethodNameCheck() {
+	super("^[a-z][a-zA-Z0-9]*$");
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.METHOD_DEF, };
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.METHOD_DEF, };
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        if (!AnnotationUtil.containsAnnotation(ast, OVERRIDE)
-                && !AnnotationUtil.containsAnnotation(ast, CANONICAL_OVERRIDE)) {
-            // Will check the name against the format.
-            super.visitToken(ast);
-        }
+@Override
+public void visitToken(DetailAST ast) {
+	if (!AnnotationUtil.containsAnnotation(ast, OVERRIDE)
+	    && !AnnotationUtil.containsAnnotation(ast, CANONICAL_OVERRIDE)) {
+		// Will check the name against the format.
+		super.visitToken(ast);
+	}
 
-        if (!allowClassName) {
-            final DetailAST method =
-                ast.findFirstToken(TokenTypes.IDENT);
-            // in all cases this will be the classDef type except anon inner
-            // with anon inner classes this will be the Literal_New keyword
-            final DetailAST classDefOrNew = ast.getParent().getParent();
-            final DetailAST classIdent =
-                classDefOrNew.findFirstToken(TokenTypes.IDENT);
-            // Following logic is to handle when a classIdent can not be
-            // found. This is when you have a Literal_New keyword followed
-            // a DOT, which is when you have:
-            // new Outclass.InnerInterface(x) { ... }
-            // Such a rare case, will not have the logic to handle parsing
-            // down the tree looking for the first ident.
-            if (classIdent != null
-                    && method.getText().equals(classIdent.getText())) {
-                log(method, MSG_KEY, method.getText());
-            }
-        }
-    }
+	if (!allowClassName) {
+		final DetailAST method =
+			ast.findFirstToken(TokenTypes.IDENT);
+		// in all cases this will be the classDef type except anon inner
+		// with anon inner classes this will be the Literal_New keyword
+		final DetailAST classDefOrNew = ast.getParent().getParent();
+		final DetailAST classIdent =
+			classDefOrNew.findFirstToken(TokenTypes.IDENT);
+		// Following logic is to handle when a classIdent can not be
+		// found. This is when you have a Literal_New keyword followed
+		// a DOT, which is when you have:
+		// new Outclass.InnerInterface(x) { ... }
+		// Such a rare case, will not have the logic to handle parsing
+		// down the tree looking for the first ident.
+		if (classIdent != null
+		    && method.getText().equals(classIdent.getText())) {
+			log(method, MSG_KEY, method.getText());
+		}
+	}
+}
 
-    /**
-     * Setter to controls whether to allow a method name to have the same name as the residing
-     * class name. This is not to be confused with a constructor. An easy mistake is to place
-     * a return type on a constructor declaration which turns it into a method. For example:
-     * <pre>
-     * class MyClass {
-     *     public void MyClass() {} //this is a method
-     *     public MyClass() {} //this is a constructor
-     * }
-     * </pre>
-     *
-     * @param allowClassName true to allow false to disallow
-     */
-    public void setAllowClassName(boolean allowClassName) {
-        this.allowClassName = allowClassName;
-    }
+/**
+ * Setter to controls whether to allow a method name to have the same name as the residing
+ * class name. This is not to be confused with a constructor. An easy mistake is to place
+ * a return type on a constructor declaration which turns it into a method. For example:
+ * <pre>
+ * class MyClass {
+ *     public void MyClass() {} //this is a method
+ *     public MyClass() {} //this is a constructor
+ * }
+ * </pre>
+ *
+ * @param allowClassName true to allow false to disallow
+ */
+public void setAllowClassName(boolean allowClassName) {
+	this.allowClassName = allowClassName;
+}
 
 }

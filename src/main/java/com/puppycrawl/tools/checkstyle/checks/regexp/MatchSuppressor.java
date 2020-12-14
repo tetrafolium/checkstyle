@@ -25,15 +25,15 @@ package com.puppycrawl.tools.checkstyle.checks.regexp;
 @FunctionalInterface
 public interface MatchSuppressor {
 
-    /**
-     * Checks if the specified selection should be suppressed.
-     * @param startLineNo the starting line number
-     * @param startColNo the starting column number
-     * @param endLineNo the ending line number
-     * @param endColNo the ending column number
-     * @return true if the positions intersects with a comment.
-     **/
-    boolean shouldSuppress(int startLineNo, int startColNo, int endLineNo,
-                           int endColNo);
+/**
+ * Checks if the specified selection should be suppressed.
+ * @param startLineNo the starting line number
+ * @param startColNo the starting column number
+ * @param endLineNo the ending line number
+ * @param endColNo the ending column number
+ * @return true if the positions intersects with a comment.
+ **/
+boolean shouldSuppress(int startLineNo, int startColNo, int endLineNo,
+                       int endColNo);
 
 }

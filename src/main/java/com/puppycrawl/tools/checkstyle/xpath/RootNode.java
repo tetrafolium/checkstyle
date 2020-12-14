@@ -38,189 +38,189 @@ import net.sf.saxon.type.Type;
  */
 public class RootNode extends AbstractNode {
 
-    /** Name of the root element. */
-    private static final String ROOT_NAME = "ROOT";
+/** Name of the root element. */
+private static final String ROOT_NAME = "ROOT";
 
-    /** Constant for optimization. */
-    private static final AbstractNode[] EMPTY_ABSTRACT_NODE_ARRAY = new AbstractNode[0];
+/** Constant for optimization. */
+private static final AbstractNode[] EMPTY_ABSTRACT_NODE_ARRAY = new AbstractNode[0];
 
-    /** The ast node. */
-    private final DetailAST detailAst;
+/** The ast node. */
+private final DetailAST detailAst;
 
-    /**
-     * Creates a new {@code RootNode} instance.
-     *
-     * @param detailAst reference to {@code DetailAST}
-     */
-    public RootNode(DetailAST detailAst) {
-        super(new GenericTreeInfo(Configuration.newConfiguration()));
-        this.detailAst = detailAst;
+/**
+ * Creates a new {@code RootNode} instance.
+ *
+ * @param detailAst reference to {@code DetailAST}
+ */
+public RootNode(DetailAST detailAst) {
+	super(new GenericTreeInfo(Configuration.newConfiguration()));
+	this.detailAst = detailAst;
 
-        createChildren();
-    }
+	createChildren();
+}
 
-    /**
-     * Iterates siblings of the current node and
-     * recursively creates new Xpath-nodes.
-     */
-    private void createChildren() {
-        DetailAST currentChild = detailAst;
-        while (currentChild != null) {
-            final ElementNode child = new ElementNode(this, this, currentChild);
-            addChild(child);
-            currentChild = currentChild.getNextSibling();
-        }
-    }
+/**
+ * Iterates siblings of the current node and
+ * recursively creates new Xpath-nodes.
+ */
+private void createChildren() {
+	DetailAST currentChild = detailAst;
+	while (currentChild != null) {
+		final ElementNode child = new ElementNode(this, this, currentChild);
+		addChild(child);
+		currentChild = currentChild.getNextSibling();
+	}
+}
 
-    /**
-     * Returns attribute value. Throws {@code UnsupportedOperationException} because root node
-     * has no attributes.
-     * @param namespace namespace
-     * @param localPart actual name of the attribute
-     * @return attribute value
-     */
-    @Override
-    public String getAttributeValue(String namespace, String localPart) {
-        throw throwUnsupportedOperationException();
-    }
+/**
+ * Returns attribute value. Throws {@code UnsupportedOperationException} because root node
+ * has no attributes.
+ * @param namespace namespace
+ * @param localPart actual name of the attribute
+ * @return attribute value
+ */
+@Override
+public String getAttributeValue(String namespace, String localPart) {
+	throw throwUnsupportedOperationException();
+}
 
-    /**
-     * Returns local part.
-     * @return local part
-     */
-    @Override
-    public String getLocalPart() {
-        return ROOT_NAME;
-    }
+/**
+ * Returns local part.
+ * @return local part
+ */
+@Override
+public String getLocalPart() {
+	return ROOT_NAME;
+}
 
-    /**
-     * Returns type of the node.
-     * @return node kind
-     */
-    @Override
-    public int getNodeKind() {
-        return Type.DOCUMENT;
-    }
+/**
+ * Returns type of the node.
+ * @return node kind
+ */
+@Override
+public int getNodeKind() {
+	return Type.DOCUMENT;
+}
 
-    /**
-     * Returns parent.
-     * @return parent
-     */
-    @Override
-    public NodeInfo getParent() {
-        return null;
-    }
+/**
+ * Returns parent.
+ * @return parent
+ */
+@Override
+public NodeInfo getParent() {
+	return null;
+}
 
-    /**
-     * Returns root of the tree.
-     * @return root of the tree
-     */
-    @Override
-    public NodeInfo getRoot() {
-        return this;
-    }
+/**
+ * Returns root of the tree.
+ * @return root of the tree
+ */
+@Override
+public NodeInfo getRoot() {
+	return this;
+}
 
-    /**
-     * Determines axis iteration algorithm. Throws {@code UnsupportedOperationException} in case,
-     * when there is no axis iterator for given axisNumber.
-     * @param axisNumber element from {@code AxisInfo}
-     * @return {@code AxisIterator} object
-     */
-    @Override
-    public AxisIterator iterateAxis(byte axisNumber) {
-        final AxisIterator result;
-        switch (axisNumber) {
-        case AxisInfo.ANCESTOR:
-        case AxisInfo.ATTRIBUTE:
-        case AxisInfo.PARENT:
-        case AxisInfo.FOLLOWING:
-        case AxisInfo.FOLLOWING_SIBLING:
-        case AxisInfo.PRECEDING:
-        case AxisInfo.PRECEDING_SIBLING:
-            result = EmptyIterator.OfNodes.THE_INSTANCE;
-            break;
-        case AxisInfo.ANCESTOR_OR_SELF:
-        case AxisInfo.SELF:
-            try (AxisIterator iterator = SingleNodeIterator.makeIterator(this)) {
-                result = iterator;
-            }
-            break;
-        case AxisInfo.CHILD:
-            if (hasChildNodes()) {
-                try (AxisIterator iterator = new ArrayIterator.OfNodes(
-                        getChildren().toArray(EMPTY_ABSTRACT_NODE_ARRAY))) {
-                    result = iterator;
-                }
-            }
-            else {
-                result = EmptyIterator.OfNodes.THE_INSTANCE;
-            }
-            break;
-        case AxisInfo.DESCENDANT:
-            if (hasChildNodes()) {
-                try (AxisIterator iterator =
-                                new Navigator.DescendantEnumeration(this, false, true)) {
-                    result = iterator;
-                }
-            }
-            else {
-                result = EmptyIterator.OfNodes.THE_INSTANCE;
-            }
-            break;
-        case AxisInfo.DESCENDANT_OR_SELF:
-            try (AxisIterator iterator =
-                            new Navigator.DescendantEnumeration(this, true, true)) {
-                result = iterator;
-            }
-            break;
-        default:
-            throw throwUnsupportedOperationException();
-        }
-        return result;
-    }
+/**
+ * Determines axis iteration algorithm. Throws {@code UnsupportedOperationException} in case,
+ * when there is no axis iterator for given axisNumber.
+ * @param axisNumber element from {@code AxisInfo}
+ * @return {@code AxisIterator} object
+ */
+@Override
+public AxisIterator iterateAxis(byte axisNumber) {
+	final AxisIterator result;
+	switch (axisNumber) {
+	case AxisInfo.ANCESTOR:
+	case AxisInfo.ATTRIBUTE:
+	case AxisInfo.PARENT:
+	case AxisInfo.FOLLOWING:
+	case AxisInfo.FOLLOWING_SIBLING:
+	case AxisInfo.PRECEDING:
+	case AxisInfo.PRECEDING_SIBLING:
+		result = EmptyIterator.OfNodes.THE_INSTANCE;
+		break;
+	case AxisInfo.ANCESTOR_OR_SELF:
+	case AxisInfo.SELF:
+		try (AxisIterator iterator = SingleNodeIterator.makeIterator(this)) {
+			result = iterator;
+		}
+		break;
+	case AxisInfo.CHILD:
+		if (hasChildNodes()) {
+			try (AxisIterator iterator = new ArrayIterator.OfNodes(
+				     getChildren().toArray(EMPTY_ABSTRACT_NODE_ARRAY))) {
+				result = iterator;
+			}
+		}
+		else {
+			result = EmptyIterator.OfNodes.THE_INSTANCE;
+		}
+		break;
+	case AxisInfo.DESCENDANT:
+		if (hasChildNodes()) {
+			try (AxisIterator iterator =
+				     new Navigator.DescendantEnumeration(this, false, true)) {
+				result = iterator;
+			}
+		}
+		else {
+			result = EmptyIterator.OfNodes.THE_INSTANCE;
+		}
+		break;
+	case AxisInfo.DESCENDANT_OR_SELF:
+		try (AxisIterator iterator =
+			     new Navigator.DescendantEnumeration(this, true, true)) {
+			result = iterator;
+		}
+		break;
+	default:
+		throw throwUnsupportedOperationException();
+	}
+	return result;
+}
 
-    /**
-     * Returns line number.
-     * @return line number
-     */
-    @Override
-    public int getLineNumber() {
-        return detailAst.getLineNo();
-    }
+/**
+ * Returns line number.
+ * @return line number
+ */
+@Override
+public int getLineNumber() {
+	return detailAst.getLineNo();
+}
 
-    /**
-     * Returns column number.
-     * @return column number
-     */
-    @Override
-    public int getColumnNumber() {
-        return detailAst.getColumnNo();
-    }
+/**
+ * Returns column number.
+ * @return column number
+ */
+@Override
+public int getColumnNumber() {
+	return detailAst.getColumnNo();
+}
 
-    /**
-     * Getter method for token type.
-     * @return token type
-     */
-    @Override
-    public int getTokenType() {
-        return TokenTypes.EOF;
-    }
+/**
+ * Getter method for token type.
+ * @return token type
+ */
+@Override
+public int getTokenType() {
+	return TokenTypes.EOF;
+}
 
-    /**
-     * Returns underlying node.
-     * @return underlying node
-     */
-    @Override
-    public DetailAST getUnderlyingNode() {
-        return detailAst;
-    }
+/**
+ * Returns underlying node.
+ * @return underlying node
+ */
+@Override
+public DetailAST getUnderlyingNode() {
+	return detailAst;
+}
 
-    /**
-     * Returns UnsupportedOperationException exception.
-     * @return UnsupportedOperationException exception
-     */
-    private static UnsupportedOperationException throwUnsupportedOperationException() {
-        return new UnsupportedOperationException("Operation is not supported");
-    }
+/**
+ * Returns UnsupportedOperationException exception.
+ * @return UnsupportedOperationException exception
+ */
+private static UnsupportedOperationException throwUnsupportedOperationException() {
+	return new UnsupportedOperationException("Operation is not supported");
+}
 
 }

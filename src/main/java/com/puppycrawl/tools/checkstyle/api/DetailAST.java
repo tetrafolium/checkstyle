@@ -28,103 +28,103 @@ package com.puppycrawl.tools.checkstyle.api;
  */
 public interface DetailAST {
 
-    /**
-     * Returns the number of child nodes one level below this node. That is is
-     * does not recurse down the tree.
-     * @return the number of child nodes
-     */
-    int getChildCount();
+/**
+ * Returns the number of child nodes one level below this node. That is is
+ * does not recurse down the tree.
+ * @return the number of child nodes
+ */
+int getChildCount();
 
-    /**
-     * Returns the number of direct child tokens that have the specified type.
-     * @param type the token type to match
-     * @return the number of matching token
-     */
-    int getChildCount(int type);
+/**
+ * Returns the number of direct child tokens that have the specified type.
+ * @param type the token type to match
+ * @return the number of matching token
+ */
+int getChildCount(int type);
 
-    /**
-     * Returns the parent token.
-     * @return the parent token
-     */
-    DetailAST getParent();
+/**
+ * Returns the parent token.
+ * @return the parent token
+ */
+DetailAST getParent();
 
-    /**
-     * Gets the text of this AST.
-     * @return the text.
-     */
-    String getText();
+/**
+ * Gets the text of this AST.
+ * @return the text.
+ */
+String getText();
 
-    /**
-     * Gets the type of this AST.
-     * @return the type.
-     */
-    int getType();
+/**
+ * Gets the type of this AST.
+ * @return the type.
+ */
+int getType();
 
-    /**
-     * Gets line number.
-     * @return the line number
-     */
-    int getLineNo();
+/**
+ * Gets line number.
+ * @return the line number
+ */
+int getLineNo();
 
-    /**
-     * Gets column number.
-     * @return the column number
-     */
-    int getColumnNo();
+/**
+ * Gets column number.
+ * @return the column number
+ */
+int getColumnNo();
 
-    /**
-     * Gets the last child node.
-     * @return the last child node
-     */
-    DetailAST getLastChild();
+/**
+ * Gets the last child node.
+ * @return the last child node
+ */
+DetailAST getLastChild();
 
-    /**
-     * Checks if this branch of the parse tree contains a token
-     * of the provided type.
-     * @param type a TokenType
-     * @return true if and only if this branch (including this node)
-     *     contains a token of type {@code type}.
-     */
-    boolean branchContains(int type);
+/**
+ * Checks if this branch of the parse tree contains a token
+ * of the provided type.
+ * @param type a TokenType
+ * @return true if and only if this branch (including this node)
+ *     contains a token of type {@code type}.
+ */
+boolean branchContains(int type);
 
-    /**
-     * Returns the previous sibling or null if no such sibling exists.
-     * @return the previous sibling or null if no such sibling exists.
-     */
-    DetailAST getPreviousSibling();
+/**
+ * Returns the previous sibling or null if no such sibling exists.
+ * @return the previous sibling or null if no such sibling exists.
+ */
+DetailAST getPreviousSibling();
 
-    /**
-     * Returns the first child token that makes a specified type.
-     * @param type the token type to match
-     * @return the matching token, or null if no match
-     */
-    DetailAST findFirstToken(int type);
+/**
+ * Returns the first child token that makes a specified type.
+ * @param type the token type to match
+ * @return the matching token, or null if no match
+ */
+DetailAST findFirstToken(int type);
 
-    /**
-     * Get the next sibling in line after this one.
-     * @return the next sibling or null if none.
-     */
-    DetailAST getNextSibling();
+/**
+ * Get the next sibling in line after this one.
+ * @return the next sibling or null if none.
+ */
+DetailAST getNextSibling();
 
-    /**
-     * Get the first child of this AST.
-     * @return the first child or null if none.
-     */
-    DetailAST getFirstChild();
+/**
+ * Get the first child of this AST.
+ * @return the first child or null if none.
+ */
+DetailAST getFirstChild();
 
-    /**
-     * Get number of children of this AST.
-     * @return the number of children.
-     * @deprecated This method will be removed in a future release.
-     *             Use {@link #getChildCount()} instead.
-     */
-    @Deprecated
-    int getNumberOfChildren();
+/**
+ * Get number of children of this AST.
+ * @return the number of children.
+ * @deprecated This method will be removed in a future release.
+ *             Use {@link #getChildCount()} instead.
+ */
+@Deprecated
+int getNumberOfChildren();
 
-    /**
-     * Returns whether this AST has any children.
-     *
-     * @return {@code true} if this AST has any children.
-     */
-    boolean hasChildren();
+/**
+ * Returns whether this AST has any children.
+ *
+ * @return {@code true} if this AST has any children.
+ */
+boolean hasChildren();
 }

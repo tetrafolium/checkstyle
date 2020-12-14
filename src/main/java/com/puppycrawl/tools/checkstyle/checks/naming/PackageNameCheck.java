@@ -90,53 +90,53 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  */
 @StatelessCheck
 public class PackageNameCheck
-    extends AbstractCheck {
+	extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "name.invalidPattern";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "name.invalidPattern";
 
-    /** Specifies valid identifiers. */
-    // Uppercase letters seem rather uncommon, but they're allowed in
-    // https://docs.oracle.com/javase/specs/
-    //  second_edition/html/packages.doc.html#40169
-    private Pattern format = Pattern.compile("^[a-z]+(\\.[a-zA-Z_][a-zA-Z0-9_]*)*$");
+/** Specifies valid identifiers. */
+// Uppercase letters seem rather uncommon, but they're allowed in
+// https://docs.oracle.com/javase/specs/
+//  second_edition/html/packages.doc.html#40169
+private Pattern format = Pattern.compile("^[a-z]+(\\.[a-zA-Z_][a-zA-Z0-9_]*)*$");
 
-    /**
-     * Setter to specifies valid identifiers.
-     * @param pattern the new pattern
-     */
-    public void setFormat(Pattern pattern) {
-        format = pattern;
-    }
+/**
+ * Setter to specifies valid identifiers.
+ * @param pattern the new pattern
+ */
+public void setFormat(Pattern pattern) {
+	format = pattern;
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.PACKAGE_DEF};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.PACKAGE_DEF};
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        final DetailAST nameAST = ast.getLastChild().getPreviousSibling();
-        final FullIdent full = FullIdent.createFullIdent(nameAST);
-        if (!format.matcher(full.getText()).find()) {
-            log(full.getDetailAst(),
-                MSG_KEY,
-                full.getText(),
-                format.pattern());
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	final DetailAST nameAST = ast.getLastChild().getPreviousSibling();
+	final FullIdent full = FullIdent.createFullIdent(nameAST);
+	if (!format.matcher(full.getText()).find()) {
+		log(full.getDetailAst(),
+		    MSG_KEY,
+		    full.getText(),
+		    format.pattern());
+	}
+}
 
 }

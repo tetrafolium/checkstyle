@@ -32,95 +32,96 @@ import javax.swing.AbstractAction;
 import org.apache.commons.beanutils.locale.converters.ByteLocaleConverter;
 class InputEmptyLineSeparator //warn
 {
-    public static final double FOO_PI = 3.1415;
-    private boolean flag = true;
-    static {  //warn
-        //empty static initializer
-    }
+public static final double FOO_PI = 3.1415;
+private boolean flag = true;
+static {      //warn
+	//empty static initializer
+}
 
-    {
-        //empty instance initializer
-    }
+{
+	//empty instance initializer
+}
 
-    /**
-     *
-     *
-     *
-     */
-    private InputEmptyLineSeparator()
-    {
-        //empty
-    }
+/**
+ *
+ *
+ *
+ */
+private InputEmptyLineSeparator()
+{
+	//empty
+}
 
-    public int compareTo(InputEmptyLineSeparator aObject)
-    {
-        int number = 0;
-        return 0;
-    }
-    /**
-     *
-     * @param task
-     * @param result
-     * @return
-     */
-    public static <T> Callable<T> callable(Runnable task, T result) // warn
-    {
-        return null;
-    }
+public int compareTo(InputEmptyLineSeparator aObject)
+{
+	int number = 0;
+	return 0;
+}
+/**
+ *
+ * @param task
+ * @param result
+ * @return
+ */
+public static <T> Callable<T> callable(Runnable task, T result)     // warn
+{
+	return null;
+}
 
-    public int getBeastNumber()
-    {
-        return 666;
-    }
-    interface IntEnum { //warn
-    }
+public int getBeastNumber()
+{
+	return 666;
+}
+interface IntEnum {     //warn
+}
 
-    class InnerClass {
+class InnerClass {
 
-        public static final double FOO_PI_INNER = 3.1415;
-        private boolean flagInner = true;
-        {   //warn
-            //empty instance initializer
-        }
+public static final double FOO_PI_INNER = 3.1415;
+private boolean flagInner = true;
+{           //warn
+	    //empty instance initializer
+}
 
-        private InnerClass()
-        {
-            //empty
-        }
+private InnerClass()
+{
+	//empty
+}
 
-    }
+}
 
-    class InnerClass2 { //ok
-        private InnerClass2() //ok
-        {
-            //empty
-        }
-    }
+class InnerClass2 {     //ok
+private InnerClass2()         //ok
+{
+	//empty
+}
+}
 
-    class InnerClass3 { //ok
-        public int compareTo(InputEmptyLineSeparator aObject) //ok
-        {
-            int number = 0;
-            return 0;
-        }
+class InnerClass3 {     //ok
+public int compareTo(InputEmptyLineSeparator aObject)         //ok
+{
+	int number = 0;
+	return 0;
+}
 
-    }
+}
 }
 
 class Clazz { //ok
-    private Clazz() {} //ok
+private Clazz() {
+}                      //ok
 }
 class Class2 { //warn
-    public int compareTo(InputEmptyLineSeparator aObject) //ok
-    {
-        int number = 0;
-        return 0;
-    }
-    Class2 anon = new Class2() { //warn
-        public int compareTo(InputEmptyLineSeparator aObject) //ok
-        {
-            int number = 0;
-            return 0;
-        }
-    };
+public int compareTo(InputEmptyLineSeparator aObject)     //ok
+{
+	int number = 0;
+	return 0;
+}
+Class2 anon = new Class2() {     //warn
+	public int compareTo(InputEmptyLineSeparator aObject) //ok
+	{
+		int number = 0;
+		return 0;
+	}
+};
 }

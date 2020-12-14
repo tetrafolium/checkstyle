@@ -27,23 +27,23 @@ import com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck;
 
 public class LineLengthTest extends AbstractGoogleModuleTestSupport {
 
-    @Override
-    protected String getPackageLocation() {
-        return "com/google/checkstyle/test/chapter4formatting/rule44columnlimit";
-    }
+@Override
+protected String getPackageLocation() {
+	return "com/google/checkstyle/test/chapter4formatting/rule44columnlimit";
+}
 
-    @Test
-    public void testLineLength() throws Exception {
-        final String[] expected = {
-            "5: " + getCheckMessage(LineLengthCheck.class, "maxLineLen", 100, 112),
-            "29: " + getCheckMessage(LineLengthCheck.class, "maxLineLen", 100, 113),
-        };
+@Test
+public void testLineLength() throws Exception {
+	final String[] expected = {
+		"5: " + getCheckMessage(LineLengthCheck.class, "maxLineLen", 100, 112),
+		"29: " + getCheckMessage(LineLengthCheck.class, "maxLineLen", 100, 113),
+	};
 
-        final Configuration checkConfig = getModuleConfig("LineLength");
-        final String filePath = getPath("InputLineLength.java");
+	final Configuration checkConfig = getModuleConfig("LineLength");
+	final String filePath = getPath("InputLineLength.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
 }

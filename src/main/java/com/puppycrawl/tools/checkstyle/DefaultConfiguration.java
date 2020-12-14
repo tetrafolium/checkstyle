@@ -35,127 +35,127 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  */
 public final class DefaultConfiguration implements Configuration {
 
-    private static final long serialVersionUID = 1157875385356127169L;
+private static final long serialVersionUID = 1157875385356127169L;
 
-    /** Constant for optimization. */
-    private static final Configuration[] EMPTY_CONFIGURATION_ARRAY = new Configuration[0];
+/** Constant for optimization. */
+private static final Configuration[] EMPTY_CONFIGURATION_ARRAY = new Configuration[0];
 
-    /** The name of this configuration. */
-    private final String name;
+/** The name of this configuration. */
+private final String name;
 
-    /** The list of child Configurations. */
-    private final List<Configuration> children = new ArrayList<>();
+/** The list of child Configurations. */
+private final List<Configuration> children = new ArrayList<>();
 
-    /** The map from attribute names to attribute values. */
-    private final Map<String, String> attributeMap = new HashMap<>();
+/** The map from attribute names to attribute values. */
+private final Map<String, String> attributeMap = new HashMap<>();
 
-    /** The map containing custom messages. */
-    private final Map<String, String> messages = new HashMap<>();
+/** The map containing custom messages. */
+private final Map<String, String> messages = new HashMap<>();
 
-    /** The thread mode configuration. */
-    private final ThreadModeSettings threadModeSettings;
+/** The thread mode configuration. */
+private final ThreadModeSettings threadModeSettings;
 
-    /**
-     * Instantiates a DefaultConfiguration.
-     * @param name the name for this DefaultConfiguration.
-     */
-    public DefaultConfiguration(String name) {
-        this(name, ThreadModeSettings.SINGLE_THREAD_MODE_INSTANCE);
-    }
+/**
+ * Instantiates a DefaultConfiguration.
+ * @param name the name for this DefaultConfiguration.
+ */
+public DefaultConfiguration(String name) {
+	this(name, ThreadModeSettings.SINGLE_THREAD_MODE_INSTANCE);
+}
 
-    /**
-     * Instantiates a DefaultConfiguration.
-     * @param name the name for this DefaultConfiguration.
-     * @param threadModeSettings the thread mode configuration.
-     */
-    public DefaultConfiguration(String name,
-                                ThreadModeSettings threadModeSettings) {
-        this.name = name;
-        this.threadModeSettings = threadModeSettings;
-    }
+/**
+ * Instantiates a DefaultConfiguration.
+ * @param name the name for this DefaultConfiguration.
+ * @param threadModeSettings the thread mode configuration.
+ */
+public DefaultConfiguration(String name,
+                            ThreadModeSettings threadModeSettings) {
+	this.name = name;
+	this.threadModeSettings = threadModeSettings;
+}
 
-    @Override
-    public String[] getAttributeNames() {
-        final Set<String> keySet = attributeMap.keySet();
-        return keySet.toArray(CommonUtil.EMPTY_STRING_ARRAY);
-    }
+@Override
+public String[] getAttributeNames() {
+	final Set<String> keySet = attributeMap.keySet();
+	return keySet.toArray(CommonUtil.EMPTY_STRING_ARRAY);
+}
 
-    @Override
-    public String getAttribute(String attributeName) throws CheckstyleException {
-        if (!attributeMap.containsKey(attributeName)) {
-            throw new CheckstyleException(
-                "missing key '" + attributeName + "' in " + name);
-        }
-        return attributeMap.get(attributeName);
-    }
+@Override
+public String getAttribute(String attributeName) throws CheckstyleException {
+	if (!attributeMap.containsKey(attributeName)) {
+		throw new CheckstyleException(
+			      "missing key '" + attributeName + "' in " + name);
+	}
+	return attributeMap.get(attributeName);
+}
 
-    @Override
-    public Configuration[] getChildren() {
-        return children.toArray(
-                   EMPTY_CONFIGURATION_ARRAY);
-    }
+@Override
+public Configuration[] getChildren() {
+	return children.toArray(
+		EMPTY_CONFIGURATION_ARRAY);
+}
 
-    @Override
-    public String getName() {
-        return name;
-    }
+@Override
+public String getName() {
+	return name;
+}
 
-    /**
-     * Makes a configuration a child of this configuration.
-     * @param configuration the child configuration.
-     */
-    public void addChild(Configuration configuration) {
-        children.add(configuration);
-    }
+/**
+ * Makes a configuration a child of this configuration.
+ * @param configuration the child configuration.
+ */
+public void addChild(Configuration configuration) {
+	children.add(configuration);
+}
 
-    /**
-     * Removes a child of this configuration.
-     * @param configuration the child configuration to remove.
-     */
-    public void removeChild(final Configuration configuration) {
-        children.remove(configuration);
-    }
+/**
+ * Removes a child of this configuration.
+ * @param configuration the child configuration to remove.
+ */
+public void removeChild(final Configuration configuration) {
+	children.remove(configuration);
+}
 
-    /**
-     * Adds an attribute to this configuration.
-     * @param attributeName the name of the attribute.
-     * @param value the value of the attribute.
-     */
-    public void addAttribute(String attributeName, String value) {
-        final String current = attributeMap.get(attributeName);
-        if (current == null) {
-            attributeMap.put(attributeName, value);
-        }
-        else {
-            attributeMap.put(attributeName, current + "," + value);
-        }
-    }
+/**
+ * Adds an attribute to this configuration.
+ * @param attributeName the name of the attribute.
+ * @param value the value of the attribute.
+ */
+public void addAttribute(String attributeName, String value) {
+	final String current = attributeMap.get(attributeName);
+	if (current == null) {
+		attributeMap.put(attributeName, value);
+	}
+	else {
+		attributeMap.put(attributeName, current + "," + value);
+	}
+}
 
-    /**
-     * Adds a custom message to this configuration.
-     * @param key the message key
-     * @param value the custom message pattern
-     */
-    public void addMessage(String key, String value) {
-        messages.put(key, value);
-    }
+/**
+ * Adds a custom message to this configuration.
+ * @param key the message key
+ * @param value the custom message pattern
+ */
+public void addMessage(String key, String value) {
+	messages.put(key, value);
+}
 
-    /**
-     * Returns an unmodifiable map instance containing the custom messages
-     * for this configuration.
-     * @return unmodifiable map containing custom messages
-     */
-    @Override
-    public Map<String, String> getMessages() {
-        return new HashMap<>(messages);
-    }
+/**
+ * Returns an unmodifiable map instance containing the custom messages
+ * for this configuration.
+ * @return unmodifiable map containing custom messages
+ */
+@Override
+public Map<String, String> getMessages() {
+	return new HashMap<>(messages);
+}
 
-    /**
-     * Gets the thread mode configuration.
-     * @return the thread mode configuration.
-     */
-    public ThreadModeSettings getThreadModeSettings() {
-        return threadModeSettings;
-    }
+/**
+ * Gets the thread mode configuration.
+ * @return the thread mode configuration.
+ */
+public ThreadModeSettings getThreadModeSettings() {
+	return threadModeSettings;
+}
 
 }

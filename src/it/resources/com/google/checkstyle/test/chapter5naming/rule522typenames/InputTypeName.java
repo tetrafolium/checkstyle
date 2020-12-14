@@ -2,15 +2,15 @@ package com.google.checkstyle.test.chapter5naming.rule522typenames;
 
 class inputHeaderClass { //warn
 
-    public interface InputHeader___Interface {}; //warn
+public interface InputHeader___Interface {};     //warn
 
-    public enum inputHeaderEnum { one, two }; //warn
+public enum inputHeaderEnum { one, two };     //warn
 
-    class NoValid$Name {} //warn
+class NoValid$Name {}     //warn
 
-    class $NoValidName {} //warn
+class $NoValidName {}     //warn
 
-    class NoValidName$ {} //warn
+class NoValidName$ {}     //warn
 
 }
 

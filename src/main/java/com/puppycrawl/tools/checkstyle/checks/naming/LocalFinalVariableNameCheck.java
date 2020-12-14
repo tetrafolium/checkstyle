@@ -103,39 +103,39 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * @since 3.0
  */
 public class LocalFinalVariableNameCheck
-    extends AbstractNameCheck {
+	extends AbstractNameCheck {
 
-    /** Creates a new {@code LocalFinalVariableNameCheck} instance. */
-    public LocalFinalVariableNameCheck() {
-        super("^[a-z][a-zA-Z0-9]*$");
-    }
+/** Creates a new {@code LocalFinalVariableNameCheck} instance. */
+public LocalFinalVariableNameCheck() {
+	super("^[a-z][a-zA-Z0-9]*$");
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getAcceptableTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getAcceptableTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return new int[] {
-                   TokenTypes.VARIABLE_DEF,
-                   TokenTypes.PARAMETER_DEF,
-                   TokenTypes.RESOURCE,
-               };
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return new int[] {
+		       TokenTypes.VARIABLE_DEF,
+		       TokenTypes.PARAMETER_DEF,
+		       TokenTypes.RESOURCE,
+	};
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return CommonUtil.EMPTY_INT_ARRAY;
-    }
+@Override
+public int[] getRequiredTokens() {
+	return CommonUtil.EMPTY_INT_ARRAY;
+}
 
-    @Override
-    protected final boolean mustCheckName(DetailAST ast) {
-        final DetailAST modifiersAST =
-            ast.findFirstToken(TokenTypes.MODIFIERS);
-        final boolean isFinal = ast.getType() == TokenTypes.RESOURCE
-                                || modifiersAST.findFirstToken(TokenTypes.FINAL) != null;
-        return isFinal && ScopeUtil.isLocalVariableDef(ast);
-    }
+@Override
+protected final boolean mustCheckName(DetailAST ast) {
+	final DetailAST modifiersAST =
+		ast.findFirstToken(TokenTypes.MODIFIERS);
+	final boolean isFinal = ast.getType() == TokenTypes.RESOURCE
+	                        || modifiersAST.findFirstToken(TokenTypes.FINAL) != null;
+	return isFinal && ScopeUtil.isLocalVariableDef(ast);
+}
 
 }

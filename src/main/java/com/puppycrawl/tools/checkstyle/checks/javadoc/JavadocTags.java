@@ -29,37 +29,37 @@ import java.util.List;
  */
 public final class JavadocTags {
 
-    /** Valid validTags. */
-    private final List<JavadocTag> validTags;
-    /** Invalid validTags. */
-    private final List<InvalidJavadocTag> invalidTags;
+/** Valid validTags. */
+private final List<JavadocTag> validTags;
+/** Invalid validTags. */
+private final List<InvalidJavadocTag> invalidTags;
 
-    /**
-     * Creates an instance.
-     * @param tags the list of valid tags
-     * @param invalidTags the list of invalid tags
-     */
-    public JavadocTags(List<JavadocTag> tags, List<InvalidJavadocTag> invalidTags) {
-        final List<JavadocTag> validTagsCopy = new ArrayList<>(tags);
-        validTags = Collections.unmodifiableList(validTagsCopy);
-        final List<InvalidJavadocTag> invalidTagsCopy = new ArrayList<>(invalidTags);
-        this.invalidTags = Collections.unmodifiableList(invalidTagsCopy);
-    }
+/**
+ * Creates an instance.
+ * @param tags the list of valid tags
+ * @param invalidTags the list of invalid tags
+ */
+public JavadocTags(List<JavadocTag> tags, List<InvalidJavadocTag> invalidTags) {
+	final List<JavadocTag> validTagsCopy = new ArrayList<>(tags);
+	validTags = Collections.unmodifiableList(validTagsCopy);
+	final List<InvalidJavadocTag> invalidTagsCopy = new ArrayList<>(invalidTags);
+	this.invalidTags = Collections.unmodifiableList(invalidTagsCopy);
+}
 
-    /**
-     *  Getter for validTags field.
-     *  @return validTags field
-     */
-    public List<JavadocTag> getValidTags() {
-        return Collections.unmodifiableList(validTags);
-    }
+/**
+ *  Getter for validTags field.
+ *  @return validTags field
+ */
+public List<JavadocTag> getValidTags() {
+	return Collections.unmodifiableList(validTags);
+}
 
-    /**
-     *  Getter for invalidTags field.
-     *  @return invalidTags field
-     */
-    public List<InvalidJavadocTag> getInvalidTags() {
-        return Collections.unmodifiableList(invalidTags);
-    }
+/**
+ *  Getter for invalidTags field.
+ *  @return invalidTags field
+ */
+public List<InvalidJavadocTag> getInvalidTags() {
+	return Collections.unmodifiableList(invalidTags);
+}
 
 }

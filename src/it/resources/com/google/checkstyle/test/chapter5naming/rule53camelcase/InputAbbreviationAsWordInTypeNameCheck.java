@@ -2,74 +2,86 @@ package com.google.checkstyle.test.chapter5naming.rule53camelcase;
 
 class InputAbbreviationAsWordInTypeNameCheck {
 
-    int newCustomerId;
+int newCustomerId;
 
-    String innerStopwatch;
+String innerStopwatch;
 
-    boolean supportsIpv6OnIos;
+boolean supportsIpv6OnIos;
 
-    void XmlHttpRequest() {}
+void XmlHttpRequest() {
+}
 
-    void YouTubeImporter() {}
+void YouTubeImporter() {
+}
 
-    void YoutubeImporter() {}
+void YoutubeImporter() {
+}
 
-    class InnerGood {
+class InnerGood {
 
-        int newCustomerId;
+int newCustomerId;
 
-        String innerStopwatch;
+String innerStopwatch;
 
-        boolean supportsIpv6OnIos;
+boolean supportsIpv6OnIos;
 
-        void XmlHttpRequest() {}
+void XmlHttpRequest() {
+}
 
-        void YouTubeImporter() {}
+void YouTubeImporter() {
+}
 
-        void YoutubeImporter() {}
-    }
+void YoutubeImporter() {
+}
+}
 
-    InputAbbreviationAsWordInTypeNameCheck anonymousGood
-    = new InputAbbreviationAsWordInTypeNameCheck() {
+InputAbbreviationAsWordInTypeNameCheck anonymousGood
+        = new InputAbbreviationAsWordInTypeNameCheck() {
 
-        int newCustomerId;
+	int newCustomerId;
 
-        String innerStopwatch;
+	String innerStopwatch;
 
-        boolean supportsIpv6OnIos;
+	boolean supportsIpv6OnIos;
 
-        void XmlHttpRequest() {}
+	void XmlHttpRequest() {
+	}
 
-        void YouTubeImporter() {}
+	void YouTubeImporter() {
+	}
 
-        void YoutubeImporter() {}
-    };
+	void YoutubeImporter() {
+	}
+	};
 }
 
 class AbbreviationsIncorrect {
 
-    int newCustomerID;
+int newCustomerID;
 
-    boolean supportsIPv6OnIOS; //warn
+boolean supportsIPv6OnIOS;     //warn
 
-    void XMLHTTPRequest() {} //warn
+void XMLHTTPRequest() {
+}                            //warn
 
-    class InnerBad {
+class InnerBad {
 
-        int newCustomerID;
+int newCustomerID;
 
-        boolean supportsIPv6OnIOS; //warn
+boolean supportsIPv6OnIOS;         //warn
 
-        void XMLHTTPRequest() {} //warn
-    }
+void XMLHTTPRequest() {
+}                                //warn
+}
 
-    InputAbbreviationAsWordInTypeNameCheck anonymousBad
-    = new InputAbbreviationAsWordInTypeNameCheck() {
+InputAbbreviationAsWordInTypeNameCheck anonymousBad
+        = new InputAbbreviationAsWordInTypeNameCheck() {
 
-        int newCustomerID;
+	int newCustomerID;
 
-        boolean supportsIPv6OnIOS; //warn
+	boolean supportsIPv6OnIOS; //warn
 
-        void XMLHTTPRequest() {} //warn
-    };
+	void XMLHTTPRequest() {
+	}                        //warn
+	};
 }

@@ -32,11 +32,11 @@ package com.puppycrawl.tools.checkstyle.api;
 @FunctionalInterface
 public interface Contextualizable {
 
-    /**
-     * Sets the context for this Component.
-     * @param context the context.
-     * @throws CheckstyleException if there is a contextualization error.
-     */
-    void contextualize(Context context) throws CheckstyleException;
+/**
+ * Sets the context for this Component.
+ * @param context the context.
+ * @throws CheckstyleException if there is a contextualization error.
+ */
+void contextualize(Context context) throws CheckstyleException;
 
 }

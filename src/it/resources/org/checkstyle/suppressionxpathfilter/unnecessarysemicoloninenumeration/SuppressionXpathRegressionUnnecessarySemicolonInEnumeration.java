@@ -4,9 +4,9 @@ public class SuppressionXpathRegressionUnnecessarySemicolonInEnumeration {
 }
 
 enum Good {
-    One, Two
+	One, Two
 }
 
 enum Bad {
-    Third; //warn
+	Third; //warn
 }

@@ -27,24 +27,24 @@ import com.puppycrawl.tools.checkstyle.checks.blocks.EmptyBlockCheck;
 
 public class EmptyBlockTest extends AbstractGoogleModuleTestSupport {
 
-    @Override
-    protected String getPackageLocation() {
-        return "com/google/checkstyle/test/chapter6programpractice/rule62donotignoreexceptions";
-    }
+@Override
+protected String getPackageLocation() {
+	return "com/google/checkstyle/test/chapter6programpractice/rule62donotignoreexceptions";
+}
 
-    @Test
-    public void testEmptyBlockCatch() throws Exception {
-        final String[] expected = {
-            "29:17: " + getCheckMessage(EmptyBlockCheck.class, "block.empty", "finally"),
-            "50:21: " + getCheckMessage(EmptyBlockCheck.class, "block.empty", "finally"),
-            "72:21: " + getCheckMessage(EmptyBlockCheck.class, "block.empty", "finally"),
-        };
+@Test
+public void testEmptyBlockCatch() throws Exception {
+	final String[] expected = {
+		"29:17: " + getCheckMessage(EmptyBlockCheck.class, "block.empty", "finally"),
+		"50:21: " + getCheckMessage(EmptyBlockCheck.class, "block.empty", "finally"),
+		"72:21: " + getCheckMessage(EmptyBlockCheck.class, "block.empty", "finally"),
+	};
 
-        final Configuration checkConfig = getModuleConfig("EmptyBlock");
-        final String filePath = getPath("InputEmptyBlockCatch.java");
+	final Configuration checkConfig = getModuleConfig("EmptyBlock");
+	final String filePath = getPath("InputEmptyBlockCatch.java");
 
-        final Integer[] warnList = getLinesWithWarn(filePath);
-        verify(checkConfig, filePath, expected, warnList);
-    }
+	final Integer[] warnList = getLinesWithWarn(filePath);
+	verify(checkConfig, filePath, expected, warnList);
+}
 
 }

@@ -30,56 +30,56 @@ import com.puppycrawl.tools.checkstyle.checks.coding.IllegalThrowsCheck;
 
 public class XpathRegressionIllegalThrowsTest extends AbstractXpathTestSupport {
 
-    private final String checkName = IllegalThrowsCheck.class.getSimpleName();
+private final String checkName = IllegalThrowsCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionIllegalThrowsOne.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionIllegalThrowsOne.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(IllegalThrowsCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(IllegalThrowsCheck.class);
 
-        final String[] expectedViolation = {
-            "4:35: " + getCheckMessage(IllegalThrowsCheck.class,
-                                       IllegalThrowsCheck.MSG_KEY, "RuntimeException"),
-        };
+	final String[] expectedViolation = {
+		"4:35: " + getCheckMessage(IllegalThrowsCheck.class,
+		                           IllegalThrowsCheck.MSG_KEY, "RuntimeException"),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionIllegalThrowsOne']]/OBJBLOCK"
-                    + "/METHOD_DEF[./IDENT[@text='sayHello']]/LITERAL_THROWS"
-                    + "/IDENT[@text='RuntimeException']"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionIllegalThrowsOne']]/OBJBLOCK"
+		+ "/METHOD_DEF[./IDENT[@text='sayHello']]/LITERAL_THROWS"
+		+ "/IDENT[@text='RuntimeException']"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionIllegalThrowsTwo.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionIllegalThrowsTwo.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(IllegalThrowsCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(IllegalThrowsCheck.class);
 
-        final String[] expectedViolation = {
-            "8:45: " + getCheckMessage(IllegalThrowsCheck.class,
-                                       IllegalThrowsCheck.MSG_KEY, "java.lang.Error"),
-        };
+	final String[] expectedViolation = {
+		"8:45: " + getCheckMessage(IllegalThrowsCheck.class,
+		                           IllegalThrowsCheck.MSG_KEY, "java.lang.Error"),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionIllegalThrowsTwo']]/OBJBLOCK"
-                    + "/METHOD_DEF[./IDENT[@text='methodTwo']]/LITERAL_THROWS"
-                    + "/DOT[./IDENT[@text='Error']]"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionIllegalThrowsTwo']]/OBJBLOCK"
+		+ "/METHOD_DEF[./IDENT[@text='methodTwo']]/LITERAL_THROWS"
+		+ "/DOT[./IDENT[@text='Error']]"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 }

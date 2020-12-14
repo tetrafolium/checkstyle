@@ -39,114 +39,114 @@ import java.util.EventObject;
  * @noinspection SerializableHasSerializationMethods
  */
 public final class AuditEvent
-    extends EventObject {
+	extends EventObject {
 
-    /** Record a version. */
-    private static final long serialVersionUID = -3774725606973812736L;
-    /** Filename event associated with. **/
-    private final String fileName;
-    /** Message associated with the event. **/
-    private final LocalizedMessage localizedMessage;
+/** Record a version. */
+private static final long serialVersionUID = -3774725606973812736L;
+/** Filename event associated with. **/
+private final String fileName;
+/** Message associated with the event. **/
+private final LocalizedMessage localizedMessage;
 
-    /**
-     * Creates a new instance.
-     * @param source the object that created the event
-     */
-    public AuditEvent(Object source) {
-        this(source, null);
-    }
+/**
+ * Creates a new instance.
+ * @param source the object that created the event
+ */
+public AuditEvent(Object source) {
+	this(source, null);
+}
 
-    /**
-     * Creates a new {@code AuditEvent} instance.
-     * @param src source of the event
-     * @param fileName file associated with the event
-     */
-    public AuditEvent(Object src, String fileName) {
-        this(src, fileName, null);
-    }
+/**
+ * Creates a new {@code AuditEvent} instance.
+ * @param src source of the event
+ * @param fileName file associated with the event
+ */
+public AuditEvent(Object src, String fileName) {
+	this(src, fileName, null);
+}
 
-    /**
-     * Creates a new {@code AuditEvent} instance.
-     *
-     * @param src source of the event
-     * @param fileName file associated with the event
-     * @param localizedMessage the actual message
-     */
-    public AuditEvent(Object src, String fileName, LocalizedMessage localizedMessage) {
-        super(src);
-        this.fileName = fileName;
-        this.localizedMessage = localizedMessage;
-    }
+/**
+ * Creates a new {@code AuditEvent} instance.
+ *
+ * @param src source of the event
+ * @param fileName file associated with the event
+ * @param localizedMessage the actual message
+ */
+public AuditEvent(Object src, String fileName, LocalizedMessage localizedMessage) {
+	super(src);
+	this.fileName = fileName;
+	this.localizedMessage = localizedMessage;
+}
 
-    /**
-     * Returns name of file being audited.
-     * @return the file name currently being audited or null if there is
-     *     no relation to a file.
-     */
-    public String getFileName() {
-        return fileName;
-    }
+/**
+ * Returns name of file being audited.
+ * @return the file name currently being audited or null if there is
+ *     no relation to a file.
+ */
+public String getFileName() {
+	return fileName;
+}
 
-    /**
-     * Return the line number on the source file where the event occurred.
-     * This may be 0 if there is no relation to a file content.
-     * @return an integer representing the line number in the file source code.
-     */
-    public int getLine() {
-        return localizedMessage.getLineNo();
-    }
+/**
+ * Return the line number on the source file where the event occurred.
+ * This may be 0 if there is no relation to a file content.
+ * @return an integer representing the line number in the file source code.
+ */
+public int getLine() {
+	return localizedMessage.getLineNo();
+}
 
-    /**
-     * Return the message associated to the event.
-     * @return the event message
-     */
-    public String getMessage() {
-        return localizedMessage.getMessage();
-    }
+/**
+ * Return the message associated to the event.
+ * @return the event message
+ */
+public String getMessage() {
+	return localizedMessage.getMessage();
+}
 
-    /**
-     * Gets the column associated with the message.
-     * @return the column associated with the message
-     */
-    public int getColumn() {
-        return localizedMessage.getColumnNo();
-    }
+/**
+ * Gets the column associated with the message.
+ * @return the column associated with the message
+ */
+public int getColumn() {
+	return localizedMessage.getColumnNo();
+}
 
-    /**
-     * Gets the audit event severity level.
-     * @return the audit event severity level
-     */
-    public SeverityLevel getSeverityLevel() {
-        SeverityLevel severityLevel = SeverityLevel.INFO;
-        if (localizedMessage != null) {
-            severityLevel = localizedMessage.getSeverityLevel();
-        }
-        return severityLevel;
-    }
+/**
+ * Gets the audit event severity level.
+ * @return the audit event severity level
+ */
+public SeverityLevel getSeverityLevel() {
+	SeverityLevel severityLevel = SeverityLevel.INFO;
+	if (localizedMessage != null) {
+		severityLevel = localizedMessage.getSeverityLevel();
+	}
+	return severityLevel;
+}
 
-    /**
-     * Returns id of module.
-     * @return the identifier of the module that generated the event. Can return
-     *         null.
-     */
-    public String getModuleId() {
-        return localizedMessage.getModuleId();
-    }
+/**
+ * Returns id of module.
+ * @return the identifier of the module that generated the event. Can return
+ *         null.
+ */
+public String getModuleId() {
+	return localizedMessage.getModuleId();
+}
 
-    /**
-     * Gets the name of the source for the message.
-     * @return the name of the source for the message
-     */
-    public String getSourceName() {
-        return localizedMessage.getSourceName();
-    }
+/**
+ * Gets the name of the source for the message.
+ * @return the name of the source for the message
+ */
+public String getSourceName() {
+	return localizedMessage.getSourceName();
+}
 
-    /**
-     * Gets the localized message.
-     * @return the localized message
-     */
-    public LocalizedMessage getLocalizedMessage() {
-        return localizedMessage;
-    }
+/**
+ * Gets the localized message.
+ * @return the localized message
+ */
+public LocalizedMessage getLocalizedMessage() {
+	return localizedMessage;
+}
 
 }

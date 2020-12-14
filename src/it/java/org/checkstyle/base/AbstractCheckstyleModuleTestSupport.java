@@ -24,29 +24,29 @@ import com.puppycrawl.tools.checkstyle.utils.ModuleReflectionUtil;
 
 public abstract class AbstractCheckstyleModuleTestSupport extends AbstractItModuleTestSupport {
 
-    @Override
-    protected ModuleCreationOption findModuleCreationOption(String moduleName) {
-        ModuleCreationOption moduleCreationOption = ModuleCreationOption.IN_CHECKER;
+@Override
+protected ModuleCreationOption findModuleCreationOption(String moduleName) {
+	ModuleCreationOption moduleCreationOption = ModuleCreationOption.IN_CHECKER;
 
-        if (!ROOT_MODULE_NAME.equals(moduleName)) {
-            try {
-                final Class<?> moduleClass = Class.forName(moduleName);
-                if (ModuleReflectionUtil.isCheckstyleTreeWalkerCheck(moduleClass)
-                        || ModuleReflectionUtil.isTreeWalkerFilterModule(moduleClass)) {
-                    moduleCreationOption = ModuleCreationOption.IN_TREEWALKER;
-                }
-            }
-            catch (ClassNotFoundException ignore) {
-                // ignore exception, assume it is not part of TreeWalker
-            }
-        }
+	if (!ROOT_MODULE_NAME.equals(moduleName)) {
+		try {
+			final Class<?> moduleClass = Class.forName(moduleName);
+			if (ModuleReflectionUtil.isCheckstyleTreeWalkerCheck(moduleClass)
+			    || ModuleReflectionUtil.isTreeWalkerFilterModule(moduleClass)) {
+				moduleCreationOption = ModuleCreationOption.IN_TREEWALKER;
+			}
+		}
+		catch (ClassNotFoundException ignore) {
+			// ignore exception, assume it is not part of TreeWalker
+		}
+	}
 
-        return moduleCreationOption;
-    }
+	return moduleCreationOption;
+}
 
-    @Override
-    protected DefaultConfiguration createModuleConfig(Class<?> clazz) {
-        return new DefaultConfiguration(clazz.getName());
-    }
+@Override
+protected DefaultConfiguration createModuleConfig(Class<?> clazz) {
+	return new DefaultConfiguration(clazz.getName());
+}
 
 }

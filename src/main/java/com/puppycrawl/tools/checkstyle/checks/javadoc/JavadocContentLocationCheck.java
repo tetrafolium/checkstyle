@@ -138,107 +138,107 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 @StatelessCheck
 public class JavadocContentLocationCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties" file.
-     */
-    public static final String MSG_JAVADOC_CONTENT_FIRST_LINE = "javadoc.content.first.line";
+/**
+ * A key is pointing to the warning message text in "messages.properties" file.
+ */
+public static final String MSG_JAVADOC_CONTENT_FIRST_LINE = "javadoc.content.first.line";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties" file.
-     */
-    public static final String MSG_JAVADOC_CONTENT_SECOND_LINE = "javadoc.content.second.line";
+/**
+ * A key is pointing to the warning message text in "messages.properties" file.
+ */
+public static final String MSG_JAVADOC_CONTENT_SECOND_LINE = "javadoc.content.second.line";
 
-    /**
-     * Specify the policy on placement of the Javadoc content.
-     */
-    private JavadocContentLocationOption location = JavadocContentLocationOption.SECOND_LINE;
+/**
+ * Specify the policy on placement of the Javadoc content.
+ */
+private JavadocContentLocationOption location = JavadocContentLocationOption.SECOND_LINE;
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {
-                   TokenTypes.BLOCK_COMMENT_BEGIN,
-               };
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {
+		       TokenTypes.BLOCK_COMMENT_BEGIN,
+	};
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public boolean isCommentNodesRequired() {
-        return true;
-    }
+@Override
+public boolean isCommentNodesRequired() {
+	return true;
+}
 
-    /**
-     * Setter to specify the policy on placement of the Javadoc content.
-     *
-     * @param value string to decode location from
-     * @throws IllegalArgumentException if unable to decode
-     */
-    public void setLocation(String value) {
-        location = JavadocContentLocationOption.valueOf(value.trim().toUpperCase(Locale.ENGLISH));
-    }
+/**
+ * Setter to specify the policy on placement of the Javadoc content.
+ *
+ * @param value string to decode location from
+ * @throws IllegalArgumentException if unable to decode
+ */
+public void setLocation(String value) {
+	location = JavadocContentLocationOption.valueOf(value.trim().toUpperCase(Locale.ENGLISH));
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        if (isMultilineComment(ast) && JavadocUtil.isJavadocComment(ast)) {
-            final String commentContent = JavadocUtil.getJavadocCommentContent(ast);
-            final int indexOfFirstNonBlankLine = findIndexOfFirstNonBlankLine(commentContent);
-            if (indexOfFirstNonBlankLine >= 0) {
-                if (location == JavadocContentLocationOption.FIRST_LINE) {
-                    if (indexOfFirstNonBlankLine != 0) {
-                        log(ast, MSG_JAVADOC_CONTENT_FIRST_LINE);
-                    }
-                }
-                else if (indexOfFirstNonBlankLine != 1) {
-                    log(ast, MSG_JAVADOC_CONTENT_SECOND_LINE);
-                }
-            }
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	if (isMultilineComment(ast) && JavadocUtil.isJavadocComment(ast)) {
+		final String commentContent = JavadocUtil.getJavadocCommentContent(ast);
+		final int indexOfFirstNonBlankLine = findIndexOfFirstNonBlankLine(commentContent);
+		if (indexOfFirstNonBlankLine >= 0) {
+			if (location == JavadocContentLocationOption.FIRST_LINE) {
+				if (indexOfFirstNonBlankLine != 0) {
+					log(ast, MSG_JAVADOC_CONTENT_FIRST_LINE);
+				}
+			}
+			else if (indexOfFirstNonBlankLine != 1) {
+				log(ast, MSG_JAVADOC_CONTENT_SECOND_LINE);
+			}
+		}
+	}
+}
 
-    /**
-     * Checks if a DetailAST of type {@code TokenTypes.BLOCK_COMMENT_BEGIN} span
-     * more than one line. The node always has at least one child of the type
-     * {@code TokenTypes.BLOCK_COMMENT_END}.
-     *
-     * @param node node to check
-     * @return {@code true} for multi-line comment nodes
-     */
-    private static boolean isMultilineComment(DetailAST node) {
-        return !TokenUtil.areOnSameLine(node, node.getLastChild());
-    }
+/**
+ * Checks if a DetailAST of type {@code TokenTypes.BLOCK_COMMENT_BEGIN} span
+ * more than one line. The node always has at least one child of the type
+ * {@code TokenTypes.BLOCK_COMMENT_END}.
+ *
+ * @param node node to check
+ * @return {@code true} for multi-line comment nodes
+ */
+private static boolean isMultilineComment(DetailAST node) {
+	return !TokenUtil.areOnSameLine(node, node.getLastChild());
+}
 
-    /**
-     * Returns the index of the first non-blank line.
-     * All lines consists only of asterisks and whitespaces are treated as blank.
-     *
-     * @param commentContent Javadoc content to process
-     * @return the index of the first non-blank line or {@code -1} if all lines are blank
-     */
-    private static int findIndexOfFirstNonBlankLine(String commentContent) {
-        int lineNo = 0;
-        boolean noContent = true;
-        for (int i = 0; i < commentContent.length(); ++i) {
-            final char character = commentContent.charAt(i);
-            if (character == '\n') {
-                ++lineNo;
-            }
-            else if (character != '*' && !Character.isWhitespace(character)) {
-                noContent = false;
-                break;
-            }
-        }
-        if (noContent) {
-            lineNo = -1;
-        }
-        return lineNo;
-    }
+/**
+ * Returns the index of the first non-blank line.
+ * All lines consists only of asterisks and whitespaces are treated as blank.
+ *
+ * @param commentContent Javadoc content to process
+ * @return the index of the first non-blank line or {@code -1} if all lines are blank
+ */
+private static int findIndexOfFirstNonBlankLine(String commentContent) {
+	int lineNo = 0;
+	boolean noContent = true;
+	for (int i = 0; i < commentContent.length(); ++i) {
+		final char character = commentContent.charAt(i);
+		if (character == '\n') {
+			++lineNo;
+		}
+		else if (character != '*' && !Character.isWhitespace(character)) {
+			noContent = false;
+			break;
+		}
+	}
+	if (noContent) {
+		lineNo = -1;
+	}
+	return lineNo;
+}
 
 }

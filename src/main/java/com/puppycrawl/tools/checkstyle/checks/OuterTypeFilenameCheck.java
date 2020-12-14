@@ -44,90 +44,90 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 @FileStatefulCheck
 public class OuterTypeFilenameCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "type.file.mismatch";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "type.file.mismatch";
 
-    /** Pattern matching any file extension with dot included. */
-    private static final Pattern FILE_EXTENSION_PATTERN = Pattern.compile("\\.[^.]*$");
+/** Pattern matching any file extension with dot included. */
+private static final Pattern FILE_EXTENSION_PATTERN = Pattern.compile("\\.[^.]*$");
 
-    /** Indicates whether the first token has been seen in the file. */
-    private boolean seenFirstToken;
+/** Indicates whether the first token has been seen in the file. */
+private boolean seenFirstToken;
 
-    /** Current file name. */
-    private String fileName;
+/** Current file name. */
+private String fileName;
 
-    /** If file has public type. */
-    private boolean hasPublic;
+/** If file has public type. */
+private boolean hasPublic;
 
-    /** Outer type with mismatched file name. */
-    private DetailAST wrongType;
+/** Outer type with mismatched file name. */
+private DetailAST wrongType;
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {
-                   TokenTypes.CLASS_DEF,
-                   TokenTypes.INTERFACE_DEF,
-                   TokenTypes.ENUM_DEF,
-                   TokenTypes.ANNOTATION_DEF,
-               };
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {
+		       TokenTypes.CLASS_DEF,
+		       TokenTypes.INTERFACE_DEF,
+		       TokenTypes.ENUM_DEF,
+		       TokenTypes.ANNOTATION_DEF,
+	};
+}
 
-    @Override
-    public void beginTree(DetailAST rootAST) {
-        fileName = getFileName();
-        seenFirstToken = false;
-        hasPublic = false;
-        wrongType = null;
-    }
+@Override
+public void beginTree(DetailAST rootAST) {
+	fileName = getFileName();
+	seenFirstToken = false;
+	hasPublic = false;
+	wrongType = null;
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        if (seenFirstToken) {
-            final DetailAST modifiers = ast.findFirstToken(TokenTypes.MODIFIERS);
-            if (modifiers.findFirstToken(TokenTypes.LITERAL_PUBLIC) != null
-                    && ast.getParent() == null) {
-                hasPublic = true;
-            }
-        }
-        else {
-            final String outerTypeName = ast.findFirstToken(TokenTypes.IDENT).getText();
+@Override
+public void visitToken(DetailAST ast) {
+	if (seenFirstToken) {
+		final DetailAST modifiers = ast.findFirstToken(TokenTypes.MODIFIERS);
+		if (modifiers.findFirstToken(TokenTypes.LITERAL_PUBLIC) != null
+		    && ast.getParent() == null) {
+			hasPublic = true;
+		}
+	}
+	else {
+		final String outerTypeName = ast.findFirstToken(TokenTypes.IDENT).getText();
 
-            if (!fileName.equals(outerTypeName)) {
-                wrongType = ast;
-            }
-        }
-        seenFirstToken = true;
-    }
+		if (!fileName.equals(outerTypeName)) {
+			wrongType = ast;
+		}
+	}
+	seenFirstToken = true;
+}
 
-    @Override
-    public void finishTree(DetailAST rootAST) {
-        if (!hasPublic && wrongType != null) {
-            log(wrongType.getLineNo(), MSG_KEY);
-        }
-    }
+@Override
+public void finishTree(DetailAST rootAST) {
+	if (!hasPublic && wrongType != null) {
+		log(wrongType.getLineNo(), MSG_KEY);
+	}
+}
 
-    /**
-     * Get source file name.
-     * @return source file name.
-     */
-    private String getFileName() {
-        String name = getFileContents().getFileName();
-        name = name.substring(name.lastIndexOf(File.separatorChar) + 1);
-        name = FILE_EXTENSION_PATTERN.matcher(name).replaceAll("");
-        return name;
-    }
+/**
+ * Get source file name.
+ * @return source file name.
+ */
+private String getFileName() {
+	String name = getFileContents().getFileName();
+	name = name.substring(name.lastIndexOf(File.separatorChar) + 1);
+	name = FILE_EXTENSION_PATTERN.matcher(name).replaceAll("");
+	return name;
+}
 
 }

@@ -28,72 +28,72 @@ import java.util.TreeMap;
  */
 public class LineSet {
 
-    /**
-     * Maps line numbers to their start column.
-     */
-    private final SortedMap<Integer, Integer> lines = new TreeMap<>();
+/**
+ * Maps line numbers to their start column.
+ */
+private final SortedMap<Integer, Integer> lines = new TreeMap<>();
 
-    /**
-     * Get the starting column for a given line number.
-     *
-     * @param lineNum   the specified line number
-     *
-     * @return the starting column for the given line number
-     */
-    public Integer getStartColumn(Integer lineNum) {
-        return lines.get(lineNum);
-    }
+/**
+ * Get the starting column for a given line number.
+ *
+ * @param lineNum   the specified line number
+ *
+ * @return the starting column for the given line number
+ */
+public Integer getStartColumn(Integer lineNum) {
+	return lines.get(lineNum);
+}
 
-    /**
-     * Get the starting column for the first line.
-     *
-     * @return the starting column for the first line.
-     */
-    public int firstLineCol() {
-        final Integer firstLineKey = lines.firstKey();
-        return lines.get(firstLineKey);
-    }
+/**
+ * Get the starting column for the first line.
+ *
+ * @return the starting column for the first line.
+ */
+public int firstLineCol() {
+	final Integer firstLineKey = lines.firstKey();
+	return lines.get(firstLineKey);
+}
 
-    /**
-     * Get the line number of the first line.
-     *
-     * @return the line number of the first line
-     */
-    public int firstLine() {
-        return lines.firstKey();
-    }
+/**
+ * Get the line number of the first line.
+ *
+ * @return the line number of the first line
+ */
+public int firstLine() {
+	return lines.firstKey();
+}
 
-    /**
-     * Get the line number of the last line.
-     *
-     * @return the line number of the last line
-     */
-    public int lastLine() {
-        return lines.lastKey();
-    }
+/**
+ * Get the line number of the last line.
+ *
+ * @return the line number of the last line
+ */
+public int lastLine() {
+	return lines.lastKey();
+}
 
-    /**
-     * Add a line to this set of lines.
-     *
-     * @param lineNum   the line to add
-     * @param col       the starting column of the new line
-     */
-    public void addLineAndCol(int lineNum, int col) {
-        lines.put(lineNum, col);
-    }
+/**
+ * Add a line to this set of lines.
+ *
+ * @param lineNum   the line to add
+ * @param col       the starting column of the new line
+ */
+public void addLineAndCol(int lineNum, int col) {
+	lines.put(lineNum, col);
+}
 
-    /**
-     * Determines if this set of lines is empty.
-     *
-     * @return true if it is empty, false otherwise
-     */
-    public boolean isEmpty() {
-        return lines.isEmpty();
-    }
+/**
+ * Determines if this set of lines is empty.
+ *
+ * @return true if it is empty, false otherwise
+ */
+public boolean isEmpty() {
+	return lines.isEmpty();
+}
 
-    @Override
-    public String toString() {
-        return "LineSet[firstLine=" + lines.firstKey() + ", lastLine=" + lines.lastKey() + "]";
-    }
+@Override
+public String toString() {
+	return "LineSet[firstLine=" + lines.firstKey() + ", lastLine=" + lines.lastKey() + "]";
+}
 
 }

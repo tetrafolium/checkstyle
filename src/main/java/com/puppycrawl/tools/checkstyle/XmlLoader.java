@@ -48,110 +48,110 @@ import org.xml.sax.helpers.DefaultHandler;
  * @noinspection ThisEscapedInObjectConstruction
  */
 public class XmlLoader
-    extends DefaultHandler {
+	extends DefaultHandler {
 
-    /** Maps public id to resolve to resource name for the DTD. */
-    private final Map<String, String> publicIdToResourceNameMap;
-    /** Parser to read XML files. **/
-    private final XMLReader parser;
+/** Maps public id to resolve to resource name for the DTD. */
+private final Map<String, String> publicIdToResourceNameMap;
+/** Parser to read XML files. **/
+private final XMLReader parser;
 
-    /**
-     * Creates a new instance.
-     * @param publicIdToResourceNameMap maps public IDs to DTD resource names
-     * @throws SAXException if an error occurs
-     * @throws ParserConfigurationException if an error occurs
-     */
-    protected XmlLoader(Map<String, String> publicIdToResourceNameMap)
-    throws SAXException, ParserConfigurationException {
-        this.publicIdToResourceNameMap = new HashMap<>(publicIdToResourceNameMap);
-        final SAXParserFactory factory = SAXParserFactory.newInstance();
-        LoadExternalDtdFeatureProvider.setFeaturesBySystemProperty(factory);
-        factory.setValidating(true);
-        parser = factory.newSAXParser().getXMLReader();
-        parser.setContentHandler(this);
-        parser.setEntityResolver(this);
-        parser.setErrorHandler(this);
-    }
+/**
+ * Creates a new instance.
+ * @param publicIdToResourceNameMap maps public IDs to DTD resource names
+ * @throws SAXException if an error occurs
+ * @throws ParserConfigurationException if an error occurs
+ */
+protected XmlLoader(Map<String, String> publicIdToResourceNameMap)
+throws SAXException, ParserConfigurationException {
+	this.publicIdToResourceNameMap = new HashMap<>(publicIdToResourceNameMap);
+	final SAXParserFactory factory = SAXParserFactory.newInstance();
+	LoadExternalDtdFeatureProvider.setFeaturesBySystemProperty(factory);
+	factory.setValidating(true);
+	parser = factory.newSAXParser().getXMLReader();
+	parser.setContentHandler(this);
+	parser.setEntityResolver(this);
+	parser.setErrorHandler(this);
+}
 
-    /**
-     * Parses the specified input source.
-     * @param inputSource the input source to parse.
-     * @throws IOException if an error occurs
-     * @throws SAXException in an error occurs
-     */
-    public void parseInputSource(InputSource inputSource)
-    throws IOException, SAXException {
-        parser.parse(inputSource);
-    }
+/**
+ * Parses the specified input source.
+ * @param inputSource the input source to parse.
+ * @throws IOException if an error occurs
+ * @throws SAXException in an error occurs
+ */
+public void parseInputSource(InputSource inputSource)
+throws IOException, SAXException {
+	parser.parse(inputSource);
+}
 
-    @Override
-    public InputSource resolveEntity(String publicId, String systemId)
-    throws SAXException, IOException {
-        final InputSource inputSource;
-        if (publicIdToResourceNameMap.containsKey(publicId)) {
-            final String dtdResourceName =
-                publicIdToResourceNameMap.get(publicId);
-            final ClassLoader loader =
-                getClass().getClassLoader();
-            final InputStream dtdIs =
-                loader.getResourceAsStream(dtdResourceName);
+@Override
+public InputSource resolveEntity(String publicId, String systemId)
+throws SAXException, IOException {
+	final InputSource inputSource;
+	if (publicIdToResourceNameMap.containsKey(publicId)) {
+		final String dtdResourceName =
+			publicIdToResourceNameMap.get(publicId);
+		final ClassLoader loader =
+			getClass().getClassLoader();
+		final InputStream dtdIs =
+			loader.getResourceAsStream(dtdResourceName);
 
-            inputSource = new InputSource(dtdIs);
-        }
-        else {
-            inputSource = super.resolveEntity(publicId, systemId);
-        }
-        return inputSource;
-    }
+		inputSource = new InputSource(dtdIs);
+	}
+	else {
+		inputSource = super.resolveEntity(publicId, systemId);
+	}
+	return inputSource;
+}
 
-    @Override
-    public void error(SAXParseException exception) throws SAXException {
-        throw exception;
-    }
+@Override
+public void error(SAXParseException exception) throws SAXException {
+	throw exception;
+}
 
-    /**
-     * Used for setting specific for secure java installations features to SAXParserFactory.
-     * Pulled out as a separate class in order to suppress Pitest mutations.
-     */
-    public static final class LoadExternalDtdFeatureProvider {
+/**
+ * Used for setting specific for secure java installations features to SAXParserFactory.
+ * Pulled out as a separate class in order to suppress Pitest mutations.
+ */
+public static final class LoadExternalDtdFeatureProvider {
 
-        /** System property name to enable external DTD load. */
-        public static final String ENABLE_EXTERNAL_DTD_LOAD = "checkstyle.enableExternalDtdLoad";
+/** System property name to enable external DTD load. */
+public static final String ENABLE_EXTERNAL_DTD_LOAD = "checkstyle.enableExternalDtdLoad";
 
-        /** Feature that enables loading external DTD when loading XML files. */
-        public static final String LOAD_EXTERNAL_DTD =
-            "http://apache.org/xml/features/nonvalidating/load-external-dtd";
-        /** Feature that enables including external general entities in XML files. */
-        public static final String EXTERNAL_GENERAL_ENTITIES =
-            "http://xml.org/sax/features/external-general-entities";
-        /** Feature that enables including external parameter entities in XML files. */
-        public static final String EXTERNAL_PARAMETER_ENTITIES =
-            "http://xml.org/sax/features/external-parameter-entities";
+/** Feature that enables loading external DTD when loading XML files. */
+public static final String LOAD_EXTERNAL_DTD =
+	"http://apache.org/xml/features/nonvalidating/load-external-dtd";
+/** Feature that enables including external general entities in XML files. */
+public static final String EXTERNAL_GENERAL_ENTITIES =
+	"http://xml.org/sax/features/external-general-entities";
+/** Feature that enables including external parameter entities in XML files. */
+public static final String EXTERNAL_PARAMETER_ENTITIES =
+	"http://xml.org/sax/features/external-parameter-entities";
 
-        /** Stop instances being created. **/
-        private LoadExternalDtdFeatureProvider() {
-        }
+/** Stop instances being created. **/
+private LoadExternalDtdFeatureProvider() {
+}
 
-        /**
-         * Configures SAXParserFactory with features required
-         * to use external DTD file loading, this is not activated by default to no allow
-         * usage of schema files that checkstyle do not know
-         * it is even security problem to allow files from outside.
-         * @param factory factory to be configured with special features
-         * @throws SAXException if an error occurs
-         * @throws ParserConfigurationException if an error occurs
-         */
-        public static void setFeaturesBySystemProperty(SAXParserFactory factory)
-        throws SAXException, ParserConfigurationException {
+/**
+ * Configures SAXParserFactory with features required
+ * to use external DTD file loading, this is not activated by default to no allow
+ * usage of schema files that checkstyle do not know
+ * it is even security problem to allow files from outside.
+ * @param factory factory to be configured with special features
+ * @throws SAXException if an error occurs
+ * @throws ParserConfigurationException if an error occurs
+ */
+public static void setFeaturesBySystemProperty(SAXParserFactory factory)
+throws SAXException, ParserConfigurationException {
 
-            final boolean enableExternalDtdLoad = Boolean.parseBoolean(
-                    System.getProperty(ENABLE_EXTERNAL_DTD_LOAD, "false"));
+	final boolean enableExternalDtdLoad = Boolean.parseBoolean(
+		System.getProperty(ENABLE_EXTERNAL_DTD_LOAD, "false"));
 
-            factory.setFeature(LOAD_EXTERNAL_DTD, enableExternalDtdLoad);
-            factory.setFeature(EXTERNAL_GENERAL_ENTITIES, enableExternalDtdLoad);
-            factory.setFeature(EXTERNAL_PARAMETER_ENTITIES, enableExternalDtdLoad);
-        }
+	factory.setFeature(LOAD_EXTERNAL_DTD, enableExternalDtdLoad);
+	factory.setFeature(EXTERNAL_GENERAL_ENTITIES, enableExternalDtdLoad);
+	factory.setFeature(EXTERNAL_PARAMETER_ENTITIES, enableExternalDtdLoad);
+}
 
-    }
+}
 
 }

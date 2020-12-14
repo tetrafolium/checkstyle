@@ -79,118 +79,118 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  */
 @StatelessCheck
 public class AvoidStarImportCheck
-    extends AbstractCheck {
+	extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "import.avoidStar";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "import.avoidStar";
 
-    /** Suffix for the star import. */
-    private static final String STAR_IMPORT_SUFFIX = ".*";
+/** Suffix for the star import. */
+private static final String STAR_IMPORT_SUFFIX = ".*";
 
-    /** Specify packages where star imports are allowed. */
-    private final List<String> excludes = new ArrayList<>();
+/** Specify packages where star imports are allowed. */
+private final List<String> excludes = new ArrayList<>();
 
-    /**
-     * Control whether to allow starred class imports like
-     * {@code import java.util.*;}.
-     */
-    private boolean allowClassImports;
+/**
+ * Control whether to allow starred class imports like
+ * {@code import java.util.*;}.
+ */
+private boolean allowClassImports;
 
-    /**
-     * Control whether to allow starred static member imports like
-     * {@code import static org.junit.Assert.*;}.
-     */
-    private boolean allowStaticMemberImports;
+/**
+ * Control whether to allow starred static member imports like
+ * {@code import static org.junit.Assert.*;}.
+ */
+private boolean allowStaticMemberImports;
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        // original implementation checks both IMPORT and STATIC_IMPORT tokens to avoid ".*" imports
-        // however user can allow using "import" or "import static"
-        // by configuring allowClassImports and allowStaticMemberImports
-        // To avoid potential confusion when user specifies conflicting options on configuration
-        // (see example below) we are adding both tokens to Required list
-        //   <module name="AvoidStarImport">
-        //      <property name="tokens" value="IMPORT"/>
-        //      <property name="allowStaticMemberImports" value="false"/>
-        //   </module>
-        return new int[] {TokenTypes.IMPORT, TokenTypes.STATIC_IMPORT};
-    }
+@Override
+public int[] getRequiredTokens() {
+	// original implementation checks both IMPORT and STATIC_IMPORT tokens to avoid ".*" imports
+	// however user can allow using "import" or "import static"
+	// by configuring allowClassImports and allowStaticMemberImports
+	// To avoid potential confusion when user specifies conflicting options on configuration
+	// (see example below) we are adding both tokens to Required list
+	//   <module name="AvoidStarImport">
+	//      <property name="tokens" value="IMPORT"/>
+	//      <property name="allowStaticMemberImports" value="false"/>
+	//   </module>
+	return new int[] {TokenTypes.IMPORT, TokenTypes.STATIC_IMPORT};
+}
 
-    /**
-     * Setter to specify packages where star imports are allowed.
-     *
-     * @param excludesParam a list of package names/fully-qualifies class names
-     *     where star imports are ok.
-     */
-    public void setExcludes(String... excludesParam) {
-        for (final String exclude : excludesParam) {
-            if (exclude.endsWith(STAR_IMPORT_SUFFIX)) {
-                excludes.add(exclude);
-            }
-            else {
-                excludes.add(exclude + STAR_IMPORT_SUFFIX);
-            }
-        }
-    }
+/**
+ * Setter to specify packages where star imports are allowed.
+ *
+ * @param excludesParam a list of package names/fully-qualifies class names
+ *     where star imports are ok.
+ */
+public void setExcludes(String... excludesParam) {
+	for (final String exclude : excludesParam) {
+		if (exclude.endsWith(STAR_IMPORT_SUFFIX)) {
+			excludes.add(exclude);
+		}
+		else {
+			excludes.add(exclude + STAR_IMPORT_SUFFIX);
+		}
+	}
+}
 
-    /**
-     * Setter to control whether to allow starred class imports like
-     * {@code import java.util.*;}.
-     *
-     * @param allow true to allow false to disallow
-     */
-    public void setAllowClassImports(boolean allow) {
-        allowClassImports = allow;
-    }
+/**
+ * Setter to control whether to allow starred class imports like
+ * {@code import java.util.*;}.
+ *
+ * @param allow true to allow false to disallow
+ */
+public void setAllowClassImports(boolean allow) {
+	allowClassImports = allow;
+}
 
-    /**
-     * Setter to control whether to allow starred static member imports like
-     * {@code import static org.junit.Assert.*;}.
-     *
-     * @param allow true to allow false to disallow
-     */
-    public void setAllowStaticMemberImports(boolean allow) {
-        allowStaticMemberImports = allow;
-    }
+/**
+ * Setter to control whether to allow starred static member imports like
+ * {@code import static org.junit.Assert.*;}.
+ *
+ * @param allow true to allow false to disallow
+ */
+public void setAllowStaticMemberImports(boolean allow) {
+	allowStaticMemberImports = allow;
+}
 
-    @Override
-    public void visitToken(final DetailAST ast) {
-        if (!allowClassImports && ast.getType() == TokenTypes.IMPORT) {
-            final DetailAST startingDot = ast.getFirstChild();
-            logsStarredImportViolation(startingDot);
-        }
-        else if (!allowStaticMemberImports
-                 && ast.getType() == TokenTypes.STATIC_IMPORT) {
-            // must navigate past the static keyword
-            final DetailAST startingDot = ast.getFirstChild().getNextSibling();
-            logsStarredImportViolation(startingDot);
-        }
-    }
+@Override
+public void visitToken(final DetailAST ast) {
+	if (!allowClassImports && ast.getType() == TokenTypes.IMPORT) {
+		final DetailAST startingDot = ast.getFirstChild();
+		logsStarredImportViolation(startingDot);
+	}
+	else if (!allowStaticMemberImports
+	         && ast.getType() == TokenTypes.STATIC_IMPORT) {
+		// must navigate past the static keyword
+		final DetailAST startingDot = ast.getFirstChild().getNextSibling();
+		logsStarredImportViolation(startingDot);
+	}
+}
 
-    /**
-     * Gets the full import identifier.  If the import is a starred import and
-     * it's not excluded then a violation is logged.
-     * @param startingDot the starting dot for the import statement
-     */
-    private void logsStarredImportViolation(DetailAST startingDot) {
-        final FullIdent name = FullIdent.createFullIdent(startingDot);
-        final String importText = name.getText();
-        if (importText.endsWith(STAR_IMPORT_SUFFIX) && !excludes.contains(importText)) {
-            log(startingDot.getLineNo(), MSG_KEY, importText);
-        }
-    }
+/**
+ * Gets the full import identifier.  If the import is a starred import and
+ * it's not excluded then a violation is logged.
+ * @param startingDot the starting dot for the import statement
+ */
+private void logsStarredImportViolation(DetailAST startingDot) {
+	final FullIdent name = FullIdent.createFullIdent(startingDot);
+	final String importText = name.getText();
+	if (importText.endsWith(STAR_IMPORT_SUFFIX) && !excludes.contains(importText)) {
+		log(startingDot.getLineNo(), MSG_KEY, importText);
+	}
+}
 
 }

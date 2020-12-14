@@ -27,48 +27,48 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  */
 public class NewHandler extends AbstractExpressionHandler {
 
-    /**
-     * Construct an instance of this handler with the given indentation check,
-     * abstract syntax tree, and parent handler.
-     *
-     * @param indentCheck   the indentation check
-     * @param ast           the abstract syntax tree
-     * @param parent        the parent handler
-     */
-    public NewHandler(IndentationCheck indentCheck,
-                      DetailAST ast,
-                      AbstractExpressionHandler parent) {
-        super(indentCheck, "operator new", ast, parent);
-    }
+/**
+ * Construct an instance of this handler with the given indentation check,
+ * abstract syntax tree, and parent handler.
+ *
+ * @param indentCheck   the indentation check
+ * @param ast           the abstract syntax tree
+ * @param parent        the parent handler
+ */
+public NewHandler(IndentationCheck indentCheck,
+                  DetailAST ast,
+                  AbstractExpressionHandler parent) {
+	super(indentCheck, "operator new", ast, parent);
+}
 
-    @Override
-    public void checkIndentation() {
-        final DetailAST type = getMainAst().getFirstChild();
-        if (type != null) {
-            checkExpressionSubtree(type, getIndent(), false, false);
-        }
+@Override
+public void checkIndentation() {
+	final DetailAST type = getMainAst().getFirstChild();
+	if (type != null) {
+		checkExpressionSubtree(type, getIndent(), false, false);
+	}
 
-        final DetailAST lparen = getMainAst().findFirstToken(TokenTypes.LPAREN);
-        checkLeftParen(lparen);
-    }
+	final DetailAST lparen = getMainAst().findFirstToken(TokenTypes.LPAREN);
+	checkLeftParen(lparen);
+}
 
-    @Override
-    protected IndentLevel getIndentImpl() {
-        final IndentLevel result;
-        // if our expression isn't first on the line, just use the start
-        // of the line
-        if (getLineStart(getMainAst()) == getMainAst().getColumnNo()) {
-            result = super.getIndentImpl();
-        }
-        else {
-            result = new IndentLevel(getLineStart(getMainAst()));
-        }
-        return result;
-    }
+@Override
+protected IndentLevel getIndentImpl() {
+	final IndentLevel result;
+	// if our expression isn't first on the line, just use the start
+	// of the line
+	if (getLineStart(getMainAst()) == getMainAst().getColumnNo()) {
+		result = super.getIndentImpl();
+	}
+	else {
+		result = new IndentLevel(getLineStart(getMainAst()));
+	}
+	return result;
+}
 
-    @Override
-    protected boolean shouldIncreaseIndent() {
-        return false;
-    }
+@Override
+protected boolean shouldIncreaseIndent() {
+	return false;
+}
 
 }
