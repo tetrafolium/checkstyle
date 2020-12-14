@@ -13,8 +13,8 @@ class InputGenericWhitespace implements Comparable<InputGenericWhitespace>, Seri
     {
         List<Integer> x = new ArrayList<Integer>();
         List<List<Integer>> y = new ArrayList<List<Integer>>();
-        List < Integer > a = new ArrayList < Integer > (); // warn
-        List < List < Integer > > b = new ArrayList < List < Integer > > (); // warn
+        List<Integer> a = new ArrayList<Integer>(); // warn
+        List<List<Integer>> b = new ArrayList<List<Integer>>(); // warn
     }
 
     public int compareTo(InputGenericWhitespace aObject)
@@ -27,7 +27,7 @@ class InputGenericWhitespace implements Comparable<InputGenericWhitespace>, Seri
         return null;
     }
 
-    public static<T>Callable<T> callable2(Runnable task, T result) // warn
+    public static <T> Callable<T> callable2(Runnable task, T result) // warn
     {
         Map<Class<?>, Integer> x = new HashMap<Class<?>, Integer>();
         for (final Map.Entry<Class<?>, Integer> entry : x.entrySet()) {
@@ -39,7 +39,7 @@ class InputGenericWhitespace implements Comparable<InputGenericWhitespace>, Seri
     public int getConstructor(Class<?>... parameterTypes)
     {
         Collections.<Object>emptySet();
-        Collections. <Object> emptySet(); // warn
+        Collections.<Object>emptySet(); // warn
         return 666;
     }
 
@@ -60,6 +60,6 @@ class InputGenericWhitespace implements Comparable<InputGenericWhitespace>, Seri
     public static class IntEnumValueType2<E extends Enum<E>& IntEnum> { // warn
     }
 
-    public static class IntEnumValueType3<E extends Enum<E>  & IntEnum> { // warn
+    public static class IntEnumValueType3<E extends Enum<E>& IntEnum> { // warn
     }
 }

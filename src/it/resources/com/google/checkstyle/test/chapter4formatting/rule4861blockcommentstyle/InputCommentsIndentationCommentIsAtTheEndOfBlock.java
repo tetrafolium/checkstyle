@@ -215,14 +215,14 @@ public class InputCommentsIndentationCommentIsAtTheEndOfBlock {
     }
 
     public void foo31() {
-        String s = new String ("A"
+        String s = new String("A"
                                + "B"
                                + "C");
         // comment
     }
 
     public void foo32() {
-        String s = new String ("A"
+        String s = new String("A"
                                + "B"
                                + "C");
         // warn

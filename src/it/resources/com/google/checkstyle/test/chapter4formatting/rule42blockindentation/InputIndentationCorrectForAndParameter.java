@@ -14,7 +14,7 @@ class InputIndentationCorrectForAndParameter { //indent:0 exp:0
 
     void fooMethodWithIf() { //indent:2 exp:2
 
-        for (int i = 1; i < 10; i ++) {} //indent:4 exp:4
+        for (int i = 1; i < 10; i++) {} //indent:4 exp:4
 
         for (int i = new SecondForClassWithLongName1("Loooooooooooooooooooo" //indent:4 exp:4
                 + "oong").getInteger(new FooForClass(), //indent:8 exp:8
@@ -33,14 +33,14 @@ class InputIndentationCorrectForAndParameter { //indent:0 exp:0
                                   + "ooooong")).entrySet()) {} //indent:15 exp:>=8
 
         for (String string : new SecondForClassWithLongName1(getString(1024 //indent:4 exp:4
-                , "Looooooooooooooooooong")). //indent:8 exp:8
+, "Looooooooooooooooooong")). //indent:8 exp:8
                 getList(new FooForClass(), 1000, getString(1024, //indent:8 exp:8
                         "Loooooooooooooooooooooooooooooooo" //indent:8 exp:8
                         + "oooooooooooooooooooooooooooooooooooooooo" //indent:8 exp:8
                         + "oooooooooong"))) {} //indent:8 exp:8
 
         for (String string : new SecondForClassWithLongName1(getString(1024 //indent:4 exp:4
-                , "Looooooooooooooooooong")). //indent:8 exp:8
+, "Looooooooooooooooooong")). //indent:8 exp:8
                 getList(new FooForClass(), 1000, getString(1024, //indent:12 exp:>=8
                         "Loooooooooooooooooooooooooooooooo" //indent:14 exp:>=8
                         + "oooooooooooooooooooooooooooooooooooooooo" //indent:10 exp:>=8
@@ -52,7 +52,7 @@ class InputIndentationCorrectForAndParameter { //indent:0 exp:0
 
         void fooMethodWithIf() { //indent:4 exp:4
 
-            for (int i = 1; i < 10; i ++) {} //indent:6 exp:6
+            for (int i = 1; i < 10; i++) {} //indent:6 exp:6
 
             for (int i = new SecondForClassWithLongName1("Loooooooooooooooooooo" //indent:6 exp:6
                     + "oong").getInteger(new FooForClass(), //indent:10 exp:10
@@ -71,14 +71,14 @@ class InputIndentationCorrectForAndParameter { //indent:0 exp:0
                                       + "ooooong")).entrySet()) {} //indent:15 exp:>=10
 
             for (String string : new SecondForClassWithLongName1(getString(1024 //indent:6 exp:6
-                    , "Looooooooooooooooooong")). //indent:10 exp:10
+, "Looooooooooooooooooong")). //indent:10 exp:10
                     getList(new FooForClass(), 1000, getString(1024, //indent:10 exp:10
                             "Loooooooooooooooooooooooooooooooo" //indent:10 exp:10
                             + "oooooooooooooooooooooooooooooooooooooooo" //indent:10 exp:10
                             + "oooooooooong"))) {} //indent:10 exp:10
 
             for (String string : new SecondForClassWithLongName1(getString(1024 //indent:6 exp:6
-                    , "Looooooooooooooooooong")). //indent:15 exp:>=10
+, "Looooooooooooooooooong")). //indent:15 exp:>=10
                     getList(new FooForClass(), 1000, getString(1024, //indent:13 exp:>=10
                             "Loooooooooooooooooooooooooooooooo" //indent:19 exp:>=10
                             + "oooooooooooooooooooooooooooooooooooooooo" //indent:21 exp:>=10
