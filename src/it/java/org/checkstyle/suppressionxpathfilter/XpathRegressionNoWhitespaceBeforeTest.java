@@ -40,23 +40,23 @@ public class XpathRegressionNoWhitespaceBeforeTest extends AbstractXpathTestSupp
     @Test
     public void testNoWhitespaceBefore() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionNoWhitespaceBefore.java"));
+            new File(getPath("SuppressionXpathRegressionNoWhitespaceBefore.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(NoWhitespaceBeforeCheck.class);
+            createModuleConfig(NoWhitespaceBeforeCheck.class);
 
         final String[] expectedViolation = {
             "4:13: " + getCheckMessage(NoWhitespaceBeforeCheck.class,
-                    NoWhitespaceBeforeCheck.MSG_KEY, ";"),
+                                       NoWhitespaceBeforeCheck.MSG_KEY, ";"),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceBefore']]/OBJBLOCK"
-                + "/VARIABLE_DEF[./IDENT[@text='bad']]/SEMI"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceBefore']]/OBJBLOCK"
+                    + "/VARIABLE_DEF[./IDENT[@text='bad']]/SEMI"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
 }

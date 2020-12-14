@@ -40,23 +40,23 @@ public class XpathRegressionSingleSpaceSeparatorTest extends AbstractXpathTestSu
     @Test
     public void testSingleSpaceSeparator() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionSingleSpaceSeparator.java"));
+            new File(getPath("SuppressionXpathRegressionSingleSpaceSeparator.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(SingleSpaceSeparatorCheck.class);
+            createModuleConfig(SingleSpaceSeparatorCheck.class);
 
         final String[] expectedViolation = {
             "4:11: " + getCheckMessage(SingleSpaceSeparatorCheck.class,
-                    SingleSpaceSeparatorCheck.MSG_KEY),
+                                       SingleSpaceSeparatorCheck.MSG_KEY),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionSingleSpaceSeparator']]/OBJBLOCK"
-                + "/VARIABLE_DEF/IDENT[@text='bad']"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionSingleSpaceSeparator']]/OBJBLOCK"
+                    + "/VARIABLE_DEF/IDENT[@text='bad']"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
 }

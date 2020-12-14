@@ -153,7 +153,7 @@ public class HeaderCheck extends AbstractHeaderCheck {
     private boolean isMatch(int lineNumber, String line) {
         // skip lines we are meant to ignore
         return isIgnoreLine(lineNumber + 1)
-            || getHeaderLines().get(lineNumber).equals(line);
+               || getHeaderLines().get(lineNumber).equals(line);
     }
 
     /**

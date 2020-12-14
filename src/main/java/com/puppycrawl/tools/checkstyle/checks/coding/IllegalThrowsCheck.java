@@ -102,9 +102,10 @@ public final class IllegalThrowsCheck extends AbstractCheck {
 
     /** Specify throw class names to reject. */
     private final Set<String> illegalClassNames = Arrays.stream(
-        new String[] {"Error", "RuntimeException", "Throwable", "java.lang.Error",
-                      "java.lang.RuntimeException", "java.lang.Throwable", })
-        .collect(Collectors.toSet());
+                new String[] {"Error", "RuntimeException", "Throwable", "java.lang.Error",
+                              "java.lang.RuntimeException", "java.lang.Throwable",
+                             })
+            .collect(Collectors.toSet());
 
     /**
      * Allow to ignore checking overridden methods (marked with {@code Override}
@@ -121,7 +122,7 @@ public final class IllegalThrowsCheck extends AbstractCheck {
     public void setIllegalClassNames(final String... classNames) {
         illegalClassNames.clear();
         illegalClassNames.addAll(
-                CheckUtil.parseClassNames(classNames));
+            CheckUtil.parseClassNames(classNames));
     }
 
     @Override
@@ -162,9 +163,9 @@ public final class IllegalThrowsCheck extends AbstractCheck {
      */
     private boolean isIgnorableMethod(DetailAST methodDef) {
         return shouldIgnoreMethod(methodDef.findFirstToken(TokenTypes.IDENT).getText())
-            || ignoreOverriddenMethods
+               || ignoreOverriddenMethods
                && (AnnotationUtil.containsAnnotation(methodDef, "Override")
-                  || AnnotationUtil.containsAnnotation(methodDef, "java.lang.Override"));
+                   || AnnotationUtil.containsAnnotation(methodDef, "java.lang.Override"));
     }
 
     /**

@@ -3491,7 +3491,7 @@ public final class TokenTypes {
      * </pre>
      */
     public static final int SINGLE_LINE_COMMENT =
-            GeneratedJavaTokenTypes.SINGLE_LINE_COMMENT;
+        GeneratedJavaTokenTypes.SINGLE_LINE_COMMENT;
 
     /**
      * Beginning of block comment: '/*'.
@@ -3504,7 +3504,7 @@ public final class TokenTypes {
      * </pre>
      */
     public static final int BLOCK_COMMENT_BEGIN =
-            GeneratedJavaTokenTypes.BLOCK_COMMENT_BEGIN;
+        GeneratedJavaTokenTypes.BLOCK_COMMENT_BEGIN;
 
     /**
      * End of block comment: '&#42;/'.
@@ -3517,7 +3517,7 @@ public final class TokenTypes {
      * </pre>
      */
     public static final int BLOCK_COMMENT_END =
-            GeneratedJavaTokenTypes.BLOCK_COMMENT_END;
+        GeneratedJavaTokenTypes.BLOCK_COMMENT_END;
 
     /**
      * Text of single-line or block comment.
@@ -3536,7 +3536,7 @@ public final class TokenTypes {
      * </pre>
      */
     public static final int COMMENT_CONTENT =
-            GeneratedJavaTokenTypes.COMMENT_CONTENT;
+        GeneratedJavaTokenTypes.COMMENT_CONTENT;
 
     /** Prevent instantiation. */
     private TokenTypes() {

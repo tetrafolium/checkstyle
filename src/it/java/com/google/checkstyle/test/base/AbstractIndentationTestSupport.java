@@ -38,22 +38,22 @@ public abstract class AbstractIndentationTestSupport extends AbstractGoogleModul
     private static final int TAB_WIDTH = 4;
 
     private static final Pattern NONEMPTY_LINE_REGEX =
-            Pattern.compile(".*?\\S+.*?");
+        Pattern.compile(".*?\\S+.*?");
 
     private static final Pattern LINE_WITH_COMMENT_REGEX =
-            Pattern.compile(".*?\\S+.*?(//indent:(\\d+) exp:((>=\\d+)|(\\d+(,\\d+)*?))( warn)?)");
+        Pattern.compile(".*?\\S+.*?(//indent:(\\d+) exp:((>=\\d+)|(\\d+(,\\d+)*?))( warn)?)");
 
     private static final Pattern GET_INDENT_FROM_COMMENT_REGEX =
-            Pattern.compile("//indent:(\\d+).*?");
+        Pattern.compile("//indent:(\\d+).*?");
 
     private static final Pattern MULTILEVEL_COMMENT_REGEX =
-            Pattern.compile("//indent:\\d+ exp:(\\d+(,\\d+)+?)( warn)?");
+        Pattern.compile("//indent:\\d+ exp:(\\d+(,\\d+)+?)( warn)?");
 
     private static final Pattern SINGLE_LEVEL_COMMENT_REGEX =
-            Pattern.compile("//indent:\\d+ exp:(\\d+)( warn)?");
+        Pattern.compile("//indent:\\d+ exp:(\\d+)( warn)?");
 
     private static final Pattern NON_STRICT_LEVEL_COMMENT_REGEX =
-            Pattern.compile("//indent:\\d+ exp:>=(\\d+)( warn)?");
+        Pattern.compile("//indent:\\d+ exp:>=(\\d+)( warn)?");
 
     @Override
     protected Integer[] getLinesWithWarn(String fileName) throws IOException {
@@ -62,10 +62,10 @@ public abstract class AbstractIndentationTestSupport extends AbstractGoogleModul
 
     private static Integer[] getLinesWithWarnAndCheckComments(String aFileName,
             final int tabWidth)
-                    throws IOException {
+    throws IOException {
         final List<Integer> result = new ArrayList<>();
         try (BufferedReader br = Files.newBufferedReader(
-                Paths.get(aFileName), StandardCharsets.UTF_8)) {
+                                         Paths.get(aFileName), StandardCharsets.UTF_8)) {
             int lineNumber = 1;
             for (String line = br.readLine(); line != null; line = br.readLine()) {
                 final Matcher match = LINE_WITH_COMMENT_REGEX.matcher(line);
@@ -76,12 +76,12 @@ public abstract class AbstractIndentationTestSupport extends AbstractGoogleModul
 
                     if (actualIndent != indentInComment) {
                         throw new IllegalStateException(String.format(Locale.ROOT,
-                                        "File \"%1$s\" has incorrect indentation in comment."
+                                                        "File \"%1$s\" has incorrect indentation in comment."
                                                         + "Line %2$d: comment:%3$d, actual:%4$d.",
-                                        aFileName,
-                                        lineNumber,
-                                        indentInComment,
-                                        actualIndent));
+                                                        aFileName,
+                                                        lineNumber,
+                                                        indentInComment,
+                                                        actualIndent));
                     }
 
                     if (isWarnComment(comment)) {
@@ -90,18 +90,18 @@ public abstract class AbstractIndentationTestSupport extends AbstractGoogleModul
 
                     if (!isCommentConsistent(comment)) {
                         throw new IllegalStateException(String.format(Locale.ROOT,
-                                        "File \"%1$s\" has inconsistent comment on line %2$d",
-                                        aFileName,
-                                        lineNumber));
+                                                        "File \"%1$s\" has inconsistent comment on line %2$d",
+                                                        aFileName,
+                                                        lineNumber));
                     }
                 }
                 else if (NONEMPTY_LINE_REGEX.matcher(line).matches()) {
                     throw new IllegalStateException(String.format(Locale.ROOT,
-                                    "File \"%1$s\" has no indentation comment or its format "
+                                                    "File \"%1$s\" has no indentation comment or its format "
                                                     + "malformed. Error on line: %2$d(%3$s)",
-                                    aFileName,
-                                    lineNumber,
-                                    line));
+                                                    aFileName,
+                                                    lineNumber,
+                                                    line));
                 }
                 lineNumber++;
             }
@@ -126,23 +126,23 @@ public abstract class AbstractIndentationTestSupport extends AbstractGoogleModul
         final boolean result;
         final CommentType type = getCommentType(comment);
         switch (type) {
-            case MULTILEVEL:
-                result = isMultiLevelCommentConsistent(comment, indentInComment, isWarnComment);
-                break;
+        case MULTILEVEL:
+            result = isMultiLevelCommentConsistent(comment, indentInComment, isWarnComment);
+            break;
 
-            case SINGLE_LEVEL:
-                result = isSingleLevelCommentConsistent(comment, indentInComment, isWarnComment);
-                break;
+        case SINGLE_LEVEL:
+            result = isSingleLevelCommentConsistent(comment, indentInComment, isWarnComment);
+            break;
 
-            case NON_STRICT_LEVEL:
-                result = isNonStrictCommentConsistent(comment, indentInComment, isWarnComment);
-                break;
+        case NON_STRICT_LEVEL:
+            result = isNonStrictCommentConsistent(comment, indentInComment, isWarnComment);
+            break;
 
-            case UNKNOWN:
-                throw new IllegalArgumentException("Cannot determine comment consistent");
+        case UNKNOWN:
+            throw new IllegalArgumentException("Cannot determine comment consistent");
 
-            default:
-                throw new IllegalStateException("Cannot determine comment is consistent");
+        default:
+            throw new IllegalStateException("Cannot determine comment is consistent");
         }
         return result;
     }
@@ -154,7 +154,7 @@ public abstract class AbstractIndentationTestSupport extends AbstractGoogleModul
         final int expectedMinimalIndent = Integer.parseInt(nonStrictLevelMatch.group(1));
 
         return indentInComment >= expectedMinimalIndent && !isWarnComment
-                || indentInComment < expectedMinimalIndent && isWarnComment;
+               || indentInComment < expectedMinimalIndent && isWarnComment;
     }
 
     private static boolean isSingleLevelCommentConsistent(String comment,
@@ -164,7 +164,7 @@ public abstract class AbstractIndentationTestSupport extends AbstractGoogleModul
         final int expectedLevel = Integer.parseInt(singleLevelMatch.group(1));
 
         return expectedLevel == indentInComment && !isWarnComment
-                || expectedLevel != indentInComment && isWarnComment;
+               || expectedLevel != indentInComment && isWarnComment;
     }
 
     private static boolean isMultiLevelCommentConsistent(String comment,
@@ -174,10 +174,10 @@ public abstract class AbstractIndentationTestSupport extends AbstractGoogleModul
         final String[] levels = multilevelMatch.group(1).split(",");
         final String indentInCommentStr = String.valueOf(indentInComment);
         final boolean containsActualLevel =
-                Arrays.asList(levels).contains(indentInCommentStr);
+            Arrays.asList(levels).contains(indentInCommentStr);
 
         return containsActualLevel && !isWarnComment
-                || !containsActualLevel && isWarnComment;
+               || !containsActualLevel && isWarnComment;
     }
 
     private static CommentType getCommentType(String comment) {

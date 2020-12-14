@@ -364,11 +364,11 @@ public class DescendantTokenCheck extends AbstractCheck {
                     minimumMessage = MSG_KEY_MIN;
                 }
                 log(ast,
-                        minimumMessage,
-                        String.valueOf(tokenCount),
-                        String.valueOf(minimumNumber),
-                        name,
-                        descendantName);
+                    minimumMessage,
+                    String.valueOf(tokenCount),
+                    String.valueOf(minimumNumber),
+                    name,
+                    descendantName);
             }
             if (tokenCount > maximumNumber) {
                 final String descendantName = TokenUtil.getTokenName(element);
@@ -377,11 +377,11 @@ public class DescendantTokenCheck extends AbstractCheck {
                     maximumMessage = MSG_KEY_MAX;
                 }
                 log(ast,
-                        maximumMessage,
-                        String.valueOf(tokenCount),
-                        String.valueOf(maximumNumber),
-                        name,
-                        descendantName);
+                    maximumMessage,
+                    String.valueOf(tokenCount),
+                    String.valueOf(maximumNumber),
+                    name,
+                    descendantName);
             }
         }
     }
@@ -403,18 +403,18 @@ public class DescendantTokenCheck extends AbstractCheck {
                 minimumMessage = MSG_KEY_SUM_MIN;
             }
             log(ast,
-                    minimumMessage,
-                    String.valueOf(total),
-                    String.valueOf(minimumNumber), name);
+                minimumMessage,
+                String.valueOf(total),
+                String.valueOf(minimumNumber), name);
         }
         if (total > maximumNumber) {
             if (maximumMessage == null) {
                 maximumMessage = MSG_KEY_SUM_MAX;
             }
             log(ast,
-                    maximumMessage,
-                    String.valueOf(total),
-                    String.valueOf(maximumNumber), name);
+                maximumMessage,
+                String.valueOf(total),
+                String.valueOf(maximumNumber), name);
         }
     }
 

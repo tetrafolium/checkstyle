@@ -211,8 +211,8 @@ public class EmptyCatchBlockCheck extends AbstractCheck {
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.LITERAL_CATCH,
-        };
+                   TokenTypes.LITERAL_CATCH,
+               };
     }
 
     @Override
@@ -276,9 +276,9 @@ public class EmptyCatchBlockCheck extends AbstractCheck {
     private boolean isVerifiable(DetailAST emptyCatchAst, String commentContent) {
         final String variableName = getExceptionVariableName(emptyCatchAst);
         final boolean isMatchingVariableName = exceptionVariableName
-                .matcher(variableName).find();
+                                               .matcher(variableName).find();
         final boolean isMatchingCommentContent = !commentContent.isEmpty()
-                 && commentFormat.matcher(commentContent).find();
+                && commentFormat.matcher(commentContent).find();
         return !isMatchingVariableName && !isMatchingCommentContent;
     }
 
@@ -293,7 +293,7 @@ public class EmptyCatchBlockCheck extends AbstractCheck {
         DetailAST catchBlockStmt = slistToken.getFirstChild();
         while (catchBlockStmt.getType() != TokenTypes.RCURLY) {
             if (catchBlockStmt.getType() != TokenTypes.SINGLE_LINE_COMMENT
-                 && catchBlockStmt.getType() != TokenTypes.BLOCK_COMMENT_BEGIN) {
+                    && catchBlockStmt.getType() != TokenTypes.BLOCK_COMMENT_BEGIN) {
                 result = false;
                 break;
             }

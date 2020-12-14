@@ -37,7 +37,7 @@ public class ObjectBlockHandler extends BlockParentHandler {
      * @param parent        the parent handler
      */
     public ObjectBlockHandler(IndentationCheck indentCheck,
-        DetailAST ast, AbstractExpressionHandler parent) {
+                              DetailAST ast, AbstractExpressionHandler parent) {
         super(indentCheck, "object def", ast, parent);
     }
 
@@ -90,7 +90,7 @@ public class ObjectBlockHandler extends BlockParentHandler {
     protected IndentLevel curlyIndent() {
         final IndentLevel indent = super.curlyIndent();
         return IndentLevel.addAcceptable(indent, indent.getFirstIndentLevel()
-                + getLineWrappingIndentation());
+                                         + getLineWrappingIndentation());
     }
 
     /**

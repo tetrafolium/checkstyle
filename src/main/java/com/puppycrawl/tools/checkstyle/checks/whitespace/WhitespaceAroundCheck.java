@@ -331,120 +331,120 @@ public class WhitespaceAroundCheck extends AbstractCheck {
     @Override
     public int[] getDefaultTokens() {
         return new int[] {
-            TokenTypes.ASSIGN,
-            TokenTypes.BAND,
-            TokenTypes.BAND_ASSIGN,
-            TokenTypes.BOR,
-            TokenTypes.BOR_ASSIGN,
-            TokenTypes.BSR,
-            TokenTypes.BSR_ASSIGN,
-            TokenTypes.BXOR,
-            TokenTypes.BXOR_ASSIGN,
-            TokenTypes.COLON,
-            TokenTypes.DIV,
-            TokenTypes.DIV_ASSIGN,
-            TokenTypes.DO_WHILE,
-            TokenTypes.EQUAL,
-            TokenTypes.GE,
-            TokenTypes.GT,
-            TokenTypes.LAMBDA,
-            TokenTypes.LAND,
-            TokenTypes.LCURLY,
-            TokenTypes.LE,
-            TokenTypes.LITERAL_CATCH,
-            TokenTypes.LITERAL_DO,
-            TokenTypes.LITERAL_ELSE,
-            TokenTypes.LITERAL_FINALLY,
-            TokenTypes.LITERAL_FOR,
-            TokenTypes.LITERAL_IF,
-            TokenTypes.LITERAL_RETURN,
-            TokenTypes.LITERAL_SWITCH,
-            TokenTypes.LITERAL_SYNCHRONIZED,
-            TokenTypes.LITERAL_TRY,
-            TokenTypes.LITERAL_WHILE,
-            TokenTypes.LOR,
-            TokenTypes.LT,
-            TokenTypes.MINUS,
-            TokenTypes.MINUS_ASSIGN,
-            TokenTypes.MOD,
-            TokenTypes.MOD_ASSIGN,
-            TokenTypes.NOT_EQUAL,
-            TokenTypes.PLUS,
-            TokenTypes.PLUS_ASSIGN,
-            TokenTypes.QUESTION,
-            TokenTypes.RCURLY,
-            TokenTypes.SL,
-            TokenTypes.SLIST,
-            TokenTypes.SL_ASSIGN,
-            TokenTypes.SR,
-            TokenTypes.SR_ASSIGN,
-            TokenTypes.STAR,
-            TokenTypes.STAR_ASSIGN,
-            TokenTypes.LITERAL_ASSERT,
-            TokenTypes.TYPE_EXTENSION_AND,
-        };
+                   TokenTypes.ASSIGN,
+                   TokenTypes.BAND,
+                   TokenTypes.BAND_ASSIGN,
+                   TokenTypes.BOR,
+                   TokenTypes.BOR_ASSIGN,
+                   TokenTypes.BSR,
+                   TokenTypes.BSR_ASSIGN,
+                   TokenTypes.BXOR,
+                   TokenTypes.BXOR_ASSIGN,
+                   TokenTypes.COLON,
+                   TokenTypes.DIV,
+                   TokenTypes.DIV_ASSIGN,
+                   TokenTypes.DO_WHILE,
+                   TokenTypes.EQUAL,
+                   TokenTypes.GE,
+                   TokenTypes.GT,
+                   TokenTypes.LAMBDA,
+                   TokenTypes.LAND,
+                   TokenTypes.LCURLY,
+                   TokenTypes.LE,
+                   TokenTypes.LITERAL_CATCH,
+                   TokenTypes.LITERAL_DO,
+                   TokenTypes.LITERAL_ELSE,
+                   TokenTypes.LITERAL_FINALLY,
+                   TokenTypes.LITERAL_FOR,
+                   TokenTypes.LITERAL_IF,
+                   TokenTypes.LITERAL_RETURN,
+                   TokenTypes.LITERAL_SWITCH,
+                   TokenTypes.LITERAL_SYNCHRONIZED,
+                   TokenTypes.LITERAL_TRY,
+                   TokenTypes.LITERAL_WHILE,
+                   TokenTypes.LOR,
+                   TokenTypes.LT,
+                   TokenTypes.MINUS,
+                   TokenTypes.MINUS_ASSIGN,
+                   TokenTypes.MOD,
+                   TokenTypes.MOD_ASSIGN,
+                   TokenTypes.NOT_EQUAL,
+                   TokenTypes.PLUS,
+                   TokenTypes.PLUS_ASSIGN,
+                   TokenTypes.QUESTION,
+                   TokenTypes.RCURLY,
+                   TokenTypes.SL,
+                   TokenTypes.SLIST,
+                   TokenTypes.SL_ASSIGN,
+                   TokenTypes.SR,
+                   TokenTypes.SR_ASSIGN,
+                   TokenTypes.STAR,
+                   TokenTypes.STAR_ASSIGN,
+                   TokenTypes.LITERAL_ASSERT,
+                   TokenTypes.TYPE_EXTENSION_AND,
+               };
     }
 
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.ASSIGN,
-            TokenTypes.ARRAY_INIT,
-            TokenTypes.BAND,
-            TokenTypes.BAND_ASSIGN,
-            TokenTypes.BOR,
-            TokenTypes.BOR_ASSIGN,
-            TokenTypes.BSR,
-            TokenTypes.BSR_ASSIGN,
-            TokenTypes.BXOR,
-            TokenTypes.BXOR_ASSIGN,
-            TokenTypes.COLON,
-            TokenTypes.DIV,
-            TokenTypes.DIV_ASSIGN,
-            TokenTypes.DO_WHILE,
-            TokenTypes.EQUAL,
-            TokenTypes.GE,
-            TokenTypes.GT,
-            TokenTypes.LAMBDA,
-            TokenTypes.LAND,
-            TokenTypes.LCURLY,
-            TokenTypes.LE,
-            TokenTypes.LITERAL_CATCH,
-            TokenTypes.LITERAL_DO,
-            TokenTypes.LITERAL_ELSE,
-            TokenTypes.LITERAL_FINALLY,
-            TokenTypes.LITERAL_FOR,
-            TokenTypes.LITERAL_IF,
-            TokenTypes.LITERAL_RETURN,
-            TokenTypes.LITERAL_SWITCH,
-            TokenTypes.LITERAL_SYNCHRONIZED,
-            TokenTypes.LITERAL_TRY,
-            TokenTypes.LITERAL_WHILE,
-            TokenTypes.LOR,
-            TokenTypes.LT,
-            TokenTypes.MINUS,
-            TokenTypes.MINUS_ASSIGN,
-            TokenTypes.MOD,
-            TokenTypes.MOD_ASSIGN,
-            TokenTypes.NOT_EQUAL,
-            TokenTypes.PLUS,
-            TokenTypes.PLUS_ASSIGN,
-            TokenTypes.QUESTION,
-            TokenTypes.RCURLY,
-            TokenTypes.SL,
-            TokenTypes.SLIST,
-            TokenTypes.SL_ASSIGN,
-            TokenTypes.SR,
-            TokenTypes.SR_ASSIGN,
-            TokenTypes.STAR,
-            TokenTypes.STAR_ASSIGN,
-            TokenTypes.LITERAL_ASSERT,
-            TokenTypes.TYPE_EXTENSION_AND,
-            TokenTypes.WILDCARD_TYPE,
-            TokenTypes.GENERIC_START,
-            TokenTypes.GENERIC_END,
-            TokenTypes.ELLIPSIS,
-        };
+                   TokenTypes.ASSIGN,
+                   TokenTypes.ARRAY_INIT,
+                   TokenTypes.BAND,
+                   TokenTypes.BAND_ASSIGN,
+                   TokenTypes.BOR,
+                   TokenTypes.BOR_ASSIGN,
+                   TokenTypes.BSR,
+                   TokenTypes.BSR_ASSIGN,
+                   TokenTypes.BXOR,
+                   TokenTypes.BXOR_ASSIGN,
+                   TokenTypes.COLON,
+                   TokenTypes.DIV,
+                   TokenTypes.DIV_ASSIGN,
+                   TokenTypes.DO_WHILE,
+                   TokenTypes.EQUAL,
+                   TokenTypes.GE,
+                   TokenTypes.GT,
+                   TokenTypes.LAMBDA,
+                   TokenTypes.LAND,
+                   TokenTypes.LCURLY,
+                   TokenTypes.LE,
+                   TokenTypes.LITERAL_CATCH,
+                   TokenTypes.LITERAL_DO,
+                   TokenTypes.LITERAL_ELSE,
+                   TokenTypes.LITERAL_FINALLY,
+                   TokenTypes.LITERAL_FOR,
+                   TokenTypes.LITERAL_IF,
+                   TokenTypes.LITERAL_RETURN,
+                   TokenTypes.LITERAL_SWITCH,
+                   TokenTypes.LITERAL_SYNCHRONIZED,
+                   TokenTypes.LITERAL_TRY,
+                   TokenTypes.LITERAL_WHILE,
+                   TokenTypes.LOR,
+                   TokenTypes.LT,
+                   TokenTypes.MINUS,
+                   TokenTypes.MINUS_ASSIGN,
+                   TokenTypes.MOD,
+                   TokenTypes.MOD_ASSIGN,
+                   TokenTypes.NOT_EQUAL,
+                   TokenTypes.PLUS,
+                   TokenTypes.PLUS_ASSIGN,
+                   TokenTypes.QUESTION,
+                   TokenTypes.RCURLY,
+                   TokenTypes.SL,
+                   TokenTypes.SLIST,
+                   TokenTypes.SL_ASSIGN,
+                   TokenTypes.SR,
+                   TokenTypes.SR_ASSIGN,
+                   TokenTypes.STAR,
+                   TokenTypes.STAR_ASSIGN,
+                   TokenTypes.LITERAL_ASSERT,
+                   TokenTypes.TYPE_EXTENSION_AND,
+                   TokenTypes.WILDCARD_TYPE,
+                   TokenTypes.GENERIC_START,
+                   TokenTypes.GENERIC_END,
+                   TokenTypes.ELLIPSIS,
+               };
     }
 
     @Override
@@ -545,21 +545,21 @@ public class WhitespaceAroundCheck extends AbstractCheck {
     private boolean isNotRelevantSituation(DetailAST ast, int currentType) {
         final int parentType = ast.getParent().getType();
         final boolean starImport = currentType == TokenTypes.STAR
-                && parentType == TokenTypes.DOT;
+                                   && parentType == TokenTypes.DOT;
         final boolean insideCaseGroup = parentType == TokenTypes.CASE_GROUP;
 
         final boolean starImportOrSlistInsideCaseGroup = starImport || insideCaseGroup;
         final boolean colonOfCaseOrDefaultOrForEach =
-                isColonOfCaseOrDefault(parentType)
-                        || isColonOfForEach(parentType);
+            isColonOfCaseOrDefault(parentType)
+            || isColonOfForEach(parentType);
         final boolean emptyBlockOrType =
-                isEmptyBlock(ast, parentType)
-                    || allowEmptyTypes && isEmptyType(ast);
+            isEmptyBlock(ast, parentType)
+            || allowEmptyTypes && isEmptyType(ast);
 
         return starImportOrSlistInsideCaseGroup
-                || colonOfCaseOrDefaultOrForEach
-                || emptyBlockOrType
-                || isArrayInitialization(currentType, parentType);
+               || colonOfCaseOrDefaultOrForEach
+               || emptyBlockOrType
+               || isArrayInitialization(currentType, parentType);
     }
 
     /**
@@ -593,10 +593,10 @@ public class WhitespaceAroundCheck extends AbstractCheck {
      */
     private static boolean shouldCheckSeparationFromNextToken(DetailAST ast, char nextChar) {
         return !(ast.getType() == TokenTypes.LITERAL_RETURN
-                    && ast.getFirstChild().getType() == TokenTypes.SEMI)
-                && ast.getType() != TokenTypes.ARRAY_INIT
-                && !isAnonymousInnerClassEnd(ast.getType(), nextChar)
-                && !isPartOfDoubleBraceInitializerForNextToken(ast);
+                 && ast.getFirstChild().getType() == TokenTypes.SEMI)
+               && ast.getType() != TokenTypes.ARRAY_INIT
+               && !isAnonymousInnerClassEnd(ast.getType(), nextChar)
+               && !isPartOfDoubleBraceInitializerForNextToken(ast);
     }
 
     /**
@@ -607,10 +607,10 @@ public class WhitespaceAroundCheck extends AbstractCheck {
      */
     private static boolean isAnonymousInnerClassEnd(int currentType, char nextChar) {
         return currentType == TokenTypes.RCURLY
-                && (nextChar == ')'
-                        || nextChar == ';'
-                        || nextChar == ','
-                        || nextChar == '.');
+               && (nextChar == ')'
+                   || nextChar == ';'
+                   || nextChar == ','
+                   || nextChar == '.');
     }
 
     /**
@@ -621,10 +621,10 @@ public class WhitespaceAroundCheck extends AbstractCheck {
      */
     private boolean isEmptyBlock(DetailAST ast, int parentType) {
         return isEmptyMethodBlock(ast, parentType)
-                || isEmptyCtorBlock(ast, parentType)
-                || isEmptyLoop(ast, parentType)
-                || isEmptyLambda(ast, parentType)
-                || isEmptyCatch(ast, parentType);
+               || isEmptyCtorBlock(ast, parentType)
+               || isEmptyLoop(ast, parentType)
+               || isEmptyLambda(ast, parentType)
+               || isEmptyCatch(ast, parentType);
     }
 
     /**
@@ -649,12 +649,12 @@ public class WhitespaceAroundCheck extends AbstractCheck {
             final DetailAST parent = ast.getParent();
             final DetailAST grandParent = ast.getParent().getParent();
             result = parent.getFirstChild().getType() == TokenTypes.RCURLY
-                    && grandParent.getType() == match;
+                     && grandParent.getType() == match;
         }
         else {
             result = type == TokenTypes.SLIST
-                && parentType == match
-                && ast.getFirstChild().getType() == TokenTypes.RCURLY;
+                     && parentType == match
+                     && ast.getFirstChild().getType() == TokenTypes.RCURLY;
         }
         return result;
     }
@@ -666,7 +666,7 @@ public class WhitespaceAroundCheck extends AbstractCheck {
      */
     private static boolean isColonOfCaseOrDefault(int parentType) {
         return parentType == TokenTypes.LITERAL_DEFAULT
-                    || parentType == TokenTypes.LITERAL_CASE;
+               || parentType == TokenTypes.LITERAL_CASE;
     }
 
     /**
@@ -676,7 +676,7 @@ public class WhitespaceAroundCheck extends AbstractCheck {
      */
     private boolean isColonOfForEach(int parentType) {
         return parentType == TokenTypes.FOR_EACH_CLAUSE
-                && ignoreEnhancedForColon;
+               && ignoreEnhancedForColon;
     }
 
     /**
@@ -687,8 +687,8 @@ public class WhitespaceAroundCheck extends AbstractCheck {
      */
     private static boolean isArrayInitialization(int currentType, int parentType) {
         return currentType == TokenTypes.RCURLY
-                && (parentType == TokenTypes.ARRAY_INIT
-                        || parentType == TokenTypes.ANNOTATION_ARRAY_INIT);
+               && (parentType == TokenTypes.ARRAY_INIT
+                   || parentType == TokenTypes.ANNOTATION_ARRAY_INIT);
     }
 
     /**
@@ -701,7 +701,7 @@ public class WhitespaceAroundCheck extends AbstractCheck {
      */
     private boolean isEmptyMethodBlock(DetailAST ast, int parentType) {
         return allowEmptyMethods
-                && isEmptyBlock(ast, parentType, TokenTypes.METHOD_DEF);
+               && isEmptyBlock(ast, parentType, TokenTypes.METHOD_DEF);
     }
 
     /**
@@ -714,7 +714,7 @@ public class WhitespaceAroundCheck extends AbstractCheck {
      */
     private boolean isEmptyCtorBlock(DetailAST ast, int parentType) {
         return allowEmptyConstructors
-                && isEmptyBlock(ast, parentType, TokenTypes.CTOR_DEF);
+               && isEmptyBlock(ast, parentType, TokenTypes.CTOR_DEF);
     }
 
     /**
@@ -726,9 +726,9 @@ public class WhitespaceAroundCheck extends AbstractCheck {
      */
     private boolean isEmptyLoop(DetailAST ast, int parentType) {
         return allowEmptyLoops
-                && (isEmptyBlock(ast, parentType, TokenTypes.LITERAL_FOR)
-                        || isEmptyBlock(ast, parentType, TokenTypes.LITERAL_WHILE)
-                        || isEmptyBlock(ast, parentType, TokenTypes.LITERAL_DO));
+               && (isEmptyBlock(ast, parentType, TokenTypes.LITERAL_FOR)
+                   || isEmptyBlock(ast, parentType, TokenTypes.LITERAL_WHILE)
+                   || isEmptyBlock(ast, parentType, TokenTypes.LITERAL_DO));
     }
 
     /**
@@ -772,9 +772,9 @@ public class WhitespaceAroundCheck extends AbstractCheck {
         final DetailAST nextSibling = ast.getNextSibling();
         final DetailAST previousSibling = ast.getPreviousSibling();
         return type == TokenTypes.LCURLY
-                    && nextSibling.getType() == TokenTypes.RCURLY
-                || previousSibling != null
-                    && previousSibling.getType() == TokenTypes.LCURLY;
+               && nextSibling.getType() == TokenTypes.RCURLY
+               || previousSibling != null
+               && previousSibling.getType() == TokenTypes.LCURLY;
     }
 
     /**
@@ -785,7 +785,7 @@ public class WhitespaceAroundCheck extends AbstractCheck {
      */
     private static boolean isPartOfDoubleBraceInitializerForPreviousToken(DetailAST ast) {
         final boolean initializerBeginsAfterClassBegins =
-                ast.getParent().getType() == TokenTypes.INSTANCE_INIT;
+            ast.getParent().getType() == TokenTypes.INSTANCE_INIT;
         final boolean classEndsAfterInitializerEnds = ast.getPreviousSibling() != null
                 && ast.getPreviousSibling().getType() == TokenTypes.INSTANCE_INIT;
         return initializerBeginsAfterClassBegins || classEndsAfterInitializerEnds;
@@ -801,7 +801,7 @@ public class WhitespaceAroundCheck extends AbstractCheck {
      */
     private static boolean isPartOfDoubleBraceInitializerForNextToken(DetailAST ast) {
         final boolean classBeginBeforeInitializerBegin = ast.getType() == TokenTypes.LCURLY
-            && ast.getNextSibling().getType() == TokenTypes.INSTANCE_INIT;
+                && ast.getNextSibling().getType() == TokenTypes.INSTANCE_INIT;
         final boolean initializerEndsBeforeClassEnds =
             ast.getParent().getParent().getType() == TokenTypes.INSTANCE_INIT
             && ast.getParent().getParent().getNextSibling().getType() == TokenTypes.RCURLY;

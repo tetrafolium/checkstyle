@@ -124,9 +124,9 @@ class InputWhitespaceAroundBasic
     {
         Object o = new java.lang.Object();
         o.
-            toString();
+        toString();
         o
-            .toString();
+        .toString();
         o . toString();
         return o.toString();
     }
@@ -217,15 +217,15 @@ class SpecialCasesInForLoop
     {
         // avoid conflict between WhiteSpaceAfter ';' and ParenPad(nospace)
         for (int i = 0; i++ < 5;) {
-        //                  ^ no whitespace
-    }
+            //                  ^ no whitespace
+        }
 
         // bug 895072
-    // avoid conflict between ParenPad(space) and NoWhiteSpace before ';'
-    int i = 0;
-    for ( ; i < 5; i++ ) {
-    //   ^ whitespace
-    }
+        // avoid conflict between ParenPad(space) and NoWhiteSpace before ';'
+        int i = 0;
+        for ( ; i < 5; i++ ) {
+            //   ^ whitespace
+        }
         for (int anInt : getSomeInts()) {
             //Should be ignored
         }
@@ -244,17 +244,17 @@ class NewGoogleOperators
 {
     NewGoogleOperators()
     {
-       Runnable l;
+        Runnable l;
 
-       l = ()-> { }; //warn
-       l = () ->{ }; //warn
-       l = () -> { }; //ok
-       l = () -> {}; //ok
+        l = ()-> { }; //warn
+        l = () -> { }; //warn
+        l = () -> { }; //ok
+        l = () -> {}; //ok
 
-       java.util.Arrays.sort(null, String :: compareToIgnoreCase);
-       java.util.Arrays.sort(null, String::compareToIgnoreCase);
+        java.util.Arrays.sort(null, String :: compareToIgnoreCase);
+        java.util.Arrays.sort(null, String::compareToIgnoreCase);
 
-       new Object().toString();
-       new Object() . toString();
+        new Object().toString();
+        new Object() . toString();
     }
 }

@@ -24,8 +24,8 @@ public class InputJavadocMethodCheck extends OverrideClass
     String foo2()
     {
         return "Fooooooooooooooo"
-                + "ooooo"
-                + "ooo";
+               + "ooooo"
+               + "ooo";
     }
 
     /**
@@ -51,14 +51,14 @@ public class InputJavadocMethodCheck extends OverrideClass
     String foo6()
     {
         return "Fooooooooooooooo"
-                + "oooooooo";
+               + "oooooooo";
     }
 
     public String foo7()
     {
         return "Fooooooooooooooo"
-                + "ooooo"
-                + "ooo";
+               + "ooooo"
+               + "ooo";
     }
 
     void foo81()
@@ -78,18 +78,18 @@ public class InputJavadocMethodCheck extends OverrideClass
     String foo91()
     {
         return "Fooooooooooooooo"
-                + "ooooo"
-                + "ooo";
+               + "ooooo"
+               + "ooo";
     }
 
     @Override
     public String foo92()
     {
         return "Fooooo"
-                + "ooo"
-                + "ooooooo"
-                + "ooooo"
-                + "ooo";
+               + "ooo"
+               + "ooooooo"
+               + "ooooo"
+               + "ooo";
     }
 }
 
@@ -99,10 +99,10 @@ class OverrideClass {
     public String foo92()
     {
         return "Fooooo"
-                + "ooo"
-                + "ooooooo"
-                + "ooooo"
-                + "ooo";
+               + "ooo"
+               + "ooooooo"
+               + "ooooo"
+               + "ooo";
     }
 }
 @interface MyAnnotation {}

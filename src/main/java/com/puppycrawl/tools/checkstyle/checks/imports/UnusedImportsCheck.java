@@ -110,13 +110,13 @@ public class UnusedImportsCheck extends AbstractCheck {
 
     /** Regex to match class names. */
     private static final Pattern CLASS_NAME = CommonUtil.createPattern(
-           "((:?[\\p{L}_$][\\p{L}\\p{N}_$]*\\.)*[\\p{L}_$][\\p{L}\\p{N}_$]*)");
+                "((:?[\\p{L}_$][\\p{L}\\p{N}_$]*\\.)*[\\p{L}_$][\\p{L}\\p{N}_$]*)");
     /** Regex to match the first class name. */
     private static final Pattern FIRST_CLASS_NAME = CommonUtil.createPattern(
-           "^" + CLASS_NAME);
+                "^" + CLASS_NAME);
     /** Regex to match argument names. */
     private static final Pattern ARGUMENT_NAME = CommonUtil.createPattern(
-           "[(,]\\s*" + CLASS_NAME.pattern());
+                "[(,]\\s*" + CLASS_NAME.pattern());
 
     /** Regexp pattern to match java.lang package. */
     private static final Pattern JAVA_LANG_PACKAGE_PATTERN =
@@ -156,8 +156,8 @@ public class UnusedImportsCheck extends AbstractCheck {
     public void finishTree(DetailAST rootAST) {
         // loop over all the imports to see if referenced.
         imports.stream()
-            .filter(imprt -> isUnusedImport(imprt.getText()))
-            .forEach(imprt -> log(imprt.getDetailAst(), MSG_KEY, imprt.getText()));
+        .filter(imprt -> isUnusedImport(imprt.getText()))
+        .forEach(imprt -> log(imprt.getDetailAst(), MSG_KEY, imprt.getText()));
     }
 
     @Override
@@ -168,21 +168,21 @@ public class UnusedImportsCheck extends AbstractCheck {
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.IDENT,
-            TokenTypes.IMPORT,
-            TokenTypes.STATIC_IMPORT,
-            // Definitions that may contain Javadoc...
-            TokenTypes.PACKAGE_DEF,
-            TokenTypes.ANNOTATION_DEF,
-            TokenTypes.ANNOTATION_FIELD_DEF,
-            TokenTypes.ENUM_DEF,
-            TokenTypes.ENUM_CONSTANT_DEF,
-            TokenTypes.CLASS_DEF,
-            TokenTypes.INTERFACE_DEF,
-            TokenTypes.METHOD_DEF,
-            TokenTypes.CTOR_DEF,
-            TokenTypes.VARIABLE_DEF,
-        };
+                   TokenTypes.IDENT,
+                   TokenTypes.IMPORT,
+                   TokenTypes.STATIC_IMPORT,
+                   // Definitions that may contain Javadoc...
+                   TokenTypes.PACKAGE_DEF,
+                   TokenTypes.ANNOTATION_DEF,
+                   TokenTypes.ANNOTATION_FIELD_DEF,
+                   TokenTypes.ENUM_DEF,
+                   TokenTypes.ENUM_CONSTANT_DEF,
+                   TokenTypes.CLASS_DEF,
+                   TokenTypes.INTERFACE_DEF,
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.CTOR_DEF,
+                   TokenTypes.VARIABLE_DEF,
+               };
     }
 
     @Override
@@ -219,7 +219,7 @@ public class UnusedImportsCheck extends AbstractCheck {
     private boolean isUnusedImport(String imprt) {
         final Matcher javaLangPackageMatcher = JAVA_LANG_PACKAGE_PATTERN.matcher(imprt);
         return !referenced.contains(CommonUtil.baseClassName(imprt))
-            || javaLangPackageMatcher.matches();
+               || javaLangPackageMatcher.matches();
     }
 
     /**
@@ -230,8 +230,8 @@ public class UnusedImportsCheck extends AbstractCheck {
         final DetailAST parent = ast.getParent();
         final int parentType = parent.getType();
         if (parentType != TokenTypes.DOT
-            && parentType != TokenTypes.METHOD_DEF
-            || parentType == TokenTypes.DOT
+                && parentType != TokenTypes.METHOD_DEF
+                || parentType == TokenTypes.DOT
                 && ast.getNextSibling() != null) {
             referenced.add(ast.getText());
         }
@@ -291,8 +291,8 @@ public class UnusedImportsCheck extends AbstractCheck {
         final Set<String> references = new HashSet<>();
 
         tags.stream()
-            .filter(JavadocTag::canReferenceImports)
-            .forEach(tag -> references.addAll(processJavadocTag(tag)));
+        .filter(JavadocTag::canReferenceImports)
+        .forEach(tag -> references.addAll(processJavadocTag(tag)));
         return references;
     }
 
@@ -316,7 +316,7 @@ public class UnusedImportsCheck extends AbstractCheck {
         final Set<String> references = new HashSet<>();
         final String identifier = tag.getFirstArg().trim();
         for (Pattern pattern : new Pattern[]
-        {FIRST_CLASS_NAME, ARGUMENT_NAME}) {
+                {FIRST_CLASS_NAME, ARGUMENT_NAME}) {
             references.addAll(matchPattern(identifier, pattern));
         }
         return references;

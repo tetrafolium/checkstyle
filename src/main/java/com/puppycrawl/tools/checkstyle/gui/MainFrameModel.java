@@ -194,15 +194,15 @@ public class MainFrameModel {
                 final DetailAST parseTree;
 
                 switch (parseMode) {
-                    case PLAIN_JAVA:
-                        parseTree = JavaParser.parseFile(file, JavaParser.Options.WITHOUT_COMMENTS);
-                        break;
-                    case JAVA_WITH_COMMENTS:
-                    case JAVA_WITH_JAVADOC_AND_COMMENTS:
-                        parseTree = JavaParser.parseFile(file, JavaParser.Options.WITH_COMMENTS);
-                        break;
-                    default:
-                        throw new IllegalArgumentException("Unknown mode: " + parseMode);
+                case PLAIN_JAVA:
+                    parseTree = JavaParser.parseFile(file, JavaParser.Options.WITHOUT_COMMENTS);
+                    break;
+                case JAVA_WITH_COMMENTS:
+                case JAVA_WITH_JAVADOC_AND_COMMENTS:
+                    parseTree = JavaParser.parseFile(file, JavaParser.Options.WITH_COMMENTS);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown mode: " + parseMode);
                 }
 
                 parseTreeTableModel.setParseTree(parseTree);
@@ -224,8 +224,8 @@ public class MainFrameModel {
             }
             catch (IOException ex) {
                 final String exceptionMsg = String.format(Locale.ROOT,
-                    "%s occurred while opening file %s.",
-                    ex.getClass().getSimpleName(), file.getPath());
+                                            "%s occurred while opening file %s.",
+                                            ex.getClass().getSimpleName(), file.getPath());
                 throw new CheckstyleException(exceptionMsg, ex);
             }
         }
@@ -239,7 +239,7 @@ public class MainFrameModel {
      */
     private static FileText getFileText(File file) throws IOException {
         return new FileText(file.getAbsoluteFile(),
-                System.getProperty("file.encoding", StandardCharsets.UTF_8.name()));
+                            System.getProperty("file.encoding", StandardCharsets.UTF_8.name()));
     }
 
 }

@@ -115,12 +115,12 @@ public final class ModifiedControlVariableCheck extends AbstractCheck {
     /** Operations which can change control variable in update part of the loop. */
     private static final Set<Integer> MUTATION_OPERATIONS =
         Arrays.stream(new Integer[] {
-            TokenTypes.POST_INC,
-            TokenTypes.POST_DEC,
-            TokenTypes.DEC,
-            TokenTypes.INC,
-            TokenTypes.ASSIGN,
-        }).collect(Collectors.toSet());
+                          TokenTypes.POST_INC,
+                          TokenTypes.POST_DEC,
+                          TokenTypes.DEC,
+                          TokenTypes.INC,
+                          TokenTypes.ASSIGN,
+                      }).collect(Collectors.toSet());
 
     /** Stack of block parameters. */
     private final Deque<Deque<String>> variableStack = new ArrayDeque<>();
@@ -150,27 +150,27 @@ public final class ModifiedControlVariableCheck extends AbstractCheck {
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.OBJBLOCK,
-            TokenTypes.LITERAL_FOR,
-            TokenTypes.FOR_ITERATOR,
-            TokenTypes.FOR_EACH_CLAUSE,
-            TokenTypes.ASSIGN,
-            TokenTypes.PLUS_ASSIGN,
-            TokenTypes.MINUS_ASSIGN,
-            TokenTypes.STAR_ASSIGN,
-            TokenTypes.DIV_ASSIGN,
-            TokenTypes.MOD_ASSIGN,
-            TokenTypes.SR_ASSIGN,
-            TokenTypes.BSR_ASSIGN,
-            TokenTypes.SL_ASSIGN,
-            TokenTypes.BAND_ASSIGN,
-            TokenTypes.BXOR_ASSIGN,
-            TokenTypes.BOR_ASSIGN,
-            TokenTypes.INC,
-            TokenTypes.POST_INC,
-            TokenTypes.DEC,
-            TokenTypes.POST_DEC,
-        };
+                   TokenTypes.OBJBLOCK,
+                   TokenTypes.LITERAL_FOR,
+                   TokenTypes.FOR_ITERATOR,
+                   TokenTypes.FOR_EACH_CLAUSE,
+                   TokenTypes.ASSIGN,
+                   TokenTypes.PLUS_ASSIGN,
+                   TokenTypes.MINUS_ASSIGN,
+                   TokenTypes.STAR_ASSIGN,
+                   TokenTypes.DIV_ASSIGN,
+                   TokenTypes.MOD_ASSIGN,
+                   TokenTypes.SR_ASSIGN,
+                   TokenTypes.BSR_ASSIGN,
+                   TokenTypes.SL_ASSIGN,
+                   TokenTypes.BAND_ASSIGN,
+                   TokenTypes.BXOR_ASSIGN,
+                   TokenTypes.BOR_ASSIGN,
+                   TokenTypes.INC,
+                   TokenTypes.POST_INC,
+                   TokenTypes.DEC,
+                   TokenTypes.POST_DEC,
+               };
     }
 
     @Override
@@ -187,75 +187,75 @@ public final class ModifiedControlVariableCheck extends AbstractCheck {
     @Override
     public void visitToken(DetailAST ast) {
         switch (ast.getType()) {
-            case TokenTypes.OBJBLOCK:
-                enterBlock();
-                break;
-            case TokenTypes.LITERAL_FOR:
-            case TokenTypes.FOR_ITERATOR:
-            case TokenTypes.FOR_EACH_CLAUSE:
-                // we need that Tokens only at leaveToken()
-                break;
-            case TokenTypes.ASSIGN:
-            case TokenTypes.PLUS_ASSIGN:
-            case TokenTypes.MINUS_ASSIGN:
-            case TokenTypes.STAR_ASSIGN:
-            case TokenTypes.DIV_ASSIGN:
-            case TokenTypes.MOD_ASSIGN:
-            case TokenTypes.SR_ASSIGN:
-            case TokenTypes.BSR_ASSIGN:
-            case TokenTypes.SL_ASSIGN:
-            case TokenTypes.BAND_ASSIGN:
-            case TokenTypes.BXOR_ASSIGN:
-            case TokenTypes.BOR_ASSIGN:
-            case TokenTypes.INC:
-            case TokenTypes.POST_INC:
-            case TokenTypes.DEC:
-            case TokenTypes.POST_DEC:
-                checkIdent(ast);
-                break;
-            default:
-                throw new IllegalStateException(ILLEGAL_TYPE_OF_TOKEN + ast);
+        case TokenTypes.OBJBLOCK:
+            enterBlock();
+            break;
+        case TokenTypes.LITERAL_FOR:
+        case TokenTypes.FOR_ITERATOR:
+        case TokenTypes.FOR_EACH_CLAUSE:
+            // we need that Tokens only at leaveToken()
+            break;
+        case TokenTypes.ASSIGN:
+        case TokenTypes.PLUS_ASSIGN:
+        case TokenTypes.MINUS_ASSIGN:
+        case TokenTypes.STAR_ASSIGN:
+        case TokenTypes.DIV_ASSIGN:
+        case TokenTypes.MOD_ASSIGN:
+        case TokenTypes.SR_ASSIGN:
+        case TokenTypes.BSR_ASSIGN:
+        case TokenTypes.SL_ASSIGN:
+        case TokenTypes.BAND_ASSIGN:
+        case TokenTypes.BXOR_ASSIGN:
+        case TokenTypes.BOR_ASSIGN:
+        case TokenTypes.INC:
+        case TokenTypes.POST_INC:
+        case TokenTypes.DEC:
+        case TokenTypes.POST_DEC:
+            checkIdent(ast);
+            break;
+        default:
+            throw new IllegalStateException(ILLEGAL_TYPE_OF_TOKEN + ast);
         }
     }
 
     @Override
     public void leaveToken(DetailAST ast) {
         switch (ast.getType()) {
-            case TokenTypes.FOR_ITERATOR:
-                leaveForIter(ast.getParent());
-                break;
-            case TokenTypes.FOR_EACH_CLAUSE:
-                if (!skipEnhancedForLoopVariable) {
-                    final DetailAST paramDef = ast.findFirstToken(TokenTypes.VARIABLE_DEF);
-                    leaveForEach(paramDef);
-                }
-                break;
-            case TokenTypes.LITERAL_FOR:
-                leaveForDef(ast);
-                break;
-            case TokenTypes.OBJBLOCK:
-                exitBlock();
-                break;
-            case TokenTypes.ASSIGN:
-            case TokenTypes.PLUS_ASSIGN:
-            case TokenTypes.MINUS_ASSIGN:
-            case TokenTypes.STAR_ASSIGN:
-            case TokenTypes.DIV_ASSIGN:
-            case TokenTypes.MOD_ASSIGN:
-            case TokenTypes.SR_ASSIGN:
-            case TokenTypes.BSR_ASSIGN:
-            case TokenTypes.SL_ASSIGN:
-            case TokenTypes.BAND_ASSIGN:
-            case TokenTypes.BXOR_ASSIGN:
-            case TokenTypes.BOR_ASSIGN:
-            case TokenTypes.INC:
-            case TokenTypes.POST_INC:
-            case TokenTypes.DEC:
-            case TokenTypes.POST_DEC:
-                // we need that Tokens only at visitToken()
-                break;
-            default:
-                throw new IllegalStateException(ILLEGAL_TYPE_OF_TOKEN + ast);
+        case TokenTypes.FOR_ITERATOR:
+            leaveForIter(ast.getParent());
+            break;
+        case TokenTypes.FOR_EACH_CLAUSE:
+            if (!skipEnhancedForLoopVariable) {
+                final DetailAST paramDef = ast.findFirstToken(TokenTypes.VARIABLE_DEF);
+                leaveForEach(paramDef);
+            }
+            break;
+        case TokenTypes.LITERAL_FOR:
+            leaveForDef(ast);
+            break;
+        case TokenTypes.OBJBLOCK:
+            exitBlock();
+            break;
+        case TokenTypes.ASSIGN:
+        case TokenTypes.PLUS_ASSIGN:
+        case TokenTypes.MINUS_ASSIGN:
+        case TokenTypes.STAR_ASSIGN:
+        case TokenTypes.DIV_ASSIGN:
+        case TokenTypes.MOD_ASSIGN:
+        case TokenTypes.SR_ASSIGN:
+        case TokenTypes.BSR_ASSIGN:
+        case TokenTypes.SL_ASSIGN:
+        case TokenTypes.BAND_ASSIGN:
+        case TokenTypes.BXOR_ASSIGN:
+        case TokenTypes.BOR_ASSIGN:
+        case TokenTypes.INC:
+        case TokenTypes.POST_INC:
+        case TokenTypes.DEC:
+        case TokenTypes.POST_DEC:
+            // we need that Tokens only at visitToken()
+            break;
+        default:
+            throw new IllegalStateException(ILLEGAL_TYPE_OF_TOKEN + ast);
         }
     }
 
@@ -290,7 +290,7 @@ public final class ModifiedControlVariableCheck extends AbstractCheck {
         final DetailAST identAST = ast.getFirstChild();
 
         if (identAST != null && identAST.getType() == TokenTypes.IDENT
-            && currentVariables.contains(identAST.getText())) {
+                && currentVariables.contains(identAST.getText())) {
             log(ast, MSG_KEY, identAST.getText());
         }
     }
@@ -316,7 +316,7 @@ public final class ModifiedControlVariableCheck extends AbstractCheck {
         final Set<String> initializedVariables = getForInitVariables(ast);
         final Set<String> iteratingVariables = getForIteratorVariables(ast);
         return initializedVariables.stream().filter(iteratingVariables::contains)
-            .collect(Collectors.toSet());
+               .collect(Collectors.toSet());
     }
 
     /**
@@ -366,11 +366,11 @@ public final class ModifiedControlVariableCheck extends AbstractCheck {
         final DetailAST forInitAST = ast.findFirstToken(TokenTypes.FOR_INIT);
 
         for (DetailAST parameterDefAST = forInitAST.findFirstToken(TokenTypes.VARIABLE_DEF);
-             parameterDefAST != null;
-             parameterDefAST = parameterDefAST.getNextSibling()) {
+                parameterDefAST != null;
+                parameterDefAST = parameterDefAST.getNextSibling()) {
             if (parameterDefAST.getType() == TokenTypes.VARIABLE_DEF) {
                 final DetailAST param =
-                        parameterDefAST.findFirstToken(TokenTypes.IDENT);
+                    parameterDefAST.findFirstToken(TokenTypes.IDENT);
 
                 initializedVariables.add(param.getText());
             }
@@ -389,12 +389,12 @@ public final class ModifiedControlVariableCheck extends AbstractCheck {
         final DetailAST forUpdateListAST = forIteratorAST.findFirstToken(TokenTypes.ELIST);
 
         findChildrenOfExpressionType(forUpdateListAST).stream()
-            .filter(iteratingExpressionAST -> {
-                return MUTATION_OPERATIONS.contains(iteratingExpressionAST.getType());
-            }).forEach(iteratingExpressionAST -> {
-                final DetailAST oneVariableOperatorChild = iteratingExpressionAST.getFirstChild();
-                iteratorVariables.add(oneVariableOperatorChild.getText());
-            });
+        .filter(iteratingExpressionAST -> {
+            return MUTATION_OPERATIONS.contains(iteratingExpressionAST.getType());
+        }).forEach(iteratingExpressionAST -> {
+            final DetailAST oneVariableOperatorChild = iteratingExpressionAST.getFirstChild();
+            iteratorVariables.add(oneVariableOperatorChild.getText());
+        });
 
         return iteratorVariables;
     }
@@ -408,8 +408,8 @@ public final class ModifiedControlVariableCheck extends AbstractCheck {
         final List<DetailAST> foundExpressions = new LinkedList<>();
         if (ast != null) {
             for (DetailAST iteratingExpressionAST = ast.findFirstToken(TokenTypes.EXPR);
-                 iteratingExpressionAST != null;
-                 iteratingExpressionAST = iteratingExpressionAST.getNextSibling()) {
+                    iteratingExpressionAST != null;
+                    iteratingExpressionAST = iteratingExpressionAST.getNextSibling()) {
                 if (iteratingExpressionAST.getType() == TokenTypes.EXPR) {
                     foundExpressions.add(iteratingExpressionAST.getFirstChild());
                 }

@@ -53,7 +53,7 @@ public class SynchronizedHandler extends BlockParentHandler {
             super.checkIndentation();
             checkSynchronizedExpr();
             checkWrappingIndentation(getMainAst(),
-                    getSynchronizedStatementRightParen(getMainAst()));
+                                     getSynchronizedStatementRightParen(getMainAst()));
         }
     }
 
@@ -62,9 +62,9 @@ public class SynchronizedHandler extends BlockParentHandler {
      */
     private void checkSynchronizedExpr() {
         final DetailAST syncAst = getMainAst().findFirstToken(TokenTypes.LPAREN)
-                .getNextSibling();
+                                  .getNextSibling();
         final IndentLevel expected =
-                new IndentLevel(getIndent(), getBasicOffset());
+            new IndentLevel(getIndent(), getBasicOffset());
         checkExpressionSubtree(syncAst, expected, false, false);
     }
 

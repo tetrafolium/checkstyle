@@ -35,7 +35,7 @@ public class NonEmptyAtclauseDescriptionTest extends AbstractGoogleModuleTestSup
     @Test
     public void testDefaultConfiguration() throws Exception {
         final String msg = getCheckMessage(NonEmptyAtclauseDescriptionCheck.class,
-            "non.empty.atclause");
+                                           "non.empty.atclause");
 
         final String[] expected = {
             "34: " + msg,
@@ -61,7 +61,7 @@ public class NonEmptyAtclauseDescriptionTest extends AbstractGoogleModuleTestSup
     @Test
     public void testSpaceSequence() throws Exception {
         final String msg = getCheckMessage(NonEmptyAtclauseDescriptionCheck.class,
-            "non.empty.atclause");
+                                           "non.empty.atclause");
 
         final String[] expected = {
             "27: " + msg,

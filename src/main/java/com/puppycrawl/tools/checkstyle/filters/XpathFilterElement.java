@@ -78,7 +78,7 @@ public class XpathFilterElement implements TreeWalkerFilter {
      * @param query the xpath query
      */
     public XpathFilterElement(String files, String checks,
-                       String message, String moduleId, String query) {
+                              String message, String moduleId, String query) {
         filePattern = files;
         if (files == null) {
             fileRegexp = null;
@@ -125,7 +125,7 @@ public class XpathFilterElement implements TreeWalkerFilter {
      * @param query the xpath query
      */
     public XpathFilterElement(Pattern files, Pattern checks, Pattern message,
-                           String moduleId, String query) {
+                              String moduleId, String query) {
         if (files == null) {
             filePattern = null;
             fileRegexp = null;
@@ -169,8 +169,8 @@ public class XpathFilterElement implements TreeWalkerFilter {
     @Override
     public boolean accept(TreeWalkerAuditEvent event) {
         return !isFileNameAndModuleAndModuleNameMatching(event)
-                || !isMessageNameMatching(event)
-                || !isXpathQueryMatching(event);
+               || !isMessageNameMatching(event)
+               || !isXpathQueryMatching(event);
     }
 
     /**
@@ -180,10 +180,10 @@ public class XpathFilterElement implements TreeWalkerFilter {
      */
     private boolean isFileNameAndModuleAndModuleNameMatching(TreeWalkerAuditEvent event) {
         return event.getFileName() != null
-                && (fileRegexp == null || fileRegexp.matcher(event.getFileName()).find())
-                && event.getLocalizedMessage() != null
-                && (moduleId == null || moduleId.equals(event.getModuleId()))
-                && (checkRegexp == null || checkRegexp.matcher(event.getSourceName()).find());
+               && (fileRegexp == null || fileRegexp.matcher(event.getFileName()).find())
+               && event.getLocalizedMessage() != null
+               && (moduleId == null || moduleId.equals(event.getModuleId()))
+               && (checkRegexp == null || checkRegexp.matcher(event.getSourceName()).find());
     }
 
     /**
@@ -208,11 +208,11 @@ public class XpathFilterElement implements TreeWalkerFilter {
         else {
             isMatching = false;
             final List<AbstractNode> nodes = getItems(event)
-                    .stream().map(item -> (AbstractNode) item).collect(Collectors.toList());
+                                             .stream().map(item -> (AbstractNode) item).collect(Collectors.toList());
             for (AbstractNode abstractNode : nodes) {
                 isMatching = abstractNode.getTokenType() == event.getTokenType()
-                        && abstractNode.getLineNumber() == event.getLine()
-                        && abstractNode.getColumnNumber() == event.getColumnCharIndex();
+                             && abstractNode.getLineNumber() == event.getLine()
+                             && abstractNode.getColumnNumber() == event.getColumnCharIndex();
                 if (isMatching) {
                     break;
                 }
@@ -237,12 +237,12 @@ public class XpathFilterElement implements TreeWalkerFilter {
         final List<Item<?>> items;
         try {
             final XPathDynamicContext xpathDynamicContext =
-                    xpathExpression.createDynamicContext(rootNode);
+                xpathExpression.createDynamicContext(rootNode);
             items = xpathExpression.evaluate(xpathDynamicContext);
         }
         catch (XPathException ex) {
             throw new IllegalStateException("Cannot initialize context and evaluate query: "
-                    + xpathQuery, ex);
+                                            + xpathQuery, ex);
         }
         return items;
     }
@@ -262,10 +262,10 @@ public class XpathFilterElement implements TreeWalkerFilter {
         }
         final XpathFilterElement xpathFilter = (XpathFilterElement) other;
         return Objects.equals(filePattern, xpathFilter.filePattern)
-                && Objects.equals(checkPattern, xpathFilter.checkPattern)
-                && Objects.equals(messagePattern, xpathFilter.messagePattern)
-                && Objects.equals(moduleId, xpathFilter.moduleId)
-                && Objects.equals(xpathQuery, xpathFilter.xpathQuery);
+               && Objects.equals(checkPattern, xpathFilter.checkPattern)
+               && Objects.equals(messagePattern, xpathFilter.messagePattern)
+               && Objects.equals(moduleId, xpathFilter.moduleId)
+               && Objects.equals(xpathQuery, xpathFilter.xpathQuery);
     }
 
 }

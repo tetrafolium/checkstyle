@@ -97,16 +97,16 @@ public class WhitespaceAfterCheck
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.COMMA,
-            TokenTypes.SEMI,
-            TokenTypes.TYPECAST,
-            TokenTypes.LITERAL_IF,
-            TokenTypes.LITERAL_ELSE,
-            TokenTypes.LITERAL_WHILE,
-            TokenTypes.LITERAL_DO,
-            TokenTypes.LITERAL_FOR,
-            TokenTypes.DO_WHILE,
-        };
+                   TokenTypes.COMMA,
+                   TokenTypes.SEMI,
+                   TokenTypes.TYPECAST,
+                   TokenTypes.LITERAL_IF,
+                   TokenTypes.LITERAL_ELSE,
+                   TokenTypes.LITERAL_WHILE,
+                   TokenTypes.LITERAL_DO,
+                   TokenTypes.LITERAL_FOR,
+                   TokenTypes.DO_WHILE,
+               };
     }
 
     @Override
@@ -146,8 +146,8 @@ public class WhitespaceAfterCheck
         if (after < line.length()) {
             final char charAfter = line.charAt(after);
             followedByWhitespace = charAfter == ';'
-                || charAfter == ')'
-                || Character.isWhitespace(charAfter);
+                                   || charAfter == ')'
+                                   || Character.isWhitespace(charAfter);
         }
         return followedByWhitespace;
     }

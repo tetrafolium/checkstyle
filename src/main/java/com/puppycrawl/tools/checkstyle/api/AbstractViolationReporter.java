@@ -166,6 +166,6 @@ public abstract class AbstractViolationReporter
     // -@cs[CustomDeclarationOrder] CustomDeclarationOrder does not treat groups of
     // overloaded methods. See https://github.com/sevntu-checkstyle/sevntu.checkstyle/issues/414
     public abstract void log(int line, int col, String key,
-            Object... args);
+                             Object... args);
 
 }

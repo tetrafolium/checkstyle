@@ -39,7 +39,7 @@ class InputLocalVariableNameOneCharVarName
         }
 
         for (int a = 0, b[] = { 1 }, c[][] = { { 1 }, { 2 } }; a < 10; a++) { //ok
-              // something
+            // something
         }
 
         for(int i_ndex = 1; i_ndex < 10; i_ndex++) { //warn

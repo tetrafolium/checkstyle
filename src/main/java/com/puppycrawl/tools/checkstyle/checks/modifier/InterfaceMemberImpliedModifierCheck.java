@@ -336,31 +336,31 @@ public class InterfaceMemberImpliedModifierCheck
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.METHOD_DEF,
-            TokenTypes.VARIABLE_DEF,
-            TokenTypes.INTERFACE_DEF,
-            TokenTypes.CLASS_DEF,
-            TokenTypes.ENUM_DEF,
-        };
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.VARIABLE_DEF,
+                   TokenTypes.INTERFACE_DEF,
+                   TokenTypes.CLASS_DEF,
+                   TokenTypes.ENUM_DEF,
+               };
     }
 
     @Override
     public void visitToken(DetailAST ast) {
         if (ScopeUtil.isInInterfaceBlock(ast) && !ScopeUtil.isInCodeBlock(ast)) {
             switch (ast.getType()) {
-                case TokenTypes.METHOD_DEF:
-                    processMethod(ast);
-                    break;
-                case TokenTypes.VARIABLE_DEF:
-                    processField(ast);
-                    break;
-                case TokenTypes.CLASS_DEF:
-                case TokenTypes.INTERFACE_DEF:
-                case TokenTypes.ENUM_DEF:
-                    processNestedType(ast);
-                    break;
-                default:
-                    throw new IllegalStateException(ast.toString());
+            case TokenTypes.METHOD_DEF:
+                processMethod(ast);
+                break;
+            case TokenTypes.VARIABLE_DEF:
+                processField(ast);
+                break;
+            case TokenTypes.CLASS_DEF:
+            case TokenTypes.INTERFACE_DEF:
+            case TokenTypes.ENUM_DEF:
+                processNestedType(ast);
+                break;
+            default:
+                throw new IllegalStateException(ast.toString());
             }
         }
     }

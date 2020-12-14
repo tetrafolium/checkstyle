@@ -82,17 +82,17 @@ public abstract class AbstractAccessControlNameCheck
      */
     protected boolean shouldCheckInScope(DetailAST modifiers) {
         final boolean isPublic = modifiers
-                .findFirstToken(TokenTypes.LITERAL_PUBLIC) != null;
+                                 .findFirstToken(TokenTypes.LITERAL_PUBLIC) != null;
         final boolean isProtected = modifiers
-                .findFirstToken(TokenTypes.LITERAL_PROTECTED) != null;
+                                    .findFirstToken(TokenTypes.LITERAL_PROTECTED) != null;
         final boolean isPrivate = modifiers
-                .findFirstToken(TokenTypes.LITERAL_PRIVATE) != null;
+                                  .findFirstToken(TokenTypes.LITERAL_PRIVATE) != null;
         final boolean isPackage = !(isPublic || isProtected || isPrivate);
 
         return applyToPublic && isPublic
-                || applyToProtected && isProtected
-                || applyToPackage && isPackage
-                || applyToPrivate && isPrivate;
+               || applyToProtected && isProtected
+               || applyToPackage && isPackage
+               || applyToPrivate && isPrivate;
     }
 
     /**

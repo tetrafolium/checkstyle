@@ -38,7 +38,7 @@ public class ElseHandler extends BlockParentHandler {
      * @param parent        the parent handler
      */
     public ElseHandler(IndentationCheck indentCheck,
-        DetailAST ast, AbstractExpressionHandler parent) {
+                       DetailAST ast, AbstractExpressionHandler parent) {
         super(indentCheck, "else", ast, parent);
     }
 

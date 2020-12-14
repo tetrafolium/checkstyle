@@ -58,7 +58,7 @@ class PkgImportControl extends AbstractImportControl {
      * @param strategyOnMismatch strategy in a case if matching allow/disallow rule was not found.
      */
     /* package */ PkgImportControl(String packageName, boolean regex,
-            MismatchStrategy strategyOnMismatch) {
+                                   MismatchStrategy strategyOnMismatch) {
         super(null, strategyOnMismatch);
 
         this.regex = regex;
@@ -84,12 +84,12 @@ class PkgImportControl extends AbstractImportControl {
      * @param strategyOnMismatch strategy in a case if matching allow/disallow rule was not found.
      */
     /* package */ PkgImportControl(PkgImportControl parent, String subPackageName, boolean regex,
-            MismatchStrategy strategyOnMismatch) {
+                                   MismatchStrategy strategyOnMismatch) {
         super(parent, strategyOnMismatch);
         if (regex || parent.regex) {
             // regex gets inherited
             final String parentRegex = ensureSelfContainedRegex(parent.fullPackageName,
-                    parent.regex);
+                                       parent.regex);
             final String thisRegex = ensureSelfContainedRegex(subPackageName, regex);
             fullPackageName = parentRegex + DOT_REGEX + thisRegex;
             patternForPartialMatch = createPatternForPartialMatch(fullPackageName);
@@ -229,8 +229,8 @@ class PkgImportControl extends AbstractImportControl {
      */
     private boolean matchesAtFrontNoRegex(String pkg) {
         return pkg.startsWith(fullPackageName)
-                && (pkg.length() == fullPackageName.length()
-                    || pkg.charAt(fullPackageName.length()) == '.');
+               && (pkg.length() == fullPackageName.length()
+                   || pkg.charAt(fullPackageName.length()) == '.');
     }
 
     @Override

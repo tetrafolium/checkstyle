@@ -38,7 +38,7 @@ public class IfHandler extends BlockParentHandler {
      * @param parent        the parent handler
      */
     public IfHandler(IndentationCheck indentCheck,
-        DetailAST ast, AbstractExpressionHandler parent) {
+                     DetailAST ast, AbstractExpressionHandler parent) {
         super(indentCheck, "if", ast, parent);
     }
 
@@ -76,7 +76,7 @@ public class IfHandler extends BlockParentHandler {
         // check if there is an 'else' and an 'if' on the same line
         final DetailAST parent = getMainAst().getParent();
         return parent.getType() == TokenTypes.LITERAL_ELSE
-            && TokenUtil.areOnSameLine(parent, getMainAst());
+               && TokenUtil.areOnSameLine(parent, getMainAst());
     }
 
     @Override
@@ -91,7 +91,7 @@ public class IfHandler extends BlockParentHandler {
      */
     private void checkCondExpr() {
         final DetailAST condAst = getMainAst().findFirstToken(TokenTypes.LPAREN)
-            .getNextSibling();
+                                  .getNextSibling();
         final IndentLevel expected =
             new IndentLevel(getIndent(), getBasicOffset());
         checkExpressionSubtree(condAst, expected, false, false);

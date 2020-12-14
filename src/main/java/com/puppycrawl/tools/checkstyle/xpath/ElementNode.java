@@ -165,77 +165,77 @@ public class ElementNode extends AbstractNode {
     public AxisIterator iterateAxis(byte axisNumber) {
         final AxisIterator result;
         switch (axisNumber) {
-            case AxisInfo.ANCESTOR:
-                try (AxisIterator iterator = new Navigator.AncestorEnumeration(this, false)) {
+        case AxisInfo.ANCESTOR:
+            try (AxisIterator iterator = new Navigator.AncestorEnumeration(this, false)) {
+                result = iterator;
+            }
+            break;
+        case AxisInfo.ANCESTOR_OR_SELF:
+            try (AxisIterator iterator = new Navigator.AncestorEnumeration(this, true)) {
+                result = iterator;
+            }
+            break;
+        case AxisInfo.ATTRIBUTE:
+            try (AxisIterator iterator = SingleNodeIterator.makeIterator(attributeNode)) {
+                result = iterator;
+            }
+            break;
+        case AxisInfo.CHILD:
+            if (hasChildNodes()) {
+                try (AxisIterator iterator = new ArrayIterator.OfNodes(
+                        getChildren().toArray(EMPTY_ABSTRACT_NODE_ARRAY))) {
                     result = iterator;
                 }
-                break;
-            case AxisInfo.ANCESTOR_OR_SELF:
-                try (AxisIterator iterator = new Navigator.AncestorEnumeration(this, true)) {
-                    result = iterator;
-                }
-                break;
-            case AxisInfo.ATTRIBUTE:
-                try (AxisIterator iterator = SingleNodeIterator.makeIterator(attributeNode)) {
-                    result = iterator;
-                }
-                break;
-            case AxisInfo.CHILD:
-                if (hasChildNodes()) {
-                    try (AxisIterator iterator = new ArrayIterator.OfNodes(
-                            getChildren().toArray(EMPTY_ABSTRACT_NODE_ARRAY))) {
-                        result = iterator;
-                    }
-                }
-                else {
-                    result = EmptyIterator.OfNodes.THE_INSTANCE;
-                }
-                break;
-            case AxisInfo.DESCENDANT:
-                if (hasChildNodes()) {
-                    try (AxisIterator iterator =
-                                 new Navigator.DescendantEnumeration(this, false, true)) {
-                        result = iterator;
-                    }
-                }
-                else {
-                    result = EmptyIterator.OfNodes.THE_INSTANCE;
-                }
-                break;
-            case AxisInfo.DESCENDANT_OR_SELF:
+            }
+            else {
+                result = EmptyIterator.OfNodes.THE_INSTANCE;
+            }
+            break;
+        case AxisInfo.DESCENDANT:
+            if (hasChildNodes()) {
                 try (AxisIterator iterator =
-                             new Navigator.DescendantEnumeration(this, true, true)) {
+                                new Navigator.DescendantEnumeration(this, false, true)) {
                     result = iterator;
                 }
-                break;
-            case AxisInfo.PARENT:
-                try (AxisIterator iterator = SingleNodeIterator.makeIterator(parent)) {
-                    result = iterator;
-                }
-                break;
-            case AxisInfo.SELF:
-                try (AxisIterator iterator = SingleNodeIterator.makeIterator(this)) {
-                    result = iterator;
-                }
-                break;
-            case AxisInfo.FOLLOWING_SIBLING:
-                result = getFollowingSiblingsIterator();
-                break;
-            case AxisInfo.PRECEDING_SIBLING:
-                result = getPrecedingSiblingsIterator();
-                break;
-            case AxisInfo.FOLLOWING:
-                try (AxisIterator iterator = new FollowingEnumeration(this)) {
-                    result = iterator;
-                }
-                break;
-            case AxisInfo.PRECEDING:
-                try (AxisIterator iterator = new Navigator.PrecedingEnumeration(this, true)) {
-                    result = iterator;
-                }
-                break;
-            default:
-                throw throwUnsupportedOperationException();
+            }
+            else {
+                result = EmptyIterator.OfNodes.THE_INSTANCE;
+            }
+            break;
+        case AxisInfo.DESCENDANT_OR_SELF:
+            try (AxisIterator iterator =
+                            new Navigator.DescendantEnumeration(this, true, true)) {
+                result = iterator;
+            }
+            break;
+        case AxisInfo.PARENT:
+            try (AxisIterator iterator = SingleNodeIterator.makeIterator(parent)) {
+                result = iterator;
+            }
+            break;
+        case AxisInfo.SELF:
+            try (AxisIterator iterator = SingleNodeIterator.makeIterator(this)) {
+                result = iterator;
+            }
+            break;
+        case AxisInfo.FOLLOWING_SIBLING:
+            result = getFollowingSiblingsIterator();
+            break;
+        case AxisInfo.PRECEDING_SIBLING:
+            result = getPrecedingSiblingsIterator();
+            break;
+        case AxisInfo.FOLLOWING:
+            try (AxisIterator iterator = new FollowingEnumeration(this)) {
+                result = iterator;
+            }
+            break;
+        case AxisInfo.PRECEDING:
+            try (AxisIterator iterator = new Navigator.PrecedingEnumeration(this, true)) {
+                result = iterator;
+            }
+            break;
+        default:
+            throw throwUnsupportedOperationException();
         }
         return result;
     }
@@ -339,7 +339,7 @@ public class ElementNode extends AbstractNode {
         AttributeNode attribute = null;
         if (XpathUtil.supportsTextAttribute(detailAst)) {
             attribute = new AttributeNode(TEXT_ATTRIBUTE_NAME,
-                    XpathUtil.getTextAttributeValue(detailAst));
+                                          XpathUtil.getTextAttributeValue(detailAst));
         }
         attributeNode = attribute;
     }

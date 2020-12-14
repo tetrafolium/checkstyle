@@ -173,7 +173,7 @@ public class AvoidStarImportCheck
             logsStarredImportViolation(startingDot);
         }
         else if (!allowStaticMemberImports
-            && ast.getType() == TokenTypes.STATIC_IMPORT) {
+                 && ast.getType() == TokenTypes.STATIC_IMPORT) {
             // must navigate past the static keyword
             final DetailAST startingDot = ast.getFirstChild().getNextSibling();
             logsStarredImportViolation(startingDot);

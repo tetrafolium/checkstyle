@@ -53,7 +53,7 @@ public abstract class AbstractXpathTestSupport extends AbstractCheckstyleModuleT
     private static final String DELIMITER = " | \n";
 
     private static final Pattern LINE_COLUMN_NUMBER_REGEX =
-            Pattern.compile("([0-9]+):([0-9]+):");
+        Pattern.compile("([0-9]+):([0-9]+):");
 
     /**
      * <p>
@@ -102,17 +102,17 @@ public abstract class AbstractXpathTestSupport extends AbstractCheckstyleModuleT
     @Override
     protected String getPackageLocation() {
         final String subpackage = getCheckName().toLowerCase(Locale.ENGLISH)
-                .replace("check", "");
+                                  .replace("check", "");
         return "org/checkstyle/suppressionxpathfilter/" + subpackage;
     }
 
     private static List<String> generateXpathQueries(File fileToProcess,
-                                                     ViolationPosition position)
-            throws Exception {
+            ViolationPosition position)
+    throws Exception {
         final FileText fileText = new FileText(fileToProcess,
-                StandardCharsets.UTF_8.name());
+                                               StandardCharsets.UTF_8.name());
         final DetailAST rootAst = JavaParser.parseFile(fileToProcess,
-                JavaParser.Options.WITH_COMMENTS);
+                                  JavaParser.Options.WITH_COMMENTS);
         final XpathQueryGenerator queryGenerator = new XpathQueryGenerator(rootAst,
                 position.violationLineNumber, position.violationColumnNumber,
                 fileText, DEFAULT_TAB_WIDTH);
@@ -123,16 +123,16 @@ public abstract class AbstractXpathTestSupport extends AbstractCheckstyleModuleT
     private static void verifyXpathQueries(List<String> generatedXpathQueries,
                                            List<String> expectedXpathQueries) {
         assertEquals(expectedXpathQueries,
-                generatedXpathQueries, "Generated queries do not match expected ones");
+                     generatedXpathQueries, "Generated queries do not match expected ones");
     }
 
     private String createSuppressionsXpathConfigFile(String checkName,
-                                                     List<String> xpathQueries)
-            throws Exception {
+            List<String> xpathQueries)
+    throws Exception {
         final Path suppressionsXpathConfigPath =
-                Files.createTempFile(temporaryFolder, "", "");
+            Files.createTempFile(temporaryFolder, "", "");
         try (Writer bw = Files.newBufferedWriter(suppressionsXpathConfigPath,
-                StandardCharsets.UTF_8)) {
+                             StandardCharsets.UTF_8)) {
             bw.write("<?xml version=\"1.0\"?>\n");
             bw.write("<!DOCTYPE suppressions PUBLIC\n");
             bw.write("    \"-//Checkstyle//DTD SuppressionXpathFilter ");
@@ -154,9 +154,9 @@ public abstract class AbstractXpathTestSupport extends AbstractCheckstyleModuleT
     }
 
     private DefaultConfiguration createSuppressionXpathFilter(String checkName,
-                                           List<String> xpathQueries) throws Exception {
+            List<String> xpathQueries) throws Exception {
         final DefaultConfiguration suppressionXpathFilterConfig =
-                createModuleConfig(SuppressionXpathFilter.class);
+            createModuleConfig(SuppressionXpathFilter.class);
         suppressionXpathFilterConfig.addAttribute("file",
                 createSuppressionsXpathConfigFile(checkName, xpathQueries));
 
@@ -166,7 +166,7 @@ public abstract class AbstractXpathTestSupport extends AbstractCheckstyleModuleT
     private static ViolationPosition extractLineAndColumnNumber(String... expectedViolations) {
         ViolationPosition violation = null;
         final Matcher matcher =
-                LINE_COLUMN_NUMBER_REGEX.matcher(expectedViolations[0]);
+            LINE_COLUMN_NUMBER_REGEX.matcher(expectedViolations[0]);
         if (matcher.find()) {
             final int violationLineNumber = Integer.parseInt(matcher.group(1));
             final int violationColumnNumber = Integer.parseInt(matcher.group(2));
@@ -190,19 +190,19 @@ public abstract class AbstractXpathTestSupport extends AbstractCheckstyleModuleT
      * @throws Exception if an error occurs
      */
     protected void runVerifications(DefaultConfiguration moduleConfig,
-                                  File fileToProcess,
-                                  String[] expectedViolations,
-                                  List<String> expectedXpathQueries) throws Exception {
+                                    File fileToProcess,
+                                    String[] expectedViolations,
+                                    List<String> expectedXpathQueries) throws Exception {
         final ViolationPosition position =
-                extractLineAndColumnNumber(expectedViolations);
+            extractLineAndColumnNumber(expectedViolations);
         final List<String> generatedXpathQueries =
-                generateXpathQueries(fileToProcess, position);
+            generateXpathQueries(fileToProcess, position);
 
         final DefaultConfiguration treeWalkerConfigWithXpath =
-                createModuleConfig(TreeWalker.class);
+            createModuleConfig(TreeWalker.class);
         treeWalkerConfigWithXpath.addChild(moduleConfig);
         treeWalkerConfigWithXpath.addChild(createSuppressionXpathFilter(moduleConfig.getName(),
-                generatedXpathQueries));
+                                           generatedXpathQueries));
 
         final Integer[] warnList = getLinesWithWarn(fileToProcess.getPath());
         verify(moduleConfig, fileToProcess.getPath(), expectedViolations, warnList);
@@ -215,7 +215,7 @@ public abstract class AbstractXpathTestSupport extends AbstractCheckstyleModuleT
         private final int violationColumnNumber;
 
         /* package */ ViolationPosition(int violationLineNumber,
-                              int violationColumnNumber) {
+                                        int violationColumnNumber) {
             this.violationLineNumber = violationLineNumber;
             this.violationColumnNumber = violationColumnNumber;
         }

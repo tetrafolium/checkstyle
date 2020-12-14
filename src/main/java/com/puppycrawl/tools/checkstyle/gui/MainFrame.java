@@ -82,7 +82,7 @@ public class MainFrame extends JFrame {
         final JScrollPane treeTableScrollPane = new JScrollPane(treeTable);
 
         final JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, treeTableScrollPane,
-            textAreaScrollPane);
+                textAreaScrollPane);
         add(splitPane, BorderLayout.CENTER);
         splitPane.setResizeWeight(0.7);
 

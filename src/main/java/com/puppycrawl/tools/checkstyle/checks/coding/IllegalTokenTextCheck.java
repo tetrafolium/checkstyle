@@ -107,15 +107,15 @@ public class IllegalTokenTextCheck
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.NUM_DOUBLE,
-            TokenTypes.NUM_FLOAT,
-            TokenTypes.NUM_INT,
-            TokenTypes.NUM_LONG,
-            TokenTypes.IDENT,
-            TokenTypes.COMMENT_CONTENT,
-            TokenTypes.STRING_LITERAL,
-            TokenTypes.CHAR_LITERAL,
-        };
+                   TokenTypes.NUM_DOUBLE,
+                   TokenTypes.NUM_FLOAT,
+                   TokenTypes.NUM_INT,
+                   TokenTypes.NUM_LONG,
+                   TokenTypes.IDENT,
+                   TokenTypes.COMMENT_CONTENT,
+                   TokenTypes.STRING_LITERAL,
+                   TokenTypes.CHAR_LITERAL,
+               };
     }
 
     @Override

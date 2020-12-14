@@ -74,25 +74,25 @@ public final class ParameterAssignmentCheck extends AbstractCheck {
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.CTOR_DEF,
-            TokenTypes.METHOD_DEF,
-            TokenTypes.ASSIGN,
-            TokenTypes.PLUS_ASSIGN,
-            TokenTypes.MINUS_ASSIGN,
-            TokenTypes.STAR_ASSIGN,
-            TokenTypes.DIV_ASSIGN,
-            TokenTypes.MOD_ASSIGN,
-            TokenTypes.SR_ASSIGN,
-            TokenTypes.BSR_ASSIGN,
-            TokenTypes.SL_ASSIGN,
-            TokenTypes.BAND_ASSIGN,
-            TokenTypes.BXOR_ASSIGN,
-            TokenTypes.BOR_ASSIGN,
-            TokenTypes.INC,
-            TokenTypes.POST_INC,
-            TokenTypes.DEC,
-            TokenTypes.POST_DEC,
-        };
+                   TokenTypes.CTOR_DEF,
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.ASSIGN,
+                   TokenTypes.PLUS_ASSIGN,
+                   TokenTypes.MINUS_ASSIGN,
+                   TokenTypes.STAR_ASSIGN,
+                   TokenTypes.DIV_ASSIGN,
+                   TokenTypes.MOD_ASSIGN,
+                   TokenTypes.SR_ASSIGN,
+                   TokenTypes.BSR_ASSIGN,
+                   TokenTypes.SL_ASSIGN,
+                   TokenTypes.BAND_ASSIGN,
+                   TokenTypes.BXOR_ASSIGN,
+                   TokenTypes.BOR_ASSIGN,
+                   TokenTypes.INC,
+                   TokenTypes.POST_INC,
+                   TokenTypes.DEC,
+                   TokenTypes.POST_DEC,
+               };
     }
 
     @Override
@@ -110,62 +110,62 @@ public final class ParameterAssignmentCheck extends AbstractCheck {
     @Override
     public void visitToken(DetailAST ast) {
         switch (ast.getType()) {
-            case TokenTypes.CTOR_DEF:
-            case TokenTypes.METHOD_DEF:
-                visitMethodDef(ast);
-                break;
-            case TokenTypes.ASSIGN:
-            case TokenTypes.PLUS_ASSIGN:
-            case TokenTypes.MINUS_ASSIGN:
-            case TokenTypes.STAR_ASSIGN:
-            case TokenTypes.DIV_ASSIGN:
-            case TokenTypes.MOD_ASSIGN:
-            case TokenTypes.SR_ASSIGN:
-            case TokenTypes.BSR_ASSIGN:
-            case TokenTypes.SL_ASSIGN:
-            case TokenTypes.BAND_ASSIGN:
-            case TokenTypes.BXOR_ASSIGN:
-            case TokenTypes.BOR_ASSIGN:
-                visitAssign(ast);
-                break;
-            case TokenTypes.INC:
-            case TokenTypes.POST_INC:
-            case TokenTypes.DEC:
-            case TokenTypes.POST_DEC:
-                visitIncDec(ast);
-                break;
-            default:
-                throw new IllegalStateException(ast.toString());
+        case TokenTypes.CTOR_DEF:
+        case TokenTypes.METHOD_DEF:
+            visitMethodDef(ast);
+            break;
+        case TokenTypes.ASSIGN:
+        case TokenTypes.PLUS_ASSIGN:
+        case TokenTypes.MINUS_ASSIGN:
+        case TokenTypes.STAR_ASSIGN:
+        case TokenTypes.DIV_ASSIGN:
+        case TokenTypes.MOD_ASSIGN:
+        case TokenTypes.SR_ASSIGN:
+        case TokenTypes.BSR_ASSIGN:
+        case TokenTypes.SL_ASSIGN:
+        case TokenTypes.BAND_ASSIGN:
+        case TokenTypes.BXOR_ASSIGN:
+        case TokenTypes.BOR_ASSIGN:
+            visitAssign(ast);
+            break;
+        case TokenTypes.INC:
+        case TokenTypes.POST_INC:
+        case TokenTypes.DEC:
+        case TokenTypes.POST_DEC:
+            visitIncDec(ast);
+            break;
+        default:
+            throw new IllegalStateException(ast.toString());
         }
     }
 
     @Override
     public void leaveToken(DetailAST ast) {
         switch (ast.getType()) {
-            case TokenTypes.CTOR_DEF:
-            case TokenTypes.METHOD_DEF:
-                leaveMethodDef();
-                break;
-            case TokenTypes.ASSIGN:
-            case TokenTypes.PLUS_ASSIGN:
-            case TokenTypes.MINUS_ASSIGN:
-            case TokenTypes.STAR_ASSIGN:
-            case TokenTypes.DIV_ASSIGN:
-            case TokenTypes.MOD_ASSIGN:
-            case TokenTypes.SR_ASSIGN:
-            case TokenTypes.BSR_ASSIGN:
-            case TokenTypes.SL_ASSIGN:
-            case TokenTypes.BAND_ASSIGN:
-            case TokenTypes.BXOR_ASSIGN:
-            case TokenTypes.BOR_ASSIGN:
-            case TokenTypes.INC:
-            case TokenTypes.POST_INC:
-            case TokenTypes.DEC:
-            case TokenTypes.POST_DEC:
-                // Do nothing
-                break;
-            default:
-                throw new IllegalStateException(ast.toString());
+        case TokenTypes.CTOR_DEF:
+        case TokenTypes.METHOD_DEF:
+            leaveMethodDef();
+            break;
+        case TokenTypes.ASSIGN:
+        case TokenTypes.PLUS_ASSIGN:
+        case TokenTypes.MINUS_ASSIGN:
+        case TokenTypes.STAR_ASSIGN:
+        case TokenTypes.DIV_ASSIGN:
+        case TokenTypes.MOD_ASSIGN:
+        case TokenTypes.SR_ASSIGN:
+        case TokenTypes.BSR_ASSIGN:
+        case TokenTypes.SL_ASSIGN:
+        case TokenTypes.BAND_ASSIGN:
+        case TokenTypes.BXOR_ASSIGN:
+        case TokenTypes.BOR_ASSIGN:
+        case TokenTypes.INC:
+        case TokenTypes.POST_INC:
+        case TokenTypes.DEC:
+        case TokenTypes.POST_DEC:
+            // Do nothing
+            break;
+        default:
+            throw new IllegalStateException(ast.toString());
         }
     }
 
@@ -193,8 +193,8 @@ public final class ParameterAssignmentCheck extends AbstractCheck {
         final DetailAST identAST = ast.getFirstChild();
 
         if (identAST != null
-            && identAST.getType() == TokenTypes.IDENT
-            && parameterNames.contains(identAST.getText())) {
+                && identAST.getType() == TokenTypes.IDENT
+                && parameterNames.contains(identAST.getText())) {
             log(ast, MSG_KEY, identAST.getText());
         }
     }

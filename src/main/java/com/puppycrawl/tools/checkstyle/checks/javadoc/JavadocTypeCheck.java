@@ -206,11 +206,11 @@ public class JavadocTypeCheck
 
     /** Pattern to match type name within angle brackets in javadoc param tag. */
     private static final Pattern TYPE_NAME_IN_JAVADOC_TAG =
-            Pattern.compile("\\s*<([^>]+)>.*");
+        Pattern.compile("\\s*<([^>]+)>.*");
 
     /** Pattern to split type name field in javadoc param tag. */
     private static final Pattern TYPE_NAME_IN_JAVADOC_TAG_SPLITTER =
-            Pattern.compile("\\s+");
+        Pattern.compile("\\s+");
 
     /** Specify the visibility scope where Javadoc comments are checked. */
     private Scope scope = Scope.PRIVATE;
@@ -307,11 +307,11 @@ public class JavadocTypeCheck
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.INTERFACE_DEF,
-            TokenTypes.CLASS_DEF,
-            TokenTypes.ENUM_DEF,
-            TokenTypes.ANNOTATION_DEF,
-        };
+                   TokenTypes.INTERFACE_DEF,
+                   TokenTypes.CLASS_DEF,
+                   TokenTypes.ENUM_DEF,
+                   TokenTypes.ANNOTATION_DEF,
+               };
     }
 
     @Override
@@ -330,9 +330,9 @@ public class JavadocTypeCheck
                 if (ScopeUtil.isOuterMostType(ast)) {
                     // don't check author/version for inner classes
                     checkTag(lineNo, tags, JavadocTagInfo.AUTHOR.getName(),
-                            authorFormat);
+                             authorFormat);
                     checkTag(lineNo, tags, JavadocTagInfo.VERSION.getName(),
-                            versionFormat);
+                             versionFormat);
                 }
 
                 final List<String> typeParamNames =
@@ -369,12 +369,12 @@ public class JavadocTypeCheck
         final Scope surroundingScope = ScopeUtil.getSurroundingScope(ast);
 
         return customScope.isIn(scope)
-            && (surroundingScope == null || surroundingScope.isIn(scope))
-            && (excludeScope == null
-                || !customScope.isIn(excludeScope)
-                || surroundingScope != null
-                && !surroundingScope.isIn(excludeScope))
-            && !AnnotationUtil.containsAnnotation(ast, allowedAnnotations);
+               && (surroundingScope == null || surroundingScope.isIn(scope))
+               && (excludeScope == null
+                   || !customScope.isIn(excludeScope)
+                   || surroundingScope != null
+                   && !surroundingScope.isIn(excludeScope))
+               && !AnnotationUtil.containsAnnotation(ast, allowedAnnotations);
     }
 
     /**
@@ -384,7 +384,7 @@ public class JavadocTypeCheck
      */
     private List<JavadocTag> getJavadocTags(TextBlock textBlock) {
         final JavadocTags tags = JavadocUtil.getJavadocTags(textBlock,
-            JavadocUtil.JavadocTagType.BLOCK);
+                                 JavadocUtil.JavadocTagType.BLOCK);
         if (!allowUnknownTags) {
             for (final InvalidJavadocTag tag : tags.getInvalidTags()) {
                 log(tag.getLine(), tag.getCol(), MSG_UNKNOWN_TAG,
@@ -429,13 +429,13 @@ public class JavadocTypeCheck
      * @param typeParamName the name of the type parameter
      */
     private void checkTypeParamTag(final int lineNo,
-            final List<JavadocTag> tags, final String typeParamName) {
+                                   final List<JavadocTag> tags, final String typeParamName) {
         boolean found = false;
         for (int i = tags.size() - 1; i >= 0; i--) {
             final JavadocTag tag = tags.get(i);
             if (tag.isParamTag()
-                && tag.getFirstArg().indexOf(OPEN_ANGLE_BRACKET
-                        + typeParamName + CLOSE_ANGLE_BRACKET) == 0) {
+                    && tag.getFirstArg().indexOf(OPEN_ANGLE_BRACKET
+                                                 + typeParamName + CLOSE_ANGLE_BRACKET) == 0) {
                 found = true;
                 break;
             }
@@ -461,9 +461,9 @@ public class JavadocTypeCheck
 
                 if (!typeParamNames.contains(typeParamName)) {
                     log(tag.getLineNo(), tag.getColumnNo(),
-                            MSG_UNUSED_TAG,
-                            JavadocTagInfo.PARAM.getText(),
-                            OPEN_ANGLE_BRACKET + typeParamName + CLOSE_ANGLE_BRACKET);
+                        MSG_UNUSED_TAG,
+                        JavadocTagInfo.PARAM.getText(),
+                        OPEN_ANGLE_BRACKET + typeParamName + CLOSE_ANGLE_BRACKET);
                 }
             }
         }
@@ -477,7 +477,7 @@ public class JavadocTypeCheck
     private static String extractTypeParamNameFromTag(JavadocTag tag) {
         final String typeParamName;
         final Matcher matchInAngleBrackets =
-                TYPE_NAME_IN_JAVADOC_TAG.matcher(tag.getFirstArg());
+            TYPE_NAME_IN_JAVADOC_TAG.matcher(tag.getFirstArg());
         if (matchInAngleBrackets.find()) {
             typeParamName = matchInAngleBrackets.group(1).trim();
         }

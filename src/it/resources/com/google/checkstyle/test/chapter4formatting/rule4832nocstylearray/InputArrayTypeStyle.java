@@ -25,10 +25,10 @@ public class InputArrayTypeStyle
     public class Test
     {
         public Test[]
-            variable; //ok
+        variable; //ok
 
         public Test[]
-            getTests()
+        getTests()
         {
             return null;
         }
@@ -49,7 +49,7 @@ public class InputArrayTypeStyle
         }
 
         public Test[]
-            getMoreTests()[] //warn
+        getMoreTests()[] //warn
         {
             return null;
         }

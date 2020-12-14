@@ -27,10 +27,10 @@ public class InputParenPad
                         if (i > 2) {
                             synchronized (this) {
                                 switch (i) {
-                                    case 3:
-                                    case (4):
-                                    case 5:
-                                        break;
+                                case 3:
+                                case (4):
+                                case 5:
+                                    break;
                                 }
                             }
                         }
@@ -61,10 +61,10 @@ public class InputParenPad
                         if ( i > 2) { // warning
                             synchronized ( this) { // warning
                                 switch ( i) { // warning
-                                    case 3:
-                                    case ( 4): // warning
-                                    case 5:
-                                        break;
+                                case 3:
+                                case ( 4): // warning
+                                case 5:
+                                    break;
                                 }
                             }
                         }
@@ -95,10 +95,10 @@ public class InputParenPad
                         if (i > 2 ) { // warning
                             synchronized (this ) { // warning
                                 switch (i ) { // warning
-                                    case 3:
-                                    case (4 ): // warning
-                                    case 5:
-                                        break;
+                                case 3:
+                                case (4 ): // warning
+                                case 5:
+                                    break;
                                 }
                             }
                         }
@@ -110,7 +110,7 @@ public class InputParenPad
 
     String foo() {
         return ( (Object // warning
-                ) bar( ( 1 > 2 ) ? // warning
+                 ) bar( ( 1 > 2 ) ? // warning
                         ( ( 3 < 4 )? false : true ) : // warning
                         ( ( 1 == 1 ) ? false : true) ) ).toString(); // warning
     }
@@ -129,7 +129,7 @@ public class InputParenPad
 enum MyEnum {
     SOME_CONSTANT( ) { // warning
         int i = (int) (2 * (4 / 2)
-                );
+                      );
     };
 
     public void myMethod() {
@@ -183,8 +183,8 @@ enum MyEnum {
 
     public String testing() {
         return ( this.exam != null ) // warning
-                ? ( ( Enum )this.exam ).name() // warning
-                : null;
+               ? ( ( Enum )this.exam ).name() // warning
+               : null;
     }
 
     Object stringReturnValue( Object result ) { // warning
@@ -209,7 +209,7 @@ enum MyEnum {
         }
         org.junit.Assert.assertThat( "123", org.hamcrest.CoreMatchers.is( "123" ) ); // warning
         org.junit.Assert.assertThat( "Help! Integers don't work", // warning
-                0, org.hamcrest.CoreMatchers.is( 1 ) ); // warning
+                                     0, org.hamcrest.CoreMatchers.is( 1 ) ); // warning
     }
 
     private void tryWithResources() throws Exception {

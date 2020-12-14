@@ -99,8 +99,8 @@ public final class CheckUtil {
         if (ast.getType() == TokenTypes.METHOD_DEF) {
             final DetailAST modifiers = ast.findFirstToken(TokenTypes.MODIFIERS);
             final boolean staticOrAbstract =
-                    modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) != null
-                    || modifiers.findFirstToken(TokenTypes.ABSTRACT) != null;
+                modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) != null
+                || modifiers.findFirstToken(TokenTypes.ABSTRACT) != null;
 
             if (!staticOrAbstract) {
                 final DetailAST nameNode = ast.findFirstToken(TokenTypes.IDENT);
@@ -125,7 +125,7 @@ public final class CheckUtil {
         final DetailAST parentAST = ast.getParent();
 
         return ast.getType() == TokenTypes.LITERAL_IF
-            && (isElse(parentAST) || isElseWithCurlyBraces(parentAST));
+               && (isElse(parentAST) || isElseWithCurlyBraces(parentAST));
     }
 
     /**
@@ -145,8 +145,8 @@ public final class CheckUtil {
      */
     private static boolean isElseWithCurlyBraces(DetailAST ast) {
         return ast.getType() == TokenTypes.SLIST
-            && ast.getChildCount() == 2
-            && isElse(ast.getParent());
+               && ast.getChildCount() == 2
+               && isElse(ast.getParent());
     }
 
     /**
@@ -161,30 +161,30 @@ public final class CheckUtil {
         String txt = UNDERSCORE_PATTERN.matcher(text).replaceAll("");
         final double result;
         switch (type) {
-            case TokenTypes.NUM_FLOAT:
-            case TokenTypes.NUM_DOUBLE:
-                result = Double.parseDouble(txt);
-                break;
-            case TokenTypes.NUM_INT:
-            case TokenTypes.NUM_LONG:
-                int radix = BASE_10;
-                if (txt.startsWith("0x") || txt.startsWith("0X")) {
-                    radix = BASE_16;
-                    txt = txt.substring(2);
-                }
-                else if (txt.startsWith("0b") || txt.startsWith("0B")) {
-                    radix = BASE_2;
-                    txt = txt.substring(2);
-                }
-                else if (CommonUtil.startsWithChar(txt, '0')) {
-                    radix = BASE_8;
-                    txt = txt.substring(1);
-                }
-                result = parseNumber(txt, radix, type);
-                break;
-            default:
-                result = Double.NaN;
-                break;
+        case TokenTypes.NUM_FLOAT:
+        case TokenTypes.NUM_DOUBLE:
+            result = Double.parseDouble(txt);
+            break;
+        case TokenTypes.NUM_INT:
+        case TokenTypes.NUM_LONG:
+            int radix = BASE_10;
+            if (txt.startsWith("0x") || txt.startsWith("0X")) {
+                radix = BASE_16;
+                txt = txt.substring(2);
+            }
+            else if (txt.startsWith("0b") || txt.startsWith("0B")) {
+                radix = BASE_2;
+                txt = txt.substring(2);
+            }
+            else if (CommonUtil.startsWithChar(txt, '0')) {
+                radix = BASE_8;
+                txt = txt.substring(1);
+            }
+            result = parseNumber(txt, radix, type);
+            break;
+        default:
+            result = Double.NaN;
+            break;
         }
         return result;
     }
@@ -258,8 +258,8 @@ public final class CheckUtil {
      */
     public static boolean isBeforeInSource(DetailAST ast1, DetailAST ast2) {
         return ast1.getLineNo() < ast2.getLineNo()
-            || TokenUtil.areOnSameLine(ast1, ast2)
-                && ast1.getColumnNo() < ast2.getColumnNo();
+               || TokenUtil.areOnSameLine(ast1, ast2)
+               && ast1.getColumnNo() < ast2.getColumnNo();
     }
 
     /**
@@ -276,13 +276,13 @@ public final class CheckUtil {
             final DetailAST typeParam =
                 typeParameters.findFirstToken(TokenTypes.TYPE_PARAMETER);
             typeParameterNames.add(
-                    typeParam.findFirstToken(TokenTypes.IDENT).getText());
+                typeParam.findFirstToken(TokenTypes.IDENT).getText());
 
             DetailAST sibling = typeParam.getNextSibling();
             while (sibling != null) {
                 if (sibling.getType() == TokenTypes.TYPE_PARAMETER) {
                     typeParameterNames.add(
-                            sibling.findFirstToken(TokenTypes.IDENT).getText());
+                        sibling.findFirstToken(TokenTypes.IDENT).getText());
                 }
                 sibling = sibling.getNextSibling();
             }
@@ -416,7 +416,7 @@ public final class CheckUtil {
      */
     public static boolean isReceiverParameter(DetailAST parameterDefAst) {
         return parameterDefAst.getType() == TokenTypes.PARAMETER_DEF
-                && parameterDefAst.findFirstToken(TokenTypes.IDENT) == null;
+               && parameterDefAst.findFirstToken(TokenTypes.IDENT) == null;
     }
 
     /**
@@ -434,7 +434,7 @@ public final class CheckUtil {
         // default access modifier
         AccessModifier accessModifier = AccessModifier.PACKAGE;
         for (DetailAST token = modifiersToken.getFirstChild(); token != null;
-             token = token.getNextSibling()) {
+                token = token.getNextSibling()) {
             final int tokenType = token.getType();
             if (tokenType == TokenTypes.LITERAL_PUBLIC) {
                 accessModifier = AccessModifier.PUBLIC;
@@ -462,7 +462,7 @@ public final class CheckUtil {
             final int lastDot = name.lastIndexOf('.');
             if (lastDot != -1 && lastDot < name.length() - 1) {
                 final String shortName = name
-                        .substring(name.lastIndexOf('.') + 1);
+                                         .substring(name.lastIndexOf('.') + 1);
                 illegalClassNames.add(shortName);
             }
         }

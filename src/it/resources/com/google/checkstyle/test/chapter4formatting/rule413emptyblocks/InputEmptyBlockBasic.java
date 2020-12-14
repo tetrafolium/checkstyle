@@ -23,7 +23,9 @@ class InputEmptyBlockBasic
         IO in = new IO();
         while ((r = in.read()) != null) {} // ok
         for (; index < s.length && s[index] != 'x'; index++) {} // ok
-        if (a == 1) {} else {System.identityHashCode("a");}  // warn
+        if (a == 1) {} else {
+            System.identityHashCode("a");   // warn
+        }
         do {} while(a == 1); //ok
         switch (a) {} //warn
         int[] z = {}; // ok
@@ -72,7 +74,9 @@ class WithInner
             IO in = new IO();
             while ((r = in.read()) != null) {} // ok
             for (; index < s.length && s[index] != 'x'; index++) {} // ok
-            if (a == 1) {} else {System.identityHashCode("a");} // warn
+            if (a == 1) {} else {
+                System.identityHashCode("a");   // warn
+            }
             do {} while(a == 1); //ok
             switch (a) {} //warn
             int[] z = {}; // ok
@@ -102,7 +106,9 @@ class WithAnon
                 IO in = new IO();
                 while ((r = in.read()) != null) {} // ok
                 for (; index < s.length && s[index] != 'x'; index++) {} // ok
-                if (a == 1) {} else {System.identityHashCode("a");} // warn
+                if (a == 1) {} else {
+                    System.identityHashCode("a");   // warn
+                }
                 do {} while(a == 1); //ok
                 switch (a) {} //warn
                 int[] z = {}; // ok

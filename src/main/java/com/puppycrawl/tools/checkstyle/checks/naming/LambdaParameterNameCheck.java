@@ -89,8 +89,8 @@ public class LambdaParameterNameCheck extends AbstractNameCheck {
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.LAMBDA,
-        };
+                   TokenTypes.LAMBDA,
+               };
     }
 
     @Override
@@ -101,8 +101,8 @@ public class LambdaParameterNameCheck extends AbstractNameCheck {
         }
         else {
             for (DetailAST parameterDef = parametersNode.getFirstChild();
-                 parameterDef != null;
-                 parameterDef = parameterDef.getNextSibling()) {
+                    parameterDef != null;
+                    parameterDef = parameterDef.getNextSibling()) {
                 if (parameterDef.getType() == TokenTypes.PARAMETER_DEF) {
                     super.visitToken(parameterDef);
                 }

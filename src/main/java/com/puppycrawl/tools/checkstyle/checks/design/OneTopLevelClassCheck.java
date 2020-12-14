@@ -132,7 +132,7 @@ public class OneTopLevelClassCheck extends AbstractCheck {
                 }
                 else {
                     final String typeName = currentNode
-                            .findFirstToken(TokenTypes.IDENT).getText();
+                                            .findFirstToken(TokenTypes.IDENT).getText();
                     lineNumberTypeMap.put(currentNode.getLineNo(), typeName);
                 }
             }
@@ -162,7 +162,7 @@ public class OneTopLevelClassCheck extends AbstractCheck {
      */
     private static boolean isPublic(DetailAST typeDef) {
         final DetailAST modifiers =
-                typeDef.findFirstToken(TokenTypes.MODIFIERS);
+            typeDef.findFirstToken(TokenTypes.MODIFIERS);
         return modifiers.findFirstToken(TokenTypes.LITERAL_PUBLIC) != null;
     }
 

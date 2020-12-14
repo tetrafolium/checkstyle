@@ -10,7 +10,7 @@ public class InputCommentsIndentationSurroundingCode
         if (true) {
             // here initialize some variables
             int k = 0; // trailing comment
-              // warn
+            // warn
             int b = 10;
             // sss
         }
@@ -20,14 +20,14 @@ public class InputCommentsIndentationSurroundingCode
         if (true) {
             /* some */
             int k = 0;
-                /* // warn */
+            /* // warn */
             int b = 10;
-                /* // warn
-                 * */
+            /* // warn
+             * */
             double d; /* trailing comment */
-                /* // warn
-             *
-                */
+            /* // warn
+            *
+            */
             boolean bb;
             /***/
             /* my comment*/
@@ -46,11 +46,11 @@ public class InputCommentsIndentationSurroundingCode
     private void foo3() {
         int a = 5, b = 3, v = 6;
         if (a == b
-            && v == b || ( a ==1
-                           /// // warn
-                       /* // warn
-                        * one fine day ... */
-                                    && b == 1)   ) {
+                && v == b || ( a ==1
+                               /// // warn
+                               /* // warn
+                                * one fine day ... */
+                               && b == 1)   ) {
         }
     }
 
@@ -62,12 +62,13 @@ public class InputCommentsIndentationSurroundingCode
         // This example of trailing block comments was found in PMD sources.
         /* TOP */{ "", },
         /* ALWAYS */{ "", "", },
-       /* NEVER */{ "NEVER", "UNKNOWN", "NEVER", },
-       /* UNKNOWN */{ "UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN" }, };
+        /* NEVER */{ "NEVER", "UNKNOWN", "NEVER", },
+        /* UNKNOWN */{ "UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN" },
+    };
 
     private void foo4() {
-        if (!Arrays.equals(new String[]{""}, new String[]{""})
-              /* wierd trailing comment */) {
+        if (!Arrays.equals(new String[] {""}, new String[] {""})
+                /* wierd trailing comment */) {
         }
     }
     /**
@@ -83,29 +84,29 @@ public class InputCommentsIndentationSurroundingCode
     }
 
     public void foo6() {
-              // comment
-              // ...
-              // block
-              // ...
-              // warn
+        // comment
+        // ...
+        // block
+        // ...
+        // warn
         String someStr = new String();
     }
 
     public void foo7() {
-             // comment
-             // ...
-             // block
-             // warn
+        // comment
+        // ...
+        // block
+        // warn
         // comment
         String someStr = new String();
     }
 
     public void foo8() {
         String s = new String(); // comment
-                                 // ...
-                                 // block
-                                 // ...
-                                 // warn
+        // ...
+        // block
+        // ...
+        // warn
         String someStr = new String();
     }
 
@@ -114,7 +115,7 @@ public class InputCommentsIndentationSurroundingCode
     }
 
     public void foo10()
-        throws Exception {
+    throws Exception {
 
         final String pattern = "^foo$";
 

@@ -7,7 +7,7 @@ public class InputAvoidEscapedUnicodeCharacters {
     private String unitAbbrev3 = "\u03bcs"; //Greek letter mu ok
 
     private String unitAbbrev4 =
-            "\u03bcs"; //Greek letter mu
+        "\u03bcs"; //Greek letter mu
 
     public Object fooString()
     {

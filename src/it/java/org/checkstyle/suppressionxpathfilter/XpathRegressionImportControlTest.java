@@ -40,90 +40,90 @@ public class XpathRegressionImportControlTest extends AbstractXpathTestSupport {
     @Test
     public void testOne() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionImportControlOne.java"));
+            new File(getPath("SuppressionXpathRegressionImportControlOne.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(ImportControlCheck.class);
+            createModuleConfig(ImportControlCheck.class);
         moduleConfig.addAttribute("file", getPath(
-                "SuppressionXpathRegressionImportControlOne.xml"));
+                                      "SuppressionXpathRegressionImportControlOne.xml"));
 
         final String[] expectedViolation = {
             "3:1: " + getCheckMessage(ImportControlCheck.class,
-                ImportControlCheck.MSG_DISALLOWED, "java.util.Scanner"),
+                                      ImportControlCheck.MSG_DISALLOWED, "java.util.Scanner"),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/IMPORT"
-        );
+                    "/IMPORT"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionImportControlTwo.java"));
+            new File(getPath("SuppressionXpathRegressionImportControlTwo.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(ImportControlCheck.class);
+            createModuleConfig(ImportControlCheck.class);
         moduleConfig.addAttribute("file", getPath(
-                "SuppressionXpathRegressionImportControlTwo.xml"));
+                                      "SuppressionXpathRegressionImportControlTwo.xml"));
 
         final String[] expectedViolation = {
             "1:1: " + getCheckMessage(ImportControlCheck.class,
-                ImportControlCheck.MSG_UNKNOWN_PKG),
+                                      ImportControlCheck.MSG_UNKNOWN_PKG),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/PACKAGE_DEF"
-        );
+                    "/PACKAGE_DEF"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testThree() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionImportControlThree.java"));
+            new File(getPath("SuppressionXpathRegressionImportControlThree.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(ImportControlCheck.class);
+            createModuleConfig(ImportControlCheck.class);
 
         final String[] expectedViolation = {
             "1:1: " + getCheckMessage(ImportControlCheck.class,
-                ImportControlCheck.MSG_MISSING_FILE),
+                                      ImportControlCheck.MSG_MISSING_FILE),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/PACKAGE_DEF"
-        );
+                    "/PACKAGE_DEF"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testFour() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionImportControlFour.java"));
+            new File(getPath("SuppressionXpathRegressionImportControlFour.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(ImportControlCheck.class);
+            createModuleConfig(ImportControlCheck.class);
         moduleConfig.addAttribute("file",
-                getPath("SuppressionXpathRegressionImportControlFour.xml"));
+                                  getPath("SuppressionXpathRegressionImportControlFour.xml"));
 
         final String[] expectedViolation = {
             "4:1: " + getCheckMessage(ImportControlCheck.class,
-                ImportControlCheck.MSG_DISALLOWED, "java.util.Scanner"),
+                                      ImportControlCheck.MSG_DISALLOWED, "java.util.Scanner"),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/IMPORT[./DOT/IDENT[@text='Scanner']]"
-        );
+                    "/IMPORT[./DOT/IDENT[@text='Scanner']]"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }

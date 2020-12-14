@@ -66,7 +66,7 @@ public final class AnnotationUtil {
      * @return true if contains the annotation
      */
     public static boolean containsAnnotation(final DetailAST ast,
-        String annotation) {
+            String annotation) {
         return getAnnotation(ast, annotation) != null;
     }
 
@@ -116,7 +116,7 @@ public final class AnnotationUtil {
                 DetailAST identNode = annotationNode.findFirstToken(TokenTypes.IDENT);
                 if (identNode == null) {
                     identNode = annotationNode.findFirstToken(TokenTypes.DOT)
-                            .findFirstToken(TokenTypes.IDENT);
+                    .findFirstToken(TokenTypes.IDENT);
                 }
 
                 return annotations.contains(identNode.getText());
@@ -144,7 +144,7 @@ public final class AnnotationUtil {
         final DetailAST annotationHolder;
 
         if (ast.getType() == TokenTypes.ENUM_CONSTANT_DEF
-            || ast.getType() == TokenTypes.PACKAGE_DEF) {
+                || ast.getType() == TokenTypes.PACKAGE_DEF) {
             annotationHolder = ast.findFirstToken(TokenTypes.ANNOTATIONS);
         }
         else {
@@ -177,7 +177,7 @@ public final class AnnotationUtil {
      * @throws IllegalArgumentException when ast or annotations are null; when annotation is blank
      */
     public static DetailAST getAnnotation(final DetailAST ast,
-        String annotation) {
+                                          String annotation) {
         if (ast == null) {
             throw new IllegalArgumentException(THE_AST_IS_NULL);
         }
@@ -188,13 +188,13 @@ public final class AnnotationUtil {
 
         if (CommonUtil.isBlank(annotation)) {
             throw new IllegalArgumentException(
-                    "the annotation is empty or spaces");
+                "the annotation is empty or spaces");
         }
 
         return findFirstAnnotation(ast, annotationNode -> {
             final DetailAST firstChild = annotationNode.findFirstToken(TokenTypes.AT);
             final String name =
-                    FullIdent.createFullIdent(firstChild.getNextSibling()).getText();
+            FullIdent.createFullIdent(firstChild.getNextSibling()).getText();
             return annotation.equals(name);
         });
     }
@@ -214,11 +214,11 @@ public final class AnnotationUtil {
      * @return the AST representing that annotation
      */
     private static DetailAST findFirstAnnotation(final DetailAST ast,
-                                                 Predicate<DetailAST> predicate) {
+            Predicate<DetailAST> predicate) {
         final DetailAST holder = getAnnotationHolder(ast);
         DetailAST result = null;
         for (DetailAST child = holder.getFirstChild();
-            child != null; child = child.getNextSibling()) {
+                child != null; child = child.getNextSibling()) {
             if (child.getType() == TokenTypes.ANNOTATION && predicate.test(child)) {
                 result = child;
                 break;

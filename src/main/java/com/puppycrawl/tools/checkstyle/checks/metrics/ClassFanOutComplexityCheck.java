@@ -177,19 +177,19 @@ public final class ClassFanOutComplexityCheck extends AbstractClassCouplingCheck
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.PACKAGE_DEF,
-            TokenTypes.IMPORT,
-            TokenTypes.CLASS_DEF,
-            TokenTypes.EXTENDS_CLAUSE,
-            TokenTypes.IMPLEMENTS_CLAUSE,
-            TokenTypes.ANNOTATION,
-            TokenTypes.INTERFACE_DEF,
-            TokenTypes.ENUM_DEF,
-            TokenTypes.TYPE,
-            TokenTypes.LITERAL_NEW,
-            TokenTypes.LITERAL_THROWS,
-            TokenTypes.ANNOTATION_DEF,
-        };
+                   TokenTypes.PACKAGE_DEF,
+                   TokenTypes.IMPORT,
+                   TokenTypes.CLASS_DEF,
+                   TokenTypes.EXTENDS_CLAUSE,
+                   TokenTypes.IMPLEMENTS_CLAUSE,
+                   TokenTypes.ANNOTATION,
+                   TokenTypes.INTERFACE_DEF,
+                   TokenTypes.ENUM_DEF,
+                   TokenTypes.TYPE,
+                   TokenTypes.LITERAL_NEW,
+                   TokenTypes.LITERAL_THROWS,
+                   TokenTypes.ANNOTATION_DEF,
+               };
     }
 
     @Override

@@ -50,7 +50,7 @@ public class Comment implements TextBlock {
      * @param lastCol number of the last column of the comment.
      */
     public Comment(final String[] text, final int firstCol,
-            final int lastLine, final int lastCol) {
+                   final int lastLine, final int lastCol) {
         this.text = text.clone();
         startLineNo = lastLine - text.length + 1;
         endLineNo = lastLine;
@@ -100,10 +100,10 @@ public class Comment implements TextBlock {
     @Override
     public String toString() {
         return "Comment[text=" + Arrays.toString(text)
-                + ", startLineNo=" + startLineNo
-                + ", endLineNo=" + endLineNo
-                + ", startColNo=" + startColNo
-                + ", endColNo=" + endColNo + ']';
+               + ", startLineNo=" + startLineNo
+               + ", endLineNo=" + endLineNo
+               + ", startColNo=" + startColNo
+               + ", endColNo=" + endColNo + ']';
     }
 
 }

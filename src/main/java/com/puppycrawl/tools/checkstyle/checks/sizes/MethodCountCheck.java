@@ -192,13 +192,13 @@ public final class MethodCountCheck extends AbstractCheck {
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.CLASS_DEF,
-            TokenTypes.ENUM_CONSTANT_DEF,
-            TokenTypes.ENUM_DEF,
-            TokenTypes.INTERFACE_DEF,
-            TokenTypes.ANNOTATION_DEF,
-            TokenTypes.METHOD_DEF,
-        };
+                   TokenTypes.CLASS_DEF,
+                   TokenTypes.ENUM_CONSTANT_DEF,
+                   TokenTypes.ENUM_DEF,
+                   TokenTypes.INTERFACE_DEF,
+                   TokenTypes.ANNOTATION_DEF,
+                   TokenTypes.METHOD_DEF,
+               };
     }
 
     @Override

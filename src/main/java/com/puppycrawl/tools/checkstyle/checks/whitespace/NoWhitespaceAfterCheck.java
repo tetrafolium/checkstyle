@@ -118,38 +118,38 @@ public class NoWhitespaceAfterCheck extends AbstractCheck {
     @Override
     public int[] getDefaultTokens() {
         return new int[] {
-            TokenTypes.ARRAY_INIT,
-            TokenTypes.AT,
-            TokenTypes.INC,
-            TokenTypes.DEC,
-            TokenTypes.UNARY_MINUS,
-            TokenTypes.UNARY_PLUS,
-            TokenTypes.BNOT,
-            TokenTypes.LNOT,
-            TokenTypes.DOT,
-            TokenTypes.ARRAY_DECLARATOR,
-            TokenTypes.INDEX_OP,
-        };
+                   TokenTypes.ARRAY_INIT,
+                   TokenTypes.AT,
+                   TokenTypes.INC,
+                   TokenTypes.DEC,
+                   TokenTypes.UNARY_MINUS,
+                   TokenTypes.UNARY_PLUS,
+                   TokenTypes.BNOT,
+                   TokenTypes.LNOT,
+                   TokenTypes.DOT,
+                   TokenTypes.ARRAY_DECLARATOR,
+                   TokenTypes.INDEX_OP,
+               };
     }
 
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.ARRAY_INIT,
-            TokenTypes.AT,
-            TokenTypes.INC,
-            TokenTypes.DEC,
-            TokenTypes.UNARY_MINUS,
-            TokenTypes.UNARY_PLUS,
-            TokenTypes.BNOT,
-            TokenTypes.LNOT,
-            TokenTypes.DOT,
-            TokenTypes.TYPECAST,
-            TokenTypes.ARRAY_DECLARATOR,
-            TokenTypes.INDEX_OP,
-            TokenTypes.LITERAL_SYNCHRONIZED,
-            TokenTypes.METHOD_REF,
-        };
+                   TokenTypes.ARRAY_INIT,
+                   TokenTypes.AT,
+                   TokenTypes.INC,
+                   TokenTypes.DEC,
+                   TokenTypes.UNARY_MINUS,
+                   TokenTypes.UNARY_PLUS,
+                   TokenTypes.BNOT,
+                   TokenTypes.LNOT,
+                   TokenTypes.DOT,
+                   TokenTypes.TYPECAST,
+                   TokenTypes.ARRAY_DECLARATOR,
+                   TokenTypes.INDEX_OP,
+                   TokenTypes.LITERAL_SYNCHRONIZED,
+                   TokenTypes.METHOD_REF,
+               };
     }
 
     @Override
@@ -190,17 +190,17 @@ public class NoWhitespaceAfterCheck extends AbstractCheck {
     private static DetailAST getWhitespaceFollowedNode(DetailAST ast) {
         final DetailAST whitespaceFollowedAst;
         switch (ast.getType()) {
-            case TokenTypes.TYPECAST:
-                whitespaceFollowedAst = ast.findFirstToken(TokenTypes.RPAREN);
-                break;
-            case TokenTypes.ARRAY_DECLARATOR:
-                whitespaceFollowedAst = getArrayDeclaratorPreviousElement(ast);
-                break;
-            case TokenTypes.INDEX_OP:
-                whitespaceFollowedAst = getIndexOpPreviousElement(ast);
-                break;
-            default:
-                whitespaceFollowedAst = ast;
+        case TokenTypes.TYPECAST:
+            whitespaceFollowedAst = ast.findFirstToken(TokenTypes.RPAREN);
+            break;
+        case TokenTypes.ARRAY_DECLARATOR:
+            whitespaceFollowedAst = getArrayDeclaratorPreviousElement(ast);
+            break;
+        case TokenTypes.INDEX_OP:
+            whitespaceFollowedAst = getIndexOpPreviousElement(ast);
+            break;
+        default:
+            whitespaceFollowedAst = ast;
         }
         return whitespaceFollowedAst;
     }
@@ -258,7 +258,7 @@ public class NoWhitespaceAfterCheck extends AbstractCheck {
      * @return true if whitespace found.
      */
     private boolean hasTrailingWhitespace(DetailAST ast,
-        int whitespaceColumnNo, int whitespaceLineNo) {
+                                          int whitespaceColumnNo, int whitespaceLineNo) {
         final boolean result;
         final int astLineNo = ast.getLineNo();
         final String line = getLine(astLineNo - 1);
@@ -290,43 +290,43 @@ public class NoWhitespaceAfterCheck extends AbstractCheck {
             // first array index, is preceded with identifier or type
             final DetailAST parent = getFirstNonArrayDeclaratorParent(ast);
             switch (parent.getType()) {
-                // generics
-                case TokenTypes.TYPE_ARGUMENT:
-                    final DetailAST wildcard = parent.findFirstToken(TokenTypes.WILDCARD_TYPE);
-                    if (wildcard == null) {
-                        // usual generic type argument like <char[]>
-                        previousElement = getTypeLastNode(ast);
-                    }
-                    else {
-                        // constructions with wildcard like <? extends String[]>
-                        previousElement = getTypeLastNode(ast.getFirstChild());
-                    }
-                    break;
-                // 'new' is a special case with its own subtree structure
-                case TokenTypes.LITERAL_NEW:
-                    previousElement = getTypeLastNode(parent);
-                    break;
-                // mundane array declaration, can be either java style or C style
-                case TokenTypes.TYPE:
-                    previousElement = getPreviousNodeWithParentOfTypeAst(ast, parent);
-                    break;
-                // i.e. boolean[].class
-                case TokenTypes.DOT:
+            // generics
+            case TokenTypes.TYPE_ARGUMENT:
+                final DetailAST wildcard = parent.findFirstToken(TokenTypes.WILDCARD_TYPE);
+                if (wildcard == null) {
+                    // usual generic type argument like <char[]>
                     previousElement = getTypeLastNode(ast);
-                    break;
-                // java 8 method reference
-                case TokenTypes.METHOD_REF:
-                    final DetailAST ident = getIdentLastToken(ast);
-                    if (ident == null) {
-                        // i.e. int[]::new
-                        previousElement = ast.getFirstChild();
-                    }
-                    else {
-                        previousElement = ident;
-                    }
-                    break;
-                default:
-                    throw new IllegalStateException("unexpected ast syntax " + parent);
+                }
+                else {
+                    // constructions with wildcard like <? extends String[]>
+                    previousElement = getTypeLastNode(ast.getFirstChild());
+                }
+                break;
+            // 'new' is a special case with its own subtree structure
+            case TokenTypes.LITERAL_NEW:
+                previousElement = getTypeLastNode(parent);
+                break;
+            // mundane array declaration, can be either java style or C style
+            case TokenTypes.TYPE:
+                previousElement = getPreviousNodeWithParentOfTypeAst(ast, parent);
+                break;
+            // i.e. boolean[].class
+            case TokenTypes.DOT:
+                previousElement = getTypeLastNode(ast);
+                break;
+            // java 8 method reference
+            case TokenTypes.METHOD_REF:
+                final DetailAST ident = getIdentLastToken(ast);
+                if (ident == null) {
+                    // i.e. int[]::new
+                    previousElement = ast.getFirstChild();
+                }
+                else {
+                    previousElement = ident;
+                }
+                break;
+            default:
+                throw new IllegalStateException("unexpected ast syntax " + parent);
             }
         }
         return previousElement;
@@ -432,9 +432,9 @@ public class NoWhitespaceAfterCheck extends AbstractCheck {
             final int instanceOfSize = 13;
             // +2 because ast has `[]` after the ident
             if (ident.getColumnNo() >= ast.getColumnNo() + 2
-                // +13 because ident (at most 1 character) is followed by
-                // ' instanceof ' (12 characters)
-                || lastTypeNode.getColumnNo() >= ident.getColumnNo() + instanceOfSize) {
+                    // +13 because ident (at most 1 character) is followed by
+                    // ' instanceof ' (12 characters)
+                    || lastTypeNode.getColumnNo() >= ident.getColumnNo() + instanceOfSize) {
                 previousElement = lastTypeNode;
             }
             else {

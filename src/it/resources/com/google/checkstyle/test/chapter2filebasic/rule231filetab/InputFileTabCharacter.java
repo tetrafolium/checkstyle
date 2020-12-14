@@ -27,7 +27,8 @@ final class InputFileTabCharacter
 
     /** commas are wrong **/
     private int[] mInts = new int[] {1,2, 3,
-                                     4};
+                                     4
+                                    };
 
     public static int sTest1;
     /** should be private **/
@@ -48,8 +49,8 @@ final class InputFileTabCharacter
      * @throws java.lang.Exception abc
      **/
     int test1(int badFormat1,int badFormat2,
-    			final int badFormat3) //warn
-        throws java.lang.Exception
+              final int badFormat3) //warn
+    throws java.lang.Exception
     {
         return 0;
     }
@@ -126,12 +127,12 @@ final class InputFileTabCharacter
     {
         // with tab-width 8 all statements below start at the same column,
         // with different combinations of ' ' and '\t' before the statement
-                int tab0 =1;
-        	int tab1 =1; //warn
-         	int tab2 =1; //warn
-		int tab3 =1; //warn
-  	  	int tab4 =1; //warn
-  	        int tab5 =1; //warn
+        int tab0 =1;
+        int tab1 =1; //warn
+        int tab2 =1; //warn
+        int tab3 =1; //warn
+        int tab4 =1; //warn
+        int tab5 =1; //warn
     }
 
     // MEMME:

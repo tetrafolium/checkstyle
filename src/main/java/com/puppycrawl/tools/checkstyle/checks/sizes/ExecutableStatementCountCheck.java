@@ -97,12 +97,12 @@ public final class ExecutableStatementCountCheck
     @Override
     public int[] getDefaultTokens() {
         return new int[] {
-            TokenTypes.CTOR_DEF,
-            TokenTypes.METHOD_DEF,
-            TokenTypes.INSTANCE_INIT,
-            TokenTypes.STATIC_INIT,
-            TokenTypes.SLIST,
-        };
+                   TokenTypes.CTOR_DEF,
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.INSTANCE_INIT,
+                   TokenTypes.STATIC_INIT,
+                   TokenTypes.SLIST,
+               };
     }
 
     @Override
@@ -113,12 +113,12 @@ public final class ExecutableStatementCountCheck
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.CTOR_DEF,
-            TokenTypes.METHOD_DEF,
-            TokenTypes.INSTANCE_INIT,
-            TokenTypes.STATIC_INIT,
-            TokenTypes.SLIST,
-        };
+                   TokenTypes.CTOR_DEF,
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.INSTANCE_INIT,
+                   TokenTypes.STATIC_INIT,
+                   TokenTypes.SLIST,
+               };
     }
 
     /**
@@ -139,34 +139,34 @@ public final class ExecutableStatementCountCheck
     @Override
     public void visitToken(DetailAST ast) {
         switch (ast.getType()) {
-            case TokenTypes.CTOR_DEF:
-            case TokenTypes.METHOD_DEF:
-            case TokenTypes.INSTANCE_INIT:
-            case TokenTypes.STATIC_INIT:
-                visitMemberDef(ast);
-                break;
-            case TokenTypes.SLIST:
-                visitSlist(ast);
-                break;
-            default:
-                throw new IllegalStateException(ast.toString());
+        case TokenTypes.CTOR_DEF:
+        case TokenTypes.METHOD_DEF:
+        case TokenTypes.INSTANCE_INIT:
+        case TokenTypes.STATIC_INIT:
+            visitMemberDef(ast);
+            break;
+        case TokenTypes.SLIST:
+            visitSlist(ast);
+            break;
+        default:
+            throw new IllegalStateException(ast.toString());
         }
     }
 
     @Override
     public void leaveToken(DetailAST ast) {
         switch (ast.getType()) {
-            case TokenTypes.CTOR_DEF:
-            case TokenTypes.METHOD_DEF:
-            case TokenTypes.INSTANCE_INIT:
-            case TokenTypes.STATIC_INIT:
-                leaveMemberDef(ast);
-                break;
-            case TokenTypes.SLIST:
-                // Do nothing
-                break;
-            default:
-                throw new IllegalStateException(ast.toString());
+        case TokenTypes.CTOR_DEF:
+        case TokenTypes.METHOD_DEF:
+        case TokenTypes.INSTANCE_INIT:
+        case TokenTypes.STATIC_INIT:
+            leaveMemberDef(ast);
+            break;
+        case TokenTypes.SLIST:
+            // Do nothing
+            break;
+        default:
+            throw new IllegalStateException(ast.toString());
         }
     }
 
@@ -204,9 +204,9 @@ public final class ExecutableStatementCountCheck
             DetailAST parent = ast.getParent();
             int type = parent.getType();
             while (type != TokenTypes.CTOR_DEF
-                && type != TokenTypes.METHOD_DEF
-                && type != TokenTypes.INSTANCE_INIT
-                && type != TokenTypes.STATIC_INIT) {
+                    && type != TokenTypes.METHOD_DEF
+                    && type != TokenTypes.INSTANCE_INIT
+                    && type != TokenTypes.STATIC_INIT) {
                 parent = parent.getParent();
                 type = parent.getType();
             }

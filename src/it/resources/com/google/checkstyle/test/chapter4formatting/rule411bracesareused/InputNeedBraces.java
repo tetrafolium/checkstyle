@@ -26,7 +26,8 @@ class InputNeedBraces
         while (condition());
 
         // Invalid
-        do testDoWhile(); while (condition()); //warn
+        do testDoWhile();
+        while (condition()); //warn
     }
 
     /** Test while loops **/
@@ -55,11 +56,11 @@ class InputNeedBraces
         }
 
         // Invalid
-        for(int i = 1;i < 5;i++); //warn
+        for(int i = 1; i < 5; i++); //warn
         for (int i = 1; i < 5; i++) //warn
             testFor();
         for (int i = 1; i < 5; //warn
-             i++)
+                i++)
             if (i > 2) //warn
                 testFor();
     }
@@ -104,7 +105,8 @@ class InputNeedBraces
     void whitespaceAfterSemi()
     {
         //reject
-        int i = 1;int j = 2;
+        int i = 1;
+        int j = 2;
 
         //accept
         for (;;) {
@@ -133,13 +135,13 @@ class EmptyBlocks {
         do {/*foo*/}
         while(flag);
         if(flag); //warn
-        if(flag){}
+        if(flag) {}
         if(flag) {/*foo*/}
         if(flag); //warn
         else; //warn
-        if(flag){}
+        if(flag) {}
         else {}
-        if(flag){/*foo*/}
+        if(flag) {/*foo*/}
         else {/*foo*/}
         for(int i = 0; i < 10; i++); //warn
         for(int i = 0; i < 10; i++) {}
@@ -164,13 +166,13 @@ class EmptyBlocks {
             do {/*foo*/}
             while(flag);
             if(flag); //warn
-            if(flag){}
+            if(flag) {}
             if(flag) {/*foo*/}
             if(flag); //warn
             else; //warn
-            if(flag){}
+            if(flag) {}
             else {}
-            if(flag){/*foo*/}
+            if(flag) {/*foo*/}
             else {/*foo*/}
             for(int i = 0; i < 10; i++); //warn
             for(int i = 0; i < 10; i++) {}
@@ -196,13 +198,13 @@ class EmptyBlocks {
             do {/*foo*/}
             while(flag);
             if(flag); //warn
-            if(flag){}
+            if(flag) {}
             if(flag) {/*foo*/}
             if(flag); //warn
             else; //warn
-            if(flag){}
+            if(flag) {}
             else {}
-            if(flag){/*foo*/}
+            if(flag) {/*foo*/}
             else {/*foo*/}
             for(int i = 0; i < 10; i++); //warn
             for(int i = 0; i < 10; i++) {}

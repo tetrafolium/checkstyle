@@ -528,7 +528,7 @@ public class ImportControlCheck extends AbstractCheck implements ExternalResourc
             else if (currentImportControl != null) {
                 final String importText = getImportText(ast);
                 final AccessResult access = currentImportControl.checkAccess(packageName, fileName,
-                        importText);
+                                            importText);
                 if (access != AccessResult.ALLOWED) {
                     log(ast, MSG_DISALLOWED, importText);
                 }
@@ -564,7 +564,7 @@ public class ImportControlCheck extends AbstractCheck implements ExternalResourc
         else {
             // know it is a static import
             imp = FullIdent.createFullIdent(ast
-                    .getFirstChild().getNextSibling());
+                                            .getFirstChild().getNextSibling());
         }
         return imp.getText();
     }

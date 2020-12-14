@@ -237,10 +237,10 @@ public class MissingJavadocMethodCheck extends AbstractCheck {
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.METHOD_DEF,
-            TokenTypes.CTOR_DEF,
-            TokenTypes.ANNOTATION_FIELD_DEF,
-        };
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.CTOR_DEF,
+                   TokenTypes.ANNOTATION_FIELD_DEF,
+               };
     }
 
     @Override
@@ -282,9 +282,9 @@ public class MissingJavadocMethodCheck extends AbstractCheck {
      */
     private boolean isMissingJavadocAllowed(final DetailAST ast) {
         return allowMissingPropertyJavadoc
-                && (CheckUtil.isSetterMethod(ast) || CheckUtil.isGetterMethod(ast))
-            || matchesSkipRegex(ast)
-            || isContentsAllowMissingJavadoc(ast);
+               && (CheckUtil.isSetterMethod(ast) || CheckUtil.isGetterMethod(ast))
+               || matchesSkipRegex(ast)
+               || isContentsAllowMissingJavadoc(ast);
     }
 
     /**
@@ -296,8 +296,8 @@ public class MissingJavadocMethodCheck extends AbstractCheck {
      */
     private boolean isContentsAllowMissingJavadoc(DetailAST ast) {
         return (ast.getType() == TokenTypes.METHOD_DEF || ast.getType() == TokenTypes.CTOR_DEF)
-                && (getMethodsNumberOfLine(ast) <= minLineCount
-                    || AnnotationUtil.containsAnnotation(ast, allowedAnnotations));
+               && (getMethodsNumberOfLine(ast) <= minLineCount
+                   || AnnotationUtil.containsAnnotation(ast, allowedAnnotations));
     }
 
     /**
@@ -333,8 +333,8 @@ public class MissingJavadocMethodCheck extends AbstractCheck {
         return (excludeScope == null
                 || nodeScope != excludeScope
                 && surroundingScope != excludeScope)
-            && nodeScope.isIn(scope)
-            && surroundingScope.isIn(scope);
+               && nodeScope.isIn(scope)
+               && surroundingScope.isIn(scope);
     }
 
     /**

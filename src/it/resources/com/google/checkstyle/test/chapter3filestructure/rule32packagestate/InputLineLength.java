@@ -42,8 +42,8 @@ final class InputLineLength
         String url = "https://github.com/checkstyle/checkstyle/blob/master/src/main/java/com/puppycrawl/tools/checkstyle/checks/AvoidEscapedUnicodeCharactersCheck.java"; //ok
         processUrl("https://github.com/checkstyle/checkstyle/blob/master/src/main/java/com/puppycrawl/tools/checkstyle/checks/AvoidEscapedUnicodeCharactersCheck.java"); //ok
         processUrl("some line"
-                + "https://github.com/checkstyle/checkstyle/blob/master/src/main/java/com/puppycrawl/tools/checkstyle/checks/AvoidEscapedUnicodeCharactersCheck.java" //ok
-                + "+ long fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo00000000000o line"); //warn
+                   + "https://github.com/checkstyle/checkstyle/blob/master/src/main/java/com/puppycrawl/tools/checkstyle/checks/AvoidEscapedUnicodeCharactersCheck.java" //ok
+                   + "+ long fooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo00000000000o line"); //warn
         processUrl("Some long foooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo line"); //warn
         String[] soooooooooooooooooooooooooooooooooooolongfooooooooooooooooooooooooooooooooooooooooooo = { //warn
             "http://github.com/checkstyle/checkstyle/blob/master/src/main/java/com/puppycrawl/tools/checkstyle/checks/AvoidEscapedUnicodeCharactersCheck.java", //ok
@@ -53,14 +53,14 @@ final class InputLineLength
         String fakehttps = "Some long foooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo line"; //warn
 
         processUrl(new String[] {
-            "http://github.com/checkstyle/checkstyle/blob/master/src/main/java/com/puppycrawl/tools/checkstyle/checks/AvoidEscapedUnicodeCharactersCheck.java", //ok
-            "Some long foooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo line", //warn
-        });
+                       "http://github.com/checkstyle/checkstyle/blob/master/src/main/java/com/puppycrawl/tools/checkstyle/checks/AvoidEscapedUnicodeCharactersCheck.java", //ok
+                       "Some long foooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo line", //warn
+                   });
 
         String s = "text"
-                + "text"
-                + "text something more.. <a href=\"https://groups.google.com/forum/#!topic/checkstyle-devel/E0z89fzvxGs%5B226-250-false%5D\">long url name, long url name, long url name</a>" //ok
-                + "other text";
+                   + "text"
+                   + "text something more.. <a href=\"https://groups.google.com/forum/#!topic/checkstyle-devel/E0z89fzvxGs%5B226-250-false%5D\">long url name, long url name, long url name</a>" //ok
+                   + "other text";
     }
 
     /**
@@ -73,5 +73,5 @@ final class InputLineLength
      *
      * @param urls
      */
-    public void processUrl(String[] urls){}
+    public void processUrl(String[] urls) {}
 }

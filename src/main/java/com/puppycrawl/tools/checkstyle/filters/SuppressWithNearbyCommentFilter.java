@@ -506,14 +506,14 @@ public class SuppressWithNearbyCommentFilter
             String format = "";
             try {
                 format = CommonUtil.fillTemplateWithStringsByRegexp(
-                        filter.checkFormat, text, filter.commentFormat);
+                             filter.checkFormat, text, filter.commentFormat);
                 tagCheckRegexp = Pattern.compile(format);
                 if (filter.messageFormat == null) {
                     tagMessageRegexp = null;
                 }
                 else {
                     format = CommonUtil.fillTemplateWithStringsByRegexp(
-                            filter.messageFormat, text, filter.commentFormat);
+                                 filter.messageFormat, text, filter.commentFormat);
                     tagMessageRegexp = Pattern.compile(format);
                 }
                 if (filter.idFormat == null) {
@@ -521,11 +521,11 @@ public class SuppressWithNearbyCommentFilter
                 }
                 else {
                     format = CommonUtil.fillTemplateWithStringsByRegexp(
-                            filter.idFormat, text, filter.commentFormat);
+                                 filter.idFormat, text, filter.commentFormat);
                     tagIdRegexp = Pattern.compile(format);
                 }
                 format = CommonUtil.fillTemplateWithStringsByRegexp(
-                        filter.influenceFormat, text, filter.commentFormat);
+                             filter.influenceFormat, text, filter.commentFormat);
 
                 final int influence = parseInfluence(format, filter.influenceFormat, text);
 
@@ -559,7 +559,7 @@ public class SuppressWithNearbyCommentFilter
             }
             catch (final NumberFormatException ex) {
                 throw new IllegalArgumentException("unable to parse influence from '" + text
-                        + "' using " + influenceFormat, ex);
+                                                   + "' using " + influenceFormat, ex);
             }
         }
 
@@ -573,17 +573,17 @@ public class SuppressWithNearbyCommentFilter
             }
             final Tag tag = (Tag) other;
             return Objects.equals(firstLine, tag.firstLine)
-                    && Objects.equals(lastLine, tag.lastLine)
-                    && Objects.equals(text, tag.text)
-                    && Objects.equals(tagCheckRegexp, tag.tagCheckRegexp)
-                    && Objects.equals(tagMessageRegexp, tag.tagMessageRegexp)
-                    && Objects.equals(tagIdRegexp, tag.tagIdRegexp);
+                   && Objects.equals(lastLine, tag.lastLine)
+                   && Objects.equals(text, tag.text)
+                   && Objects.equals(tagCheckRegexp, tag.tagCheckRegexp)
+                   && Objects.equals(tagMessageRegexp, tag.tagMessageRegexp)
+                   && Objects.equals(tagIdRegexp, tag.tagIdRegexp);
         }
 
         @Override
         public int hashCode() {
             return Objects.hash(text, firstLine, lastLine, tagCheckRegexp, tagMessageRegexp,
-                    tagIdRegexp);
+                                tagIdRegexp);
         }
 
         /**
@@ -594,9 +594,9 @@ public class SuppressWithNearbyCommentFilter
          */
         public boolean isMatch(TreeWalkerAuditEvent event) {
             return isInScopeOfSuppression(event)
-                    && isCheckMatch(event)
-                    && isIdMatch(event)
-                    && isMessageMatch(event);
+                   && isCheckMatch(event)
+                   && isIdMatch(event)
+                   && isMessageMatch(event);
         }
 
         /**
@@ -655,12 +655,12 @@ public class SuppressWithNearbyCommentFilter
         @Override
         public String toString() {
             return "Tag[text='" + text + '\''
-                    + ", firstLine=" + firstLine
-                    + ", lastLine=" + lastLine
-                    + ", tagCheckRegexp=" + tagCheckRegexp
-                    + ", tagMessageRegexp=" + tagMessageRegexp
-                    + ", tagIdRegexp=" + tagIdRegexp
-                    + ']';
+                   + ", firstLine=" + firstLine
+                   + ", lastLine=" + lastLine
+                   + ", tagCheckRegexp=" + tagCheckRegexp
+                   + ", tagMessageRegexp=" + tagMessageRegexp
+                   + ", tagIdRegexp=" + tagIdRegexp
+                   + ']';
         }
 
     }

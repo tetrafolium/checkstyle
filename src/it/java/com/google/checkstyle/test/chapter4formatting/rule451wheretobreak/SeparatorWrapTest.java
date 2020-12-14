@@ -67,7 +67,7 @@ public class SeparatorWrapTest extends AbstractGoogleModuleTestSupport {
         };
 
         final Configuration checkConfig = getModuleConfig("SeparatorWrap",
-                "SeparatorWrapMethodRef");
+                                          "SeparatorWrapMethodRef");
         final String filePath = getPath("InputSeparatorWrapMethodRef.java");
 
         final Integer[] warnList = getLinesWithWarn(filePath);
@@ -93,7 +93,7 @@ public class SeparatorWrapTest extends AbstractGoogleModuleTestSupport {
             "9:13: " + getCheckMessage(SeparatorWrapCheck.class, "line.previous", "["),
         };
         final Configuration checkConfig = getModuleConfig("SeparatorWrap",
-                "SeparatorWrapArrayDeclarator");
+                                          "SeparatorWrapArrayDeclarator");
         final String filePath = getPath("InputSeparatorWrapArrayDeclarator.java");
 
         final Integer[] warnList = getLinesWithWarn(filePath);

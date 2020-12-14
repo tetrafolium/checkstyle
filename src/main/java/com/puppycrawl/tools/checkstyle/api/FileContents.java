@@ -77,7 +77,7 @@ public final class FileContents implements CommentListener {
 
     @Override
     public void reportSingleLineComment(String type, int startLineNo,
-            int startColNo) {
+                                        int startColNo) {
         reportSingleLineComment(startLineNo, startColNo);
     }
 
@@ -90,13 +90,13 @@ public final class FileContents implements CommentListener {
         final String line = line(startLineNo - 1);
         final String[] txt = {line.substring(startColNo)};
         final Comment comment = new Comment(txt, startColNo, startLineNo,
-                line.length() - 1);
+                                            line.length() - 1);
         cppComments.put(startLineNo, comment);
     }
 
     @Override
     public void reportBlockComment(String type, int startLineNo,
-            int startColNo, int endLineNo, int endColNo) {
+                                   int startColNo, int endLineNo, int endColNo) {
         reportBlockComment(startLineNo, startColNo, endLineNo, endColNo);
     }
 
@@ -108,11 +108,11 @@ public final class FileContents implements CommentListener {
      * @param endColNo the ending column number
      **/
     public void reportBlockComment(int startLineNo, int startColNo,
-            int endLineNo, int endColNo) {
+                                   int endLineNo, int endColNo) {
         final String[] cComment = extractBlockComment(startLineNo, startColNo,
-                endLineNo, endColNo);
+                                  endLineNo, endColNo);
         final Comment comment = new Comment(cComment, startColNo, endLineNo,
-                endColNo);
+                                            endColNo);
 
         // save the comment
         if (clangComments.containsKey(startLineNo)) {
@@ -160,12 +160,12 @@ public final class FileContents implements CommentListener {
      * @return block comment as an array
      **/
     private String[] extractBlockComment(int startLineNo, int startColNo,
-            int endLineNo, int endColNo) {
+                                         int endLineNo, int endColNo) {
         final String[] returnValue;
         if (startLineNo == endLineNo) {
             returnValue = new String[1];
             returnValue[0] = line(startLineNo - 1).substring(startColNo,
-                    endColNo + 1);
+                             endColNo + 1);
         }
         else {
             returnValue = new String[endLineNo - startLineNo + 1];
@@ -174,7 +174,7 @@ public final class FileContents implements CommentListener {
                 returnValue[i - startLineNo + 1] = line(i);
             }
             returnValue[returnValue.length - 1] = line(endLineNo - 1).substring(0,
-                    endColNo + 1);
+                                                  endColNo + 1);
         }
         return returnValue;
     }
@@ -272,8 +272,8 @@ public final class FileContents implements CommentListener {
     public boolean hasIntersectionWithComment(int startLineNo,
             int startColNo, int endLineNo, int endColNo) {
         return hasIntersectionWithBlockComment(startLineNo, startColNo, endLineNo, endColNo)
-                || hasIntersectionWithSingleLineComment(startLineNo, startColNo, endLineNo,
-                        endColNo);
+               || hasIntersectionWithSingleLineComment(startLineNo, startColNo, endLineNo,
+                       endColNo);
     }
 
     /**
@@ -324,7 +324,7 @@ public final class FileContents implements CommentListener {
         boolean hasIntersection = false;
         // Check CPP comments (line searching is possible)
         for (int lineNumber = startLineNo; lineNumber <= endLineNo;
-             lineNumber++) {
+                lineNumber++) {
             final TextBlock comment = cppComments.get(lineNumber);
             if (comment != null && comment.intersects(startLineNo, startColNo,
                     endLineNo, endColNo)) {

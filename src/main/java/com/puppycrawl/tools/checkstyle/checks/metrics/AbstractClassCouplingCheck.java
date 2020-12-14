@@ -53,28 +53,28 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
 
     /** Class names to ignore. */
     private static final Set<String> DEFAULT_EXCLUDED_CLASSES = Collections.unmodifiableSet(
-        Arrays.stream(new String[] {
-            // primitives
-            "boolean", "byte", "char", "double", "float", "int",
-            "long", "short", "void",
-            // wrappers
-            "Boolean", "Byte", "Character", "Double", "Float",
-            "Integer", "Long", "Short", "Void",
-            // java.lang.*
-            "Object", "Class",
-            "String", "StringBuffer", "StringBuilder",
-            // Exceptions
-            "ArrayIndexOutOfBoundsException", "Exception",
-            "RuntimeException", "IllegalArgumentException",
-            "IllegalStateException", "IndexOutOfBoundsException",
-            "NullPointerException", "Throwable", "SecurityException",
-            "UnsupportedOperationException",
-            // java.util.*
-            "List", "ArrayList", "Deque", "Queue", "LinkedList",
-            "Set", "HashSet", "SortedSet", "TreeSet",
-            "Map", "HashMap", "SortedMap", "TreeMap",
-            "Override", "Deprecated", "SafeVarargs", "SuppressWarnings", "FunctionalInterface",
-        }).collect(Collectors.toSet()));
+                Arrays.stream(new String[] {
+                                  // primitives
+                                  "boolean", "byte", "char", "double", "float", "int",
+                                  "long", "short", "void",
+                                  // wrappers
+                                  "Boolean", "Byte", "Character", "Double", "Float",
+                                  "Integer", "Long", "Short", "Void",
+                                  // java.lang.*
+                                  "Object", "Class",
+                                  "String", "StringBuffer", "StringBuilder",
+                                  // Exceptions
+                                  "ArrayIndexOutOfBoundsException", "Exception",
+                                  "RuntimeException", "IllegalArgumentException",
+                                  "IllegalStateException", "IndexOutOfBoundsException",
+                                  "NullPointerException", "Throwable", "SecurityException",
+                                  "UnsupportedOperationException",
+                                  // java.util.*
+                                  "List", "ArrayList", "Deque", "Queue", "LinkedList",
+                                  "Set", "HashSet", "SortedSet", "TreeSet",
+                                  "Map", "HashMap", "SortedMap", "TreeMap",
+                                  "Override", "Deprecated", "SafeVarargs", "SuppressWarnings", "FunctionalInterface",
+                              }).collect(Collectors.toSet()));
 
     /** Package names to ignore. */
     private static final Set<String> DEFAULT_EXCLUDED_PACKAGES = Collections.emptySet();
@@ -148,8 +148,8 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
      */
     public void setExcludeClassesRegexps(String... from) {
         excludeClassesRegexps.addAll(Arrays.stream(from.clone())
-                .map(CommonUtil::createPattern)
-                .collect(Collectors.toSet()));
+                                     .map(CommonUtil::createPattern)
+                                     .collect(Collectors.toSet()));
     }
 
     /**
@@ -160,16 +160,16 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
      */
     public final void setExcludedPackages(String... excludedPackages) {
         final List<String> invalidIdentifiers = Arrays.stream(excludedPackages)
-            .filter(excludedPackageName -> !CommonUtil.isName(excludedPackageName))
-            .collect(Collectors.toList());
+                                                .filter(excludedPackageName -> !CommonUtil.isName(excludedPackageName))
+                                                .collect(Collectors.toList());
         if (!invalidIdentifiers.isEmpty()) {
             throw new IllegalArgumentException(
                 "the following values are not valid identifiers: "
-                    + invalidIdentifiers.stream().collect(Collectors.joining(", ", "[", "]")));
+                + invalidIdentifiers.stream().collect(Collectors.joining(", ", "[", "]")));
         }
 
         this.excludedPackages = Collections.unmodifiableSet(
-            Arrays.stream(excludedPackages).collect(Collectors.toSet()));
+                                    Arrays.stream(excludedPackages).collect(Collectors.toSet()));
     }
 
     @Override
@@ -183,48 +183,48 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
     @Override
     public void visitToken(DetailAST ast) {
         switch (ast.getType()) {
-            case TokenTypes.PACKAGE_DEF:
-                visitPackageDef(ast);
-                break;
-            case TokenTypes.IMPORT:
-                registerImport(ast);
-                break;
-            case TokenTypes.CLASS_DEF:
-            case TokenTypes.INTERFACE_DEF:
-            case TokenTypes.ANNOTATION_DEF:
-            case TokenTypes.ENUM_DEF:
-                visitClassDef(ast);
-                break;
-            case TokenTypes.EXTENDS_CLAUSE:
-            case TokenTypes.IMPLEMENTS_CLAUSE:
-            case TokenTypes.TYPE:
-                visitType(ast);
-                break;
-            case TokenTypes.LITERAL_NEW:
-                visitLiteralNew(ast);
-                break;
-            case TokenTypes.LITERAL_THROWS:
-                visitLiteralThrows(ast);
-                break;
-            case TokenTypes.ANNOTATION:
-                visitAnnotationType(ast);
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown type: " + ast);
+        case TokenTypes.PACKAGE_DEF:
+            visitPackageDef(ast);
+            break;
+        case TokenTypes.IMPORT:
+            registerImport(ast);
+            break;
+        case TokenTypes.CLASS_DEF:
+        case TokenTypes.INTERFACE_DEF:
+        case TokenTypes.ANNOTATION_DEF:
+        case TokenTypes.ENUM_DEF:
+            visitClassDef(ast);
+            break;
+        case TokenTypes.EXTENDS_CLAUSE:
+        case TokenTypes.IMPLEMENTS_CLAUSE:
+        case TokenTypes.TYPE:
+            visitType(ast);
+            break;
+        case TokenTypes.LITERAL_NEW:
+            visitLiteralNew(ast);
+            break;
+        case TokenTypes.LITERAL_THROWS:
+            visitLiteralThrows(ast);
+            break;
+        case TokenTypes.ANNOTATION:
+            visitAnnotationType(ast);
+            break;
+        default:
+            throw new IllegalArgumentException("Unknown type: " + ast);
         }
     }
 
     @Override
     public void leaveToken(DetailAST ast) {
         switch (ast.getType()) {
-            case TokenTypes.CLASS_DEF:
-            case TokenTypes.INTERFACE_DEF:
-            case TokenTypes.ANNOTATION_DEF:
-            case TokenTypes.ENUM_DEF:
-                leaveClassDef();
-                break;
-            default:
-                // Do nothing
+        case TokenTypes.CLASS_DEF:
+        case TokenTypes.INTERFACE_DEF:
+        case TokenTypes.ANNOTATION_DEF:
+        case TokenTypes.ENUM_DEF:
+            leaveClassDef();
+            break;
+        default:
+            // Do nothing
         }
     }
 
@@ -257,7 +257,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
      */
     private void registerImport(DetailAST imp) {
         final FullIdent ident = FullIdent.createFullIdent(
-            imp.getLastChild().getPreviousSibling());
+                                    imp.getLastChild().getPreviousSibling());
         final String fullName = ident.getText();
         final int lastDot = fullName.lastIndexOf(DOT);
         importedClassPackages.put(fullName.substring(lastDot + 1), fullName);
@@ -344,8 +344,8 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
          */
         public void visitLiteralThrows(DetailAST literalThrows) {
             for (DetailAST childAST = literalThrows.getFirstChild();
-                 childAST != null;
-                 childAST = childAST.getNextSibling()) {
+                    childAST != null;
+                    childAST = childAST.getNextSibling()) {
                 if (childAST.getType() != TokenTypes.COMMA) {
                     addReferencedClassName(childAST);
                 }
@@ -395,8 +395,8 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
 
             if (referencedClassNames.size() > max) {
                 log(classAst, getLogMessageId(),
-                        referencedClassNames.size(), max,
-                        referencedClassNames.toString());
+                    referencedClassNames.size(), max,
+                    referencedClassNames.toString());
             }
         }
 
@@ -407,8 +407,8 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
          */
         private boolean isSignificant(String candidateClassName) {
             return !excludedClasses.contains(candidateClassName)
-                && !isFromExcludedPackage(candidateClassName)
-                && !isExcludedClassRegexp(candidateClassName);
+                   && !isFromExcludedPackage(candidateClassName)
+                   && !isExcludedClassRegexp(candidateClassName);
         }
 
         /**
@@ -420,7 +420,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
             String classNameWithPackage = candidateClassName;
             if (!candidateClassName.contains(DOT)) {
                 classNameWithPackage = getClassNameWithPackage(candidateClassName)
-                    .orElse("");
+                                       .orElse("");
             }
             boolean isFromExcludedPackage = false;
             if (classNameWithPackage.contains(DOT)) {
@@ -428,7 +428,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
                 final String candidatePackageName =
                     classNameWithPackage.substring(0, lastDotIndex);
                 isFromExcludedPackage = candidatePackageName.startsWith("java.lang")
-                    || excludedPackages.contains(candidatePackageName);
+                                        || excludedPackages.contains(candidatePackageName);
             }
             return isFromExcludedPackage;
         }

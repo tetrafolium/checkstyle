@@ -176,9 +176,9 @@ public class SingleSpaceSeparatorCheck extends AbstractCheck {
      */
     private boolean isTextSeparatedCorrectlyFromPrevious(String line, int columnNo) {
         return isSingleSpace(line, columnNo)
-                || !isWhitespace(line, columnNo)
-                || isFirstInLine(line, columnNo)
-                || !validateComments && isBlockCommentEnd(line, columnNo);
+               || !isWhitespace(line, columnNo)
+               || isFirstInLine(line, columnNo)
+               || !validateComments && isBlockCommentEnd(line, columnNo);
     }
 
     /**

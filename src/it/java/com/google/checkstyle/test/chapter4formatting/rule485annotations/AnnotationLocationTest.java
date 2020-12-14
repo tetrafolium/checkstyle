@@ -37,7 +37,7 @@ public class AnnotationLocationTest extends AbstractGoogleModuleTestSupport {
         final Class<AnnotationLocationCheck> clazz = AnnotationLocationCheck.class;
         getCheckMessage(clazz, "annotation.location.alone");
         final Configuration checkConfig = getModuleConfig("AnnotationLocation",
-                "AnnotationLocationMostCases");
+                                          "AnnotationLocationMostCases");
 
         final String msgLocationAlone = "annotation.location.alone";
         final String msgLocation = "annotation.location";
@@ -67,7 +67,7 @@ public class AnnotationLocationTest extends AbstractGoogleModuleTestSupport {
         final Class<AnnotationLocationCheck> clazz = AnnotationLocationCheck.class;
         getCheckMessage(clazz, "annotation.location.alone");
         final Configuration checkConfig = getModuleConfig("AnnotationLocation",
-                "AnnotationLocationVariables");
+                                          "AnnotationLocationVariables");
 
         final String msgLocation = "annotation.location";
         final String[] expected = {

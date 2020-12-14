@@ -36,7 +36,7 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  */
 @FileStatefulCheck
 public abstract class AbstractSuperCheck
-        extends AbstractCheck {
+    extends AbstractCheck {
 
     /**
      * A key is pointing to the warning message text in "messages.properties"
@@ -66,9 +66,9 @@ public abstract class AbstractSuperCheck
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.METHOD_DEF,
-            TokenTypes.LITERAL_SUPER,
-        };
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.LITERAL_SUPER,
+               };
     }
 
     @Override
@@ -101,7 +101,7 @@ public abstract class AbstractSuperCheck
             final DetailAST dotAst = literalSuperAst.getParent();
 
             if (!isSameNameMethod(literalSuperAst)
-                && !hasArguments(dotAst)) {
+                    && !hasArguments(dotAst)) {
                 superCall = isSuperCallInOverridingMethod(dotAst);
             }
         }
@@ -148,7 +148,7 @@ public abstract class AbstractSuperCheck
         DetailAST sibling = ast.getNextSibling();
         // ignore type parameters
         if (sibling != null
-            && sibling.getType() == TokenTypes.TYPE_ARGUMENTS) {
+                && sibling.getType() == TokenTypes.TYPE_ARGUMENTS) {
             sibling = sibling.getNextSibling();
         }
         return sibling == null || !getMethodName().equals(sibling.getText());

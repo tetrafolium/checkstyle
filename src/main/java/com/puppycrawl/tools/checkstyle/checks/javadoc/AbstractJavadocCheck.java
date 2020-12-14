@@ -52,26 +52,26 @@ public abstract class AbstractJavadocCheck extends AbstractCheck {
      * clear that error is about missed close HTML tag.
      */
     public static final String MSG_JAVADOC_MISSED_HTML_CLOSE =
-            JavadocDetailNodeParser.MSG_JAVADOC_MISSED_HTML_CLOSE;
+        JavadocDetailNodeParser.MSG_JAVADOC_MISSED_HTML_CLOSE;
 
     /**
      * Message key of error message.
      */
     public static final String MSG_JAVADOC_WRONG_SINGLETON_TAG =
-            JavadocDetailNodeParser.MSG_JAVADOC_WRONG_SINGLETON_TAG;
+        JavadocDetailNodeParser.MSG_JAVADOC_WRONG_SINGLETON_TAG;
 
     /**
      * Parse error while rule recognition.
      */
     public static final String MSG_JAVADOC_PARSE_RULE_ERROR =
-            JavadocDetailNodeParser.MSG_JAVADOC_PARSE_RULE_ERROR;
+        JavadocDetailNodeParser.MSG_JAVADOC_PARSE_RULE_ERROR;
 
     /**
      * Key is "line:column". Value is {@link DetailNode} tree. Map is stored in {@link ThreadLocal}
      * to guarantee basic thread safety and avoid shared, mutable state when not necessary.
      */
     private static final ThreadLocal<Map<String, ParseStatus>> TREE_CACHE =
-            ThreadLocal.withInitial(HashMap::new);
+        ThreadLocal.withInitial(HashMap::new);
 
     /**
      * The file context.
@@ -175,7 +175,7 @@ public abstract class AbstractJavadocCheck extends AbstractCheck {
         validateDefaultJavadocTokens();
         if (javadocTokens.isEmpty()) {
             javadocTokens.addAll(
-                    Arrays.stream(getDefaultJavadocTokens()).boxed().collect(Collectors.toList()));
+                Arrays.stream(getDefaultJavadocTokens()).boxed().collect(Collectors.toList()));
         }
         else {
             final int[] acceptableJavadocTokens = getAcceptableJavadocTokens();
@@ -183,8 +183,8 @@ public abstract class AbstractJavadocCheck extends AbstractCheck {
             for (Integer javadocTokenId : javadocTokens) {
                 if (Arrays.binarySearch(acceptableJavadocTokens, javadocTokenId) < 0) {
                     final String message = String.format(Locale.ROOT, "Javadoc Token \"%s\" was "
-                            + "not found in Acceptable javadoc tokens list in check %s",
-                            JavadocUtil.getTokenName(javadocTokenId), getClass().getName());
+                                                         + "not found in Acceptable javadoc tokens list in check %s",
+                                                         JavadocUtil.getTokenName(javadocTokenId), getClass().getName());
                     throw new IllegalStateException(message);
                 }
             }
@@ -202,10 +202,10 @@ public abstract class AbstractJavadocCheck extends AbstractCheck {
             for (final int javadocToken : getRequiredJavadocTokens()) {
                 if (Arrays.binarySearch(defaultJavadocTokens, javadocToken) < 0) {
                     final String message = String.format(Locale.ROOT,
-                            "Javadoc Token \"%s\" from required javadoc "
-                                + "tokens was not found in default "
-                                + "javadoc tokens list in check %s",
-                            javadocToken, getClass().getName());
+                                                         "Javadoc Token \"%s\" from required javadoc "
+                                                         + "tokens was not found in default "
+                                                         + "javadoc tokens list in check %s",
+                                                         javadocToken, getClass().getName());
                     throw new IllegalStateException(message);
                 }
             }
@@ -286,7 +286,7 @@ public abstract class AbstractJavadocCheck extends AbstractCheck {
             context.get().blockCommentAst = blockCommentNode;
 
             final String treeCacheKey = blockCommentNode.getLineNo() + ":"
-                    + blockCommentNode.getColumnNo();
+                                        + blockCommentNode.getColumnNo();
 
             final ParseStatus result;
 
@@ -295,7 +295,7 @@ public abstract class AbstractJavadocCheck extends AbstractCheck {
             }
             else {
                 result = context.get().parser
-                        .parseJavadocAsDetailNode(blockCommentNode);
+                         .parseJavadocAsDetailNode(blockCommentNode);
                 TREE_CACHE.get().put(treeCacheKey, result);
             }
 
@@ -306,15 +306,15 @@ public abstract class AbstractJavadocCheck extends AbstractCheck {
 
                 if (violateExecutionOnNonTightHtml && result.isNonTight()) {
                     log(result.getFirstNonTightHtmlTag().getLine(),
-                            JavadocDetailNodeParser.MSG_UNCLOSED_HTML_TAG,
-                            result.getFirstNonTightHtmlTag().getText());
+                        JavadocDetailNodeParser.MSG_UNCLOSED_HTML_TAG,
+                        result.getFirstNonTightHtmlTag().getText());
                 }
             }
             else {
                 final ParseErrorMessage parseErrorMessage = result.getParseErrorMessage();
                 log(parseErrorMessage.getLineNumber(),
-                        parseErrorMessage.getMessageKey(),
-                        parseErrorMessage.getMessageArguments());
+                    parseErrorMessage.getMessageKey(),
+                    parseErrorMessage.getMessageArguments());
             }
         }
     }

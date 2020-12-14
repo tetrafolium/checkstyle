@@ -9,16 +9,16 @@ class InputOperatorWrap
     void test()
     {
         /*warn*/int x = 1 +
-                /*warn*/ 2 -
-            3
-            -
-            4;
+                        /*warn*/ 2 -
+                        3
+                        -
+                        4;
         x = x + 2;
         boolean y = true
-            &&
-            false;
+                    &&
+                    false;
         /*warn*/ y = true &&
-            false;
+                     false;
         y = false
             && true;
         /* Note: The three tests below will be used when issue #3381 is closed */
@@ -41,15 +41,15 @@ class InputOperatorWrap
 
     <
     T extends Comparable &
-        java.io.Serializable
+    java.io.Serializable
     >
     void testGenerics1()
     {
         Comparable
-            <
-            String
-            >
-            c = new String();
+        <
+        String
+        >
+        c = new String();
         Map<String, String> map = new HashMap<String, String>();
 
         boolean flag = false;
@@ -57,32 +57,32 @@ class InputOperatorWrap
         int init = 9;
 
         /*ok*/ for (Map.Entry<String, String> entry :
-            map.entrySet())
+                    map.entrySet())
         {
             /*warn*/int i = flag == true ?
-                    1 : 2;
+                            1 : 2;
         }
 
         /*warn*/ if (init !=
-                9)
+                     9)
         {
 
         }
 
         /*warn*/ while (init ==
-                10)
+                        10)
         {
 
         }
 
         /*warn*/ if (init >
-                10)
+                     10)
         {
 
         } else {}
 
         /*warn*/ while (init < 10 ||
-                !flag) {
+                        !flag) {
 
         }
     }
@@ -92,88 +92,88 @@ class InputOperatorWrap
         ()
         {
             Comparable
-                <
-                String
-                >
-                c = new String();
+            <
+            String
+            >
+            c = new String();
             Map<String, String> map = new HashMap<String, String>();
             boolean flag = false;
 
             int init = 9;
 
             /*ok*/ for (Map.Entry<String, String> entry :
-                map.entrySet())
+                        map.entrySet())
             {
                 /*warn*/int i = flag == true ?
-                        1 : 2;
+                                1 : 2;
             }
 
             /*warn*/ if (init !=
-                    9)
+                         9)
             {
 
             }
 
             /*warn*/ while (init ==
-                    10)
+                            10)
             {
 
             }
 
             /*warn*/ if (init >
-                    10)
+                         10)
             {
 
             } else {}
 
             /*warn*/ while (init < 10 ||
-                    !flag) {
+                            !flag) {
 
             }
         }
     }
 
     Inner anon = new Inner
-            (){
+    () {
         void testGenerics1
         ()
         {
             Comparable
-                <
-                String
-                >
-                c = new String();
+            <
+            String
+            >
+            c = new String();
             Map<String, String> map = new HashMap<String, String>();
             boolean flag = false;
             int init = 9;
 
             /*ok*/ for (Map.Entry<String, String> entry :
-                map.entrySet())
+                        map.entrySet())
             {
                 /*warn*/int i = flag == true ?
-                        1 : 2;
+                                1 : 2;
             }
 
             /*warn*/ if (init !=
-                    9)
+                         9)
             {
 
             }
 
             /*warn*/ while (init ==
-                    10)
+                            10)
             {
 
             }
 
             /*warn*/ if (init >
-                    10)
+                         10)
             {
 
             } else {}
 
             /*warn*/ while (init < 10 ||
-                    !flag) {
+                            !flag) {
 
             }
         }
@@ -185,23 +185,23 @@ class AsInput {
     String string
         = "string";
     double PI = // ok
-            3.1415;
+        3.1415;
 }
 
 class Ternary {
     void foo() {
         boolean flag = true;
         /*warn*/int i = flag == true ?
-                1 :
-                2;
+                        1 :
+                        2;
         int i2 = flag == true
-                ?
-                1
-                :
-                2;
+                 ?
+                 1
+                 :
+                 2;
         int i3 = flag == true
-                ? 1
-                : 2;
+                 ? 1
+                 : 2;
 
     }
 }
@@ -211,49 +211,49 @@ class AssignClass {
         int i = 0;
         int j = 0;
         i +=
-                1;
+            1;
         j
-             += 2;
+        += 2;
         i -=
-                1;
+            1;
         j
-             -= 2;
+        -= 2;
         i /=
-                1;
+            1;
         j
-             /= 2;
+        /= 2;
         i *=
-                1;
+            1;
         j
-             *= 2;
+        *= 2;
         i %=
-                1;
+            1;
         j
-             %= 2;
+        %= 2;
         i ^=
-                1;
+            1;
         j
-             ^= 2;
+        ^= 2;
         i |=
-                1;
+            1;
         j
-             |= 2;
+        |= 2;
         i &=
-                1;
+            1;
         j
-             &= 2;
+        &= 2;
         i >>=
-                1;
+            1;
         j
-            >>= 2;
+        >>= 2;
         i >>>=
-                1;
+            1;
         j
-            >>>= 2;
+        >>>= 2;
         i <<=
-                1;
+            1;
         j
-            <<= 2;
+        <<= 2;
     }
 
     class InnerClass {
@@ -261,49 +261,49 @@ class AssignClass {
             int i = 0;
             int j = 0;
             i +=
-                    1;
+                1;
             j
-                 += 2;
+            += 2;
             i -=
-                    1;
+                1;
             j
-                 -= 2;
+            -= 2;
             i /=
-                    1;
+                1;
             j
-                 /= 2;
+            /= 2;
             i *=
-                    1;
+                1;
             j
-                 *= 2;
+            *= 2;
             i %=
-                    1;
+                1;
             j
-                 %= 2;
+            %= 2;
             i ^=
-                    1;
+                1;
             j
-                 ^= 2;
+            ^= 2;
             i |=
-                    1;
+                1;
             j
-                 |= 2;
+            |= 2;
             i &=
-                    1;
+                1;
             j
-                 &= 2;
+            &= 2;
             i >>=
-                    1;
+                1;
             j
-                >>= 2;
+            >>= 2;
             i >>>=
-                    1;
+                1;
             j
-                >>>= 2;
+            >>>= 2;
             i <<=
-                    1;
+                1;
             j
-                <<= 2;
+            <<= 2;
         }
     }
 
@@ -312,49 +312,49 @@ class AssignClass {
             int i = 0;
             int j = 0;
             i +=
-                    1;
+                1;
             j
-                 += 2;
+            += 2;
             i -=
-                    1;
+                1;
             j
-                 -= 2;
+            -= 2;
             i /=
-                    1;
+                1;
             j
-                 /= 2;
+            /= 2;
             i *=
-                    1;
+                1;
             j
-                 *= 2;
+            *= 2;
             i %=
-                    1;
+                1;
             j
-                 %= 2;
+            %= 2;
             i ^=
-                    1;
+                1;
             j
-                 ^= 2;
+            ^= 2;
             i |=
-                    1;
+                1;
             j
-                 |= 2;
+            |= 2;
             i &=
-                    1;
+                1;
             j
-                 &= 2;
+            &= 2;
             i >>=
-                    1;
+                1;
             j
-                >>= 2;
+            >>= 2;
             i >>>=
-                    1;
+                1;
             j
-                >>>= 2;
+            >>>= 2;
             i <<=
-                    1;
+                1;
             j
-                <<= 2;
+            <<= 2;
         }
     };
 }

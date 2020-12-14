@@ -17,20 +17,20 @@ class InputAnnotationLocation
     public int d;
 
     @MyAnnotation2
-        @MyAnnotation1 //warn
+    @MyAnnotation1 //warn
     public InputAnnotationLocation() {}
 
     @MyAnnotationWithParam("foo")
     @MyAnnotation2 void foo1() {}
 
     @MyAnnotation1
-       @MyAnnotation2 //warn
+    @MyAnnotation2 //warn
     void foo2() {}
 
     @MyAnnotation1
-        @MyAnnotation2 //warn
-      @MyAnnotation3 //warn
-          @MyAnnotation4 //warn
+    @MyAnnotation2 //warn
+    @MyAnnotation3 //warn
+    @MyAnnotation4 //warn
     class InnerClass
     {
         @MyAnnotation2 @MyAnnotation1
@@ -51,16 +51,16 @@ class InputAnnotationLocation
             // OOOO Auto-generated constructor stub
         }
         @MyAnnotation1
-            @MyAnnotation2 //warn
+        @MyAnnotation2 //warn
         void foo1() {}
 
         @MyAnnotation1
-            @MyAnnotation2 //warn
+        @MyAnnotation2 //warn
         void foo2() {}
     }
 
     @MyAnnotation1
-       @MyAnnotation2
+    @MyAnnotation2
     InnerClass anon = new InnerClass()
     {
         @MyAnnotation2 @MyAnnotation1 public int a;
@@ -75,10 +75,10 @@ class InputAnnotationLocation
         public int d;
 
         @MyAnnotation1
-           @MyAnnotation2 void foo1() {} //warn
+        @MyAnnotation2 void foo1() {} //warn
 
         @MyAnnotation1
-          @MyAnnotation2 //warn
+        @MyAnnotation2 //warn
         void foo2() {}
 
         @MyAnnotation1 void foo42() {}
@@ -87,7 +87,7 @@ class InputAnnotationLocation
 }
 
 @MyAnnotation1
- @MyAnnotation2 //warn
+@MyAnnotation2 //warn
 class Foo {}
 
 @MyAnnotationWithParam(value = "bar") class Bar {} //warn
@@ -102,4 +102,5 @@ class Foo {}
 
 @interface MyAnnotationWithParam {
 
-    String value();}
+    String value();
+}

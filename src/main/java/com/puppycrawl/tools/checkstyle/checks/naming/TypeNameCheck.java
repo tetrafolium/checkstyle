@@ -140,7 +140,7 @@ public class TypeNameCheck
                           TokenTypes.INTERFACE_DEF,
                           TokenTypes.ENUM_DEF,
                           TokenTypes.ANNOTATION_DEF,
-        };
+                         };
     }
 
     @Override

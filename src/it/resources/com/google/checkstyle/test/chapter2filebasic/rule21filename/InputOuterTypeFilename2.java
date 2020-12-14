@@ -10,10 +10,10 @@ public class InputOuterTypeFilename2 //ok
         int i = 0;
         switch (i)
         {
-            default:
-                i--;
-                i++;
-                break;
+        default:
+            i--;
+            i++;
+            break;
         }
     }
 

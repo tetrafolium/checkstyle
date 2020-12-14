@@ -98,8 +98,8 @@ public final class XpathUtil {
      * These token types are listed below.
      * */
     private static final List<Integer> TOKEN_TYPES_WITH_TEXT_ATTRIBUTE = Arrays.asList(
-            TokenTypes.IDENT, TokenTypes.STRING_LITERAL, TokenTypes.CHAR_LITERAL,
-            TokenTypes.NUM_LONG, TokenTypes.NUM_INT, TokenTypes.NUM_DOUBLE, TokenTypes.NUM_FLOAT);
+                TokenTypes.IDENT, TokenTypes.STRING_LITERAL, TokenTypes.CHAR_LITERAL,
+                TokenTypes.NUM_LONG, TokenTypes.NUM_INT, TokenTypes.NUM_DOUBLE, TokenTypes.NUM_FLOAT);
 
     /** Delimiter to separate xpath results. */
     private static final String DELIMITER = "---------" + System.lineSeparator();
@@ -142,23 +142,23 @@ public final class XpathUtil {
      * @throws IOException if an error occurs
      */
     public static String printXpathBranch(String xpath, File file) throws CheckstyleException,
-            IOException {
+        IOException {
         final XPathEvaluator xpathEvaluator = new XPathEvaluator();
         try {
             final RootNode rootNode = new RootNode(JavaParser.parseFile(file,
-                JavaParser.Options.WITH_COMMENTS));
+                                                   JavaParser.Options.WITH_COMMENTS));
             final XPathExpression xpathExpression = xpathEvaluator.createExpression(xpath);
             final XPathDynamicContext xpathDynamicContext =
                 xpathExpression.createDynamicContext(rootNode);
             final List<Item<?>> matchingItems = xpathExpression.evaluate(xpathDynamicContext);
             return matchingItems.stream()
-                .map(item -> ((AbstractNode) item).getUnderlyingNode())
-                .map(AstTreeStringPrinter::printBranch)
-                .collect(Collectors.joining(DELIMITER));
+                   .map(item -> ((AbstractNode) item).getUnderlyingNode())
+                   .map(AstTreeStringPrinter::printBranch)
+                   .collect(Collectors.joining(DELIMITER));
         }
         catch (XPathException ex) {
             final String errMsg = String.format(Locale.ROOT,
-                "Error during evaluation for xpath: %s, file: %s", xpath, file.getCanonicalPath());
+                                                "Error during evaluation for xpath: %s, file: %s", xpath, file.getCanonicalPath());
             throw new CheckstyleException(errMsg, ex);
         }
     }

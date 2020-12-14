@@ -35,7 +35,7 @@ public class JavadocTagContinuationIndentationTest extends AbstractGoogleModuleT
     @Test
     public void testWithDefaultConfiguration() throws Exception {
         final String msg = getCheckMessage(JavadocTagContinuationIndentationCheck.class,
-                "tag.continuation.indent", 4);
+                                           "tag.continuation.indent", 4);
 
         final String[] expected = {
             "47: " + msg,

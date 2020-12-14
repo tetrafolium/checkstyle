@@ -42,7 +42,7 @@ abstract class AbstractImportControl {
      * @param strategyOnMismatch strategy in a case if matching allow/disallow rule was not found.
      */
     protected AbstractImportControl(AbstractImportControl parent,
-            MismatchStrategy strategyOnMismatch) {
+                                    MismatchStrategy strategyOnMismatch) {
         this.parent = parent;
         this.strategyOnMismatch = strategyOnMismatch;
     }

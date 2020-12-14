@@ -110,7 +110,7 @@ public abstract class AbstractItModuleTestSupport extends AbstractPathTestSuppor
      */
     protected final String getNonCompilablePath(String filename) throws IOException {
         return new File("src/" + getResourceLocation() + "/resources-noncompilable/"
-                + getPackageLocation() + "/" + filename).getCanonicalPath();
+                        + getPackageLocation() + "/" + filename).getCanonicalPath();
     }
 
     /**
@@ -120,7 +120,7 @@ public abstract class AbstractItModuleTestSupport extends AbstractPathTestSuppor
      * @throws Exception if an exception occurs during checker configuration.
      */
     protected final Checker createChecker(Configuration moduleConfig)
-            throws Exception {
+    throws Exception {
         final String name = moduleConfig.getName();
 
         return createChecker(moduleConfig, findModuleCreationOption(name));
@@ -135,8 +135,8 @@ public abstract class AbstractItModuleTestSupport extends AbstractPathTestSuppor
      * @throws Exception if an exception occurs during checker configuration.
      */
     protected final Checker createChecker(Configuration moduleConfig,
-                                    ModuleCreationOption moduleCreationOption)
-            throws Exception {
+                                          ModuleCreationOption moduleCreationOption)
+    throws Exception {
         final Configuration dc;
 
         if (moduleCreationOption == ModuleCreationOption.IN_TREEWALKER) {
@@ -169,7 +169,7 @@ public abstract class AbstractItModuleTestSupport extends AbstractPathTestSuppor
      */
     protected final DefaultConfiguration createTreeWalkerConfig(Configuration config) {
         final DefaultConfiguration dc =
-                new DefaultConfiguration("configuration");
+            new DefaultConfiguration("configuration");
         final DefaultConfiguration twConf = createModuleConfig(TreeWalker.class);
         // make sure that the tests always run with this charset
         dc.addAttribute("charset", "iso-8859-1");
@@ -203,10 +203,10 @@ public abstract class AbstractItModuleTestSupport extends AbstractPathTestSuppor
      * @throws Exception if exception occurs during verification process.
      */
     protected final void verify(Configuration config, String fileName, String[] expected,
-            Integer... warnsExpected) throws Exception {
+                                Integer... warnsExpected) throws Exception {
         verify(createChecker(config),
-                new File[] {new File(fileName)},
-                fileName, expected, warnsExpected);
+        new File[] {new File(fileName)},
+        fileName, expected, warnsExpected);
     }
 
     /**
@@ -219,11 +219,11 @@ public abstract class AbstractItModuleTestSupport extends AbstractPathTestSuppor
      * @throws Exception if exception occurs during verification process.
      */
     protected final void verify(Checker checker,
-            File[] processedFiles,
-            String messageFileName,
-            String[] expected,
-            Integer... warnsExpected)
-            throws Exception {
+                                File[] processedFiles,
+                                String messageFileName,
+                                String[] expected,
+                                Integer... warnsExpected)
+    throws Exception {
         stream.flush();
         stream.reset();
         final List<File> theFiles = new ArrayList<>();
@@ -234,8 +234,8 @@ public abstract class AbstractItModuleTestSupport extends AbstractPathTestSuppor
 
         // process each of the lines
         try (ByteArrayInputStream inputStream =
-                new ByteArrayInputStream(stream.toByteArray());
-            LineNumberReader lnr = new LineNumberReader(
+                        new ByteArrayInputStream(stream.toByteArray());
+                    LineNumberReader lnr = new LineNumberReader(
                 new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
             int previousLineNumber = 0;
             for (int i = 0; i < expected.length; i++) {
@@ -248,14 +248,14 @@ public abstract class AbstractItModuleTestSupport extends AbstractPathTestSuppor
                 parseInt = parseInt.substring(0, parseInt.indexOf(':'));
                 final int lineNumber = Integer.parseInt(parseInt);
                 assertTrue(previousLineNumber == lineNumber
-                                || theWarnings.remove((Integer) lineNumber),
-                        "input file is expected to have a warning comment on line number "
-                                        + lineNumber);
+                           || theWarnings.remove((Integer) lineNumber),
+                           "input file is expected to have a warning comment on line number "
+                           + lineNumber);
                 previousLineNumber = lineNumber;
             }
 
             assertEquals(expected.length,
-                    errs, "unexpected output: " + lnr.readLine());
+                         errs, "unexpected output: " + lnr.readLine());
             assertEquals(0, theWarnings.size(), "unexpected warnings " + theWarnings);
         }
 
@@ -273,7 +273,7 @@ public abstract class AbstractItModuleTestSupport extends AbstractPathTestSuppor
      * @throws IOException if there is a problem loading the property file.
      */
     protected static String getCheckMessage(Class<? extends AbstractViolationReporter> aClass,
-            String messageKey, Object... arguments) throws IOException {
+                                            String messageKey, Object... arguments) throws IOException {
         final Properties pr = new Properties();
         pr.load(aClass.getResourceAsStream("messages.properties"));
         final MessageFormat formatter = new MessageFormat(pr.getProperty(messageKey),
@@ -289,7 +289,7 @@ public abstract class AbstractItModuleTestSupport extends AbstractPathTestSuppor
      * @return The message of the check with the arguments applied.
      */
     protected static String getCheckMessage(Map<String, String> messages, String messageKey,
-            Object... arguments) {
+                                            Object... arguments) {
         String checkMessage = null;
         for (Map.Entry<String, String> entry : messages.entrySet()) {
             if (messageKey.equals(entry.getKey())) {
@@ -320,7 +320,7 @@ public abstract class AbstractItModuleTestSupport extends AbstractPathTestSuppor
     protected Integer[] getLinesWithWarn(String fileName) throws IOException {
         final List<Integer> result = new ArrayList<>();
         try (BufferedReader br = Files.newBufferedReader(
-                Paths.get(fileName), StandardCharsets.UTF_8)) {
+                                         Paths.get(fileName), StandardCharsets.UTF_8)) {
             int lineNumber = 1;
             while (true) {
                 final String line = br.readLine();

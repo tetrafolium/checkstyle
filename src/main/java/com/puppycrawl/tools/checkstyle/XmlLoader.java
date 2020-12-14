@@ -62,7 +62,7 @@ public class XmlLoader
      * @throws ParserConfigurationException if an error occurs
      */
     protected XmlLoader(Map<String, String> publicIdToResourceNameMap)
-            throws SAXException, ParserConfigurationException {
+    throws SAXException, ParserConfigurationException {
         this.publicIdToResourceNameMap = new HashMap<>(publicIdToResourceNameMap);
         final SAXParserFactory factory = SAXParserFactory.newInstance();
         LoadExternalDtdFeatureProvider.setFeaturesBySystemProperty(factory);
@@ -80,17 +80,17 @@ public class XmlLoader
      * @throws SAXException in an error occurs
      */
     public void parseInputSource(InputSource inputSource)
-            throws IOException, SAXException {
+    throws IOException, SAXException {
         parser.parse(inputSource);
     }
 
     @Override
     public InputSource resolveEntity(String publicId, String systemId)
-            throws SAXException, IOException {
+    throws SAXException, IOException {
         final InputSource inputSource;
         if (publicIdToResourceNameMap.containsKey(publicId)) {
             final String dtdResourceName =
-                    publicIdToResourceNameMap.get(publicId);
+                publicIdToResourceNameMap.get(publicId);
             final ClassLoader loader =
                 getClass().getClassLoader();
             final InputStream dtdIs =
@@ -120,13 +120,13 @@ public class XmlLoader
 
         /** Feature that enables loading external DTD when loading XML files. */
         public static final String LOAD_EXTERNAL_DTD =
-                "http://apache.org/xml/features/nonvalidating/load-external-dtd";
+            "http://apache.org/xml/features/nonvalidating/load-external-dtd";
         /** Feature that enables including external general entities in XML files. */
         public static final String EXTERNAL_GENERAL_ENTITIES =
-                "http://xml.org/sax/features/external-general-entities";
+            "http://xml.org/sax/features/external-general-entities";
         /** Feature that enables including external parameter entities in XML files. */
         public static final String EXTERNAL_PARAMETER_ENTITIES =
-                "http://xml.org/sax/features/external-parameter-entities";
+            "http://xml.org/sax/features/external-parameter-entities";
 
         /** Stop instances being created. **/
         private LoadExternalDtdFeatureProvider() {
@@ -142,10 +142,10 @@ public class XmlLoader
          * @throws ParserConfigurationException if an error occurs
          */
         public static void setFeaturesBySystemProperty(SAXParserFactory factory)
-                throws SAXException, ParserConfigurationException {
+        throws SAXException, ParserConfigurationException {
 
             final boolean enableExternalDtdLoad = Boolean.parseBoolean(
-                System.getProperty(ENABLE_EXTERNAL_DTD_LOAD, "false"));
+                    System.getProperty(ENABLE_EXTERNAL_DTD_LOAD, "false"));
 
             factory.setFeature(LOAD_EXTERNAL_DTD, enableExternalDtdLoad);
             factory.setFeature(EXTERNAL_GENERAL_ENTITIES, enableExternalDtdLoad);

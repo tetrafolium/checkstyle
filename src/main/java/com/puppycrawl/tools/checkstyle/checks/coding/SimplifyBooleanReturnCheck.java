@@ -99,7 +99,7 @@ public class SimplifyBooleanReturnCheck
             final DetailAST thenStatement = condition.getNextSibling().getNextSibling();
 
             if (canReturnOnlyBooleanLiteral(thenStatement)
-                && canReturnOnlyBooleanLiteral(elseStatement)) {
+                    && canReturnOnlyBooleanLiteral(elseStatement)) {
                 log(ast, MSG_KEY);
             }
         }

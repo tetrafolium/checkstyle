@@ -170,13 +170,13 @@ public class JavadocNodeImpl implements DetailNode {
     @Override
     public String toString() {
         return "JavadocNodeImpl["
-                + "index=" + index
-                + ", type=" + JavadocUtil.getTokenName(type)
-                + ", text='" + text + '\''
-                + ", lineNumber=" + lineNumber
-                + ", columnNumber=" + columnNumber
-                + ", children=" + Objects.hashCode(children)
-                + ", parent=" + parent + ']';
+               + "index=" + index
+               + ", type=" + JavadocUtil.getTokenName(type)
+               + ", text='" + text + '\''
+               + ", lineNumber=" + lineNumber
+               + ", columnNumber=" + columnNumber
+               + ", children=" + Objects.hashCode(children)
+               + ", parent=" + parent + ']';
     }
 
 }

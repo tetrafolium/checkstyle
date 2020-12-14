@@ -1,27 +1,27 @@
 package com.google.checkstyle.test. //warn
-              chapter3filestructure.rule332nolinewrap;
+chapter3filestructure.rule332nolinewrap;
 
 import com.puppycrawl.tools.checkstyle.checks.design.FinalClassCheck; //ok
 
 import javax.accessibility. //warn
-    AccessibleAttributeSequence;
+AccessibleAttributeSequence;
 import java.util.concurrent.atomic.AtomicIntegerFieldUpdater; //ok
 
 import static java.math. //warn
-        BigInteger.ONE;
+BigInteger.ONE;
 
 public class
     InputNoLineWrapBad {
 
     public void
-        fooMethod() {
+    fooMethod() {
         final int
-            foo = 0;
+        foo = 0;
     }
 }
 
 enum
-    FooFoo {
+FooFoo {
 }
 
 interface

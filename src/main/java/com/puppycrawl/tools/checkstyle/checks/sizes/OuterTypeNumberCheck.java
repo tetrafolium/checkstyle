@@ -83,7 +83,8 @@ public class OuterTypeNumberCheck extends AbstractCheck {
     @Override
     public int[] getRequiredTokens() {
         return new int[] {TokenTypes.CLASS_DEF, TokenTypes.INTERFACE_DEF,
-            TokenTypes.ENUM_DEF, TokenTypes.ANNOTATION_DEF, };
+                          TokenTypes.ENUM_DEF, TokenTypes.ANNOTATION_DEF,
+                         };
     }
 
     @Override

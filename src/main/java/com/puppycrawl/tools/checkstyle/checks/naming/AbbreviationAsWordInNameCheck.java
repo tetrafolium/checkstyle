@@ -176,7 +176,7 @@ public class AbbreviationAsWordInNameCheck extends AbstractCheck {
      * and methods names, ... ).
      */
     private int allowedAbbreviationLength =
-            DEFAULT_ALLOWED_ABBREVIATIONS_LENGTH;
+        DEFAULT_ALLOWED_ABBREVIATIONS_LENGTH;
 
     /**
      * Specify list of abbreviations that must be skipped for checking. Abbreviations
@@ -251,30 +251,30 @@ public class AbbreviationAsWordInNameCheck extends AbstractCheck {
     @Override
     public int[] getDefaultTokens() {
         return new int[] {
-            TokenTypes.CLASS_DEF,
-            TokenTypes.INTERFACE_DEF,
-            TokenTypes.ENUM_DEF,
-            TokenTypes.ANNOTATION_DEF,
-            TokenTypes.ANNOTATION_FIELD_DEF,
-            TokenTypes.PARAMETER_DEF,
-            TokenTypes.VARIABLE_DEF,
-            TokenTypes.METHOD_DEF,
-        };
+                   TokenTypes.CLASS_DEF,
+                   TokenTypes.INTERFACE_DEF,
+                   TokenTypes.ENUM_DEF,
+                   TokenTypes.ANNOTATION_DEF,
+                   TokenTypes.ANNOTATION_FIELD_DEF,
+                   TokenTypes.PARAMETER_DEF,
+                   TokenTypes.VARIABLE_DEF,
+                   TokenTypes.METHOD_DEF,
+               };
     }
 
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.CLASS_DEF,
-            TokenTypes.INTERFACE_DEF,
-            TokenTypes.ENUM_DEF,
-            TokenTypes.ANNOTATION_DEF,
-            TokenTypes.ANNOTATION_FIELD_DEF,
-            TokenTypes.PARAMETER_DEF,
-            TokenTypes.VARIABLE_DEF,
-            TokenTypes.METHOD_DEF,
-            TokenTypes.ENUM_CONSTANT_DEF,
-        };
+                   TokenTypes.CLASS_DEF,
+                   TokenTypes.INTERFACE_DEF,
+                   TokenTypes.ENUM_DEF,
+                   TokenTypes.ANNOTATION_DEF,
+                   TokenTypes.ANNOTATION_FIELD_DEF,
+                   TokenTypes.PARAMETER_DEF,
+                   TokenTypes.VARIABLE_DEF,
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.ENUM_CONSTANT_DEF,
+               };
     }
 
     @Override
@@ -314,9 +314,9 @@ public class AbbreviationAsWordInNameCheck extends AbstractCheck {
             }
             else {
                 result = ignoreFinal
-                          && modifiers.findFirstToken(TokenTypes.FINAL) != null
-                    || ignoreStatic
-                        && modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) != null;
+                         && modifiers.findFirstToken(TokenTypes.FINAL) != null
+                         || ignoreStatic
+                         && modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) != null;
             }
         }
         else if (ast.getType() == TokenTypes.METHOD_DEF) {

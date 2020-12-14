@@ -37,7 +37,7 @@ public class MethodDefHandler extends BlockParentHandler {
      * @param parent        the parent handler
      */
     public MethodDefHandler(IndentationCheck indentCheck,
-        DetailAST ast, AbstractExpressionHandler parent) {
+                            DetailAST ast, AbstractExpressionHandler parent) {
         super(indentCheck, getHandlerName(ast), ast, parent);
     }
 
@@ -51,7 +51,7 @@ public class MethodDefHandler extends BlockParentHandler {
     protected void checkModifiers() {
         final DetailAST modifier = getMainAst().findFirstToken(TokenTypes.MODIFIERS);
         if (isOnStartOfLine(modifier)
-            && !getIndent().isAcceptable(expandedTabsColumnNo(modifier))) {
+                && !getIndent().isAcceptable(expandedTabsColumnNo(modifier))) {
             logError(modifier, "modifier", expandedTabsColumnNo(modifier));
         }
     }
@@ -64,8 +64,8 @@ public class MethodDefHandler extends BlockParentHandler {
 
         if (throwsAst != null) {
             checkWrappingIndentation(throwsAst, throwsAst.getNextSibling(), getIndentCheck()
-                    .getThrowsIndent(), getLineStart(getMethodDefLineStart(getMainAst())),
-                    !isOnStartOfLine(throwsAst));
+                                     .getThrowsIndent(), getLineStart(getMethodDefLineStart(getMainAst())),
+                                     !isOnStartOfLine(throwsAst));
         }
     }
 

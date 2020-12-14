@@ -267,16 +267,16 @@ public final class IllegalTypeCheck extends AbstractCheck {
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.ANNOTATION_FIELD_DEF,
-            TokenTypes.CLASS_DEF,
-            TokenTypes.IMPORT,
-            TokenTypes.INTERFACE_DEF,
-            TokenTypes.METHOD_CALL,
-            TokenTypes.METHOD_DEF,
-            TokenTypes.METHOD_REF,
-            TokenTypes.PARAMETER_DEF,
-            TokenTypes.VARIABLE_DEF,
-        };
+                   TokenTypes.ANNOTATION_FIELD_DEF,
+                   TokenTypes.CLASS_DEF,
+                   TokenTypes.IMPORT,
+                   TokenTypes.INTERFACE_DEF,
+                   TokenTypes.METHOD_CALL,
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.METHOD_REF,
+                   TokenTypes.PARAMETER_DEF,
+                   TokenTypes.VARIABLE_DEF,
+               };
     }
 
     @Override
@@ -298,29 +298,29 @@ public final class IllegalTypeCheck extends AbstractCheck {
     @Override
     public void visitToken(DetailAST ast) {
         switch (ast.getType()) {
-            case TokenTypes.CLASS_DEF:
-            case TokenTypes.INTERFACE_DEF:
-                visitTypeDef(ast);
-                break;
-            case TokenTypes.METHOD_CALL:
-            case TokenTypes.METHOD_REF:
-                visitMethodCallOrRef(ast);
-                break;
-            case TokenTypes.METHOD_DEF:
-                visitMethodDef(ast);
-                break;
-            case TokenTypes.VARIABLE_DEF:
-            case TokenTypes.ANNOTATION_FIELD_DEF:
-                visitVariableDef(ast);
-                break;
-            case TokenTypes.PARAMETER_DEF:
-                visitParameterDef(ast);
-                break;
-            case TokenTypes.IMPORT:
-                visitImport(ast);
-                break;
-            default:
-                throw new IllegalStateException(ast.toString());
+        case TokenTypes.CLASS_DEF:
+        case TokenTypes.INTERFACE_DEF:
+            visitTypeDef(ast);
+            break;
+        case TokenTypes.METHOD_CALL:
+        case TokenTypes.METHOD_REF:
+            visitMethodCallOrRef(ast);
+            break;
+        case TokenTypes.METHOD_DEF:
+            visitMethodDef(ast);
+            break;
+        case TokenTypes.VARIABLE_DEF:
+        case TokenTypes.ANNOTATION_FIELD_DEF:
+            visitVariableDef(ast);
+            break;
+        case TokenTypes.PARAMETER_DEF:
+            visitParameterDef(ast);
+            break;
+        case TokenTypes.IMPORT:
+            visitImport(ast);
+            break;
+        default:
+            throw new IllegalStateException(ast.toString());
         }
     }
 
@@ -334,7 +334,7 @@ public final class IllegalTypeCheck extends AbstractCheck {
         boolean result = true;
         if (memberModifiers != null) {
             final DetailAST modifiersAst = methodOrVariableDef
-                    .findFirstToken(TokenTypes.MODIFIERS);
+                                           .findFirstToken(TokenTypes.MODIFIERS);
             result = isContainVerifiableType(modifiersAst);
         }
         return result;
@@ -351,7 +351,7 @@ public final class IllegalTypeCheck extends AbstractCheck {
         boolean result = false;
         if (modifiers.getFirstChild() != null) {
             for (DetailAST modifier = modifiers.getFirstChild(); modifier != null;
-                     modifier = modifier.getNextSibling()) {
+                    modifier = modifier.getNextSibling()) {
                 if (memberModifiers.contains(modifier.getType())) {
                     result = true;
                     break;
@@ -555,10 +555,10 @@ public final class IllegalTypeCheck extends AbstractCheck {
     private boolean isMatchingClassName(String className) {
         final String shortName = className.substring(className.lastIndexOf('.') + 1);
         return illegalClassNames.contains(className)
-                || illegalShortClassNames.contains(shortName)
-                || validateAbstractClassNames
-                    && !legalAbstractClassNames.contains(className)
-                    && illegalAbstractClassNameFormat.matcher(className).find();
+               || illegalShortClassNames.contains(shortName)
+               || validateAbstractClassNames
+               && !legalAbstractClassNames.contains(className)
+               && illegalAbstractClassNameFormat.matcher(className).find();
     }
 
     /**
@@ -570,7 +570,7 @@ public final class IllegalTypeCheck extends AbstractCheck {
     private void extendIllegalClassNamesWithShortName(String canonicalName) {
         if (illegalClassNames.contains(canonicalName)) {
             final String shortName = canonicalName
-                .substring(canonicalName.lastIndexOf('.') + 1);
+                                     .substring(canonicalName.lastIndexOf('.') + 1);
             illegalShortClassNames.add(shortName);
         }
     }
@@ -606,7 +606,7 @@ public final class IllegalTypeCheck extends AbstractCheck {
      *        method returns null
      */
     private static DetailAST
-        getNextSubTreeNode(DetailAST currentNodeAst, DetailAST subTreeRootAst) {
+    getNextSubTreeNode(DetailAST currentNodeAst, DetailAST subTreeRootAst) {
         DetailAST currentNode = currentNodeAst;
         DetailAST toVisitAst = currentNode.getFirstChild();
         while (toVisitAst == null) {
@@ -630,7 +630,7 @@ public final class IllegalTypeCheck extends AbstractCheck {
         final String methodName =
             ast.findFirstToken(TokenTypes.IDENT).getText();
         return isVerifiable(ast) && !ignoredMethodNames.contains(methodName)
-                && !AnnotationUtil.containsAnnotation(ast, "Override");
+               && !AnnotationUtil.containsAnnotation(ast, "Override");
     }
 
     /**

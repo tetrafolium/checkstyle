@@ -44,7 +44,7 @@ abstract class AbstractImportRule {
      *        expression.
      */
     protected AbstractImportRule(final boolean allow, final boolean localOnly,
-        final boolean regExp) {
+                                 final boolean regExp) {
         allowed = allow;
         this.localOnly = localOnly;
         this.regExp = regExp;

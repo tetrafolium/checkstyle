@@ -101,14 +101,14 @@ public final class MissingDeprecatedCheck extends AbstractJavadocCheck {
      * file.
      */
     public static final String MSG_KEY_ANNOTATION_MISSING_DEPRECATED =
-            "annotation.missing.deprecated";
+        "annotation.missing.deprecated";
 
     /**
      * A key is pointing to the warning message text in "messages.properties"
      * file.
      */
     public static final String MSG_KEY_JAVADOC_DUPLICATE_TAG =
-            "javadoc.duplicateTag";
+        "javadoc.duplicateTag";
 
     /** {@link Deprecated Deprecated} annotation name. */
     private static final String DEPRECATED = "Deprecated";
@@ -124,8 +124,8 @@ public final class MissingDeprecatedCheck extends AbstractJavadocCheck {
     @Override
     public int[] getRequiredJavadocTokens() {
         return new int[] {
-            JavadocTokenTypes.JAVADOC,
-        };
+                   JavadocTokenTypes.JAVADOC,
+               };
     }
 
     @Override
@@ -156,7 +156,7 @@ public final class MissingDeprecatedCheck extends AbstractJavadocCheck {
                     && child.getChildren()[0].getType() == JavadocTokenTypes.DEPRECATED_LITERAL) {
                 if (found) {
                     log(child.getLineNumber(), MSG_KEY_JAVADOC_DUPLICATE_TAG,
-                            JavadocTagInfo.DEPRECATED.getText());
+                        JavadocTagInfo.DEPRECATED.getText());
                 }
                 found = true;
             }

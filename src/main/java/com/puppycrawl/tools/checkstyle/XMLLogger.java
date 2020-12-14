@@ -57,7 +57,8 @@ public class XMLLogger
 
     /** Some known entities to detect. */
     private static final String[] ENTITIES = {"gt", "amp", "lt", "apos",
-                                              "quot", };
+                                              "quot",
+                                             };
 
     /** Close output stream in auditFinished. */
     private final boolean closeStream;
@@ -67,7 +68,7 @@ public class XMLLogger
 
     /** Holds all messages for the given file. */
     private final Map<String, FileMessages> fileMessages =
-            new ConcurrentHashMap<>();
+        new ConcurrentHashMap<>();
 
     /**
      * Helper writer that allows easy encoding and printing.
@@ -189,11 +190,11 @@ public class XMLLogger
             writer.print(" column=\"" + event.getColumn() + "\"");
         }
         writer.print(" severity=\""
-                + event.getSeverityLevel().getName()
-                + "\"");
+                     + event.getSeverityLevel().getName()
+                     + "\"");
         writer.print(" message=\""
-                + encode(event.getMessage())
-                + "\"");
+                     + encode(event.getMessage())
+                     + "\"");
         writer.print(" source=\"");
         if (event.getModuleId() == null) {
             writer.print(encode(event.getSourceName()));
@@ -245,38 +246,38 @@ public class XMLLogger
         for (int i = 0; i < value.length(); i++) {
             final char chr = value.charAt(i);
             switch (chr) {
-                case '<':
-                    sb.append("&lt;");
-                    break;
-                case '>':
-                    sb.append("&gt;");
-                    break;
-                case '\'':
-                    sb.append("&apos;");
-                    break;
-                case '\"':
-                    sb.append("&quot;");
-                    break;
-                case '&':
-                    sb.append("&amp;");
-                    break;
-                case '\r':
-                    break;
-                case '\n':
-                    sb.append("&#10;");
-                    break;
-                default:
-                    if (Character.isISOControl(chr)) {
-                        // true escape characters need '&' before but it also requires XML 1.1
-                        // until https://github.com/checkstyle/checkstyle/issues/5168
-                        sb.append("#x");
-                        sb.append(Integer.toHexString(chr));
-                        sb.append(';');
-                    }
-                    else {
-                        sb.append(chr);
-                    }
-                    break;
+            case '<':
+                sb.append("&lt;");
+                break;
+            case '>':
+                sb.append("&gt;");
+                break;
+            case '\'':
+                sb.append("&apos;");
+                break;
+            case '\"':
+                sb.append("&quot;");
+                break;
+            case '&':
+                sb.append("&amp;");
+                break;
+            case '\r':
+                break;
+            case '\n':
+                sb.append("&#10;");
+                break;
+            default:
+                if (Character.isISOControl(chr)) {
+                    // true escape characters need '&' before but it also requires XML 1.1
+                    // until https://github.com/checkstyle/checkstyle/issues/5168
+                    sb.append("#x");
+                    sb.append(Integer.toHexString(chr));
+                    sb.append(';');
+                }
+                else {
+                    sb.append(chr);
+                }
+                break;
             }
         }
         return sb.toString();
