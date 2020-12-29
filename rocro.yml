@@ -1,5 +1,8 @@
 inspecode:
 
+  global:
+    ignore: ["**/test/"]
+
   tasks:
 
     - name: yamllint
@@ -18,28 +21,25 @@ inspecode:
           path: "/.reports/yamllint.sarif"
           format:
             type: SARIF
-      thresholds: {num-issues: 58}
+      thresholds: {num-issues: 152}
 
   tools:
 
     astyle:
-      ignore: [src/test/]
       auto-fix: true
-      thresholds: {num-issues: 453}
+      thresholds: {num-issues: 584}
 
     checkstyle:
       config-file: inspecode-checkstyle.xml
-      ignore:
-        - src/test/resources*/
       auto-fix: true
-      thresholds: {num-issues: 953}
+      thresholds: {num-issues: 999}   # too many issues detected: 1030 > 1000
 
     cpd:
       options: [--skip-lexical-errors]
-      thresholds: {num-issues: 429}
+      thresholds: {num-issues: 999}   # too many issues detected: 1165 > 1000
 
     grep:
-      thresholds: {num-issues: 14}
+      thresholds: {num-issues: 22}
 
     ### BUILD FAILURE
     ### Usage Error: *** Maven command failed:
@@ -49,26 +49,23 @@ inspecode:
     #   thresholds: {num-issues: 999}
 
     jscpd:
-      ignore: [src/test/]
-      thresholds: {num-issues: 459}
+      thresholds: {num-issues: 575}
 
     misspell:
       auto-fix: true
-      thresholds: {num-issues: 24}
+      thresholds: {num-issues: 31}
 
     pmd:
       config-file: config/pmd-main.xml
       auto-fix: true
-      thresholds: {num-issues: 6}
+      thresholds: {num-issues: 12}
 
     uncrustify:
-      ignore: [src/test/]
       auto-fix: true
-      thresholds: {num-issues: 688}
+      thresholds: {num-issues: 924}
 
     ### Unused: analyzing unused: <stdin>: hGetContents: invalid argument (invalid byte sequence)
     ### Possibly Unused failed because the tags file had an invalid encoding. Convert the tags file to UTF-8 and try again.
     # unused:
-    #   ignore: [src/test/]
     #   options: [--single-occurrence, --all-likelihoods]
     #   thresholds: {num-issues: 999}
