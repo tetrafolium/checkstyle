@@ -45,6 +45,7 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * <li>
  * Property {@code onlyObjectReferences} - control whether only explicit
  * initializations made to null for objects should be checked.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * </ul>
@@ -53,6 +54,32 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * </p>
  * <pre>
  * &lt;module name=&quot;ExplicitInitialization&quot;/&gt;
+ * </pre>
+ * <p>
+ * Example:
+ * </p>
+ * <pre>
+ * public class Test {
+ *   private int intField1 = 0; // violation
+ *   private int intField2 = 1;
+ *   private int intField3;
+ *
+ *   private char charField1 = '\0'; // violation
+ *   private char charField2 = 'b';
+ *   private char charField3;
+ *
+ *   private boolean boolField1 = false; // violation
+ *   private boolean boolField2 = true;
+ *   private boolean boolField3;
+ *
+ *   private Obj objField1 = null; // violation
+ *   private Obj objField2 = new Obj();
+ *   private Obj objField3;
+ *
+ *   private int arrField1[] = null; // violation
+ *   private int arrField2[] = new int[10];
+ *   private int arrField3[];
+ * }
  * </pre>
  * <p>
  * To configure the check so that it only checks for objects that explicitly initialize to null:
@@ -67,31 +94,38 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * </p>
  * <pre>
  * public class Test {
- *   private int a = 0;
- *   private int b = 1;
- *   private int c = 2;
+ *   private int intField1 = 0; // ignored
+ *   private int intField2 = 1;
+ *   private int intField3;
  *
- *   private boolean a = true;
- *   private boolean b = false;
- *   private boolean c = true;
- *   private boolean d = false;
- *   private boolean e = false;
+ *   private char charField1 = '\0'; // ignored
+ *   private char charField2 = 'b';
+ *   private char charField3;
  *
- *   private A a = new A();
- *   private A b = null; // violation
- *   private C c = null; // violation
- *   private D d = new D();
+ *   private boolean boolField1 = false; // ignored
+ *   private boolean boolField2 = true;
+ *   private boolean boolField3;
  *
- *   int ar1[] = null; // violation
- *   int ar2[] = new int[];
- *   int ar3[];
- *   private Bar&lt;String&gt; bar = null; // violation
- *   private Bar&lt;String&gt;[] barArray = null; // violation
+ *   private Obj objField1 = null; // violation
+ *   private Obj objField2 = new Obj();
+ *   private Obj objField3;
  *
- *   public static void main( String [] args ) {
- *   }
+ *   private int arrField1[] = null; // violation
+ *   private int arrField2[] = new int[10];
+ *   private int arrField3[];
  * }
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code explicit.init}
+ * </li>
+ * </ul>
  *
  * @since 3.2
  */
@@ -127,6 +161,7 @@ public class ExplicitInitializationCheck extends AbstractCheck {
     /**
      * Setter to control whether only explicit initializations made to null
      * for objects should be checked.
+     *
      * @param onlyObjectReferences whether only explicit initialization made to null
      *                             should be checked
      */
@@ -152,6 +187,7 @@ public class ExplicitInitializationCheck extends AbstractCheck {
 
     /**
      * Checks for explicit initializations made to 'false', '0' and '\0'.
+     *
      * @param ast token being checked for explicit initializations
      */
     private void validateNonObjects(DetailAST ast) {
@@ -176,6 +212,7 @@ public class ExplicitInitializationCheck extends AbstractCheck {
 
     /**
      * Examine char literal for initializing to default value.
+     *
      * @param exprStart expression
      * @return true is literal is initialized by zero symbol
      */
@@ -186,6 +223,7 @@ public class ExplicitInitializationCheck extends AbstractCheck {
 
     /**
      * Checks for cases that should be skipped: no assignment, local variable, final variables.
+     *
      * @param ast Variable def AST
      * @return true is that is a case that need to be skipped.
      */
@@ -208,6 +246,7 @@ public class ExplicitInitializationCheck extends AbstractCheck {
 
     /**
      * Determine if a given type is a numeric type.
+     *
      * @param type code of the type for check.
      * @return true if it's a numeric type.
      * @see TokenTypes

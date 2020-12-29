@@ -37,12 +37,12 @@ public final class Main {
 
     /**
      * Entry point.
+     *
      * @param args the command line arguments.
      */
     public static void main(final String... args) {
         SwingUtilities.invokeLater(() -> {
             final MainFrame mainFrame = new MainFrame();
-
             if (args.length > 0) {
                 final File sourceFile = new File(args[0]);
                 mainFrame.openFile(sourceFile);

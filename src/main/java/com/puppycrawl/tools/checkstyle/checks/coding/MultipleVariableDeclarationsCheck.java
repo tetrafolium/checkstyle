@@ -43,6 +43,41 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  * <pre>
  * &lt;module name="MultipleVariableDeclarations"/&gt;
  * </pre>
+ * <p>
+ * Example:
+ * </p>
+ * <pre>
+ * public class Test {
+ *   public void myTest() {
+ *     int mid;
+ *     int high;
+ *     // ...
+ *
+ *     int lower, higher; // violation
+ *     // ...
+ *
+ *     int value,
+ *         index; // violation
+ *     // ...
+ *
+ *     int place = mid, number = high;  // violation
+ *   }
+ * }
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code multiple.variable.declarations}
+ * </li>
+ * <li>
+ * {@code multiple.variable.declarations.comma}
+ * </li>
+ * </ul>
  *
  * @since 3.4
  */
@@ -116,6 +151,7 @@ public class MultipleVariableDeclarationsCheck extends AbstractCheck {
 
     /**
      * Finds sub-node for given node maximum (line, column) pair.
+     *
      * @param node the root of tree for search.
      * @return sub-node with maximum (line, column) pair.
      */

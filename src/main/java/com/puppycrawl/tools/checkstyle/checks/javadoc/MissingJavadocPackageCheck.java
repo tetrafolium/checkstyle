@@ -56,6 +56,17 @@ import com.puppycrawl.tools.checkstyle.utils.JavadocUtil;
  * *&#47;
  * package com.checkstyle.api; // violation
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code package.javadoc.missing}
+ * </li>
+ * </ul>
  *
  * @since 8.22
  */
@@ -92,7 +103,7 @@ public class MissingJavadocPackageCheck extends AbstractCheck {
     public void visitToken(DetailAST ast) {
         final FileContents contents = getFileContents();
         if (contents.inPackageInfo() && !hasJavadoc(ast)) {
-            log(ast.getLineNo(), MSG_PKG_JAVADOC_MISSING);
+            log(ast, MSG_PKG_JAVADOC_MISSING);
         }
     }
 
@@ -137,6 +148,7 @@ public class MissingJavadocPackageCheck extends AbstractCheck {
 
     /**
      * Checks that ast is a javadoc comment.
+     *
      * @param ast token to check
      * @return true if ast is a javadoc comment, false otherwise
      */

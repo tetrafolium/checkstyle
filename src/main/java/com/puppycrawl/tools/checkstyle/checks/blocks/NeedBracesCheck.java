@@ -35,14 +35,18 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  * <ul>
  * <li>
  * Property {@code allowSingleLineStatement} - allow single-line statements without braces.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * <li>
  * Property {@code allowEmptyLoopBody} - allow loops with empty bodies.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * <li>
  * Property {@code tokens} - tokens to check
+ * Type is {@code java.lang.String[]}.
+ * Validation type is {@code tokenSet}.
  * Default value is:
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_DO">
  * LITERAL_DO</a>,
@@ -145,6 +149,17 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  *   }, // OK
  *   ex -&gt; fail(ex.getMessage()));
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code needBraces}
+ * </li>
+ * </ul>
  *
  * @since 3.0
  */
@@ -169,6 +184,7 @@ public class NeedBracesCheck extends AbstractCheck {
 
     /**
      * Setter to allow single-line statements without braces.
+     *
      * @param allowSingleLineStatement Check's option for skipping single-line statements
      */
     public void setAllowSingleLineStatement(boolean allowSingleLineStatement) {
@@ -177,6 +193,7 @@ public class NeedBracesCheck extends AbstractCheck {
 
     /**
      * Setter to allow loops with empty bodies.
+     *
      * @param allowEmptyLoopBody Check's option for allowing loops with empty body.
      */
     public void setAllowEmptyLoopBody(boolean allowEmptyLoopBody) {
@@ -217,7 +234,7 @@ public class NeedBracesCheck extends AbstractCheck {
     public void visitToken(DetailAST ast) {
         final boolean hasNoSlist = ast.findFirstToken(TokenTypes.SLIST) == null;
         if (hasNoSlist && !isSkipStatement(ast) && isBracesNeeded(ast)) {
-            log(ast.getLineNo(), MSG_KEY_NEED_BRACES, ast.getText());
+            log(ast, MSG_KEY_NEED_BRACES, ast.getText());
         }
     }
 
@@ -230,8 +247,10 @@ public class NeedBracesCheck extends AbstractCheck {
      *     <li>{@link TokenTypes#LITERAL_CASE}</li>
      *     <li>{@link TokenTypes#LITERAL_DEFAULT}</li>
      *     <li>{@link TokenTypes#LITERAL_ELSE}</li>
+     *     <li>{@link TokenTypes#LAMBDA}</li>
      * </ul>
      * For all others default value {@code true} is returned.
+     *
      * @param ast token to check
      * @return result of additional checks for specific token types,
      * {@code true} if there is no additional checks for token
@@ -245,10 +264,14 @@ public class NeedBracesCheck extends AbstractCheck {
                 break;
             case TokenTypes.LITERAL_CASE:
             case TokenTypes.LITERAL_DEFAULT:
-                result = hasUnbracedStatements(ast);
+                result = hasUnbracedStatements(ast)
+                    && !isSwitchLabeledExpression(ast);
                 break;
             case TokenTypes.LITERAL_ELSE:
                 result = ast.findFirstToken(TokenTypes.LITERAL_IF) == null;
+                break;
+            case TokenTypes.LAMBDA:
+                result = !isInSwitchRule(ast);
                 break;
             default:
                 result = true;
@@ -259,6 +282,7 @@ public class NeedBracesCheck extends AbstractCheck {
 
     /**
      * Checks if current loop has empty body and can be skipped by this check.
+     *
      * @param ast for, while statements.
      * @return true if current loop can be skipped by check.
      */
@@ -268,18 +292,29 @@ public class NeedBracesCheck extends AbstractCheck {
 
     /**
      * Checks if switch member (case, default statements) has statements without curly braces.
+     *
      * @param ast case, default statements.
      * @return true if switch member has unbraced statements, false otherwise.
      */
     private static boolean hasUnbracedStatements(DetailAST ast) {
         final DetailAST nextSibling = ast.getNextSibling();
-        return nextSibling != null
+        boolean result = false;
+
+        if (isInSwitchRule(ast)) {
+            final DetailAST parent = ast.getParent();
+            result = parent.getLastChild().getType() != TokenTypes.SLIST;
+        }
+        else if (nextSibling != null
             && nextSibling.getType() == TokenTypes.SLIST
-            && nextSibling.getFirstChild().getType() != TokenTypes.SLIST;
+            && nextSibling.getFirstChild().getType() != TokenTypes.SLIST) {
+            result = true;
+        }
+        return result;
     }
 
     /**
      * Checks if current statement can be skipped by "need braces" warning.
+     *
      * @param statement if, for, while, do-while, lambda, else, case, default statements.
      * @return true if current statement can be skipped by Check.
      */
@@ -299,6 +334,7 @@ public class NeedBracesCheck extends AbstractCheck {
      * while (obj.isValid()) return true;
      * }
      * </p>
+     *
      * @param statement if, for, while, do-while, lambda, else, case, default statements.
      * @return true if current statement is single-line statement.
      */
@@ -319,7 +355,8 @@ public class NeedBracesCheck extends AbstractCheck {
                 result = isSingleLineWhile(statement);
                 break;
             case TokenTypes.LAMBDA:
-                result = isSingleLineLambda(statement);
+                result = !isInSwitchRule(statement)
+                    && isSingleLineLambda(statement);
                 break;
             case TokenTypes.LITERAL_CASE:
             case TokenTypes.LITERAL_DEFAULT:
@@ -340,6 +377,7 @@ public class NeedBracesCheck extends AbstractCheck {
      * while (obj.isValid()) return true;
      * }
      * </p>
+     *
      * @param literalWhile {@link TokenTypes#LITERAL_WHILE while statement}.
      * @return true if current while statement is single-line statement.
      */
@@ -359,6 +397,7 @@ public class NeedBracesCheck extends AbstractCheck {
      * do this.notify(); while (o != null);
      * }
      * </p>
+     *
      * @param literalDo {@link TokenTypes#LITERAL_DO do-while statement}.
      * @return true if current do-while statement is single-line statement.
      */
@@ -378,6 +417,7 @@ public class NeedBracesCheck extends AbstractCheck {
      * for (int i = 0; ; ) this.notify();
      * }
      * </p>
+     *
      * @param literalFor {@link TokenTypes#LITERAL_FOR for statement}.
      * @return true if current for statement is single-line statement.
      */
@@ -399,6 +439,7 @@ public class NeedBracesCheck extends AbstractCheck {
      * if (obj.isValid()) return true;
      * }
      * </p>
+     *
      * @param literalIf {@link TokenTypes#LITERAL_IF if statement}.
      * @return true if current if statement is single-line statement.
      */
@@ -426,6 +467,7 @@ public class NeedBracesCheck extends AbstractCheck {
      * Runnable r = () -> System.out.println("Hello, world!");
      * }
      * </p>
+     *
      * @param lambda {@link TokenTypes#LAMBDA lambda statement}.
      * @return true if current lambda statement is single-line statement.
      */
@@ -449,25 +491,111 @@ public class NeedBracesCheck extends AbstractCheck {
     }
 
     /**
-     * Checks if switch member (case or default statement) is single-line statement, e.g.:
+     * Checks if current ast's parent is a switch rule, e.g.:
      * <p>
      * {@code
-     * case 1: doSomeStuff(); break;
-     * case 2: doSomeStuff(); break;
-     * case 3: ;
-     * default: doSomeStuff();break;
+     * case 1 ->  monthString = "January";
      * }
      * </p>
+     *
+     * @param ast the ast to check.
+     * @return true if current ast belongs to a switch rule.
+     */
+    private static boolean isInSwitchRule(DetailAST ast) {
+        return ast.getParent().getType() == TokenTypes.SWITCH_RULE;
+    }
+
+    /**
+     * Checks if current expression is a switch labeled expression. If so,
+     * braces are not allowed e.g.:
+     * <p>
+     * {@code
+     * case 1 -> 4;
+     * }
+     * </p>
+     *
+     * @param ast the ast to check
+     * @return true if current expression is a switch labeled expression.
+     */
+    private static boolean isSwitchLabeledExpression(DetailAST ast) {
+        final DetailAST parent = ast.getParent();
+        return switchRuleHasSingleExpression(parent);
+    }
+
+    /**
+     * Checks if current switch labeled expression contains only a single expression.
+     *
+     * @param switchRule {@link TokenTypes#SWITCH_RULE}.
+     * @return true if current switch rule has a single expression.
+     */
+    private static boolean switchRuleHasSingleExpression(DetailAST switchRule) {
+        final DetailAST possibleExpression = switchRule.findFirstToken(TokenTypes.EXPR);
+        return possibleExpression != null
+                && possibleExpression.getFirstChild().getFirstChild() == null;
+    }
+
+    /**
+     * Checks if switch member (case or default statement) in a switch rule or
+     * case group is on a single line.
+     *
+     * @param statement {@link TokenTypes#LITERAL_CASE case statement} or
+     * {@link TokenTypes#LITERAL_DEFAULT default statement}.
+     * @return true if current switch member is single-line statement.
+     */
+    private static boolean isSingleLineSwitchMember(DetailAST statement) {
+        final boolean result;
+        if (isInSwitchRule(statement)) {
+            result = isSingleLineSwitchRule(statement);
+        }
+        else {
+            result = isSingleLineCaseGroup(statement);
+        }
+        return result;
+    }
+
+    /**
+     * Checks if switch member in case group (case or default statement)
+     * is single-line statement, e.g.:
+     * <p>
+     * {@code
+     * case 1: System.out.println("case one"); break;
+     * case 2: System.out.println("case two"); break;
+     * case 3: ;
+     * default: System.out.println("default"); break;
+     * }
+     * </p>
+     *
+     *
      * @param ast {@link TokenTypes#LITERAL_CASE case statement} or
      * {@link TokenTypes#LITERAL_DEFAULT default statement}.
      * @return true if current switch member is single-line statement.
      */
-    private static boolean isSingleLineSwitchMember(DetailAST ast) {
+    private static boolean isSingleLineCaseGroup(DetailAST ast) {
         return Optional.of(ast)
-                .map(DetailAST::getNextSibling)
-                .map(DetailAST::getLastChild)
-                .map(lastToken -> TokenUtil.areOnSameLine(ast, lastToken))
-                .orElse(true);
+            .map(DetailAST::getNextSibling)
+            .map(DetailAST::getLastChild)
+            .map(lastToken -> TokenUtil.areOnSameLine(ast, lastToken))
+            .orElse(true);
+    }
+
+    /**
+     * Checks if switch member in switch rule (case or default statement) is
+     * single-line statement, e.g.:
+     * <p>
+     * {@code
+     * case 1 -> System.out.println("case one");
+     * case 2 -> System.out.println("case two");
+     * default -> System.out.println("default");
+     * }
+     * </p>
+     *
+     * @param ast {@link TokenTypes#LITERAL_CASE case statement} or
+     *            {@link TokenTypes#LITERAL_DEFAULT default statement}.
+     * @return true if current switch label is single-line statement.
+     */
+    private static boolean isSingleLineSwitchRule(DetailAST ast) {
+        final DetailAST lastSibling = ast.getParent().getLastChild();
+        return TokenUtil.areOnSameLine(ast, lastSibling);
     }
 
     /**
@@ -477,6 +605,7 @@ public class NeedBracesCheck extends AbstractCheck {
      * else doSomeStuff();
      * }
      * </p>
+     *
      * @param literalElse {@link TokenTypes#LITERAL_ELSE else statement}.
      * @return true if current else statement is single-line statement.
      */

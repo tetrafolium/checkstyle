@@ -39,19 +39,11 @@ pitest-annotation|pitest-design \
 |pitest-common-2|pitest-misc|pitest-xpath \
 |pitest-filters \
 |pitest-main \
-|pitest-coding)
+|pitest-coding \
+|pitest-regexp \
+|pitest-meta)
   mvn -e -P$1 clean test org.pitest:pitest-maven:mutationCoverage;
   declare -a ignoredItems=();
-  checkPitestReport "${ignoredItems[@]}"
-  ;;
-
-pitest-regexp)
-  mvn -e -P$1 clean test org.pitest:pitest-maven:mutationCoverage;
-  declare -a ignoredItems=(
-  "DetectorOptions.java.html:<td class='covered'><pre><span  class='survived'>        if (pattern == null) {</span></pre></td></tr>"
-  "RegexpCheck.java.html:<td class='covered'><pre><span  class='survived'>        if (message == null) {</span></pre></td></tr>"
-  "RegexpCheck.java.html:<td class='covered'><pre><span  class='survived'>        return errorCount &#60;= errorLimit - 1</span></pre></td></tr>"
-  );
   checkPitestReport "${ignoredItems[@]}"
   ;;
 
@@ -71,31 +63,12 @@ pitest-header)
 pitest-imports)
   mvn -e -P$1 clean test org.pitest:pitest-maven:mutationCoverage;
   declare -a ignoredItems=(
-  "AvoidStarImportCheck.java.html:<td class='covered'><pre><span  class='survived'>            &#38;&#38; ast.getType() == TokenTypes.STATIC_IMPORT) {</span></pre></td></tr>"
-  "AvoidStarImportCheck.java.html:<td class='covered'><pre><span  class='survived'>            if (exclude.endsWith(STAR_IMPORT_SUFFIX)) {</span></pre></td></tr>"
-  "AvoidStaticImportCheck.java.html:<td class='covered'><pre><span  class='survived'>        if (exclude.endsWith(&#34;.*&#34;)) {</span></pre></td></tr>"
-  "CustomImportOrderCheck.java.html:<td class='covered'><pre><span  class='survived'>                        &#38;&#38; matcher.start() &#60; betterMatchCandidate.matchPosition) {</span></pre></td></tr>"
-  "CustomImportOrderCheck.java.html:<td class='covered'><pre><span  class='survived'>        else if (customImportOrderRules.contains(SAME_PACKAGE_RULE_GROUP)) {</span></pre></td></tr>"
-  "CustomImportOrderCheck.java.html:<td class='covered'><pre><span  class='survived'>        if (bestMatch.group.equals(NON_GROUP_RULE_GROUP)) {</span></pre></td></tr>"
-  "CustomImportOrderCheck.java.html:<td class='covered'><pre><span  class='survived'>            if (customImportOrderRules.contains(SAME_PACKAGE_RULE_GROUP)) {</span></pre></td></tr>"
-  "CustomImportOrderCheck.java.html:<td class='covered'><pre><span  class='survived'>                    || length == betterMatchCandidate.matchLength</span></pre></td></tr>"
-  "IllegalImportCheck.java.html:<td class='covered'><pre><span  class='survived'>        if (regexp) {</span></pre></td></tr>"
-  "IllegalImportCheck.java.html:<td class='covered'><pre><span  class='survived'>        if (!result &#38;&#38; illegalClasses != null) {</span></pre></td></tr>"
-  "IllegalImportCheck.java.html:<td class='covered'><pre><span  class='survived'>        if (!result) {</span></pre></td></tr>"
   "ImportControlLoader.java.html:<td class='covered'><pre><span  class='survived'>        else if (ALLOW_ELEMENT_NAME.equals(qName) || &#34;disallow&#34;.equals(qName)) {</span></pre></td></tr>"
-  "ImportOrderCheck.java.html:<td class='covered'><pre><span  class='survived'>                else if (matcher.start() == bestPos &#38;&#38; matcher.end() &#62; bestEnd) {</span></pre></td></tr>"
-  "ImportOrderCheck.java.html:<td class='covered'><pre><span  class='survived'>        final boolean separatorBetween = isStatic != lastImportStatic</span></pre></td></tr>"
-  "ImportOrderCheck.java.html:<td class='covered'><pre><span  class='survived'>        if (caseSensitive) {</span></pre></td></tr>"
-  "ImportOrderCheck.java.html:<td class='covered'><pre><span  class='survived'>                if (!CommonUtil.endsWithChar(pkg, &#39;.&#39;)) {</span></pre></td></tr>"
-  "ImportOrderCheck.java.html:<td class='covered'><pre><span  class='survived'>        if (isStatic) {</span></pre></td></tr>"
   "ImportOrderCheck.java.html:<td class='covered'><pre><span  class='survived'>        return !beforeFirstImport &#38;&#38; line - lastImportLine &#62; 1;</span></pre></td></tr>"
   "ImportOrderCheck.java.html:<td class='covered'><pre><span  class='survived'>            staticImportSeparator = isStatic &#38;&#38; separated;</span></pre></td></tr>"
   "PkgImportControl.java.html:<td class='covered'><pre><span  class='survived'>        if (alreadyRegex) {</span></pre></td></tr>"
   "PkgImportControl.java.html:<td class='covered'><pre><span  class='survived'>        if (regex || parent.regex) {</span></pre></td></tr>"
   "PkgImportControl.java.html:<td class='covered'><pre><span  class='survived'>        if (regex) {</span></pre></td></tr>"
-  "PkgImportRule.java.html:<td class='covered'><pre><span  class='survived'>        if (isRegExp()) {</span></pre></td></tr>"
-  "RedundantImportCheck.java.html:<td class='covered'><pre><span  class='survived'>            else if (pkgName != null &#38;&#38; isFromPackage(imp.getText(), pkgName)) {</span></pre></td></tr>"
-  "UnusedImportsCheck.java.html:<td class='covered'><pre><span  class='survived'>            if (collect) {</span></pre></td></tr>"
   );
   checkPitestReport "${ignoredItems[@]}"
   ;;
@@ -148,10 +121,9 @@ pitest-ant)
 pitest-indentation)
   mvn -e -P$1 clean test org.pitest:pitest-maven:mutationCoverage;
   declare -a ignoredItems=(
+  "AbstractExpressionHandler.java.html:<td class='covered'><pre><span  class='survived'>            &#38;&#38; tree.getColumnNo() &#60; realStart.getColumnNo()</span></pre></td></tr>"
   "AbstractExpressionHandler.java.html:<td class='covered'><pre><span  class='survived'>            if (colNum == null || thisLineColumn &#60; colNum) {</span></pre></td></tr>"
-  "AbstractExpressionHandler.java.html:<td class='covered'><pre><span  class='survived'>        if (currLine &#60; realStart) {</span></pre></td></tr>"
   "AbstractExpressionHandler.java.html:<td class='covered'><pre><span  class='survived'>            if (toTest.getColumnNo() &#60; first.getColumnNo()) {</span></pre></td></tr>"
-  "ArrayInitHandler.java.html:<td class='covered'><pre><span  class='survived'>        if (firstChildPos &#62;= 0) {</span></pre></td></tr>"
   "BlockParentHandler.java.html:<td class='covered'><pre><span  class='survived'>        return getIndentCheck().getLineWrappingIndentation();</span></pre></td></tr>"
   "CommentsIndentationCheck.java.html:<td class='covered'><pre><span  class='survived'>            &#38;&#38; root.getFirstChild().getFirstChild().getFirstChild().getNextSibling() != null;</span></pre></td></tr>"
   "CommentsIndentationCheck.java.html:<td class='covered'><pre><span  class='survived'>                if (isUsingOfObjectReferenceToInvokeMethod(blockBody)) {</span></pre></td></tr>"
@@ -164,7 +136,6 @@ pitest-indentation)
   "IndentationCheck.java.html:<td class='covered'><pre><span  class='survived'>        handlerFactory.clearCreatedHandlers();</span></pre></td></tr>"
   "IndentationCheck.java.html:<td class='covered'><pre><span  class='survived'>        handlers.clear();</span></pre></td></tr>"
   "IndentationCheck.java.html:<td class='covered'><pre><span  class='survived'>        primordialHandler.checkIndentation();</span></pre></td></tr>"
-  "IndentLevel.java.html:<td class='covered'><pre><span  class='survived'>            for (int i = levels.nextSetBit(0); i &#62;= 0;</span></pre></td></tr>"
   "MethodDefHandler.java.html:<td class='covered'><pre><span  class='survived'>            if (node.getLineNo() &#60; lineStart) {</span></pre></td></tr>"
   "MethodDefHandler.java.html:<td class='covered'><pre><span  class='survived'>            if (node.getType() == TokenTypes.ANNOTATION) {</span></pre></td></tr>"
   "NewHandler.java.html:<td class='covered'><pre><span  class='survived'>        return false;</span></pre></td></tr>"
@@ -182,20 +153,9 @@ pitest-javadoc)
   mvn -e -P$1 clean test org.pitest:pitest-maven:mutationCoverage;
   declare -a ignoredItems=(
   "AbstractJavadocCheck.java.html:<td class='covered'><pre><span  class='survived'>            Arrays.sort(acceptableJavadocTokens);</span></pre></td></tr>"
-  "AbstractJavadocCheck.java.html:<td class='covered'><pre><span  class='survived'>            Arrays.sort(defaultJavadocTokens);</span></pre></td></tr>"
   "AbstractJavadocCheck.java.html:<td class='covered'><pre><span  class='survived'>        beginJavadocTree(root);</span></pre></td></tr>"
   "AbstractJavadocCheck.java.html:<td class='covered'><pre><span  class='survived'>        finishJavadocTree(root);</span></pre></td></tr>"
   "AbstractJavadocCheck.java.html:<td class='covered'><pre><span  class='survived'>        javadocTokens.clear();</span></pre></td></tr>"
-  "JavadocMethodCheck.java.html:<td class='covered'><pre><span  class='survived'>        if (!currentClassName.isEmpty()) {</span></pre></td></tr>"
-  "JavadocMethodCheck.java.html:<td class='covered'><pre><span  class='survived'>        if (classInfo == null) {</span></pre></td></tr>"
-  "JavadocMethodCheck.java.html:<td class='covered'><pre><span  class='survived'>                 child != null;</span></pre></td></tr>"
-  "JavadocMethodCheck.java.html:<td class='covered'><pre><span  class='survived'>                if (child.getType() == TokenTypes.TYPE_PARAMETER) {</span></pre></td></tr>"
-  "JavadocMethodCheck.java.html:<td class='covered'><pre><span  class='survived'>            if (classInfo != null) {</span></pre></td></tr>"
-  "JavadocMethodCheck.java.html:<td class='covered'><pre><span  class='survived'>            if (dotIdx == -1) {</span></pre></td></tr>"
-  "JavadocMethodCheck.java.html:<td class='covered'><pre><span  class='survived'>        currentTypeParams.clear();</span></pre></td></tr>"
-  "JavadocMethodCheck.java.html:<td class='covered'><pre><span  class='survived'>        while (iterator.hasNext()) {</span></pre></td></tr>"
-  "JavadocTagInfo.java.html:<td class='covered'><pre><span  class='survived'>            .collect(Collectors.toMap(JavadocTagInfo::getName, tagName -&#62; tagName)));</span></pre></td></tr>"
-  "JavadocTagInfo.java.html:<td class='covered'><pre><span  class='survived'>            .collect(Collectors.toMap(JavadocTagInfo::getText, tagText -&#62; tagText)));</span></pre></td></tr>"
   "TagParser.java.html:<td class='covered'><pre><span  class='survived'>                while (column &#60; currentLine.length()</span></pre></td></tr>"
   );
   checkPitestReport "${ignoredItems[@]}"
@@ -232,6 +192,5 @@ pitest-utils)
   ;;
 
 esac
-
 
 

@@ -96,42 +96,49 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * <li>
  * Property {@code violateImpliedPublicField} - Control whether to enforce that {@code public}
  * is explicitly coded on interface fields.
+ * Type is {@code boolean}.
  * Default value is {@code true}.
  * </li>
  * <li>
  * Property {@code violateImpliedStaticField} - Control whether to enforce that {@code static}
  * is explicitly coded on interface fields.
+ * Type is {@code boolean}.
  * Default value is {@code true}.
  * </li>
  * <li>
  * Property {@code violateImpliedFinalField} - Control whether to enforce that {@code final}
  * is explicitly coded on interface fields.
+ * Type is {@code boolean}.
  * Default value is {@code true}.
  * </li>
  * <li>
  * Property {@code violateImpliedPublicMethod} - Control whether to enforce that {@code public}
  * is explicitly coded on interface methods.
+ * Type is {@code boolean}.
  * Default value is {@code true}.
  * </li>
  * <li>
  * Property {@code violateImpliedAbstractMethod} - Control whether to enforce that {@code abstract}
  * is explicitly coded on interface methods.
+ * Type is {@code boolean}.
  * Default value is {@code true}.
  * </li>
  * <li>
  * Property {@code violateImpliedPublicNested} - Control whether to enforce that {@code public}
  * is explicitly coded on interface nested types.
+ * Type is {@code boolean}.
  * Default value is {@code true}.
  * </li>
  * <li>
  * Property {@code violateImpliedStaticNested} - Control whether to enforce that {@code static}
  * is explicitly coded on interface nested types.
+ * Type is {@code boolean}.
  * Default value is {@code true}.
  * </li>
  * </ul>
  * <p>
- * This example checks that all implicit modifiers on methods, fields and nested
- * types are explicitly specified in interfaces.
+ * To configure the check so that it checks that all implicit modifiers on methods, fields
+ * and nested types are explicitly specified in interfaces.
  * </p>
  * <p>
  * Configuration:
@@ -188,6 +195,18 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  *   }
  * }
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code interface.implied.modifier}
+ * </li>
+ * </ul>
+ *
  * @since 8.12
  */
 @StatelessCheck
@@ -256,6 +275,7 @@ public class InterfaceMemberImpliedModifierCheck
     /**
      * Setter to control whether to enforce that {@code public} is explicitly coded
      * on interface fields.
+     *
      * @param violateImpliedPublicField
      *        True to perform the check, false to turn the check off.
      */
@@ -266,6 +286,7 @@ public class InterfaceMemberImpliedModifierCheck
     /**
      * Setter to control whether to enforce that {@code static} is explicitly coded
      * on interface fields.
+     *
      * @param violateImpliedStaticField
      *        True to perform the check, false to turn the check off.
      */
@@ -276,6 +297,7 @@ public class InterfaceMemberImpliedModifierCheck
     /**
      * Setter to control whether to enforce that {@code final} is explicitly coded
      * on interface fields.
+     *
      * @param violateImpliedFinalField
      *        True to perform the check, false to turn the check off.
      */
@@ -286,6 +308,7 @@ public class InterfaceMemberImpliedModifierCheck
     /**
      * Setter to control whether to enforce that {@code public} is explicitly coded
      * on interface methods.
+     *
      * @param violateImpliedPublicMethod
      *        True to perform the check, false to turn the check off.
      */
@@ -296,6 +319,7 @@ public class InterfaceMemberImpliedModifierCheck
     /**
      * Setter to control whether to enforce that {@code abstract} is explicitly coded
      * on interface methods.
+     *
      * @param violateImpliedAbstractMethod
      *        True to perform the check, false to turn the check off.
      */
@@ -306,6 +330,7 @@ public class InterfaceMemberImpliedModifierCheck
     /**
      * Setter to control whether to enforce that {@code public} is explicitly coded
      * on interface nested types.
+     *
      * @param violateImpliedPublicNested
      *        True to perform the check, false to turn the check off.
      */
@@ -316,6 +341,7 @@ public class InterfaceMemberImpliedModifierCheck
     /**
      * Setter to control whether to enforce that {@code static} is explicitly coded
      * on interface nested types.
+     *
      * @param violateImpliedStaticNested
      *        True to perform the check, false to turn the check off.
      */
@@ -367,6 +393,7 @@ public class InterfaceMemberImpliedModifierCheck
 
     /**
      * Check method in interface.
+     *
      * @param ast the method AST
      */
     private void processMethod(DetailAST ast) {
@@ -387,6 +414,7 @@ public class InterfaceMemberImpliedModifierCheck
 
     /**
      * Check field in interface.
+     *
      * @param ast the field AST
      */
     private void processField(DetailAST ast) {
@@ -407,6 +435,7 @@ public class InterfaceMemberImpliedModifierCheck
 
     /**
      * Check nested types in interface.
+     *
      * @param ast the nested type AST
      */
     private void processNestedType(DetailAST ast) {

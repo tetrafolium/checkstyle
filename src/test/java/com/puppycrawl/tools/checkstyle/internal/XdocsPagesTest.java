@@ -82,20 +82,8 @@ import com.puppycrawl.tools.checkstyle.api.AbstractFileSetCheck;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
 import com.puppycrawl.tools.checkstyle.api.Scope;
-import com.puppycrawl.tools.checkstyle.api.SeverityLevel;
-import com.puppycrawl.tools.checkstyle.checks.LineSeparatorOption;
-import com.puppycrawl.tools.checkstyle.checks.annotation.AnnotationUseStyleCheck.ClosingParens;
-import com.puppycrawl.tools.checkstyle.checks.annotation.AnnotationUseStyleCheck.ElementStyle;
-import com.puppycrawl.tools.checkstyle.checks.annotation.AnnotationUseStyleCheck.TrailingArrayComma;
-import com.puppycrawl.tools.checkstyle.checks.blocks.BlockOption;
-import com.puppycrawl.tools.checkstyle.checks.blocks.LeftCurlyOption;
-import com.puppycrawl.tools.checkstyle.checks.blocks.RightCurlyOption;
-import com.puppycrawl.tools.checkstyle.checks.imports.ImportOrderOption;
 import com.puppycrawl.tools.checkstyle.checks.javadoc.AbstractJavadocCheck;
-import com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocContentLocationOption;
-import com.puppycrawl.tools.checkstyle.checks.naming.AccessModifier;
-import com.puppycrawl.tools.checkstyle.checks.whitespace.PadOption;
-import com.puppycrawl.tools.checkstyle.checks.whitespace.WrapOption;
+import com.puppycrawl.tools.checkstyle.checks.naming.AccessModifierOption;
 import com.puppycrawl.tools.checkstyle.internal.utils.CheckUtil;
 import com.puppycrawl.tools.checkstyle.internal.utils.TestUtil;
 import com.puppycrawl.tools.checkstyle.internal.utils.XdocUtil;
@@ -248,6 +236,8 @@ public class XdocsPagesTest {
         final String availableChecks = new String(Files.readAllBytes(AVAILABLE_CHECKS_PATH), UTF_8);
 
         CheckUtil.getSimpleNames(CheckUtil.getCheckstyleChecks())
+            .stream()
+            .filter(checkName -> !"JavadocMetadataScraper".equals(checkName))
             .forEach(checkName -> {
                 if (!isPresent(availableChecks, checkName)) {
                     fail(checkName + " is not correctly listed on Available Checks page"
@@ -268,7 +258,7 @@ public class XdocsPagesTest {
 
         for (Path path : XdocUtil.getXdocsConfigFilePaths(XdocUtil.getXdocsFilePaths())) {
             final String fileName = path.getFileName().toString();
-            if ("config_reporting.xml".equals(fileName)
+            if ("config_system_properties.xml".equals(fileName)
                     || "config_filefilters.xml".equals(fileName)
                     || "config_filters.xml".equals(fileName)) {
                 continue;
@@ -478,7 +468,7 @@ public class XdocsPagesTest {
         for (Path path : XdocUtil.getXdocsConfigFilePaths(XdocUtil.getXdocsFilePaths())) {
             final String fileName = path.getFileName().toString();
 
-            if ("config_reporting.xml".equals(fileName)) {
+            if ("config_system_properties.xml".equals(fileName)) {
                 continue;
             }
 
@@ -515,6 +505,7 @@ public class XdocsPagesTest {
 
     /**
      * Test contains asserts in callstack, but idea does not see them.
+     *
      * @noinspection JUnitTestMethodWithNoAssertions
      */
     @Test
@@ -671,10 +662,11 @@ public class XdocsPagesTest {
             "Incompatible check list should match XpathRegressionTest.INCOMPATIBLE_CHECK_NAMES")
             .that(getListById(subSection, "SuppressionXpathFilter_IncompatibleChecks"))
             .isEqualTo(XpathRegressionTest.INCOMPATIBLE_CHECK_NAMES);
-
+        final Set<String> suppressionXpathFilterJavadocChecks = getListById(subSection,
+                "SuppressionXpathFilter_JavadocChecks");
         assertWithMessage(
             "Javadoc check list should match XpathRegressionTest.INCOMPATIBLE_JAVADOC_CHECK_NAMES")
-            .that(getListById(subSection, "SuppressionXpathFilter_JavadocChecks"))
+            .that(suppressionXpathFilterJavadocChecks)
             .isEqualTo(XpathRegressionTest.INCOMPATIBLE_JAVADOC_CHECK_NAMES);
     }
 
@@ -868,8 +860,9 @@ public class XdocsPagesTest {
                         + "' should have the type for " + propertyName);
 
         if (expectedValue != null) {
-            final String actualValue = columns.get(3).getTextContent().replace("\n", "")
-                    .replace("\r", "").replaceAll(" +", " ").trim();
+            final String actualValue = columns.get(3).getTextContent().trim()
+                    .replaceAll("\\s+", " ")
+                    .replaceAll("\\s,", ",");
 
             assertEquals(expectedValue, actualValue,
                     fileName + " section '" + sectionName
@@ -882,14 +875,46 @@ public class XdocsPagesTest {
         assertEquals("tokens to check", columns.get(1).getTextContent(),
                 fileName + " section '" + sectionName
                         + "' should have the basic token description");
-        assertEquals("subset of tokens " + CheckUtil.getTokenText(check.getAcceptableTokens(),
-                check.getRequiredTokens()),
-                columns.get(2).getTextContent().replaceAll("\\s+", " ").trim(),
-                fileName + " section '" + sectionName + "' should have all the acceptable tokens");
-        assertEquals(
-                CheckUtil.getTokenText(check.getDefaultTokens(), check.getRequiredTokens()),
-                columns.get(3).getTextContent().replaceAll("\\s+", " ").trim(),
-                fileName + " section '" + sectionName + "' should have all the default tokens");
+
+        final String acceptableTokenText = columns.get(2).getTextContent().trim();
+        String expectedAcceptableTokenText = "subset of tokens "
+                + CheckUtil.getTokenText(check.getAcceptableTokens(),
+                check.getRequiredTokens());
+        if (isAllTokensAcceptable(check)) {
+            expectedAcceptableTokenText = "set of any supported tokens";
+        }
+        assertEquals(expectedAcceptableTokenText, acceptableTokenText
+                        .replaceAll("\\s+", " ")
+                        .replaceAll("\\s,", ",")
+                        .replaceAll("\\s\\.", "."),
+                fileName + " section '" + sectionName
+                        + "' should have all the acceptable tokens");
+        assertFalse(isInvalidTokenPunctuation(acceptableTokenText),
+                fileName + "'s acceptable token section: " + sectionName
+                        + "should have ',' & '.' at beginning of the next corresponding lines.");
+
+        final String defaultTokenText = columns.get(3).getTextContent().trim();
+        final String expectedDefaultTokenText = CheckUtil.getTokenText(check.getDefaultTokens(),
+                check.getRequiredTokens());
+        if (expectedDefaultTokenText.isEmpty()) {
+            assertEquals("empty", defaultTokenText,
+                    "Empty tokens should have 'empty' string in xdoc");
+        }
+        else {
+            assertEquals(expectedDefaultTokenText, defaultTokenText
+                            .replaceAll("\\s+", " ")
+                            .replaceAll("\\s,", ",")
+                            .replaceAll("\\s\\.", "."),
+                    fileName + " section '" + sectionName + "' should have all the default tokens");
+            assertFalse(isInvalidTokenPunctuation(defaultTokenText),
+                    fileName + "'s default token section: " + sectionName
+                          + "should have ',' or '.' at beginning of the next corresponding lines.");
+        }
+
+    }
+
+    private static boolean isAllTokensAcceptable(AbstractCheck check) {
+        return Arrays.equals(check.getAcceptableTokens(), TokenUtil.getAllTokenIds());
     }
 
     private static void validatePropertySectionPropertyJavadocTokens(String fileName,
@@ -897,20 +922,43 @@ public class XdocsPagesTest {
         assertEquals("javadoc tokens to check",
                 columns.get(1).getTextContent(), fileName + " section '" + sectionName
                         + "' should have the basic token javadoc description");
+
+        final String acceptableTokenText = columns.get(2).getTextContent().trim();
         assertEquals("subset of javadoc tokens "
                         + CheckUtil.getJavadocTokenText(check.getAcceptableJavadocTokens(),
-                                check.getRequiredJavadocTokens()), columns.get(2).getTextContent()
-                        .replaceAll("\\s+", " ").trim(), fileName + " section '" + sectionName
-                                + "' should have all the acceptable javadoc tokens");
-        assertEquals(
-                CheckUtil.getJavadocTokenText(check.getDefaultJavadocTokens(),
-                        check.getRequiredJavadocTokens()), columns.get(3).getTextContent()
-                        .replaceAll("\\s+", " ").trim(), fileName + " section '" + sectionName
-                                + "' should have all the default javadoc tokens");
+                check.getRequiredJavadocTokens()),
+                acceptableTokenText
+                        .replaceAll("\\s+", " ")
+                        .replaceAll("\\s,", ",")
+                        .replaceAll("\\s\\.", "."),
+                fileName + " section '" + sectionName
+                        + "' should have all the acceptable javadoc tokens");
+        assertFalse(isInvalidTokenPunctuation(acceptableTokenText),
+                fileName + "'s acceptable javadoc token section: " + sectionName
+                        + "should have ',' & '.' at beginning of the next corresponding lines.");
+
+        final String defaultTokenText = columns.get(3).getTextContent().trim();
+        assertEquals(CheckUtil.getJavadocTokenText(check.getDefaultJavadocTokens(),
+                check.getRequiredJavadocTokens()),
+                defaultTokenText
+                        .replaceAll("\\s+", " ")
+                        .replaceAll("\\s,", ",")
+                        .replaceAll("\\s\\.", "."),
+                fileName + " section '" + sectionName
+                        + "' should have all the default javadoc tokens");
+        assertFalse(isInvalidTokenPunctuation(defaultTokenText),
+                fileName + "'s default javadoc token section: " + sectionName
+                        + "should have ',' & '.' at beginning of the next corresponding lines.");
+    }
+
+    private static boolean isInvalidTokenPunctuation(String tokenText) {
+        return Pattern.compile("\\w,").matcher(tokenText).find()
+                || Pattern.compile("\\w\\.").matcher(tokenText).find();
     }
 
     /**
      * Get's the name of the bean property's type for the class.
+     *
      * @param sectionName The name of the section/module being worked on.
      * @param fieldClass The bean property's type.
      * @param instance The class instance to work with.
@@ -922,7 +970,7 @@ public class XdocsPagesTest {
             Object instance, String propertyName) {
         final String instanceName = instance.getClass().getSimpleName();
         String result = null;
-
+        final String checkProperty = sectionName + ":" + propertyName;
         if (("SuppressionCommentFilter".equals(sectionName)
                 || "SuppressWithNearbyCommentFilter".equals(sectionName)
                 || "SuppressWithPlainTextCommentFilter".equals(sectionName))
@@ -937,27 +985,22 @@ public class XdocsPagesTest {
             // dynamic custom expression
             result = "Regular Expression";
         }
-        else if ("CustomImportOrder".equals(sectionName)
-                && "customImportOrderRules".equals(propertyName)) {
-            // specially separated list
-            result = "String";
-        }
         else if (fieldClass == boolean.class) {
-            result = "Boolean";
+            result = "boolean";
         }
         else if (fieldClass == int.class) {
-            result = "Integer";
+            result = "int";
         }
         else if (fieldClass == int[].class) {
             if (isPropertyTokenType(sectionName, propertyName)) {
                 result = "subset of tokens TokenTypes";
             }
             else {
-                result = "Integer Set";
+                result = "int[]";
             }
         }
         else if (fieldClass == double[].class) {
-            result = "Number Set";
+            result = "double[]";
         }
         else if (fieldClass == String.class) {
             result = "String";
@@ -977,62 +1020,46 @@ public class XdocsPagesTest {
                 result = "subset of tokens TokenTypes";
             }
             else {
-                result = "String Set";
+                result = "String[]";
             }
         }
         else if (fieldClass == URI.class) {
             result = "URI";
         }
         else if (fieldClass == Pattern.class) {
-            result = "Regular Expression";
+            if ("SuppressionSingleFilter:checks".equals(checkProperty)
+                || "SuppressionXpathSingleFilter:files".equals(checkProperty)
+                || "SuppressionXpathSingleFilter:checks".equals(checkProperty)
+                || "SuppressionXpathSingleFilter:message".equals(checkProperty)
+                || "IllegalTokenText:format".equals(checkProperty)) {
+                result = "Regular Expression";
+            }
+            else {
+                result = "Pattern";
+            }
         }
         else if (fieldClass == Pattern[].class) {
-            result = "Regular Expressions";
-        }
-        else if (fieldClass == SeverityLevel.class) {
-            result = "Severity";
+            if ("ImportOrder:groups".equals(checkProperty)
+                || "ImportOrder:staticGroups".equals(checkProperty)
+                || "ClassDataAbstractionCoupling:excludeClassesRegexps".equals(checkProperty)
+                || "ClassFanOutComplexity:excludeClassesRegexps".equals(checkProperty)) {
+                result = "Regular Expressions";
+            }
+            else {
+                result = "Pattern[]";
+            }
         }
         else if (fieldClass == Scope.class) {
             result = "Scope";
         }
-        else if (fieldClass == ElementStyle.class) {
-            result = "Element Style";
-        }
-        else if (fieldClass == ClosingParens.class) {
-            result = "Closing Parens";
-        }
-        else if (fieldClass == TrailingArrayComma.class) {
-            result = "Trailing Comma";
-        }
-        else if (fieldClass == PadOption.class) {
-            result = "Pad Policy";
-        }
-        else if (fieldClass == WrapOption.class) {
-            result = "Wrap Operator Policy";
-        }
-        else if (fieldClass == BlockOption.class) {
-            result = "Block Policy";
-        }
-        else if (fieldClass == LeftCurlyOption.class) {
-            result = "Left Curly Brace Policy";
-        }
-        else if (fieldClass == RightCurlyOption.class) {
-            result = "Right Curly Brace Policy";
-        }
-        else if (fieldClass == LineSeparatorOption.class) {
-            result = "Line Separator Policy";
-        }
-        else if (fieldClass == ImportOrderOption.class) {
-            result = "Import Order Policy";
-        }
-        else if (fieldClass == AccessModifier[].class) {
-            result = "Access Modifier Set";
-        }
-        else if (fieldClass == JavadocContentLocationOption.class) {
-            result = "Javadoc Content Location";
+        else if (fieldClass == AccessModifierOption[].class) {
+            result = "AccessModifierOption[]";
         }
         else if ("PropertyCacheFile".equals(fieldClass.getSimpleName())) {
             result = "File";
+        }
+        else if (fieldClass.isEnum()) {
+            result = fieldClass.getSimpleName();
         }
         else {
             fail("Unknown property type: " + fieldClass.getSimpleName());
@@ -1048,6 +1075,7 @@ public class XdocsPagesTest {
 
     /**
      * Get's the name of the bean property's default value for the class.
+     *
      * @param sectionName The name of the section/module being worked on.
      * @param propertyName The property name to work with.
      * @param field The bean property's field.
@@ -1071,7 +1099,7 @@ public class XdocsPagesTest {
                 result = "default locale language for the Java Virtual Machine";
             }
             else if ("Checker".equals(sectionName) && "charset".equals(propertyName)) {
-                result = "System property \"file.encoding\"";
+                result = "UTF-8";
             }
             else if ("charset".equals(propertyName)) {
                 result = "the charset property of the parent Checker module";
@@ -1084,7 +1112,7 @@ public class XdocsPagesTest {
             }
             else if (fieldClass == int.class) {
                 if (value.equals(Integer.MAX_VALUE)) {
-                    result = "java.lang.Integer.MAX_VALUE";
+                    result = "2147483647";
                 }
                 else {
                     result = value.toString();
@@ -1108,10 +1136,7 @@ public class XdocsPagesTest {
                 if (isPropertyTokenType(sectionName, propertyName)) {
                     boolean first = true;
 
-                    if (value == null) {
-                        result = "no tokens";
-                    }
-                    else if (value instanceof BitSet) {
+                    if (value instanceof BitSet) {
                         final BitSet list = (BitSet) value;
                         final StringBuilder sb = new StringBuilder(20);
 
@@ -1199,10 +1224,6 @@ public class XdocsPagesTest {
                 if (value != null) {
                     result = '"' + value.toString().replace("\n", "\\n").replace("\t", "\\t")
                             .replace("\r", "\\r").replace("\f", "\\f") + '"';
-
-                    if ("\"^$\"".equals(result)) {
-                        result += " (empty)";
-                    }
                 }
             }
             else if (fieldClass == Pattern[].class) {
@@ -1244,7 +1265,7 @@ public class XdocsPagesTest {
                     result = value.toString().toLowerCase(Locale.ENGLISH);
                 }
             }
-            else if (fieldClass == AccessModifier[].class) {
+            else if (fieldClass == AccessModifierOption[].class) {
                 result = Arrays.toString((Object[]) value).replace("[", "").replace("]", "");
             }
             else {
@@ -1261,6 +1282,7 @@ public class XdocsPagesTest {
 
     /**
      * Checks if the given property is takes token names as a type.
+     *
      * @param sectionName The name of the section/module being worked on.
      * @param propertyName The property name to work with.
      * @return {@code true} if the property is takes token names as a type.
@@ -1571,6 +1593,7 @@ public class XdocsPagesTest {
             styleChecks.remove("BeforeExecutionExclusionFileFilter");
             styleChecks.remove("SuppressionFilter");
             styleChecks.remove("SuppressionXpathFilter");
+            styleChecks.remove("SuppressionXpathSingleFilter");
             styleChecks.remove("TreeWalker");
             styleChecks.remove("Checker");
 

@@ -30,6 +30,11 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 public class MethodCallHandler extends AbstractExpressionHandler {
 
     /**
+     * The instance of {@code IndentationCheck} used by this class.
+     */
+    private final IndentationCheck indentCheck;
+
+    /**
      * Construct an instance of this handler with the given indentation check,
      * abstract syntax tree, and parent handler.
      *
@@ -40,6 +45,7 @@ public class MethodCallHandler extends AbstractExpressionHandler {
     public MethodCallHandler(IndentationCheck indentCheck,
         DetailAST ast, AbstractExpressionHandler parent) {
         super(indentCheck, "method call", ast, parent);
+        this.indentCheck = indentCheck;
     }
 
     @Override
@@ -68,9 +74,9 @@ public class MethodCallHandler extends AbstractExpressionHandler {
         else {
             // if our expression isn't first on the line, just use the start
             // of the line
-            final LineSet lines = new LineSet();
-            findSubtreeLines(lines, getMainAst().getFirstChild(), true);
-            final int firstCol = lines.firstLineCol();
+            final DetailAstSet astSet = new DetailAstSet(indentCheck);
+            findSubtreeAst(astSet, getMainAst().getFirstChild(), true);
+            final int firstCol = expandedTabsColumnNo(astSet.firstLine());
             final int lineStart = getLineStart(getFirstAst(getMainAst()));
             if (lineStart == firstCol) {
                 indentLevel = super.getIndentImpl();
@@ -105,6 +111,7 @@ public class MethodCallHandler extends AbstractExpressionHandler {
 
     /**
      * If this is the first chained method call which was moved to the next line.
+     *
      * @return true if chained class are wrapped
      */
     private boolean isChainedMethodCallWrapped() {
@@ -226,6 +233,7 @@ public class MethodCallHandler extends AbstractExpressionHandler {
 
     /**
      * Returns method or constructor call right paren.
+     *
      * @param firstNode
      *          call ast(TokenTypes.METHOD_CALL|TokenTypes.CTOR_CALL|TokenTypes.SUPER_CTOR_CALL)
      * @return ast node containing right paren for specified method or constructor call. If

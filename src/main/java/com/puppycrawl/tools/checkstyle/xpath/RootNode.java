@@ -19,8 +19,11 @@
 
 package com.puppycrawl.tools.checkstyle.xpath;
 
+import java.util.List;
+
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.XpathUtil;
 import net.sf.saxon.Configuration;
 import net.sf.saxon.om.AxisInfo;
 import net.sf.saxon.om.GenericTreeInfo;
@@ -55,26 +58,45 @@ public class RootNode extends AbstractNode {
     public RootNode(DetailAST detailAst) {
         super(new GenericTreeInfo(Configuration.newConfiguration()));
         this.detailAst = detailAst;
+    }
 
-        createChildren();
+    /**
+     * Compares current object with specified for order.
+     * Throws {@code UnsupportedOperationException} because functionality not required here.
+     *
+     * @param nodeInfo another {@code NodeInfo} object
+     * @return number representing order of current object to specified one
+     */
+    @Override
+    public int compareOrder(NodeInfo nodeInfo) {
+        throw throwUnsupportedOperationException();
     }
 
     /**
      * Iterates siblings of the current node and
      * recursively creates new Xpath-nodes.
+     *
+     * @return children list
      */
-    private void createChildren() {
-        DetailAST currentChild = detailAst;
-        while (currentChild != null) {
-            final ElementNode child = new ElementNode(this, this, currentChild);
-            addChild(child);
-            currentChild = currentChild.getNextSibling();
-        }
+    @Override
+    protected List<AbstractNode> createChildren() {
+        return XpathUtil.createChildren(this, this, detailAst);
+    }
+
+    /**
+     * Determine whether the node has any children.
+     *
+     * @return {@code true} is the node has any children.
+     */
+    @Override
+    public boolean hasChildNodes() {
+        return detailAst != null;
     }
 
     /**
      * Returns attribute value. Throws {@code UnsupportedOperationException} because root node
      * has no attributes.
+     *
      * @param namespace namespace
      * @param localPart actual name of the attribute
      * @return attribute value
@@ -86,6 +108,7 @@ public class RootNode extends AbstractNode {
 
     /**
      * Returns local part.
+     *
      * @return local part
      */
     @Override
@@ -95,6 +118,7 @@ public class RootNode extends AbstractNode {
 
     /**
      * Returns type of the node.
+     *
      * @return node kind
      */
     @Override
@@ -104,6 +128,7 @@ public class RootNode extends AbstractNode {
 
     /**
      * Returns parent.
+     *
      * @return parent
      */
     @Override
@@ -113,6 +138,7 @@ public class RootNode extends AbstractNode {
 
     /**
      * Returns root of the tree.
+     *
      * @return root of the tree
      */
     @Override
@@ -123,11 +149,13 @@ public class RootNode extends AbstractNode {
     /**
      * Determines axis iteration algorithm. Throws {@code UnsupportedOperationException} in case,
      * when there is no axis iterator for given axisNumber.
+     *
      * @param axisNumber element from {@code AxisInfo}
      * @return {@code AxisIterator} object
+     * @noinspection resource, IOResourceOpenedButNotSafelyClosed
      */
     @Override
-    public AxisIterator iterateAxis(byte axisNumber) {
+    public AxisIterator iterateAxis(int axisNumber) {
         final AxisIterator result;
         switch (axisNumber) {
             case AxisInfo.ANCESTOR:
@@ -137,41 +165,31 @@ public class RootNode extends AbstractNode {
             case AxisInfo.FOLLOWING_SIBLING:
             case AxisInfo.PRECEDING:
             case AxisInfo.PRECEDING_SIBLING:
-                result = EmptyIterator.OfNodes.THE_INSTANCE;
+                result = EmptyIterator.ofNodes();
                 break;
             case AxisInfo.ANCESTOR_OR_SELF:
             case AxisInfo.SELF:
-                try (AxisIterator iterator = SingleNodeIterator.makeIterator(this)) {
-                    result = iterator;
-                }
+                result = SingleNodeIterator.makeIterator(this);
                 break;
             case AxisInfo.CHILD:
                 if (hasChildNodes()) {
-                    try (AxisIterator iterator = new ArrayIterator.OfNodes(
-                            getChildren().toArray(EMPTY_ABSTRACT_NODE_ARRAY))) {
-                        result = iterator;
-                    }
+                    result = new ArrayIterator.OfNodes(
+                            getChildren().toArray(EMPTY_ABSTRACT_NODE_ARRAY));
                 }
                 else {
-                    result = EmptyIterator.OfNodes.THE_INSTANCE;
+                    result = EmptyIterator.ofNodes();
                 }
                 break;
             case AxisInfo.DESCENDANT:
                 if (hasChildNodes()) {
-                    try (AxisIterator iterator =
-                                 new Navigator.DescendantEnumeration(this, false, true)) {
-                        result = iterator;
-                    }
+                    result = new Navigator.DescendantEnumeration(this, false, true);
                 }
                 else {
-                    result = EmptyIterator.OfNodes.THE_INSTANCE;
+                    result = EmptyIterator.ofNodes();
                 }
                 break;
             case AxisInfo.DESCENDANT_OR_SELF:
-                try (AxisIterator iterator =
-                             new Navigator.DescendantEnumeration(this, true, true)) {
-                    result = iterator;
-                }
+                result = new Navigator.DescendantEnumeration(this, true, true);
                 break;
             default:
                 throw throwUnsupportedOperationException();
@@ -181,6 +199,7 @@ public class RootNode extends AbstractNode {
 
     /**
      * Returns line number.
+     *
      * @return line number
      */
     @Override
@@ -190,6 +209,7 @@ public class RootNode extends AbstractNode {
 
     /**
      * Returns column number.
+     *
      * @return column number
      */
     @Override
@@ -199,6 +219,7 @@ public class RootNode extends AbstractNode {
 
     /**
      * Getter method for token type.
+     *
      * @return token type
      */
     @Override
@@ -208,6 +229,7 @@ public class RootNode extends AbstractNode {
 
     /**
      * Returns underlying node.
+     *
      * @return underlying node
      */
     @Override
@@ -216,7 +238,18 @@ public class RootNode extends AbstractNode {
     }
 
     /**
+     * Getter method for node depth.
+     *
+     * @return always {@code 0}
+     */
+    @Override
+    public int getDepth() {
+        return 0;
+    }
+
+    /**
      * Returns UnsupportedOperationException exception.
+     *
      * @return UnsupportedOperationException exception
      */
     private static UnsupportedOperationException throwUnsupportedOperationException() {

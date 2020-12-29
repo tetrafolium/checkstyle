@@ -75,26 +75,34 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * <ul>
  * <li>
  * Property {@code maxTotal} - Specify the maximum number of methods allowed at all scope levels.
+ * Type is {@code int}.
  * Default value is {@code 100}.
  * </li>
  * <li>
  * Property {@code maxPrivate} - Specify the maximum number of {@code private} methods allowed.
+ * Type is {@code int}.
  * Default value is {@code 100}.
  * </li>
  * <li>
  * Property {@code maxPackage} - Specify the maximum number of {@code package} methods allowed.
+ * Type is {@code int}.
  * Default value is {@code 100}.
  * </li>
  * <li>
  * Property {@code maxProtected} - Specify the maximum number of {@code protected} methods allowed.
- * Default value is 100.
- * </li>
- * <li>
- * Property {@code maxPublic} - Specify the maximum number of {@code public} methods allowed.
+ * Type is {@code int}.
  * Default value is {@code 100}.
  * </li>
  * <li>
- * Property {@code tokens} - tokens to check Default value is:
+ * Property {@code maxPublic} - Specify the maximum number of {@code public} methods allowed.
+ * Type is {@code int}.
+ * Default value is {@code 100}.
+ * </li>
+ * <li>
+ * Property {@code tokens} - tokens to check
+ * Type is {@code java.lang.String[]}.
+ * Validation type is {@code tokenSet}.
+ * Default value is:
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">
  * CLASS_DEF</a>,
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_CONSTANT_DEF">
@@ -104,11 +112,13 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
  * INTERFACE_DEF</a>,
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
- * ANNOTATION_DEF</a>.
+ * ANNOTATION_DEF</a>,
+ * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RECORD_DEF">
+ * RECORD_DEF</a>.
  * </li>
  * </ul>
  * <p>
- * To configure the check with defaults:
+ * To configure the default check:
  * </p>
  * <pre>
  * &lt;module name="MethodCount"/&gt;
@@ -131,6 +141,29 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  *   &lt;property name="maxTotal" value="40"/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code too.many.methods}
+ * </li>
+ * <li>
+ * {@code too.many.packageMethods}
+ * </li>
+ * <li>
+ * {@code too.many.privateMethods}
+ * </li>
+ * <li>
+ * {@code too.many.protectedMethods}
+ * </li>
+ * <li>
+ * {@code too.many.publicMethods}
+ * </li>
+ * </ul>
  *
  * @since 5.3
  */
@@ -198,6 +231,7 @@ public final class MethodCountCheck extends AbstractCheck {
             TokenTypes.INTERFACE_DEF,
             TokenTypes.ANNOTATION_DEF,
             TokenTypes.METHOD_DEF,
+            TokenTypes.RECORD_DEF,
         };
     }
 
@@ -230,6 +264,7 @@ public final class MethodCountCheck extends AbstractCheck {
     /**
      * Checks if there is a scope definition to check and that the method is found inside that scope
      * (class, enum, etc.).
+     *
      * @param methodDef
      *        The method to analyze.
      * @return {@code true} if the method is part of the latest scope definition and should be
@@ -249,6 +284,7 @@ public final class MethodCountCheck extends AbstractCheck {
 
     /**
      * Determine the visibility modifier and raise the corresponding counter.
+     *
      * @param method
      *            The method-subtree from the AbstractSyntaxTree.
      */
@@ -261,6 +297,7 @@ public final class MethodCountCheck extends AbstractCheck {
 
     /**
      * Check the counters and report violations.
+     *
      * @param counter the method counters to check
      * @param ast to report violations against.
      */
@@ -278,6 +315,7 @@ public final class MethodCountCheck extends AbstractCheck {
 
     /**
      * Utility for reporting if a maximum has been exceeded.
+     *
      * @param max the maximum allowed value
      * @param value the actual value
      * @param msg the message to log. Takes two arguments of value and maximum.
@@ -285,7 +323,7 @@ public final class MethodCountCheck extends AbstractCheck {
      */
     private void checkMax(int max, int value, String msg, DetailAST ast) {
         if (max < value) {
-            log(ast.getLineNo(), msg, value, max);
+            log(ast, msg, value, max);
         }
     }
 
@@ -355,6 +393,7 @@ public final class MethodCountCheck extends AbstractCheck {
 
         /**
          * Creates an interface.
+         *
          * @param scopeDefinition
          *        The surrounding scope definition (class, enum, etc.) which to count all methods
          *        for.
@@ -366,6 +405,7 @@ public final class MethodCountCheck extends AbstractCheck {
 
         /**
          * Increments to counter by one for the supplied scope.
+         *
          * @param scope the scope counter to increment.
          */
         private void increment(Scope scope) {
@@ -380,6 +420,7 @@ public final class MethodCountCheck extends AbstractCheck {
 
         /**
          * Gets the value of a scope counter.
+         *
          * @param scope the scope counter to get the value of
          * @return the value of a scope counter
          */
@@ -397,6 +438,7 @@ public final class MethodCountCheck extends AbstractCheck {
 
         /**
          * Fetches total number of methods.
+         *
          * @return the total number of methods.
          */
         private int getTotal() {

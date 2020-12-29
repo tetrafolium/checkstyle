@@ -43,34 +43,19 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * }
  * </pre>
  * <p>
- * This check processes LITERAL_CASE and LITERAL_DEFAULT separately.
- * So, if tokens=LITERAL_DEFAULT, following code will not trigger any violation,
- * as the empty block belongs to LITERAL_CASE:
+ * NOTE: This check processes LITERAL_CASE and LITERAL_DEFAULT separately.
+ * Verification empty block is done for single most nearest {@code case} or {@code default}.
  * </p>
- * <p>
- * Configuration:
- * </p>
- * <pre>
- * &lt;module name=&quot;EmptyBlock&quot;&gt;
- *   &lt;property name=&quot;tokens&quot; value=&quot;LITERAL_DEFAULT&quot;/&gt;
- * &lt;/module&gt;
- * </pre>
- * <p>
- * Result:
- * </p>
- * <pre>
- * switch (a) {
- *   default:        // no violation for "default:" as empty block belong to "case 1:"
- *   case 1: { }
- * }
- * </pre>
  * <ul>
  * <li>
  * Property {@code option} - specify the policy on block contents.
+ * Type is {@code com.puppycrawl.tools.checkstyle.checks.blocks.BlockOption}.
  * Default value is {@code statement}.
  * </li>
  * <li>
  * Property {@code tokens} - tokens to check
+ * Type is {@code java.lang.String[]}.
+ * Validation type is {@code tokenSet}.
  * Default value is:
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_WHILE">
  * LITERAL_WHILE</a>,
@@ -103,6 +88,23 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * &lt;module name="EmptyBlock"/&gt;
  * </pre>
  * <p>
+ * Example:
+ * </p>
+ * <pre>
+ * public class Test {
+ *   private void emptyLoop() {
+ *     for (int i = 0; i &lt; 10; i++) { // violation
+ *     }
+ *
+ *     try { // violation
+ *
+ *     } catch (Exception e) {
+ *       // ignored
+ *     }
+ *   }
+ * }
+ * </pre>
+ * <p>
  * To configure the check for the {@code text} policy and only {@code try} blocks:
  * </p>
  * <pre>
@@ -111,6 +113,60 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  *   &lt;property name=&quot;tokens&quot; value=&quot;LITERAL_TRY&quot;/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p> Example: </p>
+ * <pre>
+ * public class Test {
+ *   private void emptyLoop() {
+ *     for (int i = 0; i &lt; 10; i++) {
+ *       // ignored
+ *     }
+ *
+ *     // violation on next line
+ *     try {
+ *
+ *     } catch (Exception e) {
+ *       // ignored
+ *     }
+ *   }
+ * }
+ * </pre>
+ * <p>
+ * To configure the check for default in switch block:
+ * </p>
+ * <pre>
+ * &lt;module name=&quot;EmptyBlock&quot;&gt;
+ *   &lt;property name=&quot;tokens&quot; value=&quot;LITERAL_DEFAULT&quot;/&gt;
+ * &lt;/module&gt;
+ * </pre>
+ * <p> Example: </p>
+ * <pre>
+ * public class Test {
+ *   private void test(int a) {
+ *     switch (a) {
+ *       case 1: someMethod();
+ *       default: // OK, as there is no block
+ *     }
+ *     switch (a) {
+ *       case 1: someMethod();
+ *       default: {} // violation
+ *     }
+ *   }
+ * }
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code block.empty}
+ * </li>
+ * <li>
+ * {@code block.noStatement}
+ * </li>
+ * </ul>
  *
  * @since 3.0
  */
@@ -135,6 +191,7 @@ public class EmptyBlockCheck
 
     /**
      * Setter to specify the policy on block contents.
+     *
      * @param optionStr string to decode option from
      * @throws IllegalArgumentException if unable to decode
      */
@@ -192,7 +249,9 @@ public class EmptyBlockCheck
             if (option == BlockOption.STATEMENT) {
                 final boolean emptyBlock;
                 if (leftCurly.getType() == TokenTypes.LCURLY) {
-                    emptyBlock = leftCurly.getNextSibling().getType() != TokenTypes.CASE_GROUP;
+                    final DetailAST nextSibling = leftCurly.getNextSibling();
+                    emptyBlock = nextSibling.getType() != TokenTypes.CASE_GROUP
+                            && nextSibling.getType() != TokenTypes.SWITCH_RULE;
                 }
                 else {
                     emptyBlock = leftCurly.getChildCount() <= 1;
@@ -213,6 +272,7 @@ public class EmptyBlockCheck
 
     /**
      * Checks if SLIST token contains any text.
+     *
      * @param slistAST a {@code DetailAST} value
      * @return whether the SLIST token contains any text.
      */

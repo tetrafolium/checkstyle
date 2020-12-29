@@ -70,10 +70,13 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * <li>
  * Property {@code format} - Specify the RegExp to match against warnings. Any warning
  * being suppressed matching this pattern will be flagged.
+ * Type is {@code java.util.regex.Pattern}.
  * Default value is {@code "^\s*+$"}.
  * </li>
  * <li>
  * Property {@code tokens} - tokens to check
+ * Type is {@code java.lang.String[]}.
+ * Validation type is {@code tokenSet}.
  * Default value is:
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">
  * CLASS_DEF</a>,
@@ -94,7 +97,11 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
  * METHOD_DEF</a>,
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
- * CTOR_DEF</a>.
+ * CTOR_DEF</a>,
+ * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COMPACT_CTOR_DEF">
+ * COMPACT_CTOR_DEF</a>,
+ * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RECORD_DEF">
+ * RECORD_DEF</a>.
  * </li>
  * </ul>
  * <p>
@@ -119,6 +126,17 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  *     &quot;/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code suppressed.warning.not.allowed}
+ * </li>
+ * </ul>
  *
  * @since 5.0
  */
@@ -151,6 +169,7 @@ public class SuppressWarningsCheck extends AbstractCheck {
     /**
      * Setter to specify the RegExp to match against warnings. Any warning
      * being suppressed matching this pattern will be flagged.
+     *
      * @param pattern the new pattern
      */
     public final void setFormat(Pattern pattern) {
@@ -175,6 +194,8 @@ public class SuppressWarningsCheck extends AbstractCheck {
             TokenTypes.VARIABLE_DEF,
             TokenTypes.METHOD_DEF,
             TokenTypes.CTOR_DEF,
+            TokenTypes.COMPACT_CTOR_DEF,
+            TokenTypes.RECORD_DEF,
         };
     }
 

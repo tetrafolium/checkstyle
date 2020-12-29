@@ -10,27 +10,28 @@
             src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"/>
     <script type="text/javascript" src="js/anchors.js"/>
     <script type="text/javascript" src="js/google-analytics.js"/>
+    <script type="text/javascript" src="js/checkstyle.js"/>
     <link rel="icon" href="images/favicon.png" type="image/x-icon" />
     <link rel="shortcut icon" href="images/favicon.ico" type="image/ico" />
   </head>
 
   <body>
     <section name="Standard Checks">
-    <p>
-      The Standard Checkstyle Checks are applicable to general Java coding style
-      and require no external libraries. The standard checks are included in
-      the base distribution.
-    </p>
+      <p>
+        The Standard Checkstyle Checks are applicable to general Java coding style
+        and require no external libraries. The standard checks are included in
+        the base distribution.
+      </p>
 
-    <p>
-      The site navigation menu lets you browse the individual checks by functionality.
-    </p>
+      <p>
+        The site navigation menu lets you browse the individual checks by functionality.
+      </p>
 
-    <p>
-      Checkstyle provides many checks that you can apply to your
-      source code. Below is an alphabetical reference, the site
-      navigation menu provides a reference organized by functionality.
-    </p>
+      <p>
+        Checkstyle provides many checks that you can apply to your
+        source code. Below is an alphabetical reference, the site
+        navigation menu provides a reference organized by functionality.
+      </p>
       <div class="wrapper">
         <table>
           <tr>
@@ -75,7 +76,7 @@
             <td>Checks the order of javadoc block-tags or javadoc tags.</td>
           </tr>
           <tr>
-            <td><a href="config_misc.html#AvoidDoubleBraceInitialization">
+            <td><a href="config_coding.html#AvoidDoubleBraceInitialization">
               AvoidDoubleBraceInitialization</a></td>
             <td>Detects double brace initialization.</td>
           </tr>
@@ -121,16 +122,18 @@
           <tr>
             <td><a href="config_metrics.html#ClassDataAbstractionCoupling">
               ClassDataAbstractionCoupling</a></td>
-            <td>Measures the number of instantiations of other classes within the given class.</td>
+            <td>Measures the number of instantiations of other classes within the given class
+              or record.</td>
           </tr>
           <tr>
             <td><a href="config_metrics.html#ClassFanOutComplexity">ClassFanOutComplexity</a></td>
-            <td>Checks the number of other classes a given class relies on.</td>
+            <td>Checks the number of other types a given class/record/interface/enum/annotation
+              relies on.</td>
           </tr>
           <tr>
             <td><a href="config_modifier.html#ClassMemberImpliedModifier">
               ClassMemberImpliedModifier</a></td>
-            <td>Checks for implicit modifiers on nested types in classes.</td>
+            <td>Checks for implicit modifiers on nested types in classes and records.</td>
           </tr>
           <tr>
             <td><a href="config_naming.html#ClassTypeParameterName">ClassTypeParameterName</a></td>
@@ -149,7 +152,7 @@
           <tr>
             <td><a href="config_coding.html#CovariantEquals">CovariantEquals</a></td>
             <td>
-              Checks that classes which define a covariant <code>equals()</code>
+              Checks that classes and records which define a covariant <code>equals()</code>
               method also override method <code>equals(Object)</code>.
             </td>
           </tr>
@@ -167,7 +170,7 @@
           <tr>
             <td><a href="config_coding.html#DeclarationOrder">DeclarationOrder</a></td>
             <td>
-              Checks that the parts of a class or interface declaration
+              Checks that the parts of a class, record, or interface declaration
               appear in the order suggested by the <a
               href="styleguides/sun-code-conventions-19990420/CodeConventions.doc2.html#a1852"
               >Code Conventions for the Java Programming Language</a>.
@@ -309,6 +312,15 @@
             <td>Checks that certain exception types do not appear in a catch statement.</td>
           </tr>
           <tr>
+            <td>
+              <a href="config_naming.html#IllegalIdentifierName">IllegalIdentifierName</a>
+            </td>
+            <td>
+              Checks identifiers with a regular expression for a set of illegal names, such as those
+              that are restricted or contextual keywords.
+            </td>
+          </tr>
+          <tr>
             <td><a href="config_imports.html#IllegalImport">IllegalImport</a></td>
             <td>
             Checks for imports from a set of illegal packages.</td>
@@ -354,13 +366,15 @@
             <td><a href="config_coding.html#InnerAssignment">InnerAssignment</a></td>
             <td>
               Checks for assignments in subexpressions, such as in
-            <code>String s = Integer.toString(i = 2);</code>.</td>
+              <code>String s = Integer.toString(i = 2);</code>.
+            </td>
           </tr>
           <tr>
             <td><a href="config_design.html#InnerTypeLast">InnerTypeLast</a></td>
             <td>
               Checks nested (internal) classes/interfaces are declared at the bottom of the
-              primary (top-level) class after all method and field declarations.
+              primary (top-level) class after all init and static init blocks,
+              method, constructor and field declarations.
             </td>
           </tr>
           <tr>
@@ -405,6 +419,24 @@
             <td>Checks the Javadoc of a method or constructor.</td>
           </tr>
           <tr>
+            <td>
+              <a href="config_javadoc.html#JavadocMissingLeadingAsterisk">JavadocMissingLeadingAsterisk</a>
+            </td>
+            <td>
+              Checks if the javadoc has
+              <a href="https://docs.oracle.com/en/java/javase/14/docs/specs/javadoc/doc-comment-spec.html#leading-asterisks">
+                leading asterisks
+              </a>
+              on each line.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="config_javadoc.html#JavadocMissingWhitespaceAfterAsterisk">JavadocMissingWhitespaceAfterAsterisk</a>
+            </td>
+            <td>Checks that there is at least one whitespace after the leading asterisk.</td>
+          </tr>
+          <tr>
             <td><a href="config_javadoc.html#JavadocPackage">JavadocPackage</a></td>
             <td>Checks that each Java package has a Javadoc file used for commenting.</td>
           </tr>
@@ -419,11 +451,11 @@
           <tr>
             <td><a href="config_javadoc.html#JavadocTagContinuationIndentation">
               JavadocTagContinuationIndentation</a></td>
-            <td>Checks the indentation of the continuation lines in at-clauses.</td>
+            <td>Checks the indentation of the continuation lines in block tags.</td>
           </tr>
           <tr>
             <td><a href="config_javadoc.html#JavadocType">JavadocType</a></td>
-            <td>Checks the Javadoc comments for annotation/enum/class/interface definitions.</td>
+            <td>Checks the Javadoc comments for type definitions.</td>
           </tr>
           <tr>
             <td><a href="config_javadoc.html#JavadocVariable">JavadocVariable</a></td>
@@ -435,6 +467,10 @@
               Determines complexity of methods, classes and files by counting
               the Non Commenting Source Statements (NCSS).
             </td>
+          </tr>
+          <tr>
+            <td><a href="config_sizes.html#LambdaBodyLength">LambdaBodyLength</a></td>
+            <td>Checks lambda body length.</td>
           </tr>
           <tr>
             <td><a href="config_naming.html#LambdaParameterName">LambdaParameterName</a></td>
@@ -466,6 +502,10 @@
               Checks that there are no "magic numbers" where a magic number
               is a numeric literal that is not defined as a constant.
             </td>
+          </tr>
+          <tr>
+            <td><a href="config_coding.html#MatchXpath">MatchXpath</a></td>
+            <td>Evaluates Xpath query and report violation on all matching AST nodes.</td>
           </tr>
           <tr>
             <td><a href="config_naming.html#MemberName">MemberName</a></td>
@@ -605,6 +645,12 @@
             Object class.</td>
           </tr>
           <tr>
+            <td><a href="config_misc.html#NoCodeInFile">NoCodeInFile</a></td>
+            <td>
+              Checks whether file contains code.
+            </td>
+          </tr>
+          <tr>
             <td><a href="config_coding.html#NoFinalizer">NoFinalizer</a></td>
             <td>Checks that there is no method <code>finalize</code> with zero parameters.</td>
           </tr>
@@ -617,7 +663,7 @@
             <td><a href="config_javadoc.html#NonEmptyAtclauseDescription">
               NonEmptyAtclauseDescription</a></td>
             <td>
-            Checks that the at-clause tag is followed by description.</td>
+            Checks that the block tag is followed by description.</td>
           </tr>
           <tr>
             <td><a href="config_coding.html#NoEnumTrailingComma">NoEnumTrailingComma</a></td>
@@ -643,8 +689,8 @@
           </tr>
           <tr>
             <td><a href="config_design.html#OneTopLevelClass">OneTopLevelClass</a></td>
-            <td>Checks that each top-level class, interface or enum resides in a source file of
-                its own.</td>
+            <td>Checks that each top-level class, interface, enum or annotation resides in
+              a source file of its own.</td>
           </tr>
           <tr>
             <td><a href="config_whitespace.html#OperatorWrap">OperatorWrap</a></td>
@@ -668,7 +714,7 @@
           <tr>
             <td><a href="config_coding.html#OverloadMethodsDeclarationOrder">
               OverloadMethodsDeclarationOrder</a></td>
-            <td>Checks that overload methods are grouped together.</td>
+            <td>Checks that overloaded methods are grouped together.</td>
           </tr>
           <tr>
             <td><a href="config_annotation.html#PackageAnnotation">PackageAnnotation</a></td>
@@ -706,6 +752,24 @@
               Checks the policy on the padding of parentheses; that is whether a
               space is required after a left parenthesis and before a right
               parenthesis, or such spaces are forbidden.
+            </td>
+          </tr>
+          <tr>
+            <td><a href="config_naming.html#PatternVariableName">PatternVariableName</a></td>
+            <td>
+              Checks that pattern variable names conform to a specified pattern.
+            </td>
+          </tr>
+          <tr>
+            <td><a href="config_sizes.html#RecordComponentNumber">RecordComponentNumber</a></td>
+            <td>Checks the number of record components in the header of a record definition.</td>
+          </tr>
+          <tr>
+            <td>
+              <a href="config_naming.html#RecordTypeParameterName">RecordTypeParameterName</a>
+            </td>
+            <td>
+              Checks that record type parameter names conform to a specified pattern.
             </td>
           </tr>
           <tr>
@@ -785,7 +849,14 @@
             <td><a href="config_javadoc.html#SingleLineJavadoc">SingleLineJavadoc</a></td>
             <td>
               Checks that a Javadoc block can fit in a single line and doesn't contain
-              at-clauses.</td>
+              block tags.</td>
+          </tr>
+          <tr>
+            <td><a href="config_javadoc.html#RequireEmptyLineBeforeBlockTagGroup">
+              RequireEmptyLineBeforeBlockTagGroup</a></td>
+            <td>
+              Checks that one blank line before the block tag if it is present in Javadoc.
+            </td>
           </tr>
           <tr>
             <td><a href="config_whitespace.html#SingleSpaceSeparator">SingleSpaceSeparator</a></td>
@@ -800,9 +871,12 @@
               conform to a specified pattern.</td>
           </tr>
           <tr>
-            <td><a href="config_coding.html#StringLiteralEquality">StringLiteralEquality</a></td>
+            <td>
+              <a href="config_coding.html#StringLiteralEquality">StringLiteralEquality</a>
+            </td>
             <td>Checks that string literals are not used with
-            <code>==</code> or <code>&#33;=</code>.</td>
+              <code>==</code> or <code>&#33;=</code>.
+            </td>
           </tr>
           <tr>
             <td><a href="config_javadoc.html#SummaryJavadoc">SummaryJavadoc</a></td>
@@ -823,7 +897,7 @@
           <tr>
             <td><a href="config_annotation.html#SuppressWarnings">SuppressWarnings</a></td>
             <td>
-              Allows to specify what warnings that<code>@SuppressWarnings</code>
+              Allows to specify what warnings that <code>@SuppressWarnings</code>
               is not allowed to suppress.
             </td>
           </tr>
@@ -885,6 +959,11 @@
             <td>Checks if unnecessary semicolon is used in last resource declaration.</td>
           </tr>
           <tr>
+            <td><a href="config_coding.html#UnnecessarySemicolonAfterOuterTypeDeclaration">
+              UnnecessarySemicolonAfterOuterTypeDeclaration</a></td>
+            <td>Checks if unnecessary semicolon is used after type declaration.</td>
+          </tr>
+          <tr>
             <td><a href="config_coding.html#UnnecessarySemicolonAfterTypeMemberDeclaration">
               UnnecessarySemicolonAfterTypeMemberDeclaration</a></td>
             <td>Checks if unnecessary semicolon is used after type member declaration.</td>
@@ -930,10 +1009,10 @@
     </section>
 
     <section name="Holder Checks">
-    <p>
-      These checks aren't normal checks and are usually associated with a specialized filter
-      to gather information the filter can't get on it's own.
-    </p>
+      <p>
+        These checks aren't normal checks and are usually associated with a specialized filter
+        to gather information the filter can't get on it's own.
+      </p>
 
       <div class="wrapper">
         <table>

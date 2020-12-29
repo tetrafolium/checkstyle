@@ -22,12 +22,14 @@ package com.puppycrawl.tools.checkstyle.checks.javadoc;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.Scope;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 /**
  * This enum defines the various Javadoc tags and there properties.
@@ -39,7 +41,7 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  *
  * and
  *
- * <a href="https://www.oracle.com/technetwork/java/javase/documentation/index-137868.html">
+ * <a href="https://www.oracle.com/technical-resources/articles/java/javadoc-tool.html">
  * how to write</a>.
  * </p>
  *
@@ -75,10 +77,7 @@ public enum JavadocTagInfo {
         public boolean isValidOn(final DetailAST ast) {
             final int astType = ast.getType();
             return astType == TokenTypes.PACKAGE_DEF
-                || astType == TokenTypes.CLASS_DEF
-                || astType == TokenTypes.INTERFACE_DEF
-                || astType == TokenTypes.ENUM_DEF
-                || astType == TokenTypes.ANNOTATION_DEF;
+                || TokenUtil.isTypeDeclaration(astType);
         }
 
     },
@@ -349,10 +348,7 @@ public enum JavadocTagInfo {
         public boolean isValidOn(final DetailAST ast) {
             final int astType = ast.getType();
             return astType == TokenTypes.PACKAGE_DEF
-                || astType == TokenTypes.CLASS_DEF
-                || astType == TokenTypes.INTERFACE_DEF
-                || astType == TokenTypes.ENUM_DEF
-                || astType == TokenTypes.ANNOTATION_DEF;
+                || TokenUtil.isTypeDeclaration(astType);
         }
 
     };
@@ -388,10 +384,10 @@ public enum JavadocTagInfo {
     private static final Map<String, JavadocTagInfo> NAME_TO_TAG;
 
     static {
-        TEXT_TO_TAG = Collections.unmodifiableMap(Arrays.stream(JavadocTagInfo.values())
-            .collect(Collectors.toMap(JavadocTagInfo::getText, tagText -> tagText)));
-        NAME_TO_TAG = Collections.unmodifiableMap(Arrays.stream(JavadocTagInfo.values())
-            .collect(Collectors.toMap(JavadocTagInfo::getName, tagName -> tagName)));
+        TEXT_TO_TAG = Collections.unmodifiableMap(Arrays.stream(values())
+            .collect(Collectors.toMap(JavadocTagInfo::getText, Function.identity())));
+        NAME_TO_TAG = Collections.unmodifiableMap(Arrays.stream(values())
+            .collect(Collectors.toMap(JavadocTagInfo::getName, Function.identity())));
 
         // Arrays sorting for binary search
         Arrays.sort(DEF_TOKEN_TYPES);
@@ -437,6 +433,7 @@ public enum JavadocTagInfo {
 
     /**
      * Gets the tag text.
+     *
      * @return the tag text
      */
     public String getText() {
@@ -445,6 +442,7 @@ public enum JavadocTagInfo {
 
     /**
      * Gets the tag name.
+     *
      * @return the tag name
      */
     public String getName() {
@@ -453,6 +451,7 @@ public enum JavadocTagInfo {
 
     /**
      * Gets the Tag type defined by {@link Type Type}.
+     *
      * @return the Tag type
      */
     public Type getType() {
@@ -461,6 +460,7 @@ public enum JavadocTagInfo {
 
     /**
      * Returns a JavadocTag from the tag text.
+     *
      * @param text String representing the tag text
      * @return Returns a JavadocTag type from a String representing the tag
      * @throws NullPointerException if the text is null
@@ -483,6 +483,7 @@ public enum JavadocTagInfo {
 
     /**
      * Returns a JavadocTag from the tag name.
+     *
      * @param name String name of the tag
      * @return Returns a JavadocTag type from a String representing the tag
      * @throws NullPointerException if the text is null
@@ -506,6 +507,7 @@ public enum JavadocTagInfo {
 
     /**
      * Returns whether the provided name is for a valid tag.
+     *
      * @param name the tag name to check.
      * @return whether the provided name is for a valid tag.
      */

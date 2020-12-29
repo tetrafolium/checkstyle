@@ -40,7 +40,8 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  * <ul>
  * <li>
  * Property {@code tokens} - tokens to check
- * Default value is:
+ * Type is {@code anyTokenTypesSet}.
+ * Default value is
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LABELED_STAT">
  * LABELED_STAT</a>.
  * </li>
@@ -51,14 +52,40 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  * <pre>
  * &lt;module name=&quot;IllegalToken&quot;/&gt;
  * </pre>
+ * <p>Example:</p>
+ * <pre>
+ * public void myTest() {
+ *     outer: // violation
+ *     for (int i = 0; i &lt; 5; i++) {
+ *         if (i == 1) {
+ *             break outer;
+ *         }
+ *     }
+ * }
+ * </pre>
  * <p>
- * To configure the check to find token LITERAL_NATIVE:
+ * To configure the check to report violation on token LITERAL_NATIVE:
  * </p>
  * <pre>
  * &lt;module name=&quot;IllegalToken&quot;&gt;
  *   &lt;property name=&quot;tokens&quot; value=&quot;LITERAL_NATIVE&quot;/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>Example:</p>
+ * <pre>
+ * public native void myTest(); // violation
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code illegal.token}
+ * </li>
+ * </ul>
  *
  * @since 3.2
  */
@@ -105,6 +132,7 @@ public class IllegalTokenCheck
 
     /**
      * Converts given AST node to string representation.
+     *
      * @param ast node to be represented as string
      * @return string representation of AST node
      */

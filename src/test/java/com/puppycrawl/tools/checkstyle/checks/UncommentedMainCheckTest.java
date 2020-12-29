@@ -48,10 +48,10 @@ public class UncommentedMainCheckTest
         final DefaultConfiguration checkConfig =
             createModuleConfig(UncommentedMainCheck.class);
         final String[] expected = {
-            "14: " + getCheckMessage(MSG_KEY),
-            "23: " + getCheckMessage(MSG_KEY),
-            "32: " + getCheckMessage(MSG_KEY),
-            "96: " + getCheckMessage(MSG_KEY),
+            "14:5: " + getCheckMessage(MSG_KEY),
+            "23:5: " + getCheckMessage(MSG_KEY),
+            "32:5: " + getCheckMessage(MSG_KEY),
+            "96:5: " + getCheckMessage(MSG_KEY),
         };
         verify(checkConfig, getPath("InputUncommentedMain.java"), expected);
     }
@@ -63,9 +63,9 @@ public class UncommentedMainCheckTest
             createModuleConfig(UncommentedMainCheck.class);
         checkConfig.addAttribute("excludedClasses", "\\.Main.*$");
         final String[] expected = {
-            "14: " + getCheckMessage(MSG_KEY),
-            "32: " + getCheckMessage(MSG_KEY),
-            "96: " + getCheckMessage(MSG_KEY),
+            "14:5: " + getCheckMessage(MSG_KEY),
+            "32:5: " + getCheckMessage(MSG_KEY),
+            "96:5: " + getCheckMessage(MSG_KEY),
         };
         verify(checkConfig, getPath("InputUncommentedMain.java"), expected);
     }
@@ -93,7 +93,7 @@ public class UncommentedMainCheckTest
         final DefaultConfiguration checkConfig = createModuleConfig(UncommentedMainCheck.class);
         checkConfig.addAttribute("excludedClasses", "uncommentedmain\\.InputUncommentedMain5");
         final String[] expected = {
-            "14: " + getCheckMessage(MSG_KEY),
+            "14:5: " + getCheckMessage(MSG_KEY),
         };
         verify(checkConfig, getPath("InputUncommentedMain5.java"), expected);
     }
@@ -124,6 +124,21 @@ public class UncommentedMainCheckTest
         catch (IllegalStateException ex) {
             assertEquals(ast.toString(), ex.getMessage(), "Error message is unexpected");
         }
+    }
+
+    @Test
+    public void testRecords()
+            throws Exception {
+        final DefaultConfiguration checkConfig = createModuleConfig(UncommentedMainCheck.class);
+
+        final String[] expected = {
+            "9:5: " + getCheckMessage(MSG_KEY),
+            "17:9: " + getCheckMessage(MSG_KEY),
+            "22:13: " + getCheckMessage(MSG_KEY),
+        };
+
+        verify(checkConfig, getNonCompilablePath(
+                "InputUncommentedMainRecords.java"), expected);
     }
 
 }

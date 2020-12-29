@@ -31,6 +31,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * <ul>
  * <li>
  * Property {@code max} - Specify maximum allowed nesting depth.
+ * Type is {@code int}.
  * Default value is {@code 1}.
  * </li>
  * </ul>
@@ -40,14 +41,57 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * <pre>
  * &lt;module name=&quot;NestedForDepth&quot;/&gt;
  * </pre>
+ * <p>Example:</p>
+ * <pre>
+ * for(int i=0; i&lt;10; i++) {
+ *   for(int j=0; j&lt;i; j++) {
+ *     for(int k=0; k&lt;j; k++) { // violation, max allowed nested loop number is 1
+ *     }
+ *   }
+ * }
+ *
+ * for(int i=0; i&lt;10; i++) {
+ *   for(int j=0; j&lt;i; j++) { // ok
+ *   }
+ * }
+ * </pre>
  * <p>
- * To configure the check to allow nesting depth 3:
+ * To configure the check to allow nesting depth 2:
  * </p>
  * <pre>
  * &lt;module name=&quot;NestedForDepth&quot;&gt;
- *   &lt;property name=&quot;max&quot; value=&quot;3&quot;/&gt;
+ *   &lt;property name=&quot;max&quot; value=&quot;2&quot;/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>Example:</p>
+ * <pre>
+ * for(int i=0; i&lt;10; i++) {
+ *   for(int j=0; j&lt;i; j++) {
+ *     for(int k=0; k&lt;j; k++) {
+ *       for(int l=0; l&lt;k; l++) { // violation, max allowed nested loop number is 2
+ *       }
+ *     }
+ *    }
+ * }
+ *
+ * for(int i=0; i&lt;10; i++) {
+ *   for(int j=0; j&lt;i; j++) {
+ *     for(int k=0; k&lt;j; k++) { // ok
+ *     }
+ *   }
+ * }
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code nested.for.depth}
+ * </li>
+ * </ul>
  *
  * @since 5.3
  */
@@ -67,6 +111,7 @@ public final class NestedForDepthCheck extends AbstractCheck {
 
     /**
      * Setter to specify maximum allowed nesting depth.
+     *
      * @param max maximum allowed nesting depth.
      */
     public void setMax(int max) {

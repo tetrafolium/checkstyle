@@ -30,6 +30,7 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.CheckUtil;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 /**
  * <p>
@@ -46,10 +47,14 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * <ul>
  * <li>
  * Property {@code ignorePrimitiveTypes} - Ignore primitive types as parameters.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * <li>
- * Property {@code tokens} - tokens to check Default value is:
+ * Property {@code tokens} - tokens to check
+ * Type is {@code java.lang.String[]}.
+ * Validation type is {@code tokenSet}.
+ * Default value is:
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
  * METHOD_DEF</a>,
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
@@ -80,6 +85,17 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  *   &lt;property name=&quot;ignorePrimitiveTypes&quot; value=&quot;true&quot;/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code final.parameter}
+ * </li>
+ * </ul>
  *
  * @since 3.0
  */
@@ -116,6 +132,7 @@ public class FinalParametersCheck extends AbstractCheck {
 
     /**
      * Setter to ignore primitive types as parameters.
+     *
      * @param ignorePrimitiveTypes true or false.
      */
     public void setIgnorePrimitiveTypes(boolean ignorePrimitiveTypes) {
@@ -164,6 +181,7 @@ public class FinalParametersCheck extends AbstractCheck {
 
     /**
      * Checks parameters of the method or ctor.
+     *
      * @param method method or ctor to check.
      */
     private void visitMethod(final DetailAST method) {
@@ -175,19 +193,13 @@ public class FinalParametersCheck extends AbstractCheck {
                 && modifiers.findFirstToken(TokenTypes.LITERAL_NATIVE) == null) {
             final DetailAST parameters =
                 method.findFirstToken(TokenTypes.PARAMETERS);
-            DetailAST child = parameters.getFirstChild();
-            while (child != null) {
-                // children are PARAMETER_DEF and COMMA
-                if (child.getType() == TokenTypes.PARAMETER_DEF) {
-                    checkParam(child);
-                }
-                child = child.getNextSibling();
-            }
+            TokenUtil.forEachChild(parameters, TokenTypes.PARAMETER_DEF, this::checkParam);
         }
     }
 
     /**
      * Checks parameter of the catch block.
+     *
      * @param catchClause catch block to check.
      */
     private void visitCatch(final DetailAST catchClause) {
@@ -196,6 +208,7 @@ public class FinalParametersCheck extends AbstractCheck {
 
     /**
      * Checks parameter of the for each clause.
+     *
      * @param forEachClause for each clause to check.
      */
     private void visitForEachClause(final DetailAST forEachClause) {
@@ -204,6 +217,7 @@ public class FinalParametersCheck extends AbstractCheck {
 
     /**
      * Checks if the given parameter is final.
+     *
      * @param param parameter to check.
      */
     private void checkParam(final DetailAST param) {
@@ -219,6 +233,7 @@ public class FinalParametersCheck extends AbstractCheck {
 
     /**
      * Checks for skip current param due to <b>ignorePrimitiveTypes</b> option.
+     *
      * @param paramDef {@link TokenTypes#PARAMETER_DEF PARAMETER_DEF}
      * @return true if param has to be skipped.
      */

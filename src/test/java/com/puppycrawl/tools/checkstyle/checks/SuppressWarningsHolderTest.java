@@ -48,6 +48,7 @@ import com.puppycrawl.tools.checkstyle.api.Configuration;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.LocalizedMessage;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.checks.naming.AbstractNameCheck;
 import com.puppycrawl.tools.checkstyle.checks.naming.MemberNameCheck;
 import com.puppycrawl.tools.checkstyle.checks.whitespace.AbstractParenPadCheck;
 import com.puppycrawl.tools.checkstyle.checks.whitespace.TypecastParenPadCheck;
@@ -222,6 +223,14 @@ public class SuppressWarningsHolderTest extends AbstractModuleTestSupport {
     }
 
     @Test
+    public void testIsSuppressedAfterEventStart2() throws Exception {
+        populateHolder("check", 100, 100, 350, 350);
+        final AuditEvent event = createAuditEvent("check", 100, 0);
+
+        assertTrue(SuppressWarningsHolder.isSuppressed(event), "Event is not suppressed");
+    }
+
+    @Test
     public void testIsSuppressedWithAllArgument() throws Exception {
         populateHolder("all", 100, 100, 350, 350);
 
@@ -251,9 +260,7 @@ public class SuppressWarningsHolderTest extends AbstractModuleTestSupport {
     public void testAnnotationInTry() throws Exception {
         final Configuration checkConfig = createModuleConfig(SuppressWarningsHolder.class);
 
-        final String[] expected = {
-            "11: " + getCheckMessage(SuppressWarningsHolder.MSG_KEY),
-        };
+        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
 
         verify(checkConfig, getPath("InputSuppressWarningsHolder2.java"), expected);
     }
@@ -380,6 +387,15 @@ public class SuppressWarningsHolderTest extends AbstractModuleTestSupport {
     }
 
     @Test
+    public void testSuppressWarningsAsAnnotationProperty() throws Exception {
+        final Configuration checkConfig = createModuleConfig(SuppressWarningsHolder.class);
+
+        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
+
+        verify(checkConfig, getPath("InputSuppressWarningsHolder7.java"), expected);
+    }
+
+    @Test
     @SuppressWarnings("unchecked")
     public void testClearState() throws Exception {
         final SuppressWarningsHolder check = new SuppressWarningsHolder();
@@ -420,6 +436,34 @@ public class SuppressWarningsHolderTest extends AbstractModuleTestSupport {
         final LocalizedMessage message = new LocalizedMessage(line, column, null, null, null,
                 moduleId, MemberNameCheck.class, "message");
         return new AuditEvent(source, "filename", message);
+    }
+
+    @Test
+    public void testSuppressWarningsTextBlocks() throws Exception {
+        final Configuration checkConfig = createModuleConfig(SuppressWarningsHolder.class);
+        final DefaultConfiguration treeWalker = createModuleConfig(TreeWalker.class);
+        final Configuration filter = createModuleConfig(SuppressWarningsFilter.class);
+        final DefaultConfiguration violationCheck = createModuleConfig(MemberNameCheck.class);
+
+        treeWalker.addChild(checkConfig);
+        treeWalker.addChild(violationCheck);
+
+        final DefaultConfiguration root = createRootConfig(treeWalker);
+        root.addChild(filter);
+
+        final String pattern = "^[a-z][a-zA-Z0-9]*$";
+
+        final String[] expected = {
+            "15:12: " + getCheckMessage(MemberNameCheck.class,
+                AbstractNameCheck.MSG_INVALID_PATTERN, "STRING3", pattern),
+            "17:12: " + getCheckMessage(MemberNameCheck.class,
+                AbstractNameCheck.MSG_INVALID_PATTERN, "STRING4", pattern),
+            "46:12: " + getCheckMessage(MemberNameCheck.class,
+                AbstractNameCheck.MSG_INVALID_PATTERN, "STRING8", pattern),
+            };
+
+        verify(root,
+            getNonCompilablePath("InputSuppressWarningsHolderTextBlocks.java"), expected);
     }
 
 }

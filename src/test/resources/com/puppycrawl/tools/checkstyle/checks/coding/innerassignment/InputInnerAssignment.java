@@ -49,7 +49,7 @@ public class InputInnerAssignment
     public static void demoInputStreamIdiom(java.io.InputStream is) throws java.io.IOException
     {
         int b;
-        while ((b = is.read()) != -1) // common idiom to avoid clumsy loop control logic, don't flag (make configurable later)
+        while ((b = is.read()) != -1) // common idiom to avoid clumsy loop control logic don't flag
         {
             // work with b
         }
@@ -128,5 +128,50 @@ public class InputInnerAssignment
         while (line < 3 || (line = file.read()) != null) {}
         while (line < 3 & (line = file.read()) != null) {}
         while (line < 3 | (line = file.read()) != null) {}
+
+        do{}
+        while (!((line = file.read()) != null));
+        do{}
+        while ((line = file.read()) != null && line < 3);
+        do{}
+        while ((line = file.read()) != null && line < 3 && line > 5);
+        do{}
+        while ((line = file.read()) != null || line < 3);
+        do{}
+        while ((line = file.read()) != null || line < 3 || line > 5);
+        do{}
+        while ((line = file.read()) != null & line < 3);
+        do{}
+        while ((line = file.read()) != null & line < 3 & line > 5);
+        do{}
+        while ((line = file.read()) != null | line < 3);
+        do{}
+        while ((line = file.read()) != null | line < 3 | line > 5);
+        do{}
+        while (line < 3 && (line = file.read()) != null);
+        do{}
+        while (line < 3 || (line = file.read()) != null);
+        do{}
+        while (line < 3 & (line = file.read()) != null);
+        do{}
+        while (line < 3 | (line = file.read()) != null);
+
+        for (;!((line = file.read()) != null);) {}
+        for (;(line = file.read()) != null && line < 3;) {}
+        for (;(line = file.read()) != null && line < 3 && line > 5;) {}
+        for (;(line = file.read()) != null || line < 3;) {}
+        for (;(line = file.read()) != null || line < 3 || line > 5;) {}
+        for (;(line = file.read()) != null & line < 3;) {}
+        for (;(line = file.read()) != null & line < 3 & line > 5;) {}
+        for (;(line = file.read()) != null | line < 3;) {}
+        for (;(line = file.read()) != null | line < 3 | line > 5;) {}
+        for (;line < 3 && (line = file.read()) != null;) {}
+        for (;line < 3 || (line = file.read()) != null;) {}
+        for (;line < 3 & (line = file.read()) != null;) {}
+        for (;line < 3 | (line = file.read()) != null;) {}
+
+        String str1 = "";
+        String str2 = "cd";
+        for (;;(str1 = "ab").concat(str2)) {} // violation
     }
 }

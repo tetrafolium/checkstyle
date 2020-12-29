@@ -115,6 +115,7 @@ public class PackageObjectFactory implements ModuleFactory {
 
     /**
      * Creates a new {@code PackageObjectFactory} instance.
+     *
      * @param packageNames the list of package names to use
      * @param moduleClassLoader class loader used to load Checkstyle
      *          core and custom modules
@@ -125,6 +126,7 @@ public class PackageObjectFactory implements ModuleFactory {
 
     /**
      * Creates a new {@code PackageObjectFactory} instance.
+     *
      * @param packageNames the list of package names to use
      * @param moduleClassLoader class loader used to load Checkstyle
      *          core and custom modules
@@ -148,6 +150,7 @@ public class PackageObjectFactory implements ModuleFactory {
 
     /**
      * Creates a new {@code PackageObjectFactory} instance.
+     *
      * @param packageName The package name to use
      * @param moduleClassLoader class loader used to load Checkstyle
      *          core and custom modules
@@ -171,6 +174,7 @@ public class PackageObjectFactory implements ModuleFactory {
      * a class name, creates an instance of the named class. Otherwise, creates
      * an instance of a class name obtained by concatenating the given name
      * to a package name from a given list of package names.
+     *
      * @param name the name of a class.
      * @return the {@code Object} created by loader.
      * @throws CheckstyleException if an error occurs.
@@ -215,6 +219,7 @@ public class PackageObjectFactory implements ModuleFactory {
 
     /**
      * Create object from one of Checkstyle module names.
+     *
      * @param name name of module.
      * @return instance of module.
      * @throws CheckstyleException if the class fails to instantiate or there are ambiguous classes.
@@ -237,6 +242,7 @@ public class PackageObjectFactory implements ModuleFactory {
 
     /**
      * Create object with the help of the supplied map.
+     *
      * @param name name of module.
      * @param map the supplied map.
      * @return instance of module if it is found in modules map and no ambiguous classes exist.
@@ -262,6 +268,7 @@ public class PackageObjectFactory implements ModuleFactory {
      * Create Object from optional full module names.
      * In most case, there should be only one element in {@code fullModuleName}, otherwise
      * an exception would be thrown.
+     *
      * @param name name of module
      * @param fullModuleNames the supplied full module names set
      * @return instance of module if there is only one element in {@code fullModuleName}
@@ -289,6 +296,7 @@ public class PackageObjectFactory implements ModuleFactory {
     /**
      * Generate the map of third party Checkstyle module names to the set of their fully qualified
      * names.
+     *
      * @param loader the class loader used to load Checkstyle package names
      * @return the map of third party Checkstyle module names to the set of their fully qualified
      *      names
@@ -308,6 +316,7 @@ public class PackageObjectFactory implements ModuleFactory {
 
     /**
      * Returns simple check name from full modules names map.
+     *
      * @param fullName name of the class for joining.
      * @return simple check name.
      */
@@ -323,6 +332,7 @@ public class PackageObjectFactory implements ModuleFactory {
 
     /**
      * Creates a string by joining package names with a class name.
+     *
      * @param className name of the class for joining.
      * @param packages packages names.
      * @return a string which is obtained by joining package names with a class name.
@@ -335,6 +345,7 @@ public class PackageObjectFactory implements ModuleFactory {
 
     /**
      * Creates a new instance of a named class.
+     *
      * @param className the name of the class to instantiate.
      * @return the {@code Object} created by loader or null.
      * @throws CheckstyleException if the class fails to instantiate.
@@ -366,6 +377,7 @@ public class PackageObjectFactory implements ModuleFactory {
     /**
      * Searching to class with given name (or name concatenated with &quot;Check&quot;) in existing
      * packages. Returns instance if class found or, otherwise, null.
+     *
      * @param name the name of a class.
      * @return the {@code Object} created by loader.
      * @throws CheckstyleException if an error occurs.
@@ -543,6 +555,9 @@ public class PackageObjectFactory implements ModuleFactory {
                 BASE_PACKAGE + ".checks.coding.SuperFinalizeCheck");
         NAME_TO_FULL_MODULE_NAME.put("UnnecessaryParenthesesCheck",
                 BASE_PACKAGE + ".checks.coding.UnnecessaryParenthesesCheck");
+        NAME_TO_FULL_MODULE_NAME.put("UnnecessarySemicolonAfterOuterTypeDeclarationCheck",
+                BASE_PACKAGE
+                        + ".checks.coding.UnnecessarySemicolonAfterOuterTypeDeclarationCheck");
         NAME_TO_FULL_MODULE_NAME.put("UnnecessarySemicolonAfterTypeMemberDeclarationCheck",
                 BASE_PACKAGE
                     + ".checks.coding.UnnecessarySemicolonAfterTypeMemberDeclarationCheck");
@@ -554,6 +569,8 @@ public class PackageObjectFactory implements ModuleFactory {
                 BASE_PACKAGE + ".checks.coding.VariableDeclarationUsageDistanceCheck");
         NAME_TO_FULL_MODULE_NAME.put("NoArrayTrailingCommaCheck",
                 BASE_PACKAGE + ".checks.coding.NoArrayTrailingCommaCheck");
+        NAME_TO_FULL_MODULE_NAME.put("MatchXpathCheck",
+                BASE_PACKAGE + ".checks.coding.MatchXpathCheck");
     }
 
     /**
@@ -636,6 +653,10 @@ public class PackageObjectFactory implements ModuleFactory {
                 BASE_PACKAGE + ".checks.javadoc.JavadocContentLocationCheck");
         NAME_TO_FULL_MODULE_NAME.put("JavadocMethodCheck",
                 BASE_PACKAGE + ".checks.javadoc.JavadocMethodCheck");
+        NAME_TO_FULL_MODULE_NAME.put("JavadocMissingLeadingAsteriskCheck",
+                BASE_PACKAGE + ".checks.javadoc.JavadocMissingLeadingAsteriskCheck");
+        NAME_TO_FULL_MODULE_NAME.put("JavadocMissingWhitespaceAfterAsteriskCheck",
+                BASE_PACKAGE + ".checks.javadoc.JavadocMissingWhitespaceAfterAsteriskCheck");
         NAME_TO_FULL_MODULE_NAME.put("JavadocPackageCheck",
                 BASE_PACKAGE + ".checks.javadoc.JavadocPackageCheck");
         NAME_TO_FULL_MODULE_NAME.put("JavadocParagraphCheck",
@@ -656,6 +677,8 @@ public class PackageObjectFactory implements ModuleFactory {
                 BASE_PACKAGE + ".checks.javadoc.MissingJavadocTypeCheck");
         NAME_TO_FULL_MODULE_NAME.put("NonEmptyAtclauseDescriptionCheck",
                 BASE_PACKAGE + ".checks.javadoc.NonEmptyAtclauseDescriptionCheck");
+        NAME_TO_FULL_MODULE_NAME.put("RequireEmptyLineBeforeBlockTagGroupCheck",
+                BASE_PACKAGE + ".checks.javadoc.RequireEmptyLineBeforeBlockTagGroupCheck");
         NAME_TO_FULL_MODULE_NAME.put("SingleLineJavadocCheck",
                 BASE_PACKAGE + ".checks.javadoc.SingleLineJavadocCheck");
         NAME_TO_FULL_MODULE_NAME.put("SummaryJavadocCheck",
@@ -708,6 +731,8 @@ public class PackageObjectFactory implements ModuleFactory {
                 BASE_PACKAGE + ".checks.naming.CatchParameterNameCheck");
         NAME_TO_FULL_MODULE_NAME.put("ClassTypeParameterNameCheck",
                 BASE_PACKAGE + ".checks.naming.ClassTypeParameterNameCheck");
+        NAME_TO_FULL_MODULE_NAME.put("RecordTypeParameterNameCheck",
+                BASE_PACKAGE + ".checks.naming.RecordTypeParameterNameCheck");
         NAME_TO_FULL_MODULE_NAME.put("ConstantNameCheck",
                 BASE_PACKAGE + ".checks.naming.ConstantNameCheck");
         NAME_TO_FULL_MODULE_NAME.put("InterfaceTypeParameterNameCheck",
@@ -732,6 +757,10 @@ public class PackageObjectFactory implements ModuleFactory {
                 BASE_PACKAGE + ".checks.naming.StaticVariableNameCheck");
         NAME_TO_FULL_MODULE_NAME.put("TypeNameCheck",
                 BASE_PACKAGE + ".checks.naming.TypeNameCheck");
+        NAME_TO_FULL_MODULE_NAME.put("PatternVariableNameCheck",
+                BASE_PACKAGE + ".checks.naming.PatternVariableNameCheck");
+        NAME_TO_FULL_MODULE_NAME.put("IllegalIdentifierNameCheck",
+            BASE_PACKAGE + ".checks.naming.IllegalIdentifierNameCheck");
     }
 
     /**
@@ -760,6 +789,8 @@ public class PackageObjectFactory implements ModuleFactory {
                 BASE_PACKAGE + ".checks.sizes.ExecutableStatementCountCheck");
         NAME_TO_FULL_MODULE_NAME.put("FileLengthCheck",
                 BASE_PACKAGE + ".checks.sizes.FileLengthCheck");
+        NAME_TO_FULL_MODULE_NAME.put("LambdaBodyLengthCheck",
+                BASE_PACKAGE + ".checks.sizes.LambdaBodyLengthCheck");
         NAME_TO_FULL_MODULE_NAME.put("LineLengthCheck",
                 BASE_PACKAGE + ".checks.sizes.LineLengthCheck");
         NAME_TO_FULL_MODULE_NAME.put("MethodCountCheck",
@@ -770,6 +801,8 @@ public class PackageObjectFactory implements ModuleFactory {
                 BASE_PACKAGE + ".checks.sizes.OuterTypeNumberCheck");
         NAME_TO_FULL_MODULE_NAME.put("ParameterNumberCheck",
                 BASE_PACKAGE + ".checks.sizes.ParameterNumberCheck");
+        NAME_TO_FULL_MODULE_NAME.put("RecordComponentNumberCheck",
+                BASE_PACKAGE + ".checks.sizes.RecordComponentNumberCheck");
     }
 
     /**
@@ -824,6 +857,8 @@ public class PackageObjectFactory implements ModuleFactory {
                 BASE_PACKAGE + ".checks.FinalParametersCheck");
         NAME_TO_FULL_MODULE_NAME.put("NewlineAtEndOfFileCheck",
                 BASE_PACKAGE + ".checks.NewlineAtEndOfFileCheck");
+        NAME_TO_FULL_MODULE_NAME.put("NoCodeInFileCheck",
+                BASE_PACKAGE + ".checks.NoCodeInFileCheck");
         NAME_TO_FULL_MODULE_NAME.put("OuterTypeFilenameCheck",
                 BASE_PACKAGE + ".checks.OuterTypeFilenameCheck");
         NAME_TO_FULL_MODULE_NAME.put("OrderedPropertiesCheck",

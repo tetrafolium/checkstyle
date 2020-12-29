@@ -47,11 +47,13 @@ import com.puppycrawl.tools.checkstyle.api.FileText;
  * <li>
  * Property {@code eachLine} - Control whether to report on each line containing a tab,
  * or just the first instance.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * <li>
  * Property {@code fileExtensions} - Specify file type extension of files to process.
- * Default value is {@code all files}.
+ * Type is {@code java.lang.String[]}.
+ * Default value is {@code ""}.
  * </li>
  * </ul>
  * <p>
@@ -68,6 +70,20 @@ import com.puppycrawl.tools.checkstyle.api.FileText;
  *   &lt;property name=&quot;eachLine&quot; value=&quot;true&quot;/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.Checker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code containsTab}
+ * </li>
+ * <li>
+ * {@code file.containsTab}
+ * </li>
+ * </ul>
  *
  * @since 5.0
  */
@@ -111,6 +127,7 @@ public class FileTabCharacterCheck extends AbstractFileSetCheck {
     /**
      * Setter to control whether to report on each line containing a tab, or just the first
      * instance.
+     *
      * @param eachLine Whether report on each line containing a tab.
      */
     public void setEachLine(boolean eachLine) {

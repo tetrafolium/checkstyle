@@ -28,27 +28,35 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * </p>
  * <ul>
  * <li>
- * Property {@code format} - Specifies valid identifiers. Default value is
- * {@code "^[A-Z][a-zA-Z0-9]*$"}.
+ * Property {@code format} - Specifies valid identifiers.
+ * Type is {@code java.util.regex.Pattern}.
+ * Default value is {@code "^[A-Z][a-zA-Z0-9]*$"}.
  * </li>
  * <li>
  * Property {@code applyToPublic} - Controls whether to apply the check to public member.
+ * Type is {@code boolean}.
  * Default value is {@code true}.
  * </li>
  * <li>
  * Property {@code applyToProtected} - Controls whether to apply the check to protected member.
+ * Type is {@code boolean}.
  * Default value is {@code true}.
  * </li>
  * <li>
  * Property {@code applyToPackage} - Controls whether to apply the check to package-private member.
+ * Type is {@code boolean}.
  * Default value is {@code true}.
  * </li>
  * <li>
  * Property {@code applyToPrivate} - Controls whether to apply the check to private member.
+ * Type is {@code boolean}.
  * Default value is {@code true}.
  * </li>
  * <li>
- * Property {@code tokens} - tokens to check Default value is:
+ * Property {@code tokens} - tokens to check
+ * Type is {@code java.lang.String[]}.
+ * Validation type is {@code tokenSet}.
+ * Default value is:
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">
  * CLASS_DEF</a>,
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
@@ -56,11 +64,13 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">
  * ENUM_DEF</a>,
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_DEF">
- * ANNOTATION_DEF</a>.
+ * ANNOTATION_DEF</a>,
+ * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RECORD_DEF">
+ * RECORD_DEF</a>.
  * </li>
  * </ul>
  * <p>
- * An example of how to configure the check is:
+ * To configure the check:
  * </p>
  * <pre>
  * &lt;module name=&quot;TypeName&quot;/&gt;
@@ -111,6 +121,17 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * interface SecondName {} // violation, name 'SecondName'
  *                         // must match pattern '^I_[a-zA-Z0-9]*$'
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code name.invalidPattern}
+ * </li>
+ * </ul>
  *
  * @since 3.0
  */
@@ -136,10 +157,12 @@ public class TypeNameCheck
 
     @Override
     public int[] getAcceptableTokens() {
-        return new int[] {TokenTypes.CLASS_DEF,
-                          TokenTypes.INTERFACE_DEF,
-                          TokenTypes.ENUM_DEF,
-                          TokenTypes.ANNOTATION_DEF,
+        return new int[] {
+            TokenTypes.CLASS_DEF,
+            TokenTypes.INTERFACE_DEF,
+            TokenTypes.ENUM_DEF,
+            TokenTypes.ANNOTATION_DEF,
+            TokenTypes.RECORD_DEF,
         };
     }
 

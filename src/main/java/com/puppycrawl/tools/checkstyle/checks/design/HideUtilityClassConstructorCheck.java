@@ -57,6 +57,51 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * <pre>
  * &lt;module name=&quot;HideUtilityClassConstructor&quot;/&gt;
  * </pre>
+ * <p>
+ * Example:
+ * </p>
+ * <pre>
+ * class Test { // violation, class only has a static method and a constructor
+ *
+ *   public Test() {
+ *   }
+ *
+ *   public static void fun() {
+ *   }
+ * }
+ *
+ * class Foo { // OK
+ *
+ *   private Foo() {
+ *   }
+ *
+ *   static int n;
+ * }
+ *
+ * class Bar { // OK
+ *
+ *   protected Bar() {
+ *     // prevents calls from subclass
+ *     throw new UnsupportedOperationException();
+ *   }
+ * }
+ *
+ * class UtilityClass { // violation, class only has a static field
+ *
+ *   static float f;
+ * }
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code hide.utility.class}
+ * </li>
+ * </ul>
  *
  * @since 3.1
  */
@@ -117,6 +162,7 @@ public class HideUtilityClassConstructorCheck extends AbstractCheck {
 
     /**
      * Returns true if given class is abstract or false.
+     *
      * @param ast class definition for check.
      * @return true if a given class declared as abstract.
      */
@@ -127,6 +173,7 @@ public class HideUtilityClassConstructorCheck extends AbstractCheck {
 
     /**
      * Returns true if given class is static or false.
+     *
      * @param ast class definition for check.
      * @return true if a given class declared as static.
      */
@@ -153,6 +200,7 @@ public class HideUtilityClassConstructorCheck extends AbstractCheck {
 
         /**
          * C-tor.
+         *
          * @param ast class ast
          * */
         /* package */ Details(DetailAST ast) {
@@ -161,6 +209,7 @@ public class HideUtilityClassConstructorCheck extends AbstractCheck {
 
         /**
          * Getter.
+         *
          * @return boolean
          */
         public boolean isHasNonStaticMethodOrField() {
@@ -169,6 +218,7 @@ public class HideUtilityClassConstructorCheck extends AbstractCheck {
 
         /**
          * Getter.
+         *
          * @return boolean
          */
         public boolean isHasNonPrivateStaticMethodOrField() {
@@ -177,6 +227,7 @@ public class HideUtilityClassConstructorCheck extends AbstractCheck {
 
         /**
          * Getter.
+         *
          * @return boolean
          */
         public boolean isHasDefaultCtor() {
@@ -185,6 +236,7 @@ public class HideUtilityClassConstructorCheck extends AbstractCheck {
 
         /**
          * Getter.
+         *
          * @return boolean
          */
         public boolean isHasPublicCtor() {

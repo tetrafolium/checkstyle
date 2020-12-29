@@ -39,6 +39,8 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * <ul>
  * <li>
  * Property {@code tokens} - tokens to check
+ * Type is {@code java.lang.String[]}.
+ * Validation type is {@code tokenSet}.
  * Default value is:
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">
  * CLASS_DEF</a>,
@@ -61,7 +63,11 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
  * METHOD_DEF</a>,
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_CONSTANT_DEF">
- * ENUM_CONSTANT_DEF</a>.
+ * ENUM_CONSTANT_DEF</a>,
+ * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COMPACT_CTOR_DEF">
+ * COMPACT_CTOR_DEF</a>,
+ * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RECORD_DEF">
+ * RECORD_DEF</a>.
  * </li>
  * </ul>
  * <p>
@@ -96,6 +102,17 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  *     }
  * }
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code unnecessary.semicolon}
+ * </li>
+ * </ul>
  *
  * @since 8.24
  */
@@ -127,6 +144,8 @@ public final class UnnecessarySemicolonAfterTypeMemberDeclarationCheck extends A
             TokenTypes.CTOR_DEF,
             TokenTypes.METHOD_DEF,
             TokenTypes.ENUM_CONSTANT_DEF,
+            TokenTypes.COMPACT_CTOR_DEF,
+            TokenTypes.RECORD_DEF,
         };
     }
 
@@ -142,6 +161,7 @@ public final class UnnecessarySemicolonAfterTypeMemberDeclarationCheck extends A
             case TokenTypes.INTERFACE_DEF:
             case TokenTypes.ENUM_DEF:
             case TokenTypes.ANNOTATION_DEF:
+            case TokenTypes.RECORD_DEF:
                 checkTypeDefinition(ast);
                 break;
             case TokenTypes.VARIABLE_DEF:

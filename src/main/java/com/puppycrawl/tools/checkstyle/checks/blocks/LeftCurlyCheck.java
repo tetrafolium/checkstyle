@@ -36,14 +36,18 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  * <li>
  * Property {@code option} - Specify the policy on placement of a left curly brace
  * (<code>'{'</code>).
+ * Type is {@code com.puppycrawl.tools.checkstyle.checks.blocks.LeftCurlyOption}.
  * Default value is {@code eol}.
  * </li>
  * <li>
  * Property {@code ignoreEnums} - Allow to ignore enums when left curly brace policy is EOL.
+ * Type is {@code boolean}.
  * Default value is {@code true}.
  * </li>
  * <li>
  * Property {@code tokens} - tokens to check
+ * Type is {@code java.lang.String[]}.
+ * Validation type is {@code tokenSet}.
  * Default value is:
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_DEF">
  * ANNOTATION_DEF</a>,
@@ -88,7 +92,11 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#OBJBLOCK">
  * OBJBLOCK</a>,
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STATIC_INIT">
- * STATIC_INIT</a>.
+ * STATIC_INIT</a>,
+ * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RECORD_DEF">
+ * RECORD_DEF</a>,
+ * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COMPACT_CTOR_DEF">
+ * COMPACT_CTOR_DEF</a>.
  * </li>
  * </ul>
  * <p>
@@ -96,6 +104,24 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  * </p>
  * <pre>
  * &lt;module name="LeftCurly"/&gt;
+ * </pre>
+ * <pre>
+ * class Test
+ * { // Violation - '{' should be on the previous line
+ *   private interface TestInterface
+ *   { // Violation - '{' should be on the previous line
+ *   }
+ *
+ *   private
+ *   class
+ *   MyClass { // OK
+ *   }
+ *
+ *   enum Colors {RED, // OK
+ *     BLUE,
+ *     GREEN;
+ *   }
+ * }
  * </pre>
  * <p>
  * To configure the check to apply the {@code nl} policy to type blocks:
@@ -106,6 +132,24 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  *   &lt;property name=&quot;tokens&quot; value=&quot;CLASS_DEF,INTERFACE_DEF&quot;/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <pre>
+ * class Test
+ * { // OK
+ *   private interface TestInterface
+ *   { // OK
+ *   }
+ *
+ *   private
+ *   class
+ *   MyClass { // Violation - '{' should be on a new line
+ *   }
+ *
+ *   enum Colors {RED, // OK
+ *     BLUE,
+ *     GREEN;
+ *   }
+ * }
+ * </pre>
  * <p>
  * An example of how to configure the check to validate enum definitions:
  * </p>
@@ -114,6 +158,41 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  *   &lt;property name=&quot;ignoreEnums&quot; value=&quot;false&quot;/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <pre>
+ * class Test
+ * { // Violation - '{' should be on the previous line
+ *   private interface TestInterface
+ *   { // Violation - '{' should be on the previous line
+ *   }
+ *
+ *   private
+ *   class
+ *   MyClass { // OK
+ *   }
+ *
+ *   enum Colors {RED, // Violation - '{' should have line break after
+ *   BLUE,
+ *   GREEN;
+ *   }
+ * }
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code line.break.after}
+ * </li>
+ * <li>
+ * {@code line.new}
+ * </li>
+ * <li>
+ * {@code line.previous}
+ * </li>
+ * </ul>
  *
  * @since 3.0
  */
@@ -152,6 +231,7 @@ public class LeftCurlyCheck
 
     /**
      * Setter to specify the policy on placement of a left curly brace (<code>'{'</code>).
+     *
      * @param optionStr string to decode option from
      * @throws IllegalArgumentException if unable to decode
      */
@@ -161,6 +241,7 @@ public class LeftCurlyCheck
 
     /**
      * Setter to allow to ignore enums when left curly brace policy is EOL.
+     *
      * @param ignoreEnums check's option for ignoring enums.
      */
     public void setIgnoreEnums(boolean ignoreEnums) {
@@ -197,6 +278,8 @@ public class LeftCurlyCheck
             TokenTypes.METHOD_DEF,
             TokenTypes.OBJBLOCK,
             TokenTypes.STATIC_INIT,
+            TokenTypes.RECORD_DEF,
+            TokenTypes.COMPACT_CTOR_DEF,
         };
     }
 
@@ -205,6 +288,14 @@ public class LeftCurlyCheck
         return CommonUtil.EMPTY_INT_ARRAY;
     }
 
+    /**
+     * We cannot reduce the number of branches in this switch statement,
+     * since many tokens require specific methods to find the first left
+     * curly.
+     *
+     * @param ast the token to process
+     * @noinspection SwitchStatementWithTooManyBranches
+     */
     @Override
     public void visitToken(DetailAST ast) {
         final DetailAST startToken;
@@ -213,6 +304,7 @@ public class LeftCurlyCheck
         switch (ast.getType()) {
             case TokenTypes.CTOR_DEF:
             case TokenTypes.METHOD_DEF:
+            case TokenTypes.COMPACT_CTOR_DEF:
                 startToken = skipModifierAnnotations(ast);
                 brace = ast.findFirstToken(TokenTypes.SLIST);
                 break;
@@ -221,6 +313,7 @@ public class LeftCurlyCheck
             case TokenTypes.ANNOTATION_DEF:
             case TokenTypes.ENUM_DEF:
             case TokenTypes.ENUM_CONSTANT_DEF:
+            case TokenTypes.RECORD_DEF:
                 startToken = skipModifierAnnotations(ast);
                 final DetailAST objBlock = ast.findFirstToken(TokenTypes.OBJBLOCK);
                 brace = objBlock;
@@ -249,7 +342,7 @@ public class LeftCurlyCheck
             case TokenTypes.LITERAL_CASE:
             case TokenTypes.LITERAL_DEFAULT:
                 startToken = ast;
-                brace = getBraceAsFirstChild(ast.getNextSibling());
+                brace = getBraceFromSwitchMember(ast);
                 break;
             default:
                 // ATTENTION! We have default here, but we expect case TokenTypes.METHOD_DEF,
@@ -268,7 +361,27 @@ public class LeftCurlyCheck
     }
 
     /**
+     * Gets the brace of a switch statement/ expression member.
+     *
+     * @param ast {@code DetailAST}.
+     * @return {@code DetailAST} if the first child is {@code TokenTypes.SLIST},
+     * {@code null} otherwise.
+     */
+    private static DetailAST getBraceFromSwitchMember(DetailAST ast) {
+        final DetailAST brace;
+        final DetailAST parent = ast.getParent();
+        if (parent.getType() == TokenTypes.SWITCH_RULE) {
+            brace = parent.findFirstToken(TokenTypes.SLIST);
+        }
+        else {
+            brace = getBraceAsFirstChild(ast.getNextSibling());
+        }
+        return brace;
+    }
+
+    /**
      * Gets a SLIST if it is the first child of the AST.
+     *
      * @param ast {@code DetailAST}.
      * @return {@code DetailAST} if the first child is {@code TokenTypes.SLIST},
      *     {@code null} otherwise.
@@ -286,6 +399,7 @@ public class LeftCurlyCheck
 
     /**
      * Skip all {@code TokenTypes.ANNOTATION}s to the first non-annotation.
+     *
      * @param ast {@code DetailAST}.
      * @return {@code DetailAST}.
      */
@@ -311,6 +425,7 @@ public class LeftCurlyCheck
     /**
      * Find the last token of type {@code TokenTypes.ANNOTATION}
      * under the given set of modifiers.
+     *
      * @param modifiers {@code DetailAST}.
      * @return {@code DetailAST} or null if there are no annotations.
      */
@@ -326,6 +441,7 @@ public class LeftCurlyCheck
     /**
      * Verifies that a specified left curly brace is placed correctly
      * according to policy.
+     *
      * @param brace token for left curly brace
      * @param startToken token for start of expression
      */
@@ -352,6 +468,7 @@ public class LeftCurlyCheck
 
     /**
      * Validate EOL case.
+     *
      * @param brace brace AST
      * @param braceLine line content
      */
@@ -366,6 +483,7 @@ public class LeftCurlyCheck
 
     /**
      * Validate token on new Line position.
+     *
      * @param brace brace AST
      * @param startToken start Token
      * @param braceLine content of line with Brace
@@ -387,6 +505,7 @@ public class LeftCurlyCheck
 
     /**
      * Checks if left curly has line break after.
+     *
      * @param leftCurly
      *        Left curly token.
      * @return

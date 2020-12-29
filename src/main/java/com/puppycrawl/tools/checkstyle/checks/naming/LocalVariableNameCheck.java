@@ -31,34 +31,21 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * </p>
  * <ul>
  * <li>
- * Property {@code format} - Specifies valid identifiers. Default value is
- * {@code "^[a-z][a-zA-Z0-9]*$"}.
+ * Property {@code format} - Specifies valid identifiers.
+ * Type is {@code java.util.regex.Pattern}.
+ * Default value is {@code "^[a-z][a-zA-Z0-9]*$"}.
  * </li>
  * <li>
  * Property {@code allowOneCharVarInForLoop} - Allow one character variable name in
  * <a href="https://docs.oracle.com/javase/tutorial/java/nutsandbolts/for.html">
  * initialization expressions</a>
- * in FOR loop if one char variable name is prohibited by {@code format} regexp. For example:
- * <pre>
- * for (int i = 1; i &lt; 10; i++) { // OK
- *     int j = 1; // violation
- * }
- * for (int K = 1; K &lt; 10; K++) { // OK
- *     int j = 1; // violation
- * }
- * List list = new ArrayList();
- * for (Object o : list) { // OK
- *     int j = 1; // violation
- * }
- * for (Object O : list) { // OK
- *     int j = 1; // violation
- * }
- * </pre>
+ * in FOR loop if one char variable name is prohibited by {@code format} regexp.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * </ul>
  * <p>
- * An example of how to configure the check is:
+ * To configure the check:
  * </p>
  * <pre>
  * &lt;module name="LocalVariableName"/&gt;
@@ -161,6 +148,18 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  *   }
  * }
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code name.invalidPattern}
+ * </li>
+ * </ul>
+ *
  * @since 3.0
  */
 public class LocalVariableNameCheck
@@ -170,22 +169,7 @@ public class LocalVariableNameCheck
      * Allow one character variable name in
      * <a href="https://docs.oracle.com/javase/tutorial/java/nutsandbolts/for.html">
      * initialization expressions</a>
-     * in FOR loop if one char variable name is prohibited by {@code format} regexp. For example:
-     * <pre>
-     * for (int i = 1; i &lt; 10; i++) { // OK
-     *     int j = 1; // violation
-     * }
-     * for (int K = 1; K &lt; 10; K++) { // OK
-     *     int j = 1; // violation
-     * }
-     * List list = new ArrayList();
-     * for (Object o : list) { // OK
-     *     int j = 1; // violation
-     * }
-     * for (Object O : list) { // OK
-     *     int j = 1; // violation
-     * }
-     * </pre>
+     * in FOR loop if one char variable name is prohibited by {@code format} regexp.
      */
     private boolean allowOneCharVarInForLoop;
 
@@ -198,22 +182,7 @@ public class LocalVariableNameCheck
      * Setter to allow one character variable name in
      * <a href="https://docs.oracle.com/javase/tutorial/java/nutsandbolts/for.html">
      * initialization expressions</a>
-     * in FOR loop if one char variable name is prohibited by {@code format} regexp. For example:
-     * <pre>
-     * for (int i = 1; i &lt; 10; i++) { // OK
-     *     int j = 1; // violation
-     * }
-     * for (int K = 1; K &lt; 10; K++) { // OK
-     *     int j = 1; // violation
-     * }
-     * List list = new ArrayList();
-     * for (Object o : list) { // OK
-     *     int j = 1; // violation
-     * }
-     * for (Object O : list) { // OK
-     *     int j = 1; // violation
-     * }
-     * </pre>
+     * in FOR loop if one char variable name is prohibited by {@code format} regexp.
      *
      * @param allow Flag for allowing or not one character name in FOR loop.
      */
@@ -255,6 +224,7 @@ public class LocalVariableNameCheck
 
     /**
      * Checks if a variable is the loop's one.
+     *
      * @param variableDef variable definition.
      * @return true if a variable is the loop's one.
      */

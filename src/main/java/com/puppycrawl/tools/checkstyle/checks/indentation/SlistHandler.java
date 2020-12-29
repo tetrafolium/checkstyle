@@ -47,6 +47,7 @@ public class SlistHandler extends BlockParentHandler {
         TokenTypes.LITERAL_TRY,
         TokenTypes.LITERAL_CATCH,
         TokenTypes.LITERAL_FINALLY,
+        TokenTypes.COMPACT_CTOR_DEF,
     };
 
     static {
@@ -133,6 +134,7 @@ public class SlistHandler extends BlockParentHandler {
 
     /**
      * Checks if SLIST node is placed at the same line as CASE_GROUP node.
+     *
      * @return true, if SLIST node is places at the same line as CASE_GROUP node.
      */
     private boolean isSameLineCaseGroup() {

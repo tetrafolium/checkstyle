@@ -57,6 +57,7 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * <li>
  * Property {@code validateComments} - Control whether to validate whitespaces
  * surrounding comments.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * </ul>
@@ -66,6 +67,16 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  *
  * <pre>
  * &lt;module name=&quot;SingleSpaceSeparator&quot;/&gt;
+ * </pre>
+ * <p>Example:</p>
+ * <pre>
+ * int foo()   { // violation, 3 whitespaces
+ *   return  1; // violation, 2 whitespaces
+ * }
+ * int fun1() { // OK, 1 whitespace
+ *   return 3; // OK, 1 whitespace
+ * }
+ * void  fun2() {} // violation, 2 whitespaces
  * </pre>
  *
  * <p>
@@ -77,6 +88,36 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  *   &lt;property name=&quot;validateComments&quot; value=&quot;true&quot;/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>Example:</p>
+ * <pre>
+ * void fun1() {}  // violation, 2 whitespaces before the comment starts
+ * void fun2() { return; }  /* violation here, 2 whitespaces before the comment starts *&#47;
+ *
+ * /* violation, 2 whitespaces after the comment ends *&#47;  int a;
+ *
+ * String s; /* OK, 1 whitespace *&#47;
+ *
+ * /**
+ * * This is a Javadoc comment
+ * *&#47;  int b; // violation, 2 whitespaces after the javadoc comment ends
+ *
+ * float f1; // OK, 1 whitespace
+ *
+ * /**
+ * * OK, 1 white space after the doc comment ends
+ * *&#47; float f2;
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code single.space.separator}
+ * </li>
+ * </ul>
  *
  * @since 6.19
  */
@@ -134,10 +175,11 @@ public class SingleSpaceSeparatorCheck extends AbstractCheck {
      * @param node The node to start examining.
      */
     private void visitEachToken(DetailAST node) {
-        DetailAST sibling = node;
+        DetailAST currentNode = node;
+        final DetailAST parent = node.getParent();
 
         do {
-            final int columnNo = sibling.getColumnNo() - 1;
+            final int columnNo = currentNode.getColumnNo() - 1;
 
             // in such expression: "j  =123", placed at the start of the string index of the second
             // space character will be: 2 = 0(j) + 1(whitespace) + 1(whitespace). It is a minimal
@@ -145,16 +187,21 @@ public class SingleSpaceSeparatorCheck extends AbstractCheck {
             final int minSecondWhitespaceColumnNo = 2;
 
             if (columnNo >= minSecondWhitespaceColumnNo
-                    && !isTextSeparatedCorrectlyFromPrevious(getLine(sibling.getLineNo() - 1),
+                    && !isTextSeparatedCorrectlyFromPrevious(
+                            getLine(currentNode.getLineNo() - 1),
                             columnNo)) {
-                log(sibling, MSG_KEY);
+                log(currentNode, MSG_KEY);
             }
-            if (sibling.getChildCount() >= 1) {
-                visitEachToken(sibling.getFirstChild());
+            if (currentNode.hasChildren()) {
+                currentNode = currentNode.getFirstChild();
             }
-
-            sibling = sibling.getNextSibling();
-        } while (sibling != null);
+            else {
+                while (currentNode.getNextSibling() == null && currentNode.getParent() != parent) {
+                    currentNode = currentNode.getParent();
+                }
+                currentNode = currentNode.getNextSibling();
+            }
+        } while (currentNode != null);
     }
 
     /**

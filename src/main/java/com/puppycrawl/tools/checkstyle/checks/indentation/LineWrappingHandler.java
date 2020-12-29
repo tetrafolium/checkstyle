@@ -53,6 +53,7 @@ public class LineWrappingHandler {
 
         /**
          * Builds enum value from boolean.
+         *
          * @param val value.
          * @return enum instance.
          *
@@ -238,7 +239,7 @@ public class LineWrappingHandler {
     /**
      * Checks line wrapping into annotations.
      *
-     * @param atNode at-clause node.
+     * @param atNode block tag node.
      * @param firstNodesOnLines map which contains
      *     first nodes as values and line numbers as keys.
      * @param indentLevel line wrapping indentation.
@@ -256,17 +257,20 @@ public class LineWrappingHandler {
             final DetailAST node = itr.next();
 
             final DetailAST parentNode = node.getParent();
+            final boolean isArrayInitPresentInAncestors =
+                isParentContainsTokenType(node, TokenTypes.ANNOTATION_ARRAY_INIT);
             final boolean isCurrentNodeCloseAnnotationAloneInLine =
                 node.getLineNo() == lastAnnotationLine
                     && isEndOfScope(lastAnnotationNode, node);
-            if (isCurrentNodeCloseAnnotationAloneInLine
+            if (!isArrayInitPresentInAncestors
+                    && (isCurrentNodeCloseAnnotationAloneInLine
                     || node.getType() == TokenTypes.AT
                     && (parentNode.getParent().getType() == TokenTypes.MODIFIERS
                         || parentNode.getParent().getType() == TokenTypes.ANNOTATIONS)
-                    || TokenUtil.areOnSameLine(node, atNode)) {
+                    || TokenUtil.areOnSameLine(node, atNode))) {
                 logWarningMessage(node, firstNodeIndent);
             }
-            else {
+            else if (!isArrayInitPresentInAncestors) {
                 logWarningMessage(node, currentIndent);
             }
             itr.remove();
@@ -299,6 +303,17 @@ public class LineWrappingHandler {
             }
         }
         return endOfScope;
+    }
+
+    private static boolean isParentContainsTokenType(final DetailAST node, int type) {
+        boolean returnValue = false;
+        for (DetailAST ast = node.getParent(); ast != null; ast = ast.getParent()) {
+            if (ast.getType() == type) {
+                returnValue = true;
+                break;
+            }
+        }
+        return returnValue;
     }
 
     /**
@@ -354,14 +369,14 @@ public class LineWrappingHandler {
     private void logWarningMessage(DetailAST currentNode, int currentIndent) {
         if (indentCheck.isForceStrictCondition()) {
             if (expandedTabsColumnNo(currentNode) != currentIndent) {
-                indentCheck.indentationLog(currentNode.getLineNo(),
+                indentCheck.indentationLog(currentNode,
                         IndentationCheck.MSG_ERROR, currentNode.getText(),
                         expandedTabsColumnNo(currentNode), currentIndent);
             }
         }
         else {
             if (expandedTabsColumnNo(currentNode) < currentIndent) {
-                indentCheck.indentationLog(currentNode.getLineNo(),
+                indentCheck.indentationLog(currentNode,
                         IndentationCheck.MSG_ERROR, currentNode.getText(),
                         expandedTabsColumnNo(currentNode), currentIndent);
             }

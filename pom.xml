@@ -12,7 +12,7 @@
 
   <groupId>com.puppycrawl.tools</groupId>
   <artifactId>checkstyle</artifactId>
-  <version>8.30-SNAPSHOT</version>
+  <version>8.39-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>checkstyle</name>
@@ -199,19 +199,19 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <projectVersion>${project.version}</projectVersion>
     <antlr4.version>4.8-1</antlr4.version>
-    <maven.site.plugin.version>3.8.2</maven.site.plugin.version>
-    <maven.spotbugs.plugin.version>3.1.12.2</maven.spotbugs.plugin.version>
-    <maven.pmd.plugin.version>3.13.0</maven.pmd.plugin.version>
-    <pmd.version>6.21.0</pmd.version>
-    <maven.jacoco.plugin.version>0.8.5</maven.jacoco.plugin.version>
-    <powermock.version>2.0.5</powermock.version>
-    <saxon.version>9.9.1-6</saxon.version>
-    <maven.checkstyle.plugin.version>3.1.0</maven.checkstyle.plugin.version>
-    <maven.sevntu.checkstyle.plugin.version>1.37.1</maven.sevntu.checkstyle.plugin.version>
+    <maven.site.plugin.version>3.9.1</maven.site.plugin.version>
+    <maven.spotbugs.plugin.version>4.1.4</maven.spotbugs.plugin.version>
+    <maven.pmd.plugin.version>3.14.0</maven.pmd.plugin.version>
+    <pmd.version>6.30.0</pmd.version>
+    <maven.jacoco.plugin.version>0.8.6</maven.jacoco.plugin.version>
+    <powermock.version>2.0.9</powermock.version>
+    <saxon.version>10.3</saxon.version>
+    <maven.checkstyle.plugin.version>3.1.1</maven.checkstyle.plugin.version>
+    <maven.sevntu.checkstyle.plugin.version>1.38.0</maven.sevntu.checkstyle.plugin.version>
     <maven.sevntu-checkstyle-check.checkstyle.version>
       8.29
     </maven.sevntu-checkstyle-check.checkstyle.version>
-    <maven.versions.plugin.version>2.7</maven.versions.plugin.version>
+    <maven.versions.plugin.version>2.8.1</maven.versions.plugin.version>
     <java.version>1.8</java.version>
     <pitest.plugin.version>1.4.9</pitest.plugin.version>
     <pitest.plugin.timeout.factor>10</pitest.plugin.timeout.factor>
@@ -219,14 +219,20 @@
     <pitest.plugin.threads>4</pitest.plugin.threads>
     <pitest.junit5.plugin.version>0.10</pitest.junit5.plugin.version>
     <sonar.test.exclusions>**/test/resources/**/*,**/it/resources/**/*</sonar.test.exclusions>
-    <junit.version>5.6.0</junit.version>
+    <junit.version>5.7.0</junit.version>
   </properties>
 
   <dependencies>
     <dependency>
+      <groupId>com.tngtech.archunit</groupId>
+      <artifactId>archunit-junit5</artifactId>
+      <version>0.14.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>info.picocli</groupId>
       <artifactId>picocli</artifactId>
-      <version>4.2.0</version>
+      <version>4.5.2</version>
     </dependency>
     <dependency>
       <groupId>antlr</groupId>
@@ -246,13 +252,18 @@
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>28.2-jre</version>
+      <version>30.0-jre</version>
     </dependency>
     <dependency>
       <groupId>org.apache.ant</groupId>
       <artifactId>ant</artifactId>
-      <version>1.10.7</version>
+      <version>1.10.9</version>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.reflections</groupId>
+      <artifactId>reflections</artifactId>
+      <version>0.9.12</version>
     </dependency>
 
     <!-- test scope stuff -->
@@ -277,7 +288,7 @@
     <dependency>
       <groupId>org.junit-pioneer</groupId>
       <artifactId>junit-pioneer</artifactId>
-      <version>0.5.3</version>
+      <version>1.1.0</version>
       <scope>test</scope>
     </dependency>
     <!-- till https://github.com/checkstyle/checkstyle/issues/7368 -->
@@ -290,7 +301,7 @@
     <dependency>
       <groupId>com.google.truth</groupId>
       <artifactId>truth</artifactId>
-      <version>1.0.1</version>
+      <version>1.1</version>
       <scope>test</scope>
     </dependency>
     <!-- till https://github.com/checkstyle/checkstyle/issues/7368 -->
@@ -303,7 +314,7 @@
     <dependency>
       <groupId>nl.jqno.equalsverifier</groupId>
       <artifactId>equalsverifier</artifactId>
-      <version>3.1.12</version>
+      <version>3.5</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -322,13 +333,13 @@
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
-      <version>2.6</version>
+      <version>2.8.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jgit</groupId>
       <artifactId>org.eclipse.jgit</artifactId>
-      <version>5.6.0.201912101111-r</version>
+      <version>5.10.0.202012080955-r</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -375,15 +386,15 @@
              see no old versions -->
         <plugin>
           <artifactId>maven-antrun-plugin</artifactId>
-          <version>1.8</version>
+          <version>3.0.0</version>
         </plugin>
         <plugin>
           <artifactId>maven-assembly-plugin</artifactId>
-          <version>3.2.0</version>
+          <version>3.3.0</version>
         </plugin>
         <plugin>
           <artifactId>maven-dependency-plugin</artifactId>
-          <version>3.1.1</version>
+          <version>3.1.2</version>
         </plugin>
         <plugin>
           <artifactId>maven-release-plugin</artifactId>
@@ -395,7 +406,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>exec-maven-plugin</artifactId>
-          <version>1.6.0</version>
+          <version>3.0.0</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
@@ -405,7 +416,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-shade-plugin</artifactId>
-          <version>3.2.2</version>
+          <version>3.2.4</version>
         </plugin>
         <plugin>
           <groupId>org.pitest</groupId>
@@ -422,7 +433,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.1.1</version>
+          <version>3.2.0</version>
           <configuration>
             <source>${java.version}</source>
             <failOnError>true</failOnError>
@@ -626,6 +637,7 @@
               <logViolationsToConsole>true</logViolationsToConsole>
               <maxAllowedViolations>0</maxAllowedViolations>
               <violationSeverity>error</violationSeverity>
+              <cacheFile>${project.build.directory}/cachefile_sevntu</cacheFile>
               <propertyExpansion>project.basedir=${project.basedir}</propertyExpansion>
               <sourceDirectories>
                 <sourceDirectory>${project.basedir}/src</sourceDirectory>
@@ -666,7 +678,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
-        <version>3.1.0</version>
+        <version>3.2.0</version>
         <executions>
           <execution>
             <id>copy-resources</id>
@@ -824,12 +836,6 @@
             </goals>
             <configuration>
               <excludes>
-                <!-- Parser related classes -->
-                <exclude>com/puppycrawl/tools/checkstyle/grammar/*.class</exclude>
-                <exclude>com/puppycrawl/tools/checkstyle/grammar/javadoc/*.class</exclude>
-                <exclude>
-                  com/puppycrawl/tools/checkstyle/JavadocDetailNodeParser$JavadocParserErrorStrategy.class
-                </exclude>
                 <!-- Swing related classes -->
                 <exclude>com/puppycrawl/tools/checkstyle/gui/*.class</exclude>
               </excludes>
@@ -850,6 +856,9 @@
                       com.puppycrawl.tools.checkstyle.grammar.GeneratedJavaRecognizer
                     </exclude>
                     <exclude>com.puppycrawl.tools.checkstyle.grammar.GeneratedJavaLexer</exclude>
+                    <exclude>
+                      com.puppycrawl.tools.checkstyle.grammar.GeneratedTextBlockLexer
+                    </exclude>
                     <exclude>
                       com.puppycrawl.tools.checkstyle.grammar.javadoc.JavadocParser*
                     </exclude>
@@ -875,6 +884,8 @@
                     <exclude>com.puppycrawl.tools.checkstyle.gui.ParseTreeTableModel*</exclude>
                     <exclude>com.puppycrawl.tools.checkstyle.gui.TreeTableCellRenderer*</exclude>
                     <exclude>com.puppycrawl.tools.checkstyle.gui.TreeTableModelAdapter*</exclude>
+                    <!-- Metadata Generator related classes -->
+                    <exclude>com.puppycrawl.tools.checkstyle.meta.*</exclude>
                   </excludes>
                   <limits>
                     <limit>
@@ -905,7 +916,7 @@
                     <limit>
                       <counter>BRANCH</counter>
                       <value>COVEREDRATIO</value>
-                      <minimum>0.73</minimum>
+                      <minimum>0.72</minimum>
                     </limit>
                   </limits>
                 </rule>
@@ -930,6 +941,24 @@
                 <rule>
                   <element>CLASS</element>
                   <includes>
+                    <include>com.puppycrawl.tools.checkstyle.grammar.GeneratedTextBlockLexer</include>
+                  </includes>
+                  <limits>
+                    <limit>
+                      <counter>LINE</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.95</minimum>
+                    </limit>
+                    <limit>
+                      <counter>BRANCH</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.78</minimum>
+                    </limit>
+                  </limits>
+                </rule>
+                <rule>
+                  <element>CLASS</element>
+                  <includes>
                     <include>
                       com.puppycrawl.tools.checkstyle.grammar.javadoc.JavadocParser
                     </include>
@@ -938,12 +967,12 @@
                     <limit>
                       <counter>LINE</counter>
                       <value>COVEREDRATIO</value>
-                      <minimum>0.54</minimum>
+                      <minimum>0.57</minimum>
                     </limit>
                     <limit>
                       <counter>BRANCH</counter>
                       <value>COVEREDRATIO</value>
-                      <minimum>0.44</minimum>
+                      <minimum>0.48</minimum>
                     </limit>
                   </limits>
                 </rule>
@@ -1025,6 +1054,103 @@
                     </limit>
                   </limits>
                 </rule>
+                <!-- Metadata Generator related classes, temporary limits for
+                https://github.com/checkstyle/checkstyle/issues/8761, needs to be revisited -->
+                <rule>
+                  <element>CLASS</element>
+                  <includes>
+                    <include>
+                      com.puppycrawl.tools.checkstyle.meta.JavadocMetadataScraper
+                    </include>
+                  </includes>
+                  <limits>
+                    <limit>
+                      <counter>LINE</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.98</minimum>
+                    </limit>
+                    <limit>
+                      <counter>BRANCH</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.87</minimum>
+                    </limit>
+                  </limits>
+                </rule>
+                <rule>
+                  <element>CLASS</element>
+                  <includes>
+                    <include>
+                      com.puppycrawl.tools.checkstyle.meta.XmlMetaWriter
+                    </include>
+                  </includes>
+                  <limits>
+                    <limit>
+                      <counter>LINE</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.93</minimum>
+                    </limit>
+                    <limit>
+                      <counter>BRANCH</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.80</minimum>
+                    </limit>
+                  </limits>
+                </rule>
+                <rule>
+                  <element>CLASS</element>
+                  <includes>
+                    <include>
+                      com.puppycrawl.tools.checkstyle.meta.XmlMetaReader
+                    </include>
+                  </includes>
+                  <limits>
+                    <limit>
+                      <counter>LINE</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.00</minimum>
+                    </limit>
+                    <limit>
+                      <counter>BRANCH</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.00</minimum>
+                    </limit>
+                  </limits>
+                </rule>
+                <rule>
+                  <element>CLASS</element>
+                  <includes>
+                    <include>
+                       com.puppycrawl.tools.checkstyle.meta.ModuleDetails
+                    </include>
+                  </includes>
+                  <limits>
+                    <limit>
+                      <counter>LINE</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.76</minimum>
+                    </limit>
+                  </limits>
+                </rule>
+                <rule>
+                  <element>CLASS</element>
+                  <includes>
+                    <include>
+                      com.puppycrawl.tools.checkstyle.meta.MetadataGeneratorUtil
+                    </include>
+                  </includes>
+                  <limits>
+                    <limit>
+                      <counter>LINE</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.87</minimum>
+                    </limit>
+                    <limit>
+                      <counter>BRANCH</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.90</minimum>
+                    </limit>
+                  </limits>
+                </rule>
               </rules>
             </configuration>
           </execution>
@@ -1032,18 +1158,18 @@
       </plugin>
 
       <plugin>
-          <groupId>org.sonatype.plugins</groupId>
-          <artifactId>nexus-staging-maven-plugin</artifactId>
-          <version>1.6.8</version>
-          <extensions>true</extensions>
-          <configuration>
-              <!-- serverId is ID of a <server> section from Maven's settings.xml
-                   to pick authentication information from
-              -->
-              <serverId>sonatype-nexus-staging</serverId>
-              <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-              <autoReleaseAfterClose>true</autoReleaseAfterClose>
-          </configuration>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.8</version>
+        <extensions>true</extensions>
+        <configuration>
+          <!-- serverId is ID of a <server> section from Maven's settings.xml
+               to pick authentication information from
+          -->
+          <serverId>sonatype-nexus-staging</serverId>
+          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
       </plugin>
 
       <plugin>
@@ -1106,7 +1232,7 @@
           <sourceDirectory>
             ${basedir}/src/main/resources/com/puppycrawl/tools/checkstyle/grammar
           </sourceDirectory>
-          <grammars>java.g</grammars>
+          <grammars>java*.g</grammars>
         </configuration>
         <executions>
           <execution>
@@ -1143,7 +1269,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>build-helper-maven-plugin</artifactId>
-        <version>3.0.0</version>
+        <version>3.2.0</version>
         <executions>
           <execution>
             <id>add-source</id>
@@ -1228,6 +1354,7 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.22.2</version>
         <configuration>
+          <argLine>-Dfile.encoding=UTF-8</argLine>
           <systemPropertyVariables>
             <jacoco-agent.destfile>${project.build.directory}/jacoco.exec</jacoco-agent.destfile>
           </systemPropertyVariables>
@@ -1337,11 +1464,38 @@
           <execution>
             <goals>
               <goal>validate</goal>
+              <goal>check-format</goal>
             </goals>
           </execution>
         </executions>
         <configuration>
           <catalogHandling>strict</catalogHandling>
+          <!-- We need to exclude some files, so the default configuration is not suitable. -->
+          <useDefaultFormatFileSet>false</useDefaultFormatFileSet>
+          <formatFileSets>
+            <formatFileSet>
+              <directory>.</directory>
+              <includes>
+                <include>**/*.xml</include>
+                <include>**/*.xsd</include>
+                <include>**/*.xml.vm</include>
+              </includes>
+              <excludes>
+                <!-- The <b>{</b> tag requires more indentation than the enclosing <pre> tag,
+                     which results in too much indentation to the right -->
+                <exclude>src/xdocs/property_types.xml</exclude>
+                <!-- Temporary files -->
+                <exclude>target/**</exclude>
+                <exclude>.ci-temp/**</exclude>
+                <!-- Specially crafted test files -->
+                <exclude>src/test/resources/**</exclude>
+                <!-- Generated files -->
+                <exclude>src/xdocs/releasenotes.xml</exclude>
+                <exclude>src/xdocs/releasenotes_old.xml</exclude>
+                <exclude>src/main/resources/com/puppycrawl/tools/checkstyle/meta/**</exclude>
+              </excludes>
+            </formatFileSet>
+          </formatFileSets>
           <validationSets>
             <validationSet>
               <dir>config</dir>
@@ -1350,6 +1504,7 @@
                 <exclude>java_regexp.header</exclude>
                 <exclude>org.eclipse.jdt.core.prefs</exclude>
                 <exclude>intellij-idea-inspections.properties</exclude>
+                <exclude>markdownlint.rb</exclude>
               </excludes>
             </validationSet>
             <validationSet>
@@ -1394,7 +1549,7 @@
       <plugin>
         <groupId>de.thetaphi</groupId>
         <artifactId>forbiddenapis</artifactId>
-        <version>2.7</version>
+        <version>3.1</version>
         <configuration>
           <targetVersion>${java.version}</targetVersion>
           <failOnUnsupportedJava>false</failOnUnsupportedJava>
@@ -1412,10 +1567,15 @@
             <exclude>**/JavadocPropertiesGenerator.class</exclude>
             <!-- generated classes, unfortunately use problematic api -->
             <exclude>**/GeneratedJavaLexer.class</exclude>
+            <exclude>**/GeneratedTextBlockLexer.class</exclude>
             <exclude>**/JavadocParser.class</exclude>
             <exclude>**/Input*</exclude>
             <!-- tests need forbidden apis to test the main code fully -->
             <exclude>**/XpathFileGeneratorAuditListenerTest.class</exclude>
+            <!-- These tests uses java.lang.reflect.AccessibleObject.isAccessible
+              which has no Java 8 compatible workaround. -->
+            <exclude>**/AllChecksTest.class</exclude>
+            <exclude>**/XdocsPagesTest.class</exclude>
           </excludes>
         </configuration>
         <executions>
@@ -1439,7 +1599,7 @@
     <plugins>
       <plugin>
         <artifactId>maven-project-info-reports-plugin</artifactId>
-        <version>3.0.0</version>
+        <version>3.1.1</version>
       </plugin>
 
       <plugin>
@@ -1626,7 +1786,7 @@
             <!-- Excluded due to Maven Release Plugin's issue #919:
                  https://issues.apache.org/jira/browse/MRELEASE-919 -->
             <excludedLink>http://maven.apache.org/plugins/maven-release-plugin/</excludedLink>
-            <!-- permanent java.net.UnknownHostException :-->
+            <!-- permanent java.net.UnknownHostException : -->
             <excludedLink>http://jacoco-maven-plugin/</excludedLink>
             <!-- Excluded till https://issues.sonatype.org/browse/NEXUS-9643 -->
             <excludedLink>
@@ -1665,6 +1825,23 @@
             </excludedLink>
             <!-- ConnectTimeoutException -->
             <excludedLink>https://www.w3.org/TR/*</excludedLink>
+            <!-- very frequent SocketTimeoutException : Read timed out -->
+            <excludedLink>https://maven.apache.org/*</excludedLink>
+            <!-- very frequent SocketTimeoutException : Read timed out -->
+            <excludedLink>https://www.bountysource.com/*</excludedLink>
+            <excludedLink>https://api.bountysource.com/*</excludedLink>
+            <!-- This URL become to require to login first to see content -->
+            <excludedLink>https://bitbucket.org/atlassian/bamboo-checkstyle-plugin</excludedLink>
+            <!-- link works but plugin's request always result in 404 -->
+            <excludedLink>https://www.manning.com/books/java-development-with-ant</excludedLink>
+            <!-- permanent 403, but it works fine out of plugin execution -->
+            <excludedLink>https://opencollective.com/*</excludedLink>
+            <!-- 405 Not Allowed, link present in generated website only -->
+            <excludedLink>https://oss.sonatype.org/service/local/staging/deploy/maven2/</excludedLink>
+            <!-- site is too unstable, it might improve in future -->
+            <excludedLink>https://freedomsponsors.org/*</excludedLink>
+            <!-- site works fine in browser but for plugin always return 500  -->
+            <excludedLink>https://liberapay.com/checkstyle/</excludedLink>
           </excludedLinks>
         </configuration>
       </plugin>
@@ -1836,8 +2013,12 @@
                 <param>com.puppycrawl.tools.checkstyle.checks.FinalParametersCheck*</param>
                 <param>com.puppycrawl.tools.checkstyle.checks.LineSeparatorOption*</param>
                 <param>com.puppycrawl.tools.checkstyle.checks.NewlineAtEndOfFileCheck*</param>
+                <param>com.puppycrawl.tools.checkstyle.checks.NoCodeInFileCheck*</param>
                 <param>com.puppycrawl.tools.checkstyle.checks.OrderedPropertiesCheck*</param>
                 <param>com.puppycrawl.tools.checkstyle.checks.OuterTypeFilenameCheck*</param>
+                <param>
+                  com.puppycrawl.tools.checkstyle.checks.sizes.RecordComponentNumberCheck*
+                </param>
                 <param>com.puppycrawl.tools.checkstyle.checks.SuppressWarningsHolder*</param>
                 <param>com.puppycrawl.tools.checkstyle.checks.TodoCommentCheck*</param>
                 <param>com.puppycrawl.tools.checkstyle.checks.TrailingCommentCheck*</param>
@@ -1854,8 +2035,12 @@
                 <param>com.puppycrawl.tools.checkstyle.checks.DescendantTokenCheckTest</param>
                 <param>com.puppycrawl.tools.checkstyle.checks.FinalParametersCheckTest</param>
                 <param>com.puppycrawl.tools.checkstyle.checks.NewlineAtEndOfFileCheckTest</param>
+                <param>com.puppycrawl.tools.checkstyle.checks.NoCodeInFileCheckTest</param>
                 <param>com.puppycrawl.tools.checkstyle.checks.OrderedPropertiesCheckTest</param>
                 <param>com.puppycrawl.tools.checkstyle.checks.OuterTypeFilenameCheckTest</param>
+                <param>
+                  com.puppycrawl.tools.checkstyle.checks.sizes.RecordComponentNumberCheckTest
+                </param>
                 <param>com.puppycrawl.tools.checkstyle.checks.SuppressWarningsHolderTest</param>
                 <param>com.puppycrawl.tools.checkstyle.checks.TodoCommentCheckTest</param>
                 <param>com.puppycrawl.tools.checkstyle.checks.TrailingCommentCheckTest</param>
@@ -1997,7 +2182,7 @@
                 <mutator>MATH</mutator>
                 <mutator>NEGATE_CONDITIONALS</mutator>
                 <!-- result in 115 extra survived items, too much to keep in ignore list -->
-                <!--<mutator>REMOVE_CONDITIONALS</mutator>-->
+                <!-- <mutator>REMOVE_CONDITIONALS</mutator> -->
                 <mutator>RETURN_VALS</mutator>
                 <mutator>TRUE_RETURNS</mutator>
                 <mutator>VOID_METHOD_CALLS</mutator>
@@ -2182,7 +2367,7 @@
                 <mutator>MATH</mutator>
                 <mutator>NEGATE_CONDITIONALS</mutator>
                 <!-- result in 53 extra survived items, too much to keep in ignore list -->
-                <!--<mutator>REMOVE_CONDITIONALS</mutator>-->
+                <!-- <mutator>REMOVE_CONDITIONALS</mutator> -->
                 <mutator>RETURN_VALS</mutator>
                 <mutator>TRUE_RETURNS</mutator>
                 <mutator>VOID_METHOD_CALLS</mutator>
@@ -2228,7 +2413,7 @@
                 <mutator>MATH</mutator>
                 <mutator>NEGATE_CONDITIONALS</mutator>
                 <!-- result in 64 extra survived items, too much to keep in ignore list -->
-                <!--<mutator>REMOVE_CONDITIONALS</mutator>-->
+                <!-- <mutator>REMOVE_CONDITIONALS</mutator> -->
                 <mutator>RETURN_VALS</mutator>
                 <mutator>TRUE_RETURNS</mutator>
                 <mutator>VOID_METHOD_CALLS</mutator>
@@ -2735,11 +2920,11 @@
                 <param>com.puppycrawl.tools.checkstyle.ConfigurationLoaderTest</param>
               </targetTests>
               <excludedMethods>
-                <!--cause of https://github.com/checkstyle/checkstyle/issues/3605 -->
+                <!-- cause of https://github.com/checkstyle/checkstyle/issues/3605 -->
                 <param>setFeaturesBySystemProperty</param>
               </excludedMethods>
               <avoidCallsTo>
-                <!--cause of https://github.com/checkstyle/checkstyle/issues/3605 -->
+                <!-- cause of https://github.com/checkstyle/checkstyle/issues/3605 -->
                 <avoidCallsTo>
                   com.puppycrawl.tools.checkstyle.XmlLoader$LoadExternalDtdFeatureProvider
                 </avoidCallsTo>
@@ -3012,7 +3197,7 @@
                 <mutator>MATH</mutator>
                 <mutator>NEGATE_CONDITIONALS</mutator>
                 <!-- result in 58 extra survived items, too much to keep in ignore list -->
-                <!--<mutator>REMOVE_CONDITIONALS</mutator>-->
+                <!-- <mutator>REMOVE_CONDITIONALS</mutator> -->
                 <mutator>RETURN_VALS</mutator>
                 <mutator>TRUE_RETURNS</mutator>
                 <mutator>VOID_METHOD_CALLS</mutator>
@@ -3043,6 +3228,9 @@
                 </param>
                 <param>
                   com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheckTest
+                </param>
+                <param>
+                  com.puppycrawl.tools.checkstyle.checks.coding.MultipleStringLiteralsCheckTest
                 </param>
               </targetTests>
               <excludedTestClasses>
@@ -3107,9 +3295,9 @@
       <id>eclipse-compiler</id>
       <dependencies>
         <dependency>
-            <groupId>org.eclipse.jdt</groupId>
-            <artifactId>org.eclipse.jdt.annotation</artifactId>
-            <version>2.2.400</version>
+          <groupId>org.eclipse.jdt</groupId>
+          <artifactId>org.eclipse.jdt.annotation</artifactId>
+          <version>2.2.600</version>
         </dependency>
       </dependencies>
       <build>

@@ -19,6 +19,7 @@ Aconfig
 adb
 addons
 adf
+adoptopenjdk
 adr
 AFDF
 AFilter
@@ -28,6 +29,7 @@ Aleksey
 allchecks
 allclasses
 alot
+amazonaws
 ambig
 Amessages
 androidx
@@ -52,6 +54,7 @@ apos
 applet
 appveyor
 APRV
+archunit
 areaoftest
 arget
 argn
@@ -80,6 +83,7 @@ atlassian
 attlist
 attr
 autoboxing
+autobuild
 autocomplete
 autocrlf
 Autoproxy
@@ -95,6 +99,7 @@ avoidnestedblocks
 avoidnoargumentsuperconstructorcall
 avoidstarimport
 avoidstaticimport
+aws
 awt
 backend
 backport
@@ -159,7 +164,7 @@ bunzip
 bw
 BXOR
 bykey
-Bytecode
+bytecode
 bzip
 Cacheable
 cachefile
@@ -174,7 +179,7 @@ ccc
 CCCC
 CClass
 ccomment
-CDATA
+cdata
 cde
 cdfd
 Cdi
@@ -209,12 +214,14 @@ checkouting
 checkstyle
 checkstyleanttask
 checkstylecompilation
+checkstylemeta
 checkutil
 chmod
 chr
 ci
 cidfile
 circleci
+cirrusci
 Claira
 classdataabstractioncoupling
 classfanoutcomplexity
@@ -246,6 +253,7 @@ codeconventions
 codeconvtoc
 codecov
 codehaus
+codeql
 codeselectorpresentation
 codeship
 codestyle
@@ -324,7 +332,9 @@ Destructuring
 detailast
 detailastimpl
 detailnodetreestringprinter
+devops
 Dexec
+Dfile
 dfn
 Dfoo
 Dforbiddenapis
@@ -332,6 +342,7 @@ dghj
 Dgpg
 Dgui
 dhj
+Dhttp
 Diachenko
 dirname
 distelli
@@ -340,13 +351,14 @@ Dlinkcheck
 DMail
 Dmaven
 doccheck
+DOCKERHUB
 Dockter
 doclet
 DOCTYPE
 documentationcomments
-Don''t
 donotignoreexceptions
 Dorekit
+Dorg
 DOTALL
 doubletag
 Dpi
@@ -408,6 +420,7 @@ errorprone
 esac
 Eslint
 esslingen
+esversion
 etsy
 ev
 Evt
@@ -447,7 +460,7 @@ fht
 fieldset
 filebasic
 filechooser
-filefilters
+filefilter
 filelength
 filepath
 fileset
@@ -476,6 +489,7 @@ Flushables
 Fmain
 Fmetrics
 Fmodifier
+fmodule
 Fnaming
 forbiddenapis
 foreach
@@ -498,6 +512,7 @@ func
 Fwhitespace
 Fx
 gav
+gcp
 generalform
 genericwhitespace
 Getenv
@@ -512,6 +527,7 @@ Gjs
 google
 googleapis
 googleblog
+googlecloudplatform
 googleecommon
 googlegroups
 googlesource
@@ -551,8 +567,9 @@ hh
 hiddenfield
 hideutilityclassconstructor
 hipparchus
+hmap
 hne
-Homepage
+homepage
 horizontalwhitespace
 Hostname
 href
@@ -564,6 +581,7 @@ HTMLJS
 htmlunit
 http
 hurz
+hyperlinks
 iae
 ibs
 ico
@@ -577,6 +595,8 @@ igorminar
 IInterfacable
 Ilja
 illegalcatch
+illegalex
+illegalidentifiername
 illegalimport
 illegalinstantiation
 illegalthrows
@@ -612,6 +632,7 @@ intercell
 interfaceistype
 interfacememberimpliedmodifier
 interfacetypeparametername
+intqueue
 invalidformat
 invalidinherit
 invalidjavadocposition
@@ -630,6 +651,7 @@ itsallcode
 ivanov
 ivanovjr
 IVersion
+ivysettings
 iws
 Izmailov
 jacoco
@@ -640,7 +662,10 @@ javadoc
 javadocblocktaglocation
 javadoccontentlocation
 javadocdetailnodeparser
+javadocmetadatascraper
 javadocmethod
+javadocmissingleadingasterisk
+javadocmissingwhitespaceafterasterisk
 javadocpackage
 javadocparagraph
 javadocpropertiesgenerator
@@ -697,6 +722,7 @@ jls
 JNDI
 jooq
 JOption
+josm
 jp
 Jpa
 JPanel
@@ -714,6 +740,7 @@ Jscs
 jsecurity
 Jsf
 jshiell
+jshint
 JSJ
 jslint
 jsni
@@ -732,6 +759,7 @@ junitpioneer
 jvm
 jxr
 kailasam
+kate
 kazgroup
 kbd
 kclee
@@ -741,6 +769,7 @@ konstantinos
 Kordas
 Kotlin
 kused
+lambdabodylength
 lambdaparametername
 lbc
 LBRACK
@@ -753,6 +782,7 @@ len
 lexer
 lgpl
 lharris
+lhmap
 LHSOf
 libcore
 liberapay
@@ -760,6 +790,7 @@ libexec
 lifecycle
 linebreak
 linecolumn
+linejava
 linelength
 linkcheck
 linkplain
@@ -792,11 +823,15 @@ mailhost
 mailto
 mainframemodel
 marazmatic
+markdownlint
 Massol
+matchxpath
 mavenbadge
 maxmethods
 MCHECKSTYLE
 mct
+mdl
+mega
 membername
 MENFORCER
 metadata
@@ -808,7 +843,7 @@ methodparampad
 methodtypeparametername
 MEZk
 Micha
-Microsoft
+microsoft
 minimalistic
 Mipmap
 misconfigured
@@ -834,6 +869,7 @@ mojohaus
 moks
 moradan
 moz
+mozilla
 MRELEASE
 MSITE
 MSONAR
@@ -862,13 +898,13 @@ mypackage
 myproject
 Mysql
 mytag
-n'th
 NAMEFILE
 nameofcompany
 nameofdivision
 nameofproject
 namespace
 Nanos
+navcolumn
 nbactions
 nbia
 nbsp
@@ -887,6 +923,7 @@ newlineatendoffile
 Nfc
 Nfo
 Niederhauser
+nikitasavinov
 nio
 nlow
 NMTOKEN
@@ -896,6 +933,8 @@ noarraytrailingcomma
 noauto
 nobr
 noclone
+nocode
+nocodeinfile
 nocstylearray
 nodeps
 NODESET
@@ -936,12 +975,14 @@ npathcomplexity
 npe
 npm
 nts
+NTU
 nullanalysis
 NULLCHECK
 nullness
 numberperline
 numericliterals
 nutsandbolts
+nvuillam
 nyu
 objblock
 oburn
@@ -959,6 +1000,7 @@ OOL
 oopsla
 opencollective
 openjdk
+openstreetmap
 operatorwrap
 optgroup
 optimisation
@@ -1010,11 +1052,14 @@ Passembly
 pathcomplexity
 pathelement
 patreon
+patternvariablename
 Paulicke
 paypal
 pbludov
+Pcheckstyle
 pdf
 Peclipse
+Penable
 perl
 pex
 pgjdbc
@@ -1050,6 +1095,7 @@ println
 priva
 programpractice
 Proguard
+proj
 propertycachefile
 propertyfile
 prot
@@ -1084,6 +1130,8 @@ README
 Readonly
 rebased
 rebasing
+recordcomponentnumber
+recordtypeparametername
 redundantimport
 redundantmodifier
 refactor
@@ -1099,9 +1147,11 @@ regexpsinglelinejava
 relativized
 releasenotes
 remkop
+requireemptylinebeforeblocktaggroup
 requirethis
 Rethrown
 returncount
+reviewdog
 revwalk
 rfe
 rga
@@ -1111,9 +1161,11 @@ RHSOf
 rickgiles
 rightcurly
 rl
+rmdir
 rnveach
 romani
 romanivanov
+romanivanovjr
 Rootsmorejunk
 rp
 rparen
@@ -1132,6 +1184,7 @@ rw
 rx
 sabaka
 Sameline
+Savinov
 saxonica
 sbe
 sbt
@@ -1144,6 +1197,7 @@ Scss
 sdk
 selfexplanatory
 Selkin
+semaphoreci
 separatorwrap
 servlet
 SETPOINT
@@ -1169,6 +1223,7 @@ slist
 Sms
 smth
 snyk
+socio
 solr
 som
 someinner
@@ -1265,10 +1320,12 @@ technotes
 tected
 Testik
 testmodules
+textarea
 textlevel
 Tfo
 tfoot
 thead
+thejavageek
 thesummaryfragment
 thetaphi
 thr
@@ -1278,6 +1335,7 @@ Thymeleaf
 tidelift
 TKN
 tmp
+tngtech
 toc
 todo
 todocomment
@@ -1291,6 +1349,8 @@ Toolbar
 Touchscreen
 trailingcomment
 treelayout
+treemap
+treeset
 treewalker
 TRequest
 tschneeberger
@@ -1304,7 +1364,7 @@ typename
 typeof
 typevariablenames
 uber
-Ubuntu
+ubuntu
 ucc
 UElement
 ufeff
@@ -1317,11 +1377,13 @@ uncommentedmain
 Unconstructable
 unicode
 Uninstantiable
+uninterned
 uniq
 uniqueproperties
 Unitless
 unlzma
 unnecessaryparentheses
+unnecessarysemicolonafteroutertypedeclaration
 unnecessarysemicolonaftertypememberdeclaration
 unnecessarysemicoloninenumeration
 unnecessarysemicolonintrywithresources
@@ -1364,6 +1426,7 @@ Vladlis
 vm
 vscode
 Vtl
+Vuillamy
 Wadl
 Wakelock
 Warni
@@ -1377,6 +1440,7 @@ webtoolkit
 Wellformedness
 wercker
 wget
+wherejavadocrequired
 wheretobreak
 whi
 Whitebox
@@ -1388,11 +1452,12 @@ Wifi
 wiki
 wikipedia
 wiktionary
+windowsservercore
 woff
 wontfix
 wordpress
 workaround
-workflows
+workflow
 writetag
 writingchecks
 writingdoccomments
@@ -1432,17 +1497,19 @@ xmlvalidate
 Xms
 Xmx
 xpath
+xpathfilegenerator
 xpathfilegeneratorastfilter
 xpathfilegeneratorauditlistener
 xpathfilter
 xpathfilterelement
 xpathmapper
 xpathquerygenerator
+xright
 xsd
 Xshow
 xsi
 xsl
-Xslt
+xslt
 xsltproc
 XSO
 Xss
@@ -1457,7 +1524,7 @@ xy
 XYzz
 xz
 xzvf
-Yaml
+yaml
 Yaroslavtsev
 yml
 youtrack

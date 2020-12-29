@@ -67,10 +67,25 @@ public class IllegalTypeCheckTest extends AbstractModuleTestSupport {
     public void testDefaults() throws Exception {
         final DefaultConfiguration checkConfig = createModuleConfig(IllegalTypeCheck.class);
         final String[] expected = {
-            "16:13: " + getCheckMessage(MSG_KEY, "java.util.TreeSet"),
-            "17:13: " + getCheckMessage(MSG_KEY, "TreeSet"),
-            "42:14: " + getCheckMessage(MSG_KEY, "HashMap"),
-            "44:5: " + getCheckMessage(MSG_KEY, "HashMap"),
+            "17:13: " + getCheckMessage(MSG_KEY, "java.util.TreeSet"),
+            "18:13: " + getCheckMessage(MSG_KEY, "TreeSet"),
+            "43:14: " + getCheckMessage(MSG_KEY, "HashMap"),
+            "45:5: " + getCheckMessage(MSG_KEY, "HashMap"),
+        };
+
+        verify(checkConfig, getPath("InputIllegalType.java"), expected);
+    }
+
+    @Test
+    public void testDefaultsEmptyStringMemberModifiers() throws Exception {
+        final DefaultConfiguration checkConfig = createModuleConfig(IllegalTypeCheck.class);
+        checkConfig.addAttribute("memberModifiers", "");
+
+        final String[] expected = {
+            "17:13: " + getCheckMessage(MSG_KEY, "java.util.TreeSet"),
+            "18:13: " + getCheckMessage(MSG_KEY, "TreeSet"),
+            "43:14: " + getCheckMessage(MSG_KEY, "HashMap"),
+            "45:5: " + getCheckMessage(MSG_KEY, "HashMap"),
         };
 
         verify(checkConfig, getPath("InputIllegalType.java"), expected);
@@ -86,10 +101,10 @@ public class IllegalTypeCheckTest extends AbstractModuleTestSupport {
             "9:13: " + getCheckMessage(MSG_KEY,
                 "com.puppycrawl.tools.checkstyle.checks.coding.illegaltype."
                     + "InputIllegalType.AbstractClass"),
-            "16:13: " + getCheckMessage(MSG_KEY, "java.util.TreeSet"),
-            "25:36: " + getCheckMessage(MSG_KEY, "java.util.TreeSet"),
-            "42:14: " + getCheckMessage(MSG_KEY, "HashMap"),
-            "44:5: " + getCheckMessage(MSG_KEY, "HashMap"),
+            "17:13: " + getCheckMessage(MSG_KEY, "java.util.TreeSet"),
+            "26:36: " + getCheckMessage(MSG_KEY, "java.util.TreeSet"),
+            "43:14: " + getCheckMessage(MSG_KEY, "HashMap"),
+            "45:5: " + getCheckMessage(MSG_KEY, "HashMap"),
         };
 
         verify(checkConfig, getPath("InputIllegalType.java"), expected);
@@ -101,10 +116,10 @@ public class IllegalTypeCheckTest extends AbstractModuleTestSupport {
         checkConfig.addAttribute("illegalAbstractClassNameFormat", "^$");
 
         final String[] expected = {
-            "16:13: " + getCheckMessage(MSG_KEY, "java.util.TreeSet"),
-            "17:13: " + getCheckMessage(MSG_KEY, "TreeSet"),
-            "42:14: " + getCheckMessage(MSG_KEY, "HashMap"),
-            "44:5: " + getCheckMessage(MSG_KEY, "HashMap"),
+            "17:13: " + getCheckMessage(MSG_KEY, "java.util.TreeSet"),
+            "18:13: " + getCheckMessage(MSG_KEY, "TreeSet"),
+            "43:14: " + getCheckMessage(MSG_KEY, "HashMap"),
+            "45:5: " + getCheckMessage(MSG_KEY, "HashMap"),
         };
 
         verify(checkConfig, getPath("InputIllegalType.java"), expected);
@@ -120,10 +135,10 @@ public class IllegalTypeCheckTest extends AbstractModuleTestSupport {
             "9:13: " + getCheckMessage(MSG_KEY,
                 "com.puppycrawl.tools.checkstyle.checks.coding.illegaltype."
                     + "InputIllegalType.AbstractClass"),
-            "16:13: " + getCheckMessage(MSG_KEY, "java.util.TreeSet"),
-            "17:13: " + getCheckMessage(MSG_KEY, "TreeSet"),
-            "42:14: " + getCheckMessage(MSG_KEY, "HashMap"),
-            "44:5: " + getCheckMessage(MSG_KEY, "HashMap"),
+            "17:13: " + getCheckMessage(MSG_KEY, "java.util.TreeSet"),
+            "18:13: " + getCheckMessage(MSG_KEY, "TreeSet"),
+            "43:14: " + getCheckMessage(MSG_KEY, "HashMap"),
+            "45:5: " + getCheckMessage(MSG_KEY, "HashMap"),
         };
 
         verify(checkConfig, getPath("InputIllegalType.java"), expected);
@@ -271,17 +286,13 @@ public class IllegalTypeCheckTest extends AbstractModuleTestSupport {
         checkConfig.addAttribute("memberModifiers", "LITERAL_PRIVATE, LITERAL_PROTECTED,"
                 + " LITERAL_STATIC");
         final String[] expected = {
-            "6:13: " + getCheckMessage(MSG_KEY, "AbstractClass"),
-            "9:13: " + getCheckMessage(MSG_KEY,
-                "com.puppycrawl.tools.checkstyle.checks.coding.illegaltype."
-                    + "InputIllegalTypeMemberModifiers.AbstractClass"),
-            "16:13: " + getCheckMessage(MSG_KEY, "java.util.TreeSet"),
-            "17:13: " + getCheckMessage(MSG_KEY, "TreeSet"),
-            "23:15: " + getCheckMessage(MSG_KEY,
-                "com.puppycrawl.tools.checkstyle.checks.coding.illegaltype."
-                    + "InputIllegalTypeMemberModifiers.AbstractClass"),
-            "25:25: " + getCheckMessage(MSG_KEY, "java.util.TreeSet"),
-            "33:15: " + getCheckMessage(MSG_KEY, "AbstractClass"),
+            "5:13: " + getCheckMessage(MSG_KEY, "AbstractClass"),
+            "8:13: " + getCheckMessage(MSG_KEY, "java.util.AbstractList"),
+            "15:13: " + getCheckMessage(MSG_KEY, "java.util.TreeSet"),
+            "16:13: " + getCheckMessage(MSG_KEY, "TreeSet"),
+            "22:15: " + getCheckMessage(MSG_KEY, "java.util.AbstractList"),
+            "24:25: " + getCheckMessage(MSG_KEY, "java.util.TreeSet"),
+            "32:15: " + getCheckMessage(MSG_KEY, "AbstractClass"),
         };
 
         verify(checkConfig, getPath("InputIllegalTypeMemberModifiers.java"), expected);
@@ -303,14 +314,52 @@ public class IllegalTypeCheckTest extends AbstractModuleTestSupport {
         final String violationFile = getPath("InputIllegalType.java");
         checkConfig.addAttribute("illegalClassNames", "java.util.TreeSet");
         final String[] expected = {
-            "16:13: " + getCheckMessage(MSG_KEY, "java.util.TreeSet"),
-            "17:13: " + getCheckMessage(MSG_KEY, "TreeSet"),
+            "17:13: " + getCheckMessage(MSG_KEY, "java.util.TreeSet"),
+            "18:13: " + getCheckMessage(MSG_KEY, "TreeSet"),
         };
 
         verify(createChecker(checkConfig), new File[] {
             new File(violationFile),
             new File(getPath("InputIllegalTypeSimilarClassName.java")),
         }, violationFile, expected);
+    }
+
+    @Test
+    public void testIllegalTypeEnhancedInstanceof() throws Exception {
+        final DefaultConfiguration checkConfig = createModuleConfig(IllegalTypeCheck.class);
+        final String[] expected = {
+            "23:9: " + getCheckMessage(MSG_KEY, "LinkedHashMap"),
+            "26:28: " + getCheckMessage(MSG_KEY, "LinkedHashMap"),
+            "30:35: " + getCheckMessage(MSG_KEY, "HashMap"),
+            "36:32: " + getCheckMessage(MSG_KEY, "TreeSet"),
+        };
+
+        verify(checkConfig,
+                getNonCompilablePath("InputIllegalTypeEnhancedInstanceof.java"),
+                expected);
+    }
+
+    @Test
+    public void testIllegalTypeRecordsAndCompactCtors() throws Exception {
+        final DefaultConfiguration checkConfig = createModuleConfig(IllegalTypeCheck.class);
+        checkConfig.addAttribute("illegalClassNames", "HashMap, HashSet, LinkedHashMap,"
+            + " LinkedHashSet, TreeMap, TreeSet, java.util.HashMap, java.util.HashSet,"
+            + " java.util.LinkedHashMap, java.util.LinkedHashSet, java.util.TreeMap,"
+            + " java.util.TreeSet, Cloneable");
+
+        final String[] expected = {
+            "23:14: " + getCheckMessage(MSG_KEY, "LinkedHashMap"),
+            "27:52: " + getCheckMessage(MSG_KEY, "Cloneable"),
+            "28:16: " + getCheckMessage(MSG_KEY, "LinkedHashMap"),
+            "31:13: " + getCheckMessage(MSG_KEY, "TreeSet"),
+            "35:38: " + getCheckMessage(MSG_KEY, "TreeSet"),
+            "36:18: " + getCheckMessage(MSG_KEY, "HashMap"),
+            "44:13: " + getCheckMessage(MSG_KEY, "LinkedHashMap"),
+            };
+
+        verify(checkConfig,
+            getNonCompilablePath("InputIllegalTypeRecordsAndCompactCtors.java"),
+            expected);
     }
 
     @Test

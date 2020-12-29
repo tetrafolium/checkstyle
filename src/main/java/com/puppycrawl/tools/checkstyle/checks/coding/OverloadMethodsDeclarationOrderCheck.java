@@ -26,27 +26,51 @@ import com.puppycrawl.tools.checkstyle.StatelessCheck;
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 /**
  * <p>
- * Checks that overload methods are grouped together.
+ * Checks that overloaded methods are grouped together. Overloaded methods have the same
+ * name but different signatures where the signature can differ by the number of
+ * input parameters or type of input parameters or both.
  * </p>
  * <p>
- * Example of incorrect grouping overload methods:
+ * To configure the check:
+ * </p>
+ * <pre>
+ * &lt;module name=&quot;OverloadMethodsDeclarationOrder&quot;/&gt;
+ * </pre>
+ * <p>
+ * Example of correct grouping of overloaded methods:
  * </p>
  * <pre>
  * public void foo(int i) {}
  * public void foo(String s) {}
- * public void notFoo() {} // Have to be after foo(int i, String s)
+ * public void foo(String s, int i) {}
  * public void foo(int i, String s) {}
+ * public void notFoo() {}
  * </pre>
  * <p>
- * An example of how to configure the check is:
+ * Example of incorrect grouping of overloaded methods:
  * </p>
- *
  * <pre>
- * &lt;module name=&quot;OverloadMethodsDeclarationOrder&quot;/&gt;
+ * public void foo(int i) {} // OK
+ * public void foo(String s) {} // OK
+ * public void notFoo() {} // violation. Have to be after foo(String s, int i)
+ * public void foo(int i, String s) {}
+ * public void foo(String s, int i) {}
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code overload.methods.declaration}
+ * </li>
+ * </ul>
  *
  * @since 5.8
  */
@@ -79,10 +103,16 @@ public class OverloadMethodsDeclarationOrderCheck extends AbstractCheck {
     @Override
     public void visitToken(DetailAST ast) {
         final int parentType = ast.getParent().getType();
-        if (parentType == TokenTypes.CLASS_DEF
-                || parentType == TokenTypes.ENUM_DEF
-                || parentType == TokenTypes.INTERFACE_DEF
-                || parentType == TokenTypes.LITERAL_NEW) {
+
+        final int[] tokenTypes = {
+            TokenTypes.CLASS_DEF,
+            TokenTypes.ENUM_DEF,
+            TokenTypes.INTERFACE_DEF,
+            TokenTypes.LITERAL_NEW,
+            TokenTypes.RECORD_DEF,
+        };
+
+        if (TokenUtil.isOfType(parentType, tokenTypes)) {
             checkOverloadMethodsGrouping(ast);
         }
     }
@@ -90,6 +120,7 @@ public class OverloadMethodsDeclarationOrderCheck extends AbstractCheck {
     /**
      * Checks that if overload methods are grouped together they should not be
      * separated from each other.
+     *
      * @param objectBlock
      *        is a class, interface or enum object block.
      */
@@ -109,7 +140,7 @@ public class OverloadMethodsDeclarationOrderCheck extends AbstractCheck {
                     if (currentIndex - previousIndex > allowedDistance) {
                         final int previousLineWithOverloadMethod =
                                 methodLineNumberMap.get(methodName);
-                        log(currentToken.getLineNo(), MSG_KEY,
+                        log(currentToken, MSG_KEY,
                                 previousLineWithOverloadMethod);
                     }
                 }

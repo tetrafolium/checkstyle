@@ -39,6 +39,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * AllTestsTest.
+ *
  * @noinspection ClassIndependentOfModule
  */
 public class AllTestsTest {
@@ -201,7 +202,9 @@ public class AllTestsTest {
 
             if (!fileName.endsWith("TestSupport.java")
                     // tests external utility XPathEvaluator
-                    && !"XpathMapper.java".equals(fileName)) {
+                    && !"XpathMapper.java".equals(fileName)
+                    // JavadocMetadataScraper and related classes are temporarily hosted in test
+                    && !file.getPath().contains("meta")) {
                 final String path;
 
                 try {

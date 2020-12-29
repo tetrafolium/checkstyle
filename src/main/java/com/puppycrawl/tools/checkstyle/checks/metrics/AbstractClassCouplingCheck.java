@@ -40,6 +40,7 @@ import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.CheckUtil;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 /**
  * Base class for coupling calculation.
@@ -54,6 +55,8 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
     /** Class names to ignore. */
     private static final Set<String> DEFAULT_EXCLUDED_CLASSES = Collections.unmodifiableSet(
         Arrays.stream(new String[] {
+            // reserved type name
+            "var",
             // primitives
             "boolean", "byte", "char", "double", "float", "int",
             "long", "short", "void",
@@ -74,6 +77,10 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
             "Set", "HashSet", "SortedSet", "TreeSet",
             "Map", "HashMap", "SortedMap", "TreeMap",
             "Override", "Deprecated", "SafeVarargs", "SuppressWarnings", "FunctionalInterface",
+            "Collection", "EnumSet", "LinkedHashMap", "LinkedHashSet", "Optional",
+            "OptionalDouble", "OptionalInt", "OptionalLong",
+            // java.util.stream.*
+            "DoubleStream", "IntStream", "LongStream", "Stream",
         }).collect(Collectors.toSet()));
 
     /** Package names to ignore. */
@@ -105,6 +112,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
 
     /**
      * Creates new instance of the check.
+     *
      * @param defaultMax default value for allowed complexity.
      */
     protected AbstractClassCouplingCheck(int defaultMax) {
@@ -114,6 +122,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
 
     /**
      * Returns message key we use for log violations.
+     *
      * @return message key we use for log violations.
      */
     protected abstract String getLogMessageId();
@@ -134,6 +143,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
 
     /**
      * Setter to specify user-configured class names to ignore.
+     *
      * @param excludedClasses the list of classes to ignore.
      */
     public final void setExcludedClasses(String... excludedClasses) {
@@ -193,6 +203,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
             case TokenTypes.INTERFACE_DEF:
             case TokenTypes.ANNOTATION_DEF:
             case TokenTypes.ENUM_DEF:
+            case TokenTypes.RECORD_DEF:
                 visitClassDef(ast);
                 break;
             case TokenTypes.EXTENDS_CLAUSE:
@@ -216,20 +227,14 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
 
     @Override
     public void leaveToken(DetailAST ast) {
-        switch (ast.getType()) {
-            case TokenTypes.CLASS_DEF:
-            case TokenTypes.INTERFACE_DEF:
-            case TokenTypes.ANNOTATION_DEF:
-            case TokenTypes.ENUM_DEF:
-                leaveClassDef();
-                break;
-            default:
-                // Do nothing
+        if (TokenUtil.isTypeDeclaration(ast.getType())) {
+            leaveClassDef();
         }
     }
 
     /**
      * Stores package of current class we check.
+     *
      * @param pkg package definition.
      */
     private void visitPackageDef(DetailAST pkg) {
@@ -239,6 +244,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
 
     /**
      * Creates new context for a given class.
+     *
      * @param classDef class definition node.
      */
     private void visitClassDef(DetailAST classDef) {
@@ -253,6 +259,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
 
     /**
      * Registers given import. This allows us to track imported classes.
+     *
      * @param imp import definition.
      */
     private void registerImport(DetailAST imp) {
@@ -265,6 +272,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
 
     /**
      * Creates new inner class context with given name and location.
+     *
      * @param className The class name.
      * @param ast The class ast.
      */
@@ -279,6 +287,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
 
     /**
      * Visits type token for the current class context.
+     *
      * @param ast TYPE token.
      */
     private void visitType(DetailAST ast) {
@@ -287,6 +296,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
 
     /**
      * Visits NEW token for the current class context.
+     *
      * @param ast NEW token.
      */
     private void visitLiteralNew(DetailAST ast) {
@@ -295,6 +305,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
 
     /**
      * Visits THROWS token for the current class context.
+     *
      * @param ast THROWS token.
      */
     private void visitLiteralThrows(DetailAST ast) {
@@ -303,6 +314,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
 
     /**
      * Visit ANNOTATION literal and get its type to referenced classes of context.
+     *
      * @param annotationAST Annotation ast.
      */
     private void visitAnnotationType(DetailAST annotationAST) {
@@ -330,6 +342,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
 
         /**
          * Create new context associated with given class.
+         *
          * @param className name of the given class.
          * @param ast ast of class definition.
          */
@@ -340,6 +353,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
 
         /**
          * Visits throws clause and collects all exceptions we throw.
+         *
          * @param literalThrows throws to process.
          */
         public void visitLiteralThrows(DetailAST literalThrows) {
@@ -354,6 +368,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
 
         /**
          * Visits type.
+         *
          * @param ast type to process.
          */
         public void visitType(DetailAST ast) {
@@ -363,6 +378,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
 
         /**
          * Visits NEW.
+         *
          * @param ast NEW to process.
          */
         public void visitLiteralNew(DetailAST ast) {
@@ -371,6 +387,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
 
         /**
          * Adds new referenced class.
+         *
          * @param ast a node which represents referenced class.
          */
         private void addReferencedClassName(DetailAST ast) {
@@ -380,6 +397,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
 
         /**
          * Adds new referenced class.
+         *
          * @param referencedClassName class name of the referenced class.
          */
         private void addReferencedClassName(String referencedClassName) {
@@ -402,6 +420,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
 
         /**
          * Checks if given class shouldn't be ignored and not from java.lang.
+         *
          * @param candidateClassName class to check.
          * @return true if we should count this class.
          */
@@ -413,6 +432,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
 
         /**
          * Checks if given class should be ignored as it belongs to excluded package.
+         *
          * @param candidateClassName class to check
          * @return true if we should not count this class.
          */
@@ -436,6 +456,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
         /**
          * Retrieves class name with packages. Uses previously registered imports to
          * get the full class name.
+         *
          * @param examineClassName Class name to be retrieved.
          * @return Class name with package name, if found, {@link Optional#empty()} otherwise.
          */
@@ -445,6 +466,7 @@ public abstract class AbstractClassCouplingCheck extends AbstractCheck {
 
         /**
          * Checks if given class should be ignored as it belongs to excluded class regexp.
+         *
          * @param candidateClassName class to check.
          * @return true if we should not count this class.
          */

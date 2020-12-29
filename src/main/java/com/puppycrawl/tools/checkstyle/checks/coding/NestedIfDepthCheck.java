@@ -32,6 +32,7 @@ import com.puppycrawl.tools.checkstyle.utils.CheckUtil;
  * <ul>
  * <li>
  * Property {@code max} - Specify maximum allowed nesting depth.
+ * Type is {@code int}.
  * Default value is {@code 1}.
  * </li>
  * </ul>
@@ -41,6 +42,22 @@ import com.puppycrawl.tools.checkstyle.utils.CheckUtil;
  * <pre>
  * &lt;module name=&quot;NestedIfDepth&quot;/&gt;
  * </pre>
+ * <p>Valid code example:</p>
+ * <pre>
+ * if (true) {
+ *     if (true) {} // OK
+ *     else {}
+ * }
+ * </pre>
+ * <p>Invalid code example:</p>
+ * <pre>
+ * if (true) {
+ *     if (true) {
+ *         if (true) { // violation, nested if-else depth is 2 (max allowed is 1)
+ *         }
+ *     }
+ * }
+ * </pre>
  * <p>
  * To configure the check to allow nesting depth 3:
  * </p>
@@ -49,6 +66,43 @@ import com.puppycrawl.tools.checkstyle.utils.CheckUtil;
  *   &lt;property name=&quot;max&quot; value=&quot;3&quot;/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>Valid code example:</p>
+ * <pre>
+ * if (true) {
+ *    if (true) {
+ *       if (true) {
+ *          if (true) {} // OK
+ *          else {}
+ *       }
+ *    }
+ * }
+ * </pre>
+ * <p>Invalid code example:</p>
+ * <pre>
+ * if (true) {
+ *    if (true) {
+ *       if (true) {
+ *          if (true) {
+ *             if (true) { // violation, nested if-else depth is 4 (max allowed is 3)
+ *                if (true) {} // violation, nested if-else depth is 5 (max allowed is 3)
+ *                else {}
+ *             }
+ *          }
+ *       }
+ *    }
+ * }
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code nested.if.depth}
+ * </li>
+ * </ul>
  *
  * @since 3.2
  */
@@ -68,6 +122,7 @@ public final class NestedIfDepthCheck extends AbstractCheck {
 
     /**
      * Setter to specify maximum allowed nesting depth.
+     *
      * @param max maximum allowed nesting depth.
      */
     public void setMax(int max) {

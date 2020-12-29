@@ -99,6 +99,28 @@ public class ScopeUtilTest {
     }
 
     @Test
+    public void testInRecordBlock() {
+        assertFalse(ScopeUtil.isInRecordBlock(new DetailAstImpl()),
+                "Should return false when passed is not record");
+        assertFalse(ScopeUtil.isInRecordBlock(getNode(TokenTypes.LITERAL_NEW,
+                TokenTypes.MODIFIERS)), "Should return false when passed is not record");
+        assertTrue(ScopeUtil.isInRecordBlock(getNode(TokenTypes.OBJBLOCK, TokenTypes.RECORD_DEF,
+                TokenTypes.MODIFIERS)), "Should return true when passed is record");
+        assertFalse(ScopeUtil.isInRecordBlock(getNode(TokenTypes.RECORD_DEF,
+                TokenTypes.INTERFACE_DEF, TokenTypes.MODIFIERS)),
+                "Should return false when passed is not record");
+        assertFalse(
+                ScopeUtil.isInRecordBlock(getNode(TokenTypes.RECORD_DEF, TokenTypes.ANNOTATION_DEF,
+                TokenTypes.MODIFIERS)), "Should return false when passed is not record");
+        assertFalse(ScopeUtil.isInRecordBlock(getNode(TokenTypes.RECORD_DEF, TokenTypes.ENUM_DEF,
+                TokenTypes.MODIFIERS)), "Should return false when passed is not record");
+        assertFalse(ScopeUtil.isInRecordBlock(getNode(TokenTypes.RECORD_DEF, TokenTypes.LITERAL_NEW,
+                TokenTypes.IDENT)), "Should return false when passed is not record");
+        assertFalse(ScopeUtil.isInRecordBlock(getNode(TokenTypes.PACKAGE_DEF, TokenTypes.DOT)),
+                "Should return false when passed is not expected");
+    }
+
+    @Test
     public void testIsOuterMostTypeInterface() {
         assertFalse(ScopeUtil.isOuterMostType(getNode(TokenTypes.INTERFACE_DEF,
                 TokenTypes.MODIFIERS)), "Should return false when passed is not outer most type");
@@ -144,7 +166,18 @@ public class ScopeUtilTest {
 
     @Test
     public void testIsLocalVariableDefResource() {
-        assertTrue(ScopeUtil.isLocalVariableDef(getNode(TokenTypes.RESOURCE)), "invalid result");
+        final DetailAstImpl node = getNode(TokenTypes.RESOURCE);
+        final DetailAstImpl modifiers = new DetailAstImpl();
+        modifiers.setType(TokenTypes.MODIFIERS);
+        node.addChild(modifiers);
+        final DetailAstImpl ident = new DetailAstImpl();
+        ident.setType(TokenTypes.IDENT);
+        node.addChild(ident);
+        assertTrue(ScopeUtil.isLocalVariableDef(node), "invalid result");
+        final DetailAstImpl resourceWithIdent = getNode(TokenTypes.RESOURCE);
+        resourceWithIdent.addChild(ident);
+        assertFalse(ScopeUtil.isLocalVariableDef(resourceWithIdent), "invalid result");
+        assertFalse(ScopeUtil.isLocalVariableDef(getNode(TokenTypes.RESOURCE)), "invalid result");
     }
 
     @Test

@@ -52,10 +52,14 @@ import com.puppycrawl.tools.checkstyle.utils.CheckUtil;
  * <li>
  * Property {@code max} - Specify the maximum number of boolean operations
  * allowed in one expression.
+ * Type is {@code int}.
  * Default value is {@code 3}.
  * </li>
  * <li>
- * Property {@code tokens} - tokens to check Default value is:
+ * Property {@code tokens} - tokens to check
+ * Type is {@code java.lang.String[]}.
+ * Validation type is {@code tokenSet}.
+ * Default value is:
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LAND">
  * LAND</a>,
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BAND">
@@ -74,13 +78,44 @@ import com.puppycrawl.tools.checkstyle.utils.CheckUtil;
  * <pre>
  * &lt;module name="BooleanExpressionComplexity"/&gt;
  * </pre>
+ * <p>Code Example:</p>
+ * <pre>
+ * public class Test
+ * {
+ * public static void main(String ... args)
+ * {
+ * boolean a = true;
+ * boolean b = false;
+ *
+ * boolean c = (a &amp; b) | (b ^ a);       // OK, 1(&amp;) + 1(|) + 1(^) = 3 (max allowed 3)
+ *
+ * boolean d = (a &amp; b) ^ (a || b) | a;  // violation, 1(&amp;) + 1(^) + 1(||) + 1(|) = 4
+ * }
+ * }
+ * </pre>
  * <p>
- * To configure the check with 7 allowed operation in boolean expression:
+ * To configure the check with 5 allowed operation in boolean expression:
  * </p>
  * <pre>
  * &lt;module name="BooleanExpressionComplexity"&gt;
- *   &lt;property name="max" value="7"/&gt;
+ *   &lt;property name="max" value="5"/&gt;
  * &lt;/module&gt;
+ * </pre>
+ * <p>Code Example:</p>
+ * <pre>
+ * public class Test
+ * {
+ *  public static void main(String ... args)
+ *  {
+ *   boolean a = true;
+ *   boolean b = false;
+ *
+ *   boolean c = (a &amp; b) | (b ^ a) | (a ^ b);   // OK, 1(&amp;) + 1(|) + 1(^) + 1(|) + 1(^) = 5
+ *
+ *   boolean d = (a | b) ^ (a | b) ^ (a || b) &amp; b; // violation,
+ *                                               // 1(|) + 1(^) + 1(|) + 1(^) + 1(||) + 1(&amp;) = 6
+ *  }
+ * }
  * </pre>
  * <p>
  * To configure the check to ignore {@code &amp;} and {@code |}:
@@ -90,6 +125,35 @@ import com.puppycrawl.tools.checkstyle.utils.CheckUtil;
  *   &lt;property name="tokens" value="BXOR,LAND,LOR"/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>Code Example:</p>
+ * <pre>
+ * public class Test
+ * {
+ *  public static void main(String ... args)
+ *   {
+ *     boolean a = true;
+ *     boolean b = false;
+ *
+ *     boolean c = (!a &amp;&amp; b) | (a || !b) ^ a;    // OK, 1(&amp;&amp;) + 1(||) + 1(^) = 3
+ *                                                // | is ignored here
+ *
+ *     boolean d = a ^ (a || b) ^ (b || a) &amp; a; // violation, 1(^) + 1(||) + 1(^) + 1(||) = 4
+ *                                               // &amp; is ignored here
+ *    }
+ *  }
+ * </pre>
+ *
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code booleanExpressionComplexity}
+ * </li>
+ * </ul>
  *
  * @since 3.4
  */
@@ -128,6 +192,7 @@ public final class BooleanExpressionComplexityCheck extends AbstractCheck {
             TokenTypes.LOR,
             TokenTypes.BOR,
             TokenTypes.BXOR,
+            TokenTypes.COMPACT_CTOR_DEF,
         };
     }
 
@@ -137,6 +202,7 @@ public final class BooleanExpressionComplexityCheck extends AbstractCheck {
             TokenTypes.CTOR_DEF,
             TokenTypes.METHOD_DEF,
             TokenTypes.EXPR,
+            TokenTypes.COMPACT_CTOR_DEF,
         };
     }
 
@@ -151,6 +217,7 @@ public final class BooleanExpressionComplexityCheck extends AbstractCheck {
             TokenTypes.LOR,
             TokenTypes.BOR,
             TokenTypes.BXOR,
+            TokenTypes.COMPACT_CTOR_DEF,
         };
     }
 
@@ -168,6 +235,7 @@ public final class BooleanExpressionComplexityCheck extends AbstractCheck {
         switch (ast.getType()) {
             case TokenTypes.CTOR_DEF:
             case TokenTypes.METHOD_DEF:
+            case TokenTypes.COMPACT_CTOR_DEF:
                 visitMethodDef(ast);
                 break;
             case TokenTypes.EXPR:
@@ -195,6 +263,7 @@ public final class BooleanExpressionComplexityCheck extends AbstractCheck {
 
     /**
      * Checks if logical operator is part of constructor or method call.
+     *
      * @param logicalOperator logical operator
      * @return true if logical operator is part of constructor or method call
      */
@@ -207,6 +276,7 @@ public final class BooleanExpressionComplexityCheck extends AbstractCheck {
      * in
      * <a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-14.html#jls-14.20">
      * multi-catch</a> (pipe-syntax).
+     *
      * @param binaryOr {@link TokenTypes#BOR binary or}
      * @return true if binary or is applied to exceptions in multi-catch.
      */
@@ -219,6 +289,7 @@ public final class BooleanExpressionComplexityCheck extends AbstractCheck {
         switch (ast.getType()) {
             case TokenTypes.CTOR_DEF:
             case TokenTypes.METHOD_DEF:
+            case TokenTypes.COMPACT_CTOR_DEF:
                 leaveMethodDef();
                 break;
             case TokenTypes.EXPR:
@@ -231,6 +302,7 @@ public final class BooleanExpressionComplexityCheck extends AbstractCheck {
 
     /**
      * Creates new context for a given method.
+     *
      * @param ast a method we start to check.
      */
     private void visitMethodDef(DetailAST ast) {
@@ -252,6 +324,7 @@ public final class BooleanExpressionComplexityCheck extends AbstractCheck {
 
     /**
      * Restores previous context.
+     *
      * @param ast expression we leave.
      */
     private void leaveExpr(DetailAST ast) {
@@ -275,6 +348,7 @@ public final class BooleanExpressionComplexityCheck extends AbstractCheck {
 
         /**
          * Creates new instance.
+         *
          * @param checking should we check in current context or not.
          */
         /* package */ Context(boolean checking) {
@@ -284,6 +358,7 @@ public final class BooleanExpressionComplexityCheck extends AbstractCheck {
 
         /**
          * Getter for checking property.
+         *
          * @return should we check in current context or not.
          */
         public boolean isChecking() {
@@ -297,6 +372,7 @@ public final class BooleanExpressionComplexityCheck extends AbstractCheck {
 
         /**
          * Checks if we violates maximum allowed complexity.
+         *
          * @param ast a node we check now.
          */
         public void checkCount(DetailAST ast) {

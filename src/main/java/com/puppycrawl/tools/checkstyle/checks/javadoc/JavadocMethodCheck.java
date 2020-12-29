@@ -19,17 +19,13 @@
 
 package com.puppycrawl.tools.checkstyle.checks.javadoc;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Deque;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -52,15 +48,38 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * Checks the Javadoc of a method or constructor.
  * The scope to verify is specified using the {@code Scope} class and defaults
  * to {@code Scope.PRIVATE}. To verify another scope, set property scope to
- * a different <a href="https://checkstyle.org/property_types.html#scope">scope</a>.
+ * a different <a href="https://checkstyle.org/property_types.html#Scope">scope</a>.
  * </p>
  * <p>
- * Violates parameters and type parameters for which no param tags are present
- * can be suppressed by defining property {@code allowMissingParamTags}.
- * Violates methods which return non-void but for which no return tag is present
- * can be suppressed by defining property {@code allowMissingReturnTag}.
- * Violates exceptions which are declared to be thrown, but for which no throws
- * tag is present by activation of property {@code validateThrows}.
+ * Violates parameters and type parameters for which no param tags are present can
+ * be suppressed by defining property {@code allowMissingParamTags}.
+ * </p>
+ * <p>
+ * Violates methods which return non-void but for which no return tag is present can
+ * be suppressed by defining property {@code allowMissingReturnTag}.
+ * </p>
+ * <p>
+ * Violates exceptions which are declared to be thrown (by {@code throws} in the method
+ * signature or by {@code throw new} in the method body), but for which no throws tag is
+ * present by activation of property {@code validateThrows}.
+ * Note that {@code throw new} is not checked in the following places:
+ * </p>
+ * <ul>
+ * <li>
+ * Inside a try block (with catch). It is not possible to determine if the thrown
+ * exception can be caught by the catch block as there is no knowledge of the
+ * inheritance hierarchy, so the try block is ignored entirely. However, catch
+ * and finally blocks, as well as try blocks without catch, are still checked.
+ * </li>
+ * <li>
+ * Local classes, anonymous classes and lambda expressions. It is not known when the
+ * throw statements inside such classes are going to be evaluated, so they are ignored.
+ * </li>
+ * </ul>
+ * <p>
+ * ATTENTION: Checkstyle does not have information about hierarchy of exception types
+ * so usage of base class is considered as separate exception type.
+ * As workaround you need to specify both types in javadoc (parent and exact type).
  * </p>
  * <p>
  * Javadoc is not required on a method that is tagged with the {@code @Override}
@@ -88,39 +107,50 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * <li>
  * Property {@code allowedAnnotations} - Specify the list of annotations
  * that allow missed documentation.
+ * Type is {@code java.lang.String[]}.
  * Default value is {@code Override}.
  * </li>
  * <li>
  * Property {@code validateThrows} - Control whether to validate {@code throws} tags.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * <li>
  * Property {@code scope} - Specify the visibility scope where Javadoc comments are checked.
+ * Type is {@code com.puppycrawl.tools.checkstyle.api.Scope}.
  * Default value is {@code private}.
  * </li>
  * <li>
  * Property {@code excludeScope} - Specify the visibility scope where Javadoc comments
  * are not checked.
+ * Type is {@code com.puppycrawl.tools.checkstyle.api.Scope}.
  * Default value is {@code null}.
  * </li>
  * <li>
  * Property {@code allowMissingParamTags} - Control whether to ignore violations
  * when a method has parameters but does not have matching {@code param} tags in the javadoc.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * <li>
  * Property {@code allowMissingReturnTag} - Control whether to ignore violations
  * when a method returns non-void type and does not have a {@code return} tag in the javadoc.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * <li>
- * Property {@code tokens} - tokens to check Default value is:
+ * Property {@code tokens} - tokens to check
+ * Type is {@code java.lang.String[]}.
+ * Validation type is {@code tokenSet}.
+ * Default value is:
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
  * METHOD_DEF</a>,
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
  * CTOR_DEF</a>,
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_FIELD_DEF">
- * ANNOTATION_FIELD_DEF</a>.
+ * ANNOTATION_FIELD_DEF</a>,
+ * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COMPACT_CTOR_DEF">
+ * COMPACT_CTOR_DEF</a>.
  * </li>
  * </ul>
  * <p>
@@ -150,9 +180,6 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * </pre>
  * <p>
  * To configure the check to validate {@code throws} tags, you can use following config.
- * ATTENTION: Checkstyle does not have information about hierarchy of exception types so usage
- * of base class is considered as separate exception type. As workaround you need to
- * specify both types in javadoc (parent and exact type).
  * </p>
  * <pre>
  * &lt;module name="JavadocMethod"&gt;
@@ -187,7 +214,85 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  *         throw new FileNotFoundException();
  *     }
  * }
+ *
+ * &#47;**
+ *  * Ignore try block, but keep catch and finally blocks.
+ *  *
+ *  * &#64;param s String to parse
+ *  * &#64;return A positive integer
+ *  *&#47;
+ * public int parsePositiveInt(String s) {
+ *     try {
+ *         int value = Integer.parseInt(s);
+ *         if (value &lt;= 0) {
+ *             throw new NumberFormatException(value + " is negative/zero"); // ok, try
+ *         }
+ *         return value;
+ *     } catch (NumberFormatException ex) {
+ *         throw new IllegalArgumentException("Invalid number", ex); // violation, catch
+ *     } finally {
+ *         throw new IllegalStateException("Should never reach here"); // violation, finally
+ *     }
+ * }
+ *
+ * &#47;**
+ *  * Try block without catch is not ignored.
+ *  *
+ *  * &#64;return a String from standard input, if there is one
+ *  *&#47;
+ * public String readLine() {
+ *     try (Scanner sc = new Scanner(System.in)) {
+ *         if (!sc.hasNext()) {
+ *             throw new IllegalStateException("Empty input"); // violation, not caught
+ *         }
+ *         return sc.next();
+ *     }
+ * }
+ *
+ * &#47;**
+ *  * Lambda expressions are ignored as we do not know when the exception will be thrown.
+ *  *
+ *  * &#64;param s a String to be printed at some point in the future
+ *  * &#64;return a Runnable to be executed when the string is to be printed
+ *  *&#47;
+ * public Runnable printLater(String s) {
+ *     return () -&gt; {
+ *         if (s == null) {
+ *             throw new NullPointerException(); // ok
+ *         }
+ *         System.out.println(s);
+ *     };
+ * }
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code javadoc.classInfo}
+ * </li>
+ * <li>
+ * {@code javadoc.duplicateTag}
+ * </li>
+ * <li>
+ * {@code javadoc.expectedTag}
+ * </li>
+ * <li>
+ * {@code javadoc.invalidInheritDoc}
+ * </li>
+ * <li>
+ * {@code javadoc.return.expected}
+ * </li>
+ * <li>
+ * {@code javadoc.unusedTag}
+ * </li>
+ * <li>
+ * {@code javadoc.unusedTagGeneral}
+ * </li>
+ * </ul>
  *
  * @since 3.0
  */
@@ -262,9 +367,6 @@ public class JavadocMethodCheck extends AbstractCheck {
     /** Compiled regexp to match Javadoc tags with no argument and {}. */
     private static final Pattern MATCH_JAVADOC_NOARG_CURLY =
             CommonUtil.createPattern("\\{\\s*@(inheritDoc)\\s*\\}");
-
-    /** Stack of maps for type params. */
-    private final Deque<Map<String, ClassInfo>> currentTypeParams = new ArrayDeque<>();
 
     /** Name of current class. */
     private String currentClassName;
@@ -357,6 +459,7 @@ public class JavadocMethodCheck extends AbstractCheck {
             TokenTypes.CLASS_DEF,
             TokenTypes.INTERFACE_DEF,
             TokenTypes.ENUM_DEF,
+            TokenTypes.RECORD_DEF,
         };
     }
 
@@ -374,26 +477,25 @@ public class JavadocMethodCheck extends AbstractCheck {
             TokenTypes.METHOD_DEF,
             TokenTypes.CTOR_DEF,
             TokenTypes.ANNOTATION_FIELD_DEF,
+            TokenTypes.RECORD_DEF,
+            TokenTypes.COMPACT_CTOR_DEF,
         };
     }
 
     @Override
     public void beginTree(DetailAST rootAST) {
         currentClassName = "";
-        currentTypeParams.clear();
     }
 
     @Override
     public final void visitToken(DetailAST ast) {
         if (ast.getType() == TokenTypes.CLASS_DEF
                  || ast.getType() == TokenTypes.INTERFACE_DEF
-                 || ast.getType() == TokenTypes.ENUM_DEF) {
+                 || ast.getType() == TokenTypes.ENUM_DEF
+                 || ast.getType() == TokenTypes.RECORD_DEF) {
             processClass(ast);
         }
         else {
-            if (ast.getType() == TokenTypes.METHOD_DEF) {
-                processTypeParams(ast);
-            }
             processAST(ast);
         }
     }
@@ -402,29 +504,17 @@ public class JavadocMethodCheck extends AbstractCheck {
     public final void leaveToken(DetailAST ast) {
         if (ast.getType() == TokenTypes.CLASS_DEF
             || ast.getType() == TokenTypes.INTERFACE_DEF
-            || ast.getType() == TokenTypes.ENUM_DEF) {
+            || ast.getType() == TokenTypes.ENUM_DEF
+            || ast.getType() == TokenTypes.RECORD_DEF) {
             // perhaps it was inner class
-            int dotIdx = currentClassName.lastIndexOf('$');
-            if (dotIdx == -1) {
-                // perhaps just a class
-                dotIdx = currentClassName.lastIndexOf('.');
-            }
-            if (dotIdx == -1) {
-                // looks like a topmost class
-                currentClassName = "";
-            }
-            else {
-                currentClassName = currentClassName.substring(0, dotIdx);
-            }
-            currentTypeParams.pop();
-        }
-        else if (ast.getType() == TokenTypes.METHOD_DEF) {
-            currentTypeParams.pop();
+            final int dotIdx = currentClassName.lastIndexOf('$');
+            currentClassName = currentClassName.substring(0, dotIdx);
         }
     }
 
     /**
      * Called to process an AST when visiting it.
+     *
      * @param ast the AST to process. Guaranteed to not be PACKAGE_DEF or
      *             IMPORT tokens.
      */
@@ -480,13 +570,17 @@ public class JavadocMethodCheck extends AbstractCheck {
                 final boolean reportExpectedTags = !hasInheritDocTag
                     && !AnnotationUtil.containsAnnotation(ast, allowedAnnotations);
 
-                checkParamTags(tags, ast, reportExpectedTags);
+                // COMPACT_CTOR_DEF has no parameters
+                if (ast.getType() != TokenTypes.COMPACT_CTOR_DEF) {
+                    checkParamTags(tags, ast, reportExpectedTags);
+                }
                 final List<ExceptionInfo> throwed =
-                        combineExceptionInfo(getThrows(ast), getThrowed(ast));
+                    combineExceptionInfo(getThrows(ast), getThrowed(ast));
                 checkThrowsTags(tags, throwed, reportExpectedTags);
                 if (CheckUtil.isNonVoidMethod(ast)) {
                     checkReturnTag(tags, ast.getLineNo(), reportExpectedTags);
                 }
+
             }
 
             // Dump out all unused tags
@@ -595,6 +689,7 @@ public class JavadocMethodCheck extends AbstractCheck {
 
     /**
      * Calculates column number using Javadoc tag matcher.
+     *
      * @param javadocTagMatcher found javadoc tag matcher
      * @param lineNumber line number of Javadoc tag in comment
      * @param startColumnNumber column number of Javadoc comment beginning
@@ -611,6 +706,7 @@ public class JavadocMethodCheck extends AbstractCheck {
 
     /**
      * Gets multiline Javadoc tags with no arguments.
+     *
      * @param noargMultilineStart javadoc tag Matcher
      * @param lines comment text lines
      * @param lineIndex line number that contains the javadoc tag
@@ -669,7 +765,7 @@ public class JavadocMethodCheck extends AbstractCheck {
      * @param ast the method node.
      * @return the list of exception nodes for ast.
      */
-    private List<ExceptionInfo> getThrows(DetailAST ast) {
+    private static List<ExceptionInfo> getThrows(DetailAST ast) {
         final List<ExceptionInfo> returnValue = new ArrayList<>();
         final DetailAST throwsAST = ast
                 .findFirstToken(TokenTypes.LITERAL_THROWS);
@@ -678,10 +774,7 @@ public class JavadocMethodCheck extends AbstractCheck {
             while (child != null) {
                 if (child.getType() == TokenTypes.IDENT
                         || child.getType() == TokenTypes.DOT) {
-                    final FullIdent ident = FullIdent.createFullIdent(child);
-                    final ExceptionInfo exceptionInfo = new ExceptionInfo(
-                            createClassInfo(new Token(ident), currentClassName));
-                    returnValue.add(exceptionInfo);
+                    returnValue.add(getExceptionInfo(child));
                 }
                 child = child.getNextSibling();
             }
@@ -691,22 +784,23 @@ public class JavadocMethodCheck extends AbstractCheck {
 
     /**
      * Get ExceptionInfo for all exceptions that throws in method code by 'throw new'.
+     *
      * @param methodAst method DetailAST object where to find exceptions
      * @return list of ExceptionInfo
      */
-    private List<ExceptionInfo> getThrowed(DetailAST methodAst) {
+    private static List<ExceptionInfo> getThrowed(DetailAST methodAst) {
         final List<ExceptionInfo> returnValue = new ArrayList<>();
         final DetailAST blockAst = methodAst.findFirstToken(TokenTypes.SLIST);
         if (blockAst != null) {
             final List<DetailAST> throwLiterals = findTokensInAstByType(blockAst,
                     TokenTypes.LITERAL_THROW);
             for (DetailAST throwAst : throwLiterals) {
-                final DetailAST newAst = throwAst.getFirstChild().getFirstChild();
-                if (newAst.getType() == TokenTypes.LITERAL_NEW) {
-                    final FullIdent ident = FullIdent.createFullIdent(newAst.getFirstChild());
-                    final ExceptionInfo exceptionInfo = new ExceptionInfo(
-                            createClassInfo(new Token(ident), currentClassName));
-                    returnValue.add(exceptionInfo);
+                if (!isInIgnoreBlock(blockAst, throwAst)) {
+                    final DetailAST newAst = throwAst.getFirstChild().getFirstChild();
+                    if (newAst.getType() == TokenTypes.LITERAL_NEW) {
+                        final DetailAST child = newAst.getFirstChild();
+                        returnValue.add(getExceptionInfo(child));
+                    }
                 }
             }
         }
@@ -714,7 +808,66 @@ public class JavadocMethodCheck extends AbstractCheck {
     }
 
     /**
+     * Get ExceptionInfo instance.
+     *
+     * @param ast DetailAST object where to find exceptions node;
+     * @return ExceptionInfo
+     */
+    private static ExceptionInfo getExceptionInfo(DetailAST ast) {
+        final FullIdent ident = FullIdent.createFullIdent(ast);
+        final DetailAST firstClassNameNode = getFirstClassNameNode(ast);
+        return new ExceptionInfo(firstClassNameNode,
+                new ClassInfo(new Token(ident)));
+    }
+
+    /**
+     * Get node where class name of exception starts.
+     *
+     * @param ast DetailAST object where to find exceptions node;
+     * @return exception node where class name starts
+     */
+    private static DetailAST getFirstClassNameNode(DetailAST ast) {
+        DetailAST startNode = ast;
+        while (startNode.getType() == TokenTypes.DOT) {
+            startNode = startNode.getFirstChild();
+        }
+        return startNode;
+    }
+
+    /**
+     * Checks if a 'throw' usage is contained within a block that should be ignored.
+     * Such blocks consist of try (with catch) blocks, local classes, anonymous classes,
+     * and lambda expressions. Note that a try block without catch is not considered.
+     *
+     * @param methodBodyAst DetailAST node representing the method body
+     * @param throwAst DetailAST node representing the 'throw' literal
+     * @return true if throwAst is inside a block that should be ignored
+     */
+    private static boolean isInIgnoreBlock(DetailAST methodBodyAst, DetailAST throwAst) {
+        DetailAST ancestor = throwAst.getParent();
+        while (ancestor != methodBodyAst) {
+            if (ancestor.getType() == TokenTypes.LITERAL_TRY
+                    && ancestor.findFirstToken(TokenTypes.LITERAL_CATCH) != null
+                    || ancestor.getType() == TokenTypes.LAMBDA
+                    || ancestor.getType() == TokenTypes.OBJBLOCK) {
+                // throw is inside a try block, and there is a catch block,
+                // or throw is inside a lambda expression/anonymous class/local class
+                break;
+            }
+            if (ancestor.getType() == TokenTypes.LITERAL_CATCH
+                    || ancestor.getType() == TokenTypes.LITERAL_FINALLY) {
+                // if the throw is inside a catch or finally block,
+                // skip the immediate ancestor (try token)
+                ancestor = ancestor.getParent();
+            }
+            ancestor = ancestor.getParent();
+        }
+        return ancestor != methodBodyAst;
+    }
+
+    /**
      * Combine ExceptionInfo lists together by matching names.
+     *
      * @param list1 list of ExceptionInfo
      * @param list2 list of ExceptionInfo
      * @return combined list of ExceptionInfo
@@ -722,9 +875,9 @@ public class JavadocMethodCheck extends AbstractCheck {
     private static List<ExceptionInfo> combineExceptionInfo(List<ExceptionInfo> list1,
                                                      List<ExceptionInfo> list2) {
         final List<ExceptionInfo> result = new ArrayList<>(list1);
-        for (ExceptionInfo expectionInfo : list2) {
-            if (result.stream().noneMatch(item -> isExceptionInfoSame(item, expectionInfo))) {
-                result.add(expectionInfo);
+        for (ExceptionInfo exceptionInfo : list2) {
+            if (result.stream().noneMatch(item -> isExceptionInfoSame(item, exceptionInfo))) {
+                result.add(exceptionInfo);
             }
         }
         return result;
@@ -733,6 +886,7 @@ public class JavadocMethodCheck extends AbstractCheck {
     /**
      * Finds node of specified type among root children, siblings, siblings children
      * on any deep level.
+     *
      * @param root    DetailAST
      * @param astType value of TokenType
      * @return {@link List} of {@link DetailAST} nodes which matches the predicate.
@@ -817,6 +971,7 @@ public class JavadocMethodCheck extends AbstractCheck {
 
     /**
      * Returns true if required type found in type parameters.
+     *
      * @param typeParams
      *            list of type parameters
      * @param requiredTypeName
@@ -842,6 +997,7 @@ public class JavadocMethodCheck extends AbstractCheck {
 
     /**
      * Remove parameter from params collection by name.
+     *
      * @param params collection of DetailAST parameters
      * @param paramName name of parameter
      * @return true if parameter found and removed
@@ -920,8 +1076,7 @@ public class JavadocMethodCheck extends AbstractCheck {
             // Loop looking for matching throw
             final Token token = new Token(tag.getFirstArg(), tag.getLineNo(), tag
                     .getColumnNo());
-            final ClassInfo documentedClassInfo = createClassInfo(token,
-                    currentClassName);
+            final ClassInfo documentedClassInfo = new ClassInfo(token);
             processThrows(throwsList, documentedClassInfo, foundThrows);
         }
         // Now dump out all throws without tags :- unless
@@ -930,7 +1085,7 @@ public class JavadocMethodCheck extends AbstractCheck {
             throwsList.stream().filter(exceptionInfo -> !exceptionInfo.isFound())
                 .forEach(exceptionInfo -> {
                     final Token token = exceptionInfo.getName();
-                    log(token.getLineNo(), token.getColumnNo(),
+                    log(exceptionInfo.getAst(),
                         MSG_EXPECTED_TAG,
                         JavadocTagInfo.THROWS.getText(), token.getText());
                 });
@@ -965,6 +1120,7 @@ public class JavadocMethodCheck extends AbstractCheck {
 
     /**
      * Check that ExceptionInfo objects are same by name.
+     *
      * @param info1 ExceptionInfo object
      * @param info2 ExceptionInfo object
      * @return true is ExceptionInfo object have the same name
@@ -977,6 +1133,7 @@ public class JavadocMethodCheck extends AbstractCheck {
     /**
      * Check that class names are same by short name of class. If some class name is fully
      * qualified it is cut to short name.
+     *
      * @param class1 class name
      * @param class2 class name
      * @return true is ExceptionInfo object have the same name
@@ -1000,89 +1157,16 @@ public class JavadocMethodCheck extends AbstractCheck {
     }
 
     /**
-     * Process type params (if any) for given class, enum or method.
-     * @param ast class, enum or method to process.
-     */
-    private void processTypeParams(DetailAST ast) {
-        final DetailAST params =
-            ast.findFirstToken(TokenTypes.TYPE_PARAMETERS);
-
-        final Map<String, ClassInfo> paramsMap = new HashMap<>();
-        currentTypeParams.push(paramsMap);
-
-        if (params != null) {
-            for (DetailAST child = params.getFirstChild();
-                 child != null;
-                 child = child.getNextSibling()) {
-                if (child.getType() == TokenTypes.TYPE_PARAMETER) {
-                    final DetailAST bounds =
-                        child.findFirstToken(TokenTypes.TYPE_UPPER_BOUNDS);
-                    if (bounds != null) {
-                        final FullIdent name =
-                            FullIdent.createFullIdentBelow(bounds);
-                        final ClassInfo classInfo =
-                            createClassInfo(new Token(name), currentClassName);
-                        final String alias =
-                                child.findFirstToken(TokenTypes.IDENT).getText();
-                        paramsMap.put(alias, classInfo);
-                    }
-                }
-            }
-        }
-    }
-
-    /**
      * Processes class definition.
+     *
      * @param ast class definition to process.
      */
     private void processClass(DetailAST ast) {
         final DetailAST ident = ast.findFirstToken(TokenTypes.IDENT);
         String innerClass = ident.getText();
 
-        if (!currentClassName.isEmpty()) {
-            innerClass = "$" + innerClass;
-        }
+        innerClass = "$" + innerClass;
         currentClassName += innerClass;
-        processTypeParams(ast);
-    }
-
-    /**
-     * Creates class info for given name.
-     * @param name name of type.
-     * @param surroundingClass name of surrounding class.
-     * @return class info for given name.
-     */
-    private ClassInfo createClassInfo(final Token name,
-                                      final String surroundingClass) {
-        final ClassInfo result;
-        final ClassInfo classInfo = findClassAlias(name.getText());
-        if (classInfo == null) {
-            result = new RegularClass(name, surroundingClass, this);
-        }
-        else {
-            result = new ClassAlias(name, classInfo);
-        }
-        return result;
-    }
-
-    /**
-     * Looking if a given name is alias.
-     * @param name given name
-     * @return ClassInfo for alias if it exists, null otherwise
-     * @noinspection WeakerAccess
-     */
-    private ClassInfo findClassAlias(final String name) {
-        ClassInfo classInfo = null;
-        final Iterator<Map<String, ClassInfo>> iterator = currentTypeParams
-                .descendingIterator();
-        while (iterator.hasNext()) {
-            final Map<String, ClassInfo> paramMap = iterator.next();
-            classInfo = paramMap.get(name);
-            if (classInfo != null) {
-                break;
-            }
-        }
-        return classInfo;
     }
 
     /**
@@ -1095,78 +1179,21 @@ public class JavadocMethodCheck extends AbstractCheck {
 
         /**
          * Creates new instance of class information object.
+         *
          * @param className token which represents class name.
          * @throws IllegalArgumentException when className is nulls
          */
         protected ClassInfo(final Token className) {
-            if (className == null) {
-                throw new IllegalArgumentException(
-                    "ClassInfo's name should be non-null");
-            }
             name = className;
         }
 
         /**
          * Gets class name.
+         *
          * @return class name
          */
         public final Token getName() {
             return name;
-        }
-
-    }
-
-    /** Represents regular classes/enums. */
-    private static final class RegularClass extends ClassInfo {
-
-        /** Name of surrounding class. */
-        private final String surroundingClass;
-        /** The check we use to resolve classes. */
-        private final JavadocMethodCheck check;
-
-        /**
-         * Creates new instance of of class information object.
-         * @param name {@code FullIdent} associated with new object.
-         * @param surroundingClass name of current surrounding class.
-         * @param check the check we use to load class.
-         */
-        /* package */ RegularClass(final Token name,
-                             final String surroundingClass,
-                             final JavadocMethodCheck check) {
-            super(name);
-            this.surroundingClass = surroundingClass;
-            this.check = check;
-        }
-
-        @Override
-        public String toString() {
-            return "RegularClass[name=" + getName()
-                    + ", in class='" + surroundingClass + '\''
-                    + ", check=" + check.hashCode()
-                    + ']';
-        }
-
-    }
-
-    /** Represents type param which is "alias" for real type. */
-    private static class ClassAlias extends ClassInfo {
-
-        /** Class information associated with the alias. */
-        private final ClassInfo classInfo;
-
-        /**
-         * Creates new instance of the class.
-         * @param name token which represents name of class alias.
-         * @param classInfo class information associated with the alias.
-         */
-        /* package */ ClassAlias(final Token name, ClassInfo classInfo) {
-            super(name);
-            this.classInfo = classInfo;
-        }
-
-        @Override
-        public String toString() {
-            return "ClassAlias[alias " + getName() + " for " + classInfo.getName() + "]";
         }
 
     }
@@ -1185,6 +1212,7 @@ public class JavadocMethodCheck extends AbstractCheck {
 
         /**
          * Creates token.
+         *
          * @param text token's text
          * @param lineNo token's line number
          * @param columnNo token's column number
@@ -1197,6 +1225,7 @@ public class JavadocMethodCheck extends AbstractCheck {
 
         /**
          * Converts FullIdent to Token.
+         *
          * @param fullIdent full ident to convert.
          */
         /* package */ Token(FullIdent fullIdent) {
@@ -1206,23 +1235,8 @@ public class JavadocMethodCheck extends AbstractCheck {
         }
 
         /**
-         * Gets line number of the token.
-         * @return line number of the token
-         */
-        public int getLineNo() {
-            return lineNo;
-        }
-
-        /**
-         * Gets column number of the token.
-         * @return column number of the token
-         */
-        public int getColumnNo() {
-            return columnNo;
-        }
-
-        /**
          * Gets text of the token.
+         *
          * @return text of the token
          */
         public String getText() {
@@ -1240,6 +1254,9 @@ public class JavadocMethodCheck extends AbstractCheck {
     /** Stores useful information about declared exception. */
     private static class ExceptionInfo {
 
+        /** AST node representing this exception. */
+        private final DetailAST ast;
+
         /** Class information associated with this exception. */
         private final ClassInfo classInfo;
         /** Does the exception have throws tag associated with. */
@@ -1248,10 +1265,21 @@ public class JavadocMethodCheck extends AbstractCheck {
         /**
          * Creates new instance for {@code FullIdent}.
          *
+         * @param ast AST node representing this exception
          * @param classInfo class info
          */
-        /* package */ ExceptionInfo(ClassInfo classInfo) {
+        /* package */ ExceptionInfo(DetailAST ast, ClassInfo classInfo) {
+            this.ast = ast;
             this.classInfo = classInfo;
+        }
+
+        /**
+         * Gets the AST node representing this exception.
+         *
+         * @return the AST node representing this exception
+         */
+        private DetailAST getAst() {
+            return ast;
         }
 
         /** Mark that the exception has associated throws tag. */
@@ -1261,6 +1289,7 @@ public class JavadocMethodCheck extends AbstractCheck {
 
         /**
          * Checks that the exception has throws tag associated with it.
+         *
          * @return whether the exception has throws tag associated with
          */
         private boolean isFound() {
@@ -1269,6 +1298,7 @@ public class JavadocMethodCheck extends AbstractCheck {
 
         /**
          * Gets exception name.
+         *
          * @return exception's name
          */
         private Token getName() {

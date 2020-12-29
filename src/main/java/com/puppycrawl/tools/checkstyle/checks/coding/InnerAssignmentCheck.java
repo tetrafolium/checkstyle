@@ -32,19 +32,28 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * {@code String s = Integer.toString(i = 2);}.
  * </p>
  * <p>
- * Rationale: With the exception of {@code for} iterators and assignment in {@code while} idiom,
+ * Rationale: With the exception of loop idioms,
  * all assignments should occur in their own top-level statement to increase readability.
  * With inner assignments like the one given above, it is difficult to see all places
  * where a variable is set.
  * </p>
  * <p>
- * Note: Check allows usage of the popular assignment in {@code while} idiom:
+ * Note: Check allows usage of the popular assignments in loops:
  * </p>
  * <pre>
  * String line;
- * while ((line = bufferedReader.readLine()) != null) {
+ * while ((line = bufferedReader.readLine()) != null) { // OK
  *   // process the line
  * }
+ *
+ * for (;(line = bufferedReader.readLine()) != null;) { // OK
+ *   // process the line
+ * }
+ *
+ * do {
+ *   // process the line
+ * }
+ * while ((line = bufferedReader.readLine()) != null); // OK
  * </pre>
  * <p>
  * Assignment inside a condition is not a problem here, as the assignment is surrounded
@@ -57,6 +66,60 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * <pre>
  * &lt;module name=&quot;InnerAssignment"/&gt;
  * </pre>
+ * <p>Example:</p>
+ * <pre>
+ * class MyClass {
+ *
+ *   void foo() {
+ *     int a, b;
+ *     a = b = 5; // violation, assignment to each variable should be in a separate statement
+ *     a = b += 5; // violation
+ *
+ *     a = 5; // OK
+ *     b = 5; // OK
+ *     a = 5; b = 5; // OK
+ *
+ *     double myDouble;
+ *     double[] doubleArray = new double[] {myDouble = 4.5, 15.5}; // violation
+ *
+ *     String nameOne;
+ *     List&lt;String&gt; myList = new ArrayList&lt;String&gt;();
+ *     myList.add(nameOne = "tom"); // violation
+ *     for (int k = 0; k &lt; 10; k = k + 2) { // OK
+ *       // some code
+ *     }
+ *
+ *     boolean someVal;
+ *     if (someVal = true) { // violation
+ *       // some code
+ *     }
+ *
+ *     while (someVal = false) {} // violation
+ *
+ *     InputStream is = new FileInputStream("textFile.txt");
+ *     while ((b = is.read()) != -1) { // OK, this is a common idiom
+ *       // some code
+ *     }
+ *
+ *   }
+ *
+ *   boolean testMethod() {
+ *     boolean val;
+ *     return val = true; // violation
+ *   }
+ * }
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code assignment.inner.avoid}
+ * </li>
+ * </ul>
  *
  * @since 3.0
  */
@@ -104,7 +167,9 @@ public class InnerAssignmentCheck
      * towards the root.
      */
     private static final int[][] ALLOWED_ASSIGNMENT_IN_COMPARISON_CONTEXT = {
-        {TokenTypes.EXPR, TokenTypes.LITERAL_WHILE, },
+        {TokenTypes.EXPR, TokenTypes.LITERAL_WHILE},
+        {TokenTypes.EXPR, TokenTypes.FOR_CONDITION},
+        {TokenTypes.EXPR, TokenTypes.LITERAL_DO},
     };
 
     /**
@@ -120,9 +185,9 @@ public class InnerAssignmentCheck
     };
 
     /**
-     * The token types that are ignored while checking "while-idiom".
+     * The token types that are ignored while checking "loop-idiom".
      */
-    private static final int[] WHILE_IDIOM_IGNORED_PARENTS = {
+    private static final int[] LOOP_IDIOM_IGNORED_PARENTS = {
         TokenTypes.LAND,
         TokenTypes.LOR,
         TokenTypes.LNOT,
@@ -132,7 +197,7 @@ public class InnerAssignmentCheck
 
     static {
         Arrays.sort(COMPARISON_TYPES);
-        Arrays.sort(WHILE_IDIOM_IGNORED_PARENTS);
+        Arrays.sort(LOOP_IDIOM_IGNORED_PARENTS);
     }
 
     @Override
@@ -167,7 +232,7 @@ public class InnerAssignmentCheck
     public void visitToken(DetailAST ast) {
         if (!isInContext(ast, ALLOWED_ASSIGNMENT_CONTEXT)
                 && !isInNoBraceControlStatement(ast)
-                && !isInWhileIdiom(ast)) {
+                && !isInLoopIdiom(ast)) {
             log(ast, MSG_KEY);
         }
     }
@@ -212,12 +277,19 @@ public class InnerAssignmentCheck
     }
 
     /**
-     * Tests whether the given AST is used in the "assignment in while" idiom.
+     * Tests whether the given AST is used in the "assignment in loop" idiom.
      * <pre>
      * String line;
      * while ((line = bufferedReader.readLine()) != null) {
-     *    // process the line
+     *   // process the line
      * }
+     * for (;(line = bufferedReader.readLine()) != null;) {
+     *   // process the line
+     * }
+     * do {
+     *   // process the line
+     * }
+     * while ((line = bufferedReader.readLine()) != null);
      * </pre>
      * Assignment inside a condition is not a problem here, as the assignment is surrounded by an
      * extra pair of parentheses. The comparison is {@code != null} and there is no chance that
@@ -226,12 +298,12 @@ public class InnerAssignmentCheck
      * @param ast assignment AST
      * @return whether the context of the assignment AST indicates the idiom
      */
-    private static boolean isInWhileIdiom(DetailAST ast) {
+    private static boolean isInLoopIdiom(DetailAST ast) {
         boolean result = false;
         if (isComparison(ast.getParent())) {
             result = isInContext(ast.getParent(),
                 ALLOWED_ASSIGNMENT_IN_COMPARISON_CONTEXT,
-                WHILE_IDIOM_IGNORED_PARENTS
+                LOOP_IDIOM_IGNORED_PARENTS
             );
         }
         return result;
@@ -239,6 +311,7 @@ public class InnerAssignmentCheck
 
     /**
      * Checks if an AST is a comparison operator.
+     *
      * @param ast the AST to check
      * @return true iff ast is a comparison operator.
      */

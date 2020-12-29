@@ -65,7 +65,6 @@ import org.powermock.reflect.Whitebox;
 import com.puppycrawl.tools.checkstyle.api.AuditListener;
 import com.puppycrawl.tools.checkstyle.api.AutomaticBean;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
-import com.puppycrawl.tools.checkstyle.api.Configuration;
 import com.puppycrawl.tools.checkstyle.api.LocalizedMessage;
 import com.puppycrawl.tools.checkstyle.internal.testmodules.TestRootModuleChecker;
 import com.puppycrawl.tools.checkstyle.internal.utils.TestUtil;
@@ -78,60 +77,106 @@ public class MainTest {
             + "Try 'checkstyle --help' for more information.%n");
 
     private static final String USAGE = String.format(Locale.ROOT,
-          "Usage: checkstyle [-dEghjJtTV] [-b=<xpath>] [-c=<configurationFile>]"
-          + " [-C=<checkerThreadsNumber>]%n"
-          + "                  [-f=<format>] [-o=<outputPath>] [-p=<propertiesFile>]%n"
-          + "                  [-s=<suppressionLineColumnNumber>] [-w=<tabWidth>]"
-          + " [-W=<treeWalkerThreadsNumber>]%n"
-          + "                  [-e=<exclude>]... [-x=<excludeRegex>]..."
-          + " <files>...%n"
-          + "Checkstyle verifies that the specified source code files adhere to the specified"
-          + " rules. By default%n"
-          + "violations are reported to standard out in plain format. Checkstyle requires a"
-          + " configuration XML%n"
-          + "file that configures the checks to apply.%n"
-          + "      <files>...            One or more source files to verify%n"
-          + "  -b, --branch-matching-xpath=<xpath>%n"
-          + "                            Show Abstract Syntax Tree(AST) branches that match XPath%n"
-          + "  -c=<configurationFile>    Sets the check configuration file to use.%n"
-          + "  -C, --checker-threads-number=<checkerThreadsNumber>%n"
-          + "                            (experimental) The number of Checker threads (must be"
-          + " greater than zero)%n"
-          + "  -d, --debug               Print all debug logging of CheckStyle utility%n"
-          + "  -e, --exclude=<exclude>   Directory/File path to exclude from CheckStyle%n"
-          + "  -E, --executeIgnoredModules%n"
-          + "                            Allows ignored modules to be run.%n"
-          + "  -f=<format>               Sets the output format. Valid values: xml, plain."
-          + " Defaults to plain%n"
-          + "  -g, --generate-xpath-suppression%n"
-          + "                            Generates to output a suppression xml to use to suppress"
-          + " all violations%n"
-          + "                              from user's config%n"
-          + "  -h, --help                Show this help message and exit.%n"
-          + "  -j, --javadocTree         Print Parse tree of the Javadoc comment%n"
-          + "  -J, --treeWithJavadoc     Print full Abstract Syntax Tree of the file%n"
-          + "  -o=<outputPath>           Sets the output file. Defaults to stdout%n"
-          + "  -p=<propertiesFile>       Loads the properties file%n"
-          + "  -s=<suppressionLineColumnNumber>%n"
-          + "                            Print xpath suppressions at the file's line and column"
-          + " position.%n"
-          + "                              Argument is the line and column number (separated by"
-          + " a : ) in the%n"
-          + "                              file that the suppression should be generated for%n"
-          + "  -t, --tree                Print Abstract Syntax Tree(AST) of the file%n"
-          + "  -T, --treeWithComments    Print Abstract Syntax Tree(AST) of the file including"
-          + " comments%n"
-          + "  -V, --version             Print version information and exit.%n"
-          + "  -w, --tabWidth=<tabWidth> Sets the length of the tab character. Used only with"
-          + " \"-s\" option.%n"
-          + "                              Default value is 8%n"
-          + "  -W, --tree-walker-threads-number=<treeWalkerThreadsNumber>%n"
-          + "                            (experimental) The number of TreeWalker threads (must be"
-          + " greater than%n"
-          + "                              zero)%n"
-          + "  -x, --exclude-regexp=<excludeRegex>%n"
-          + "                            Regular expression of directory/file to exclude from"
-          + " CheckStyle%n");
+          "Usage: checkstyle [-dEghjJtTV] [-b=<xpath>] [-c=<configurationFile>] "
+                  + "[-f=<format>]%n"
+                  + "                  [-o=<outputPath>] [-p=<propertiesFile>] "
+                  + "[-s=<suppressionLineColumnNumber>]%n"
+                  + "                  [-w=<tabWidth>] [-e=<exclude>]... [-x=<excludeRegex>]... "
+                  + "<files>...%n"
+                  + "Checkstyle verifies that the specified source code files adhere to the"
+                  + " specified rules. By default%n"
+                  + "violations are reported to standard out in plain format. Checkstyle requires"
+                  + " a configuration XML%n"
+                  + "file that configures the checks to apply.%n"
+                  + "      <files>...            One or more source files to verify%n"
+                  + "  -b, --branch-matching-xpath=<xpath>%n"
+                  + "                            Shows Abstract Syntax Tree(AST) branches that"
+                  + " match given XPath query.%n"
+                  + "  -c=<configurationFile>    Specifies the location of the file that defines"
+                  + " the configuration%n"
+                  + "                              modules. The location can either be a"
+                  + " filesystem location, or a name%n"
+                  + "                              passed to the ClassLoader.getResource()"
+                  + " method.%n"
+                  + "  -d, --debug               Prints all debug logging of CheckStyle utility.%n"
+                  + "  -e, --exclude=<exclude>   Directory/file to exclude from CheckStyle. The"
+                  + " path can be the full,%n"
+                  + "                              absolute path, or relative to the current"
+                  + " path. Multiple excludes are%n"
+                  + "                              allowed.%n"
+                  + "  -E, --executeIgnoredModules%n"
+                  + "                            Allows ignored modules to be run.%n"
+                  + "  -f=<format>               Specifies the output format. Valid values: xml,"
+                  + " plain for XMLLogger and%n"
+                  + "                              DefaultLogger respectively. Defaults to plain.%n"
+                  + "  -g, --generate-xpath-suppression%n"
+                  + "                            Generates to output a suppression xml to use"
+                  + " to suppress all violations%n"
+                  + "                              from user's config. Instead of printing every"
+                  + " violation, all%n"
+                  + "                              violations will be catched and single"
+                  + " suppressions xml file will be%n"
+                  + "                              printed out. Used only with -c option. Output"
+                  + " location can be%n"
+                  + "                              specified with -o option.%n"
+                  + "  -h, --help                Show this help message and exit.%n"
+                  + "  -j, --javadocTree         Prints Parse Tree of the Javadoc comment. The"
+                  + " file have to contain only%n"
+                  + "                              Javadoc comment content without including"
+                  + " '/**' and '*/' at the%n"
+                  + "                              beginning and at the end respectively. The"
+                  + " option cannot be used%n"
+                  + "                              other options and requires exactly one file"
+                  + " to run on to be specified.%n"
+                  + "  -J, --treeWithJavadoc     Prints Abstract Syntax Tree(AST) with Javadoc"
+                  + " nodes and comment nodes%n"
+                  + "                              of the checked file. Attention that line number"
+                  + " and columns will not%n"
+                  + "                              be the same as it is a file due to the fact"
+                  + " that each javadoc comment%n"
+                  + "                              is parsed separately from java file. The"
+                  + " option cannot be used with%n"
+                  + "                              other options and requires exactly one file to"
+                  + " run on to be specified.%n"
+                  + "  -o=<outputPath>           Sets the output file. Defaults to stdout.%n"
+                  + "  -p=<propertiesFile>       Sets the property files to load.%n"
+                  + "  -s=<suppressionLineColumnNumber>%n"
+                  + "                            Prints xpath suppressions at the file's line and"
+                  + " column position.%n"
+                  + "                              Argument is the line and column number"
+                  + " (separated by a : ) in the%n"
+                  + "                              file that the suppression should be generated"
+                  + " for. The option cannot%n"
+                  + "                              be used with other options and requires exactly"
+                  + " one file to run on to%n"
+                  + "                              be specified. ATTENTION: generated result will"
+                  + " have few queries,%n"
+                  + "                              joined by pipe(|). Together they will match all"
+                  + " AST nodes on%n"
+                  + "                              specified line and column. You need to choose"
+                  + " only one and recheck%n"
+                  + "                              that it works. Usage of all of them is also ok,"
+                  + " but might result in%n"
+                  + "                              undesirable matching and suppress other"
+                  + " issues.%n"
+                  + "  -t, --tree                Prints Abstract Syntax Tree(AST) of the checked"
+                  + " file. The option cannot%n"
+                  + "                              be used other options and requires exactly one"
+                  + " file to run on to be%n"
+                  + "                              specified.%n"
+                  + "  -T, --treeWithComments    Prints Abstract Syntax Tree(AST) with comment"
+                  + " nodes of the checked%n"
+                  + "                              file. The option cannot be used with other"
+                  + " options and requires%n"
+                  + "                              exactly one file to run on to be specified.%n"
+                  + "  -V, --version             Print version information and exit.%n"
+                  + "  -w, --tabWidth=<tabWidth> Sets the length of the tab character. Used only"
+                  + " with -s option. Default%n"
+                  + "                              value is 8.%n"
+                  + "  -x, --exclude-regexp=<excludeRegex>%n"
+                  + "                            Directory/file pattern to exclude from CheckStyle."
+                  + " Multiple excludes%n"
+                  + "                              are allowed.%n");
 
     private static final Logger LOG = Logger.getLogger(MainTest.class.getName()).getParent();
     private static final Handler[] HANDLERS = LOG.getHandlers();
@@ -238,7 +283,7 @@ public class MainTest {
         assertExitWithStatus(-1, () -> invokeMain("-q"));
         // files is defined as a required positional param;
         // picocli verifies required parameters before checking unknown options
-        final String usage = "Missing required parameter: <files>" + EOL + SHORT_USAGE;
+        final String usage = "Missing required parameter: '<files>'" + EOL + SHORT_USAGE;
         assertEquals("", systemOut.getCapturedData(), "Unexpected output log");
         assertEquals(usage, systemErr.getCapturedData(), "Unexpected system error log");
     }
@@ -477,6 +522,7 @@ public class MainTest {
      * Similar test to {@link #testExistingTargetFileWithError}, but for PIT mutation tests:
      * this test fails if the boundary condition is changed from {@code if (exitStatus > 0)}
      * to {@code if (exitStatus > 1)}.
+     *
      * @throws Exception should not throw anything
      */
     @Test
@@ -685,6 +731,7 @@ public class MainTest {
 
     /**
      * Test doesn't need to be serialized.
+     *
      * @noinspection SerializableInnerClassWithNonSerializableOuterClass
      */
     @Test
@@ -715,6 +762,7 @@ public class MainTest {
 
     /**
      * Test doesn't need to be serialized.
+     *
      * @noinspection SerializableInnerClassWithNonSerializableOuterClass
      */
     @Test
@@ -1445,135 +1493,9 @@ public class MainTest {
     }
 
     @Test
-    public void testInvalidCheckerThreadsNumber(@SysErr Capturable systemErr,
-            @SysOut Capturable systemOut) {
-        assertExitWithStatus(-1, () -> {
-            invokeMain("-C", "invalid", "-c", "/google_checks.xml", getPath("InputMain.java"));
-        });
-        assertEquals("", systemOut.getCapturedData(), "Unexpected output log");
-        assertEquals("Invalid value for option '--checker-threads-number': 'invalid' is not an int"
-                + EOL + SHORT_USAGE, systemErr.getCapturedData(), "Unexpected system error log");
-    }
-
-    @Test
-    public void testInvalidTreeWalkerThreadsNumber(@SysErr Capturable systemErr,
-            @SysOut Capturable systemOut) {
-        assertExitWithStatus(-1, () -> {
-            invokeMain("-W", "invalid", "-c", "/google_checks.xml", getPath("InputMain.java"));
-        });
-        assertEquals("", systemOut.getCapturedData(), "Unexpected output log");
-        assertEquals("Invalid value for option '--tree-walker-threads-number': "
-                + "'invalid' is not an int" + EOL + SHORT_USAGE, systemErr.getCapturedData(),
-                "Unexpected system error log");
-    }
-
-    @Test
-    public void testZeroCheckerThreadsNumber(@SysErr Capturable systemErr,
-            @SysOut Capturable systemOut) {
-        assertExitWithStatus(-1, () -> {
-            invokeMain("-C", "0", "-c", "/google_checks.xml", getPath("InputMain.java"));
-        });
-        assertEquals("Checker threads number must be greater than zero"
-            + System.lineSeparator(), systemOut.getCapturedData(), "Unexpected output log");
-        assertEquals("", systemErr.getCapturedData(), "Unexpected system error log");
-    }
-
-    @Test
-    public void testZeroTreeWalkerThreadsNumber(@SysErr Capturable systemErr,
-            @SysOut Capturable systemOut) {
-        assertExitWithStatus(-1, () -> {
-            invokeMain("-W", "0", "-c", "/google_checks.xml", getPath("InputMain.java"));
-        });
-        assertEquals(
-                "TreeWalker threads number must be greater than zero"
-            + System.lineSeparator(), systemOut.getCapturedData(), "Unexpected output log");
-        assertEquals("", systemErr.getCapturedData(), "Unexpected system error log");
-    }
-
-    @Test
-    public void testCheckerThreadsNumber(@SysErr Capturable systemErr, @SysOut Capturable systemOut)
-            throws IOException {
-        TestRootModuleChecker.reset();
-
-        Main.main("-C", "4", "-c", getPath("InputMainConfig-custom-root-module.xml"),
-                getPath("InputMain.java"));
-        assertEquals("", systemOut.getCapturedData(), "Unexpected output log");
-        assertEquals("", systemErr.getCapturedData(), "Unexpected system error log");
-        assertTrue(TestRootModuleChecker.isProcessed(), "Invalid checker state");
-        final DefaultConfiguration config =
-                (DefaultConfiguration) TestRootModuleChecker.getConfig();
-        final ThreadModeSettings multiThreadModeSettings = config.getThreadModeSettings();
-        assertEquals(4, multiThreadModeSettings.getCheckerThreadsNumber(),
-                "Invalid checker thread number");
-        assertEquals(1, multiThreadModeSettings.getTreeWalkerThreadsNumber(),
-                "Invalid checker thread number");
-    }
-
-    @Test
-    public void testTreeWalkerThreadsNumber(@SysErr Capturable systemErr,
-            @SysOut Capturable systemOut) throws IOException {
-        TestRootModuleChecker.reset();
-
-        Main.main("-W", "4", "-c", getPath("InputMainConfig-custom-root-module.xml"),
-                getPath("InputMain.java"));
-        assertEquals("", systemOut.getCapturedData(), "Unexpected output log");
-        assertEquals("", systemErr.getCapturedData(), "Unexpected system error log");
-        assertTrue(TestRootModuleChecker.isProcessed(), "Invalid checker state");
-        final DefaultConfiguration config =
-                (DefaultConfiguration) TestRootModuleChecker.getConfig();
-        final ThreadModeSettings multiThreadModeSettings = config.getThreadModeSettings();
-        assertEquals(1, multiThreadModeSettings.getCheckerThreadsNumber(),
-                "Invalid checker thread number");
-        assertEquals(4, multiThreadModeSettings.getTreeWalkerThreadsNumber(),
-                "Invalid checker thread number");
-    }
-
-    @Test
-    public void testModuleNameInSingleThreadMode(@SysErr Capturable systemErr,
-            @SysOut Capturable systemOut) throws IOException {
-        TestRootModuleChecker.reset();
-
-        Main.main("-C", "1", "-W", "1", "-c", getPath("InputMainConfig-multi-thread-mode.xml"),
-                getPath("InputMain.java"));
-        assertEquals("", systemOut.getCapturedData(), "Unexpected output log");
-        assertEquals("", systemErr.getCapturedData(), "Unexpected system error log");
-        assertTrue(TestRootModuleChecker.isProcessed(), "Invalid checker state");
-        final DefaultConfiguration config =
-                (DefaultConfiguration) TestRootModuleChecker.getConfig();
-        final ThreadModeSettings multiThreadModeSettings =
-            config.getThreadModeSettings();
-        assertEquals(1, multiThreadModeSettings.getCheckerThreadsNumber(),
-                "Invalid checker thread number");
-        assertEquals(1, multiThreadModeSettings.getTreeWalkerThreadsNumber(),
-                "Invalid checker thread number");
-        final Configuration checkerConfiguration = config.getChildren()[0];
-        assertEquals("Checker", checkerConfiguration.getName(), "Invalid checker name");
-        final Configuration treeWalkerConfig = checkerConfiguration.getChildren()[0];
-        assertEquals("TreeWalker", treeWalkerConfig.getName(), "Invalid checker children name");
-    }
-
-    @Test
-    public void testModuleNameInMultiThreadMode() {
-        TestRootModuleChecker.reset();
-
-        try {
-            assertExitWithStatus(-1, () -> {
-                invokeMain("-C", "4", "-W", "4", "-c",
-                        getPath("InputMainConfig-multi-thread-mode.xml"),
-                        getPath("InputMain.java"));
-            });
-            fail("An exception is expected");
-        }
-        catch (IllegalArgumentException ex) {
-            assertEquals("Multi thread mode for Checker module is not implemented",
-                ex.getMessage(), "Invalid error message");
-        }
-    }
-
-    @Test
     public void testMissingFiles(@SysErr Capturable systemErr, @SysOut Capturable systemOut) {
         assertExitWithStatus(-1, MainTest::invokeMain);
-        final String usage = "Missing required parameter: <files>" + EOL + SHORT_USAGE;
+        final String usage = "Missing required parameter: '<files>'" + EOL + SHORT_USAGE;
         assertEquals("", systemOut.getCapturedData(), "Unexpected output log");
         assertEquals(usage, systemErr.getCapturedData(), "Unexpected system error log");
     }

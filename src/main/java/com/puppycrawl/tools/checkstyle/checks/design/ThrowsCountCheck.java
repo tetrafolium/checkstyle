@@ -54,13 +54,49 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * <ul>
  * <li>
  * Property {@code max} - Specify maximum allowed number of throws statements.
+ * Type is {@code int}.
  * Default value is {@code 4}.
  * </li>
  * <li>
  * Property {@code ignorePrivateMethods} - Allow private methods to be ignored.
+ * Type is {@code boolean}.
  * Default value is {@code true}.
  * </li>
  * </ul>
+ * <p>
+ * To configure check:
+ * </p>
+ * <pre>
+ * &lt;module name="ThrowsCount"/&gt;
+ * </pre>
+ * <p>
+ * Example:
+ * </p>
+ * <pre>
+ * class Test {
+ *     public void myFunction() throws CloneNotSupportedException,
+ *                             ArrayIndexOutOfBoundsException,
+ *                             StringIndexOutOfBoundsException,
+ *                             IllegalStateException,
+ *                             NullPointerException { // violation, max allowed is 4
+ *         // body
+ *     }
+ *
+ *     public void myFunc() throws ArithmeticException,
+ *             NumberFormatException { // ok
+ *         // body
+ *     }
+ *
+ *     private void privateFunc() throws CloneNotSupportedException,
+ *                             ClassNotFoundException,
+ *                             IllegalAccessException,
+ *                             ArithmeticException,
+ *                             ClassCastException { // ok, private methods are ignored
+ *         // body
+ *     }
+ *
+ * }
+ * </pre>
  * <p>
  * To configure the check so that it doesn't allow more than two throws per method:
  * </p>
@@ -70,6 +106,32 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * &lt;/module&gt;
  * </pre>
  * <p>
+ * Example:
+ * </p>
+ * <pre>
+ * class Test {
+ *     public void myFunction() throws IllegalStateException,
+ *                                 ArrayIndexOutOfBoundsException,
+ *                                 NullPointerException { // violation, max allowed is 2
+ *         // body
+ *     }
+ *
+ *     public void myFunc() throws ArithmeticException,
+ *                                 NumberFormatException { // ok
+ *         // body
+ *     }
+ *
+ *     private void privateFunc() throws CloneNotSupportedException,
+ *                                 ClassNotFoundException,
+ *                                 IllegalAccessException,
+ *                                 ArithmeticException,
+ *                                 ClassCastException { // ok, private methods are ignored
+ *         // body
+ *     }
+ *
+ * }
+ * </pre>
+ * <p>
  * To configure the check so that it doesn't skip private methods:
  * </p>
  * <pre>
@@ -77,6 +139,50 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  *   &lt;property name=&quot;ignorePrivateMethods&quot; value=&quot;false&quot;/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>
+ * Example:
+ * </p>
+ * <pre>
+ * class Test {
+ *     public void myFunction() throws CloneNotSupportedException,
+ *                                 ArrayIndexOutOfBoundsException,
+ *                                 StringIndexOutOfBoundsException,
+ *                                 IllegalStateException,
+ *                                 NullPointerException { // violation, max allowed is 4
+ *         // body
+ *     }
+ *
+ *     public void myFunc() throws ArithmeticException,
+ *                                 NumberFormatException { // ok
+ *         // body
+ *     }
+ *
+ *     private void privateFunc() throws CloneNotSupportedException,
+ *                                 ClassNotFoundException,
+ *                                 IllegalAccessException,
+ *                                 ArithmeticException,
+ *                                 ClassCastException { // violation, max allowed is 4
+ *         // body
+ *     }
+ *
+ *     private void func() throws IllegalStateException,
+ *                                 NullPointerException { // ok
+ *         // body
+ *     }
+ *
+ * }
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code throws.count}
+ * </li>
+ * </ul>
  *
  * @since 3.2
  */
@@ -122,6 +228,7 @@ public final class ThrowsCountCheck extends AbstractCheck {
 
     /**
      * Setter to allow private methods to be ignored.
+     *
      * @param ignorePrivateMethods whether private methods must be ignored.
      */
     public void setIgnorePrivateMethods(boolean ignorePrivateMethods) {
@@ -130,6 +237,7 @@ public final class ThrowsCountCheck extends AbstractCheck {
 
     /**
      * Setter to specify maximum allowed number of throws statements.
+     *
      * @param max maximum allowed throws statements.
      */
     public void setMax(int max) {
@@ -148,6 +256,7 @@ public final class ThrowsCountCheck extends AbstractCheck {
 
     /**
      * Checks number of throws statements.
+     *
      * @param ast throws for check.
      */
     private void visitLiteralThrows(DetailAST ast) {
@@ -163,6 +272,7 @@ public final class ThrowsCountCheck extends AbstractCheck {
 
     /**
      * Check if a method has annotation @Override.
+     *
      * @param ast throws, which is being checked.
      * @return true, if a method has annotation @Override.
      */
@@ -183,6 +293,7 @@ public final class ThrowsCountCheck extends AbstractCheck {
 
     /**
      * Gets name of an annotation.
+     *
      * @param annotation to get name of.
      * @return name of an annotation.
      */
@@ -200,6 +311,7 @@ public final class ThrowsCountCheck extends AbstractCheck {
 
     /**
      * Checks if method, which throws an exception is private.
+     *
      * @param ast throws, which is being checked.
      * @return true, if method, which throws an exception is private.
      */

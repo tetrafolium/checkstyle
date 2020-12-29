@@ -19,7 +19,7 @@
 
 package com.puppycrawl.tools.checkstyle.filters;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static com.google.common.truth.Truth.assertWithMessage;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -38,6 +38,7 @@ import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.FileText;
 import com.puppycrawl.tools.checkstyle.api.LocalizedMessage;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import net.sf.saxon.Configuration;
 import net.sf.saxon.sxpath.XPathEvaluator;
 import net.sf.saxon.sxpath.XPathExpression;
 import nl.jqno.equalsverifier.EqualsVerifier;
@@ -302,7 +303,7 @@ public class XpathFilterElementTest extends AbstractModuleTestSupport {
 
     @Test
     public void testEqualsAndHashCode() throws Exception {
-        final XPathEvaluator xpathEvaluator = new XPathEvaluator();
+        final XPathEvaluator xpathEvaluator = new XPathEvaluator(Configuration.newConfiguration());
         final EqualsVerifierReport ev = EqualsVerifier.forClass(XpathFilterElement.class)
             .withPrefabValues(XPathExpression.class,
                 xpathEvaluator.createExpression("//METHOD_DEF"),
@@ -310,7 +311,9 @@ public class XpathFilterElementTest extends AbstractModuleTestSupport {
                 .usingGetClass()
                 .withIgnoredFields("fileRegexp", "checkRegexp", "messageRegexp", "xpathExpression")
                 .report();
-        assertEquals(EqualsVerifierReport.SUCCESS, ev, "Error: " + ev.getMessage());
+        assertWithMessage("Error: " + ev.getMessage())
+                .that(ev.isSuccessful())
+                .isTrue();
     }
 
     private TreeWalkerAuditEvent getEvent(int line, int column, int tokenType)

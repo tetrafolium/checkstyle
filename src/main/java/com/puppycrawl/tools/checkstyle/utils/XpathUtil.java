@@ -21,10 +21,12 @@ package com.puppycrawl.tools.checkstyle.utils;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.puppycrawl.tools.checkstyle.AstTreeStringPrinter;
 import com.puppycrawl.tools.checkstyle.JavaParser;
@@ -32,7 +34,9 @@ import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.xpath.AbstractNode;
+import com.puppycrawl.tools.checkstyle.xpath.ElementNode;
 import com.puppycrawl.tools.checkstyle.xpath.RootNode;
+import net.sf.saxon.Configuration;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.sxpath.XPathDynamicContext;
 import net.sf.saxon.sxpath.XPathEvaluator;
@@ -97,15 +101,39 @@ public final class XpathUtil {
      * Only these tokens support text attribute because they make our xpath queries more accurate.
      * These token types are listed below.
      * */
-    private static final List<Integer> TOKEN_TYPES_WITH_TEXT_ATTRIBUTE = Arrays.asList(
+    private static final Set<Integer> TOKEN_TYPES_WITH_TEXT_ATTRIBUTE =
+        Stream.of(
             TokenTypes.IDENT, TokenTypes.STRING_LITERAL, TokenTypes.CHAR_LITERAL,
-            TokenTypes.NUM_LONG, TokenTypes.NUM_INT, TokenTypes.NUM_DOUBLE, TokenTypes.NUM_FLOAT);
+            TokenTypes.NUM_LONG, TokenTypes.NUM_INT, TokenTypes.NUM_DOUBLE, TokenTypes.NUM_FLOAT)
+        .collect(Collectors.toSet());
 
     /** Delimiter to separate xpath results. */
     private static final String DELIMITER = "---------" + System.lineSeparator();
 
     /** Stop instances being created. **/
     private XpathUtil() {
+    }
+
+    /**
+     * Iterates siblings of the given node and creates new Xpath-nodes.
+     *
+     * @param root the root node
+     * @param parent the parent node
+     * @param firstChild the first DetailAST
+     * @return children list
+     */
+    public static List<AbstractNode> createChildren(AbstractNode root, AbstractNode parent,
+                                                    DetailAST firstChild) {
+        DetailAST currentChild = firstChild;
+        final int depth = parent.getDepth() + 1;
+        final List<AbstractNode> result = new ArrayList<>();
+        while (currentChild != null) {
+            final int index = result.size();
+            final ElementNode child = new ElementNode(root, parent, currentChild, depth, index);
+            result.add(child);
+            currentChild = currentChild.getNextSibling();
+        }
+        return result;
     }
 
     /**
@@ -143,14 +171,14 @@ public final class XpathUtil {
      */
     public static String printXpathBranch(String xpath, File file) throws CheckstyleException,
             IOException {
-        final XPathEvaluator xpathEvaluator = new XPathEvaluator();
+        final XPathEvaluator xpathEvaluator = new XPathEvaluator(Configuration.newConfiguration());
         try {
             final RootNode rootNode = new RootNode(JavaParser.parseFile(file,
                 JavaParser.Options.WITH_COMMENTS));
             final XPathExpression xpathExpression = xpathEvaluator.createExpression(xpath);
             final XPathDynamicContext xpathDynamicContext =
                 xpathExpression.createDynamicContext(rootNode);
-            final List<Item<?>> matchingItems = xpathExpression.evaluate(xpathDynamicContext);
+            final List<Item> matchingItems = xpathExpression.evaluate(xpathDynamicContext);
             return matchingItems.stream()
                 .map(item -> ((AbstractNode) item).getUnderlyingNode())
                 .map(AstTreeStringPrinter::printBranch)

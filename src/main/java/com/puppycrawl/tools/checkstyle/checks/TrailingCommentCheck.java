@@ -19,6 +19,7 @@
 
 package com.puppycrawl.tools.checkstyle.checks;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,7 @@ import com.puppycrawl.tools.checkstyle.StatelessCheck;
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TextBlock;
+import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
 /**
@@ -87,12 +89,14 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * <ul>
  * <li>
  * Property {@code format} - Specify pattern for strings allowed before the comment.
+ * Type is {@code java.util.regex.Pattern}.
  * Default value is <code>"^[\s});]*$"</code>.
  * </li>
  * <li>
  * Property {@code legalComment} - Define pattern for text allowed in trailing comments.
  * (This pattern will not be applied to multiline comments and the text of
  * the comment will be trimmed before matching.)
+ * Type is {@code java.util.regex.Pattern}.
  * Default value is {@code null}.
  * </li>
  * </ul>
@@ -111,6 +115,18 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * &lt;/module&gt;
  * </pre>
  *
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code trailing.comments}
+ * </li>
+ * </ul>
+ *
  * @noinspection HtmlTagCanBeJavadocTag
  * @since 3.4
  */
@@ -122,6 +138,12 @@ public class TrailingCommentCheck extends AbstractCheck {
      * file.
      */
     public static final String MSG_KEY = "trailing.comments";
+
+    /**
+     * A Map contains illegal lines, the key is lineNo, the value is
+     * ColumnNo.
+     */
+    private final Map<Integer, Integer> illegalLines = new HashMap<>();
 
     /**
      * Define pattern for text allowed in trailing comments.
@@ -146,10 +168,16 @@ public class TrailingCommentCheck extends AbstractCheck {
 
     /**
      * Setter to specify pattern for strings allowed before the comment.
+     *
      * @param pattern a pattern
      */
     public final void setFormat(Pattern pattern) {
         format = pattern;
+    }
+
+    @Override
+    public boolean isCommentNodesRequired() {
+        return true;
     }
 
     @Override
@@ -164,12 +192,19 @@ public class TrailingCommentCheck extends AbstractCheck {
 
     @Override
     public int[] getRequiredTokens() {
-        return CommonUtil.EMPTY_INT_ARRAY;
+        return new int[] {
+            TokenTypes.SINGLE_LINE_COMMENT,
+            TokenTypes.BLOCK_COMMENT_BEGIN,
+        };
     }
 
     @Override
     public void visitToken(DetailAST ast) {
-        throw new IllegalStateException("visitToken() shouldn't be called.");
+        final int lineNo = ast.getLineNo();
+        if (illegalLines.get(lineNo) != null
+                && illegalLines.get(lineNo).equals(ast.getColumnNo())) {
+            log(ast, MSG_KEY);
+        }
     }
 
     @Override
@@ -204,7 +239,7 @@ public class TrailingCommentCheck extends AbstractCheck {
             }
             if (!format.matcher(lineBefore).find()
                 && !isLegalComment(comment)) {
-                log(lineNo, MSG_KEY);
+                illegalLines.put(lineNo, comment.getStartColNo());
             }
         }
     }
@@ -212,6 +247,7 @@ public class TrailingCommentCheck extends AbstractCheck {
     /**
      * Checks if given comment is legal (single-line and matches to the
      * pattern).
+     *
      * @param comment comment to check.
      * @return true if the comment if legal.
      */

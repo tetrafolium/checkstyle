@@ -10,6 +10,7 @@
             src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"/>
     <script type="text/javascript" src="js/anchors.js"/>
     <script type="text/javascript" src="js/google-analytics.js"/>
+    <script type="text/javascript" src="js/checkstyle.js"/>
     <link rel="icon" href="images/favicon.png" type="image/x-icon" />
     <link rel="shortcut icon" href="images/favicon.ico" type="image/ico" />
   </head>
@@ -26,18 +27,18 @@
       <p>Since Checkstyle 8.16</p>
       <subsection name="Description" id="ClassMemberImpliedModifier_Description">
         <p>
-          Checks for implicit modifiers on nested types in classes.
+          Checks for implicit modifiers on nested types in classes and records.
         </p>
         <p>
           This check is effectively the opposite of
           <a href="config_modifier.html#RedundantModifier">RedundantModifier</a>.
-          It checks the modifiers on nested types in classes, ensuring that certain
+          It checks the modifiers on nested types in classes and records, ensuring that certain
           modifiers are explicitly specified even though they are actually redundant.
         </p>
         <p>
-          Nested enums and interfaces within a class are always <code>static</code> and as such the
-          compiler does not require the <code>static</code> modifier. This check provides the
-          ability to enforce that the <code>static</code> modifier is explicitly coded and not
+          Nested enums, interfaces, and records within a class are always <code>static</code> and as
+          such the compiler does not require the <code>static</code> modifier. This check provides
+          the ability to enforce that the <code>static</code> modifier is explicitly coded and not
           implicitly added by the compiler.
         </p>
         <source>
@@ -49,9 +50,9 @@ public final class Person {
         </source>
         <p>
           Rationale for this check:
-          Nested enums and interfaces are treated differently from nested classes as they are
-          only allowed to be <code>static</code>. Developers should not need to remember this rule,
-          and this check provides the means to enforce that the modifier is coded explicitly.
+          Nested enums, interfaces, and records are treated differently from nested classes as they
+          are only allowed to be <code>static</code>. Developers should not need to remember this
+          rule, and this check provides the means to enforce that the modifier is coded explicitly.
         </p>
       </subsection>
 
@@ -69,8 +70,8 @@ public final class Person {
               <td>violateImpliedStaticOnNestedEnum</td>
               <td>
                 Control whether to enforce that <code>static</code> is explicitly coded
-                on nested enums in classes.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+                on nested enums in classes and records.</td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>true</code></td>
               <td>8.16</td>
             </tr>
@@ -78,10 +79,19 @@ public final class Person {
               <td>violateImpliedStaticOnNestedInterface</td>
               <td>
                 Control whether to enforce that <code>static</code> is explicitly coded
-                on nested interfaces in classes.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+                on nested interfaces in classes and records.</td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>true</code></td>
               <td>8.16</td>
+            </tr>
+            <tr>
+              <td>violateImpliedStaticOnNestedRecord</td>
+              <td>
+                Control whether to enforce that <code>static</code> is explicitly coded
+                on nested records in classes and records.</td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
+              <td><code>true</code></td>
+              <td>8.36</td>
             </tr>
           </table>
         </div>
@@ -89,8 +99,8 @@ public final class Person {
 
       <subsection name="Examples" id="ClassMemberImpliedModifier_Examples">
         <p>
-          This example checks that all implicit modifiers on nested interfaces and enums
-          are explicitly specified in classes.
+          To configure the check so that it checks that all implicit modifiers on nested interfaces,
+          enums, and records are explicitly specified in classes and records.
         </p>
         <p>
           Configuration:
@@ -115,6 +125,14 @@ public final class Person {
 
   enum Age2 {  // violation
     CHILD, ADULT
+  }
+
+  public static record GoodRecord() {} // valid
+  public record BadRecord() {} // violation
+
+  public static record OuterRecord() {
+    static record InnerRecord1(){} // valid
+    record InnerRecord2(){} // violation
   }
 }
         </source>
@@ -243,7 +261,7 @@ public interface AddressFactory {
               <td>
                 Control whether to enforce that <code>public</code> is explicitly coded
                 on interface fields.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>true</code></td>
               <td>8.12</td>
             </tr>
@@ -252,7 +270,7 @@ public interface AddressFactory {
               <td>
                 Control whether to enforce that <code>static</code> is explicitly coded
                 on interface fields.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>true</code></td>
               <td>8.12</td>
             </tr>
@@ -261,7 +279,7 @@ public interface AddressFactory {
               <td>
                 Control whether to enforce that <code>final</code> is explicitly coded
                 on interface fields.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>true</code></td>
               <td>8.12</td>
             </tr>
@@ -270,7 +288,7 @@ public interface AddressFactory {
               <td>
                 Control whether to enforce that <code>public</code> is explicitly coded
                 on interface methods.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>true</code></td>
               <td>8.12</td>
             </tr>
@@ -279,7 +297,7 @@ public interface AddressFactory {
               <td>
                 Control whether to enforce that <code>abstract</code> is explicitly coded
                 on interface methods.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>true</code></td>
               <td>8.12</td>
             </tr>
@@ -288,7 +306,7 @@ public interface AddressFactory {
               <td>
                 Control whether to enforce that <code>public</code> is explicitly coded
                 on interface nested types.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>true</code></td>
               <td>8.12</td>
             </tr>
@@ -297,7 +315,7 @@ public interface AddressFactory {
               <td>
                 Control whether to enforce that <code>static</code> is explicitly coded
                 on interface nested types.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>true</code></td>
               <td>8.12</td>
             </tr>
@@ -307,8 +325,8 @@ public interface AddressFactory {
 
       <subsection name="Examples" id="InterfaceMemberImpliedModifier_Examples">
         <p>
-          This example checks that all implicit modifiers on methods, fields and nested
-          types are explicitly specified in interfaces.
+          To configure the check so that it checks that all implicit modifiers on methods,
+          fields and nested types are explicitly specified in interfaces.
         </p>
         <p>
           Configuration:
@@ -657,39 +675,41 @@ public class ClassExtending extends ClassExample {
               <td>
                 subset of tokens
                 <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
-                  METHOD_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
-                  VARIABLE_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_FIELD_DEF">
-                  ANNOTATION_FIELD_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
-                  INTERFACE_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
-                  CTOR_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">
-                  CLASS_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">
-                  ENUM_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RESOURCE">
-                  RESOURCE</a>.
+                  METHOD_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
+                  VARIABLE_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_FIELD_DEF">
+                  ANNOTATION_FIELD_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
+                  INTERFACE_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
+                  CTOR_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">
+                  CLASS_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">
+                  ENUM_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RESOURCE">
+                  RESOURCE</a>
+                .
               </td>
               <td>
                 <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
-                  METHOD_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
-                  VARIABLE_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_FIELD_DEF">
-                  ANNOTATION_FIELD_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
-                  INTERFACE_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
-                  CTOR_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">
-                  CLASS_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">
-                  ENUM_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RESOURCE">
-                  RESOURCE</a>.
+                  METHOD_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
+                  VARIABLE_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_FIELD_DEF">
+                  ANNOTATION_FIELD_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
+                  INTERFACE_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
+                  CTOR_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">
+                  CLASS_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">
+                  ENUM_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RESOURCE">
+                  RESOURCE</a>
+                .
               </td>
               <td>3.0</td>
             </tr>

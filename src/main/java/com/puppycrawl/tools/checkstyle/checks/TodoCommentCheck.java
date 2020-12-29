@@ -40,6 +40,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * <ul>
  * <li>
  * Property {@code format} - Specify pattern to match comments against.
+ * Type is {@code java.util.regex.Pattern}.
  * Default value is {@code "TODO:"}.
  * </li>
  * </ul>
@@ -50,6 +51,13 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * &lt;module name="TodoComment"/&gt;
  * </pre>
  * <p>
+ * Example:
+ * </p>
+ * <pre>
+ * i++; // TODO: do differently in future   // violation
+ * i++; // todo: do differently in future   // OK
+ * </pre>
+ * <p>
  * To configure the check for comments that contain {@code TODO} and {@code FIXME}:
  * </p>
  * <pre>
@@ -57,6 +65,26 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  *   &lt;property name="format" value="(TODO)|(FIXME)"/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>
+ * Example:
+ * </p>
+ * <pre>
+ * i++;   // TODO: do differently in future   // violation
+ * i++;   // todo: do differently in future   // OK
+ * i=i/x; // FIXME: handle x = 0 case         // violation
+ * i=i/x; // FIX :  handle x = 0 case         // OK
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code todo.match}
+ * </li>
+ * </ul>
  *
  * @since 3.0
  */
@@ -82,6 +110,7 @@ public class TodoCommentCheck
 
     /**
      * Setter to specify pattern to match comments against.
+     *
      * @param pattern
      *        pattern of 'todo' comment.
      */
@@ -108,9 +137,9 @@ public class TodoCommentCheck
     public void visitToken(DetailAST ast) {
         final String[] lines = ast.getText().split("\n");
 
-        for (int i = 0; i < lines.length; i++) {
-            if (format.matcher(lines[i]).find()) {
-                log(ast.getLineNo() + i, MSG_KEY, format.pattern());
+        for (String line : lines) {
+            if (format.matcher(line).find()) {
+                log(ast, MSG_KEY, format.pattern());
             }
         }
     }

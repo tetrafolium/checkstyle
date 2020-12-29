@@ -28,6 +28,7 @@ import com.puppycrawl.tools.checkstyle.AbstractTreeTestSupport;
 
 /**
  * JavadocParseTreeTest.
+ *
  * @noinspection ClassOnlyUsedInOnePackage
  */
 public class JavadocParseTreeTest extends AbstractTreeTestSupport {
@@ -385,6 +386,12 @@ public class JavadocParseTreeTest extends AbstractTreeTestSupport {
     public void testParagraph() throws Exception {
         verifyJavadocTree(getHtmlPath("expectedParagraphAst.txt"),
                 getHtmlPath("InputParagraph.javadoc"));
+    }
+
+    @Test
+    public void testCdata() throws Exception {
+        verifyJavadocTree(getHtmlPath("expectedCdataAst.txt"),
+                getHtmlPath("InputCdata.javadoc"));
     }
 
 }

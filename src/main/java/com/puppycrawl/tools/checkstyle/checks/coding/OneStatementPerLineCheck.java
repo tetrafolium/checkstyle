@@ -50,11 +50,12 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  * <ul>
  * <li>
  * Property {@code treatTryResourcesAsStatement} - Enable resources processing.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * </ul>
  * <p>
- * An example of how to configure this Check:
+ * To configure the check:
  * </p>
  * <pre>
  * &lt;module name=&quot;OneStatementPerLine&quot;/&gt;
@@ -107,6 +108,17 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  * try (Reader r = new PipedReader(); s2; Reader s3 = new PipedReader() // violation
  * ) {}
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code multiple.statements.line}
+ * </li>
+ * </ul>
  *
  * @since 5.3
  */
@@ -161,6 +173,7 @@ public final class OneStatementPerLineCheck extends AbstractCheck {
 
     /**
      * Setter to enable resources processing.
+     *
      * @param treatTryResourcesAsStatement user's value of treatTryResourcesAsStatement.
      */
     public void setTreatTryResourcesAsStatement(boolean treatTryResourcesAsStatement) {
@@ -240,6 +253,7 @@ public final class OneStatementPerLineCheck extends AbstractCheck {
 
     /**
      * Checks if given semicolon is in different line than previous.
+     *
      * @param ast semicolon to check
      */
     private void checkIfSemicolonIsInDifferentLineThanPrevious(DetailAST ast) {
@@ -295,6 +309,7 @@ public final class OneStatementPerLineCheck extends AbstractCheck {
 
     /**
      * Checks whether two statements are on the same line.
+     *
      * @param ast token for the current statement.
      * @param lastStatementEnd the line-number where the last statement ended.
      * @param forStatementEnd the line-number where the last 'for-loop'
@@ -311,6 +326,7 @@ public final class OneStatementPerLineCheck extends AbstractCheck {
 
     /**
      * Checks whether statement is multiline.
+     *
      * @param ast token for the current statement.
      * @return true if one statement is distributed over two or more lines.
      */

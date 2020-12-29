@@ -27,11 +27,8 @@ import static com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck.
 import static com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck.MSG_UNUSED_TAG_GENERAL;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.junit.jupiter.api.Test;
@@ -61,6 +58,8 @@ public class JavadocMethodCheckTest extends AbstractModuleTestSupport {
             TokenTypes.METHOD_DEF,
             TokenTypes.CTOR_DEF,
             TokenTypes.ANNOTATION_FIELD_DEF,
+            TokenTypes.RECORD_DEF,
+            TokenTypes.COMPACT_CTOR_DEF,
         };
 
         assertArrayEquals(expected, actual, "Default acceptable tokens are invalid");
@@ -95,6 +94,20 @@ public class JavadocMethodCheckTest extends AbstractModuleTestSupport {
             "119:23: " + getCheckMessage(MSG_EXPECTED_TAG, "@throws", "FileNotFoundException"),
         };
         verify(config, getPath("InputJavadocMethodExtraThrows.java"), expected);
+    }
+
+    @Test
+    public void testIgnoreThrows() throws Exception {
+        final DefaultConfiguration config = createModuleConfig(JavadocMethodCheck.class);
+        config.addAttribute("validateThrows", "true");
+        final String[] expected = {
+            "31:23: " + getCheckMessage(MSG_EXPECTED_TAG, "@throws", "IllegalArgumentException"),
+            "33:23: " + getCheckMessage(MSG_EXPECTED_TAG, "@throws", "IllegalStateException"),
+            "49:23: " + getCheckMessage(MSG_EXPECTED_TAG, "@throws", "IllegalArgumentException"),
+            "129:27: " + getCheckMessage(MSG_EXPECTED_TAG, "@throws", "IllegalArgumentException"),
+            "185:27: " + getCheckMessage(MSG_EXPECTED_TAG, "@throws", "IllegalArgumentException"),
+        };
+        verify(config, getPath("InputJavadocMethodIgnoreThrows.java"), expected);
     }
 
     @Test
@@ -474,11 +487,35 @@ public class JavadocMethodCheckTest extends AbstractModuleTestSupport {
     }
 
     @Test
+    public void testJavadocMethodRecordsAndCompactCtors() throws Exception {
+        final DefaultConfiguration checkConfig = createModuleConfig(JavadocMethodCheck.class);
+        checkConfig.addAttribute("validateThrows", "true");
+        checkConfig.addAttribute("tokens", "METHOD_DEF , CTOR_DEF , ANNOTATION_FIELD_DEF,"
+            + " COMPACT_CTOR_DEF, RECORD_DEF, CLASS_DEF");
+
+        final String[] expected = {
+            "26:27: " + getCheckMessage(MSG_EXPECTED_TAG, "@throws", "IllegalArgumentException"),
+            "39:27: " + getCheckMessage(MSG_EXPECTED_TAG, "@throws",
+                "java.lang.IllegalArgumentException"),
+            "51: " + getCheckMessage(MSG_UNUSED_TAG_GENERAL),
+            "57:27: " + getCheckMessage(MSG_EXPECTED_TAG, "@throws", "IllegalArgumentException"),
+            "67: " + getCheckMessage(MSG_UNUSED_TAG_GENERAL),
+            "73:27: " + getCheckMessage(MSG_EXPECTED_TAG, "@throws", "IllegalArgumentException"),
+            "83:12: " + getCheckMessage(MSG_UNUSED_TAG, "@param", "properties"),
+            "86:35: " + getCheckMessage(MSG_EXPECTED_TAG, "@param", "myInt"),
+
+            };
+        verify(checkConfig,
+            getNonCompilablePath("InputJavadocMethodRecordsAndCompactCtors.java"), expected);
+    }
+
+    @Test
     public void testGetRequiredTokens() {
         final int[] expected = {
             TokenTypes.CLASS_DEF,
             TokenTypes.INTERFACE_DEF,
             TokenTypes.ENUM_DEF,
+            TokenTypes.RECORD_DEF,
         };
         final JavadocMethodCheck check = new JavadocMethodCheck();
         final int[] actual = check.getRequiredTokens();
@@ -495,83 +532,6 @@ public class JavadocMethodCheckTest extends AbstractModuleTestSupport {
         final Method toString = token.getClass().getDeclaredMethod("toString");
         final String result = (String) toString.invoke(token);
         assertEquals("Token[blablabla(1x1)]", result, "Invalid toString result");
-    }
-
-    @Test
-    public void testClassRegularClass() throws Exception {
-        final Class<?> tokenType = Class.forName("com.puppycrawl.tools.checkstyle.checks.javadoc."
-                + "JavadocMethodCheck$Token");
-
-        final Class<?> regularClassType = Class
-                .forName("com.puppycrawl.tools.checkstyle.checks.javadoc."
-                        + "JavadocMethodCheck$RegularClass");
-        final Constructor<?> regularClassConstructor = regularClassType.getDeclaredConstructor(
-                tokenType, String.class, JavadocMethodCheck.class);
-        regularClassConstructor.setAccessible(true);
-
-        try {
-            regularClassConstructor.newInstance(null, "", new JavadocMethodCheck());
-            fail("Exception is expected");
-        }
-        catch (InvocationTargetException ex) {
-            assertTrue(ex.getCause() instanceof IllegalArgumentException,
-                    "Invalid exception class, expected: IllegalArgumentException.class");
-            assertEquals("ClassInfo's name should be non-null", ex.getCause().getMessage(),
-                    "Invalid exception message");
-        }
-
-        final Constructor<?> tokenConstructor = tokenType.getDeclaredConstructor(String.class,
-                int.class, int.class);
-        final Object token = tokenConstructor.newInstance("blablabla", 1, 1);
-
-        final JavadocMethodCheck methodCheck = new JavadocMethodCheck();
-        final Object regularClass = regularClassConstructor.newInstance(token, "sur",
-                methodCheck);
-
-        final Method toString = regularClass.getClass().getDeclaredMethod("toString");
-        toString.setAccessible(true);
-        final String result = (String) toString.invoke(regularClass);
-        final String expected = "RegularClass[name=Token[blablabla(1x1)], in class='sur', check="
-                + methodCheck.hashCode() + "]";
-
-        assertEquals(expected, result, "Invalid toString result");
-    }
-
-    @Test
-    public void testClassAliasToString() throws Exception {
-        final Class<?> tokenType = Class.forName("com.puppycrawl.tools.checkstyle.checks.javadoc."
-                + "JavadocMethodCheck$Token");
-
-        final Class<?> regularClassType = Class
-                .forName("com.puppycrawl.tools.checkstyle.checks.javadoc."
-                        + "JavadocMethodCheck$RegularClass");
-        final Constructor<?> regularClassConstructor = regularClassType.getDeclaredConstructor(
-                tokenType, String.class, JavadocMethodCheck.class);
-        regularClassConstructor.setAccessible(true);
-
-        final Constructor<?> tokenConstructor = tokenType.getDeclaredConstructor(String.class,
-                int.class, int.class);
-        final Object token = tokenConstructor.newInstance("blablabla", 1, 1);
-
-        final Object regularClass = regularClassConstructor.newInstance(token, "sur",
-                new JavadocMethodCheck());
-
-        final Class<?> classAliasType = Class.forName(
-                "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck$ClassAlias");
-        final Class<?> abstractTypeInfoType = Class
-                .forName("com.puppycrawl.tools.checkstyle.checks.javadoc."
-                        + "JavadocMethodCheck$ClassInfo");
-
-        final Constructor<?> classAliasConstructor = classAliasType
-                .getDeclaredConstructor(tokenType, abstractTypeInfoType);
-        classAliasConstructor.setAccessible(true);
-
-        final Object classAlias = classAliasConstructor.newInstance(token, regularClass);
-        final Method toString = classAlias.getClass().getDeclaredMethod("toString");
-        toString.setAccessible(true);
-        final String result = (String) toString.invoke(classAlias);
-        assertEquals("ClassAlias[alias Token[blablabla(1x1)] for Token[blablabla(1x1)]]", result,
-                "Invalid toString result");
     }
 
     @Test

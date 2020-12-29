@@ -37,50 +37,84 @@ import com.puppycrawl.tools.checkstyle.api.FileText;
  * <ul>
  * <li>
  * Property {@code format} - Specify the format of the regular expression to match.
+ * Type is {@code java.lang.String}.
  * Default value is {@code "$."}.
  * </li>
  * <li>
  * Property {@code message} - Specify the message which is used to notify about
  * violations, if empty then default (hard-coded) message is used.
+ * Type is {@code java.lang.String}.
  * Default value is {@code null}.
  * </li>
  * <li>
  * Property {@code ignoreCase} - Control whether to ignore case when searching.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * <li>
  * Property {@code minimum} - Specify the minimum number of matches required in each file.
+ * Type is {@code int}.
  * Default value is {@code 0}.
  * </li>
  * <li>
  * Property {@code maximum} - Specify the maximum number of matches required in each file.
+ * Type is {@code int}.
  * Default value is {@code 0}.
  * </li>
  * <li>
  * Property {@code fileExtensions} - Specify the file type extension of files to process.
- * Default value is {@code all files}.
+ * Type is {@code java.lang.String[]}.
+ * Default value is {@code ""}.
  * </li>
  * </ul>
  * <p>
- * To configure the check to find trailing whitespace at the end of a line:
+ *   To configure the default check:
  * </p>
  * <pre>
- * &lt;module name="RegexpSingleline"&gt;
- *   &lt;!-- \s matches whitespace character, $ matches end of line. --&gt;
- *   &lt;property name="format" value="\s+$"/&gt;
- * &lt;/module&gt;
+ * &lt;module name="RegexpSingleline" /&gt;
  * </pre>
  * <p>
- * To configure the check to find trailing whitespace at the end of a line,
- * with some <i>slack</i> of allowing two occurrences per file:
+ *   This configuration does not match to anything,
+ *   so we do not provide any code example for it
+ *   as no violation will ever be reported.
+ * </p>
+ * <p>
+ * To configure the check to find occurrences of 'System.exit('
+ * with some <i>slack</i> of allowing only one occurrence per file:
  * </p>
  * <pre>
  * &lt;module name="RegexpSingleline"&gt;
- *   &lt;property name="format" value="\s+$"/&gt;
+ *   &lt;property name="format" value="System.exit\("/&gt;
  *   &lt;!-- next line not required as 0 is the default --&gt;
  *   &lt;property name="minimum" value="0"/&gt;
- *   &lt;property name="maximum" value="2"/&gt;
+ *   &lt;property name="maximum" value="1"/&gt;
  * &lt;/module&gt;
+ * </pre>
+ * <p>Example:</p>
+ * <pre>
+ * class MyClass {
+ *      void myFunction() {
+ *          try {
+ *             doSomething();
+ *          } catch (Exception e) {
+ *             System.exit(1); // OK, as only there is only one occurrence.
+ *          }
+ *      }
+ *      void doSomething(){};
+ * }
+ * </pre>
+ * <pre>
+ * class MyClass {
+ *     void myFunction() {
+ *         try {
+ *             doSomething();
+ *             System.exit(0);
+ *         } catch (Exception e) {
+ *             System.exit(1); // Violation, as there are more than one occurrence.
+ *         }
+ *     }
+ *     void doSomething(){};
+ * }
  * </pre>
  * <p>
  * An example of how to configure the check to make sure a copyright statement
@@ -94,6 +128,66 @@ import com.puppycrawl.tools.checkstyle.api.FileText;
  *   &lt;property name="maximum" value="10"/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>Example:</p>
+ * <pre>
+ * &#47;**
+ * * This file is copyrighted under CC. // Ok, as the file contains a copyright statement.
+ * *&#47;
+ * class MyClass {
+ *
+ * }
+ * </pre>
+ * <pre>
+ * &#47;** // violation, as the file doesn't contain a copyright statement.
+ * * MyClass as a configuration example.
+ * *&#47;
+ * class MyClass {
+ *
+ * }
+ * </pre>
+ * <p>
+ *  An example of how to configure the check to make sure sql files contains the term 'license'.
+ * </p>
+ * <pre>
+ * &lt;module name="RegexpSingleline"&gt;
+ *     &lt;property name="format" value="license"/&gt;
+ *     &lt;property name="minimum" value="1"/&gt;
+ *     &lt;property name="maximum" value="9999"/&gt;
+ *     &lt;property name="ignoreCase" value="true"/&gt;
+ *     &lt;!--  Configure a message to be shown on violation of the Check. --&gt;
+ *     &lt;property name="message"
+ *           value="File must contain at least one occurrence of 'license' term"/&gt;
+*      &lt;!--  Perform the Check only on files with java extension. --&gt;
+ *     &lt;property name="fileExtensions" value="sql"/&gt;
+ * &lt;/module&gt;
+ * </pre>
+ * <p>Example:</p>
+ * <pre>
+ * &#47;*
+ * AP 2.0 License. // Ok, Check ignores the case of the term.
+ * *&#47;
+ * CREATE DATABASE MyDB;
+ * </pre>
+ * <pre>
+ * &#47;* // violation, file doesn't contain the term.
+ * Example sql file.
+ * *&#47;
+ * CREATE DATABASE MyDB;
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.Checker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code regexp.exceeded}
+ * </li>
+ * <li>
+ * {@code regexp.minimum}
+ * </li>
+ * </ul>
  *
  * @since 5.0
  */

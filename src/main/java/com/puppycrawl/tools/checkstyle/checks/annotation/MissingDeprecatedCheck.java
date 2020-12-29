@@ -19,6 +19,10 @@
 
 package com.puppycrawl.tools.checkstyle.checks.annotation;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import com.puppycrawl.tools.checkstyle.StatelessCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.DetailNode;
@@ -70,6 +74,7 @@ import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
  * tight html rules defined at
  * <a href="https://checkstyle.org/writingjavadocchecks.html#Tight-HTML_rules">
  * Tight-HTML Rules</a>.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * </ul>
@@ -90,6 +95,29 @@ import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
  * &#64;Deprecated
  * public static final int COUNTER = 10; // violation
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code annotation.missing.deprecated}
+ * </li>
+ * <li>
+ * {@code javadoc.duplicateTag}
+ * </li>
+ * <li>
+ * {@code javadoc.missed.html.close}
+ * </li>
+ * <li>
+ * {@code javadoc.parse.rule.error}
+ * </li>
+ * <li>
+ * {@code javadoc.wrong.singleton.html.tag}
+ * </li>
+ * </ul>
  *
  * @since 5.0
  */
@@ -115,6 +143,12 @@ public final class MissingDeprecatedCheck extends AbstractJavadocCheck {
 
     /** Fully-qualified {@link Deprecated Deprecated} annotation name. */
     private static final String FQ_DEPRECATED = "java.lang." + DEPRECATED;
+
+    /** List of token types to find parent of. */
+    private static final Set<Integer> TYPES_HASH_SET = new HashSet<>(Arrays.asList(
+            TokenTypes.TYPE, TokenTypes.MODIFIERS, TokenTypes.ANNOTATION,
+            TokenTypes.ANNOTATIONS, TokenTypes.ARRAY_DECLARATOR,
+            TokenTypes.TYPE_PARAMETERS, TokenTypes.DOT));
 
     @Override
     public int[] getDefaultJavadocTokens() {
@@ -166,6 +200,7 @@ public final class MissingDeprecatedCheck extends AbstractJavadocCheck {
 
     /**
      * Returns the parent node of the comment.
+     *
      * @param commentBlock child node.
      * @return parent node.
      */
@@ -178,11 +213,11 @@ public final class MissingDeprecatedCheck extends AbstractJavadocCheck {
 
         while (true) {
             final int type = result.getType();
-            if (type == TokenTypes.TYPE || type == TokenTypes.MODIFIERS
-                    || type == TokenTypes.ANNOTATION || type == TokenTypes.ANNOTATIONS
-                    || type == TokenTypes.ARRAY_DECLARATOR || type == TokenTypes.TYPE_PARAMETERS
-                    || type == TokenTypes.DOT) {
+            if (TYPES_HASH_SET.contains(type)) {
                 result = result.getParent();
+            }
+            else if (type == TokenTypes.SINGLE_LINE_COMMENT) {
+                result = result.getNextSibling();
             }
             else {
                 break;

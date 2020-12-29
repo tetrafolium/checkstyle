@@ -73,27 +73,33 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * <ul>
  * <li>
  * Property {@code folderPattern} - Specify the regular expression to match the folder path against.
+ * Type is {@code java.util.regex.Pattern}.
  * Default value is {@code null}.</li>
  *
  * <li>
  * Property {@code fileNamePattern} - Specify the regular expression to match the file name against.
+ * Type is {@code java.util.regex.Pattern}.
  * Default value is {@code null}.</li>
  *
  * <li>
  * Property {@code match} - Control whether to look for a match or mis-match on the file name, if
  * the fileNamePattern is supplied, otherwise it is applied on the folderPattern.
+ * Type is {@code boolean}.
  * Default value is {@code true}.</li>
  *
  * <li>
  * Property {@code ignoreFileNameExtensions} - Control whether to ignore the file extension for
- * the file name match. Default value is {@code false}.</li>
+ * the file name match.
+ * Type is {@code boolean}.
+ * Default value is {@code false}.</li>
  *
  * <li>
  * Property {@code fileExtensions} - Specify the file type extension of files to process. If this is
  * specified, then only files that match these types are examined with the other
- * patterns. Default value is {@code all files}.</li>
+ * patterns.
+ * Type is {@code java.lang.String[]}.
+ * Default value is {@code ""}.</li>
  * </ul>
- *
  * <p>
  * To configure the check to report file names that contain a space:
  * </p>
@@ -101,8 +107,15 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * <pre>
  * &lt;module name=&quot;RegexpOnFilename&quot;/&gt;
  * </pre>
+ *
+ * <p>Example:</p>
+ * <pre>
+ * src/xdocs/config_regexp.xml  //OK, contains no whitespace
+ * src/xdocs/&quot;config regexp&quot;.xml  //violation, contains whitespace
+ * </pre>
+ *
  * <p>
- * To configure the check to force picture files to not be 'gif':
+ * To configure the check to forbid 'gif' files in folders:
  * </p>
  *
  * <pre>
@@ -110,15 +123,34 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  *   &lt;property name=&quot;fileNamePattern&quot; value=&quot;\.gif$&quot;/&gt;
  * &lt;/module&gt;
  * </pre>
+ *
+ * <p>Example:</p>
+ * <pre>
+ * src/site/resources/images/favicon.png  //OK
+ * src/site/resources/images/logo.jpg  //OK
+ * src/site/resources/images/groups.gif  //violation, .gif images not allowed
+ * </pre>
+ *
  * <p>
- * OR:
+ * To configure the check to forbid 'md' files except 'README.md file' in folders,
+ * with custom message:
  * </p>
  *
  * <pre>
  * &lt;module name=&quot;RegexpOnFilename&quot;&gt;
- *   &lt;property name=&quot;fileNamePattern&quot; value=&quot;.&quot;/&gt;
- *   &lt;property name=&quot;fileExtensions&quot; value=&quot;gif&quot;/&gt;
+ *   &lt;property name=&quot;fileNamePattern&quot; value=&quot;README&quot;/&gt;
+ *   &lt;property name=&quot;fileExtensions&quot; value=&quot;md&quot;/&gt;
+ *   &lt;property name=&quot;match&quot; value=&quot;false&quot;/&gt;
+ *   &lt;message key=&quot;regexp.filename.mismatch&quot;
+ *     value=&quot;No '*.md' files other then 'README.md'&quot;/&gt;
  * &lt;/module&gt;
+ * </pre>
+ *
+ * <p>Example:</p>
+ * <pre>
+ * src/site/resources/README.md  //OK
+ * src/site/resources/Logo.png  //OK
+ * src/site/resources/Text.md  //violation, .md files other than 'README.md' are not allowed
  * </pre>
  *
  * <p>
@@ -135,6 +167,13 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * &lt;/module&gt;
  * </pre>
  *
+ * <p>Example:</p>
+ * <pre>
+ * src/main/resources/sun_checks.xml  //OK
+ * src/main/resources/check_properties.properties  //OK
+ * src/main/resources/JavaClass.java  //violation, xml|property files are allowed in resource folder
+ * </pre>
+ *
  * <p>
  * To configure the check to only allow Java and XML files in your folders use
  * the below.
@@ -145,6 +184,16 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  *   &lt;property name=&quot;fileNamePattern&quot; value=&quot;\.(java|xml)$&quot;/&gt;
  *   &lt;property name=&quot;match&quot; value=&quot;false&quot;/&gt;
  * &lt;/module&gt;
+ * </pre>
+ *
+ * <p>Example:</p>
+ * <pre>
+ * src/main/java/JavaClass.java  //OK
+ * src/main/MainClass.java  //OK
+ * src/main/java/java_xml.xml  //OK
+ * src/main/main_xml.xml  //OK
+ * src/main/java/image.png  //violation, folders should only contain java or xml files
+ * src/main/check_properties.properties  //violation, folders should only contain java or xml files
  * </pre>
  *
  * <p>
@@ -158,6 +207,14 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  *   &lt;property name=&quot;fileNamePattern&quot; value=&quot;\.(java|xml)$&quot;/&gt;
  *   &lt;property name=&quot;match&quot; value=&quot;false&quot;/&gt;
  * &lt;/module&gt;
+ * </pre>
+ *
+ * <p>Example:</p>
+ * <pre>
+ * src/SourceClass.java  //OK
+ * src/source_xml.xml  //OK
+ * src/image.png  //violation, only java and xml files are allowed in src folder
+ * src/main/main_properties.properties  //OK, this check only applies to src folder
  * </pre>
  *
  * <p>
@@ -177,6 +234,28 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  *   &lt;property name=&quot;ignoreFileNameExtensions&quot; value=&quot;true&quot;/&gt;
  * &lt;/module&gt;
  * </pre>
+ *
+ * <p>Example:</p>
+ * <pre>
+ * src/main/java/JavaClass.java  //OK
+ * src/main/MainClass.java  //OK
+ * src/main/java/java_class.java  //violation, file names should be in Camel Case
+ * src/main/main_class.java  //violation, file names should be in Camel Case
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.Checker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code regexp.filename.match}
+ * </li>
+ * <li>
+ * {@code regexp.filename.mismatch}
+ * </li>
+ * </ul>
  *
  * @since 6.15
  */

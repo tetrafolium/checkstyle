@@ -29,28 +29,33 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * </p>
  * <ul>
  * <li>
- * Property {@code format} - Specifies valid identifiers. Default value is
- * {@code "^[a-z][a-zA-Z0-9]*$"}.
+ * Property {@code format} - Specifies valid identifiers.
+ * Type is {@code java.util.regex.Pattern}.
+ * Default value is {@code "^[a-z][a-zA-Z0-9]*$"}.
  * </li>
  * <li>
  * Property {@code applyToPublic} - Controls whether to apply the check to public member.
+ * Type is {@code boolean}.
  * Default value is {@code true}.
  * </li>
  * <li>
  * Property {@code applyToProtected} - Controls whether to apply the check to protected member.
+ * Type is {@code boolean}.
  * Default value is {@code true}.
  * </li>
  * <li>
  * Property {@code applyToPackage} - Controls whether to apply the check to package-private member.
+ * Type is {@code boolean}.
  * Default value is {@code true}.
  * </li>
  * <li>
  * Property {@code applyToPrivate} - Controls whether to apply the check to private member.
+ * Type is {@code boolean}.
  * Default value is {@code true}.
  * </li>
  * </ul>
  * <p>
- * An example of how to configure the check is:
+ * To configure the check:
  * </p>
  * <pre>
  * &lt;module name=&quot;MemberName&quot;/&gt;
@@ -60,15 +65,18 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * class MyClass {
  *   public int num1; // OK
  *   protected int num2; // OK
- *   int num3; // OK
+ *   final int num3 = 3; // OK
  *   private int num4; // OK
+ *
+ *   static int num5; // ignored: not an instance variable
+ *   public static final int CONSTANT = 1; // ignored: not an instance variable
  *
  *   public int NUM1; // violation, name 'NUM1'
  *                    // must match pattern '^[a-z][a-zA-Z0-9]*$'
  *   protected int NUM2; // violation, name 'NUM2'
  *                       // must match pattern '^[a-z][a-zA-Z0-9]*$'
- *   int NUM3; // violation, name 'NUM3'
- *             // must match pattern '^[a-z][a-zA-Z0-9]*$'
+ *   final int NUM3; // violation, name 'NUM3'
+ *                   // must match pattern '^[a-z][a-zA-Z0-9]*$'
  *   private int NUM4; // violation, name 'NUM4'
  *                     // must match pattern '^[a-z][a-zA-Z0-9]*$'
  * }
@@ -119,6 +127,17 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  *   private int NUM4; // OK
  * }
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code name.invalidPattern}
+ * </li>
+ * </ul>
  *
  * @since 3.0
  */

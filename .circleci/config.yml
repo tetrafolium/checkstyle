@@ -24,9 +24,9 @@ jobs:
             FULL_SKIP2=$SKIP_FILES5$SKIP_FILES6$SKIP_FILES7$SKIP_FILES8
             SKIP_FILES=$FULL_SKIP1$FULL_SKIP2
             export RUN_JOB=1
-            #source ./.ci/common.sh
+            # source ./.ci/common.sh
             # should_run_job will change RUN_JOB variable
-            #should_run_job "recheck" $SKIP_FILES
+            # should_run_job "recheck" $SKIP_FILES
             echo $RUN_JOB > .ci-temp/run_job
       - run:
           name: download all maven dependencies and groovy
@@ -38,7 +38,7 @@ jobs:
               ls -la
               java -version
               mvn --version
-              mvn -Ppitest-metrics dependency:go-offline
+              mvn -e -Ppitest-metrics dependency:go-offline
             else
               echo "build is skipped ..."
             fi
@@ -70,6 +70,8 @@ jobs:
             else
               echo "build is skipped ..."
             fi
+      - store_artifacts:
+          path: ./target/pit-reports
 
   pitest2:
     machine: true
@@ -92,6 +94,8 @@ jobs:
             else
               echo "build is skipped ..."
             fi
+      - store_artifacts:
+          path: ./target/pit-reports
 
   pitest3:
     machine: true
@@ -114,6 +118,8 @@ jobs:
             else
               echo "build is skipped ..."
             fi
+      - store_artifacts:
+          path: ./target/pit-reports
 
   pitest4:
     machine: true
@@ -136,6 +142,8 @@ jobs:
             else
               echo "build is skipped ..."
             fi
+      - store_artifacts:
+          path: ./target/pit-reports
 
   pitest5:
     machine: true
@@ -158,6 +166,8 @@ jobs:
             else
               echo "build is skipped ..."
             fi
+      - store_artifacts:
+          path: ./target/pit-reports
 
   pitest6:
     machine: true
@@ -180,6 +190,8 @@ jobs:
             else
               echo "build is skipped ..."
             fi
+      - store_artifacts:
+          path: ./target/pit-reports
 
   pitest7:
     machine: true
@@ -193,12 +205,15 @@ jobs:
             echo "RUN_JOB="$RUN_JOB
             if [[ $RUN_JOB == 1 ]]; then
               echo "./.ci/pitest.sh pitest-gui"   >> commands.txt
+              # echo "./.ci/pitest.sh pitest-meta"  >> commands.txt
               CMD="$(circleci tests split commands.txt)"
               echo "Command: $CMD"
               eval $CMD
             else
               echo "build is skipped ..."
             fi
+      - store_artifacts:
+          path: ./target/pit-reports
 
   pitest8:
     machine: true
@@ -218,6 +233,8 @@ jobs:
             else
               echo "build is skipped ..."
             fi
+      - store_artifacts:
+          path: ./target/pit-reports
 
 workflows:
   version: 2

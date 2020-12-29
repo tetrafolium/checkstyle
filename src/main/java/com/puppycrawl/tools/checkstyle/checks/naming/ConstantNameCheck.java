@@ -33,33 +33,48 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * </p>
  * <ul>
  * <li>
- * Property {@code format} - Specifies valid identifiers. Default value is
- * {@code "^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$"}.
+ * Property {@code format} - Specifies valid identifiers.
+ * Type is {@code java.util.regex.Pattern}.
+ * Default value is {@code "^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$"}.
  * </li>
  * <li>
  * Property {@code applyToPublic} - Controls whether to apply the check to public member.
+ * Type is {@code boolean}.
  * Default value is {@code true}.
  * </li>
  * <li>
  * Property {@code applyToProtected} - Controls whether to apply the check to protected member.
+ * Type is {@code boolean}.
  * Default value is {@code true}.
  * </li>
  * <li>
  * Property {@code applyToPackage} - Controls whether to apply the check to package-private member.
+ * Type is {@code boolean}.
  * Default value is {@code true}.
  * </li>
  * <li>
  * Property {@code applyToPrivate} - Controls whether to apply the check to private member.
+ * Type is {@code boolean}.
  * Default value is {@code true}.
  * </li>
  * </ul>
  * <p>
- * An example of how to configure the check is:
+ * To configure the check:
  * </p>
  * <pre>
  * &lt;module name="ConstantName"/&gt;
  * </pre>
- *
+ * <p>Example:</p>
+ * <pre>
+ * class MyClass {
+ *   public final static int FIRST_CONSTANT1 = 10; // OK
+ *   protected final static int SECOND_CONSTANT2 = 100; // OK
+ *   final static int third_Constant3 = 1000; // violation, name 'third_Constant3' must
+ *                                           // match pattern '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'
+ *   private final static int fourth_Const4 = 50; // violation, name 'fourth_Const4' must match
+ *                                                 // pattern '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'
+ * }
+ * </pre>
  * <p>
  * The following configuration apart from names allowed by default allows {@code log}
  * or {@code logger}:
@@ -105,6 +120,18 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  *                                                 // pattern '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'
  * }
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code name.invalidPattern}
+ * </li>
+ * </ul>
+ *
  * @since 3.0
  */
 public class ConstantNameCheck
@@ -136,12 +163,12 @@ public class ConstantNameCheck
 
         final DetailAST modifiersAST =
             ast.findFirstToken(TokenTypes.MODIFIERS);
-        final boolean isStatic = modifiersAST.findFirstToken(TokenTypes.LITERAL_STATIC) != null;
-        final boolean isFinal = modifiersAST.findFirstToken(TokenTypes.FINAL) != null;
-
-        if (isStatic && isFinal && shouldCheckInScope(modifiersAST)
-                || ScopeUtil.isInAnnotationBlock(ast)
-                || ScopeUtil.isInInterfaceBlock(ast)
+        final boolean isStaticFinal =
+            modifiersAST.findFirstToken(TokenTypes.LITERAL_STATIC) != null
+                && modifiersAST.findFirstToken(TokenTypes.FINAL) != null
+            || ScopeUtil.isInAnnotationBlock(ast)
+            || ScopeUtil.isInInterfaceBlock(ast);
+        if (isStaticFinal && shouldCheckInScope(modifiersAST)
                         && !ScopeUtil.isInCodeBlock(ast)) {
             // Handle the serialVersionUID and serialPersistentFields constants
             // which are used for Serialization. Cannot enforce rules on it. :-)

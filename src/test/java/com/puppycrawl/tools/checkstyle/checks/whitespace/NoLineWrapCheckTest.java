@@ -46,9 +46,9 @@ public class NoLineWrapCheckTest
     public void testDefaultTokensLineWrapping() throws Exception {
         final DefaultConfiguration checkConfig = createModuleConfig(NoLineWrapCheck.class);
         final String[] expected = {
-            "1: " + getCheckMessage(MSG_KEY, "package"),
-            "6: " + getCheckMessage(MSG_KEY, "import"),
-            "10: " + getCheckMessage(MSG_KEY, "import"),
+            "1:1: " + getCheckMessage(MSG_KEY, "package"),
+            "6:1: " + getCheckMessage(MSG_KEY, "import"),
+            "10:1: " + getCheckMessage(MSG_KEY, "import"),
         };
         verify(checkConfig, getPath("InputNoLineWrapBad.java"), expected);
     }
@@ -60,13 +60,36 @@ public class NoLineWrapCheckTest
         checkConfig.addAttribute(
                 "tokens", "IMPORT, STATIC_IMPORT, CLASS_DEF, METHOD_DEF, ENUM_DEF");
         final String[] expected = {
-            "6: " + getCheckMessage(MSG_KEY, "import"),
-            "10: " + getCheckMessage(MSG_KEY, "import"),
-            "13: " + getCheckMessage(MSG_KEY, "CLASS_DEF"),
-            "16: " + getCheckMessage(MSG_KEY, "METHOD_DEF"),
-            "23: " + getCheckMessage(MSG_KEY, "ENUM_DEF"),
+            "6:1: " + getCheckMessage(MSG_KEY, "import"),
+            "10:1: " + getCheckMessage(MSG_KEY, "import"),
+            "13:1: " + getCheckMessage(MSG_KEY, "CLASS_DEF"),
+            "16:9: " + getCheckMessage(MSG_KEY, "METHOD_DEF"),
+            "23:1: " + getCheckMessage(MSG_KEY, "ENUM_DEF"),
         };
         verify(checkConfig, getPath("InputNoLineWrapBad.java"), expected);
+    }
+
+    @Test
+    public void testNoLineWrapRecordsAndCompactCtors()
+            throws Exception {
+        final DefaultConfiguration checkConfig = createModuleConfig(NoLineWrapCheck.class);
+        checkConfig.addAttribute(
+                "tokens", "RECORD_DEF, CLASS_DEF, CTOR_DEF, COMPACT_CTOR_DEF");
+
+        final String[] expected = {
+            "10:9: " + getCheckMessage(MSG_KEY, "CTOR_DEF"),
+            "16:5: " + getCheckMessage(MSG_KEY, "RECORD_DEF"),
+            "25:9: " + getCheckMessage(MSG_KEY, "CTOR_DEF"),
+            "31:5: " + getCheckMessage(MSG_KEY, "RECORD_DEF"),
+            "33:9: " + getCheckMessage(MSG_KEY, "COMPACT_CTOR_DEF"),
+            "37:5: " + getCheckMessage(MSG_KEY, "RECORD_DEF"),
+            "39:9: " + getCheckMessage(MSG_KEY, "COMPACT_CTOR_DEF"),
+            "44:9: " + getCheckMessage(MSG_KEY, "RECORD_DEF"),
+            "46:13: " + getCheckMessage(MSG_KEY, "COMPACT_CTOR_DEF"),
+        };
+        verify(checkConfig,
+                getNonCompilablePath("InputNoLineWrapRecordsAndCompactCtors.java"),
+                expected);
     }
 
 }

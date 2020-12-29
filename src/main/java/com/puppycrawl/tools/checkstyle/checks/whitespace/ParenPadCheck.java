@@ -45,10 +45,13 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  * <ul>
  * <li>
  * Property {@code option} - Specify policy on how to pad parentheses.
+ * Type is {@code com.puppycrawl.tools.checkstyle.checks.whitespace.PadOption}.
  * Default value is {@code nospace}.
  * </li>
  * <li>
  * Property {@code tokens} - tokens to check
+ * Type is {@code java.lang.String[]}.
+ * Validation type is {@code tokenSet}.
  * Default value is:
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION">
  * ANNOTATION</a>,
@@ -91,7 +94,9 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SUPER_CTOR_CALL">
  * SUPER_CTOR_CALL</a>,
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LAMBDA">
- * LAMBDA</a>.
+ * LAMBDA</a>,
+ * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RECORD_DEF">
+ * RECORD_DEF</a>.
  * </li>
  * </ul>
  * <p>
@@ -101,24 +106,113 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  * &lt;module name=&quot;ParenPad&quot;/&gt;
  * </pre>
  * <p>
+ * Example:
+ * </p>
+ * <pre>
+ * class Foo {
+ *
+ *   int n;
+ *
+ *   public void fun() {  // OK
+ *     bar( 1);  // violation, space after left parenthesis
+ *   }
+ *
+ *   public void bar(int k ) {  // violation, space before right parenthesis
+ *     while (k &gt; 0) {  // OK
+ *     }
+ *
+ *     Test obj = new Test(k);  // OK
+ *   }
+ *
+ *   public void fun2() {  // OK
+ *     switch( n) {  // violation, space after left parenthesis
+ *       case 2:
+ *         bar(n);  // OK
+ *       default:
+ *         break;
+ *     }
+ *   }
+ *
+ * }
+ * </pre>
+ * <p>
  * To configure the check to require spaces for the
  * parentheses of constructor, method, and super constructor calls:
  * </p>
  * <pre>
  * &lt;module name=&quot;ParenPad&quot;&gt;
- *   &lt;property name=&quot;tokens&quot; value=&quot;CTOR_CALL, METHOD_CALL,
+ *   &lt;property name=&quot;tokens&quot; value=&quot;LITERAL_FOR, LITERAL_CATCH,
  *     SUPER_CTOR_CALL&quot;/&gt;
  *   &lt;property name=&quot;option&quot; value=&quot;space&quot;/&gt;
  * &lt;/module&gt;
  * </pre>
  * <p>
- * The following cases not checked:
+ * Example:
+ * </p>
+ * <pre>
+ * class Foo {
+ *
+ *   int x;
+ *
+ *   public Foo(int n) {
+ *   }
+ *
+ *   public void fun() {
+ *     try {
+ *       System.out.println(x);
+ *     } catch( IOException e) {  // violation, no space before right parenthesis
+ *     } catch( Exception e ) {  // OK
+ *     }
+ *
+ *     for ( int i = 0; i &lt; x; i++ ) {  // OK
+ *     }
+ *   }
+ *
+ * }
+ *
+ * class Bar extends Foo {
+ *
+ *   public Bar() {
+ *     super(1 );  // violation, no space after left parenthesis
+ *   }
+ *
+ *   public Bar(int k) {
+ *     super( k ); // OK
+ *
+ *     for ( int i = 0; i &lt; k; i++) {  // violation, no space before right parenthesis
+ *     }
+ *   }
+ *
+ * }
+ * </pre>
+ * <p>
+ * The following cases are not checked:
  * </p>
  * <pre>
  * for ( ; i &lt; j; i++, j--) // no check after left parenthesis
  * for (Iterator it = xs.iterator(); it.hasNext(); ) // no check before right parenthesis
  * try (Closeable resource = acquire(); ) // no check before right parenthesis
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code ws.followed}
+ * </li>
+ * <li>
+ * {@code ws.notFollowed}
+ * </li>
+ * <li>
+ * {@code ws.notPreceded}
+ * </li>
+ * <li>
+ * {@code ws.preceded}
+ * </li>
+ * </ul>
  *
  * @since 3.0
  */
@@ -188,6 +282,7 @@ public class ParenPadCheck extends AbstractParenPadCheck {
      * {@link TokenTypes#ENUM_CONSTANT_DEF}, {@link TokenTypes#ANNOTATION}
      * {@link TokenTypes#LITERAL_SYNCHRONIZED}, {@link TokenTypes#LITERAL_NEW} and
      * {@link TokenTypes#LAMBDA}.
+     *
      * @param ast the token to check.
      */
     private void visitTokenWithOptionalParentheses(DetailAST ast) {
@@ -200,6 +295,7 @@ public class ParenPadCheck extends AbstractParenPadCheck {
 
     /**
      * Checks parens in {@link TokenTypes#RESOURCE_SPECIFICATION}.
+     *
      * @param ast the token to check.
      */
     private void visitResourceSpecification(DetailAST ast) {
@@ -212,6 +308,7 @@ public class ParenPadCheck extends AbstractParenPadCheck {
 
     /**
      * Checks that a token is preceded by a semi-colon.
+     *
      * @param ast the token to check
      * @return whether a token is preceded by a semi-colon
      */
@@ -221,6 +318,7 @@ public class ParenPadCheck extends AbstractParenPadCheck {
 
     /**
      * Checks parens in {@link TokenTypes#LITERAL_FOR}.
+     *
      * @param ast the token to check.
      */
     private void visitLiteralFor(DetailAST ast) {
@@ -237,28 +335,36 @@ public class ParenPadCheck extends AbstractParenPadCheck {
     /**
      * Checks parens inside {@link TokenTypes#EXPR}, {@link TokenTypes#QUESTION}
      * and {@link TokenTypes#METHOD_CALL}.
+     *
      * @param ast the token to check.
      */
     private void processExpression(DetailAST ast) {
-        DetailAST childAst = ast.getFirstChild();
-        while (childAst != null) {
-            if (childAst.getType() == TokenTypes.LPAREN) {
-                processLeft(childAst);
+        DetailAST currentNode = ast.getFirstChild();
+        while (currentNode != null) {
+            if (currentNode.getType() == TokenTypes.LPAREN) {
+                processLeft(currentNode);
             }
-            else if (childAst.getType() == TokenTypes.RPAREN && !isInTypecast(childAst)) {
-                processRight(childAst);
+            else if (currentNode.getType() == TokenTypes.RPAREN && !isInTypecast(currentNode)) {
+                processRight(currentNode);
             }
-            else if (!isAcceptableToken(childAst)) {
+            else if (currentNode.hasChildren() && !isAcceptableToken(currentNode)) {
                 // Traverse all subtree tokens which will never be configured
                 // to be launched in visitToken()
-                processExpression(childAst);
+                currentNode = currentNode.getFirstChild();
+                continue;
             }
-            childAst = childAst.getNextSibling();
+
+            // Go up after processing the last child
+            while (currentNode.getNextSibling() == null && currentNode.getParent() != ast) {
+                currentNode = currentNode.getParent();
+            }
+            currentNode = currentNode.getNextSibling();
         }
     }
 
     /**
      * Checks whether AcceptableTokens contains the given ast.
+     *
      * @param ast the token to check.
      * @return true if the ast is in AcceptableTokens.
      */
@@ -272,6 +378,7 @@ public class ParenPadCheck extends AbstractParenPadCheck {
 
     /**
      * Returns array of acceptable tokens.
+     *
      * @return acceptableTokens.
      */
     private static int[] makeAcceptableTokens() {
@@ -296,12 +403,14 @@ public class ParenPadCheck extends AbstractParenPadCheck {
             TokenTypes.RESOURCE_SPECIFICATION,
             TokenTypes.SUPER_CTOR_CALL,
             TokenTypes.LAMBDA,
+            TokenTypes.RECORD_DEF,
         };
     }
 
     /**
      * Checks whether {@link TokenTypes#RPAREN} is a closing paren
      * of a {@link TokenTypes#TYPECAST}.
+     *
      * @param ast of a {@link TokenTypes#RPAREN} to check.
      * @return true if ast is a closing paren of a {@link TokenTypes#TYPECAST}.
      */
@@ -319,6 +428,7 @@ public class ParenPadCheck extends AbstractParenPadCheck {
 
     /**
      * Checks that a token follows an empty for iterator.
+     *
      * @param ast the token to check
      * @return whether a token follows an empty for iterator
      */
@@ -336,6 +446,7 @@ public class ParenPadCheck extends AbstractParenPadCheck {
 
     /**
      * Checks that a token precedes an empty for initializer.
+     *
      * @param ast the token to check
      * @return whether a token precedes an empty for initializer
      */

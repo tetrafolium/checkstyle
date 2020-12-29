@@ -44,55 +44,19 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * and must be on the last non-empty line before the {@code case} triggering
  * the warning or on the same line before the {@code case}(ugly, but possible).
  * </p>
- * <pre>
- * switch (i) {
- * case 0:
- *   i++; // fall through
- *
- * case 1:
- *   i++;
- *   // falls through
- * case 2:
- * case 3:
- * case 4: {
- *   i++;
- * }
- * // fallthrough
- * case 5:
- *   i++;
- * &#47;* fallthru *&#47;case 6:
- *   i++;
- * // fall-through
- * case 7:
- *   i++;
- *   break;
- * }
- * </pre>
  * <p>
  * Note: The check assumes that there is no unreachable code in the {@code case}.
  * </p>
- * <p>
- * The following fragment of code will NOT trigger the check,
- * because of the comment "fallthru" or any Java code
- * in case 5 are absent.
- * </p>
- * <pre>
- * case 3:
- *     x = 2;
- *     // fallthru
- * case 4:
- * case 5: // violation
- * case 6:
- *     break;
- * </pre>
  * <ul>
  * <li>
  * Property {@code checkLastCaseGroup} - Control whether the last case group must be checked.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * <li>
  * Property {@code reliefPattern} - Define the RegExp to match the relief comment that suppresses
  * the warning about a fall through.
+ * Type is {@code java.util.regex.Pattern}.
  * Default value is {@code "falls?[ -]?thr(u|ough)"}.
  * </li>
  * </ul>
@@ -100,16 +64,125 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * To configure the check:
  * </p>
  * <pre>
- * &lt;module name=&quot;FallThrough&quot;/&gt;
+ * &lt;module name="FallThrough"/&gt;
  * </pre>
  * <p>
- * or
+ * Example:
+ * </p>
+ * <pre>
+ * public void foo() throws Exception {
+ *   int i = 0;
+ *   while (i &gt;= 0) {
+ *     switch (i) {
+ *       case 1:
+ *         i++;
+ *       case 2: // violation, previous case contains code but lacks
+ *               // break, return, throw or continue statement
+ *         i++;
+ *         break;
+ *       case 3: // OK
+ *         i++;
+ *         return;
+ *       case 4: // OK
+ *         i++;
+ *         throw new Exception();
+ *       case 5: // OK
+ *         i++;
+ *         continue;
+ *       case 6: // OK
+ *       case 7: // Previous case: OK, case does not contain code
+ *               // This case: OK, by default the last case might not have statement
+ *               // that transfer control
+ *         i++;
+ *     }
+ *   }
+ * }
+ * </pre>
+ * <p>
+ * Example how to suppress violations by comment:
+ * </p>
+ * <pre>
+ * switch (i) {
+ *   case 1:
+ *     i++; // fall through
+ *
+ *   case 2: // OK
+ *     i++;
+ *     // fallthru
+ *   case 3: { // OK
+ *     i++;
+ *   }
+ *   &#47;* fall-thru *&#47;
+ *   case 4: // OK
+ *     i++;
+ *     // Fallthru
+ *   case 5: // violation, "Fallthru" in case 4 should be "fallthru"
+ *     i++;
+ *     // fall through
+ *     i++;
+ *   case 6: // violation, the comment must be on the last non-empty line before 'case'
+ *     i++;
+ *   &#47;* fall through *&#47;case 7: // OK, comment can appear on the same line but before 'case'
+ *     i++;
+ * }
+ * </pre>
+ * <p>
+ * To configure the check to enable check for last case group:
  * </p>
  * <pre>
  * &lt;module name=&quot;FallThrough&quot;&gt;
- *   &lt;property name=&quot;reliefPattern&quot; value=&quot;continue in next case&quot;/&gt;
+ *    &lt;property name=&quot;checkLastCaseGroup&quot; value=&quot;true&quot;/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>
+ * Example:
+ * </p>
+ * <pre>
+ * switch (i) {
+ *   case 1:
+ *     break;
+ *   case 2: // Previous case: OK
+ *           // This case: violation, last case must have statement that transfer control
+ *     i++;
+ * }
+ * </pre>
+ * <p>
+ * To configure the check with custom relief pattern:
+ * </p>
+ * <pre>
+ * &lt;module name=&quot;FallThrough&quot;&gt;
+ *    &lt;property name=&quot;reliefPattern&quot; value=&quot;FALL?[ -]?THROUGH&quot;/&gt;
+ * &lt;/module&gt;
+ * </pre>
+ * <p>
+ * Example:
+ * </p>
+ * <pre>
+ * switch (i) {
+ *   case 1:
+ *     i++;
+ *     // FALL-THROUGH
+ *   case 2: // OK, "FALL-THROUGH" matches the regular expression "FALL?[ -]?THROUGH"
+ *     i++;
+ *     // fall-through
+ *   case 3: // violation, "fall-through" doesn't match
+ *     break;
+ * }
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code fall.through}
+ * </li>
+ * <li>
+ * {@code fall.through.last}
+ * </li>
+ * </ul>
  *
  * @since 3.4
  */
@@ -165,6 +238,7 @@ public class FallThroughCheck extends AbstractCheck {
 
     /**
      * Setter to control whether the last case group must be checked.
+     *
      * @param value new value of the property.
      */
     public void setCheckLastCaseGroup(boolean value) {
@@ -193,6 +267,7 @@ public class FallThroughCheck extends AbstractCheck {
     /**
      * Checks if a given subtree terminated by return, throw or,
      * if allowed break, continue.
+     *
      * @param ast root of given subtree
      * @param useBreak should we consider break as terminator.
      * @param useContinue should we consider continue as terminator.
@@ -242,6 +317,7 @@ public class FallThroughCheck extends AbstractCheck {
     /**
      * Checks if a given SLIST terminated by return, throw or,
      * if allowed break, continue.
+     *
      * @param slistAst SLIST to check
      * @param useBreak should we consider break as terminator.
      * @param useContinue should we consider continue as terminator.
@@ -262,6 +338,7 @@ public class FallThroughCheck extends AbstractCheck {
     /**
      * Checks if a given IF terminated by return, throw or,
      * if allowed break, continue.
+     *
      * @param ast IF to check
      * @param useBreak should we consider break as terminator.
      * @param useContinue should we consider continue as terminator.
@@ -281,6 +358,7 @@ public class FallThroughCheck extends AbstractCheck {
     /**
      * Checks if a given loop terminated by return, throw or,
      * if allowed break, continue.
+     *
      * @param ast loop to check
      * @return true if loop is terminated.
      */
@@ -300,6 +378,7 @@ public class FallThroughCheck extends AbstractCheck {
     /**
      * Checks if a given try/catch/finally block terminated by return, throw or,
      * if allowed break, continue.
+     *
      * @param ast loop to check
      * @param useBreak should we consider break as terminator.
      * @param useContinue should we consider continue as terminator.
@@ -340,6 +419,7 @@ public class FallThroughCheck extends AbstractCheck {
     /**
      * Checks if a given switch terminated by return, throw or,
      * if allowed break, continue.
+     *
      * @param literalSwitchAst loop to check
      * @param useContinue should we consider continue as terminator.
      * @return true if switch is terminated.
@@ -359,6 +439,7 @@ public class FallThroughCheck extends AbstractCheck {
     /**
      * Checks if a given synchronized block terminated by return, throw or,
      * if allowed break, continue.
+     *
      * @param synchronizedAst synchronized block to check.
      * @param useBreak should we consider break as terminator.
      * @param useContinue should we consider continue as terminator.
@@ -427,6 +508,7 @@ public class FallThroughCheck extends AbstractCheck {
     /**
      * Does a regular expression match on the given line and checks that a
      * possible match is within a comment.
+     *
      * @param pattern The regular expression pattern to use.
      * @param line The line of test to do the match on.
      * @param lineNo The line number in the file.

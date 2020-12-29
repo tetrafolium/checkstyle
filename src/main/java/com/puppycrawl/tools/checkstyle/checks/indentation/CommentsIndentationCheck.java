@@ -218,6 +218,8 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  * <ul>
  * <li>
  * Property {@code tokens} - tokens to check
+ * Type is {@code java.lang.String[]}.
+ * Validation type is {@code tokenSet}.
  * Default value is:
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SINGLE_LINE_COMMENT">
  * SINGLE_LINE_COMMENT</a>,
@@ -231,6 +233,20 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  * <pre>
  * &lt;module name=&quot;CommentsIndentation&quot;/&gt;
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code comments.indentation.block}
+ * </li>
+ * <li>
+ * {@code comments.indentation.single}
+ * </li>
+ * </ul>
  *
  * @since 6.10
  */
@@ -296,6 +312,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
      * double d1 = 5.0;
      * }
      * </p>
+     *
      * @param comment comment to check.
      */
     private void visitComment(DetailAST comment) {
@@ -316,7 +333,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
                 handleCommentAtTheEndOfTheCodeBlock(prevStmt, comment, nextStmt);
             }
             else if (nextStmt != null && !areSameLevelIndented(comment, nextStmt, nextStmt)) {
-                log(comment.getLineNo(), getMessageKey(comment), nextStmt.getLineNo(),
+                log(comment, getMessageKey(comment), nextStmt.getLineNo(),
                     comment.getColumnNo(), nextStmt.getColumnNo());
             }
         }
@@ -324,6 +341,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
 
     /**
      * Returns the next statement of a comment.
+     *
      * @param comment comment.
      * @return the next statement of a comment.
      */
@@ -339,6 +357,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
 
     /**
      * Returns the previous statement of a comment.
+     *
      * @param comment comment.
      * @return the previous statement of a comment.
      */
@@ -355,6 +374,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
 
     /**
      * Checks whether the previous statement of a comment is distributed over two or more lines.
+     *
      * @param comment comment to check.
      * @return true if the previous statement of a comment is distributed over two or more lines.
      */
@@ -368,6 +388,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
     /**
      * Checks whether the previous statement of a comment is a method call chain or
      * string concatenation statement distributed over two ore more lines.
+     *
      * @param comment comment to check.
      * @return true if the previous statement is a distributed expression.
      */
@@ -403,6 +424,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
 
     /**
      * Whether the statement can have or always have curly brackets.
+     *
      * @param previousSibling the statement to check.
      * @return true if the statement can have or always have curly brackets.
      */
@@ -418,19 +440,18 @@ public class CommentsIndentationCheck extends AbstractCheck {
 
     /**
      * Whether the statement is a kind of definition (method, class etc.).
+     *
      * @param previousSibling the statement to check.
      * @return true if the statement is a kind of definition.
      */
     private static boolean isDefinition(DetailAST previousSibling) {
-        return previousSibling.getType() == TokenTypes.METHOD_DEF
-            || previousSibling.getType() == TokenTypes.CLASS_DEF
-            || previousSibling.getType() == TokenTypes.INTERFACE_DEF
-            || previousSibling.getType() == TokenTypes.ENUM_DEF
-            || previousSibling.getType() == TokenTypes.ANNOTATION_DEF;
+        return TokenUtil.isTypeDeclaration(previousSibling.getType())
+            || previousSibling.getType() == TokenTypes.METHOD_DEF;
     }
 
     /**
      * Checks whether the previous statement of a comment is a distributed return statement.
+     *
      * @param commentPreviousSibling previous sibling of the comment.
      * @return true if the previous statement of a comment is a distributed return statement.
      */
@@ -449,6 +470,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
 
     /**
      * Checks whether the previous statement of a comment is a distributed throw statement.
+     *
      * @param commentPreviousSibling previous sibling of the comment.
      * @return true if the previous statement of a comment is a distributed throw statement.
      */
@@ -467,6 +489,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
 
     /**
      * Returns the first token of the distributed previous statement of comment.
+     *
      * @param comment comment to check.
      * @return the first token of the distributed previous statement of comment.
      */
@@ -491,6 +514,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
 
     /**
      * Checks whether case block is empty.
+     *
      * @param nextStmt previous statement.
      * @param prevStmt next statement.
      * @return true if case block is empty.
@@ -519,6 +543,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
      *    ...
      * }
      * </p>
+     *
      * @param prevStmt previous statement.
      * @param nextStmt next statement.
      * @return true if a comment is a 'fall through' comment.
@@ -533,6 +558,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
 
     /**
      * Checks whether a comment is placed at the end of the code block.
+     *
      * @param nextStmt next statement.
      * @return true if a comment is placed at the end of the block.
      */
@@ -552,6 +578,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
      * ...
      * </p>
      * Note, the method does not treat empty case blocks.
+     *
      * @param prevStmt previous statement.
      * @param nextStmt next statement.
      * @return true if comment is placed in the empty code block.
@@ -582,6 +609,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
      *    ...
      * }
      * </p>
+     *
      * @param prevStmt previous statement.
      * @param comment single line comment.
      * @param nextStmt next statement.
@@ -623,6 +651,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
      *    ...
      * }
      * </p>
+     *
      * @param prevStmt previous statement.
      * @param comment single line comment.
      * @param nextStmt next statement.
@@ -646,6 +675,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
      *    }
      * }
      * </p>
+     *
      * @param prevStmt previous statement.
      * @param comment comment to check.
      * @param nextStmt next statement.
@@ -657,7 +687,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
                     || prevStmt.getType() == TokenTypes.CASE_GROUP
                     || prevStmt.getType() == TokenTypes.LITERAL_DEFAULT) {
                 if (comment.getColumnNo() < nextStmt.getColumnNo()) {
-                    log(comment.getLineNo(), getMessageKey(comment), nextStmt.getLineNo(),
+                    log(comment, getMessageKey(comment), nextStmt.getLineNo(),
                         comment.getColumnNo(), nextStmt.getColumnNo());
                 }
             }
@@ -668,7 +698,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
             }
             else if (!areSameLevelIndented(comment, prevStmt, prevStmt)) {
                 final int prevStmtLineNo = prevStmt.getLineNo();
-                log(comment.getLineNo(), getMessageKey(comment), prevStmtLineNo,
+                log(comment, getMessageKey(comment), prevStmtLineNo,
                         comment.getColumnNo(), getLineStart(prevStmtLineNo));
             }
         }
@@ -676,6 +706,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
 
     /**
      * Whether the comment might have been used for the next block in a multi-block structure.
+     *
      * @param endBlockStmt the end of the current block.
      * @return true, if the comment might have been used for the next
      *     block in a multi-block structure.
@@ -711,7 +742,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
      */
     private void handleCommentInEmptyCodeBlock(DetailAST comment, DetailAST nextStmt) {
         if (comment.getColumnNo() < nextStmt.getColumnNo()) {
-            log(comment.getLineNo(), getMessageKey(comment), nextStmt.getLineNo(),
+            log(comment, getMessageKey(comment), nextStmt.getLineNo(),
                 comment.getColumnNo(), nextStmt.getColumnNo());
         }
     }
@@ -720,6 +751,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
      * Does pre-order traverse of abstract syntax tree to find the previous statement of the
      * comment. If previous statement of the comment is found, then the traverse will
      * be finished.
+     *
      * @param comment current statement.
      * @return previous statement of the comment or null if the comment does not have previous
      *         statement.
@@ -754,6 +786,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
 
     /**
      * Whether the ast is a comment.
+     *
      * @param ast the ast to check.
      * @return true if the ast is a comment.
      */
@@ -767,6 +800,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
 
     /**
      * Whether the AST node starts a block.
+     *
      * @param root the AST node to check.
      * @return true if the AST node starts a block.
      */
@@ -780,6 +814,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
     /**
      * Finds a previous statement of the comment.
      * Uses root token of the line while searching.
+     *
      * @param comment comment.
      * @param root root token of the line.
      * @return previous statement of the comment or null if previous statement was not found.
@@ -817,6 +852,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
 
     /**
      * Finds a token which begins the line.
+     *
      * @param root root token of the line.
      * @return token which begins the line.
      */
@@ -833,6 +869,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
 
     /**
      * Checks whether there is a use of an object reference to invoke an object's method on line.
+     *
      * @param root root token of the line.
      * @return true if there is a use of an object reference to invoke an object's method on line.
      */
@@ -843,6 +880,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
 
     /**
      * Finds the start token of method call chain.
+     *
      * @param root root token of the line.
      * @return the start token of method call chain.
      */
@@ -861,6 +899,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
     /**
      * Checks whether the checked statement is on the previous line ignoring empty lines
      * and lines which contain only comments.
+     *
      * @param currentStatement current statement.
      * @param checkedStatement checked statement.
      * @return true if checked statement is on the line which is previous to current statement
@@ -886,6 +925,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
 
     /**
      * Get the token to start counting the number of lines to add to the distance aim from.
+     *
      * @param checkedStatement the checked statement.
      * @return the token to start counting the number of lines to add to the distance aim from.
      */
@@ -907,6 +947,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
 
     /**
      * Count the number of empty lines between statements.
+     *
      * @param startStatement start statement.
      * @param endStatement end statement.
      * @return the number of empty lines between statements.
@@ -925,6 +966,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
 
     /**
      * Logs comment which can have the same indentation level as next or previous statement.
+     *
      * @param comment comment.
      * @param nextStmt next statement.
      * @param prevStmt previous statement.
@@ -932,7 +974,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
     private void logMultilineIndentation(DetailAST prevStmt, DetailAST comment,
                                          DetailAST nextStmt) {
         final String multilineNoTemplate = "%d, %d";
-        log(comment.getLineNo(), getMessageKey(comment),
+        log(comment, getMessageKey(comment),
             String.format(Locale.getDefault(), multilineNoTemplate, prevStmt.getLineNo(),
                 nextStmt.getLineNo()), comment.getColumnNo(),
             String.format(Locale.getDefault(), multilineNoTemplate,
@@ -941,6 +983,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
 
     /**
      * Get a message key depending on a comment type.
+     *
      * @param comment the comment to process.
      * @return a message key.
      */
@@ -957,6 +1000,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
 
     /**
      * Gets comment's previous statement from switch block.
+     *
      * @param comment {@link TokenTypes#SINGLE_LINE_COMMENT single-line comment}.
      * @return comment's previous statement or null if previous statement is absent.
      */
@@ -974,6 +1018,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
 
     /**
      * Gets previous statement for comment which is placed immediately under case.
+     *
      * @param parentStatement comment's parent statement.
      * @return comment's previous statement or null if previous statement is absent.
      */
@@ -1010,6 +1055,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
 
     /**
      * Gets previous case-token for comment.
+     *
      * @param parentStatement comment's parent statement.
      * @return previous case-token or null if previous case-token is absent.
      */
@@ -1046,6 +1092,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
      * }
      * </pre>
      * </p>
+     *
      * @param comment {@link TokenTypes#SINGLE_LINE_COMMENT single line comment}.
      * @param prevStmt previous code statement.
      * @param nextStmt next code statement.
@@ -1059,6 +1106,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
 
     /**
      * Get a column number where a code starts.
+     *
      * @param lineNo the line number to get column number in.
      * @return the column number where a code starts.
      */
@@ -1073,6 +1121,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
 
     /**
      * Checks if current comment is a trailing comment.
+     *
      * @param comment comment to check.
      * @return true if current comment is a trailing comment.
      */
@@ -1094,6 +1143,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
      * double d = 3.14; // some comment
      * }
      * </p>
+     *
      * @param singleLineComment {@link TokenTypes#SINGLE_LINE_COMMENT single line comment}.
      * @return true if current single line comment is trailing comment.
      */
@@ -1111,6 +1161,7 @@ public class CommentsIndentationCheck extends AbstractCheck {
      * /* some comment *&#47; double d = 18.5;
      * }
      * </p>
+     *
      * @param blockComment {@link TokenTypes#BLOCK_COMMENT_BEGIN block comment begin}.
      * @return true if current comment block is trailing comment.
      */

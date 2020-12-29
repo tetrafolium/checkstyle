@@ -53,19 +53,25 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * <li>
  * Property {@code max} - Specify maximum allowed number of return statements
  * in non-void methods/lambdas.
+ * Type is {@code int}.
  * Default value is {@code 2}.
  * </li>
  * <li>
  * Property {@code maxForVoid} - Specify maximum allowed number of return statements
  * in void methods/constructors/lambdas.
+ * Type is {@code int}.
  * Default value is {@code 1}.
  * </li>
  * <li>
  * Property {@code format} - Specify method names to ignore.
+ * Type is {@code java.util.regex.Pattern}.
  * Default value is {@code "^equals$"}.
  * </li>
  * <li>
- * Property {@code tokens} - tokens to check Default value is:
+ * Property {@code tokens} - tokens to check
+ * Type is {@code java.lang.String[]}.
+ * Validation type is {@code tokenSet}.
+ * Default value is:
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
  * CTOR_DEF</a>,
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
@@ -130,6 +136,20 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  *   &lt;property name=&quot;tokens&quot; value=&quot;METHOD_DEF&quot;/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code return.count}
+ * </li>
+ * <li>
+ * {@code return.countVoid}
+ * </li>
+ * </ul>
  *
  * @since 3.2
  */
@@ -187,6 +207,7 @@ public final class ReturnCountCheck extends AbstractCheck {
 
     /**
      * Setter to specify method names to ignore.
+     *
      * @param pattern a pattern.
      */
     public void setFormat(Pattern pattern) {
@@ -196,6 +217,7 @@ public final class ReturnCountCheck extends AbstractCheck {
     /**
      * Setter to specify maximum allowed number of return statements
      * in non-void methods/lambdas.
+     *
      * @param max maximum allowed number of return statements.
      */
     public void setMax(int max) {
@@ -205,6 +227,7 @@ public final class ReturnCountCheck extends AbstractCheck {
     /**
      * Setter to specify maximum allowed number of return statements
      * in void methods/constructors/lambdas.
+     *
      * @param maxForVoid maximum allowed number of return statements for void methods.
      */
     public void setMaxForVoid(int maxForVoid) {
@@ -253,6 +276,7 @@ public final class ReturnCountCheck extends AbstractCheck {
 
     /**
      * Creates new method context and places old one on the stack.
+     *
      * @param ast method definition for check.
      */
     private void visitMethodDef(DetailAST ast) {
@@ -264,6 +288,7 @@ public final class ReturnCountCheck extends AbstractCheck {
 
     /**
      * Checks number of return statements and restore previous context.
+     *
      * @param ast node to leave.
      */
     private void leave(DetailAST ast) {
@@ -281,6 +306,7 @@ public final class ReturnCountCheck extends AbstractCheck {
 
     /**
      * Examines the return statement and tells context about it.
+     *
      * @param ast return statement to check.
      */
     private void visitReturn(DetailAST ast) {
@@ -310,6 +336,7 @@ public final class ReturnCountCheck extends AbstractCheck {
 
         /**
          * Creates new method context.
+         *
          * @param checking should we check this method or not.
          */
         /* package */ Context(boolean checking) {
@@ -318,6 +345,7 @@ public final class ReturnCountCheck extends AbstractCheck {
 
         /**
          * Increase the number of return statements and set context return type.
+         *
          * @param maxAssigned Maximum allowed number of return statements.
          * @param voidReturn Identifies if context is void.
          */
@@ -331,6 +359,7 @@ public final class ReturnCountCheck extends AbstractCheck {
         /**
          * Checks if number of return statements in the method are more
          * than allowed.
+         *
          * @param ast method def associated with this context.
          */
         public void checkCount(DetailAST ast) {

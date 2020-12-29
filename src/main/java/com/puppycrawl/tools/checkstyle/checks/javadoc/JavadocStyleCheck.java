@@ -74,12 +74,13 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * NOT missing from any package-info.java files.
  * </li>
  * <li>
- * Check for allowed HTML tags. The list of allowed HTML tags is "a", "abbr",
- * "acronym", "address", "area", "b", "bdo", "big", "blockquote", "br",
- * "caption", "cite", "code", "colgroup", "dd", "del", "div", "dfn", "dl", "dt",
- * "em", "fieldset", "font", "h1" to "h6", "hr", "i", "img", "ins", "kbd", "li",
- * "ol", "p", "pre", "q", "samp", "small", "span", "strong", "sub", "sup",
- * "table", "tbody", "td", "tfoot", "th", "thread", "tr", "tt", "u", "ul".
+ * Check for allowed HTML tags. The list of allowed HTML tags is
+ * "a", "abbr", "acronym", "address", "area", "b", "bdo", "big", "blockquote",
+ * "br", "caption", "cite", "code", "colgroup", "dd", "del", "dfn", "div", "dl",
+ * "dt", "em", "fieldset", "font", "h1", "h2", "h3", "h4", "h5", "h6", "hr",
+ * "i", "img", "ins", "kbd", "li", "ol", "p", "pre", "q", "samp", "small",
+ * "span", "strong", "sub", "sup", "table", "tbody", "td", "tfoot", "th",
+ * "thead", "tr", "tt", "u", "ul", "var".
  * </li>
  * </ul>
  * <p>
@@ -90,34 +91,43 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * <ul>
  * <li>
  * Property {@code scope} - Specify the visibility scope where Javadoc comments are checked.
+ * Type is {@code com.puppycrawl.tools.checkstyle.api.Scope}.
  * Default value is {@code private}.
  * </li>
  * <li>
  * Property {@code excludeScope} - Specify the visibility scope where
  * Javadoc comments are not checked.
+ * Type is {@code com.puppycrawl.tools.checkstyle.api.Scope}.
  * Default value is {@code null}.
  * </li>
  * <li>
  * Property {@code checkFirstSentence} - Control whether to check the first
  * sentence for proper end of sentence.
+ * Type is {@code boolean}.
  * Default value is {@code true}.
  * </li>
  * <li>
  * Property {@code endOfSentenceFormat} - Specify the format for matching
  * the end of a sentence.
+ * Type is {@code java.util.regex.Pattern}.
  * Default value is {@code "([.?!][ \t\n\r\f&lt;])|([.?!]$)"}.
  * </li>
  * <li>
  * Property {@code checkEmptyJavadoc} - Control whether to check if the Javadoc
  * is missing a describing text.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * <li>
  * Property {@code checkHtml} - Control whether to check for incomplete HTML tags.
+ * Type is {@code boolean}.
  * Default value is {@code true}.
  * </li>
  * <li>
- * Property {@code tokens} - tokens to check Default value is:
+ * Property {@code tokens} - tokens to check
+ * Type is {@code java.lang.String[]}.
+ * Validation type is {@code tokenSet}.
+ * Default value is:
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_DEF">
  * ANNOTATION_DEF</a>,
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_FIELD_DEF">
@@ -137,7 +147,11 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PACKAGE_DEF">
  * PACKAGE_DEF</a>,
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
- * VARIABLE_DEF</a>.
+ * VARIABLE_DEF</a>,
+ * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RECORD_DEF">
+ * RECORD_DEF</a>,
+ * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COMPACT_CTOR_DEF">
+ * COMPACT_CTOR_DEF</a>.
  * </li>
  * </ul>
  * <p>
@@ -146,6 +160,20 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * <pre>
  * &lt;module name="JavadocStyle"/&gt;
  * </pre>
+ * <p>Example:</p>
+ * <pre>
+ * public class Test {
+ *     &#47;**
+ *      * Some description here. // OK
+ *      *&#47;
+ *     private void methodWithValidCommentStyle() {}
+ *
+ *     &#47;**
+ *      * Some description here // violation, the sentence must end with a proper punctuation
+ *      *&#47;
+ *     private void methodWithInvalidCommentStyle() {}
+ * }
+ * </pre>
  * <p>
  * To configure the check for {@code public} scope:
  * </p>
@@ -153,6 +181,20 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * &lt;module name="JavadocStyle"&gt;
  *   &lt;property name="scope" value="public"/&gt;
  * &lt;/module&gt;
+ * </pre>
+ * <p>Example:</p>
+ * <pre>
+ * public class Test {
+ *     &#47;**
+ *      * Some description here // violation, the sentence must end with a proper punctuation
+ *      *&#47;
+ *     public void test1() {}
+ *
+ *     &#47;**
+ *      * Some description here // OK
+ *      *&#47;
+ *     private void test2() {}
+ * }
  * </pre>
  * <p>
  * To configure the check for javadoc which is in {@code private}, but not in {@code package} scope:
@@ -163,6 +205,20 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  *   &lt;property name="excludeScope" value="package"/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>Example:</p>
+ * <pre>
+ * public class Test {
+ *     &#47;**
+ *      * Some description here // violation, the sentence must end with a proper punctuation
+ *      *&#47;
+ *     private void test1() {}
+ *
+ *     &#47;**
+ *      * Some description here // OK
+ *      *&#47;
+ *     void test2() {}
+ * }
+ * </pre>
  * <p>
  * To configure the check to turn off first sentence checking:
  * </p>
@@ -171,6 +227,80 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  *   &lt;property name="checkFirstSentence" value="false"/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>Example:</p>
+ * <pre>
+ * public class Test {
+ *     &#47;**
+ *      * Some description here // OK
+ *      * Second line of description // violation, the sentence must end with a proper punctuation
+ *      *&#47;
+ *     private void test1() {}
+ * }
+ * </pre>
+ * <p>
+ * To configure the check to turn off validation of incomplete html tags:
+ * </p>
+ * <pre>
+ * &lt;module name="JavadocStyle"&gt;
+ * &lt;property name="checkHtml" value="false"/&gt;
+ * &lt;/module&gt;
+ * </pre>
+ * <p>Example:</p>
+ * <pre>
+ * public class Test {
+ *     &#47;**
+ *      * Some description here // violation, the sentence must end with a proper punctuation
+ *      * &lt;p // OK
+ *      *&#47;
+ *     private void test1() {}
+ * }
+ * </pre>
+ * <p>
+ * To configure the check for only class definitions:
+ * </p>
+ * <pre>
+ * &lt;module name="JavadocStyle"&gt;
+ * &lt;property name="tokens" value="CLASS_DEF"/&gt;
+ * &lt;/module&gt;
+ * </pre>
+ * <p>Example:</p>
+ * <pre>
+ * &#47;**
+ *  * Some description here // violation, the sentence must end with a proper punctuation
+ *  *&#47;
+ * public class Test {
+ *     &#47;**
+ *      * Some description here // OK
+ *      *&#47;
+ *     private void test1() {}
+ * }
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code javadoc.empty}
+ * </li>
+ * <li>
+ * {@code javadoc.extraHtml}
+ * </li>
+ * <li>
+ * {@code javadoc.incompleteTag}
+ * </li>
+ * <li>
+ * {@code javadoc.missing}
+ * </li>
+ * <li>
+ * {@code javadoc.noPeriod}
+ * </li>
+ * <li>
+ * {@code javadoc.unclosedHtml}
+ * </li>
+ * </ul>
  *
  * @since 3.2
  */
@@ -178,16 +308,16 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
 public class JavadocStyleCheck
     extends AbstractCheck {
 
-    /** Message property key for the Unclosed HTML message. */
+    /** Message property key for the Missing Javadoc message. */
     public static final String MSG_JAVADOC_MISSING = "javadoc.missing";
 
-    /** Message property key for the Unclosed HTML message. */
+    /** Message property key for the Empty Javadoc message. */
     public static final String MSG_EMPTY = "javadoc.empty";
 
-    /** Message property key for the Unclosed HTML message. */
+    /** Message property key for the No Javadoc end of Sentence Period message. */
     public static final String MSG_NO_PERIOD = "javadoc.noPeriod";
 
-    /** Message property key for the Unclosed HTML message. */
+    /** Message property key for the Incomplete Tag message. */
     public static final String MSG_INCOMPLETE_TAG = "javadoc.incompleteTag";
 
     /** Message property key for the Unclosed HTML message. */
@@ -210,11 +340,11 @@ public class JavadocStyleCheck
         Arrays.stream(new String[] {
             "a", "abbr", "acronym", "address", "area", "b", "bdo", "big",
             "blockquote", "br", "caption", "cite", "code", "colgroup", "dd",
-            "del", "div", "dfn", "dl", "dt", "em", "fieldset", "font", "h1",
+            "del", "dfn", "div", "dl", "dt", "em", "fieldset", "font", "h1",
             "h2", "h3", "h4", "h5", "h6", "hr", "i", "img", "ins", "kbd",
             "li", "ol", "p", "pre", "q", "samp", "small", "span", "strong",
-            "style", "sub", "sup", "table", "tbody", "td", "tfoot", "th",
-            "thead", "tr", "tt", "u", "ul", "var", })
+            "sub", "sup", "table", "tbody", "td", "tfoot", "th", "thead",
+            "tr", "tt", "u", "ul", "var", })
         .collect(Collectors.toCollection(TreeSet::new)));
 
     /** Specify the visibility scope where Javadoc comments are checked. */
@@ -259,6 +389,8 @@ public class JavadocStyleCheck
             TokenTypes.METHOD_DEF,
             TokenTypes.PACKAGE_DEF,
             TokenTypes.VARIABLE_DEF,
+            TokenTypes.RECORD_DEF,
+            TokenTypes.COMPACT_CTOR_DEF,
         };
     }
 
@@ -283,6 +415,7 @@ public class JavadocStyleCheck
 
     /**
      * Whether we should check this node.
+     *
      * @param ast a given node.
      * @return whether we should check a given node.
      */
@@ -330,7 +463,7 @@ public class JavadocStyleCheck
             // made sense to make another check just to ensure that the
             // package-info.java file actually contains package Javadocs.
             if (getFileContents().inPackageInfo()) {
-                log(ast.getLineNo(), MSG_JAVADOC_MISSING);
+                log(ast, MSG_JAVADOC_MISSING);
             }
         }
         else {
@@ -384,6 +517,7 @@ public class JavadocStyleCheck
 
     /**
      * Returns the comment text from the Javadoc.
+     *
      * @param comments the lines of Javadoc.
      * @return a comment text String.
      */
@@ -410,6 +544,7 @@ public class JavadocStyleCheck
      * Finds the index of the first non-whitespace character ignoring the
      * Javadoc comment start and end strings (&#47** and *&#47) as well as any
      * leading asterisk.
+     *
      * @param line the Javadoc comment line of text to scan.
      * @return the int index relative to 0 for the start of text
      *         or -1 if not found.
@@ -437,6 +572,7 @@ public class JavadocStyleCheck
 
     /**
      * Trims any trailing whitespace or the end of Javadoc comment string.
+     *
      * @param builder the StringBuilder to trim.
      */
     private static void trimTail(StringBuilder builder) {

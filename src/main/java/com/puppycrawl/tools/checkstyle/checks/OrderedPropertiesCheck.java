@@ -52,11 +52,14 @@ import com.puppycrawl.tools.checkstyle.api.FileText;
  * </p>
  * <p>Known limitation: The key should not contain a newline.
  * The string compare will work, but not the line number reporting.</p>
- * <ul>
- *   <li>Property {@code fileExtensions} - Specify file type extension of the files to check.
- *   Default value is {@code .properties}.</li>
- * </ul>
- * <p>To configure the check:</p>
+ * <ul><li>
+ * Property {@code fileExtensions} - Specify file type extension of the files to check.
+ * Type is {@code java.lang.String[]}.
+ * Default value is {@code .properties}.
+ * </li></ul>
+ * <p>
+ * To configure the check:
+ * </p>
  * <pre>&lt;module name="OrderedProperties"/&gt;</pre>
  * <p>Example properties file:</p>
  * <pre>
@@ -74,6 +77,20 @@ import com.puppycrawl.tools.checkstyle.api.FileText;
  *   Therefore on line 5 you have only "key" an nothing behind.
  *   On line 6 you have "key." The dot is on position 46 which is higher than nothing.
  *   key.png will reported as violation because "png" comes before "sub".</li>
+ * </ul>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.Checker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code properties.notSorted.property}
+ * </li>
+ * <li>
+ * {@code unable.open.cause}
+ * </li>
  * </ul>
  *
  * @since 8.22
@@ -103,6 +120,7 @@ public class OrderedPropertiesCheck extends AbstractFileSetCheck {
 
     /**
      * Processes the file and check order.
+     *
      * @param file the file to be processed
      * @param fileText the contents of the file.
      * @noinspection EnumerationCanBeIteration
@@ -216,6 +234,7 @@ public class OrderedPropertiesCheck extends AbstractFileSetCheck {
 
         /**
          * Puts the value into list by its key.
+         *
          * @noinspection UseOfPropertiesAsHashtable
          *
          * @param key the hashtable key

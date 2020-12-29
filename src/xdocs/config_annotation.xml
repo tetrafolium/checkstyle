@@ -10,6 +10,7 @@
             src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"/>
     <script type="text/javascript" src="js/anchors.js"/>
     <script type="text/javascript" src="js/google-analytics.js"/>
+    <script type="text/javascript" src="js/checkstyle.js"/>
     <link rel="icon" href="images/favicon.png" type="image/x-icon" />
     <link rel="shortcut icon" href="images/favicon.ico" type="image/ico" />
   </head>
@@ -69,15 +70,15 @@ public String getNameIfPresent() { ... }
             <tr>
               <td>allowSamelineMultipleAnnotations</td>
               <td>Allow annotation(s) to be located on the same line as target element.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
-             <td><code>false</code></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
+              <td><code>false</code></td>
               <td>6.0</td>
             </tr>
             <tr>
               <td>allowSamelineSingleParameterlessAnnotation</td>
               <td>Allow single parameterless annotation to be located on the same line as
                   target element.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>true</code></td>
               <td>6.1</td>
             </tr>
@@ -85,7 +86,7 @@ public String getNameIfPresent() { ... }
               <td>allowSamelineParameterizedAnnotation</td>
               <td>Allow one and only parameterized annotation to be located on the same line as
                   target element.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>false</code></td>
               <td>6.4</td>
             </tr>
@@ -94,45 +95,53 @@ public String getNameIfPresent() { ... }
               <td>tokens to check</td>
               <td>subset of tokens
                 <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">
-                    CLASS_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
-                    INTERFACE_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PACKAGE_DEF">
-                    PACKAGE_DEF</a>,
-                <a href=
-                    "apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_CONSTANT_DEF">
-                    ENUM_CONSTANT_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">
-                    ENUM_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
-                    METHOD_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
-                    CTOR_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
-                    VARIABLE_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_DEF">
-                    ANNOTATION_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_FIELD_DEF">
-                    ANNOTATION_FIELD_DEF</a>.
+                    CLASS_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
+                    INTERFACE_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PACKAGE_DEF">
+                    PACKAGE_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_CONSTANT_DEF">
+                    ENUM_CONSTANT_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">
+                    ENUM_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
+                    METHOD_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
+                    CTOR_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
+                    VARIABLE_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_DEF">
+                    ANNOTATION_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_FIELD_DEF">
+                    ANNOTATION_FIELD_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RECORD_DEF">
+                    RECORD_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COMPACT_CTOR_DEF">
+                    COMPACT_CTOR_DEF</a>
+                  .
               </td>
               <td>
                 <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">
-                    CLASS_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
-                    INTERFACE_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PACKAGE_DEF">
-                    PACKAGE_DEF</a>,
-                <a href=
-                    "apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_CONSTANT_DEF">
-                    ENUM_CONSTANT_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">
-                    ENUM_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
-                    METHOD_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
-                    CTOR_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
-                    VARIABLE_DEF</a>.
+                    CLASS_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
+                    INTERFACE_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PACKAGE_DEF">
+                    PACKAGE_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_CONSTANT_DEF">
+                    ENUM_CONSTANT_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">
+                    ENUM_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
+                    METHOD_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
+                    CTOR_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
+                    VARIABLE_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RECORD_DEF">
+                    RECORD_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COMPACT_CTOR_DEF">
+                    COMPACT_CTOR_DEF</a>
+                  .
               </td>
               <td>6.0</td>
             </tr>
@@ -142,13 +151,29 @@ public String getNameIfPresent() { ... }
 
       <subsection name="Examples" id="AnnotationLocation_Examples">
         <p>
-          Example to allow multiple annotations on the same line
+          To configure the default check to allow one single parameterless annotation on the same
+            line:
         </p>
         <source>
-@SuppressWarnings("deprecation") @Mock DataLoader loader; // no violations
+&lt;module name=&quot;AnnotationLocation&quot;/&gt;
         </source>
         <p>
-          Use the following configuration:
+          Example for above configuration:
+        </p>
+        <source>
+@NotNull private boolean field1; //ok
+@Override public int hashCode() { return 1; } //ok
+@NotNull //ok
+private boolean field2;
+@Override //ok
+public boolean equals(Object obj) { return true; }
+@Mock DataLoader loader; //ok
+@SuppressWarnings("deprecation") DataLoader loader; //violation
+@SuppressWarnings("deprecation") public int foo() { return 1; } //violation
+@NotNull @Mock DataLoader loader; //violation
+        </source>
+        <p>
+          Use the following configuration to allow multiple annotations on the same line:
         </p>
         <source>
 &lt;module name=&quot;AnnotationLocation&quot;&gt;
@@ -159,32 +184,23 @@ public String getNameIfPresent() { ... }
 &lt;/module&gt;
         </source>
         <p>
-          Example to allow one single parameterless annotation on the same line
+          Example to allow any location multiple annotations:
         </p>
         <source>
-@Override public int hashCode() { ... } // no violations
-@SuppressWarnings("deprecation") public int foo() { ... } // violation
+@NotNull private boolean field1; //ok
+@Override public int hashCode() { return 1; } //ok
+@NotNull //ok
+private boolean field2;
+@Override //ok
+public boolean equals(Object obj) { return true; }
+@Mock DataLoader loader; //ok
+@SuppressWarnings("deprecation") DataLoader loader; //ok
+@SuppressWarnings("deprecation") public int foo() { return 1; } //ok
+@NotNull @Mock DataLoader loader; //ok
         </source>
         <p>
-          Use the following configuration:
-        </p>
-        <source>
-&lt;module name=&quot;AnnotationLocation&quot;&gt;
-  &lt;property name=&quot;allowSamelineMultipleAnnotations&quot; value=&quot;false&quot;/&gt;
-  &lt;property name=&quot;allowSamelineSingleParameterlessAnnotation&quot;
-    value=&quot;true&quot;/&gt;
-  &lt;property name=&quot;allowSamelineParameterizedAnnotation&quot; value=&quot;false&quot;/&gt;
-&lt;/module&gt;
-        </source>
-        <p>
-          Example to allow only one and only parameterized annotation on the same line
-        </p>
-        <source>
-@SuppressWarnings("deprecation") DataLoader loader; // no violations
-@Mock DataLoader loader; // violation
-        </source>
-        <p>
-          Use the following configuration:
+          Use the following configuration to allow only one and only parameterized annotation
+          on the same line:
         </p>
         <source>
 &lt;module name=&quot;AnnotationLocation&quot;&gt;
@@ -193,6 +209,49 @@ public String getNameIfPresent() { ... }
     value=&quot;false&quot;/&gt;
   &lt;property name=&quot;allowSamelineParameterizedAnnotation&quot; value=&quot;true&quot;/&gt;
 &lt;/module&gt;
+        </source>
+        <p>
+          Example to allow only one and only parameterized annotation on the same line:
+        </p>
+        <source>
+@NotNull private boolean field1; //violation
+@Override public int hashCode() { return 1; } //violation
+@NotNull //ok
+private boolean field2;
+@Override //ok
+public boolean equals(Object obj) { return true; }
+@Mock DataLoader loader; //violation
+@SuppressWarnings("deprecation") DataLoader loader; //ok
+@SuppressWarnings("deprecation") public int foo() { return 1; } //ok
+@NotNull @Mock DataLoader loader; //violation
+        </source>
+        <p>
+          Use the following configuration to only validate annotations on methods to allow one
+          single parameterless annotation on the same line:
+        </p>
+        <source>
+&lt;module name=&quot;AnnotationLocation&quot;&gt;
+  &lt;property name=&quot;tokens&quot; value=&quot;METHOD_DEF&quot;/&gt;
+  &lt;property name=&quot;allowSamelineMultipleAnnotations&quot; value=&quot;false&quot;/&gt;
+  &lt;property name=&quot;allowSamelineSingleParameterlessAnnotation&quot;
+    value=&quot;true&quot;/&gt;
+  &lt;property name=&quot;allowSamelineParameterizedAnnotation&quot; value=&quot;false&quot;/&gt;
+&lt;/module&gt;
+        </source>
+        <p>
+          Example for above configuration to check only methods:
+        </p>
+        <source>
+@NotNull private boolean field1; //ok
+@Override public int hashCode() { return 1; } //ok
+@NotNull //ok
+private boolean field2;
+@Override //ok
+public boolean equals(Object obj) { return true; }
+@Mock DataLoader loader; //ok
+@SuppressWarnings("deprecation") DataLoader loader; //ok
+@SuppressWarnings("deprecation") public int foo() { return 1; } //violation
+@NotNull @Mock DataLoader loader; //ok
         </source>
       </subsection>
 
@@ -259,48 +318,59 @@ public String getNameIfPresent() { ... }
               <td>tokens to check</td>
               <td>subset of tokens
                 <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">
-                    CLASS_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
-                    INTERFACE_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">
-                    ENUM_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
-                    METHOD_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
-                    CTOR_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
-                    VARIABLE_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">
-                    PARAMETER_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_DEF">
-                    ANNOTATION_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#TYPECAST">
-                    TYPECAST</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_THROWS">
-                    LITERAL_THROWS</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#IMPLEMENTS_CLAUSE">
-                    IMPLEMENTS_CLAUSE</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#TYPE_ARGUMENT">
-                    TYPE_ARGUMENT</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_NEW">
-                    LITERAL_NEW</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DOT">DOT</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_FIELD_DEF">
-                    ANNOTATION_FIELD_DEF</a>.
+                    CLASS_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
+                    INTERFACE_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">
+                    ENUM_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
+                    METHOD_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
+                    CTOR_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
+                    VARIABLE_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">
+                    PARAMETER_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_DEF">
+                    ANNOTATION_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#TYPECAST">
+                    TYPECAST</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_THROWS">
+                    LITERAL_THROWS</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#IMPLEMENTS_CLAUSE">
+                    IMPLEMENTS_CLAUSE</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#TYPE_ARGUMENT">
+                    TYPE_ARGUMENT</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_NEW">
+                    LITERAL_NEW</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DOT">
+                    DOT</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_FIELD_DEF">
+                    ANNOTATION_FIELD_DEF</a>
+                ,<a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RECORD_DEF">
+                  RECORD_DEF</a>
+                ,<a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COMPACT_CTOR_DEF">
+                  COMPACT_CTOR_DEF</a>
+                  .
               </td>
               <td>
                 <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">
-                    CLASS_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
-                    INTERFACE_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">
-                    ENUM_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
-                    METHOD_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
-                    CTOR_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
-                    VARIABLE_DEF</a>.
+                    CLASS_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
+                    INTERFACE_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">
+                    ENUM_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
+                    METHOD_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
+                    CTOR_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
+                    VARIABLE_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RECORD_DEF">
+                    RECORD_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COMPACT_CTOR_DEF">
+                    COMPACT_CTOR_DEF</a>
+                  .
               </td>
               <td>8.2</td>
             </tr>
@@ -316,19 +386,72 @@ public String getNameIfPresent() { ... }
 &lt;module name=&quot;AnnotationOnSameLine&quot;/&gt;
         </source>
         <p>
-          Example to allow annotations on the same line
+          Example:
         </p>
         <source>
-@Override public int toString() { ... } // no violations
-@Before @Override public void set() { ... } // no violation
+class Foo {
+
+  @SuppressWarnings("deprecation")  // violation, annotation should be on the same line
+  public Foo() {
+  }
+
+  @SuppressWarnings("unchecked") public void fun2() {  // OK
+  }
+
+}
+
+@SuppressWarnings("unchecked") class Bar extends Foo {  // OK
+
+  @Deprecated public Bar() {  // OK
+  }
+
+  @Override  // violation, annotation should be on the same line
+  public void fun1() {
+  }
+
+  @Before @Override public void fun2() {  // OK
+  }
+
+  @SuppressWarnings("deprecation")  // violation, annotation should be on the same line
+  @Before public void fun3() {
+  }
+
+}
         </source>
         <p>
-          Example to disallow annotations on previous line
+          To configure the check to check for annotations applied on
+          interfaces, variables and constructors:
         </p>
         <source>
-@SuppressWarnings("deprecation") // violation
-@Override // violation
-public int foo() { ... }
+&lt;module name=&quot;AnnotationOnSameLine&quot;&gt;
+  &lt;property name=&quot;tokens&quot;
+      value=&quot;INTERFACE_DEF, VARIABLE_DEF, CTOR_DEF&quot;/&gt;
+&lt;/module&gt;
+        </source>
+        <p>
+          Example:
+        </p>
+        <source>
+@Deprecated interface Foo {  // OK
+
+  void doSomething();
+
+}
+
+class Bar implements Foo {
+
+  @SuppressWarnings("deprecation")  // violation, annotation should be on the same line
+  public Bar() {
+  }
+
+  @Override  // OK
+  public void doSomething() {
+  }
+
+  @Nullable  // violation, annotation should be on the same line
+  String s;
+
+}
         </source>
       </subsection>
 
@@ -373,49 +496,50 @@ public int foo() { ... }
           Annotations have three element styles starting with the least verbose.
         </p>
         <ul>
-          <li><code>ElementStyle.COMPACT_NO_ARRAY</code></li>
-          <li><code>ElementStyle.COMPACT</code></li>
-          <li><code>ElementStyle.EXPANDED</code></li>
+          <li><code>ElementStyleOption.COMPACT_NO_ARRAY</code></li>
+          <li><code>ElementStyleOption.COMPACT</code></li>
+          <li><code>ElementStyleOption.EXPANDED</code></li>
         </ul>
         <p>
-          To not enforce an element style a <code>ElementStyle.IGNORE</code> type is provided.
+          To not enforce an element style a <code>ElementStyleOption.IGNORE</code> type is provided.
           The desired style can be set through the <code>elementStyle</code> property.
         </p>
         <p>
-          Using the <code>ElementStyle.EXPANDED</code> style is more verbose.
+          Using the <code>ElementStyleOption.EXPANDED</code> style is more verbose.
           The expanded version is sometimes referred to as "named parameters" in other languages.
         </p>
         <p>
-          Using the <code>ElementStyle.COMPACT</code> style is less verbose.
+          Using the <code>ElementStyleOption.COMPACT</code> style is less verbose.
           This style can only be used when there is an element called 'value' which is either
           the sole element or all other elements have default values.
         </p>
         <p>
-          Using the <code>ElementStyle.COMPACT_NO_ARRAY</code> style is less verbose.
-          It is similar to the <code>ElementStyle.COMPACT</code> style but single value arrays
+          Using the <code>ElementStyleOption.COMPACT_NO_ARRAY</code> style is less verbose.
+          It is similar to the <code>ElementStyleOption.COMPACT</code> style but single value arrays
           are flagged.
           With annotations a single value array does not need to be placed in an array initializer.
         </p>
         <p>
           The ending parenthesis are optional when using annotations with no elements.
-          To always require ending parenthesis use the <code>ClosingParens.ALWAYS</code> type.
-          To never have ending parenthesis use the <code>ClosingParens.NEVER</code> type.
-          To not enforce a closing parenthesis preference a <code>ClosingParens.IGNORE</code>
+          To always require ending parenthesis use the <code>ClosingParensOption.ALWAYS</code> type.
+          To never have ending parenthesis use the <code>ClosingParensOption.NEVER</code> type.
+          To not enforce a closing parenthesis preference a <code>ClosingParensOption.IGNORE</code>
           type is provided. Set this through the <code>closingParens</code> property.
         </p>
         <p>
           Annotations also allow you to specify arrays of elements in a standard format.
           As with normal arrays, a trailing comma is optional.
-          To always require a trailing comma use the <code>TrailingArrayComma.ALWAYS</code> type.
-          To never have a trailing comma use the <code>TrailingArrayComma.NEVER</code> type.
-          To not enforce a trailing array comma preference a <code>TrailingArrayComma.IGNORE</code>
-          type is provided.
+          To always require a trailing comma use the <code>TrailingArrayCommaOption.ALWAYS</code>
+          type.
+          To never have a trailing comma use the <code>TrailingArrayCommaOption.NEVER</code> type.
+          To not enforce a trailing array comma preference a
+          <code>TrailingArrayCommaOption.IGNORE</code> type is provided.
           Set this through the <code>trailingArrayComma</code> property.
         </p>
         <p>
-          By default the <code>ElementStyle</code> is set to <code>COMPACT_NO_ARRAY</code>,
-          the <code>TrailingArrayComma</code> is set to <code>NEVER</code>,
-          and the <code>ClosingParens</code> is set to <code>NEVER</code>.
+          By default the <code>ElementStyleOption</code> is set to <code>COMPACT_NO_ARRAY</code>,
+          the <code>TrailingArrayCommaOption</code> is set to <code>NEVER</code>,
+          and the <code>ClosingParensOption</code> is set to <code>NEVER</code>.
         </p>
         <p>
           According to the JLS, it is legal to include a trailing comma
@@ -446,7 +570,7 @@ public int foo() { ... }
                 Define the annotation element styles.
               </td>
               <td>
-                <a href="property_types.html#elementStyle">Element Style</a>
+                <a href="property_types.html#ElementStyleOption">ElementStyleOption</a>
               </td>
               <td>
                 <code>compact_no_array</code>
@@ -459,7 +583,7 @@ public int foo() { ... }
                 Define the policy for ending parenthesis.
               </td>
               <td>
-                <a href="property_types.html#closingParens">Closing Parens</a>
+                <a href="property_types.html#ClosingParensOption">ClosingParensOption</a>
               </td>
               <td>
                 <code>never</code>
@@ -472,7 +596,7 @@ public int foo() { ... }
                 Define the policy for trailing comma in arrays.
               </td>
               <td>
-                <a href="property_types.html#trailingArrayComma">Trailing Comma</a>
+                <a href="property_types.html#TrailingArrayCommaOption">TrailingArrayCommaOption</a>
               </td>
               <td>
                 <code>never</code>
@@ -487,7 +611,25 @@ public int foo() { ... }
         <source>
 &lt;module name=&quot;AnnotationUseStyle&quot;/&gt;
         </source>
+        <p>
+          Example:
+        </p>
+        <source>
+@Deprecated // OK
+@SomeArrays(pooches={DOGS.LEO}) // Violation - COMPACT_NO_ARRAY
+@SuppressWarnings({""}) // Violation - COMPACT_NO_ARRAY
+public class TestOne
+{
 
+}
+
+@SomeArrays(pooches={DOGS.LEO}, um={}, test={"bleh"}) // Violation - COMPACT_NO_ARRAY
+@SuppressWarnings("") // OK
+@Deprecated() // Violation - cannot have closing parenthesis
+class TestTwo {
+
+}
+        </source>
         <p>
           To configure the check to enforce an <code>expanded</code> style,
           with a trailing array comma set to <code>never</code>
@@ -499,6 +641,25 @@ public int foo() { ... }
   &lt;property name=&quot;trailingArrayComma&quot; value=&quot;never&quot;/&gt;
   &lt;property name=&quot;closingParens&quot; value=&quot;always&quot;/&gt;
 &lt;/module&gt;
+        </source>
+        <p>
+          Example:
+        </p>
+        <source>
+@Deprecated // Violation - must have closing parenthesis
+@SomeArrays(pooches={DOGS.LEO}) // OK
+@SuppressWarnings({""}) // Violation - EXPANDED
+public class TestOne
+{
+
+}
+
+@SomeArrays(pooches={DOGS.LEO}, um={}, test={"bleh"}) // OK
+@SuppressWarnings("") // Violation - EXPANDED
+@Deprecated() // OK
+class TestTwo {
+
+}
         </source>
       </subsection>
 
@@ -603,8 +764,9 @@ public int foo() { ... }
               <td>
                 Control when to print violations if the Javadoc being examined by this check
                 violates the tight html rules defined at
-                <a href="writingjavadocchecks.html#Tight-HTML_rules">Tight-HTML Rules</a>.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+                <a href="writingjavadocchecks.html#Tight-HTML_rules">Tight-HTML Rules</a>.
+              </td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>false</code></td>
               <td>8.24</td>
             </tr>
@@ -723,7 +885,7 @@ public static final int COUNTER = 10; // violation
                 Enable java 5 compatibility mode.
               </td>
               <td>
-                <a href="property_types.html#boolean">Boolean</a>
+                <a href="property_types.html#boolean">boolean</a>
               </td>
               <td>
                 <code>false</code>
@@ -738,7 +900,32 @@ public static final int COUNTER = 10; // violation
         <source>
 &lt;module name=&quot;MissingOverride&quot;/&gt;
         </source>
+        <p>Example:</p>
+        <source>
+class Test extends SuperClass {
 
+    /** {@inheritDoc} */
+    @Override
+    public void test1() { // OK
+
+    }
+
+    /** {@inheritDoc} */
+    public void test2() { // violation, should be annotated with @Override
+
+    }
+
+    /** {@inheritDoc} */
+    private void test3() { // violation, using the @inheritDoc tag on private method
+
+    }
+
+    /** {@inheritDoc} */
+    public static void test4() { // violation, using the @inheritDoc tag on static method
+
+    }
+}
+        </source>
         <p>
           To configure the check for the <code>javaFiveCompatibility</code>
           mode:
@@ -748,6 +935,48 @@ public static final int COUNTER = 10; // violation
   &lt;property name=&quot;javaFiveCompatibility&quot;
       value=&quot;true&quot;/&gt;
 &lt;/module&gt;
+        </source>
+        <p>Example:</p>
+        <source>
+class Test1 {
+
+    /** {@inheritDoc} */
+    public void equals() { // violation, should be annotated with @Override
+
+    }
+}
+
+interface Test2 {
+
+    /** {@inheritDoc} */
+    void test(); // violation, should be annotated with @Override
+}
+
+class Test3 extends SuperClass {
+
+    /** {@inheritDoc} */
+    public void test() { // OK, is ignored because class extends other class
+
+    }
+}
+
+class Test4 implements SuperInterface {
+
+    /** {@inheritDoc} */
+    public void test() { // OK, is ignored because class implements interface
+
+    }
+}
+
+class Test5 {
+    Runnable r = new Runnable() {
+
+        /** {@inheritDoc} */
+        public void run() { // OK, is ignored because class is anonymous class
+
+        }
+    };
+}
         </source>
       </subsection>
 
@@ -793,24 +1022,36 @@ public static final int COUNTER = 10; // violation
           Checks that all package annotations are in the package-info.java file.
         </p>
         <p>
-             According to the Java Language Specification.
+          For Java SE8 and above, placement of package annotations in the package-info.java
+          file is enforced by the compiler and this check is not necessary.
         </p>
-
         <p>
-            The JLS does not enforce the placement of package annotations.
-            This placement may vary based on implementation. The JLS
-            does highly recommend that all package annotations are
-            placed in the package-info.java file.
-
-            See <a
-            href="https://docs.oracle.com/javase/specs/jls/se11/html/jls-7.html#jls-7.4.1">
-            Java Language Specification, &#167;7.4.1</a>.
+          For Java SE7 and below, the Java Language Specification highly recommends
+          but doesn't require that annotations are placed in the package-info.java file,
+          and this check can help to enforce that placement.
+        </p>
+        <p>
+          See <a href="https://docs.oracle.com/javase/specs/jls/se11/html/jls-7.html#jls-7.4.1">
+          Java Language Specification, &#167;7.4.1</a> for more info.
         </p>
       </subsection>
 
       <subsection name="Examples" id="PackageAnnotation_Examples">
         <p> To configure the check:</p>
-        <source> &lt;module name=&quot;PackageAnnotation&quot;/&gt;
+        <source> &lt;module name=&quot;PackageAnnotation&quot;/&gt; </source>
+        <p>Example of validating MyClass.java:</p>
+        <source>
+@Deprecated
+package com.example.annotations.packageannotation; //violation
+        </source>
+        <p>Example of fixing violation in MyClass.java:</p>
+        <source>
+package com.example.annotations.packageannotation; //ok
+        </source>
+        <p>Example of validating package-info.java:</p>
+        <source>
+@Deprecated
+package com.example.annotations.packageannotation; //ok
         </source>
       </subsection>
 
@@ -848,7 +1089,7 @@ public static final int COUNTER = 10; // violation
     <section name="SuppressWarnings">
       <p>Since Checkstyle 5.0</p>
       <subsection name="Description" id="SuppressWarnings_Description">
-        <p>Allows to specify what warnings that<code>@SuppressWarnings</code>
+        <p>Allows to specify what warnings that <code>@SuppressWarnings</code>
           is not allowed to suppress.
         You can also specify a list of TokenTypes that
         the configured warning(s) cannot be suppressed on.
@@ -858,15 +1099,15 @@ public static final int COUNTER = 10; // violation
         inside the @SuppressWarnings annotation.
         </p>
         <p>
-        For example:
-        <code>@SuppressWarnings((false) ? (true) ? "unchecked" : "foo" : "unused")</code>.
-        According to the above example, the "unused" warning is being suppressed
-        not the "unchecked" or "foo" warnings.  All of these warnings will be
-        considered and matched against regardless of what the conditional
-        evaluates to.
-        The check also does not support code like <code>@SuppressWarnings("un" + "used")</code>,
-        <code>@SuppressWarnings((String) "unused")</code> or
-        <code>@SuppressWarnings({('u' + (char)'n') + (""+("used" + (String)"")),})</code>.
+          For example:
+          <code>@SuppressWarnings((false) ? (true) ? "unchecked" : "foo" : "unused")</code>.
+          According to the above example, the "unused" warning is being suppressed
+          not the "unchecked" or "foo" warnings.  All of these warnings will be
+          considered and matched against regardless of what the conditional
+          evaluates to.
+          The check also does not support code like <code>@SuppressWarnings("un" + "used")</code>,
+          <code>@SuppressWarnings((String) "unused")</code> or
+          <code>@SuppressWarnings({('u' + (char)'n') + (""+("used" + (String)"")),})</code>.
         </p>
         <p>
           By default, any warning specified will be disallowed on
@@ -902,7 +1143,7 @@ public static final int COUNTER = 10; // violation
                  being suppressed matching this pattern will be flagged.
               </td>
               <td>
-                <a href="property_types.html#regexp">Regular Expression</a>
+                <a href="property_types.html#Pattern">Pattern</a>
               </td>
               <td>
                 <code>"^\s*+$"</code>
@@ -917,48 +1158,58 @@ public static final int COUNTER = 10; // violation
               <td>
                 subset of tokens
                 <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">
-                    CLASS_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
-                    INTERFACE_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">
-                    ENUM_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_DEF">
-                    ANNOTATION_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_FIELD_DEF">
-                    ANNOTATION_FIELD_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_CONSTANT_DEF">
-                    ENUM_CONSTANT_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">
-                    PARAMETER_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
-                    VARIABLE_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
-                    METHOD_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
-                    CTOR_DEF</a>.
+                    CLASS_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
+                    INTERFACE_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">
+                    ENUM_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_DEF">
+                    ANNOTATION_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_FIELD_DEF">
+                    ANNOTATION_FIELD_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_CONSTANT_DEF">
+                    ENUM_CONSTANT_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">
+                    PARAMETER_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
+                    VARIABLE_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
+                    METHOD_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
+                    CTOR_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COMPACT_CTOR_DEF">
+                    COMPACT_CTOR_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RECORD_DEF">
+                    RECORD_DEF</a>
+                  .
               </td>
 
               <td>
                 <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">
-                    CLASS_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
-                    INTERFACE_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">
-                    ENUM_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_DEF">
-                    ANNOTATION_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_FIELD_DEF">
-                    ANNOTATION_FIELD_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_CONSTANT_DEF">
-                    ENUM_CONSTANT_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">
-                    PARAMETER_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
-                    VARIABLE_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
-                    METHOD_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
-                    CTOR_DEF</a>.
+                    CLASS_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
+                    INTERFACE_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">
+                    ENUM_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_DEF">
+                    ANNOTATION_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_FIELD_DEF">
+                    ANNOTATION_FIELD_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_CONSTANT_DEF">
+                    ENUM_CONSTANT_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">
+                    PARAMETER_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
+                    VARIABLE_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
+                    METHOD_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
+                    CTOR_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COMPACT_CTOR_DEF">
+                    COMPACT_CTOR_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RECORD_DEF">
+                    RECORD_DEF</a>
+                  .
               </td>
               <td>5.0</td>
             </tr>
@@ -1031,7 +1282,7 @@ public static final int COUNTER = 10; // violation
           that were annotated with <code>@SuppressWarnings</code> and
           using name of the check to be excluded. You can also define
           aliases for check names that need to be suppressed.
-         </p>
+        </p>
       </subsection>
 
       <subsection name="Properties" id="SuppressWarningsHolder_Properties">
@@ -1046,11 +1297,15 @@ public static final int COUNTER = 10; // violation
             </tr>
             <tr>
               <td>aliasList</td>
-              <td>Specify aliases for check names that can be used in code within
-                  <code>SuppressWarnings</code>.</td>
-              <td><a href="property_types.html#stringSet">String Set</a>
-                  in a format of comma separated attribute=value entries.
-              The attribute is the fully qualified name of the Check and value is its alias.</td>
+              <td>
+                Specify aliases for check names that can be used in code within
+                <code>SuppressWarnings</code>.
+              </td>
+              <td>
+                <a href="property_types.html#String.5B.5D">String[]</a>
+                in a format of comma separated attribute=value entries.
+                The attribute is the fully qualified name of the Check and value is its alias.
+              </td>
               <td><code>null</code></td>
               <td>5.7</td>
             </tr>
@@ -1096,8 +1351,9 @@ public void needsLotsOfParameters(@SuppressWarnings("unused") int a,
 }
         </source>
 
-        <p>It is possible to suppress all the checkstyle warnings with the argument
-         <code>"all"</code>:
+        <p>
+          It is possible to suppress all the checkstyle warnings with the argument
+          <code>"all"</code>:
         </p>
         <source>
 @SuppressWarnings("all")
@@ -1115,19 +1371,6 @@ public void someFunctionWithInvalidStyle() {
             Checkstyle Style</a>
           </li>
         </ul>
-      </subsection>
-
-      <subsection name="Violation Messages" id="SuppressWarningsHolder_Violation_Messages">
-        <ul>
-          <li>
-            <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%2Fcom%2Fpuppycrawl%2Ftools%2Fcheckstyle%2Fchecks+filename%3Amessages*.properties+repo%3Acheckstyle%2Fcheckstyle+%22suppress.warnings.invalid.target%22">
-            suppress.warnings.invalid.target</a>
-          </li>
-        </ul>
-        <p>
-          All messages can be customized if the default message doesn't suit you.
-          Please <a href="config.html#Custom_messages">see the documentation</a> to learn how to.
-        </p>
       </subsection>
 
       <subsection name="Package" id="SuppressWarningsHolder_Package">

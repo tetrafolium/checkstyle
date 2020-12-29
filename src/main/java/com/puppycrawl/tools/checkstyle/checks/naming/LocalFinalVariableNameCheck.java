@@ -32,11 +32,15 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * </p>
  * <ul>
  * <li>
- * Property {@code format} - Specifies valid identifiers. Default value is
- * {@code "^[a-z][a-zA-Z0-9]*$"}.
+ * Property {@code format} - Specifies valid identifiers.
+ * Type is {@code java.util.regex.Pattern}.
+ * Default value is {@code "^[a-z][a-zA-Z0-9]*$"}.
  * </li>
  * <li>
- * Property {@code tokens} - tokens to check Default value is:
+ * Property {@code tokens} - tokens to check
+ * Type is {@code java.lang.String[]}.
+ * Validation type is {@code tokenSet}.
+ * Default value is:
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
  * VARIABLE_DEF</a>,
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">
@@ -46,7 +50,7 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * </li>
  * </ul>
  * <p>
- * An example of how to configure the check is:
+ * To configure the check:
  * </p>
  * <pre>
  * &lt;module name="LocalFinalVariableName"/&gt;
@@ -81,7 +85,7 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * <pre>
  * &lt;module name=&quot;LocalFinalVariableName&quot;&gt;
  *   &lt;property name="format" value="^[A-Z][A-Z0-9]*$"/&gt;
- *   &lt;property name="tokens" value="PARAMETER_DEF,RESOURCE"&gt;
+ *   &lt;property name="tokens" value="PARAMETER_DEF,RESOURCE"/&gt;
  * &lt;/module&gt;
  * </pre>
  * <p>Code Example:</p>
@@ -100,6 +104,18 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  *   }
  * }
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code name.invalidPattern}
+ * </li>
+ * </ul>
+ *
  * @since 3.0
  */
 public class LocalFinalVariableNameCheck

@@ -180,6 +180,8 @@ public class UnusedImportsCheckTest extends AbstractModuleTestSupport {
             TokenTypes.METHOD_DEF,
             TokenTypes.CTOR_DEF,
             TokenTypes.VARIABLE_DEF,
+            TokenTypes.RECORD_DEF,
+            TokenTypes.COMPACT_CTOR_DEF,
         };
 
         assertArrayEquals(expected, actual, "Default required tokens are invalid");
@@ -205,6 +207,8 @@ public class UnusedImportsCheckTest extends AbstractModuleTestSupport {
             TokenTypes.METHOD_DEF,
             TokenTypes.CTOR_DEF,
             TokenTypes.VARIABLE_DEF,
+            TokenTypes.RECORD_DEF,
+            TokenTypes.COMPACT_CTOR_DEF,
         };
 
         assertArrayEquals(expected, actual, "Default acceptable tokens are invalid");
@@ -247,6 +251,28 @@ public class UnusedImportsCheckTest extends AbstractModuleTestSupport {
             "4:8: " + getCheckMessage(MSG_KEY, "java.util.List"),
         };
         verify(checkConfig, getPath("InputUnusedImportsJavadocQualifiedName.java"), expected);
+    }
+
+    @Test
+    public void testSingleWordPackage() throws Exception {
+        final DefaultConfiguration checkConfig = createModuleConfig(UnusedImportsCheck.class);
+        final String[] expected = {
+            "3:8: " + getCheckMessage(MSG_KEY, "module"),
+        };
+        verify(checkConfig, getNonCompilablePath("InputUnusedImportsSingleWordPackage.java"),
+                expected);
+    }
+
+    @Test
+    public void testRecordsAndCompactCtors() throws Exception {
+        final DefaultConfiguration checkConfig = createModuleConfig(UnusedImportsCheck.class);
+        final String[] expected = {
+            "12:8: " + getCheckMessage(MSG_KEY, "javax.swing.JToolBar"),
+            "13:8: " + getCheckMessage(MSG_KEY, "javax.swing.JToggleButton"),
+        };
+        verify(checkConfig,
+                getNonCompilablePath("InputUnusedImportsRecordsAndCompactCtors.java"),
+                expected);
     }
 
 }

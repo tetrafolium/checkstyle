@@ -44,152 +44,19 @@ import com.puppycrawl.tools.checkstyle.utils.FilterUtil;
  * </p>
  * <ul id="SuppressionXpathFilter_IncompatibleChecks">
  * <li>
- * AnnotationLocation
+ * NoCodeInFile (reason is that AST is not generated for a file not containing code)
  * </li>
  * <li>
- * AnnotationOnSameLine
+ * Regexp (reason is at
+ * <a href="https://github.com/checkstyle/checkstyle/issues/7759#issuecomment-605525287"> #7759</a>)
  * </li>
  * <li>
- * AnnotationUseStyle
- * </li>
- * <li>
- * ArrayTrailingComma
- * </li>
- * <li>
- * AvoidEscapedUnicodeCharacters
- * </li>
- * <li>
- * AvoidStarImport
- * </li>
- * <li>
- * AvoidStaticImport
- * </li>
- * <li>
- * CommentsIndentation
- * </li>
- * <li>
- * CustomImportOrder
- * </li>
- * <li>
- * EmptyCatchBlock
- * </li>
- * <li>
- * EmptyLineSeparator
- * </li>
- * <li>
- * FinalClass
- * </li>
- * <li>
- * IllegalCatch
- * </li>
- * <li>
- * ImportOrder
- * </li>
- * <li>
- * Indentation
- * </li>
- * <li>
- * InterfaceIsType
- * </li>
- * <li>
- * InterfaceMemberImpliedModifier
- * </li>
- * <li>
- * InvalidJavadocPosition
- * </li>
- * <li>
- * JavadocContentLocation
- * </li>
- * <li>
- * JavadocMethod
- * </li>
- * <li>
- * JavadocStyle
- * </li>
- * <li>
- * JavadocType
- * </li>
- * <li>
- * LambdaParameterName
- * </li>
- * <li>
- * MethodCount
- * </li>
- * <li>
- * MissingCtor
- * </li>
- * <li>
- * MissingJavadocMethod
- * </li>
- * <li>
- * MissingJavadocPackage
- * </li>
- * <li>
- * MissingJavadocType
- * </li>
- * <li>
- * MissingOverride
- * </li>
- * <li>
- * MissingSwitchDefault
- * </li>
- * <li>
- * NeedBraces
- * </li>
- * <li>
- * NoClone
- * </li>
- * <li>
- * NoFinalizer
- * </li>
- * <li>
- * NoLineWrap
- * </li>
- * <li>
- * OneTopLevelClass
- * </li>
- * <li>
- * OuterTypeFilename
- * </li>
- * <li>
- * OverloadMethodsDeclarationOrder
- * </li>
- * <li>
- * PackageAnnotation
- * </li>
- * <li>
- * PackageDeclaration
- * </li>
- * <li>
- * Regexp
- * </li>
- * <li>
- * RegexpSinglelineJava
- * </li>
- * <li>
- * SuppressWarningsHolder
- * </li>
- * <li>
- * TodoComment
- * </li>
- * <li>
- * TrailingComment
- * </li>
- * <li>
- * UncommentedMain
- * </li>
- * <li>
- * UnnecessaryParentheses
- * </li>
- * <li>
- * VariableDeclarationUsageDistance
- * </li>
- * <li>
- * WriteTag
+ * RegexpSinglelineJava (reason is at
+ * <a href="https://github.com/checkstyle/checkstyle/issues/7759#issuecomment-605525287"> #7759</a>)
  * </li>
  * </ul>
  * <p>
- * Also, the filter does not support Javadoc checks:
+ * Also, the filter does not support suppressions inside javadoc reported by Javadoc checks:
  * </p>
  * <ul id="SuppressionXpathFilter_JavadocChecks">
  * <li>
@@ -199,10 +66,25 @@ import com.puppycrawl.tools.checkstyle.utils.FilterUtil;
  * JavadocBlockTagLocation
  * </li>
  * <li>
+ * JavadocMethod
+ * </li>
+ * <li>
+ * JavadocMissingLeadingAsterisk
+ * </li>
+ * <li>
+ * JavadocMissingWhitespaceAfterAsterisk
+ * </li>
+ * <li>
  * JavadocParagraph
  * </li>
  * <li>
+ * JavadocStyle
+ * </li>
+ * <li>
  * JavadocTagContinuationIndentation
+ * </li>
+ * <li>
+ * JavadocType
  * </li>
  * <li>
  * MissingDeprecated
@@ -211,10 +93,16 @@ import com.puppycrawl.tools.checkstyle.utils.FilterUtil;
  * NonEmptyAtclauseDescription
  * </li>
  * <li>
+ * RequireEmptyLineBeforeBlockTagGroup
+ * </li>
+ * <li>
  * SingleLineJavadoc
  * </li>
  * <li>
  * SummaryJavadoc
+ * </li>
+ * <li>
+ * WriteTag
  * </li>
  * </ul>
  * <p>
@@ -283,15 +171,20 @@ import com.puppycrawl.tools.checkstyle.utils.FilterUtil;
  * if no file found, then passed to the {@code ClassLoader.getResource()} method.
  * </li>
  * </ol>
+ * <p>
+ * SuppressionXpathFilter can suppress Checks that have Treewalker as parent module.
+ * </p>
  * <ul>
  * <li>
  * Property {@code file} - Specify the location of the <em>suppressions XML document</em> file.
+ * Type is {@code java.lang.String}.
  * Default value is {@code null}.
  * </li>
  * <li>
  * Property {@code optional} - Control what to do when the file is not existing.
  * If optional is set to false the file must exist, or else it ends with error.
  * On the other hand if optional is true and file is not found, the filter accepts all audit events.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * </ul>
@@ -313,26 +206,26 @@ import com.puppycrawl.tools.checkstyle.utils.FilterUtil;
  * </p>
  * <ul>
  * <li>
- * {@code files} - a <a href="https://checkstyle.org/property_types.html#regexp">Regular Expression</a>
+ * {@code files} - a <a href="https://checkstyle.org/property_types.html#Pattern">Pattern</a>
  * matched against the file name associated with an audit event. It is optional.
  * </li>
  * <li>
- * {@code checks} - a <a href="https://checkstyle.org/property_types.html#regexp">Regular Expression</a>
+ * {@code checks} - a <a href="https://checkstyle.org/property_types.html#Pattern">Pattern</a>
  * matched against the name of the check associated with an audit event.
  * Optional as long as {@code id} or {@code message} is specified.
  * </li>
  * <li>
- * {@code message} - a <a href="https://checkstyle.org/property_types.html#regexp">Regular Expression</a>
+ * {@code message} - a <a href="https://checkstyle.org/property_types.html#Pattern">Pattern</a>
  * matched against the message of the check associated with an audit event.
  * Optional as long as {@code checks} or {@code id} is specified.
  * </li>
  * <li>
- * {@code id} - a <a href="https://checkstyle.org/property_types.html#string">string</a> matched against
+ * {@code id} - a <a href="https://checkstyle.org/property_types.html#String">String</a> matched against
  * the ID of the check associated with an audit event.
  * Optional as long as {@code checks} or {@code message} is specified.
  * </li>
  * <li>
- * {@code query} - a <a href="https://checkstyle.org/property_types.html#string">string</a> xpath query. It is optional.
+ * {@code query} - a <a href="https://checkstyle.org/property_types.html#String">String</a> xpath query. It is optional.
  * </li>
  * </ul>
  * <p>
@@ -606,6 +499,9 @@ import com.puppycrawl.tools.checkstyle.utils.FilterUtil;
  * &lt;suppress-xpath checks="." query="//METHOD_DEF[.//ANNOTATION[
  *             ./IDENT[@text='Generated'] and ./EXPR/STRING_LITERAL[@text='second']]]"/&gt;
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
  *
  * @since 8.6
  * @noinspection NonFinalFieldReferenceInEquals, NonFinalFieldReferencedInHashCode
@@ -627,6 +523,7 @@ public class SuppressionXpathFilter extends AutomaticBean implements
 
     /**
      * Setter to specify the location of the <em>suppressions XML document</em> file.
+     *
      * @param fileName name of the suppressions file.
      */
     public void setFile(String fileName) {
@@ -638,6 +535,7 @@ public class SuppressionXpathFilter extends AutomaticBean implements
      * If optional is set to false the file must exist, or else it ends with error.
      * On the other hand if optional is true and file is not found,
      * the filter accepts all audit events.
+     *
      * @param optional tells if config file existence is optional.
      */
     public void setOptional(boolean optional) {

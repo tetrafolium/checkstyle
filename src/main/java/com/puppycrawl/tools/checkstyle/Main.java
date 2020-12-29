@@ -98,6 +98,7 @@ public final class Main {
     /**
      * Loops over the files specified checking them for errors. The exit code
      * is the number of errors found in all the files.
+     *
      * @param args the command line arguments.
      * @throws IOException if there is a problem with files access
      * @noinspection UseOfSystemOutOrSystemErr, CallToPrintStackTrace, CallToSystemExit
@@ -154,6 +155,7 @@ public final class Main {
 
     /**
      * Returns the version string printed when the user requests version help (--version or -V).
+     *
      * @return a version string based on the package implementation version
      */
     private static String getVersionString() {
@@ -163,6 +165,7 @@ public final class Main {
     /**
      * Validates the user input and returns {@value #EXIT_WITH_INVALID_USER_INPUT_CODE} if
      * invalid, otherwise executes CheckStyle and returns the number of violations.
+     *
      * @param parseResult generic access to options and parameters found on the command line
      * @param options encapsulates options and parameters specified on the command line
      * @return number of violations
@@ -191,6 +194,7 @@ public final class Main {
 
     /**
      * Determines the files to process.
+     *
      * @param options the user-specified options
      * @return list of files to process
      */
@@ -207,6 +211,7 @@ public final class Main {
     /**
      * Traverses a specified node looking for files to check. Found files are added to
      * a specified list. Subdirectories are also traversed.
+     *
      * @param node
      *        the node to process
      * @param patternsToExclude The list of patterns to exclude from searching or being added as
@@ -238,6 +243,7 @@ public final class Main {
     /**
      * Checks if a directory/file {@code path} should be excluded based on if it matches one of the
      * patterns supplied.
+     *
      * @param path The path of the directory/file to check
      * @param patternsToExclude The list of patterns to exclude from searching or being added as
      *        files.
@@ -258,6 +264,7 @@ public final class Main {
 
     /**
      * Do execution of CheckStyle based on Command line options.
+     *
      * @param options user-specified options
      * @param filesToProcess the list of files whose style to check
      * @return number of violations
@@ -329,6 +336,7 @@ public final class Main {
 
     /**
      * Executes required Checkstyle actions based on passed parameters.
+     *
      * @param options user-specified options
      * @param filesToProcess the list of files whose style to check
      * @return number of violations of ERROR level
@@ -351,8 +359,8 @@ public final class Main {
 
         // create a configuration
         final ThreadModeSettings multiThreadModeSettings =
-                new ThreadModeSettings(options.checkerThreadsNumber,
-                        options.treeWalkerThreadsNumber);
+                new ThreadModeSettings(CliOptions.CHECKER_THREADS_NUMBER,
+                        CliOptions.TREE_WALKER_THREADS_NUMBER);
 
         final ConfigurationLoader.IgnoredModulesOptions ignoredModulesOptions;
         if (options.executeIgnoredModules) {
@@ -408,6 +416,7 @@ public final class Main {
 
     /**
      * Loads properties from a File.
+     *
      * @param file
      *        the properties file
      * @return the properties in file
@@ -434,6 +443,7 @@ public final class Main {
     /**
      * Creates a new instance of the root module that will control and run
      * Checkstyle.
+     *
      * @param name The name of the module. This will either be a short name that
      *        will have to be found or the complete package name.
      * @param moduleClassLoader Class loader used to load the root module.
@@ -450,6 +460,7 @@ public final class Main {
 
     /**
      * Returns {@code TreeWalker} module configuration.
+     *
      * @param config The configuration object.
      * @return The {@code TreeWalker} module configuration.
      */
@@ -470,6 +481,7 @@ public final class Main {
      * This method creates in AuditListener an open stream for validation data, it must be
      * closed by {@link RootModule} (default implementation is {@link Checker}) by calling
      * {@link AuditListener#auditFinished(AuditEvent)}.
+     *
      * @param format format of the audit listener
      * @param outputLocation the location of output
      * @return a fresh new {@code AuditListener}
@@ -485,6 +497,7 @@ public final class Main {
 
     /**
      * Create output stream or return System.out
+     *
      * @param outputPath output location
      * @return output stream
      * @throws IOException might happen
@@ -504,6 +517,7 @@ public final class Main {
 
     /**
      * Create {@link AutomaticBean.OutputStreamOptions} for the given location.
+     *
      * @param outputPath output location
      * @return output stream options
      */
@@ -532,6 +546,7 @@ public final class Main {
 
         /**
          * Returns a new AuditListener for this OutputFormat.
+         *
          * @param out the output stream
          * @param options the output stream options
          * @return a new AuditListener for this OutputFormat
@@ -565,18 +580,20 @@ public final class Main {
         private final String packageName = Main.class.getPackage().getName();
 
         /**
-         * Returns whether the specified record should be logged.
-         * @param record the record to log
+         * Returns whether the specified logRecord should be logged.
+         *
+         * @param logRecord the logRecord to log
          * @return true if the logger name is in the package of this class or a subpackage
          */
         @Override
-        public boolean isLoggable(LogRecord record) {
-            return record.getLoggerName().startsWith(packageName);
+        public boolean isLoggable(LogRecord logRecord) {
+            return logRecord.getLoggerName().startsWith(packageName);
         }
     }
 
     /**
      * Command line options.
+     *
      * @noinspection unused, FieldMayBeFinal, CanBeFinal,
      *              MismatchedQueryAndUpdateOfCollection, LocalCanBeFinal
      */
@@ -602,27 +619,53 @@ public final class Main {
         /** Option name for output format. */
         private static final String OUTPUT_FORMAT_OPTION = "-f";
 
+        /**
+         * The checker threads number.
+         * Suppression: CanBeFinal - we use picocli and it use  reflection to manage such fields
+         * This option has been skipped for CLI options intentionally.
+         *
+         * @noinspection CanBeFinal
+         */
+        private static final int CHECKER_THREADS_NUMBER = DEFAULT_THREAD_COUNT;
+
+        /**
+         * The tree walker threads number.
+         * Suppression: CanBeFinal - we use picocli and it use  reflection to manage such fields
+         * This option has been skipped for CLI options intentionally.
+         *
+         * @noinspection CanBeFinal
+         */
+        private static final int TREE_WALKER_THREADS_NUMBER = DEFAULT_THREAD_COUNT;
+
         /** List of file to validate. */
         @Parameters(arity = "1..*", description = "One or more source files to verify")
         private List<File> files;
 
         /** Config file location. */
-        @Option(names = "-c", description = "Sets the check configuration file to use.")
+        @Option(names = "-c", description = "Specifies the location of the file that defines"
+                + " the configuration modules. The location can either be a filesystem location"
+                + ", or a name passed to the ClassLoader.getResource() method.")
         private String configurationFile;
 
         /** Output file location. */
-        @Option(names = "-o", description = "Sets the output file. Defaults to stdout")
+        @Option(names = "-o", description = "Sets the output file. Defaults to stdout.")
         private Path outputPath;
 
         /** Properties file location. */
-        @Option(names = "-p", description = "Loads the properties file")
+        @Option(names = "-p", description = "Sets the property files to load.")
         private File propertiesFile;
 
         /** LineNo and columnNo for the suppression. */
         @Option(names = "-s",
-                description = "Print xpath suppressions at the file's line and column position. "
+                description = "Prints xpath suppressions at the file's line and column position. "
                         + "Argument is the line and column number (separated by a : ) in the file "
-                        + "that the suppression should be generated for")
+                        + "that the suppression should be generated for. The option cannot be used "
+                        + "with other options and requires exactly one file to run on to be "
+                        + "specified. ATTENTION: generated result will have few queries, joined "
+                        + "by pipe(|). Together they will match all AST nodes on "
+                        + "specified line and column. You need to choose only one and recheck "
+                        + "that it works. Usage of all of them is also ok, but might result in "
+                        + "undesirable matching and suppress other issues.")
         private String suppressionLineColumnNumber;
 
         /**
@@ -631,14 +674,18 @@ public final class Main {
          *
          * @noinspection CanBeFinal
          */
-        @Option(names = {"-w", "--tabWidth"}, description = "Sets the length of the tab character. "
-                + "Used only with \"-s\" option. Default value is ${DEFAULT-VALUE}")
+        @Option(names = {"-w", "--tabWidth"},
+                description = "Sets the length of the tab character. "
+                + "Used only with -s option. Default value is ${DEFAULT-VALUE}.")
         private int tabWidth = CommonUtil.DEFAULT_TAB_WIDTH;
 
         /** Switch whether to generate suppressions file or not. */
         @Option(names = {"-g", "--generate-xpath-suppression"},
-                description = "Generates to output a suppression xml to use to suppress all"
-                        + " violations from user's config")
+                description = "Generates to output a suppression xml to use to suppress all "
+                        + "violations from user's config. Instead of printing every violation, "
+                        + "all violations will be catched and single suppressions xml file will "
+                        + "be printed out. Used only with -c option. Output "
+                        + "location can be specified with -o option.")
         private boolean generateXpathSuppressionsFile;
 
         /**
@@ -647,33 +694,48 @@ public final class Main {
          *
          * @noinspection CanBeFinal
          */
-        @Option(names = "-f", description = "Sets the output format. Valid values: "
-                + "${COMPLETION-CANDIDATES}. Defaults to ${DEFAULT-VALUE}")
+        @Option(names = "-f",
+                description = "Specifies the output format. Valid values: "
+                + "${COMPLETION-CANDIDATES} for XMLLogger and DefaultLogger respectively. "
+                + "Defaults to ${DEFAULT-VALUE}.")
         private OutputFormat format = DEFAULT_OUTPUT_FORMAT;
 
         /** Option that controls whether to print the AST of the file. */
         @Option(names = {"-t", "--tree"},
-                description = "Print Abstract Syntax Tree(AST) of the file")
+                description = "Prints Abstract Syntax Tree(AST) of the checked file. The option "
+                        + "cannot be used other options and requires exactly one file to run on "
+                        + "to be specified.")
         private boolean printAst;
 
         /** Option that controls whether to print the AST of the file including comments. */
         @Option(names = {"-T", "--treeWithComments"},
-                description = "Print Abstract Syntax Tree(AST) of the file including comments")
+                description = "Prints Abstract Syntax Tree(AST) with comment nodes "
+                        + "of the checked file. The option cannot be used with other options "
+                        + "and requires exactly one file to run on to be specified.")
         private boolean printAstWithComments;
 
         /** Option that controls whether to print the parse tree of the javadoc comment. */
         @Option(names = {"-j", "--javadocTree"},
-                description = "Print Parse tree of the Javadoc comment")
+                description = "Prints Parse Tree of the Javadoc comment. "
+                        + "The file have to contain only Javadoc comment content without "
+                        + "including '/**' and '*/' at the beginning and at the end respectively. "
+                        + "The option cannot be used other options and requires exactly one file "
+                        + "to run on to be specified.")
         private boolean printJavadocTree;
 
         /** Option that controls whether to print the full AST of the file. */
         @Option(names = {"-J", "--treeWithJavadoc"},
-                description = "Print full Abstract Syntax Tree of the file")
+                description = "Prints Abstract Syntax Tree(AST) with Javadoc nodes "
+                        + "and comment nodes of the checked file. Attention that line number and "
+                        + "columns will not be the same as it is a file due to the fact that each "
+                        + "javadoc comment is parsed separately from java file. The option cannot "
+                        + "be used with other options and requires exactly one file to run on to "
+                        + "be specified.")
         private boolean printTreeWithJavadoc;
 
         /** Option that controls whether to print debug info. */
         @Option(names = {"-d", "--debug"},
-                description = "Print all debug logging of CheckStyle utility")
+                description = "Prints all debug logging of CheckStyle utility.")
         private boolean debug;
 
         /**
@@ -683,7 +745,9 @@ public final class Main {
          * @noinspection CanBeFinal
          */
         @Option(names = {"-e", "--exclude"},
-                description = "Directory/File path to exclude from CheckStyle")
+                description = "Directory/file to exclude from CheckStyle. The path can be the "
+                        + "full, absolute path, or relative to the current path. Multiple "
+                        + "excludes are allowed.")
         private List<File> exclude = new ArrayList<>();
 
         /**
@@ -693,7 +757,8 @@ public final class Main {
          * @noinspection CanBeFinal
          */
         @Option(names = {"-x", "--exclude-regexp"},
-                description = "Regular expression of directory/file to exclude from CheckStyle")
+                description = "Directory/file pattern to exclude from CheckStyle. Multiple "
+                        + "excludes are allowed.")
         private List<Pattern> excludeRegex = new ArrayList<>();
 
         /** Switch whether to execute ignored modules or not. */
@@ -701,33 +766,14 @@ public final class Main {
                 description = "Allows ignored modules to be run.")
         private boolean executeIgnoredModules;
 
-        /**
-         * The checker threads number.
-         * Suppression: CanBeFinal - we use picocli and it use  reflection to manage such fields
-         *
-         * @noinspection CanBeFinal
-         */
-        @Option(names = {"-C", "--checker-threads-number"}, description = "(experimental) The "
-                + "number of Checker threads (must be greater than zero)")
-        private int checkerThreadsNumber = DEFAULT_THREAD_COUNT;
-
-        /**
-         * The tree walker threads number.
-         * Suppression: CanBeFinal - we use picocli and it use  reflection to manage such fields
-         *
-         * @noinspection CanBeFinal
-         */
-        @Option(names = {"-W", "--tree-walker-threads-number"}, description = "(experimental) The "
-                + "number of TreeWalker threads (must be greater than zero)")
-        private int treeWalkerThreadsNumber = DEFAULT_THREAD_COUNT;
-
         /** Show AST branches that match xpath. */
         @Option(names = {"-b", "--branch-matching-xpath"},
-            description = "Show Abstract Syntax Tree(AST) branches that match XPath")
+            description = "Shows Abstract Syntax Tree(AST) branches that match given XPath query.")
         private String xpath;
 
         /**
          * Gets the list of exclusions provided through the command line arguments.
+         *
          * @return List of exclusion patterns.
          */
         private List<Pattern> getExclusions() {
@@ -742,6 +788,7 @@ public final class Main {
 
         /**
          * Validates the user-specified command line options.
+         *
          * @param parseResult used to verify if the format option was specified on the command line
          * @param filesToProcess the list of files whose style to check
          * @return list of violations
@@ -797,6 +844,7 @@ public final class Main {
 
         /**
          * Validates optional command line parameters that might be used with config file.
+         *
          * @return list of violations
          */
         private List<String> validateOptionalCliParametersIfConfigDefined() {
@@ -804,12 +852,6 @@ public final class Main {
             if (propertiesFile != null && !propertiesFile.exists()) {
                 result.add(String.format(Locale.ROOT,
                         "Could not find file '%s'.", propertiesFile));
-            }
-            if (checkerThreadsNumber < 1) {
-                result.add("Checker threads number must be greater than zero");
-            }
-            if (treeWalkerThreadsNumber < 1) {
-                result.add("TreeWalker threads number must be greater than zero");
             }
             return result;
         }

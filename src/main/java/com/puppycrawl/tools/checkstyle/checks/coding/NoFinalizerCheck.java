@@ -45,6 +45,32 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * <pre>
  * &lt;module name=&quot;NoFinalizer&quot;/&gt;
  * </pre>
+ * <p>Example:</p>
+ * <pre>
+ *  public class Test {
+ *
+ *      protected void finalize() throws Throwable { // violation
+ *          try {
+ *             System.out.println("overriding finalize()");
+ *          } catch (Throwable t) {
+ *             throw t;
+ *          } finally {
+ *             super.finalize();
+ *          }
+ *      }
+ *  }
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code avoid.finalizer.method}
+ * </li>
+ * </ul>
  *
  * @since 5.0
  */
@@ -73,17 +99,17 @@ public class NoFinalizerCheck extends AbstractCheck {
     }
 
     @Override
-    public void visitToken(DetailAST aAST) {
-        final DetailAST mid = aAST.findFirstToken(TokenTypes.IDENT);
+    public void visitToken(DetailAST ast) {
+        final DetailAST mid = ast.findFirstToken(TokenTypes.IDENT);
         final String name = mid.getText();
 
         if ("finalize".equals(name)) {
-            final DetailAST params = aAST.findFirstToken(TokenTypes.PARAMETERS);
+            final DetailAST params = ast.findFirstToken(TokenTypes.PARAMETERS);
             final boolean hasEmptyParamList =
                 params.findFirstToken(TokenTypes.PARAMETER_DEF) == null;
 
             if (hasEmptyParamList) {
-                log(aAST.getLineNo(), MSG_KEY);
+                log(ast, MSG_KEY);
             }
         }
     }

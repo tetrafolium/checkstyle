@@ -47,6 +47,7 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * property is not set, checks if import is the part of package. If <b>regexp</b>
  * property is set, then list of packages will be interpreted as regular expressions.
  * Note, all properties for match will be used.
+ * Type is {@code java.lang.String[]}.
  * Default value is {@code sun}.
  * </li>
  * <li>
@@ -54,11 +55,13 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * property is not set, checks if import equals class name. If <b>regexp</b>
  * property is set, then list of class names will be interpreted as regular expressions.
  * Note, all properties for match will be used.
- * Default value is {@code {}}.
+ * Type is {@code java.lang.String[]}.
+ * Default value is {@code ""}.
  * </li>
  * <li>
  * Property {@code regexp} - Control whether the {@code illegalPkgs} and
  * {@code illegalClasses} should be interpreted as regular expressions.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * </ul>
@@ -258,6 +261,17 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  *
  * public class InputIllegalImport { }
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code import.illegal}
+ * </li>
+ * </ul>
  *
  * @since 3.0
  */
@@ -383,6 +397,7 @@ public class IllegalImportCheck
     /**
      * Checks if an import matches one of the regular expressions
      * for illegal packages or illegal class names.
+     *
      * @param importText the argument of the import keyword
      * @return if {@code importText} matches one of the regular expressions
      *         for illegal packages or illegal class names
@@ -395,12 +410,10 @@ public class IllegalImportCheck
                 break;
             }
         }
-        if (!result) {
-            for (Pattern pattern : illegalClassesRegexps) {
-                if (pattern.matcher(importText).matches()) {
-                    result = true;
-                    break;
-                }
+        for (Pattern pattern : illegalClassesRegexps) {
+            if (pattern.matcher(importText).matches()) {
+                result = true;
+                break;
             }
         }
         return result;
@@ -408,6 +421,7 @@ public class IllegalImportCheck
 
     /**
      * Checks if an import is from a package or class name that must not be used.
+     *
      * @param importText the argument of the import keyword
      * @return if {@code importText} contains an illegal package prefix or equals illegal class name
      */
@@ -419,7 +433,7 @@ public class IllegalImportCheck
                 break;
             }
         }
-        if (!result && illegalClasses != null) {
+        if (illegalClasses != null) {
             for (String element : illegalClasses) {
                 if (importText.equals(element)) {
                     result = true;
@@ -432,6 +446,7 @@ public class IllegalImportCheck
 
     /**
      * Checks if an import is from a package or class name that must not be used.
+     *
      * @param importText the argument of the import keyword
      * @return if {@code importText} is illegal import
      */

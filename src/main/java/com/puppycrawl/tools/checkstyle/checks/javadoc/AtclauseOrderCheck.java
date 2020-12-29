@@ -46,10 +46,14 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  * Property {@code violateExecutionOnNonTightHtml} - Control when to print violations if the
  * Javadoc being examined by this check violates the tight html rules defined at
  * <a href="https://checkstyle.org/writingjavadocchecks.html#Tight-HTML_rules">Tight-HTML Rules</a>.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * <li>
- * Property {@code target} - Specify the list of targets to check at-clauses. Default value is
+ * Property {@code target} - Specify the list of block tags targeted.
+ * Type is {@code java.lang.String[]}.
+ * Validation type is {@code tokenTypesSet}.
+ * Default value is
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">
  * CLASS_DEF</a>,
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
@@ -61,26 +65,84 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
  * CTOR_DEF</a>,
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
- * VARIABLE_DEF</a>.
+ * VARIABLE_DEF</a>,
+ * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RECORD_DEF">
+ * RECORD_DEF</a>,
+ * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COMPACT_CTOR_DEF">
+ * COMPACT_CTOR_DEF</a>.
  * </li>
  * <li>
  * Property {@code tagOrder} - Specify the order by tags.
+ * Type is {@code java.lang.String[]}.
  * Default value is
  * {@code @author, @deprecated, @exception, @param, @return, @see, @serial, @serialData, @serialField, @since, @throws, @version}.
  * </li>
  * </ul>
  * <p>
- * Default configuration
+ * To configure the default check:
  * </p>
  * <pre>
- * &lt;module name=&quot;AtclauseOrder&quot;&gt;
- *   &lt;property name=&quot;tagOrder&quot; value=&quot;&#64;author, &#64;version, &#64;param,
- *   &#64;return, &#64;throws, &#64;exception, &#64;see, &#64;since, &#64;serial,
- *   &#64;serialField, &#64;serialData, &#64;deprecated&quot;/&gt;
- *   &lt;property name=&quot;target&quot; value=&quot;CLASS_DEF, INTERFACE_DEF, ENUM_DEF,
- *   METHOD_DEF, CTOR_DEF, VARIABLE_DEF&quot;/&gt;
- * &lt;/module&gt;
+ * &lt;module name=&quot;AtclauseOrder&quot;/&gt;
  * </pre>
+ * <p>
+ * Example:
+ * </p>
+ * <pre>
+ * &#47;**
+ * * Some javadoc. // OK
+ * *
+ * * &#64;author Some javadoc. // OK
+ * * &#64;version Some javadoc. // OK
+ * * &#64;param Some javadoc. // OK
+ * * &#64;return Some javadoc. // OK
+ * * &#64;throws Some javadoc. // OK
+ * * &#64;exception Some javadoc. // OK
+ * * &#64;see Some javadoc. // OK
+ * * &#64;since Some javadoc. // OK
+ * * &#64;serial Some javadoc. // OK
+ * * &#64;serialField // OK
+ * * &#64;serialData // OK
+ * * &#64;deprecated Some javadoc. // OK
+ * *&#47;
+ *
+ * class Valid implements Serializable
+ * {
+ * }
+ *
+ * &#47;**
+ * * Some javadoc.
+ * *
+ * * &#64;since Some javadoc. // OK
+ * * &#64;version Some javadoc. // Violation - wrong order
+ * * &#64;deprecated
+ * * &#64;see Some javadoc. // Violation - wrong order
+ * * &#64;author Some javadoc. // Violation - wrong order
+ * *&#47;
+ *
+ * class Invalid implements Serializable
+ * {
+ * }
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code at.clause.order}
+ * </li>
+ * <li>
+ * {@code javadoc.missed.html.close}
+ * </li>
+ * <li>
+ * {@code javadoc.parse.rule.error}
+ * </li>
+ * <li>
+ * {@code javadoc.wrong.singleton.html.tag}
+ * </li>
+ * </ul>
  *
  * @since 6.0
  */
@@ -106,7 +168,7 @@ public class AtclauseOrderCheck extends AbstractJavadocCheck {
     };
 
     /**
-     * Specify the list of targets to check at-clauses.
+     * Specify the list of block tags targeted.
      */
     private List<Integer> target = Arrays.asList(
         TokenTypes.CLASS_DEF,
@@ -114,7 +176,9 @@ public class AtclauseOrderCheck extends AbstractJavadocCheck {
         TokenTypes.ENUM_DEF,
         TokenTypes.METHOD_DEF,
         TokenTypes.CTOR_DEF,
-        TokenTypes.VARIABLE_DEF
+        TokenTypes.VARIABLE_DEF,
+        TokenTypes.RECORD_DEF,
+        TokenTypes.COMPACT_CTOR_DEF
     );
 
     /**
@@ -123,7 +187,8 @@ public class AtclauseOrderCheck extends AbstractJavadocCheck {
     private List<String> tagOrder = Arrays.asList(DEFAULT_ORDER);
 
     /**
-     * Setter to specify the list of targets to check at-clauses.
+     * Setter to specify the list of block tags targeted.
+     *
      * @param targets user's targets.
      */
     public void setTarget(String... targets) {
@@ -136,6 +201,7 @@ public class AtclauseOrderCheck extends AbstractJavadocCheck {
 
     /**
      * Setter to specify the order by tags.
+     *
      * @param orders user's orders.
      */
     public void setTagOrder(String... orders) {
@@ -169,6 +235,7 @@ public class AtclauseOrderCheck extends AbstractJavadocCheck {
 
     /**
      * Checks order of atclauses in tag section node.
+     *
      * @param javadoc Javadoc root node.
      */
     private void checkOrderInTagSection(DetailNode javadoc) {
@@ -193,6 +260,7 @@ public class AtclauseOrderCheck extends AbstractJavadocCheck {
 
     /**
      * Returns type of parent node.
+     *
      * @param commentBlock child node.
      * @return parent type.
      */

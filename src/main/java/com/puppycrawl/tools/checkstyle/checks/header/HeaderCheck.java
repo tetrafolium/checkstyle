@@ -55,30 +55,35 @@ import com.puppycrawl.tools.checkstyle.api.FileText;
  * <ul>
  * <li>
  * Property {@code headerFile} - Specify the name of the file containing the required header.
+ * Type is {@code java.net.URI}.
  * Default value is {@code null}.
  * </li>
  * <li>
  * Property {@code charset} - Specify the character encoding to use when reading the headerFile.
- * Default value is the charset property of the parent
- * <a href="https://checkstyle.org/config.html#Checker">Checker</a> module.
+ * Type is {@code java.lang.String}.
+ * Default value is {@code the charset property of the parent
+ * <a href="https://checkstyle.org/config.html#Checker">Checker</a> module}.
  * </li>
  * <li>
  * Property {@code header} - Specify the required header specified inline.
  * Individual header lines must be separated by the string {@code "\n"}
  * (even on platforms with a different line separator), see examples below.
+ * Type is {@code java.lang.String}.
  * Default value is {@code null}.
  * </li>
  * <li>
  * Property {@code ignoreLines} - Specify the line numbers to ignore.
- * Default value is {@code {}}.
+ * Type is {@code int[]}.
+ * Default value is {@code ""}.
  * </li>
  * <li>
  * Property {@code fileExtensions} - Specify the file type extension of files to process.
- * Default value is {@code all files}.
+ * Type is {@code java.lang.String[]}.
+ * Default value is {@code ""}.
  * </li>
  * </ul>
  * <p>
- * In default configuration the check does not rise any violations.
+ * To configure the check such that no violations arise.
  * Default values of properties are used.
  * </p>
  * <pre>
@@ -111,6 +116,20 @@ import com.puppycrawl.tools.checkstyle.api.FileText;
  *     value="// Copyright (C) 2004 MyCompany\n// All rights reserved"/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.Checker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code header.mismatch}
+ * </li>
+ * <li>
+ * {@code header.missing}
+ * </li>
+ * </ul>
  *
  * @since 6.9
  */
@@ -137,6 +156,7 @@ public class HeaderCheck extends AbstractHeaderCheck {
 
     /**
      * Returns true if lineNo is header lines or false.
+     *
      * @param lineNo a line number
      * @return if {@code lineNo} is one of the ignored header lines.
      */
@@ -146,6 +166,7 @@ public class HeaderCheck extends AbstractHeaderCheck {
 
     /**
      * Checks if a code line matches the required header line.
+     *
      * @param lineNumber the line number to check against the header
      * @param line the line contents
      * @return true if and only if the line matches the required header line

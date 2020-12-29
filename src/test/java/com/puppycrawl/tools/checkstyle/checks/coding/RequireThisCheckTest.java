@@ -389,6 +389,16 @@ public class RequireThisCheckTest extends AbstractModuleTestSupport {
     }
 
     @Test
+    public void testFinalInstanceVariable() throws Exception {
+        final DefaultConfiguration checkConfig = createModuleConfig(RequireThisCheck.class);
+        final String[] expected = {
+            "13:9: " + getCheckMessage(MSG_VARIABLE, "y", ""),
+            "14:9: " + getCheckMessage(MSG_VARIABLE, "z", ""),
+        };
+        verify(checkConfig, getPath("InputRequireThisFinalInstanceVariable.java"), expected);
+    }
+
+    @Test
     public void test() throws Exception {
         final DefaultConfiguration checkConfig = createModuleConfig(RequireThisCheck.class);
         final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
@@ -401,6 +411,66 @@ public class RequireThisCheckTest extends AbstractModuleTestSupport {
         checkConfig.addAttribute("validateOnlyOverlapping", "false");
         final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
         verify(checkConfig, getPath("InputRequireThisExtendedMethod.java"), expected);
+    }
+
+    @Test
+    public void testRecordsAndCompactCtors() throws Exception {
+        final DefaultConfiguration checkConfig = createModuleConfig(RequireThisCheck.class);
+        checkConfig.addAttribute("checkFields", "false");
+        checkConfig.addAttribute("validateOnlyOverlapping", "false");
+        final String[] expected = {
+            "15:13: " + getCheckMessage(MSG_METHOD, "method1", ""),
+            "16:13: " + getCheckMessage(MSG_METHOD, "method2", ""),
+            "17:13: " + getCheckMessage(MSG_METHOD, "method3", ""),
+            "27:13: " + getCheckMessage(MSG_METHOD, "method1", ""),
+            "53:13: " + getCheckMessage(MSG_METHOD, "method1", ""),
+            "54:13: " + getCheckMessage(MSG_METHOD, "method2", ""),
+            "55:13: " + getCheckMessage(MSG_METHOD, "method3", ""),
+            "65:13: " + getCheckMessage(MSG_METHOD, "method1", ""),
+        };
+        verify(checkConfig,
+                getNonCompilablePath("InputRequireThisRecordsAndCompactCtors.java"),
+                expected);
+    }
+
+    @Test
+    public void testRecordCompactCtors() throws Exception {
+        final DefaultConfiguration checkConfig = createModuleConfig(RequireThisCheck.class);
+        checkConfig.addAttribute("validateOnlyOverlapping", "false");
+        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
+        verify(checkConfig,
+                getNonCompilablePath("InputRequireThisRecordCompactCtors.java"),
+                expected);
+    }
+
+    @Test
+    public void testRecordsAsTopLevel() throws Exception {
+        final DefaultConfiguration checkConfig = createModuleConfig(RequireThisCheck.class);
+        checkConfig.addAttribute("checkFields", "true");
+        checkConfig.addAttribute("validateOnlyOverlapping", "false");
+        final String[] expected = {
+            "14:9: " + getCheckMessage(MSG_METHOD, "method1", ""),
+            "15:9: " + getCheckMessage(MSG_METHOD, "method2", ""),
+            "16:9: " + getCheckMessage(MSG_METHOD, "method3", ""),
+            "23:9: " + getCheckMessage(MSG_METHOD, "method1", ""),
+            "27:21: " + getCheckMessage(MSG_VARIABLE, "x", ""),
+            "35:17: " + getCheckMessage(MSG_VARIABLE, "y", ""),
+            "42:9: " + getCheckMessage(MSG_METHOD, "method1", ""),
+        };
+        verify(checkConfig,
+                getNonCompilablePath("InputRequireThisRecordAsTopLevel.java"),
+                expected);
+    }
+
+    @Test
+    public void testRecordsDefault() throws Exception {
+        final DefaultConfiguration checkConfig = createModuleConfig(RequireThisCheck.class);
+        final String[] expected = {
+            "23:9: " + getCheckMessage(MSG_VARIABLE, "x", ""),
+        };
+        verify(checkConfig,
+                getNonCompilablePath("InputRequireThisRecordDefault.java"),
+                expected);
     }
 
     @Test

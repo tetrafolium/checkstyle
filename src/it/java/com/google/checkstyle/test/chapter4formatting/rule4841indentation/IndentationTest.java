@@ -81,6 +81,17 @@ public class IndentationTest extends AbstractIndentationTestSupport {
     }
 
     @Test
+    public void testCorrectNewKeyword() throws Exception {
+        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
+
+        final Configuration checkConfig = getModuleConfig("Indentation");
+        final String filePath = getPath("InputIndentationCorrectNewChildren.java");
+
+        final Integer[] warnList = getLinesWithWarn(filePath);
+        verify(checkConfig, filePath, expected, warnList);
+    }
+
+    @Test
     public void testCorrect() throws Exception {
         final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
 
@@ -127,14 +138,26 @@ public class IndentationTest extends AbstractIndentationTestSupport {
     @Test
     public void testWarnChained() throws Exception {
         final String[] expected = {
-            "18: " + getCheckMessage(IndentationCheck.class, MSG_CHILD_ERROR, "method call", 4, 8),
-            "23: " + getCheckMessage(IndentationCheck.class, MSG_ERROR, ".", 4, 8),
-            "24: " + getCheckMessage(IndentationCheck.class, MSG_ERROR, ".", 4, 8),
-            "27: " + getCheckMessage(IndentationCheck.class, MSG_ERROR, "new", 4, 8),
+            "18:5: " + getCheckMessage(IndentationCheck.class,
+                    MSG_CHILD_ERROR, "method call", 4, 8),
+            "23:5: " + getCheckMessage(IndentationCheck.class, MSG_ERROR, ".", 4, 8),
+            "24:5: " + getCheckMessage(IndentationCheck.class, MSG_ERROR, ".", 4, 8),
+            "27:5: " + getCheckMessage(IndentationCheck.class, MSG_ERROR, "new", 4, 8),
         };
 
         final Configuration checkConfig = getModuleConfig("Indentation");
         final String filePath = getPath("ClassWithChainedMethods.java");
+
+        final Integer[] warnList = getLinesWithWarn(filePath);
+        verify(checkConfig, filePath, expected, warnList);
+    }
+
+    @Test
+    public void testCorrectAnnotationArrayInit() throws Exception {
+        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
+
+        final Configuration checkConfig = getModuleConfig("Indentation");
+        final String filePath = getPath("InputIndentationCorrectAnnotationArrayInit.java");
 
         final Integer[] warnList = getLinesWithWarn(filePath);
         verify(checkConfig, filePath, expected, warnList);

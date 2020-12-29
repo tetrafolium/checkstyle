@@ -29,9 +29,13 @@ import com.puppycrawl.tools.checkstyle.api.SeverityLevel;
  * Filter {@code SeverityMatchFilter} decides audit events according to the
  * <a href="https://checkstyle.org/config.html#Severity">severity level</a> of the event.
  * </p>
+ * <p>
+ * SeverityMatchFilter can suppress Checks that have Treewalker or Checker as parent module.
+ * </p>
  * <ul>
  * <li>
  * Property {@code severity} - Specify the severity level of this filter.
+ * Type is {@code com.puppycrawl.tools.checkstyle.api.SeverityLevel}.
  * Default value is {@code error}.
  * </li>
  * <li>
@@ -40,6 +44,7 @@ import com.puppycrawl.tools.checkstyle.api.SeverityLevel;
  * property severity. If acceptOnMatch is {@code false}, then the filter accepts
  * an audit event if and only if there is not a match between the event's severity
  * level and property severity.
+ * Type is {@code boolean}.
  * Default value is {@code true}.
  * </li>
  * </ul>
@@ -53,6 +58,9 @@ import com.puppycrawl.tools.checkstyle.api.SeverityLevel;
  *   &lt;property name=&quot;acceptOnMatch&quot; value=&quot;false&quot;/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.Checker}
+ * </p>
  *
  * @since 3.2
  */

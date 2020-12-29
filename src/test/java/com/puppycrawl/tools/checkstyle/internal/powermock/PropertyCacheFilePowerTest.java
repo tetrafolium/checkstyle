@@ -60,7 +60,7 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({ PropertyCacheFile.class, ByteStreams.class,
-        CommonUtil.class})
+    CommonUtil.class})
 public class PropertyCacheFilePowerTest extends AbstractPathTestSupport {
 
     @Rule
@@ -74,6 +74,7 @@ public class PropertyCacheFilePowerTest extends AbstractPathTestSupport {
     /**
      * This SuppressWarning("unchecked") required to suppress
      * "Unchecked generics array creation for varargs parameter" during mock.
+     *
      * @throws IOException when smth wrong with file creation or cache.load
      */
     @Test

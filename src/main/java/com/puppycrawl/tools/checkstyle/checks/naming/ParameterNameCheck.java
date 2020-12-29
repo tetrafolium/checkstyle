@@ -43,28 +43,25 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * </p>
  * <ul>
  * <li>
- * Property {@code format} - Specifies valid identifiers. Default value is
- * {@code "^[a-z][a-zA-Z0-9]*$"}.
+ * Property {@code format} - Specifies valid identifiers.
+ * Type is {@code java.util.regex.Pattern}.
+ * Default value is {@code "^[a-z][a-zA-Z0-9]*$"}.
  * </li>
  * <li>
  * Property {@code ignoreOverridden} - Allows to skip methods with Override annotation from
- * validation. For example, the following method's parameter will be skipped from validation,
- * if ignoreOverridden is true:
- * <pre>
- * &#64;Override
- * public boolean equals(Object o) {
- *   return super.equals(o);
- * }
- * </pre>
+ * validation.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * <li>
- * Property {@code accessModifiers} - Access modifiers of methods where parameters are checked.
+ * Property {@code accessModifiers} - Access modifiers of methods where parameters are
+ * checked.
+ * Type is {@code com.puppycrawl.tools.checkstyle.checks.naming.AccessModifierOption[]}.
  * Default value is {@code public, protected, package, private}.
  * </li>
  * </ul>
  * <p>
- * An example of how to configure the check:
+ * To configure the check:
  * </p>
  * <pre>
  * &lt;module name=&quot;ParameterName&quot;/&gt;
@@ -160,29 +157,33 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  *                            // must match pattern '^[a-z][a-z0-9][a-zA-Z0-9]*$'
  * }
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code name.invalidPattern}
+ * </li>
+ * </ul>
  *
  * @since 3.0
  */
 public class ParameterNameCheck extends AbstractNameCheck {
 
     /**
-     * Allows to skip methods with Override annotation from validation. For example, the following
-     * method's parameter will be skipped from validation, if ignoreOverridden is true:
-     * <pre>
-     * &#64;Override
-     * public boolean equals(Object o) {
-     *   return super.equals(o);
-     * }
-     * </pre>
+     * Allows to skip methods with Override annotation from validation.
      */
     private boolean ignoreOverridden;
 
     /** Access modifiers of methods where parameters are checked. */
-    private AccessModifier[] accessModifiers = {
-        AccessModifier.PUBLIC,
-        AccessModifier.PROTECTED,
-        AccessModifier.PACKAGE,
-        AccessModifier.PRIVATE,
+    private AccessModifierOption[] accessModifiers = {
+        AccessModifierOption.PUBLIC,
+        AccessModifierOption.PROTECTED,
+        AccessModifierOption.PACKAGE,
+        AccessModifierOption.PRIVATE,
     };
 
     /**
@@ -193,14 +194,8 @@ public class ParameterNameCheck extends AbstractNameCheck {
     }
 
     /**
-     * Setter to allows to skip methods with Override annotation from validation. For example, the
-     * following method's parameter will be skipped from validation, if ignoreOverridden is true:
-     * <pre>
-     * &#64;Override
-     * public boolean equals(Object o) {
-     *   return super.equals(o);
-     * }
-     * </pre>
+     * Setter to allows to skip methods with Override annotation from validation.
+     *
      * @param ignoreOverridden Flag for skipping methods with Override annotation.
      */
     public void setIgnoreOverridden(boolean ignoreOverridden) {
@@ -209,9 +204,10 @@ public class ParameterNameCheck extends AbstractNameCheck {
 
     /**
      * Setter to access modifiers of methods where parameters are checked.
+     *
      * @param accessModifiers access modifiers of methods which should be checked.
      */
-    public void setAccessModifiers(AccessModifier... accessModifiers) {
+    public void setAccessModifiers(AccessModifierOption... accessModifiers) {
         this.accessModifiers =
             Arrays.copyOf(accessModifiers, accessModifiers.length);
     }
@@ -252,11 +248,11 @@ public class ParameterNameCheck extends AbstractNameCheck {
      * @param ast the token of the method/constructor.
      * @return the access modifier of the method/constructor.
      */
-    private static AccessModifier getAccessModifier(final DetailAST ast) {
-        final AccessModifier accessModifier;
+    private static AccessModifierOption getAccessModifier(final DetailAST ast) {
+        final AccessModifierOption accessModifier;
 
         if (ScopeUtil.isInInterfaceOrAnnotationBlock(ast)) {
-            accessModifier = AccessModifier.PUBLIC;
+            accessModifier = AccessModifierOption.PUBLIC;
         }
         else {
             final DetailAST params = ast.getParent();
@@ -270,15 +266,18 @@ public class ParameterNameCheck extends AbstractNameCheck {
 
     /**
      * Checks whether a method has the correct access modifier to be checked.
+     *
      * @param accessModifier the access modifier of the method.
      * @return whether the method matches the expected access modifier.
      */
-    private boolean matchAccessModifiers(final AccessModifier accessModifier) {
-        return Arrays.stream(accessModifiers).anyMatch(modifier -> modifier == accessModifier);
+    private boolean matchAccessModifiers(final AccessModifierOption accessModifier) {
+        return Arrays.stream(accessModifiers)
+                .anyMatch(modifier -> modifier == accessModifier);
     }
 
     /**
      * Checks whether a method is annotated with Override annotation.
+     *
      * @param ast method parameter definition token.
      * @return true if a method is annotated with Override annotation.
      */

@@ -42,7 +42,11 @@ public class HandlerFactory {
     /** Cache for created method call handlers. */
     private final Map<DetailAST, AbstractExpressionHandler> createdHandlers = new HashMap<>();
 
-    /** Creates a HandlerFactory. */
+    /**
+     * Creates a HandlerFactory.
+     *
+     * @noinspection OverlyCoupledMethod
+     */
     public HandlerFactory() {
         register(TokenTypes.CASE_GROUP, CaseHandler.class);
         register(TokenTypes.LITERAL_SWITCH, SwitchHandler.class);
@@ -64,6 +68,7 @@ public class HandlerFactory {
         register(TokenTypes.INTERFACE_DEF, ClassDefHandler.class);
         register(TokenTypes.IMPORT, ImportHandler.class);
         register(TokenTypes.ARRAY_INIT, ArrayInitHandler.class);
+        register(TokenTypes.ANNOTATION_ARRAY_INIT, AnnotationArrayInitHandler.class);
         register(TokenTypes.METHOD_CALL, MethodCallHandler.class);
         register(TokenTypes.CTOR_CALL, MethodCallHandler.class);
         register(TokenTypes.SUPER_CTOR_CALL, MethodCallHandler.class);
@@ -77,6 +82,10 @@ public class HandlerFactory {
         register(TokenTypes.LAMBDA, LambdaHandler.class);
         register(TokenTypes.ANNOTATION_DEF, ClassDefHandler.class);
         register(TokenTypes.ANNOTATION_FIELD_DEF, MethodDefHandler.class);
+        register(TokenTypes.SWITCH_RULE, SwitchRuleHandler.class);
+        register(TokenTypes.LITERAL_YIELD, YieldHandler.class);
+        register(TokenTypes.RECORD_DEF, MethodDefHandler.class);
+        register(TokenTypes.COMPACT_CTOR_DEF, MethodDefHandler.class);
     }
 
     /**

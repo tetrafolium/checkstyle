@@ -25,7 +25,9 @@ import java.awt.FontMetrics;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.EventObject;
 import java.util.List;
 
@@ -38,6 +40,9 @@ import javax.swing.KeyStroke;
 import javax.swing.LookAndFeel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.tree.TreePath;
+
+import com.puppycrawl.tools.checkstyle.api.DetailAST;
+import com.puppycrawl.tools.checkstyle.xpath.XpathQueryGenerator;
 
 /**
  * This example shows how to create a simple TreeTable component,
@@ -57,11 +62,14 @@ public final class TreeTable extends JTable {
     private final TreeTableCellRenderer tree;
     /** JTextArea editor. */
     private JTextArea editor;
+    /** JTextArea xpathEditor. */
+    private JTextArea xpathEditor;
     /** Line position map. */
     private List<Integer> linePositionMap;
 
     /**
      * Creates TreeTable base on TreeTableModel.
+     *
      * @param treeTableModel Tree table model
      */
     public TreeTable(ParseTreeTableModel treeTableModel) {
@@ -125,6 +133,7 @@ public final class TreeTable extends JTable {
     private void expandSelectedNode() {
         final TreePath selected = tree.getSelectionPath();
         makeCodeSelection();
+        generateXpath();
 
         if (tree.isExpanded(selected)) {
             tree.collapsePath(selected);
@@ -140,6 +149,23 @@ public final class TreeTable extends JTable {
      */
     private void makeCodeSelection() {
         new CodeSelector(tree.getLastSelectedPathComponent(), editor, linePositionMap).select();
+    }
+
+    /**
+     * Generate Xpath.
+     */
+    private void generateXpath() {
+        if (tree.getLastSelectedPathComponent() instanceof DetailAST) {
+            final DetailAST ast = (DetailAST) tree.getLastSelectedPathComponent();
+            final int beginPos = 4;
+            String xpath = XpathQueryGenerator.generateXpathQuery(ast);
+            final int length = xpath.length();
+            xpath = xpath.substring(beginPos, length);
+            xpathEditor.setText(xpath);
+        }
+        else {
+            xpathEditor.setText("Xpath is not supported yet for javadoc nodes");
+        }
     }
 
     /**
@@ -164,6 +190,62 @@ public final class TreeTable extends JTable {
                 fontMetrics.stringWidth("XXXXXXXXXXXXXXXXXXXXXXXXXXXX");
         final int preferredTypeColumnWidth = widthOfTwentyEightCharacterString + padding;
         getColumn("Type").setPreferredWidth(preferredTypeColumnWidth);
+    }
+
+    /**
+     * Search node by Xpath.
+     *
+     * @param root {@code DetailAST} root ast element
+     * @param xpath {@code String} xpath query
+     * @param nodes {@code Deque<DetailAST>} stack of nodes in selection path
+     * @return {@code boolean} node found or not
+     */
+    private static boolean search(DetailAST root, String xpath, Deque<DetailAST> nodes) {
+        boolean result = false;
+        if (xpath.equals(XpathQueryGenerator.generateXpathQuery(root))) {
+            nodes.push(root);
+            result = true;
+        }
+        else {
+            DetailAST child = root.getFirstChild();
+            while (child != null) {
+                if (search(child, xpath, nodes)) {
+                    nodes.push(root);
+                    result = true;
+                    break;
+                }
+                child = child.getNextSibling();
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Select Node by Xpath.
+     */
+    public void selectNodeByXpath() {
+        final DetailAST rootAST = (DetailAST) tree.getModel().getRoot();
+        if (rootAST.hasChildren()) {
+            final String xpath = "/EOF" + xpathEditor.getText();
+            final Deque<DetailAST> nodes = new ArrayDeque<>();
+            if (search(rootAST, xpath, nodes)) {
+                TreePath path = new TreePath(nodes.pop());
+                while (!nodes.isEmpty()) {
+                    path = path.pathByAddingChild(nodes.pop());
+                    if (!tree.isExpanded(path)) {
+                        tree.expandPath(path);
+                    }
+                    tree.setSelectionPath(path);
+                    makeCodeSelection();
+                }
+            }
+            else {
+                xpathEditor.setText(xpathEditor.getText() + "\n^ wrong xpath query");
+            }
+        }
+        else {
+            xpathEditor.setText("No file Opened");
+        }
     }
 
     /**
@@ -212,6 +294,7 @@ public final class TreeTable extends JTable {
 
     /**
      * Returns tree.
+     *
      * @return the tree that is being shared between the model.
      */
     public JTree getTree() {
@@ -220,6 +303,7 @@ public final class TreeTable extends JTable {
 
     /**
      * Sets text area editor.
+     *
      * @param textArea JTextArea component.
      */
     public void setEditor(JTextArea textArea) {
@@ -227,7 +311,17 @@ public final class TreeTable extends JTable {
     }
 
     /**
+     * Sets text area xpathEditor.
+     *
+     * @param xpathTextArea JTextArea component.
+     */
+    public void setXpathEditor(JTextArea xpathTextArea) {
+        xpathEditor = xpathTextArea;
+    }
+
+    /**
      * Sets line position map.
+     *
      * @param linePositionMap Line position map.
      */
     public void setLinePositionMap(List<Integer> linePositionMap) {

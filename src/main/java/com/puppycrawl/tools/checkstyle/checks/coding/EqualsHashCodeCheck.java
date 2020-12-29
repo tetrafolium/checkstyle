@@ -49,6 +49,74 @@ import com.puppycrawl.tools.checkstyle.utils.CheckUtil;
  * <pre>
  * &lt;module name=&quot;EqualsHashCode&quot;/&gt;
  * </pre>
+ * <p>Example:</p>
+ * <pre>
+ * public static class Example1 {
+ *     public int hashCode() {
+ *         // code
+ *     }
+ *     public boolean equals(String o) { // violation, overloaded implementation of 'equals'
+ *         // code
+ *     }
+ * }
+ * public static class Example2 {
+ *     public boolean equals(Object o) { // violation, no 'hashCode'
+ *         // code
+ *     }
+ *     public boolean equals(String o) {
+ *         // code
+ *     }
+ * }
+ * public static class Example3 {
+ *     public int hashCode() {
+ *         // code
+ *     }
+ *     public boolean equals(Object o) { // OK
+ *         // code
+ *     }
+ *     public boolean equals(String o) {
+ *         // code
+ *     }
+ * }
+ * public static class Example4 {
+ *     public int hashCode() {
+ *         // code
+ *     }
+ *     public boolean equals(java.lang.Object o) { // OK
+ *         // code
+ *    }
+ * }
+ * public static class Example5 {
+ *     public static int hashCode(int i) {
+ *         // code
+ *     }
+ *     public boolean equals(Object o) { // violation, overloaded implementation of 'hashCode'
+ *         // code
+ *     }
+ * }
+ * public static class Example6 {
+ *     public int hashCode() { // violation, overloaded implementation of 'equals'
+ *         // code
+ *     }
+ *     public static boolean equals(Object o, Object o2) {
+ *         // code
+ *     }
+ * }
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code equals.noEquals}
+ * </li>
+ * <li>
+ * {@code equals.noHashCode}
+ * </li>
+ * </ul>
  *
  * @since 3.0
  */
@@ -143,6 +211,7 @@ public class EqualsHashCodeCheck
 
     /**
      * Determines if an AST is a formal param of type Object.
+     *
      * @param paramNode the AST to check
      * @return true if firstChild is a parameter of an Object type.
      */

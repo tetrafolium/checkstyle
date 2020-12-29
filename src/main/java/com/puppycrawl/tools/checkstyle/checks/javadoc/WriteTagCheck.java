@@ -40,18 +40,23 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * <ul>
  * <li>
  * Property {@code tag} - Specify the name of tag.
+ * Type is {@code java.lang.String}.
  * Default value is {@code null}.
  * </li>
  * <li>
  * Property {@code tagFormat} - Specify the regexp to match tag content.
+ * Type is {@code java.util.regex.Pattern}.
  * Default value is {@code null}.
  * </li>
  * <li>
  * Property {@code tagSeverity} - Specify the severity level when tag is found and printed.
+ * Type is {@code com.puppycrawl.tools.checkstyle.api.SeverityLevel}.
  * Default value is {@code info}.
  * </li>
  * <li>
  * Property {@code tokens} - tokens to check
+ * Type is {@code java.lang.String[]}.
+ * Validation type is {@code tokenSet}.
  * Default value is:
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
  * INTERFACE_DEF</a>,
@@ -60,30 +65,120 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">
  * ENUM_DEF</a>,
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_DEF">
- * ANNOTATION_DEF</a>.
+ * ANNOTATION_DEF</a>,
+ * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RECORD_DEF">
+ * RECORD_DEF</a>.
  * </li>
  * </ul>
  * <p>
- * To configure the check for printing author name:
+ * Example of default Check configuration that do nothing.
+ * </p>
+ * <pre>
+ * &lt;module name="WriteTag"/&gt;
+ * </pre>
+ * <p>
+ * Example:
+ * </p>
+ * <pre>
+ * &#47;**
+ * * Some class
+ * *&#47;
+ * public class Test {
+ *   &#47;** some doc *&#47;
+ *   void foo() {}
+ * }
+ * </pre>
+ * <p>
+ * To configure Check to demand some special tag (for example {@code &#64;since})
+ * to be present on classes javadoc.
  * </p>
  * <pre>
  * &lt;module name="WriteTag"&gt;
- *   &lt;property name="tag" value="@author"/&gt;
- *   &lt;property name="tagFormat" value="\S"/&gt;
+ *   &lt;property name="tag" value="@since"/&gt;
  * &lt;/module&gt;
  * </pre>
  * <p>
- * To configure the check to print warnings if an "@incomplete" tag is found,
- * and not print anything if it is not found:
+ * Example:
+ * </p>
+ * <pre>
+ * &#47;**
+ * * Some class
+ * *&#47;
+ * public class Test { // violation as required tag is missed
+ *   &#47;** some doc *&#47;
+ *   void foo() {} // OK, as methods are not checked by default
+ * }
+ * </pre>
+ * <p>
+ * To configure Check to demand some special tag (for example {@code &#64;since})
+ * to be present on method javadocs also in addition to default tokens.
  * </p>
  * <pre>
  * &lt;module name="WriteTag"&gt;
- *   &lt;property name="tag" value="@incomplete"/&gt;
- *   &lt;property name="tagFormat" value="\S"/&gt;
- *   &lt;property name="severity" value="ignore"/&gt;
- *   &lt;property name="tagSeverity" value="warning"/&gt;
+ *   &lt;property name="tag" value="@since"/&gt;
+ *   &lt;property name="tokens"
+ *          value="INTERFACE_DEF, CLASS_DEF, ENUM_DEF, ANNOTATION_DEF, RECORD_DEF, METHOD_DEF" /&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>
+ * Example:
+ * </p>
+ * <pre>
+ * &#47;**
+ * * Some class
+ * *&#47;
+ * public class Test { // violation as required tag is missed
+ *   &#47;** some doc *&#47;
+ *   void foo() {} // violation as required tag is missed
+ * }
+ * </pre>
+ * <p>
+ * To configure Check to demand {@code &#64;since} tag
+ * to be present with digital value on method javadocs also in addition to default tokens.
+ * Attention: usage of non "ignore" in tagSeverity will print violation with such severity
+ * on each presence of such tag.
+ * </p>
+ * <pre>
+ * &lt;module name="WriteTag"&gt;
+ *   &lt;property name="tag" value="@since"/&gt;
+ *   &lt;property name="tokens"
+ *          value="INTERFACE_DEF, CLASS_DEF, ENUM_DEF, ANNOTATION_DEF, RECORD_DEF, METHOD_DEF" /&gt;
+ *   &lt;property name="tagFormat" value="[1-9\.]"/&gt;
+ *   &lt;property name="tagSeverity" value="ignore"/&gt;
+ * &lt;/module&gt;
+ * </pre>
+ * <p>
+ * Example:
+ * </p>
+ * <pre>
+ * &#47;**
+ * * Some class
+ * * &#64;since 1.2
+ * *&#47;
+ * public class Test {
+ *   &#47;** some doc
+ *   * &#64;since violation
+ *   *&#47;
+ *   void foo() {}
+ * }
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code javadoc.writeTag}
+ * </li>
+ * <li>
+ * {@code type.missingTag}
+ * </li>
+ * <li>
+ * {@code type.tagFormat}
+ * </li>
+ * </ul>
  *
  * @since 4.2
  */
@@ -150,23 +245,28 @@ public class WriteTagCheck
 
     @Override
     public int[] getDefaultTokens() {
-        return new int[] {TokenTypes.INTERFACE_DEF,
-                          TokenTypes.CLASS_DEF,
-                          TokenTypes.ENUM_DEF,
-                          TokenTypes.ANNOTATION_DEF,
+        return new int[] {
+            TokenTypes.INTERFACE_DEF,
+            TokenTypes.CLASS_DEF,
+            TokenTypes.ENUM_DEF,
+            TokenTypes.ANNOTATION_DEF,
+            TokenTypes.RECORD_DEF,
         };
     }
 
     @Override
     public int[] getAcceptableTokens() {
-        return new int[] {TokenTypes.INTERFACE_DEF,
-                          TokenTypes.CLASS_DEF,
-                          TokenTypes.ENUM_DEF,
-                          TokenTypes.ANNOTATION_DEF,
-                          TokenTypes.METHOD_DEF,
-                          TokenTypes.CTOR_DEF,
-                          TokenTypes.ENUM_CONSTANT_DEF,
-                          TokenTypes.ANNOTATION_FIELD_DEF,
+        return new int[] {
+            TokenTypes.INTERFACE_DEF,
+            TokenTypes.CLASS_DEF,
+            TokenTypes.ENUM_DEF,
+            TokenTypes.ANNOTATION_DEF,
+            TokenTypes.METHOD_DEF,
+            TokenTypes.CTOR_DEF,
+            TokenTypes.ENUM_CONSTANT_DEF,
+            TokenTypes.ANNOTATION_FIELD_DEF,
+            TokenTypes.RECORD_DEF,
+            TokenTypes.COMPACT_CTOR_DEF,
         };
     }
 
@@ -191,6 +291,7 @@ public class WriteTagCheck
 
     /**
      * Verifies that a type definition has a required tag.
+     *
      * @param lineNo the line number for the type definition.
      * @param comment the Javadoc comment for the type definition.
      */

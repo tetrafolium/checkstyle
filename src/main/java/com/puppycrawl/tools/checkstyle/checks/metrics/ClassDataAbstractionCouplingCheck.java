@@ -24,7 +24,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 /**
  * <p>
  * Measures the number of instantiations of other classes
- * within the given class. This type of coupling is not caused by inheritance or
+ * within the given class or record. This type of coupling is not caused by inheritance or
  * the object oriented paradigm. Generally speaking, any data type with other
  * data types as members or local variable that is an instantiation (object)
  * of another class has data abstraction coupling (DAC). The higher the DAC,
@@ -61,6 +61,10 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_NEW">
  * LITERAL_NEW</a>
  * </li>
+ * <li>
+ * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RECORD_DEF">
+ * RECORD_DEF</a>
+ * </li>
  * </ul>
  * </li>
  * <li>
@@ -77,27 +81,33 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * <ul>
  * <li>
  * Property {@code max} - Specify the maximum threshold allowed.
+ * Type is {@code int}.
  * Default value is {@code 7}.
  * </li>
  * <li>
  * Property {@code excludedClasses} - Specify user-configured class names to ignore.
+ * Type is {@code java.lang.String[]}.
  * Default value is {@code ArrayIndexOutOfBoundsException, ArrayList, Boolean, Byte,
- * Character, Class, Deprecated, Deque, Double, Exception, Float, FunctionalInterface,
- * HashMap, HashSet, IllegalArgumentException, IllegalStateException,
- * IndexOutOfBoundsException, Integer, LinkedList, List, Long, Map, NullPointerException,
- * Object, Override, Queue, RuntimeException, SafeVarargs, SecurityException, Set, Short,
- * SortedMap, SortedSet, String, StringBuffer, StringBuilder, SuppressWarnings, Throwable,
+ * Character, Class, Collection, Deprecated, Deque, Double, DoubleStream, EnumSet, Exception,
+ * Float, FunctionalInterface, HashMap, HashSet, IllegalArgumentException, IllegalStateException,
+ * IndexOutOfBoundsException, IntStream, Integer, LinkedHashMap, LinkedHashSet, LinkedList, List,
+ * Long, LongStream, Map, NullPointerException, Object, Optional, OptionalDouble, OptionalInt,
+ * OptionalLong, Override, Queue, RuntimeException, SafeVarargs, SecurityException, Set, Short,
+ * SortedMap, SortedSet, Stream, String, StringBuffer, StringBuilder, SuppressWarnings, Throwable,
  * TreeMap, TreeSet, UnsupportedOperationException, Void, boolean, byte, char, double,
- * float, int, long, short, void}.
+ * float, int, long, short, var, void}.
  * </li>
  * <li>
  * Property {@code excludeClassesRegexps} - Specify user-configured regular
  * expressions to ignore classes.
+ * Type is {@code java.lang.String[]}.
+ * Validation type is {@code java.util.regex.Pattern}.
  * Default value is {@code ^$}.
  * </li>
  * <li>
  * Property {@code excludedPackages} - Specify user-configured packages to ignore.
- * Default value is {@code {}}.
+ * Type is {@code java.lang.String[]}.
+ * Default value is {@code ""}.
  * </li>
  * </ul>
  * <p>
@@ -107,86 +117,182 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * &lt;module name="ClassDataAbstractionCoupling"/&gt;
  * </pre>
  * <p>
- * To configure the check with a threshold of 5:
- * </p>
- * <pre>
- * &lt;module name="ClassDataAbstractionCoupling"&gt;
- *   &lt;property name="max" value="5"/&gt;
- * &lt;/module&gt;
- * </pre>
- * <p>
- * To configure the check with two excluded classes {@code HashMap} and {@code HashSet}:
- * </p>
- * <pre>
- * &lt;module name="ClassDataAbstractionCoupling"&gt;
- *   &lt;property name="excludedClasses" value="HashMap, HashSet"/&gt;
- * &lt;/module&gt;
- * </pre>
- * <p>
- * To configure the check with two regular expressions {@code ^Array.*} and {@code .*Exception$}:
- * </p>
- * <pre>
- * &lt;module name="ClassDataAbstractionCoupling"&gt;
- *   &lt;property name="excludeClassesRegexps"
- *     value="^Array.*, .*Exception$"/&gt;
- * &lt;/module&gt;
- * </pre>
- * <p>
- * The following example demonstrates usage of <b>excludedClasses</b> and
- * <b>excludeClassesRegexps</b> properties
+ * Example:
  * </p>
  * <p>
- * Expected result is one class {@code Date}
+ * The check passes without violations in the following:
  * </p>
  * <pre>
- * &lt;module name="ClassDataAbstractionCoupling"&gt;
- *   &lt;property name="excludedClasses" value="ArrayList"/&gt;
- *   &lt;property name="excludeClassesRegexps" value="^Hash.*"/&gt;
- * &lt;/module&gt;
- * </pre>
- * <pre>
- * public class InputClassCoupling {
- *   public Set _set = new HashSet();
- *   public Map _map = new HashMap();
- *   public List&lt;String&gt; _list = new ArrayList&lt;&gt;();
- *   public Date _date = new Date();
+ * class InputClassCoupling {
+ *   Set set = new HashSet(); // HashSet ignored due to default excludedClasses property
+ *   Map map = new HashMap(); // HashMap ignored due to default excludedClasses property
+ *   Date date = new Date(); // Counted, 1
+ *   Time time = new Time(); // Counted, 2
+ *   Place place = new Place(); // Counted, 3
  * }
  * </pre>
  * <p>
- * To configure the check with two excluded classes {@code HashMap} and {@code HashSet}:
+ * The check results in a violation in the following:
+ * </p>
+ * <pre>
+ * class InputClassCoupling {
+ *   Set set = new HashSet(); // HashSet ignored due to default excludedClasses property
+ *   Map map = new HashMap(); // HashMap ignored due to default excludedClasses property
+ *   Date date = new Date(); // Counted, 1
+ *   Time time = new Time(); // Counted, 2
+ *   // instantiation of 5 other user defined classes
+ *   Place place = new Place(); // violation, total is 8
+ * }
+ * </pre>
+ * <p>
+ * To configure the check with a threshold of 2:
  * </p>
  * <pre>
  * &lt;module name="ClassDataAbstractionCoupling"&gt;
- *   &lt;property name="excludedClasses" value="HashMap, HashSet"/&gt;
+ *   &lt;property name="max" value="2"/&gt;
  * &lt;/module&gt;
  * </pre>
  * <p>
- * To configure the check with two regular expressions {@code ^Array.*} and {@code .*Exception$}:
+ * Example:
+ * </p>
+ * <p>
+ * The check passes without violations in the following:
+ * </p>
+ * <pre>
+ * class InputClassCoupling {
+ *   Set set = new HashSet(); // HashSet ignored due to default excludedClasses property
+ *   Map map = new HashMap(); // HashMap ignored due to default excludedClasses property
+ *   Date date = new Date(); // Counted, 1
+ *   Time time = new Time(); // Counted, 2
+ * }
+ * </pre>
+ * <p>
+ * The check results in a violation in the following:
+ * </p>
+ * <pre>
+ * class InputClassCoupling {
+ *   Set set = new HashSet(); // HashSet ignored due to default excludedClasses property
+ *   Map map = new HashMap(); // HashMap ignored due to default excludedClasses property
+ *   Date date = new Date(); // Counted, 1
+ *   Time time = new Time(); // Counted, 2
+ *   Place place = new Place(); // violation, total is 3
+ * }
+ * </pre>
+ * <p>
+ * To configure the check with three excluded classes {@code HashMap},
+ * {@code HashSet} and {@code Place}:
  * </p>
  * <pre>
  * &lt;module name="ClassDataAbstractionCoupling"&gt;
- *   &lt;property name="excludeClassesRegexps" value="^Array.*, .*Exception$"/&gt;
+ *   &lt;property name="excludedClasses" value="HashMap, HashSet, Place"/&gt;
  * &lt;/module&gt;
  * </pre>
  * <p>
- * The following example demonstrates usage of <b>excludedClasses</b> and
- * <b>excludeClassesRegexps</b> properties
+ * Example:
  * </p>
  * <p>
- * Expected result is one class {@code Date}
+ * The check passes without violations in the following:
+ * </p>
+ * <pre>
+ * class InputClassCoupling {
+ *   Set set = new HashSet(); // Ignored
+ *   Map map = new HashMap(); // Ignored
+ *   Date date = new Date(); // Counted, 1
+ *   Time time = new Time(); // Counted, 2
+ *   // instantiation of 5 other user defined classes
+ *   Place place = new Place(); // Ignored
+ * }
+ * </pre>
+ * <p>
+ * The check results in a violation in the following:
+ * </p>
+ * <pre>
+ * class InputClassCoupling {
+ *   Set set = new HashSet(); // Ignored
+ *   Map map = new HashMap(); // Ignored
+ *   Date date = new Date(); // Counted, 1
+ *   Time time = new Time(); // Counted, 2
+ *   // instantiation of 5 other user defined classes
+ *   Space space = new Space(); // violation, total is 8
+ * }
+ * </pre>
+ * <p>
+ * To configure the check to exclude classes with a regular expression
+ * {@code .*Reader$}:
  * </p>
  * <pre>
  * &lt;module name="ClassDataAbstractionCoupling"&gt;
- *   &lt;property name="excludedClasses" value="ArrayList"/&gt;
- *   &lt;property name="excludeClassesRegexps" value="^Hash.*"/&gt;
+ *   &lt;property name="excludeClassesRegexps" value=".*Reader$"/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>
+ * Example:
+ * </p>
+ * <p>
+ * The check passes without violations in the following:
+ * </p>
  * <pre>
- * public class InputClassCoupling {
- *   public Set _set = new HashSet();
- *   public Map _map = new HashMap();
- *   public List&lt;String&gt; _list = new ArrayList&lt;&gt;();
- *   public Date _date = new Date();
+ * class InputClassCoupling {
+ *   Set set = new HashSet(); // HashSet ignored due to default excludedClasses property
+ *   Map map = new HashMap(); // HashMap ignored due to default excludedClasses property
+ *   Date date = new Date(); // Counted, 1
+ *   Time time = new Time(); // Counted, 2
+ *   // instantiation of 5 other user defined classes
+ *   BufferedReader br = new BufferedReader(); // Ignored
+ * }
+ * </pre>
+ * <p>
+ * The check results in a violation in the following:
+ * </p>
+ * <pre>
+ * class InputClassCoupling {
+ *   Set set = new HashSet(); // HashSet ignored due to default excludedClasses property
+ *   Map map = new HashMap(); // HashMap ignored due to default excludedClasses property
+ *   Date date = new Date(); // Counted, 1
+ *   Time time = new Time(); // Counted, 2
+ *   // instantiation of 5 other user defined classes
+ *   File file = new File(); // violation, total is 8
+ * }
+ * </pre>
+ * <p>
+ * To configure the check with an excluded package {@code java.io}:
+ * </p>
+ * <pre>
+ * &lt;module name="ClassDataAbstractionCoupling"&gt;
+ *   &lt;property name="excludedPackages" value="java.io"/&gt;
+ * &lt;/module&gt;
+ * </pre>
+ * <p>
+ * Example:
+ * </p>
+ * <p>
+ * The check passes without violations in the following:
+ * </p>
+ * <pre>
+ * import java.io.BufferedReader;
+ *
+ * class InputClassCoupling {
+ *   Set set = new HashSet(); // HashSet ignored due to default excludedClasses property
+ *   Map map = new HashMap(); // HashMap ignored due to default excludedClasses property
+ *   Date date = new Date(); // Counted, 1
+ *   Time time = new Time(); // Counted, 2
+ *   // instantiation of 5 other user defined classes
+ *   BufferedReader br = new BufferedReader(); // Ignored
+ * }
+ * </pre>
+ * <p>
+ * The check results in a violation in the following:
+ * </p>
+ * <pre>
+ * import java.util.StringTokenizer;
+ *
+ * class InputClassCoupling {
+ *   Set set = new HashSet(); // HashSet ignored due to default excludedClasses property
+ *   Map map = new HashMap(); // HashMap ignored due to default excludedClasses property
+ *   Date date = new Date(); // Counted, 1
+ *   Time time = new Time(); // Counted, 2
+ *   // instantiation of 5 other user defined classes
+ *   StringTokenizer st = new StringTokenizer(); // violation, total is 8
  * }
  * </pre>
  * <p>
@@ -234,13 +340,13 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * import a.b.Bar;
  * import a.b.c.Baz;
  *
- * public class Foo {
- *   public Bar bar; // Will be ignored, located inside ignored a.b package
- *   public Baz baz; // Will not be ignored, located inside a.b.c package
- *   public Data data; // Will not be ignored, same file
+ * class Foo {
+ *   Bar bar; // Will be ignored, located inside ignored a.b package
+ *   Baz baz; // Will not be ignored, located inside a.b.c package
+ *   Data data; // Will not be ignored, same file
  *
  *   class Data {
- *     public Foo foo; // Will not be ignored, same file
+ *     Foo foo; // Will not be ignored, same file
  *   }
  * }
  * </pre>
@@ -251,13 +357,16 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * The {@code data} and {@code foo} members will be counted, as they are inside same file.
  * </p>
  * <p>
- * Example of usage:
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
  * </p>
- * <pre>
- * &lt;module name="ClassDataAbstractionCoupling"&gt;
- *   &lt;property name="excludedPackages" value="java.util, java.math"/&gt;
- * &lt;/module&gt;
- * </pre>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code classDataAbstractionCoupling}
+ * </li>
+ * </ul>
  *
  * @since 3.4
  *
@@ -288,6 +397,7 @@ public final class ClassDataAbstractionCouplingCheck
             TokenTypes.INTERFACE_DEF,
             TokenTypes.ENUM_DEF,
             TokenTypes.LITERAL_NEW,
+            TokenTypes.RECORD_DEF,
         };
     }
 

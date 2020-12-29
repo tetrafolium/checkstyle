@@ -46,6 +46,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * <li>
  * Property {@code matchDirectoryStructure} - Control whether to check for
  * directory and package name match.
+ * Type is {@code boolean}.
  * Default value is {@code true}.
  * </li>
  * </ul>
@@ -82,6 +83,20 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  *   //...
  * }
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code mismatch.package.directory}
+ * </li>
+ * <li>
+ * {@code missing.package.declaration}
+ * </li>
+ * </ul>
  *
  * @since 3.2
  */
@@ -100,9 +115,6 @@ public final class PackageDeclarationCheck extends AbstractCheck {
      */
     public static final String MSG_KEY_MISMATCH = "mismatch.package.directory";
 
-    /** Line number used to log violation when no AST nodes are present in file. */
-    private static final int DEFAULT_LINE_NUMBER = 1;
-
     /** Is package defined. */
     private boolean defined;
 
@@ -111,6 +123,7 @@ public final class PackageDeclarationCheck extends AbstractCheck {
 
     /**
      * Setter to control whether to check for directory and package name match.
+     *
      * @param matchDirectoryStructure the new value.
      */
     public void setMatchDirectoryStructure(boolean matchDirectoryStructure) {
@@ -139,12 +152,8 @@ public final class PackageDeclarationCheck extends AbstractCheck {
 
     @Override
     public void finishTree(DetailAST ast) {
-        if (!defined) {
-            int lineNumber = DEFAULT_LINE_NUMBER;
-            if (ast != null) {
-                lineNumber = ast.getLineNo();
-            }
-            log(lineNumber, MSG_KEY_MISSING);
+        if (!defined && ast != null) {
+            log(ast, MSG_KEY_MISSING);
         }
     }
 
@@ -160,13 +169,14 @@ public final class PackageDeclarationCheck extends AbstractCheck {
             final String directoryName = getDirectoryName();
 
             if (!directoryName.endsWith(packageName)) {
-                log(fullIdent.getLineNo(), MSG_KEY_MISMATCH, packageName);
+                log(ast, MSG_KEY_MISMATCH, packageName);
             }
         }
     }
 
     /**
      * Returns the directory name this file is in.
+     *
      * @return Directory name.
      */
     private String getDirectoryName() {

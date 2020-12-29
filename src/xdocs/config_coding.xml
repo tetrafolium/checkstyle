@@ -10,6 +10,7 @@
             src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"/>
     <script type="text/javascript" src="js/anchors.js"/>
     <script type="text/javascript" src="js/google-analytics.js"/>
+    <script type="text/javascript" src="js/checkstyle.js"/>
     <link rel="icon" href="images/favicon.png" type="image/x-icon" />
     <link rel="shortcut icon" href="images/favicon.ico" type="image/ico" />
   </head>
@@ -38,7 +39,7 @@ int[] a = new int[]
         </source>
 
         <p>
-          The check demands a comma at the end if neither left nor right curly braces
+          By default, the check demands a comma at the end if neither left nor right curly braces
           are on the same line as the last element of the array.
         </p>
         <source>
@@ -93,17 +94,41 @@ return new int[] {
         </source>
       </subsection>
 
+      <subsection name="Properties" id="ArrayTrailingComma_Properties">
+        <div class="wrapper">
+          <table>
+            <tr>
+              <th>name</th>
+              <th>description</th>
+              <th>type</th>
+              <th>default value</th>
+              <th>since</th>
+            </tr>
+            <tr>
+              <td>alwaysDemandTrailingComma</td>
+              <td>
+                  Control whether to always check for a trailing comma, even when an array is
+                  inline.
+              </td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
+              <td><code>false</code></td>
+              <td>8.33</td>
+            </tr>
+          </table>
+        </div>
+      </subsection>
+
       <subsection name="Examples" id="ArrayTrailingComma_Examples">
-          <p>
+        <p>
           To configure the check:
-          </p>
-          <source>
+        </p>
+        <source>
 &lt;module name=&quot;ArrayTrailingComma&quot;/&gt;
-          </source>
-          <p>
-            Which results in the following violations:
-          </p>
-          <source>
+        </source>
+        <p>
+          Which results in the following violations:
+        </p>
+        <source>
 int[] numbers = {1, 2, 3};        //no violation
 boolean[] bools = {
 true,
@@ -135,7 +160,48 @@ int[] a2 = new int[]{
   1,
   2
   ,};        // no violation
-          </source>
+        </source>
+
+        <p>To configure check to always validate trailing comma:</p>
+        <source>
+&lt;module name="ArrayTrailingComma"&gt;
+    &lt;property name="alwaysDemandTrailingComma" value="true"/&gt;
+&lt;/module&gt;
+        </source>
+        <p>Example:</p>
+        <source>
+int[] numbers = {1, 2, 3}; // violation
+boolean[] bools = {
+true,
+true,
+false // violation
+};
+
+String[][] text = {{},{},}; // OK
+
+double[][] decimals = {
+{0.5, 2.3, 1.1,}, // OK
+{1.7, 1.9, 0.6}, // violation
+{0.8, 7.4, 6.5} // violation
+}; // violation, previous line misses a comma
+
+char[] chars = {'a', 'b', 'c'  // violation
+  };
+
+String[] letters = {
+  "a", "b", "c"}; // violation
+
+int[] a1 = new int[]{
+  1,
+  2
+  ,
+}; // OK
+
+int[] a2 = new int[]{
+  1,
+  2
+  ,}; // OK
+        </source>
       </subsection>
 
       <subsection name="Example of Usage" id="ArrayTrailingComma_Example_of_Usage">
@@ -209,18 +275,18 @@ int[] a2 = new int[]{
         </p>
         <source>
 class MyClass {
-  List list1 = new ArrayList&lt;Object&gt; { // violation
-    {
-      add(new Object());
-    }
-  };
-  List list2 = new ArrayList&lt;Object&gt; { // violation, comments and semicolons are ignored
-    ;
-    // my comment
-    {
-      add(new Object());
-    }
-  };
+    List&lt;Integer&gt; list1 = new ArrayList&lt;&gt;() { // violation
+        {
+            add(1);
+        }
+    };
+    List&lt;String&gt; list2 = new ArrayList&lt;&gt;() { // violation
+        ;
+        // comments and semicolons are ignored
+        {
+            add("foo");
+        }
+    };
 }
         </source>
         <p>
@@ -229,16 +295,16 @@ class MyClass {
           Though these might create the same memory issues as double brace,
           the extra class members can produce side effects if changed incorrectly.
         </p>
-          <source>
+        <source>
 class MyClass {
-  List list = new ArrayList&lt;Object&gt; { // OK as it is not pure double brace pattern
-     private int field;
-     {
-       add(new Object());
-     }
-  };
+    List&lt;Object&gt; list = new ArrayList&lt;&gt;() { // OK, not pure double brace pattern
+        private int field;
+        {
+            add(new Object());
+        }
+    };
 }
-          </source>
+        </source>
       </subsection>
 
       <subsection name="Example of Usage" id="AvoidDoubleBraceInitialization_Example_of_Usage">
@@ -299,6 +365,23 @@ String b = (a==null || a.length()&lt;1) ? null : a.substring(1);
         </p>
         <source>
 &lt;module name=&quot;AvoidInlineConditionals&quot;/&gt;
+        </source>
+        <p>Example:</p>
+        <source>
+int x = 5;
+boolean foobar = (x == 5); // OK
+
+String text;
+text = (text == null) ? "" : text; // violation
+
+String b;
+if (a != null &amp;&amp; a.length() &gt;= 1) { // OK
+    b = a.substring(1);
+} else {
+    b = null;
+}
+
+b = (a != null &amp;&amp; a.length() &gt;= 1) ? a.substring(1) : null; // violation
         </source>
       </subsection>
 
@@ -416,7 +499,7 @@ class MyClass extends SomeOtherClass {
       <p>Since Checkstyle 3.2</p>
       <subsection name="Description" id="CovariantEquals_Description">
         <p>
-          Checks that classes which define a covariant <code>equals()</code> method
+          Checks that classes and records which define a covariant <code>equals()</code> method
           also override method <code>equals(Object)</code>.
         </p>
         <p>
@@ -437,7 +520,7 @@ class MyClass extends SomeOtherClass {
         </p>
 
         <p>
-          Java classes may override the <code>equals(Object)</code> method to define
+          Java classes and records may override the <code>equals(Object)</code> method to define
           a predicate for object equality. This method is used by many of the Java runtime
           library classes; for example, to implement generic containers.
         </p>
@@ -499,6 +582,30 @@ class Test {
   }
 }
         </source>
+        <p>
+          Another example:
+        </p>
+        <source>
+record Test(String str) {
+    public boolean equals(Test r) {  // violation
+        return false;
+    }
+}
+        </source>
+        <p>
+          The same record without violations:
+        </p>
+        <source>
+record Test(String str) {
+    public boolean equals(Test r) {  // no violation
+        return false;
+    }
+
+    public boolean equals(Object r) {
+        return false;
+    }
+}
+        </source>
       </subsection>
 
       <subsection name="Example of Usage" id="CovariantEquals_Example_of_Usage">
@@ -540,7 +647,7 @@ class Test {
       <p>Since Checkstyle 3.2</p>
       <subsection name="Description" id="DeclarationOrder_Description">
         <p>
-          Checks that the parts of a class or interface declaration appear in the order
+          Checks that the parts of a class, record, or interface declaration appear in the order
           suggested by the
           <a href="https://checkstyle.org/styleguides/sun-code-conventions-19990420/CodeConventions.doc2.html#a1852">
             Code Conventions for the Java Programming Language</a>.
@@ -602,14 +709,14 @@ public class A {
             <tr>
               <td>ignoreConstructors</td>
               <td>control whether to ignore constructors.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>false</code></td>
               <td>5.2</td>
             </tr>
             <tr>
               <td>ignoreModifiers</td>
               <td>control whether to ignore modifiers (fields, ...).</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>false</code></td>
               <td>5.2</td>
             </tr>
@@ -736,7 +843,7 @@ class K {
                 Control whether to allow <code>default</code> along with
                 <code>case</code> if they are not last.
               </td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>false</code></td>
               <td>7.7</td>
             </tr>
@@ -751,7 +858,44 @@ class K {
 &lt;module name=&quot;DefaultComesLast&quot;/&gt;
         </source>
         <p>
-            To configure the check for skipIfLastAndSharedWithCase:
+          Example:
+        </p>
+        <source>
+switch (i) {
+  case 1:
+    break;
+  case 2:
+    break;
+  default: // OK
+    break;
+}
+
+switch (i) {
+  case 1:
+    break;
+  case 2:
+    break; // OK, no default
+}
+
+switch (i) {
+  case 1:
+    break;
+  default: // violation, 'default' before 'case'
+    break;
+  case 2:
+    break;
+}
+
+switch (i) {
+  case 1:
+  default: // violation, 'default' before 'case'
+    break;
+  case 2:
+    break;
+}
+        </source>
+        <p>
+          To configure the check to allow default label to be not last if it is shared with case:
         </p>
         <source>
 &lt;module name=&quot;DefaultComesLast&quot;&gt;
@@ -759,24 +903,32 @@ class K {
 &lt;/module&gt;
         </source>
         <p>
-            Example when skipIfLastAndSharedWithCase is set to true.
+          Example:
         </p>
         <source>
 switch (i) {
   case 1:
     break;
   case 2:
-  default: // No violation with the new option is expected
+  default: // OK
     break;
   case 3:
     break;
 }
+
 switch (i) {
   case 1:
     break;
-  default: // violation with the new option is expected
+  default: // violation
   case 2:
     break;
+}
+
+// Switch rules are not subject to fall through, so this is still a violation:
+switch (i) {
+case 1 -&gt; x = 9;
+default -&gt; x = 10; // violation
+case 2 -&gt; x = 32;
 }
         </source>
       </subsection>
@@ -825,13 +977,8 @@ switch (i) {
       <subsection name="Description" id="EmptyStatement_Description">
         <p>
           Detects empty statements (standalone <code>";"</code> semicolon).
-          Empty statements often introduce bugs that are hard to spot, such as in
+          Empty statements often introduce bugs that are hard to spot
         </p>
-        <source>
-if (someCondition);
-  doConditionalStuff();
-doUnconditionalStuff();
-        </source>
       </subsection>
 
       <subsection name="Examples" id="EmptyStatement_Examples">
@@ -840,6 +987,20 @@ doUnconditionalStuff();
         </p>
         <source>
 &lt;module name=&quot;EmptyStatement&quot;/&gt;
+        </source>
+        <p>
+            Example:
+        </p>
+        <source>
+public void foo() {
+  int i = 5;
+  if (i &gt; 3); // violation, ";" right after if statement
+    i++;
+  for (i = 0; i &lt; 5; i++); // violation
+    i++;
+  while (i &gt; 10) // OK
+    i++;
+}
         </source>
       </subsection>
 
@@ -896,24 +1057,10 @@ doUnconditionalStuff();
           Rationale: Calling the <code>equals()</code>
           method on String literals will avoid a potential
           <code>NullPointerException</code>. Also, it is pretty common to see null
-          checks right before equals comparisons, which is not necessary
-          in the example below.
+          checks right before equals comparisons but following this rule such checks
+          are not required.
         </p>
 
-        <p>
-          For example, this code:
-        </p>
-        <source>
-String nullString = null;
-nullString.equals(&quot;My_Sweet_String&quot;);
-        </source>
-
-        <p>should be refactored to:</p>
-
-        <source>
-String nullString = null;
-&quot;My_Sweet_String&quot;.equals(nullString);
-        </source>
       </subsection>
 
       <subsection name="Properties" id="EqualsAvoidNull_Properties">
@@ -931,7 +1078,7 @@ String nullString = null;
               <td>
                 Control whether to ignore <code>String.equalsIgnoreCase(String)</code> invocations.
               </td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>false</code></td>
               <td>5.4</td>
             </tr>
@@ -945,6 +1092,35 @@ String nullString = null;
         </p>
         <source>
 &lt;module name=&quot;EqualsAvoidNull&quot;/&gt;
+        </source>
+        <p>
+         Example:
+        </p>
+        <source>
+String nullString = null;
+nullString.equals("My_Sweet_String");            // violation
+"My_Sweet_String".equals(nullString);            // OK
+nullString.equalsIgnoreCase("My_Sweet_String");  // violation
+"My_Sweet_String".equalsIgnoreCase(nullString);  // OK
+        </source>
+
+        <p>
+         To configure the check to allow ignoreEqualsIgnoreCase:
+        </p>
+        <source>
+&lt;module name=&quot;EqualsAvoidNull&quot;&gt;
+  &lt;property name=&quot;ignoreEqualsIgnoreCase&quot; value=&quot;true&quot;/&gt;
+&lt;/module&gt;
+        </source>
+        <p>
+         Example:
+        </p>
+        <source>
+String nullString = null;
+nullString.equals("My_Sweet_String");            // violation
+"My_Sweet_String".equals(nullString);            // OK
+nullString.equalsIgnoreCase("My_Sweet_String");  // OK
+"My_Sweet_String".equalsIgnoreCase(nullString);  // OK
         </source>
       </subsection>
 
@@ -1014,6 +1190,60 @@ String nullString = null;
         </p>
         <source>
 &lt;module name=&quot;EqualsHashCode&quot;/&gt;
+        </source>
+        <p>Example:</p>
+        <source>
+public static class Example1 {
+    public int hashCode() {
+        // code
+    }
+    public boolean equals(String o) { // violation, overloaded implementation of 'equals'
+        // code
+    }
+}
+public static class Example2 {
+    public boolean equals(Object o) { // violation, no 'hashCode'
+        // code
+    }
+    public boolean equals(String o) {
+        // code
+    }
+}
+public static class Example3 {
+    public int hashCode() {
+        // code
+    }
+    public boolean equals(Object o) { // OK
+        // code
+    }
+    public boolean equals(String o) {
+        // code
+    }
+}
+public static class Example4 {
+    public int hashCode() {
+        // code
+    }
+    public boolean equals(java.lang.Object o) { // OK
+        // code
+   }
+}
+public static class Example5 {
+    public static int hashCode(int i) {
+        // code
+    }
+    public boolean equals(Object o) { // violation, overloaded implementation of 'hashCode'
+        // code
+    }
+}
+public static class Example6 {
+    public int hashCode() { // violation, overloaded implementation of 'equals'
+        // code
+    }
+    public static boolean equals(Object o, Object o2) {
+        // code
+    }
+}
         </source>
       </subsection>
 
@@ -1092,7 +1322,7 @@ String nullString = null;
               <td>onlyObjectReferences</td>
               <td>control whether only explicit initializations made to
                   null for objects should be checked.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>false</code></td>
               <td>7.8</td>
             </tr>
@@ -1107,7 +1337,30 @@ String nullString = null;
         <source>
 &lt;module name=&quot;ExplicitInitialization&quot;/&gt;
         </source>
+        <p>Example:</p>
+        <source>
+public class Test {
+  private int intField1 = 0; // violation
+  private int intField2 = 1;
+  private int intField3;
 
+  private char charField1 = '\0'; // violation
+  private char charField2 = 'b';
+  private char charField3;
+
+  private boolean boolField1 = false; // violation
+  private boolean boolField2 = true;
+  private boolean boolField3;
+
+  private Obj objField1 = null; // violation
+  private Obj objField2 = new Obj();
+  private Obj objField3;
+
+  private int arrField1[] = null; // violation
+  private int arrField2[] = new int[10];
+  private int arrField3[];
+}
+        </source>
         <p>
           To configure the check so that it only checks
           for objects that explicitly initialize to null:
@@ -1120,29 +1373,25 @@ String nullString = null;
         <p>Example:</p>
         <source>
 public class Test {
-  private int a = 0;
-  private int b = 1;
-  private int c = 2;
+  private int intField1 = 0; // ignored
+  private int intField2 = 1;
+  private int intField3;
 
-  private boolean a = true;
-  private boolean b = false;
-  private boolean c = true;
-  private boolean d = false;
-  private boolean e = false;
+  private char charField1 = '\0'; // ignored
+  private char charField2 = 'b';
+  private char charField3;
 
-  private A a = new A();
-  private A b = null; // violation
-  private C c = null; // violation
-  private D d = new D();
+  private boolean boolField1 = false; // ignored
+  private boolean boolField2 = true;
+  private boolean boolField3;
 
-  int ar1[] = null; // violation
-  int ar2[] = new int[];
-  int ar3[];
-  private Bar&lt;String&gt; bar = null; // violation
-  private Bar&lt;String&gt;[] barArray = null; // violation
+  private Obj objField1 = null; // violation
+  private Obj objField2 = new Obj();
+  private Obj objField3;
 
-  public static void main( String [] args ) {
-  }
+  private int arrField1[] = null; // violation
+  private int arrField2[] = new int[10];
+  private int arrField3[];
 }
         </source>
       </subsection>
@@ -1204,50 +1453,10 @@ public class Test {
           the same line before the <code>case</code>
           (ugly, but possible).
         </p>
-        <source>
-switch (i) {
-case 0:
-  i++; // fall through
-
-case 1:
-  i++;
-  // falls through
-case 2:
-case 3:
-case 4: {
-  i++;
-}
-// fallthrough
-case 5:
-  i++;
-/* fallthru */case 6:
-  i++;
-// fall-through
-case 7:
-  i++;
-  break;
-}
-        </source>
         <p>
           Note: The check assumes that there is no unreachable
           code in the <code>case</code>.
         </p>
-        <p>
-          The following fragment of code will NOT trigger the check,
-          because of the comment "fallthru" or any Java code
-          in case 5 are absent.
-        </p>
-        <div class="wrapper">
-          <pre>
-case 3:
-    x = 2;
-    // fallthru
-case 4:
-case 5: // violation
-case 6:
-    break;
-          </pre>
-        </div>
       </subsection>
 
       <subsection name="Properties" id="FallThrough_Properties">
@@ -1265,7 +1474,7 @@ case 6:
               <td>
                 Control whether the last case group must be checked.
               </td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>false</code></td>
               <td>4.0</td>
             </tr>
@@ -1275,7 +1484,7 @@ case 6:
                 Define the RegExp to match the relief comment that suppresses
                 the warning about a fall through.
               </td>
-              <td><a href="property_types.html#regexp">Regular Expression</a></td>
+              <td><a href="property_types.html#Pattern">Pattern</a></td>
               <td><code>"falls?[ -]?thr(u|ough)"</code></td>
               <td>4.0</td>
             </tr>
@@ -1291,12 +1500,106 @@ case 6:
 &lt;module name=&quot;FallThrough&quot;/&gt;
         </source>
         <p>
-          or
+          Example:
+        </p>
+        <source>
+public void foo() throws Exception {
+  int i = 0;
+  while (i &gt;= 0) {
+    switch (i) {
+      case 1:
+        i++;
+      case 2: // violation, previous case contains code but lacks
+              // break, return, throw or continue statement
+        i++;
+        break;
+      case 3: // OK
+        i++;
+        return;
+      case 4: // OK
+        i++;
+        throw new Exception();
+      case 5: // OK
+        i++;
+        continue;
+      case 6: // OK
+      case 7: // Previous case: OK, case does not contain code
+              // This case: OK, by default the last case might not have statement
+              // that transfer control
+        i++;
+
+    }
+  }
+}
+        </source>
+        <p>
+          Example how to suppress violations by comment:
+        </p>
+        <source>
+switch (i) {
+  case 1:
+    i++; // fall through
+
+  case 2: // OK
+    i++;
+    // fallthru
+  case 3: { // OK
+    i++;
+  }
+  &#47;* fall-thru *&#47;
+  case 4: // OK
+    i++;
+    // Fallthru
+  case 5: // violation, "Fallthru" in case 4 should be "fallthru"
+    i++;
+    // fall through
+    i++;
+  case 6: // violation, the comment must be on the last non-empty line before 'case'
+    i++;
+  &#47;* fall through *&#47;case 7: // OK, comment can appear on the same line but before 'case'
+    i++;
+}
+        </source>
+        <p>
+            To configure the check to enable check for last case group:
         </p>
         <source>
 &lt;module name=&quot;FallThrough&quot;&gt;
-  &lt;property name=&quot;reliefPattern&quot; value=&quot;continue in next case&quot;/&gt;
+   &lt;property name=&quot;checkLastCaseGroup&quot; value=&quot;true&quot;/&gt;
 &lt;/module&gt;
+        </source>
+        <p>
+            Example:
+        </p>
+        <source>
+switch (i) {
+  case 1:
+    break;
+  case 2: // Previous case: OK
+          // This case: violation, last case must have statement that transfer control
+    i++;
+}
+        </source>
+        <p>
+            To configure the check with custom relief pattern:
+        </p>
+        <source>
+&lt;module name=&quot;FallThrough&quot;&gt;
+   &lt;property name=&quot;reliefPattern&quot; value=&quot;FALL?[ -]?THROUGH&quot;/&gt;
+&lt;/module&gt;
+        </source>
+        <p>Example:</p>
+        <source>
+switch (i) {
+  case 1:
+    i++;
+    // FALL-THROUGH
+  case 2: // OK, "FALL-THROUGH" matches the regular expression "FALL?[ -]?THROUGH"
+    i++;
+    // fall-through
+  case 3: // violation, "fall-through" doesn't match
+    break;
+}
         </source>
       </subsection>
 
@@ -1375,15 +1678,14 @@ case 6:
               <td>
                 Control whether to check
                 <a href = "https://docs.oracle.com/javase/specs/jls/se11/html/jls-14.html#jls-14.14.2">
-                enhanced for-loop</a> variable.</td>
-              <td>
-                <a
-                href="property_types.html#boolean">Boolean</a>
+                enhanced for-loop</a> variable.
               </td>
               <td>
-               <code>
-                false
-               </code>
+                <a
+                href="property_types.html#boolean">boolean</a>
+              </td>
+              <td>
+                <code>false</code>
               </td>
               <td>6.5</td>
             </tr>
@@ -1391,17 +1693,17 @@ case 6:
               <td>tokens</td>
               <td>tokens to check</td>
               <td>
-                subset of tokens <a
-                href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
-                  VARIABLE_DEF</a>,
-                <a
-                href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">
-                  PARAMETER_DEF</a>.
+                subset of tokens
+                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
+                VARIABLE_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">
+                PARAMETER_DEF</a>
+                .
               </td>
               <td>
-                <a
-                href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
-                  VARIABLE_DEF</a>.
+                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
+                  VARIABLE_DEF</a>
+                  .
               </td>
               <td>3.2</td>
             </tr>
@@ -1427,42 +1729,42 @@ case 6:
 &lt;/module&gt;
         </source>
         <p>
-         By default, this Check skip final validation on
-         <a href = "https://docs.oracle.com/javase/specs/jls/se11/html/jls-14.html#jls-14.14.2">
-         Enhanced For-Loop</a>.
-         </p>
-         <p>
-         Option 'validateEnhancedForLoopVariable' could be used to make Check to validate
-         even variable from Enhanced For Loop.
-         </p>
-         <p>
-         An example of how to configure the check so that it also validates enhanced For Loop
-         Variable is:
-         </p>
-         <source>
+          By default, this Check skip final validation on
+          <a href = "https://docs.oracle.com/javase/specs/jls/se11/html/jls-14.html#jls-14.14.2">
+            Enhanced For-Loop</a>.
+        </p>
+        <p>
+          Option 'validateEnhancedForLoopVariable' could be used to make Check to validate
+          even variable from Enhanced For Loop.
+        </p>
+        <p>
+          An example of how to configure the check so that it also validates enhanced For Loop
+          Variable is:
+        </p>
+        <source>
 &lt;module name="FinalLocalVariable"&gt;
   &lt;property name="tokens" value="VARIABLE_DEF"/&gt;
   &lt;property name="validateEnhancedForLoopVariable" value="true"/&gt;
 &lt;/module&gt;
-         </source>
-         <p>Example:</p>
-         <source>
+        </source>
+        <p>Example:</p>
+        <source>
 for (int number : myNumbers) { // violation
   System.out.println(number);
 }
-         </source>
-         <p>
-         An example of how to configure check on local variables and parameters
-         but do not validate loop variables:
-         </p>
-         <source>
- &lt;module name="FinalLocalVariable"&gt;
-   &lt;property name="tokens" value="VARIABLE_DEF,PARAMETER_DEF"/&gt;
-   &lt;property name="validateEnhancedForLoopVariable" value="false"/&gt;
- &lt;/module&gt;
-         </source>
-         <p>Example:</p>
-         <source>
+        </source>
+        <p>
+          An example of how to configure check on local variables and parameters
+          but do not validate loop variables:
+        </p>
+        <source>
+&lt;module name="FinalLocalVariable"&gt;
+  &lt;property name="tokens" value="VARIABLE_DEF,PARAMETER_DEF"/&gt;
+  &lt;property name="validateEnhancedForLoopVariable" value="false"/&gt;
+&lt;/module&gt;
+        </source>
+        <p>Example:</p>
+        <source>
 public class MyClass {
   static int foo(int x, int y) { //violations, parameters should be final
     return x+y;
@@ -1474,7 +1776,7 @@ public class MyClass {
     int result=foo(1,2); // violation
   }
 }
-         </source>
+        </source>
       </subsection>
 
       <subsection name="Example of Usage" id="FinalLocalVariable_Example_of_Usage">
@@ -1570,7 +1872,7 @@ class PageBuilder {
             <tr>
               <td>ignoreFormat</td>
               <td>Define the RegExp for names of variables and parameters to ignore.</td>
-              <td><a href="property_types.html#regexp">Regular Expression</a></td>
+              <td><a href="property_types.html#Pattern">Pattern</a></td>
               <td><code>null</code></td>
               <td>3.2</td>
             </tr>
@@ -1578,7 +1880,7 @@ class PageBuilder {
             <tr>
               <td>ignoreConstructorParameter</td>
               <td>Control whether to ignore constructor parameters.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>false</code></td>
               <td>3.2</td>
             </tr>
@@ -1588,7 +1890,7 @@ class PageBuilder {
               <td>
                 Allow to ignore the parameter of a property setter method.
               </td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>false</code></td>
               <td>3.2</td>
             </tr>
@@ -1599,7 +1901,7 @@ class PageBuilder {
                 Allow to expand the definition of a setter method
                 to include methods that return the class' instance.
               </td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>false</code></td>
               <td>6.3</td>
             </tr>
@@ -1607,7 +1909,7 @@ class PageBuilder {
             <tr>
               <td>ignoreAbstractMethods</td>
               <td>Control whether to ignore parameters of abstract methods.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>false</code></td>
               <td>4.0</td>
             </tr>
@@ -1618,25 +1920,30 @@ class PageBuilder {
               <td>
                 subset of tokens <a
                 href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
-                  VARIABLE_DEF</a>,
-                <a
-                href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">
-                  PARAMETER_DEF</a>,
-                <a
-                href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LAMBDA">
-                  LAMBDA</a>.
+                  VARIABLE_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">
+                  PARAMETER_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PATTERN_VARIABLE_DEF">
+                  PATTERN_VARIABLE_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LAMBDA">
+                  LAMBDA</a>
+                ,<a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RECORD_COMPONENT_DEF">
+                  RECORD_COMPONENT_DEF</a>
+                  .
               </td>
 
               <td>
-                <a
-                href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
-                  VARIABLE_DEF</a>,
-                <a
-                href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">
-                  PARAMETER_DEF</a>,
-                <a
-                href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LAMBDA">
-                  LAMBDA</a>.
+                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
+                  VARIABLE_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">
+                  PARAMETER_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PATTERN_VARIABLE_DEF">
+                  PATTERN_VARIABLE_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LAMBDA">
+                  LAMBDA</a>
+                ,<a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RECORD_COMPONENT_DEF">
+                  RECORD_COMPONENT_DEF</a>
+                  .
               </td>
               <td>3.0</td>
             </tr>
@@ -1792,7 +2099,7 @@ class SomeClass
             <tr>
               <td>illegalClassNames</td>
               <td>Specify exception class names to reject.</td>
-              <td><a href="property_types.html#stringSet">String Set</a></td>
+              <td><a href="property_types.html#String.5B.5D">String[]</a></td>
               <td><code>Error, Exception, RuntimeException, Throwable, java.lang.Error,
                 java.lang.Exception, java.lang.RuntimeException, java.lang.Throwable</code></td>
               <td>3.2</td>
@@ -1807,6 +2114,82 @@ class SomeClass
         </p>
         <source>
 &lt;module name=&quot;IllegalCatch&quot;/&gt;
+        </source>
+        <p>
+          Example:
+        </p>
+        <source>
+try {
+    // some code here
+} catch (Exception e) { // violation
+
+}
+
+try {
+    // some code here
+} catch (ArithmeticException e) { // OK
+
+} catch (Exception e) { // violation, catching Exception is illegal
+                          and order of catch blocks doesn't matter
+}
+
+try {
+    // some code here
+} catch (ArithmeticException | Exception e) { // violation, catching Exception is illegal
+
+}
+
+try {
+    // some code here
+} catch (ArithmeticException e) { // OK
+
+}
+        </source>
+        <p>
+          To configure the check to override the default list with
+          ArithmeticException and OutOfMemoryError:
+        </p>
+        <source>
+&lt;module name=&quot;IllegalCatch&quot;&gt;
+  &lt;property name=&quot;illegalClassNames&quot; value=&quot;ArithmeticException,
+              OutOfMemoryError&quot;/&gt;
+&lt;/module&gt;
+        </source>
+        <p>
+            Example:
+        </p>
+        <source>
+try {
+    // some code here
+} catch (OutOfMemoryError e) { // violation
+
+}
+
+try {
+    // some code here
+} catch (ArithmeticException e) { // violation
+
+}
+
+try {
+    // some code here
+} catch (NullPointerException e) { // OK
+
+} catch (OutOfMemoryError e) { // violation
+
+}
+
+try {
+    // some code here
+} catch (ArithmeticException | Exception e) {  // violation
+
+}
+
+try {
+    // some code here
+} catch (Exception e) { // OK
+
+}
         </source>
       </subsection>
 
@@ -1894,7 +2277,7 @@ class SomeClass
             <tr>
               <td>classes</td>
               <td>Specify fully qualified class names that should not be instantiated.</td>
-              <td><a href="property_types.html#stringSet">String Set</a></td>
+              <td><a href="property_types.html#String.5B.5D">String[]</a></td>
               <td><code>{}</code></td>
               <td>3.0</td>
             </tr>
@@ -1906,12 +2289,14 @@ class SomeClass
               <td>
                 subset of tokens
                 <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">
-                CLASS_DEF</a>.
+                CLASS_DEF</a>
+                  .
               </td>
 
               <td>
                 <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">
-                CLASS_DEF</a>.
+                CLASS_DEF</a>
+                  .
               </td>
               <td>3.0</td>
             </tr>
@@ -1992,7 +2377,7 @@ class SomeClass
             <tr>
               <td>illegalClassNames</td>
               <td>Specify throw class names to reject.</td>
-              <td><a href="property_types.html#stringSet">String Set</a></td>
+              <td><a href="property_types.html#String.5B.5D">String[]</a></td>
               <td><code>Error, RuntimeException, Throwable, java.lang.Error,
                 java.lang.RuntimeException, java.lang.Throwable</code>
               </td>
@@ -2001,7 +2386,7 @@ class SomeClass
             <tr>
               <td>ignoredMethodNames</td>
               <td>Specify names of methods to ignore.</td>
-              <td><a href="property_types.html#stringSet">String Set</a></td>
+              <td><a href="property_types.html#String.5B.5D">String[]</a></td>
               <td><code>finalize</code></td>
               <td>5.4</td>
             </tr>
@@ -2011,7 +2396,7 @@ class SomeClass
                 allow to ignore checking overridden methods (marked with <code>Override</code>
                 or <code>java.lang.Override</code> annotation).
               </td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>true</code></td>
               <td>6.4</td>
             </tr>
@@ -2026,6 +2411,18 @@ class SomeClass
         <source>
 &lt;module name=&quot;IllegalThrows&quot;/&gt;
         </source>
+        <p>Example:</p>
+        <source>
+public class Test {
+  public void func1() throws RuntimeException {} // violation
+  public void func2() throws Exception {}  // ok
+  public void func3() throws Error {}  // violation
+  public void func4() throws Throwable {} // violation
+  public void func5() throws NullPointerException {} // ok
+  @Override
+  public void toString() throws Error {} // ok
+}
+        </source>
         <p>
           To configure the check rejecting throws NullPointerException from methods:
         </p>
@@ -2034,13 +2431,37 @@ class SomeClass
   &lt;property name=&quot;illegalClassNames&quot; value=&quot;NullPointerException&quot;/&gt;
 &lt;/module&gt;
         </source>
+        <p>Example:</p>
+        <source>
+public class Test {
+  public void func1() throws RuntimeException {} // ok
+  public void func2() throws Exception {}  // ok
+  public void func3() throws Error {}  // ok
+  public void func4() throws Throwable {} // ok
+  public void func5() throws NullPointerException {} // violation
+  @Override
+  public void toString() throws Error {} // ok
+}
+        </source>
         <p>
-          To configure the check ignoring method named &quot;foo()&quot;:
+          To configure the check ignoring method named &quot;func1()&quot;:
         </p>
         <source>
 &lt;module name=&quot;IllegalThrows&quot;&gt;
-  &lt;property name=&quot;ignoredMethodNames&quot; value=&quot;foo&quot;/&gt;
+  &lt;property name=&quot;ignoredMethodNames&quot; value=&quot;func1&quot;/&gt;
 &lt;/module&gt;
+        </source>
+        <p>Example:</p>
+        <source>
+public class Test {
+  public void func1() throws RuntimeException {} // ok
+  public void func2() throws Exception {}  // ok
+  public void func3() throws Error {}  // violation
+  public void func4() throws Throwable {} // violation
+  public void func5() throws NullPointerException {} // ok
+  @Override
+  public void toString() throws Error {} // ok
+}
         </source>
         <p>
           To configure the check to warn on overridden methods:
@@ -2049,6 +2470,18 @@ class SomeClass
 &lt;module name=&quot;IllegalThrows&quot;&gt;
   &lt;property name=&quot;ignoreOverriddenMethods&quot; value=&quot;false&quot;/&gt;
 &lt;/module&gt;
+        </source>
+        <p>Example:</p>
+        <source>
+public class Test {
+  public void func1() throws RuntimeException {} // violation
+  public void func2() throws Exception {}  // ok
+  public void func3() throws Error {}  // violation
+  public void func4() throws Throwable {} // violation
+  public void func5() throws NullPointerException {} // ok
+  @Override
+  public void toString() throws Error {} // violation
+}
         </source>
       </subsection>
 
@@ -2115,12 +2548,13 @@ class SomeClass
             <tr>
               <td>tokens</td>
               <td>tokens to check</td>
-              <td>
-                subset of tokens
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html">TokenTypes</a>.
+              <td>set of any supported
+                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html">
+                    tokens</a>
               </td>
               <td>
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LABELED_STAT">LABELED_STAT</a>.
+                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LABELED_STAT">LABELED_STAT</a>
+                  .
               </td>
               <td>3.2</td>
             </tr>
@@ -2135,14 +2569,33 @@ class SomeClass
         <source>
 &lt;module name=&quot;IllegalToken&quot;/&gt;
         </source>
+        <p>Example:</p>
+        <div class="wrapper">
+          <pre>
+public void myTest() {
+    outer: // violation
+    for (int i = 0; i &lt; 5; i++) {
+        if (i == 1) {
+            break outer;
+        }
+    }
+}
+          </pre>
+        </div>
         <p>
-          To configure the check to find token LITERAL_NATIVE:
+          To configure the check to report violation on token LITERAL_NATIVE:
         </p>
         <source>
 &lt;module name=&quot;IllegalToken&quot;&gt;
   &lt;property name=&quot;tokens&quot; value=&quot;LITERAL_NATIVE&quot;/&gt;
 &lt;/module&gt;
         </source>
+        <p>Example:</p>
+        <div class="wrapper">
+          <pre>
+public native void myTest(); // violation
+          </pre>
+        </div>
       </subsection>
 
       <subsection name="Example of Usage" id="IllegalToken_Example_of_Usage">
@@ -2202,14 +2655,14 @@ class SomeClass
             <tr>
               <td>format</td>
               <td>Define the RegExp for illegal pattern.</td>
-              <td><a href="property_types.html#regexp">Regular Expression</a></td>
-              <td><code>&quot;^$&quot; (empty)</code></td>
+              <td><a href="property_types.html#RegularExpression">Regular Expression</a></td>
+              <td><code>&quot;^$&quot;</code></td>
               <td>3.2</td>
             </tr>
             <tr>
               <td>ignoreCase</td>
               <td>Control whether to ignore case when matching.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>false</code></td>
               <td>3.2</td>
             </tr>
@@ -2217,7 +2670,7 @@ class SomeClass
               <td>message</td>
               <td>Define the message which is used to notify about violations;
               if empty then the default message is used.</td>
-              <td><a href="property_types.html#string">String</a></td>
+              <td><a href="property_types.html#String">String</a></td>
               <td><code>&quot;&quot;</code></td>
               <td>3.2</td>
             </tr>
@@ -2225,24 +2678,27 @@ class SomeClass
               <td>tokens</td>
               <td>tokens to check</td>
               <td>subset of tokens
-                  <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_DOUBLE">
-                  NUM_DOUBLE</a>,
-                  <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_FLOAT">
-                  NUM_FLOAT</a>,
-                  <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_INT">
-                  NUM_INT</a>,
-                  <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_LONG">
-                  NUM_LONG</a>,
-                  <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#IDENT">
-                  IDENT</a>,
-                  <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COMMENT_CONTENT">
-                  COMMENT_CONTENT</a>,
-                  <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STRING_LITERAL">
-                  STRING_LITERAL</a>,
-                  <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CHAR_LITERAL">
-                  CHAR_LITERAL</a>.
+                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_DOUBLE">
+                NUM_DOUBLE</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_FLOAT">
+                NUM_FLOAT</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_INT">
+                NUM_INT</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_LONG">
+                NUM_LONG</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#IDENT">
+                IDENT</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COMMENT_CONTENT">
+                COMMENT_CONTENT</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STRING_LITERAL">
+                STRING_LITERAL</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CHAR_LITERAL">
+                CHAR_LITERAL</a>
+                ,<a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#TEXT_BLOCK_CONTENT">
+                TEXT_BLOCK_CONTENT</a>
+                .
               </td>
-              <td>empty</td>
+              <td><code>empty</code></td>
               <td>3.2</td>
             </tr>
           </table>
@@ -2260,7 +2716,48 @@ class SomeClass
   &lt;property name=&quot;format&quot; value=&quot;a href&quot;/&gt;
 &lt;/module&gt;
         </source>
-
+        <p>Example:</p>
+        <source>
+public void myTest() {
+    String test = "a href"; // violation
+    String test2 = "A href"; // OK, case is sensitive
+}
+        </source>
+        <p>
+          To configure the check to forbid String literals containing
+          <code>&quot;a href&quot;</code> for the ignoreCase mode:
+        </p>
+        <source>
+&lt;module name=&quot;IllegalTokenText&quot;&gt;
+  &lt;property name=&quot;tokens&quot; value=&quot;STRING_LITERAL&quot;/&gt;
+  &lt;property name=&quot;format&quot; value=&quot;a href&quot;/&gt;
+  &lt;property name=&quot;ignoreCase&quot; value=&quot;true&quot;/&gt;
+&lt;/module&gt;
+        </source>
+        <p>Example:</p>
+        <source>
+public void myTest() {
+    String test = "a href"; // violation
+    String test2 = "A href"; // violation, case is ignored
+}
+        </source>
+        <p>
+          To configure the check to forbid string literal text blocks containing
+          <code>&quot;&quot;&quot;</code>:
+        </p>
+        <source>
+&lt;module name=&quot;IllegalTokenText&quot;&gt;
+    &lt;property name=&quot;tokens&quot; value=&quot;TEXT_BLOCK_CONTENT&quot;/&gt;
+    &lt;property name=&quot;format&quot; value=&apos;&quot;&apos;/&gt;
+&lt;/module&gt;
+        </source>
+        <p>Example:</p>
+        <source>
+public void myTest() {
+    final String quote = """
+               \""""; // violation
+}
+        </source>
         <p>
           To configure the check to forbid leading zeros in an integer
           literal, other than zero and a hex literal:
@@ -2271,6 +2768,17 @@ class SomeClass
   &lt;property name=&quot;format&quot; value=&quot;^0[^lx]&quot;/&gt;
   &lt;property name=&quot;ignoreCase&quot; value=&quot;true&quot;/&gt;
 &lt;/module&gt;
+        </source>
+        <p>Example:</p>
+        <source>
+public void myTest() {
+    int test1 = 0; // OK
+    int test2 = 0x111; // OK
+    int test3 = 0X111; // OK, case is ignored
+    int test4 = 010; // violation
+    long test5 = 0L; // OK
+    long test6 = 010L; // violation
+}
         </source>
       </subsection>
 
@@ -2343,7 +2851,7 @@ class SomeClass
             <tr>
               <td>validateAbstractClassNames</td>
               <td>Control whether to validate abstract class names.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>false</code></td>
               <td>6.10</td>
             </tr>
@@ -2351,30 +2859,30 @@ class SomeClass
               <td>illegalClassNames</td>
               <td>Specify classes that should not be used as types in variable
               declarations, return values or parameters.</td>
-              <td><a href="property_types.html#stringSet">String Set</a></td>
+              <td><a href="property_types.html#String.5B.5D">String[]</a></td>
               <td><code>HashMap, HashSet, LinkedHashMap, LinkedHashSet, TreeMap, TreeSet,
                 java.util.HashMap, java.util.HashSet, java.util.LinkedHashMap,
                 java.util.LinkedHashSet, java.util.TreeMap, java.util.TreeSet</code></td>
               <td>3.2</td>
             </tr>
             <tr>
-            <td>legalAbstractClassNames</td>
-            <td>Define abstract classes that may be used as types. </td>
-            <td><a href="property_types.html#stringSet">String Set</a></td>
-            <td><code>{}</code></td>
-            <td>4.2</td>
-          </tr>
-          <tr>
+              <td>legalAbstractClassNames</td>
+              <td>Define abstract classes that may be used as types. </td>
+              <td><a href="property_types.html#String.5B.5D">String[]</a></td>
+              <td><code>{}</code></td>
+              <td>4.2</td>
+            </tr>
+            <tr>
               <td>ignoredMethodNames</td>
               <td>Specify methods that should not be checked.</td>
-              <td><a href="property_types.html#stringSet">String Set</a></td>
+              <td><a href="property_types.html#String.5B.5D">String[]</a></td>
               <td><code>getEnvironment, getInitialContext</code></td>
               <td>3.2</td>
             </tr>
             <tr>
               <td>illegalAbstractClassNameFormat</td>
               <td>Specify RegExp for illegal abstract class names.</td>
-              <td><a href="property_types.html#regexp">Regular Expression</a></td>
+              <td><a href="property_types.html#Pattern">Pattern</a></td>
               <td><code>"^(.*[.])?Abstract.*$"</code></td>
               <td>3.2</td>
             </tr>
@@ -2387,7 +2895,7 @@ class SomeClass
               <td>subset of tokens
                 <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html">TokenTypes</a>
               </td>
-              <td>no tokens</td>
+              <td><code>{}</code></td>
               <td>6.3</td>
             </tr>
             <tr>
@@ -2396,39 +2904,53 @@ class SomeClass
               <td>
                 subset of tokens
                 <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_FIELD_DEF">
-                  ANNOTATION_FIELD_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">
-                  CLASS_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
-                  INTERFACE_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_CALL">
-                  METHOD_CALL</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
-                  METHOD_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_REF">
-                  METHOD_REF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">
-                  PARAMETER_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
-                  VARIABLE_DEF</a>.
+                  ANNOTATION_FIELD_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">
+                  CLASS_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
+                  INTERFACE_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_CALL">
+                  METHOD_CALL</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
+                  METHOD_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_REF">
+                  METHOD_REF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">
+                  PARAMETER_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
+                  VARIABLE_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PATTERN_VARIABLE_DEF">
+                  PATTERN_VARIABLE_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RECORD_DEF">
+                  RECORD_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RECORD_COMPONENT_DEF">
+                  RECORD_COMPONENT_DEF</a>
+                  .
               </td>
               <td>
                 <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_FIELD_DEF">
-                  ANNOTATION_FIELD_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">
-                  CLASS_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
-                  INTERFACE_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_CALL">
-                  METHOD_CALL</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
-                  METHOD_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_REF">
-                  METHOD_REF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">
-                  PARAMETER_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
-                  VARIABLE_DEF</a>.
+                  ANNOTATION_FIELD_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">
+                  CLASS_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
+                  INTERFACE_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_CALL">
+                  METHOD_CALL</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
+                  METHOD_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_REF">
+                  METHOD_REF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">
+                  PARAMETER_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
+                  VARIABLE_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PATTERN_VARIABLE_DEF">
+                  PATTERN_VARIABLE_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RECORD_DEF">
+                  RECORD_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RECORD_COMPONENT_DEF">
+                  RECORD_COMPONENT_DEF</a>
+                  .
               </td>
               <td>3.2</td>
             </tr>
@@ -2474,12 +2996,86 @@ List list; //No violation here
 
       <subsection name="Examples" id="IllegalType_Examples">
         <p>
-          To configure the check so that it ignores getInstance() methods:
+            To configure the default check:
+        </p>
+        <source>
+&lt;module name=&quot;IllegalType&quot;/&gt;
+        </source>
+        <source>
+public class Test extends TreeSet { // violation
+  public &lt;T extends java.util.HashSet&gt; void method() { // violation
+
+    LinkedHashMap&lt;Integer, String&gt; lhmap =
+        new LinkedHashMap&lt;Integer, String&gt;(); // violation
+    TreeMap&lt;Integer, String&gt; treemap = new TreeMap&lt;Integer, String&gt;(); // violation
+    Test t; // OK
+    HashMap&lt;String, String&gt; hmap; // violation
+    Queue&lt;Integer&gt; intqueue; // OK
+
+    java.lang.IllegalArgumentException illegalex; // OK
+    java.util.TreeSet treeset; // violation
+  }
+
+}
+        </source>
+        <p>
+          To configure the Check so that particular tokens are checked:
+        </p>
+        <source>
+&lt;module name="IllegalType"&gt;
+  &lt;property name="tokens" value="METHOD_DEF"/&gt;
+&lt;/module&gt;
+        </source>
+        <source>
+public class Test extends TreeSet { // OK
+  public &lt;T extends java.util.HashSet&gt; void method() { // violation
+
+    LinkedHashMap&lt;Integer, String&gt; lhmap = new LinkedHashMap&lt;Integer, String&gt;(); // OK
+
+    java.lang.IllegalArgumentException illegalex; // OK
+    java.util.TreeSet treeset; // Ok
+  }
+
+  public &lt;T extends java.util.HashSet&gt; void typeParam(T t) {} // violation
+
+  public void fullName(TreeSet a) {} // OK
+
+}
+        </source>
+        <p>
+          To configure the Check so that it ignores function() methods:
         </p>
         <source>
 &lt;module name=&quot;IllegalType&quot;&gt;
-  &lt;property name=&quot;ignoredMethodNames&quot; value=&quot;getInstance&quot;/&gt;
+  &lt;property name=&quot;ignoredMethodNames&quot; value=&quot;function&quot;/&gt;
 &lt;/module&gt;
+        </source>
+        <source>
+public class Test {
+  public HashMap&lt;String, String&gt; function() { // OK
+    // code
+  }
+
+  public HashMap&lt;String, String&gt; function1() { // violation
+    // code
+  }
+}
+        </source>
+        <p>
+          To configure the Check so that it validates abstract class names:
+        </p>
+        <source>
+&lt;module name=&quot;IllegalType&quot;&gt;
+  &lt;property name=&quot;validateAbstractClassNames&quot; value=&quot;true&quot;/&gt;
+  &lt;property name=&quot;illegalAbstractClassNameFormat&quot; value=&quot;Gitt&quot;/&gt;
+&lt;/module&gt;
+        </source>
+        <source>
+class Test extends Gitter { // violation
+}
+
+class Test1 extends Github { // OK
+}
         </source>
         <p>
           To configure the Check so that it verifies only public, protected or static
@@ -2488,15 +3084,35 @@ List list; //No violation here
         <source>
 &lt;module name=&quot;IllegalType&quot;&gt;
   &lt;property name=&quot;memberModifiers&quot; value=&quot;LITERAL_PUBLIC,
-   LITERAL_PROTECTED, LITERAL_STATIC&quot;/&gt;
+    LITERAL_PROTECTED, LITERAL_STATIC&quot;/&gt;
 &lt;/module&gt;
         </source>
-          <p>
-            To configure the check so that it verifies usage of types Boolean and Foo:
-          </p>
+        <source>
+public class Test {
+  public HashMap&lt;String, String&gt; function1() { // violation
+    // code
+  }
+
+  private HashMap&lt;String, String&gt; function2() { // OK
+    // code
+  }
+
+  protected HashMap&lt;Integer, String&gt; function3() { // violation
+    // code
+  }
+
+  public static TreeMap&lt;Integer, String&gt; function4() { // violation
+    // code
+  }
+
+}
+        </source>
+        <p>
+          To configure the check so that it verifies usage of types Boolean and Foo:
+        </p>
         <source>
 &lt;module name="IllegalType"&gt;
-          &lt;property name=&quot;illegalClassNames&quot; value=&quot;Boolean, Foo&quot;/&gt;
+  &lt;property name=&quot;illegalClassNames&quot; value=&quot;Boolean, Foo&quot;/&gt;
 &lt;/module&gt;
         </source>
 
@@ -2569,20 +3185,29 @@ public class Test {
         </p>
 
         <p>
-          Rationale: With the exception of <code>for</code> iterators and assignment in
-          <code>while</code> idiom, all assignments should occur in their own top-level statement
+          Rationale: With the exception of loop idioms,
+          all assignments should occur in their own top-level statement
           to increase readability. With inner assignments like the one given above, it is difficult
           to see all places where a variable is set.
         </p>
 
         <p>
-          Note: Check allows usage of the popular assignment in <code>while</code> idiom:
+          Note: Check allows usage of the popular assignments in loops:
         </p>
         <source>
 String line;
-while ((line = bufferedReader.readLine()) != null) {
+while ((line = bufferedReader.readLine()) != null) { // OK
   // process the line
 }
+
+for (;(line = bufferedReader.readLine()) != null;) { // OK
+  // process the line
+}
+
+do {
+  // process the line
+}
+while ((line = bufferedReader.readLine()) != null); // OK
         </source>
         <p>
           Assignment inside a condition is not a problem here, as the assignment is surrounded by
@@ -2597,6 +3222,49 @@ while ((line = bufferedReader.readLine()) != null) {
         </p>
         <source>
 &lt;module name=&quot;InnerAssignment&quot;/&gt;
+        </source>
+        <p>Example:</p>
+        <source>
+class MyClass {
+
+  void foo() {
+    int a, b;
+    a = b = 5; // violation, assignment to each variable should be in a separate statement
+    a = b += 5; // violation
+
+    a = 5; // OK
+    b = 5; // OK
+    a = 5; b = 5; // OK
+
+    double myDouble;
+    double[] doubleArray = new double[] {myDouble = 4.5, 15.5}; // violation
+
+    String nameOne;
+    List&lt;String&gt; myList = new ArrayList&lt;String&gt;();
+    myList.add(nameOne = "tom"); // violation
+
+    for (int k = 0; k &lt; 10; k = k + 2) { // OK
+      // some code
+    }
+
+    boolean someVal;
+    if (someVal = true) { // violation
+      // some code
+    }
+
+    while (someVal = false) {} // violation
+
+    InputStream is = new FileInputStream("textFile.txt");
+    while ((b = is.read()) != -1) { // OK, this is a common idiom
+      // some code
+    }
+  }
+
+  boolean testMethod() {
+    boolean val;
+    return val = true; // violation
+  }
+}
         </source>
       </subsection>
 
@@ -2676,97 +3344,99 @@ static final Integer ANSWER_TO_THE_ULTIMATE_QUESTION_OF_LIFE = new Integer(42);
             <tr>
               <td>ignoreNumbers</td>
               <td>Specify non-magic numbers.</td>
-              <td><a href="property_types.html#intSet">Number Set</a></td>
+              <td><a href="property_types.html#double.5B.5D">double[]</a></td>
               <td><code>-1, 0, 1, 2</code></td>
               <td>3.1</td>
             </tr>
             <tr>
               <td>ignoreHashCodeMethod</td>
               <td>Ignore magic numbers in hashCode methods.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>false</code></td>
               <td>5.3</td>
             </tr>
             <tr>
               <td>ignoreAnnotation</td>
               <td>Ignore magic numbers in annotation declarations.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
-                <td><code>false</code></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
+              <td><code>false</code></td>
               <td>5.4</td>
             </tr>
             <tr>
-                <td>ignoreFieldDeclaration</td>
-                <td>Ignore magic numbers in field declarations.</td>
-                <td><a href="property_types.html#boolean">Boolean</a></td>
-                <td><code>false</code></td>
-                <td>6.6</td>
+              <td>ignoreFieldDeclaration</td>
+              <td>Ignore magic numbers in field declarations.</td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
+              <td><code>false</code></td>
+              <td>6.6</td>
             </tr>
             <tr>
               <td>ignoreAnnotationElementDefaults</td>
               <td>Ignore magic numbers in annotation elements defaults.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>true</code></td>
               <td>8.23</td>
             </tr>
             <tr>
-                <td>constantWaiverParentToken</td>
-                <td>Specify tokens that are allowed in the AST path from the number literal to the
-                    enclosing constant definition.</td>
-                <td>subset of tokens
-                  <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html">TokenTypes</a>
-                </td>
-                <td>
-                  <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#TYPECAST">
-                  TYPECAST</a>,
-                  <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_CALL">
-                  METHOD_CALL</a>,
-                  <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#EXPR">
-                  EXPR</a>,
-                  <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ARRAY_INIT">
-                  ARRAY_INIT</a>,
-                  <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#UNARY_MINUS">
-                  UNARY_MINUS</a>,
-                  <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#UNARY_PLUS">
-                  UNARY_PLUS</a>,
-                  <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ELIST">
-                  ELIST</a>,
-                  <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STAR">
-                  STAR</a>,
-                  <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ASSIGN">
-                  ASSIGN</a>,
-                  <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PLUS">
-                  PLUS</a>,
-                  <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MINUS">
-                  MINUS</a>,
-                  <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DIV">
-                  DIV</a>,
-                  <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_NEW">
-                  LITERAL_NEW</a>
-                </td>
-                <td>6.11</td>
+              <td>constantWaiverParentToken</td>
+              <td>Specify tokens that are allowed in the AST path from the number literal to the
+                  enclosing constant definition.</td>
+              <td>subset of tokens
+                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html">TokenTypes</a>
+              </td>
+              <td>
+                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#TYPECAST">
+                TYPECAST</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_CALL">
+                METHOD_CALL</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#EXPR">
+                EXPR</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ARRAY_INIT">
+                ARRAY_INIT</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#UNARY_MINUS">
+                UNARY_MINUS</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#UNARY_PLUS">
+                UNARY_PLUS</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ELIST">
+                ELIST</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STAR">
+                STAR</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ASSIGN">
+                ASSIGN</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PLUS">
+                PLUS</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MINUS">
+                MINUS</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DIV">
+                DIV</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_NEW">
+                LITERAL_NEW</a>
+              </td>
+              <td>6.11</td>
             </tr>
             <tr>
               <td>tokens</td>
               <td>tokens to check</td>
               <td>subset of tokens
-                  <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_DOUBLE">
-                  NUM_DOUBLE</a>,
-                  <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_FLOAT">
-                  NUM_FLOAT</a>,
-                  <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_INT">
-                  NUM_INT</a>,
-                  <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_LONG">
-                  NUM_LONG</a>.
+                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_DOUBLE">
+                NUM_DOUBLE</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_FLOAT">
+                NUM_FLOAT</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_INT">
+                NUM_INT</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_LONG">
+                NUM_LONG</a>
+                .
               </td>
               <td>
-                  <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_DOUBLE">
-                  NUM_DOUBLE</a>,
-                  <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_FLOAT">
-                  NUM_FLOAT</a>,
-                  <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_INT">
-                  NUM_INT</a>,
-                  <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_LONG">
-                  NUM_LONG</a>.
+                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_DOUBLE">
+                NUM_DOUBLE</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_FLOAT">
+                NUM_FLOAT</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_INT">
+                NUM_INT</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_LONG">
+                NUM_LONG</a>
+                .
               </td>
               <td>3.1</td>
             </tr>
@@ -2792,6 +3462,10 @@ class MyClass {
   void foo() {
     int i = i + 1; // no violation
     int j = j + 8; // violation
+  }
+
+  public int hashCode() {
+    return 10;    // violation
   }
 }
 @interface anno {
@@ -2826,6 +3500,27 @@ class MyClass {
 }
         </source>
         <p>
+          To configure the check so that it ignores magic numbers in field declarations:
+        </p>
+        <source>
+&lt;module name=&quot;MagicNumber&quot;&gt;
+    &lt;property name=&quot;ignoreFieldDeclaration&quot; value=&quot;false&quot;/&gt;
+&lt;/module&gt;
+        </source>
+        <p>
+          results in the following violations:
+        </p>
+        <source>
+public record MyRecord() {
+    private static int myInt = 7; // ok, field declaration
+
+    void foo() {
+        int i = myInt + 1; // no violation, 1 is defined as non-magic
+        int j = myInt + 8; // violation
+    }
+}
+        </source>
+        <p>
         To configure the check to check annotation element defaults:
         </p>
         <source>
@@ -2852,7 +3547,7 @@ class MyClass {
 &lt;/module&gt;
         </source>
         <p>result is following violation:</p>
-       <source>
+        <source>
 class TestMethodCall {
   public void method2() {
     final TestMethodCall dummyObject = new TestMethodCall(62);    //violation
@@ -2868,9 +3563,26 @@ class TestMethodCall {
     final int x = (int)(3.4);    //ok as waiver is TYPECAST
   }
 }
-       </source>
+        </source>
 
-  </subsection>
+        <p>
+        Config example of ignoreHashCodeMethod option:
+        </p>
+        <source>
+&lt;module name=&quot;MagicNumber&quot;&gt;
+    &lt;property name=&quot;ignoreHashCodeMethod&quot; value=&quot;true&quot;/&gt;
+&lt;/module&gt;
+        </source>
+        <p>result is no violation:</p>
+        <source>
+class TestHashCode {
+  public int hashCode() {
+    return 10;              // OK
+  }
+}
+        </source>
+
+      </subsection>
 
       <subsection name="Example of Usage" id="MagicNumber_Example_of_Usage">
         <ul>
@@ -2911,6 +3623,216 @@ class TestMethodCall {
       </subsection>
     </section>
 
+    <section name="MatchXpath">
+      <p>Since Checkstyle 8.39</p>
+      <subsection name="Description" id="MatchXpath_Description">
+        <p>
+          Evaluates Xpath query and report violation on all matching AST nodes. This check allows
+          user to implement custom checks using Xpath. If Xpath query is not specified explicitly,
+          then the check does nothing.
+        </p>
+        <p>
+          It is recommended to define custom message for violation to explain what is not allowed
+          and what to use instead, default message might be too abstract. To customize a message
+          you need to add <code>message</code> element with <b>matchxpath.match</b> as
+          <code>key</code> attribute and desired message as <code>value</code> attribute.
+        </p>
+        <p>
+          Please read more about Xpath syntax at
+          <a href="https://www.saxonica.com/html/documentation/expressions/">Xpath Syntax</a>.
+          Information regarding Xpath functions can be found at
+          <a href="https://www.saxonica.com/html/documentation/functions/fn/">XSLT/XPath
+            Reference</a>. Note, that <b>@text</b> attribute can used only with token types that
+          are listed in
+          <a href="https://github.com/checkstyle/checkstyle/search?q=%22TOKEN_TYPES_WITH_TEXT_ATTRIBUTE+%3D+Arrays.asList%22">
+            XpathUtil</a>.
+        </p>
+
+      </subsection>
+
+      <subsection name="Properties" id="MatchXpath_Properties">
+        <div class="wrapper">
+          <table>
+            <tr>
+              <th>name</th>
+              <th>description</th>
+              <th>type</th>
+              <th>default value</th>
+              <th>since</th>
+            </tr>
+            <tr>
+              <td>query</td>
+              <td>Specify Xpath query.</td>
+              <td><a href="property_types.html#String">String</a></td>
+              <td><code>&quot;&quot;</code></td>
+              <td>8.39</td>
+            </tr>
+          </table>
+        </div>
+      </subsection>
+
+      <subsection name="Examples" id="MatchXpath_Examples">
+        <p>
+          Checkstyle provides <a href="https://checkstyle.org/cmdline.html">command line tool</a>
+          and <a href="https://checkstyle.org/writingchecks.html#The_Checkstyle_SDK_Gui">GUI
+          application</a> with options to show AST and to ease usage of Xpath queries.
+        </p>
+        <p><b>-T</b> option prints AST tree of the checked file.</p>
+        <source>
+$ java -jar checkstyle-X.XX-all.jar -T Main.java
+CLASS_DEF -&gt; CLASS_DEF [1:0]
+|--MODIFIERS -&gt; MODIFIERS [1:0]
+|   `--LITERAL_PUBLIC -&gt; public [1:0]
+|--LITERAL_CLASS -&gt; class [1:7]
+|--IDENT -&gt; Main [1:13]
+`--OBJBLOCK -&gt; OBJBLOCK [1:18]
+|--LCURLY -&gt; { [1:18]
+|--METHOD_DEF -&gt; METHOD_DEF [2:4]
+|   |--MODIFIERS -&gt; MODIFIERS [2:4]
+|   |   `--LITERAL_PUBLIC -&gt; public [2:4]
+|   |--TYPE -&gt; TYPE [2:11]
+|   |   `--IDENT -&gt; String [2:11]
+|   |--IDENT -&gt; sayHello [2:18]
+|   |--LPAREN -&gt; ( [2:26]
+|   |--PARAMETERS -&gt; PARAMETERS [2:27]
+|   |   `--PARAMETER_DEF -&gt; PARAMETER_DEF [2:27]
+|   |       |--MODIFIERS -&gt; MODIFIERS [2:27]
+|   |       |--TYPE -&gt; TYPE [2:27]
+|   |       |   `--IDENT -&gt; String [2:27]
+|   |       `--IDENT -&gt; name [2:34]
+|   |--RPAREN -&gt; ) [2:38]
+|   `--SLIST -&gt; { [2:40]
+|       |--LITERAL_RETURN -&gt; return [3:8]
+|       |   |--EXPR -&gt; EXPR [3:25]
+|       |   |   `--PLUS -&gt; + [3:25]
+|       |   |       |--STRING_LITERAL -&gt; "Hello, " [3:15]
+|       |   |       `--IDENT -&gt; name [3:27]
+|       |   `--SEMI -&gt; ; [3:31]
+|       `--RCURLY -&gt; } [4:4]
+`--RCURLY -&gt; } [5:0]
+        </source>
+        <p><b>-b</b> option shows AST nodes that match given Xpath query. This command can be
+          used to validate accuracy of Xpath query against given file.</p>
+        <source>
+$ java -jar checkstyle-X.XX-all.jar Main.java -b "//METHOD_DEF[./IDENT[@text='sayHello']]"
+CLASS_DEF -&gt; CLASS_DEF [1:0]
+`--OBJBLOCK -&gt; OBJBLOCK [1:18]
+|--METHOD_DEF -&gt; METHOD_DEF [2:4]
+        </source>
+        <p>The following example demonstrates validation of methods order, so that public methods
+          should come before the private ones:</p>
+        <source>
+&lt;module name=&quot;MatchXpath&quot;>
+  &lt;property name=&quot;query&quot; value=&quot;//METHOD_DEF[.//LITERAL_PRIVATE and
+          following-sibling::METHOD_DEF[.//LITERAL_PUBLIC]]&quot;/&gt;
+  &lt;message key=&quot;matchxpath.match&quot;
+          value=&quot;Private methods must appear after public methods&quot;/&gt;
+&lt;/module>
+        </source>
+        <p>Example:</p>
+        <source>
+public class Test {
+  public void method1() { }
+  private void method2() { } // violation
+  public void method3() { }
+  private void method4() { } // violation
+  public void method5() { }
+  private void method6() { } // ok
+}
+        </source>
+        <p>To violate if there are any parametrized constructors</p>
+        <source>
+&lt;module name=&quot;MatchXpath&quot;>
+  &lt;property name=&quot;query&quot; value=&quot;//CTOR_DEF[count(./PARAMETERS/*)
+          &gt; 0]&quot;/&gt;
+  &lt;message key=&quot;matchxpath.match&quot;
+          value=&quot;Parameterized constructors are not allowed, there should be only default
+          ctor&quot;/&gt;
+&lt;/module>
+        </source>
+        <p>Example:</p>
+        <source>
+public class Test {
+  public Test(Object c) { } // violation
+  public Test(int a, HashMap&lt;String, Integer&gt; b) { } // violation
+  public Test() { } // ok
+}
+        </source>
+        <p>To violate if method name is 'test' or 'foo'</p>
+        <source>
+&lt;module name=&quot;MatchXpath&quot;>
+  &lt;property name=&quot;query&quot; value=&quot;//METHOD_DEF[./IDENT[@text='test'
+          or @text='foo']]&quot;/&gt;
+  &lt;message key=&quot;matchxpath.match&quot;
+          value=&quot;Method name should not be 'test' or 'foo'&quot;/&gt;
+&lt;/module>
+        </source>
+        <p>Example:</p>
+        <source>
+public class Test {
+  public void test() {} // violation
+  public void getName() {} // ok
+  public void foo() {} // violation
+  public void sayHello() {} // ok
+}
+        </source>
+        <p>To violate if new instance creation was done without <b>var</b> type</p>
+        <source>
+&lt;module name=&quot;MatchXpath&quot;&gt;
+  &lt;property name=&quot;query&quot; value=&quot;//VARIABLE_DEF[./ASSIGN/EXPR/LITERAL_NEW
+          and not(./TYPE/IDENT[@text='var'])]&quot;/&gt;
+  &lt;message key=&quot;matchxpath.match&quot;
+          value=&quot;New instances should be created via 'var' keyword to avoid duplication of
+          type reference in statement&quot;/&gt;
+&lt;/module&gt;
+        </source>
+        <p>Example:</p>
+        <source>
+public class Test {
+  public void foo() {
+    SomeObject a = new SomeObject(); // violation
+    var b = new SomeObject(); // OK
+  }
+}
+        </source>
+      </subsection>
+
+      <subsection name="Example of Usage" id="MatchXpath_Example_of_Usage">
+        <ul>
+          <li>
+            <a href="https://github.com/search?q=path%3Aconfig+filename%3Acheckstyle_checks.xml+repo%3Acheckstyle%2Fcheckstyle+MatchXpath">
+              Checkstyle Style</a>
+          </li>
+        </ul>
+      </subsection>
+
+      <subsection name="Violation Messages"
+                  id="MatchXpath_Violation_Messages">
+        <ul>
+          <li>
+            <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%2Fcom%2Fpuppycrawl%2Ftools%2Fcheckstyle%2Fchecks%2Fcoding+filename%3Amessages*.properties+repo%3Acheckstyle%2Fcheckstyle+%22matchxpath.match%22">
+              matchxpath.match</a>
+          </li>
+        </ul>
+        <p>
+          All messages can be customized if the default message doesn't suit you.
+          Please <a href="config.html#Custom_messages">see the documentation</a> to learn how to.
+        </p>
+      </subsection>
+
+      <subsection name="Package" id="MatchXpath_Package">
+        <p>
+          com.puppycrawl.tools.checkstyle.checks.coding
+        </p>
+      </subsection>
+
+      <subsection name="Parent Module" id="MatchXpath_Parent_Module">
+        <p>
+          <a href="config.html#TreeWalker">TreeWalker</a>
+        </p>
+      </subsection>
+    </section>
+
     <section name="MissingCtor">
       <p>Since Checkstyle 3.4</p>
       <subsection name="Description" id="MissingCtor_Description">
@@ -2926,6 +3848,27 @@ class TestMethodCall {
         </p>
         <source>
 &lt;module name=&quot;MissingCtor&quot;/&gt;
+        </source>
+        <p>Example:</p>
+        <source>
+class ExampleOk { // OK
+  private int a;
+  ExampleOk(int a) {
+    this.a = a;
+  }
+}
+class ExampleDefaultCtor { // OK
+  private String s;
+  ExampleDefaultCtor() {
+    s = "foobar";
+  }
+}
+class InvalidExample { // violation, class must have a constructor.
+  public void test() {}
+}
+abstract class AbstractExample { // OK
+  public abstract void test() {}
+}
         </source>
       </subsection>
 
@@ -2977,7 +3920,9 @@ class TestMethodCall {
           currently possible cases are covered, this should be expressed in
           the default branch, e.g. by using an assertion. This way the code is
           protected against later changes, e.g. introduction of new types in an
-          enumeration type.
+          enumeration type. Note that the compiler requires switch expressions
+          to be exhaustive, so this check does not enforce default branches on
+          such expressions.
         </p>
       </subsection>
 
@@ -2987,6 +3932,30 @@ class TestMethodCall {
         </p>
         <source>
 &lt;module name=&quot;MissingSwitchDefault&quot;/&gt;
+        </source>
+        <p>
+          Example of violation:
+        </p>
+        <source>
+switch (i) {    // violation
+  case 1:
+    break;
+  case 2:
+    break;
+}
+        </source>
+        <p>
+          Example of correct code:
+        </p>
+        <source>
+switch (i) {
+  case 1:
+    break;
+  case 2:
+    break;
+  default: // OK
+    break;
+}
         </source>
       </subsection>
 
@@ -3045,14 +4014,14 @@ for (int i = 0; i &lt; 1; i++) {
   i++; //violation
 }
         </source>
-          <p>
-            Rationale: If the control variable is modified inside the loop
-            body, the program flow becomes more difficult to follow. See
-            <a href="https://docs.oracle.com/javase/specs/jls/se11/html/jls-14.html#jls-14.14">
-            FOR statement</a> specification for more details.
-          </p>
         <p>
-            Such loop would be suppressed:
+          Rationale: If the control variable is modified inside the loop
+          body, the program flow becomes more difficult to follow. See
+          <a href="https://docs.oracle.com/javase/specs/jls/se11/html/jls-14.html#jls-14.14">
+          FOR statement</a> specification for more details.
+        </p>
+        <p>
+          Such loop would be suppressed:
         </p>
         <source>
 for (int i = 0; i &lt; 10;) {
@@ -3061,32 +4030,31 @@ for (int i = 0; i &lt; 10;) {
         </source>
       </subsection>
 
-       <subsection name="Properties" id="ModifiedControlVariable_Properties">
-         <div class="wrapper">
-           <table>
-             <tr class="header">
-               <th>name</th>
-               <th>description</th>
-               <th>type</th>
-               <th>default value</th>
-               <th>since</th>
+      <subsection name="Properties" id="ModifiedControlVariable_Properties">
+        <div class="wrapper">
+          <table>
+            <tr class="header">
+              <th>name</th>
+              <th>description</th>
+              <th>type</th>
+              <th>default value</th>
+              <th>since</th>
             </tr>
 
-           <tr>
-             <td>skipEnhancedForLoopVariable</td>
-             <td>Control whether to check
-               <a href = "https://docs.oracle.com/javase/specs/jls/se11/html/jls-14.html#jls-14.14.2">
-                 enhanced for-loop</a> variable.</td>
-             <td>
-               <a
-                   href="property_types.html#boolean">Boolean</a>
-             </td>
-             <td>
-               <code>
-                 false
-               </code>
-             </td>
-             <td>6.8</td>
+            <tr>
+              <td>skipEnhancedForLoopVariable</td>
+              <td>
+                Control whether to check
+                <a href = "https://docs.oracle.com/javase/specs/jls/se11/html/jls-14.html#jls-14.14.2">
+                  enhanced for-loop</a> variable.
+              </td>
+              <td>
+                <a href="property_types.html#boolean">boolean</a>
+              </td>
+              <td>
+                <code>false</code>
+              </td>
+              <td>6.8</td>
             </tr>
           </table>
         </div>
@@ -3101,28 +4069,28 @@ for (int i = 0; i &lt; 10;) {
         </source>
 
         <p>
-         By default, This Check validates
-         <a href = "https://docs.oracle.com/javase/specs/jls/se11/html/jls-14.html#jls-14.14.2">
-         Enhanced For-Loop</a>.
-         </p>
-         <p>
-         Option 'skipEnhancedForLoopVariable' could be used to skip check of variable
-         from Enhanced For Loop.
-         </p>
-         <p>
-         An example of how to configure the check so that it skips enhanced For Loop Variable is:
-         </p>
-         <source>
+          By default, This Check validates
+          <a href = "https://docs.oracle.com/javase/specs/jls/se11/html/jls-14.html#jls-14.14.2">
+          Enhanced For-Loop</a>.
+        </p>
+        <p>
+          Option 'skipEnhancedForLoopVariable' could be used to skip check of variable
+          from Enhanced For Loop.
+        </p>
+        <p>
+          An example of how to configure the check so that it skips enhanced For Loop Variable is:
+        </p>
+        <source>
 &lt;module name="ModifiedControlVariable"&gt;
   &lt;property name="skipEnhancedForLoopVariable" value="true"/&gt;
 &lt;/module&gt;
-         </source>
-         <p>Example:</p>
-         <source>
+        </source>
+        <p>Example:</p>
+        <source>
 for (String line: lines) {
   line = line.trim();   // it will skip this violation
 }
-         </source>
+        </source>
       </subsection>
 
       <subsection name="Example of Usage" id="ModifiedControlVariable_Example_of_Usage">
@@ -3190,7 +4158,7 @@ for (String line: lines) {
                 Specify the maximum number of occurrences to allow without generating a
                 warning.
               </td>
-              <td><a href="property_types.html#integer">Integer</a></td>
+              <td><a href="property_types.html#int">int</a></td>
               <td><code>1</code></td>
               <td>3.5</td>
             </tr>
@@ -3199,7 +4167,7 @@ for (String line: lines) {
               <td>
                 Specify RegExp for ignored strings (with quotation marks).
               </td>
-              <td><a href="property_types.html#regexp">Regular Expression</a></td>
+              <td><a href="property_types.html#Pattern">Pattern</a></td>
               <td><code>"^""$"</code></td>
               <td>4.0</td>
             </tr>
@@ -3321,6 +4289,27 @@ for (String line: lines) {
         <source>
 &lt;module name=&quot;MultipleVariableDeclarations&quot;/&gt;
         </source>
+        <p>
+          Example:
+        </p>
+        <source>
+public class Test {
+  public void myTest() {
+    int mid;
+    int high;
+    // ...
+
+    int lower, higher; // violation
+    // ...
+
+    int value,
+        index; // violation
+    // ...
+
+    int place = mid, number = high;  // violation
+  }
+}
+        </source>
       </subsection>
 
       <subsection name="Example of Usage" id="MultipleVariableDeclarations_Example_of_Usage">
@@ -3389,7 +4378,7 @@ for (String line: lines) {
             <tr>
               <td>max</td>
               <td>Specify maximum allowed nesting depth.</td>
-              <td><a href="property_types.html#integer">Integer</a></td>
+              <td><a href="property_types.html#int">int</a></td>
               <td><code>1</code></td>
               <td>5.3</td>
             </tr>
@@ -3404,14 +4393,45 @@ for (String line: lines) {
         <source>
 &lt;module name=&quot;NestedForDepth&quot;/&gt;
         </source>
+        <p>Example:</p>
+        <source>
+for(int i=0; i&lt;10; i++) {
+    for(int j=0; j&lt;i; j++) {
+        for(int k=0; k&lt;j; k++) { // violation, max allowed nested loop number is 1
+        }
+    }
+}
 
+for(int i=0; i&lt;10; i++) {
+    for(int j=0; j&lt;i; j++) { // ok
+    }
+}
+        </source>
         <p>
-          To configure the check to allow nesting depth 3:
+          To configure the check to allow nesting depth 2:
         </p>
         <source>
 &lt;module name=&quot;NestedForDepth&quot;&gt;
-  &lt;property name=&quot;max&quot; value=&quot;3&quot;/&gt;
+  &lt;property name=&quot;max&quot; value=&quot;2&quot;/&gt;
 &lt;/module&gt;
+        </source>
+        <p>Example:</p>
+        <source>
+for(int i=0; i&lt;10; i++) {
+    for(int j=0; j&lt;i; j++) {
+        for(int k=0; k&lt;j; k++) {
+            for(int l=0; l&lt;k; l++) { // violation, max allowed nested loop number is 2
+            }
+        }
+    }
+}
+
+for(int i=0; i&lt;10; i++) {
+    for(int j=0; j&lt;i; j++) {
+        for(int k=0; k&lt;j; k++) { // ok
+        }
+    }
+}
         </source>
       </subsection>
 
@@ -3469,7 +4489,7 @@ for (String line: lines) {
             <tr>
               <td>max</td>
               <td>Specify maximum allowed nesting depth.</td>
-              <td><a href="property_types.html#integer">Integer</a></td>
+              <td><a href="property_types.html#int">int</a></td>
               <td><code>1</code></td>
               <td>3.2</td>
             </tr>
@@ -3484,7 +4504,22 @@ for (String line: lines) {
         <source>
 &lt;module name=&quot;NestedIfDepth&quot;/&gt;
         </source>
-
+        <p>Valid code example:</p>
+        <source>
+if (true) {
+    if (true) {} // OK
+    else {}
+}
+        </source>
+        <p>Invalid code example:</p>
+        <source>
+if (true) {
+    if (true) {
+        if (true) { // violation, nested if-else depth is 2 (max allowed is 1)
+        }
+    }
+}
+        </source>
         <p>
           To configure the check to allow nesting depth 3:
         </p>
@@ -3492,6 +4527,32 @@ for (String line: lines) {
 &lt;module name=&quot;NestedIfDepth&quot;&gt;
   &lt;property name=&quot;max&quot; value=&quot;3&quot;/&gt;
 &lt;/module&gt;
+        </source>
+        <p>Valid code example:</p>
+        <source>
+if (true) {
+   if (true) {
+      if (true) {
+         if (true) {} // OK
+         else {}
+      }
+   }
+}
+        </source>
+        <p>Invalid code example:</p>
+        <source>
+if (true) {
+   if (true) {
+      if (true) {
+         if (true) {
+            if (true) { // violation, nested if-else depth is 4 (max allowed is 3)
+               if (true) {} // violation, nested if-else depth is 5 (max allowed is 3)
+               else {}
+            }
+         }
+      }
+   }
+}
         </source>
       </subsection>
 
@@ -3549,7 +4610,7 @@ for (String line: lines) {
             <tr>
               <td>max</td>
               <td>Specify maximum allowed nesting depth.</td>
-              <td><a href="property_types.html#integer">Integer</a></td>
+              <td><a href="property_types.html#int">int</a></td>
               <td><code>1</code></td>
               <td>3.2</td>
             </tr>
@@ -3564,7 +4625,49 @@ for (String line: lines) {
         <source>
 &lt;module name=&quot;NestedTryDepth&quot;/&gt;
         </source>
-
+        <p>
+            case 1: Example of code with violation:
+        </p>
+        <source>
+try {
+    try {
+        try { // violation, current depth is 2, default max allowed depth is 1
+        } catch (Exception e) {
+        }
+    } catch (Exception e) {
+    }
+} catch (Exception e) {
+}
+        </source>
+        <p>
+          case 1: Example of compliant code:
+        </p>
+        <source>
+try {
+    try { // OK, current depth is 1, default max allowed depth is also 1
+    } catch (Exception e) {
+    }
+} catch (Exception e) {
+}
+        </source>
+        <p>case 2: Example of code for handling unique and general exceptions</p>
+        <source>
+try {
+    try { // OK, current depth is 1, default max allowed depth is also 1
+            // any more nesting could cause code violation!
+            throw ArithmeticException();
+    } catch (ArithmeticException e) { // catches arithmetic exceptions
+    } catch (NumberFormatException e) { // catches number-format exceptions
+    } catch (Exception e) { // catches general exceptions other than stated above
+    }
+} catch (
+  ArithmeticException
+  | NumberFormatException
+  | ArrayIndexOutOfBoundsException e) { // catches any of the 3 exception
+} catch (Exception e) { // catches general exception
+} finally { // do something when try-catch block finished execution
+}
+        </source>
         <p>
           To configure the check to allow nesting depth 3:
         </p>
@@ -3572,6 +4675,43 @@ for (String line: lines) {
 &lt;module name=&quot;NestedTryDepth&quot;&gt;
   &lt;property name=&quot;max&quot; value=&quot;3&quot;/&gt;
 &lt;/module&gt;
+        </source>
+        <p>
+            Example of code with violation:
+        </p>
+        <source>
+try {
+    try {
+        try {
+            try {
+                try { // violation, current depth is 4, max allowed depth is 3
+                } catch (Exception e) {
+                }
+            } catch (Exception e) {
+            }
+        } catch (Exception e) {
+        }
+    } catch (Exception e) {
+    }
+} catch (Exception e) {
+}
+        </source>
+        <p>
+            Example of compliant code:
+        </p>
+        <source>
+try {
+    try {
+        try {
+            try { // OK, current depth is 3, max allowed depth is also 3
+            } catch (Exception e) {
+            }
+        } catch (Exception e) {
+        }
+    } catch (Exception e) {
+    }
+} catch (Exception e) {
+}
         </source>
       </subsection>
 
@@ -3612,40 +4752,40 @@ for (String line: lines) {
 
     <section name="NoArrayTrailingComma">
       <p>Since Checkstyle 8.28</p>
-       <subsection name="Description" id="NoArrayTrailingComma_Description">
-         <p>
-           Checks that array initialization do not contain a trailing comma.
-           Rationale: JLS allows trailing commas in arrays and enumerations, but does not allow
-           them in other locations. To unify the coding style, the use of trailing commas should
-           be prohibited.
-         </p>
-         <source>
+      <subsection name="Description" id="NoArrayTrailingComma_Description">
+        <p>
+          Checks that array initialization do not contain a trailing comma.
+          Rationale: JLS allows trailing commas in arrays and enumerations, but does not allow
+          them in other locations. To unify the coding style, the use of trailing commas should
+          be prohibited.
+        </p>
+        <source>
 int[] foo = new int[] {
   1,
   2
 };
-         </source>
-         <p>
+        </source>
+        <p>
           The check demands that there should not be any comma after the last element of an array.
-         </p>
-         <source>
+        </p>
+        <source>
 String[] foo = new String[] {
   "FOO",
   "BAR", //violation
 }
-         </source>
-       </subsection>
-       <subsection name="Examples" id="NoArrayTrailingComma_Examples">
-         <p>
-           To configure the check:
-         </p>
-         <source>
+        </source>
+      </subsection>
+      <subsection name="Examples" id="NoArrayTrailingComma_Examples">
+        <p>
+          To configure the check:
+        </p>
+        <source>
 &lt;module name=&quot;NoArrayTrailingComma&quot;/&gt;
-         </source>
-         <p>
-           Which results in the following violations:
-         </p>
-         <source>
+        </source>
+        <p>
+          Which results in the following violations:
+        </p>
+        <source>
 String[] foo1 = {
   "FOO", // OK
   "BAR", // violation
@@ -3656,9 +4796,9 @@ String[] foo3 = {
   "BAR" // OK
 };
 String[] foo4 = { "FOO", "BAR" }; // OK
-         </source>
-       </subsection>
-       <subsection name="Example of Usage" id="NoArrayTrailingComma_Example_of_Usage">
+        </source>
+      </subsection>
+      <subsection name="Example of Usage" id="NoArrayTrailingComma_Example_of_Usage">
         <ul>
           <li>
             <a href="https://github.com/search?q=path%3Aconfig+filename%3Acheckstyle_checks.xml+repo%3Acheckstyle%2Fcheckstyle+NoArrayTrailingComma">
@@ -3804,6 +4944,20 @@ System.out.println(s2 instanceof Square); //true
         </p>
         <source>
 &lt;module name=&quot;NoClone&quot;/&gt;
+        </source>
+        <p>Example: </p>
+        <source>
+public class Foo {
+
+ public Object clone() {return null;} // violation, overrides the clone method
+
+ public Foo clone() {return null;} // violation, overrides the clone method
+
+ public static Object clone(Object o) {return null;} // OK
+
+ public static Foo clone(Foo o) {return null;} // OK
+
+}
         </source>
       </subsection>
 
@@ -3971,6 +5125,21 @@ enum Foo10 { FOO, BAR } // OK
         <source>
 &lt;module name=&quot;NoFinalizer&quot;/&gt;
         </source>
+        <p>Example:</p>
+        <source>
+public class Test {
+
+    protected void finalize() throws Throwable { // violation
+        try {
+           System.out.println("overriding finalize()");
+        } catch (Throwable t) {
+           throw t;
+        } finally {
+           super.finalize();
+        }
+    }
+}
+        </source>
       </subsection>
 
       <subsection name="Example of Usage" id="NoFinalizer_Example_of_Usage">
@@ -4015,24 +5184,24 @@ enum Foo10 { FOO, BAR } // OK
     <section name="OneStatementPerLine">
       <p>Since Checkstyle 5.3</p>
       <subsection name="Description" id="OneStatementPerLine_Description">
-          <p>
+        <p>
           Checks that there is only one statement per line.
-          </p>
-          <p>
-              Rationale: It's very difficult to read multiple statements on one line.
-          </p>
-          <p>
-              In the Java programming language, statements are the fundamental unit of
-              execution. All statements except blocks are terminated by a semicolon.
-              Blocks are denoted by open and close curly braces.
-          </p>
-          <p>
-              OneStatementPerLineCheck checks the following types of statements:
-              variable declaration statements, empty statements, import statements,
-              assignment statements, expression statements, increment statements,
-              object creation statements, 'for loop' statements, 'break' statements,
-              'continue' statements, 'return' statements, resources statements (optional).
-          </p>
+        </p>
+        <p>
+          Rationale: It's very difficult to read multiple statements on one line.
+        </p>
+        <p>
+          In the Java programming language, statements are the fundamental unit of
+          execution. All statements except blocks are terminated by a semicolon.
+          Blocks are denoted by open and close curly braces.
+        </p>
+        <p>
+          OneStatementPerLineCheck checks the following types of statements:
+          variable declaration statements, empty statements, import statements,
+          assignment statements, expression statements, increment statements,
+          object creation statements, 'for loop' statements, 'break' statements,
+          'continue' statements, 'return' statements, resources statements (optional).
+        </p>
       </subsection>
 
       <subsection name="Properties" id="OneStatementPerLine_Properties">
@@ -4048,7 +5217,7 @@ enum Foo10 { FOO, BAR } // OK
             <tr>
               <td>treatTryResourcesAsStatement</td>
               <td>Enable resources processing.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>false</code></td>
               <td>8.23</td>
             </tr>
@@ -4057,16 +5226,16 @@ enum Foo10 { FOO, BAR } // OK
       </subsection>
 
       <subsection name="Examples" id="OneStatementPerLine_Examples">
-          <p>
-              An example of how to configure this Check:
-          </p>
-          <source>
-              &lt;module name=&quot;OneStatementPerLine&quot;/&gt;
-          </source>
-          <p>
-              The following examples will be flagged as a violation:
-          </p>
-          <source>
+        <p>
+          To configure the check:
+        </p>
+        <source>
+&lt;module name=&quot;OneStatementPerLine&quot;/&gt;
+        </source>
+        <p>
+          The following examples will be flagged as a violation:
+        </p>
+        <source>
 //Each line causes violation:
 int var1; int var2;
 var1 = 1; var2 = 2;
@@ -4081,27 +5250,27 @@ int var1 = 1
 ; var2 = 2; //violation here
 int o = 1, p = 2,
 r = 5; int t; //violation here
-          </source>
-          <p>
-              An example of how to configure the check to treat resources
-              in a try statement as statements to require them on their own line:
-          </p>
-          <source>
+        </source>
+        <p>
+          An example of how to configure the check to treat resources
+          in a try statement as statements to require them on their own line:
+        </p>
+        <source>
 &lt;module name=&quot;OneStatementPerLine&quot;&gt;
   &lt;property name=&quot;treatTryResourcesAsStatement&quot; value=&quot;true&quot;/&gt;
 &lt;/module&gt;
-          </source>
-          <p>
-              Note: resource declarations can contain variable definitions
-              and variable references (from java9).
-              When property "treatTryResourcesAsStatement" is enabled,
-              this check is only applied to variable definitions.
-              If there are one or more variable references
-              and one variable definition on the same line in resources declaration,
-              there is no violation.
-              The following examples will illustrate difference:
-          </p>
-          <source>
+        </source>
+        <p>
+          Note: resource declarations can contain variable definitions
+          and variable references (from java9).
+          When property "treatTryResourcesAsStatement" is enabled,
+          this check is only applied to variable definitions.
+          If there are one or more variable references
+          and one variable definition on the same line in resources declaration,
+          there is no violation.
+          The following examples will illustrate difference:
+        </p>
+        <source>
 OutputStream s1 = new PipedOutputStream();
 OutputStream s2 = new PipedOutputStream();
 // only one statement(variable definition) with two variable references
@@ -4110,7 +5279,7 @@ try (s1; s2; OutputStream s3 = new PipedOutputStream();) // OK
 // two statements with variable definitions
 try (Reader r = new PipedReader(); s2; Reader s3 = new PipedReader() // violation
 ) {}
-         </source>
+        </source>
       </subsection>
 
       <subsection name="Example of Usage" id="OneStatementPerLine_Example_of_Usage">
@@ -4156,27 +5325,34 @@ try (Reader r = new PipedReader(); s2; Reader s3 = new PipedReader() // violatio
       <p>Since Checkstyle 5.8</p>
       <subsection name="Description" id="OverloadMethodsDeclarationOrder_Description">
         <p>
-          Checks that overload methods are grouped together.
+          Checks that overloaded methods are grouped together. Overloaded methods have the same
+          name but different signatures where the signature can differ by the number of input
+          parameters or type of input parameters or both.
         </p>
       </subsection>
 
       <subsection name="Examples" id="OverloadMethodsDeclarationOrder_Examples">
-        <p>
-          Example of incorrect grouping overload methods:
-        </p>
-        <source>
-public void foo(int i) {}
-public void foo(String s) {}
-public void notFoo() {} // Have to be after foo(int i, String s)
-public void foo(int i, String s) {}
-        </source>
-        <p>
-          An example of how to configure the check is:
-        </p>
+        <p>To configure the check:</p>
         <source>
 &lt;module name="OverloadMethodsDeclarationOrder"/&gt;
         </source>
-        </subsection>
+        <p>Example of correct grouping of overloaded methods:</p>
+        <source>
+public void foo(int i) {}
+public void foo(String s) {}
+public void foo(String s, int i) {}
+public void foo(int i, String s) {}
+public void notFoo() {}
+        </source>
+        <p>Example of incorrect grouping of overloaded methods:</p>
+        <source>
+public void foo(int i) {} // OK
+public void foo(String s) {} // OK
+public void notFoo() {} // violation. Have to be after foo(String s, int i)
+public void foo(int i, String s) {}
+public void foo(String s, int i) {}
+        </source>
+      </subsection>
 
       <subsection name="Example of Usage" id="OverloadMethodsDeclarationOrder_Example_of_Usage">
         <ul>
@@ -4249,7 +5425,7 @@ public void foo(int i, String s) {}
             <tr>
               <td>matchDirectoryStructure</td>
               <td>Control whether to check for directory and package name match.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>true</code></td>
               <td>7.6.1</td>
             </tr>
@@ -4419,13 +5595,13 @@ public class AnnotationLocationCheck extends AbstractCheck {
         </ol>
       </subsection>
       <subsection name="Notes" id="RequireThis_Notes">
-            <p>
-              Limitations: Nothing is currently done about static variables
-              or catch-blocks.  Static methods invoked on a class name seem to be OK;
-              both the class name and the method name have a DOT parent.
-              Non-static methods invoked on either this or a variable name seem to be
-              OK, likewise.
-            </p>
+        <p>
+          Limitations: Nothing is currently done about static variables
+          or catch-blocks.  Static methods invoked on a class name seem to be OK;
+          both the class name and the method name have a DOT parent.
+          Non-static methods invoked on either this or a variable name seem to be
+          OK, likewise.
+        </p>
       </subsection>
 
       <subsection name="Properties" id="RequireThis_Properties">
@@ -4441,21 +5617,21 @@ public class AnnotationLocationCheck extends AbstractCheck {
             <tr>
               <td>checkFields</td>
               <td>Control whether to check references to fields.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>true</code></td>
               <td>3.4</td>
             </tr>
             <tr>
               <td>checkMethods</td>
               <td>Control whether to check references to methods.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>true</code></td>
               <td>3.4</td>
             </tr>
             <tr>
               <td>validateOnlyOverlapping</td>
               <td>Control whether to check only overlapping by variables or arguments.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>true</code></td>
               <td>6.17</td>
             </tr>
@@ -4480,10 +5656,10 @@ public class AnnotationLocationCheck extends AbstractCheck {
 &lt;/module&gt;
         </source>
 
-       <p>
-         Examples of how the check works if validateOnlyOverlapping option is set to true:
-       </p>
-       <source>
+        <p>
+          Examples of how the check works if validateOnlyOverlapping option is set to true:
+        </p>
+        <source>
 public static class A {
   private int field1;
   private int field2;
@@ -4513,15 +5689,22 @@ public static class B {
     return field += "suffix"; // violation: Reference to instance variable "field" needs "this".
   }
 }
-       </source>
-       <p>
-         Please, be aware of the following logic, which is implemented in the check:
-       </p>
-       <p>
-         1) If you arrange 'this' in your code on your own, the check will not raise violation for
-            variables which use 'this' to reference a class field, for example:
-       </p>
-       <source>
+
+public static record C(int x) {
+    void getTwoX(int x) {
+        // Overlapping by method argument.
+        return x += x; // violation: Reference to instance variable "x" needs "this".
+    }
+}
+        </source>
+        <p>
+          Please, be aware of the following logic, which is implemented in the check:
+        </p>
+        <p>
+          1) If you arrange 'this' in your code on your own, the check will not raise violation for
+          variables which use 'this' to reference a class field, for example:
+        </p>
+        <source>
 public class C {
   private int scale;
   private int x;
@@ -4533,12 +5716,12 @@ public class C {
     x *= scale;
   }
 }
-       </source>
-       <p>
-         2) If method parameter is returned from the method, the check will not raise violation for
-            returned variable/parameter, for example:
-       </p>
-       <source>
+        </source>
+        <p>
+          2) If method parameter is returned from the method, the check will not raise violation for
+             returned variable/parameter, for example:
+        </p>
+        <source>
 public class D {
   private String prefix;
   public String modifyPrefix(String prefix) {
@@ -4546,11 +5729,11 @@ public class D {
     return prefix; // modified method parameter is returned from the method
   }
 }
-       </source>
-       <p>
-         Examples of how the check works if validateOnlyOverlapping option is set to false:
-       </p>
-       <source>
+        </source>
+        <p>
+          Examples of how the check works if validateOnlyOverlapping option is set to false:
+        </p>
+        <source>
 public static class A {
   private int field1;
   private int field2;
@@ -4593,7 +5776,13 @@ class C {
     s2 += s2; // Violation. Overlapping. Reference to instance variable 's2' needs "this.".
   }
 }
-       </source>
+
+public static record D(int x) {
+    public D {
+        x = x; // violation: Reference to instance variable "x" needs "this".
+    }
+}
+        </source>
       </subsection>
 
       <subsection name="Example of Usage" id="RequireThis_Example_of_Usage">
@@ -4677,7 +5866,7 @@ class C {
               <td>
                 Specify maximum allowed number of return statements in non-void methods/lambdas.
               </td>
-              <td><a href="property_types.html#integer">Integer</a></td>
+              <td><a href="property_types.html#int">int</a></td>
               <td><code>2</code></td>
               <td>3.2</td>
             </tr>
@@ -4685,14 +5874,14 @@ class C {
               <td>maxForVoid</td>
               <td>Specify maximum allowed number of return statements in void
                   methods/constructors/lambdas.</td>
-              <td><a href="property_types.html#integer">Integer</a></td>
+              <td><a href="property_types.html#int">int</a></td>
               <td><code>1</code></td>
               <td>6.19</td>
             </tr>
             <tr>
               <td>format</td>
               <td>Specify method names to ignore.</td>
-              <td><a href="property_types.html#regexp">Regular Expression</a></td>
+              <td><a href="property_types.html#Pattern">Pattern</a></td>
               <td><code>"^equals$"</code></td>
               <td>3.4</td>
             </tr>
@@ -4702,19 +5891,21 @@ class C {
               <td>
                 subset of tokens
                 <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
-                  CTOR_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
-                  METHOD_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LAMBDA">
-                  LAMBDA</a>.
+                  CTOR_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
+                  METHOD_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LAMBDA">
+                  LAMBDA</a>
+                  .
               </td>
               <td>
                 <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
-                  CTOR_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
-                  METHOD_DEF</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LAMBDA">
-                  LAMBDA</a>.
+                  CTOR_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
+                  METHOD_DEF</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LAMBDA">
+                  LAMBDA</a>
+                  .
               </td>
               <td>3.2</td>
             </tr>
@@ -4849,6 +6040,30 @@ class C {
         <source>
 &lt;module name=&quot;SimplifyBooleanExpression&quot;/&gt;
         </source>
+        <p>Example:</p>
+        <source>
+public class Test {
+
+  public void bar() {
+
+    boolean a, b;
+    Foo c, d, e;
+
+    if (!false) {}; // violation, can be simplified to true
+
+    if (a == true) {}; // violation, can be simplified to a
+    if (a == b) {}; // OK
+    if (a == false) {}; // violation, can be simplified to !a
+    if (!(a != true)) {}; // violation, can be simplified to a
+
+    e = (a || b) ? c : d; // OK
+    e = (a || false) ? c : d; // violation, can be simplified to a
+    e = (a &amp;&amp; b) ? c : d; // OK
+
+  }
+
+}
+        </source>
       </subsection>
 
       <subsection name="Example of Usage" id="SimplifyBooleanExpression_Example_of_Usage">
@@ -4924,6 +6139,55 @@ return !valid();
         <source>
 &lt;module name=&quot;SimplifyBooleanReturn&quot;/&gt;
         </source>
+        <p>Example:</p>
+        <source>
+public class Test {
+
+ private boolean cond;
+ private Foo a;
+ private Foo b;
+
+ public boolean check1() {
+  if (cond) { // violation, can be simplified
+    return true;
+  }
+  else {
+    return false;
+  }
+ }
+
+ // Ok, simplified version of check1()
+ public boolean check2() {
+  return cond;
+ }
+
+ // violations, can be simplified
+ public boolean check3() {
+  if (cond == true) { // can be simplified to "if (cond)"
+    return false;
+  }
+  else {
+    return true; // can be simplified to "return !cond"
+  }
+ }
+
+ // Ok, can be simplified but doesn't return a Boolean
+ public Foo choose1() {
+  if (cond) {
+    return a;
+  }
+  else {
+    return b;
+  }
+ }
+
+ // Ok, simplified version of choose1()
+ public Foo choose2() {
+  return cond ? a: b;
+ }
+
+}
+        </source>
       </subsection>
 
       <subsection name="Example of Usage" id="SimplifyBooleanReturn_Example_of_Usage">
@@ -4971,6 +6235,12 @@ return !valid();
         <p>
           Checks that string literals are not used with <code>==</code> or
           <code>&#33;=</code>.
+          Since <code>==</code> will compare the object references,
+          not the actual value of the strings,
+          <code>String.equals()</code> should be used.
+          More information can be found
+          <a href="http://www.thejavageek.com/2013/07/27/string-comparison-with-equals-and-assignment-operator/">
+          in this article</a>.
         </p>
 
         <p>
@@ -4992,6 +6262,25 @@ if (&quot;something&quot;.equals(x))
         </p>
         <source>
 &lt;module name=&quot;StringLiteralEquality&quot;/&gt;
+        </source>
+        <p>
+          Examples of violations:
+        </p>
+        <source>
+String status = "pending";
+
+if (status == "done") {} // violation
+
+while (status != "done") {} // violation
+
+boolean flag = (status == "done"); // violation
+
+boolean flag = (status.equals("done")); // OK
+
+String name = "X";
+
+if (name == getName()) {}
+// OK, limitation that check cannot tell runtime type returned from method call
         </source>
       </subsection>
 
@@ -5052,6 +6341,32 @@ if (&quot;something&quot;.equals(x))
         </p>
         <source>
 &lt;module name=&quot;SuperClone&quot;/&gt;
+        </source>
+        <p>Example:</p>
+        <source>
+class A {
+
+ public Object clone() { // OK
+  return super.clone();
+ }
+}
+
+class B {
+private int b;
+
+ public B clone() { // violation, does not call super.clone()
+  B other = new B();
+  other.b = this.b;
+  return other;
+ }
+}
+
+class C {
+
+ public C clone() { // OK
+  return (C) super.clone();
+ }
+}
         </source>
       </subsection>
 
@@ -5160,11 +6475,11 @@ if (&quot;something&quot;.equals(x))
           The check will flag the following with warnings:
         </p>
         <source>
-    return (x);          // parens around identifier
-    return (x + 1);      // parens around return value
-    int x = (y / 2 + 1); // parens around assignment rhs
-    for (int i = (0); i &lt; 10; i++) {  // parens around literal
-    t -= (z + 1);        // parens around assignment rhs
+return (x);          // parens around identifier
+return (x + 1);      // parens around return value
+int x = (y / 2 + 1); // parens around assignment rhs
+for (int i = (0); i &lt; 10; i++) {  // parens around literal
+t -= (z + 1);        // parens around assignment rhs
         </source>
       </subsection>
 
@@ -5175,10 +6490,10 @@ if (&quot;something&quot;.equals(x))
           operator precedence and associativity; therefore it won't catch something like
         </p>
         <source>
-            int x = (a + b) + c;
+int x = (a + b) + c;
         </source>
         <p>
-          In the above case, given that <em>a</em>,<em>b</em>, and <em>c</em> are all
+          In the above case, given that <em>a</em>, <em>b</em>, and <em>c</em> are all
           <code>int</code> variables, the parentheses around <code>a + b</code> are not needed.
         </p>
       </subsection>
@@ -5199,99 +6514,105 @@ if (&quot;something&quot;.equals(x))
               <td>
                 subset of tokens
                 <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#EXPR">
-                  EXPR</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#IDENT">
-                  IDENT</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_DOUBLE">
-                  NUM_DOUBLE</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_FLOAT">
-                  NUM_FLOAT</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_INT">
-                  NUM_INT</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_LONG">
-                  NUM_LONG</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STRING_LITERAL">
-                  STRING_LITERAL</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_NULL">
-                  LITERAL_NULL</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_FALSE">
-                  LITERAL_FALSE</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_TRUE">
-                  LITERAL_TRUE</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ASSIGN">
-                  ASSIGN</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BAND_ASSIGN">
-                  BAND_ASSIGN</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BOR_ASSIGN">
-                  BOR_ASSIGN</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BSR_ASSIGN">
-                  BSR_ASSIGN</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BXOR_ASSIGN">
-                  BXOR_ASSIGN</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DIV_ASSIGN">
-                  DIV_ASSIGN</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MINUS_ASSIGN">
-                  MINUS_ASSIGN</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MOD_ASSIGN">
-                  MOD_ASSIGN</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PLUS_ASSIGN">
-                  PLUS_ASSIGN</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SL_ASSIGN">
-                  SL_ASSIGN</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SR_ASSIGN">
-                  SR_ASSIGN</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STAR_ASSIGN">
-                  STAR_ASSIGN</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LAMBDA">
-                  LAMBDA</a>.
+                  EXPR</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#IDENT">
+                  IDENT</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_DOUBLE">
+                  NUM_DOUBLE</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_FLOAT">
+                  NUM_FLOAT</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_INT">
+                  NUM_INT</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_LONG">
+                  NUM_LONG</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STRING_LITERAL">
+                  STRING_LITERAL</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_NULL">
+                  LITERAL_NULL</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_FALSE">
+                  LITERAL_FALSE</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_TRUE">
+                  LITERAL_TRUE</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ASSIGN">
+                  ASSIGN</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BAND_ASSIGN">
+                  BAND_ASSIGN</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BOR_ASSIGN">
+                  BOR_ASSIGN</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BSR_ASSIGN">
+                  BSR_ASSIGN</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BXOR_ASSIGN">
+                  BXOR_ASSIGN</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DIV_ASSIGN">
+                  DIV_ASSIGN</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MINUS_ASSIGN">
+                  MINUS_ASSIGN</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MOD_ASSIGN">
+                  MOD_ASSIGN</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PLUS_ASSIGN">
+                  PLUS_ASSIGN</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SL_ASSIGN">
+                  SL_ASSIGN</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SR_ASSIGN">
+                  SR_ASSIGN</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STAR_ASSIGN">
+                  STAR_ASSIGN</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LAMBDA">
+                  LAMBDA</a>
+                ,<a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#TEXT_BLOCK_LITERAL_BEGIN">
+                TEXT_BLOCK_LITERAL_BEGIN</a>
+                  .
               </td>
               <td>
                 <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#EXPR">
-                  EXPR</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#IDENT">
-                  IDENT</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_DOUBLE">
-                  NUM_DOUBLE</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_FLOAT">
-                  NUM_FLOAT</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_INT">
-                  NUM_INT</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_LONG">
-                  NUM_LONG</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STRING_LITERAL">
-                  STRING_LITERAL</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_NULL">
-                  LITERAL_NULL</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_FALSE">
-                  LITERAL_FALSE</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_TRUE">
-                  LITERAL_TRUE</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ASSIGN">
-                  ASSIGN</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BAND_ASSIGN">
-                  BAND_ASSIGN</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BOR_ASSIGN">
-                  BOR_ASSIGN</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BSR_ASSIGN">
-                  BSR_ASSIGN</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BXOR_ASSIGN">
-                  BXOR_ASSIGN</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DIV_ASSIGN">
-                  DIV_ASSIGN</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MINUS_ASSIGN">
-                  MINUS_ASSIGN</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MOD_ASSIGN">
-                  MOD_ASSIGN</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PLUS_ASSIGN">
-                  PLUS_ASSIGN</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SL_ASSIGN">
-                  SL_ASSIGN</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SR_ASSIGN">
-                  SR_ASSIGN</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STAR_ASSIGN">
-                  STAR_ASSIGN</a>,
-                <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LAMBDA">
-                  LAMBDA</a>.
+                  EXPR</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#IDENT">
+                  IDENT</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_DOUBLE">
+                  NUM_DOUBLE</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_FLOAT">
+                  NUM_FLOAT</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_INT">
+                  NUM_INT</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#NUM_LONG">
+                  NUM_LONG</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STRING_LITERAL">
+                  STRING_LITERAL</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_NULL">
+                  LITERAL_NULL</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_FALSE">
+                  LITERAL_FALSE</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LITERAL_TRUE">
+                  LITERAL_TRUE</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ASSIGN">
+                  ASSIGN</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BAND_ASSIGN">
+                  BAND_ASSIGN</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BOR_ASSIGN">
+                  BOR_ASSIGN</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BSR_ASSIGN">
+                  BSR_ASSIGN</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#BXOR_ASSIGN">
+                  BXOR_ASSIGN</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#DIV_ASSIGN">
+                  DIV_ASSIGN</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MINUS_ASSIGN">
+                  MINUS_ASSIGN</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#MOD_ASSIGN">
+                  MOD_ASSIGN</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PLUS_ASSIGN">
+                  PLUS_ASSIGN</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SL_ASSIGN">
+                  SL_ASSIGN</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SR_ASSIGN">
+                  SR_ASSIGN</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STAR_ASSIGN">
+                  STAR_ASSIGN</a>
+                , <a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LAMBDA">
+                  LAMBDA</a>
+                ,<a href="apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#TEXT_BLOCK_LITERAL_BEGIN">
+                  TEXT_BLOCK_LITERAL_BEGIN</a>
+                  .
               </td>
               <td>3.4</td>
             </tr>
@@ -5386,6 +6707,168 @@ myList.stream()
       </subsection>
     </section>
 
+    <section name="UnnecessarySemicolonAfterOuterTypeDeclaration">
+      <p>Since Checkstyle 8.31</p>
+      <subsection name="Description"
+                  id="UnnecessarySemicolonAfterOuterTypeDeclaration_Description">
+        <p>
+          Checks if unnecessary semicolon is used after type declaration.
+        </p>
+      </subsection>
+      <subsection name="Notes" id="UnnecessarySemicolonAfterOuterTypeDeclaration_Notes">
+        <p>
+          This check is not applicable to nested type declarations,
+          <a
+          href="https://checkstyle.org/config_coding.html#UnnecessarySemicolonAfterTypeMemberDeclaration">
+          UnnecessarySemicolonAfterTypeMemberDeclaration</a> is responsible for it.
+        </p>
+      </subsection>
+      <subsection name="Properties" id="UnnecessarySemicolonAfterOuterTypeDeclaration_Properties">
+        <div class="wrapper">
+          <table>
+            <tr>
+              <th>name</th>
+              <th>description</th>
+              <th>type</th>
+              <th>default value</th>
+              <th>since</th>
+            </tr>
+            <tr>
+              <td>tokens</td>
+              <td>tokens to check</td>
+              <td>
+                subset of tokens
+                <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">
+                 CLASS_DEF</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
+                INTERFACE_DEF</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">
+                ENUM_DEF</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_DEF">
+                ANNOTATION_DEF</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RECORD_DEF">
+                RECORD_DEF</a>
+                  .
+              </td>
+              <td>
+                <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">
+                    CLASS_DEF</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
+                    INTERFACE_DEF</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">
+                    ENUM_DEF</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_DEF">
+                    ANNOTATION_DEF</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RECORD_DEF">
+                    RECORD_DEF</a>
+                  .
+              </td>
+              <td>8.31</td>
+            </tr>
+          </table>
+        </div>
+      </subsection>
+
+      <subsection name="Examples" id="UnnecessarySemicolonAfterOuterTypeDeclaration_Examples">
+        <p>
+          To configure the check:
+        </p>
+        <source>
+&lt;module name=&quot;UnnecessarySemicolonAfterOuterTypeDeclaration&quot;/&gt;
+        </source>
+        <p>
+          Example:
+        </p>
+        <source>
+class A {
+
+   class Nested {
+
+   }; // OK, nested type declarations are ignored
+
+}; // violation
+
+interface B {
+
+}; // violation
+
+enum C {
+
+}; // violation
+
+{@literal @}interface D {
+
+}; // violation
+        </source>
+        <p>
+           To configure the check to detect unnecessary semicolon only after top level class
+           definitions:
+        </p>
+        <source>
+&lt;module name=&quot;UnnecessarySemicolonAfterOuterTypeDeclaration&quot;&gt;
+  &lt;property name=&quot;tokens&quot; value=&quot;CLASS_DEF&quot;/&gt;
+&lt;/module&gt;
+        </source>
+        <p>
+          Example:
+        </p>
+        <source>
+class A {
+
+}; // violation
+
+interface B {
+
+}; // OK
+
+enum C {
+
+}; // OK
+
+{@literal @}interface D {
+
+}; // OK
+        </source>
+      </subsection>
+
+      <subsection name="Example of Usage"
+                  id="UnnecessarySemicolonAfterOuterTypeDeclaration_Example_of_Usage">
+        <ul>
+          <li>
+            <a href="https://github.com/search?q=path%3Aconfig+filename%3Acheckstyle_checks.xml+repo%3Acheckstyle%2Fcheckstyle+UnnecessarySemicolonAfterOuterTypeDeclaration">
+              Checkstyle Style</a>
+          </li>
+        </ul>
+      </subsection>
+
+      <subsection name="Violation Messages"
+                  id="UnnecessarySemicolonAfterOuterTypeDeclaration_Violation_Messages">
+        <ul>
+          <li>
+            <a href="https://github.com/search?q=path%3Asrc%2Fmain%2Fresources%2Fcom%2Fpuppycrawl%2Ftools%2Fcheckstyle%2Fchecks%2Fcoding+filename%3Amessages*.properties+repo%3Acheckstyle%2Fcheckstyle+%22unnecessary.semicolon%22">
+                unnecessary.semicolon</a>
+          </li>
+        </ul>
+        <p>
+          All messages can be customized if the default message doesn't suit you.
+          Please <a href="config.html#Custom_messages">see the documentation</a> to learn how to.
+        </p>
+      </subsection>
+
+      <subsection name="Package" id="UnnecessarySemicolonAfterOuterTypeDeclaration_Package">
+        <p>
+          com.puppycrawl.tools.checkstyle.checks.coding
+        </p>
+      </subsection>
+
+      <subsection name="Parent Module"
+                  id="UnnecessarySemicolonAfterOuterTypeDeclaration_Parent_Module">
+        <p>
+          <a href="config.html#TreeWalker">TreeWalker</a>
+        </p>
+      </subsection>
+    </section>
+
     <section name="UnnecessarySemicolonAfterTypeMemberDeclaration">
       <p>Since Checkstyle 8.24</p>
       <subsection name="Description"
@@ -5418,51 +6901,61 @@ myList.stream()
               <td>
                 subset of tokens
                 <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">
-                 CLASS_DEF</a>,
-                <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
-                INTERFACE_DEF</a>,
-                <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">
-                ENUM_DEF</a>,
-                <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_DEF">
-                ANNOTATION_DEF</a>,
-                <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
-                VARIABLE_DEF</a>,
-                <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_FIELD_DEF">
-                ANNOTATION_FIELD_DEF</a>,
-                <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STATIC_INIT">
-                STATIC_INIT</a>,
-                <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INSTANCE_INIT">
-                INSTANCE_INIT</a>,
-                <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
-                CTOR_DEF</a>,
-                <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
-                METHOD_DEF</a>,
-                <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_CONSTANT_DEF">
-                ENUM_CONSTANT_DEF</a>.
+                 CLASS_DEF</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
+                INTERFACE_DEF</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">
+                ENUM_DEF</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_DEF">
+                ANNOTATION_DEF</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
+                VARIABLE_DEF</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_FIELD_DEF">
+                ANNOTATION_FIELD_DEF</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STATIC_INIT">
+                STATIC_INIT</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INSTANCE_INIT">
+                INSTANCE_INIT</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
+                CTOR_DEF</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
+                METHOD_DEF</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_CONSTANT_DEF">
+                ENUM_CONSTANT_DEF</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COMPACT_CTOR_DEF">
+                COMPACT_CTOR_DEF</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RECORD_DEF">
+                RECORD_DEF</a>
+                  .
               </td>
               <td>
                 <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">
-                    CLASS_DEF</a>,
-                <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
-                    INTERFACE_DEF</a>,
-                <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">
-                    ENUM_DEF</a>,
-                <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_DEF">
-                    ANNOTATION_DEF</a>,
-                <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
-                    VARIABLE_DEF</a>,
-                <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_FIELD_DEF">
-                    ANNOTATION_FIELD_DEF</a>,
-                <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STATIC_INIT">
-                    STATIC_INIT</a>,
-                <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INSTANCE_INIT">
-                    INSTANCE_INIT</a>,
-                <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
-                    CTOR_DEF</a>,
-                <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
-                    METHOD_DEF</a>,
-                <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_CONSTANT_DEF">
-                    ENUM_CONSTANT_DEF</a>.
+                    CLASS_DEF</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INTERFACE_DEF">
+                    INTERFACE_DEF</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_DEF">
+                    ENUM_DEF</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_DEF">
+                    ANNOTATION_DEF</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
+                    VARIABLE_DEF</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ANNOTATION_FIELD_DEF">
+                    ANNOTATION_FIELD_DEF</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STATIC_INIT">
+                    STATIC_INIT</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INSTANCE_INIT">
+                    INSTANCE_INIT</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
+                    CTOR_DEF</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
+                    METHOD_DEF</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_CONSTANT_DEF">
+                    ENUM_CONSTANT_DEF</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COMPACT_CTOR_DEF">
+                    COMPACT_CTOR_DEF</a>
+                , <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RECORD_DEF">
+                    RECORD_DEF</a>
+                  .
               </td>
               <td>8.24</td>
             </tr>
@@ -5656,7 +7149,7 @@ enum NoSemicolon {
             <tr>
               <td>allowWhenNoBraceAfterSemicolon</td>
               <td>Allow unnecessary semicolon if closing paren is not on the same line.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>true</code></td>
               <td>8.22</td>
             </tr>
@@ -5771,7 +7264,7 @@ class A {
               <td>allowedDistance</td>
               <td>Specify distance between declaration of variable and its first usage.
                   Values should be greater than 0.</td>
-              <td><a href="property_types.html#integer">Integer</a></td>
+              <td><a href="property_types.html#int">int</a></td>
               <td><code>3</code></td>
               <td>5.8</td>
             </tr>
@@ -5781,7 +7274,7 @@ class A {
               <td>
                 Define RegExp to ignore distance calculation for variables listed in this pattern.
               </td>
-              <td><a href="property_types.html#regexp">Regular Expression</a></td>
+              <td><a href="property_types.html#Pattern">Pattern</a></td>
               <td><code>""</code></td>
               <td>5.8</td>
             </tr>
@@ -5790,7 +7283,7 @@ class A {
               <td>validateBetweenScopes</td>
               <td>Allow to calculate the distance between declaration of variable and its
                   first usage in the different scopes.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>false</code></td>
               <td>5.8</td>
             </tr>
@@ -5798,7 +7291,7 @@ class A {
             <tr>
               <td>ignoreFinal</td>
               <td>Allow to ignore variables with a 'final' modifier.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>true</code></td>
               <td>5.8</td>
             </tr>
@@ -5807,6 +7300,9 @@ class A {
       </subsection>
 
       <subsection name="Examples" id="VariableDeclarationUsageDistance_Examples">
+        <p>
+            To configure the check:
+        </p>
         <p>
           Example #1:
         </p>
@@ -5860,32 +7356,32 @@ cal.set(Calendar.MILLISECOND, 0);
 System.out.println(cal);
 cal.set(Calendar.HOUR_OF_DAY, hh);
 cal.set(Calendar.MINUTE, minutes);
-         </source>
-         <p>
-           The distance for the variable minutes is 6 because there is one more expression
-           (except the initialization block) between the declaration of this variable and its usage.
-         </p>
-         <p>
-           An example how to configure this Check:
-         </p>
-         <source>
+        </source>
+        <p>
+          The distance for the variable minutes is 6 because there is one more expression
+          (except the initialization block) between the declaration of this variable and its usage.
+        </p>
+        <p>
+          An example how to configure this Check:
+        </p>
+        <source>
 &lt;module name="VariableDeclarationUsageDistance"/&gt;
-         </source>
-         <p>
-           An example of how to configure this Check:
-            - to set the allowed distance to 4;
-            - to ignore variables with prefix '^temp';
-            - to force the validation between scopes;
-            - to check the final variables;
-         </p>
-         <source>
+        </source>
+        <p>
+          An example of how to configure this Check:
+           - to set the allowed distance to 4;
+           - to ignore variables with prefix '^temp';
+           - to force the validation between scopes;
+           - to check the final variables;
+        </p>
+        <source>
 &lt;module name="VariableDeclarationUsageDistance"&gt;
   &lt;property name="allowedDistance" value="4"/&gt;
   &lt;property name="ignoreVariablePattern" value="^temp.*"/&gt;
   &lt;property name="validateBetweenScopes" value="true"/&gt;
   &lt;property name="ignoreFinal" value="false"/&gt;
 &lt;/module&gt;
-         </source>
+        </source>
       </subsection>
       <subsection name="Notes" id="VariableDeclarationUsageDistance_Notes">
         <p>
@@ -5904,18 +7400,18 @@ Case #1:
 }
         </source>
         <p>
-          Distance for variable 'a' = 1;
-          Distance for variable 'b' = 1;
-          Distance for variable 'c' = 2.
-         </p>
-         <p>
-           As distance by default is 1 the Check doesn't raise warning for
-           variables 'a' and 'b' to move them into the block.
-         </p>
-         <p>
-           Case #2:
-         </p>
-         <source>
+         Distance for variable 'a' = 1;
+         Distance for variable 'b' = 1;
+         Distance for variable 'c' = 2.
+        </p>
+        <p>
+          As distance by default is 1 the Check doesn't raise warning for
+          variables 'a' and 'b' to move them into the block.
+        </p>
+        <p>
+          Case #2:
+        </p>
+        <source>
 int sum = 0;
 for (int i = 0; i &lt; 20; i++) {
   a++;
@@ -5925,17 +7421,17 @@ for (int i = 0; i &lt; 20; i++) {
     res = true;
   }
 }
-         </source>
-         <p>
-           Distance for variable 'sum' = 3.
-         </p>
-         <p>
-           As the distance is more than the default one, the Check
-           raises warning for variable 'sum' to move it into the 'for(...)' block.
-           But there is situation when variable 'sum' hasn't to be 0 within each iteration.
-           So, to avoid such warnings you can use Suppression Filter, provided by
-           Checkstyle, for the whole class.
-         </p>
+        </source>
+        <p>
+          Distance for variable 'sum' = 3.
+        </p>
+        <p>
+          As the distance is more than the default one, the Check
+          raises warning for variable 'sum' to move it into the 'for(...)' block.
+          But there is situation when variable 'sum' hasn't to be 0 within each iteration.
+          So, to avoid such warnings you can use Suppression Filter, provided by
+          Checkstyle, for the whole class.
+        </p>
       </subsection>
 
       <subsection name="Example of Usage" id="VariableDeclarationUsageDistance_Example_of_Usage">
@@ -5984,3 +7480,4 @@ for (int i = 0; i &lt; 20; i++) {
 
   </body>
 </document>
+

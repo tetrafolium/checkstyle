@@ -184,12 +184,8 @@ public class NPathComplexityCheckTest extends AbstractModuleTestSupport {
                 "processingTokenEnd",
                 processingTokenEnd -> {
                     try {
-                        return (Integer) TestUtil.getClassDeclaredField(
-                            processingTokenEnd.getClass(), "endLineNo").get(
-                            processingTokenEnd) == 0
-                            && (Integer) TestUtil.getClassDeclaredField(
-                                processingTokenEnd.getClass(), "endColumnNo").get(
-                                processingTokenEnd) == 0;
+                        return getFieldValue(processingTokenEnd, "endLineNo") == 0
+                            && getFieldValue(processingTokenEnd, "endColumnNo") == 0;
                     }
                     catch (IllegalAccessException | NoSuchFieldException ex) {
                         throw new IllegalStateException(ex);
@@ -205,6 +201,43 @@ public class NPathComplexityCheckTest extends AbstractModuleTestSupport {
         createChecker(checkConfig);
         final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
         verify(checkConfig, getPath("InputNPathComplexityDefault.java"), expected);
+    }
+
+    @Test
+    public void testNpathComplexityRecords() throws Exception {
+        final DefaultConfiguration checkConfig = createModuleConfig(NPathComplexityCheck.class);
+        checkConfig.addAttribute("max", "1");
+
+        final int max = 1;
+
+        final String[] expected = {
+            "11:5: " + getCheckMessage(MSG_KEY, 3, max),
+            "21:9: " + getCheckMessage(MSG_KEY, 2, max),
+            "26:21: " + getCheckMessage(MSG_KEY, 2, max),
+            "40:9: " + getCheckMessage(MSG_KEY, 3, max),
+        };
+
+        verify(checkConfig,
+                getNonCompilablePath("InputNPathComplexityRecords.java"), expected);
+    }
+
+    @Test
+    public void testNpathComplexitySwitchExpression() throws Exception {
+        final DefaultConfiguration checkConfig = createModuleConfig(NPathComplexityCheck.class);
+        checkConfig.addAttribute("max", "1");
+
+        final int max = 1;
+
+        final String[] expected = {
+            "8:5: " + getCheckMessage(MSG_KEY, 5, max),
+            "25:5: " + getCheckMessage(MSG_KEY, 5, max),
+            "40:5: " + getCheckMessage(MSG_KEY, 6, max),
+            "56:5: " + getCheckMessage(MSG_KEY, 6, max),
+            };
+
+        verify(checkConfig,
+            getNonCompilablePath("InputNPathComplexityCheckSwitchExpression.java"),
+            expected);
     }
 
     @Test
@@ -228,6 +261,8 @@ public class NPathComplexityCheckTest extends AbstractModuleTestSupport {
             TokenTypes.QUESTION,
             TokenTypes.LITERAL_RETURN,
             TokenTypes.LITERAL_DEFAULT,
+            TokenTypes.COMPACT_CTOR_DEF,
+            TokenTypes.SWITCH_RULE,
         };
         assertNotNull(actual, "Acceptable tokens should not be null");
         assertArrayEquals(expected, actual, "Invalid acceptable tokens");
@@ -254,6 +289,8 @@ public class NPathComplexityCheckTest extends AbstractModuleTestSupport {
             TokenTypes.QUESTION,
             TokenTypes.LITERAL_RETURN,
             TokenTypes.LITERAL_DEFAULT,
+            TokenTypes.COMPACT_CTOR_DEF,
+            TokenTypes.SWITCH_RULE,
         };
         assertNotNull(actual, "Required tokens should not be null");
         assertArrayEquals(expected, actual, "Invalid required tokens");
@@ -285,6 +322,7 @@ public class NPathComplexityCheckTest extends AbstractModuleTestSupport {
      * visit the same token twice and we are only visiting on very specific tokens.
      * The line can't be removed or reworked as other tests fail, and regression shows us no
      * use cases to create a UT for.
+     *
      * @throws Exception if there is an error.
      */
     @Test
@@ -335,6 +373,7 @@ public class NPathComplexityCheckTest extends AbstractModuleTestSupport {
 
     /**
      * Creates MOCK lexical token and returns AST node for this token.
+     *
      * @param tokenType type of token
      * @param tokenText text of token
      * @param tokenFileName file name of token
@@ -353,6 +392,18 @@ public class NPathComplexityCheckTest extends AbstractModuleTestSupport {
         final DetailAstImpl astSemi = new DetailAstImpl();
         astSemi.initialize(tokenImportSemi);
         return astSemi;
+    }
+
+    /**
+     * Get int value of provided field in object.
+     *
+     * @param object object to get field from
+     * @param fieldName field name
+     * @return int value of field
+     */
+    private static Integer getFieldValue(Object object, String fieldName)
+            throws IllegalAccessException, NoSuchFieldException {
+        return (Integer) TestUtil.getClassDeclaredField(object.getClass(), fieldName).get(object);
     }
 
 }

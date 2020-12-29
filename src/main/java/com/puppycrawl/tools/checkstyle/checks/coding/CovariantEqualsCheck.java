@@ -31,7 +31,7 @@ import com.puppycrawl.tools.checkstyle.utils.CheckUtil;
 
 /**
  * <p>
- * Checks that classes which define a covariant {@code equals()} method
+ * Checks that classes and records which define a covariant {@code equals()} method
  * also override method {@code equals(Object)}.
  * </p>
  * <p>
@@ -50,7 +50,7 @@ import com.puppycrawl.tools.checkstyle.utils.CheckUtil;
  * Finding Bugs is Easy, chapter '4.5 Bad Covariant Definition of Equals (Eq)'</a>:
  * </p>
  * <p>
- * Java classes may override the {@code equals(Object)} method to define
+ * Java classes and records may override the {@code equals(Object)} method to define
  * a predicate for object equality. This method is used by many of the Java
  * runtime library classes; for example, to implement generic containers.
  * </p>
@@ -104,6 +104,41 @@ import com.puppycrawl.tools.checkstyle.utils.CheckUtil;
  *   }
  * }
  * </pre>
+ * <p>
+ * Another example:
+ * </p>
+ * <pre>
+ * record Test(String str) {
+ *   public boolean equals(Test r) {  // violation
+ *     return false;
+ *   }
+ * }
+ * </pre>
+ * <p>
+ * The same record without violations:
+ * </p>
+ * <pre>
+ * record Test(String str) {
+ *   public boolean equals(Test r) {  // no violation
+ *     return false;
+ *   }
+ *
+ *   public boolean equals(Object r) {
+ *     return false;
+ *   }
+ * }
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code covariant.equals}
+ * </li>
+ * </ul>
  *
  * @since 3.2
  */
@@ -126,7 +161,12 @@ public class CovariantEqualsCheck extends AbstractCheck {
 
     @Override
     public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.CLASS_DEF, TokenTypes.LITERAL_NEW, TokenTypes.ENUM_DEF, };
+        return new int[] {
+            TokenTypes.CLASS_DEF,
+            TokenTypes.LITERAL_NEW,
+            TokenTypes.ENUM_DEF,
+            TokenTypes.RECORD_DEF,
+        };
     }
 
     @Override
@@ -168,6 +208,7 @@ public class CovariantEqualsCheck extends AbstractCheck {
 
     /**
      * Tests whether a method's first parameter is an Object.
+     *
      * @param methodDefAst the method definition AST to test.
      *     Precondition: ast is a TokenTypes.METHOD_DEF node.
      * @return true if ast has first parameter of type Object.

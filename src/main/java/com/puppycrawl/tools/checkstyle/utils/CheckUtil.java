@@ -20,15 +20,17 @@
 package com.puppycrawl.tools.checkstyle.utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
-import com.puppycrawl.tools.checkstyle.checks.naming.AccessModifier;
+import com.puppycrawl.tools.checkstyle.checks.naming.AccessModifierOption;
 
 /**
  * Contains utility methods for the checks.
@@ -67,12 +69,16 @@ public final class CheckUtil {
     /** Pattern matching names of getter methods. */
     private static final Pattern GETTER_PATTERN = Pattern.compile("^(is|get)[A-Z].*");
 
+    /** Compiled pattern for all system newlines. */
+    private static final Pattern ALL_NEW_LINES = Pattern.compile("\\R");
+
     /** Prevent instances. */
     private CheckUtil() {
     }
 
     /**
      * Creates {@code FullIdent} for given type node.
+     *
      * @param typeAST a type node.
      * @return {@code FullIdent} for given type.
      */
@@ -89,6 +95,7 @@ public final class CheckUtil {
 
     /**
      * Tests whether a method definition AST defines an equals covariant.
+     *
      * @param ast the method definition AST to test.
      *     Precondition: ast is a TokenTypes.METHOD_DEF node.
      * @return true if ast defines an equals covariant.
@@ -118,6 +125,7 @@ public final class CheckUtil {
 
     /**
      * Returns whether a token represents an ELSE as part of an ELSE / IF set.
+     *
      * @param ast the token to check
      * @return whether it is
      */
@@ -130,6 +138,7 @@ public final class CheckUtil {
 
     /**
      * Returns whether a token represents an ELSE.
+     *
      * @param ast the token to check
      * @return whether the token represents an ELSE
      */
@@ -140,6 +149,7 @@ public final class CheckUtil {
     /**
      * Returns whether a token represents an SLIST as part of an ELSE
      * statement.
+     *
      * @param ast the token to check
      * @return whether the toke does represent an SLIST as part of an ELSE
      */
@@ -152,6 +162,7 @@ public final class CheckUtil {
     /**
      * Returns the value represented by the specified string of the specified
      * type. Returns 0 for types other than float, double, int, and long.
+     *
      * @param text the string to be parsed.
      * @param type the token type of the text. Should be a constant of
      *     {@link TokenTypes}.
@@ -193,6 +204,7 @@ public final class CheckUtil {
      * Parses the string argument as an integer or a long in the radix specified by
      * the second argument. The characters in the string must all be digits of
      * the specified radix.
+     *
      * @param text the String containing the integer representation to be
      *     parsed. Precondition: text contains a parsable int.
      * @param radix the radix to be used while parsing text.
@@ -233,6 +245,7 @@ public final class CheckUtil {
 
     /**
      * Finds sub-node for given node minimal (line, column) pair.
+     *
      * @param node the root of tree for search.
      * @return sub-node with minimal (line, column) pair.
      */
@@ -252,6 +265,7 @@ public final class CheckUtil {
 
     /**
      * Retrieves whether ast1 is located before ast2.
+     *
      * @param ast1 the first node.
      * @param ast2 the second node.
      * @return true, if ast1 is located before ast2.
@@ -264,6 +278,7 @@ public final class CheckUtil {
 
     /**
      * Retrieves the names of the type parameters to the node.
+     *
      * @param node the parameterized AST node
      * @return a list of type parameter names
      */
@@ -293,6 +308,7 @@ public final class CheckUtil {
 
     /**
      * Retrieves the type parameters to the node.
+     *
      * @param node the parameterized AST node
      * @return a list of type parameter names
      */
@@ -320,6 +336,7 @@ public final class CheckUtil {
 
     /**
      * Returns whether an AST represents a setter method.
+     *
      * @param ast the AST to check with
      * @return whether the AST represents a setter method
      */
@@ -357,6 +374,7 @@ public final class CheckUtil {
 
     /**
      * Returns whether an AST represents a getter method.
+     *
      * @param ast the AST to check with
      * @return whether the AST represents a getter method
      */
@@ -420,30 +438,32 @@ public final class CheckUtil {
     }
 
     /**
-     * Returns {@link AccessModifier} based on the information about access modifier
+     * Returns {@link AccessModifierOption} based on the information about access modifier
      * taken from the given token of type {@link TokenTypes#MODIFIERS}.
+     *
      * @param modifiersToken token of type {@link TokenTypes#MODIFIERS}.
-     * @return {@link AccessModifier}.
+     * @return {@link AccessModifierOption}.
      * @throws IllegalArgumentException when expected non-null modifiersToken with type 'MODIFIERS'
      */
-    public static AccessModifier getAccessModifierFromModifiersToken(DetailAST modifiersToken) {
+    public static AccessModifierOption
+        getAccessModifierFromModifiersToken(DetailAST modifiersToken) {
         if (modifiersToken == null || modifiersToken.getType() != TokenTypes.MODIFIERS) {
             throw new IllegalArgumentException("expected non-null AST-token with type 'MODIFIERS'");
         }
 
         // default access modifier
-        AccessModifier accessModifier = AccessModifier.PACKAGE;
+        AccessModifierOption accessModifier = AccessModifierOption.PACKAGE;
         for (DetailAST token = modifiersToken.getFirstChild(); token != null;
              token = token.getNextSibling()) {
             final int tokenType = token.getType();
             if (tokenType == TokenTypes.LITERAL_PUBLIC) {
-                accessModifier = AccessModifier.PUBLIC;
+                accessModifier = AccessModifierOption.PUBLIC;
             }
             else if (tokenType == TokenTypes.LITERAL_PROTECTED) {
-                accessModifier = AccessModifier.PROTECTED;
+                accessModifier = AccessModifierOption.PROTECTED;
             }
             else if (tokenType == TokenTypes.LITERAL_PRIVATE) {
-                accessModifier = AccessModifier.PRIVATE;
+                accessModifier = AccessModifierOption.PRIVATE;
             }
         }
         return accessModifier;
@@ -469,4 +489,72 @@ public final class CheckUtil {
         return illegalClassNames;
     }
 
+    /**
+     * Strip initial newline and preceding whitespace on each line from text block content.
+     * In order to be consistent with how javac handles this task, we have modeled this
+     * implementation after the code from:
+     * github.com/openjdk/jdk14u/blob/master/src/java.base/share/classes/java/lang/String.java
+     *
+     * @param textBlockContent the actual content of the text block.
+     * @return string consistent with javac representation.
+     */
+    public static String stripIndentAndInitialNewLineFromTextBlock(String textBlockContent) {
+        final String contentWithInitialNewLineRemoved =
+            ALL_NEW_LINES.matcher(textBlockContent).replaceFirst("");
+        final List<String> lines =
+            Arrays.asList(ALL_NEW_LINES.split(contentWithInitialNewLineRemoved));
+        final int indent = getSmallestIndent(lines);
+        final String suffix = "";
+
+        return lines.stream()
+                .map(line -> stripIndentAndTrailingWhitespaceFromLine(line, indent))
+                .collect(Collectors.joining(System.lineSeparator(), suffix, suffix));
+    }
+
+    /**
+     * Helper method for stripIndentAndInitialNewLineFromTextBlock, strips correct indent
+     * from string, and trailing whitespace, or returns empty string if no text.
+     *
+     * @param line the string to strip indent and trailing whitespace from
+     * @param indent the amount of indent to remove
+     * @return modified string with removed indent and trailing whitespace, or empty string.
+     */
+    private static String stripIndentAndTrailingWhitespaceFromLine(String line, int indent) {
+        final int lastNonWhitespace = lastIndexOfNonWhitespace(line);
+        String returnString = "";
+        if (lastNonWhitespace > 0) {
+            returnString = line.substring(indent, lastNonWhitespace);
+        }
+        return returnString;
+    }
+
+    /**
+     * Helper method for stripIndentAndInitialNewLineFromTextBlock, to determine the smallest
+     * indent in a text block string literal.
+     *
+     * @param lines list of actual text block content, split by line.
+     * @return number of spaces representing the smallest indent in this text block.
+     */
+    private static int getSmallestIndent(List<String> lines) {
+        return lines.stream()
+            .mapToInt(CommonUtil::indexOfNonWhitespace)
+            .min()
+            .orElse(0);
+    }
+
+    /**
+     * Helper method to find the index of the last non-whitespace character in a string.
+     *
+     * @param line the string to find the last index of a non-whitespace character for.
+     * @return the index of the last non-whitespace character.
+     */
+    private static int lastIndexOfNonWhitespace(String line) {
+        int length;
+        for (length = line.length(); length > 0; length--) {
+            if (!Character.isWhitespace(line.charAt(length - 1))) {
+                break;
+            }
+        }
+        return length;
+    }
 }

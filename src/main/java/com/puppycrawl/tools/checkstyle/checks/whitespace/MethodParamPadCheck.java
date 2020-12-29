@@ -43,14 +43,18 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * <li>
  * Property {@code allowLineBreaks} - Allow a line break between the identifier
  * and left parenthesis.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * <li>
  * Property {@code option} - Specify policy on how to pad method parameter.
+ * Type is {@code com.puppycrawl.tools.checkstyle.checks.whitespace.PadOption}.
  * Default value is {@code nospace}.
  * </li>
  * <li>
  * Property {@code tokens} - tokens to check
+ * Type is {@code java.lang.String[]}.
+ * Validation type is {@code tokenSet}.
  * Default value is:
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
  * CTOR_DEF</a>,
@@ -63,7 +67,9 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#SUPER_CTOR_CALL">
  * SUPER_CTOR_CALL</a>,
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#ENUM_CONSTANT_DEF">
- * ENUM_CONSTANT_DEF</a>.
+ * ENUM_CONSTANT_DEF</a>,
+ * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RECORD_DEF">
+ * RECORD_DEF</a>.
  * </li>
  * </ul>
  * <p>
@@ -71,6 +77,23 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * </p>
  * <pre>
  * &lt;module name="MethodParamPad"/&gt;
+ * </pre>
+ * <pre>
+ * public class Test {
+ *  public Test() { // OK
+ *     super(); // OK
+ *   }
+ *
+ *   public Test (int aParam) { // Violation - '(' is preceded with whitespace
+ *     super (); // Violation - '(' is preceded with whitespace
+ *   }
+ *
+ *   public void method() {} // OK
+ *
+ *   public void methodWithVeryLongName
+ *     () {} // Violation - '(' is preceded with whitespace
+ *
+ * }
  * </pre>
  * <p>
  * To configure the check to require a space
@@ -84,6 +107,40 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  *   &lt;property name="allowLineBreaks" value="true"/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <pre>
+ * public class Test {
+ *   public Test() { // OK
+ *     super(); // OK
+ *   }
+ *
+ *   public Test (int aParam) { // OK
+ *     super (); // OK
+ *   }
+ *
+ *   public void method() {} // Violation - '(' is NOT preceded with whitespace
+ *
+ *   public void methodWithVeryLongName
+ *     () {} // OK, because allowLineBreaks is true
+ *
+ * }
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code line.previous}
+ * </li>
+ * <li>
+ * {@code ws.notPreceded}
+ * </li>
+ * <li>
+ * {@code ws.preceded}
+ * </li>
+ * </ul>
  *
  * @since 3.4
  */
@@ -132,6 +189,7 @@ public class MethodParamPadCheck
             TokenTypes.METHOD_DEF,
             TokenTypes.SUPER_CTOR_CALL,
             TokenTypes.ENUM_CONSTANT_DEF,
+            TokenTypes.RECORD_DEF,
         };
     }
 
@@ -174,6 +232,7 @@ public class MethodParamPadCheck
 
     /**
      * Setter to allow a line break between the identifier and left parenthesis.
+     *
      * @param allowLineBreaks whether whitespace should be
      *     flagged at line breaks.
      */
@@ -183,6 +242,7 @@ public class MethodParamPadCheck
 
     /**
      * Setter to specify policy on how to pad method parameter.
+     *
      * @param optionStr string to decode option from
      * @throws IllegalArgumentException if unable to decode
      */

@@ -38,19 +38,26 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * <ul>
  * <li>
  * Property {@code max} - Specify the maximum number of lines allowed.
+ * Type is {@code int}.
  * Default value is {@code 150}.
  * </li>
  * <li>
  * Property {@code countEmpty} - Control whether to count empty lines and single
  * line comments of the form {@code //}.
+ * Type is {@code boolean}.
  * Default value is {@code true}.
  * </li>
  * <li>
- * Property {@code tokens} - tokens to check Default value is:
+ * Property {@code tokens} - tokens to check
+ * Type is {@code java.lang.String[]}.
+ * Validation type is {@code tokenSet}.
+ * Default value is:
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#METHOD_DEF">
  * METHOD_DEF</a>,
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
- * CTOR_DEF</a>.
+ * CTOR_DEF</a>,
+ * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COMPACT_CTOR_DEF">
+ * COMPACT_CTOR_DEF</a>.
  * </li>
  * </ul>
  * <p>
@@ -79,6 +86,17 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  *   &lt;property name="countEmpty" value="false"/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code maxLen.method}
+ * </li>
+ * </ul>
  *
  * @since 3.0
  */
@@ -107,7 +125,11 @@ public class MethodLengthCheck extends AbstractCheck {
 
     @Override
     public int[] getAcceptableTokens() {
-        return new int[] {TokenTypes.METHOD_DEF, TokenTypes.CTOR_DEF};
+        return new int[] {
+            TokenTypes.METHOD_DEF,
+            TokenTypes.CTOR_DEF,
+            TokenTypes.COMPACT_CTOR_DEF,
+        };
     }
 
     @Override
@@ -130,6 +152,7 @@ public class MethodLengthCheck extends AbstractCheck {
 
     /**
      * Returns length of code only without comments and blank lines.
+     *
      * @param openingBrace block opening brace
      * @param closingBrace block closing brace
      * @return number of lines with code for current block

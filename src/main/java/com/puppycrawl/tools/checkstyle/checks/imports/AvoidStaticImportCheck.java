@@ -51,7 +51,8 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * a star notation to be excluded such as {@code java.lang.Math.*} or specific
  * static members to be excluded like {@code java.lang.System.out} for a variable
  * or {@code java.lang.Math.random} for a method. See notes section for details.
- * Default value is {@code {}}.
+ * Type is {@code java.lang.String[]}.
+ * Default value is {@code ""}.
  * </li>
  * </ul>
  * <p>
@@ -59,6 +60,13 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * </p>
  * <pre>
  * &lt;module name="AvoidStaticImport"/&gt;
+ * </pre>
+ * <p>Example:</p>
+ * <pre>
+ * import static java.lang.Math.pow;          // violation
+ * import static java.lang.System.*;          // violation
+ * import java.io.File;                       // OK
+ * import java.util.*;                        // OK
  * </pre>
  * <p>
  * To configure the check so that the {@code java.lang.System.out} member and all
@@ -69,6 +77,25 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  *   &lt;property name="excludes" value="java.lang.System.out,java.lang.Math.*"/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>Example:</p>
+ * <pre>
+ * import static java.lang.Math.*;            // OK
+ * import static java.lang.System.out;        // OK
+ * import static java.lang.Integer.parseInt;  // violation
+ * import java.io.*;                          // OK
+ * import java.util.*;                        // OK
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code import.avoidStatic}
+ * </li>
+ * </ul>
  *
  * @since 5.0
  */
@@ -125,7 +152,7 @@ public class AvoidStaticImportCheck
         final FullIdent name = FullIdent.createFullIdent(startingDot);
 
         if (!isExempt(name.getText())) {
-            log(startingDot.getLineNo(), MSG_KEY, name.getText());
+            log(startingDot, MSG_KEY, name.getText());
         }
     }
 
@@ -152,6 +179,7 @@ public class AvoidStaticImportCheck
     /**
      * Returns true if classOrStaticMember is a starred name of package,
      *  not just member name.
+     *
      * @param classOrStaticMember - full name of member
      * @param exclude - current exclusion
      * @return true if member in exclusion list

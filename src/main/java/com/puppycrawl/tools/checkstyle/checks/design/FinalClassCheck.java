@@ -41,6 +41,57 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * <pre>
  * &lt;module name=&quot;FinalClass&quot;/&gt;
  * </pre>
+ * <p>
+ * Example:
+ * </p>
+ * <pre>
+ * final class MyClass {  // OK
+ *   private MyClass() { }
+ * }
+ *
+ * class MyClass { // violation, class should be declared final
+ *   private MyClass() { }
+ * }
+ *
+ * class MyClass { // OK, since it has a public constructor
+ *   int field1;
+ *   String field2;
+ *   private MyClass(int value) {
+ *     this.field1 = value;
+ *     this.field2 = " ";
+ *   }
+ *   public MyClass(String value) {
+ *     this.field2 = value;
+ *     this.field1 = 0;
+ *   }
+ * }
+ *
+ * interface CheckInterface
+ * {
+ *   class MyClass { // OK, nested class in interface is always final
+ *     private MyClass() {}
+ *   }
+ * }
+ *
+ * public @interface Test {
+ *   public boolean enabled()
+ *   default true;
+ *   class MyClass { // OK, class nested in an annotation is always final
+ *     private MyClass() { }
+ *   }
+ * }
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code final.class}
+ * </li>
+ * </ul>
  *
  * @since 3.1
  */
@@ -106,7 +157,7 @@ public class FinalClassCheck
                 break;
 
             case TokenTypes.CTOR_DEF:
-                if (!ScopeUtil.isInEnumBlock(ast)) {
+                if (!ScopeUtil.isInEnumBlock(ast) && !ScopeUtil.isInRecordBlock(ast)) {
                     final ClassDesc desc = classes.peek();
                     if (modifiers.findFirstToken(TokenTypes.LITERAL_PRIVATE) == null) {
                         desc.registerNonPrivateCtor();
@@ -134,13 +185,14 @@ public class FinalClassCheck
                 && !ScopeUtil.isInInterfaceOrAnnotationBlock(ast)) {
                 final String qualifiedName = desc.getQualifiedName();
                 final String className = getClassNameFromQualifiedName(qualifiedName);
-                log(ast.getLineNo(), MSG_KEY, className);
+                log(ast, MSG_KEY, className);
             }
         }
     }
 
     /**
      * Get name of class (with qualified package if specified) in {@code ast}.
+     *
      * @param ast ast to extract class name from
      * @return qualified name
      */
@@ -151,6 +203,7 @@ public class FinalClassCheck
     /**
      * Register to outer super classes of given classAst that
      * given classAst is extending them.
+     *
      * @param classAst class which outer super classes will be
      *                 informed about nesting subclass
      */
@@ -169,6 +222,7 @@ public class FinalClassCheck
 
     /**
      * Get qualified class name from given class Ast.
+     *
      * @param classAst class to get qualified class name
      * @return qualified class name of a class
      */
@@ -184,6 +238,7 @@ public class FinalClassCheck
     /**
      * Calculate qualified class name(package + class name) laying inside given
      * outer class.
+     *
      * @param packageName package name, empty string on default package
      * @param outerClassQualifiedName qualified name(package + class) of outer class,
      *                           null if doesn't exist
@@ -210,6 +265,7 @@ public class FinalClassCheck
 
     /**
      * Get super class name of given class.
+     *
      * @param classAst class
      * @return super class name or null if super class is not specified
      */
@@ -224,6 +280,7 @@ public class FinalClassCheck
 
     /**
      * Checks if given super class name in extend clause match super class qualified name.
+     *
      * @param superClassQualifiedName super class qualified name (with package)
      * @param superClassInExtendClause name in extend clause
      * @return true if given super class name in extend clause match super class qualified name,
@@ -240,6 +297,7 @@ public class FinalClassCheck
 
     /**
      * Get class name from qualified name.
+     *
      * @param qualifiedName qualified class name
      * @return class name
      */
@@ -270,6 +328,7 @@ public class FinalClassCheck
 
         /**
          *  Create a new ClassDesc instance.
+         *
          *  @param qualifiedName qualified class name(with package)
          *  @param declaredAsFinal indicates if the
          *         class declared as final
@@ -285,6 +344,7 @@ public class FinalClassCheck
 
         /**
          * Get qualified class name.
+         *
          * @return qualified class name
          */
         private String getQualifiedName() {
@@ -308,6 +368,7 @@ public class FinalClassCheck
 
         /**
          *  Does class have private ctors.
+         *
          *  @return true if class has private ctors
          */
         private boolean isWithPrivateCtor() {
@@ -316,6 +377,7 @@ public class FinalClassCheck
 
         /**
          *  Does class have non-private ctors.
+         *
          *  @return true if class has non-private ctors
          */
         private boolean isWithNonPrivateCtor() {
@@ -324,6 +386,7 @@ public class FinalClassCheck
 
         /**
          * Does class have nested subclass.
+         *
          * @return true if class has nested subclass
          */
         private boolean isWithNestedSubclass() {
@@ -332,6 +395,7 @@ public class FinalClassCheck
 
         /**
          *  Is class declared as final.
+         *
          *  @return true if class is declared as final
          */
         private boolean isDeclaredAsFinal() {
@@ -340,6 +404,7 @@ public class FinalClassCheck
 
         /**
          *  Is class declared as abstract.
+         *
          *  @return true if class is declared as final
          */
         private boolean isDeclaredAsAbstract() {

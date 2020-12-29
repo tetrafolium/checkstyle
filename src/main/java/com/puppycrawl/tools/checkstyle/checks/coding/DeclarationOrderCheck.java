@@ -33,7 +33,7 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
 
 /**
  * <p>
- * Checks that the parts of a class or interface declaration appear in the order
+ * Checks that the parts of a class, record, or interface declaration appear in the order
  * suggested by the
  * <a href="https://checkstyle.org/styleguides/sun-code-conventions-19990420/CodeConventions.doc2.html#a1852">
  * Code Conventions for the Java Programming Language</a>.
@@ -74,10 +74,12 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * <ul>
  * <li>
  * Property {@code ignoreConstructors} - control whether to ignore constructors.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * <li>
  * Property {@code ignoreModifiers} - control whether to ignore modifiers (fields, ...).
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * </ul>
@@ -119,6 +121,26 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  *   int b; &lt;-- &quot;Instance variable definition in wrong order&quot;
  * }
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code declaration.order.access}
+ * </li>
+ * <li>
+ * {@code declaration.order.constructor}
+ * </li>
+ * <li>
+ * {@code declaration.order.instance}
+ * </li>
+ * <li>
+ * {@code declaration.order.static}
+ * </li>
+ * </ul>
  *
  * @since 3.2
  */
@@ -193,6 +215,7 @@ public class DeclarationOrderCheck extends AbstractCheck {
             TokenTypes.MODIFIERS,
             TokenTypes.OBJBLOCK,
             TokenTypes.VARIABLE_DEF,
+            TokenTypes.COMPACT_CTOR_DEF,
         };
     }
 
@@ -217,6 +240,7 @@ public class DeclarationOrderCheck extends AbstractCheck {
                 }
                 break;
             case TokenTypes.CTOR_DEF:
+            case TokenTypes.COMPACT_CTOR_DEF:
                 if (parentType == TokenTypes.OBJBLOCK) {
                     processConstructor(ast);
                 }
@@ -241,6 +265,7 @@ public class DeclarationOrderCheck extends AbstractCheck {
 
     /**
      * Processes constructor.
+     *
      * @param ast constructor AST.
      */
     private void processConstructor(DetailAST ast) {
@@ -257,6 +282,7 @@ public class DeclarationOrderCheck extends AbstractCheck {
 
     /**
      * Processes modifiers.
+     *
      * @param ast ast of Modifiers.
      */
     private void processModifiers(DetailAST ast) {
@@ -270,6 +296,7 @@ public class DeclarationOrderCheck extends AbstractCheck {
      * ({@code STATE_STATIC_VARIABLE_DEF}, {@code STATE_INSTANCE_VARIABLE_DEF},
      * ({@code STATE_CTOR_DEF}, {@code STATE_METHOD_DEF}), if it is
      * it updates states where appropriate or logs violation.
+     *
      * @param modifierAst modifiers to process
      * @param state current state
      * @return true if modifierAst is valid in given state, false otherwise
@@ -305,6 +332,7 @@ public class DeclarationOrderCheck extends AbstractCheck {
      * Checks if given modifiers are valid in substate of given
      * state({@code Scope}), if it is it updates substate or else it
      * logs violation.
+     *
      * @param modifiersAst modifiers to process
      * @param state current state
      * @param isStateValid is main state for given modifiers is valid
@@ -326,6 +354,7 @@ public class DeclarationOrderCheck extends AbstractCheck {
 
     /**
      * Checks whether an identifier references a field which has been already defined in class.
+     *
      * @param fieldDef a field definition.
      * @return true if an identifier references a field which has been already defined in class.
      */
@@ -344,6 +373,7 @@ public class DeclarationOrderCheck extends AbstractCheck {
 
     /**
      * Collects all tokens of specific type starting with the current ast node.
+     *
      * @param ast ast node.
      * @param tokenType token type.
      * @return a set of all tokens of specific type starting with the current ast node.
@@ -378,6 +408,7 @@ public class DeclarationOrderCheck extends AbstractCheck {
 
     /**
      * Setter to control whether to ignore constructors.
+     *
      * @param ignoreConstructors whether to ignore constructors.
      */
     public void setIgnoreConstructors(boolean ignoreConstructors) {
@@ -386,6 +417,7 @@ public class DeclarationOrderCheck extends AbstractCheck {
 
     /**
      * Setter to control whether to ignore modifiers (fields, ...).
+     *
      * @param ignoreModifiers whether to ignore modifiers.
      */
     public void setIgnoreModifiers(boolean ignoreModifiers) {

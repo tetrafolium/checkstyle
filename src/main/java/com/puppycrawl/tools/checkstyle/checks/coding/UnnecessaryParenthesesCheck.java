@@ -19,6 +19,8 @@
 
 package com.puppycrawl.tools.checkstyle.checks.coding;
 
+import java.util.regex.Pattern;
+
 import com.puppycrawl.tools.checkstyle.FileStatefulCheck;
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -52,6 +54,8 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * <ul>
  * <li>
  * Property {@code tokens} - tokens to check
+ * Type is {@code java.lang.String[]}.
+ * Validation type is {@code tokenSet}.
  * Default value is:
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#EXPR">
  * EXPR</a>,
@@ -98,7 +102,9 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STAR_ASSIGN">
  * STAR_ASSIGN</a>,
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LAMBDA">
- * LAMBDA</a>.
+ * LAMBDA</a>,
+ * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#TEXT_BLOCK_LITERAL_BEGIN">
+ * TEXT_BLOCK_LITERAL_BEGIN</a>.
  * </li>
  * </ul>
  * <p>
@@ -126,6 +132,35 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  *   .filter((s) -&gt; s.startsWith(&quot;c&quot;)) //violation
  *   .forEach(System.out::println);
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code unnecessary.paren.assign}
+ * </li>
+ * <li>
+ * {@code unnecessary.paren.expr}
+ * </li>
+ * <li>
+ * {@code unnecessary.paren.ident}
+ * </li>
+ * <li>
+ * {@code unnecessary.paren.lambda}
+ * </li>
+ * <li>
+ * {@code unnecessary.paren.literal}
+ * </li>
+ * <li>
+ * {@code unnecessary.paren.return}
+ * </li>
+ * <li>
+ * {@code unnecessary.paren.string}
+ * </li>
+ * </ul>
  *
  * @since 3.4
  */
@@ -174,6 +209,16 @@ public class UnnecessaryParenthesesCheck extends AbstractCheck {
      */
     public static final String MSG_LAMBDA = "unnecessary.paren.lambda";
 
+    /**
+     * Compiled pattern used to match newline control characters, for replacement.
+     */
+    private static final Pattern NEWLINE = Pattern.compile("\\R");
+
+    /**
+     * String used to amend TEXT_BLOCK_CONTENT so that it matches STRING_LITERAL.
+     */
+    private static final String QUOTE = "\"";
+
     /** The maximum string length before we chop the string. */
     private static final int MAX_QUOTED_LENGTH = 25;
 
@@ -187,6 +232,7 @@ public class UnnecessaryParenthesesCheck extends AbstractCheck {
         TokenTypes.LITERAL_NULL,
         TokenTypes.LITERAL_FALSE,
         TokenTypes.LITERAL_TRUE,
+        TokenTypes.TEXT_BLOCK_LITERAL_BEGIN,
     };
 
     /** Token types for assignment operations. */
@@ -239,6 +285,7 @@ public class UnnecessaryParenthesesCheck extends AbstractCheck {
             TokenTypes.SR_ASSIGN,
             TokenTypes.STAR_ASSIGN,
             TokenTypes.LAMBDA,
+            TokenTypes.TEXT_BLOCK_LITERAL_BEGIN,
         };
     }
 
@@ -268,6 +315,7 @@ public class UnnecessaryParenthesesCheck extends AbstractCheck {
             TokenTypes.SR_ASSIGN,
             TokenTypes.STAR_ASSIGN,
             TokenTypes.LAMBDA,
+            TokenTypes.TEXT_BLOCK_LITERAL_BEGIN,
         };
     }
 
@@ -300,6 +348,15 @@ public class UnnecessaryParenthesesCheck extends AbstractCheck {
                 if (type == TokenTypes.STRING_LITERAL) {
                     log(ast, MSG_STRING,
                         chopString(ast.getText()));
+                }
+                else if (type == TokenTypes.TEXT_BLOCK_LITERAL_BEGIN) {
+                    // Strip newline control characters to keep message as single line, add
+                    // quotes to make string consistent with STRING_LITERAL
+                    final String logString = QUOTE
+                        + NEWLINE.matcher(
+                            ast.getFirstChild().getText()).replaceAll("\\\\n")
+                        + QUOTE;
+                    log(ast, MSG_STRING, chopString(logString));
                 }
                 else {
                     log(ast, MSG_LITERAL, ast.getText());
@@ -355,6 +412,7 @@ public class UnnecessaryParenthesesCheck extends AbstractCheck {
      * In short, does {@code ast} have a previous sibling whose type is
      * {@code TokenTypes.LPAREN} and a next sibling whose type is {@code
      * TokenTypes.RPAREN}.
+     *
      * @param ast the {@code DetailAST} to check if it is surrounded by
      *        parentheses.
      * @return {@code true} if {@code ast} is surrounded by
@@ -369,6 +427,7 @@ public class UnnecessaryParenthesesCheck extends AbstractCheck {
 
     /**
      * Tests if the given expression node is surrounded by parentheses.
+     *
      * @param ast a {@code DetailAST} whose type is
      *        {@code TokenTypes.EXPR}.
      * @return {@code true} if the expression is surrounded by
@@ -381,6 +440,7 @@ public class UnnecessaryParenthesesCheck extends AbstractCheck {
     /**
      * Tests if the given lambda node has a single parameter, no defined type, and is surrounded
      * by parentheses.
+     *
      * @param ast a {@code DetailAST} whose type is
      *        {@code TokenTypes.LAMBDA}.
      * @return {@code true} if the lambda has a single parameter, no defined type, and is
@@ -389,7 +449,7 @@ public class UnnecessaryParenthesesCheck extends AbstractCheck {
     private static boolean isLambdaSingleParameterSurrounded(DetailAST ast) {
         final DetailAST firstChild = ast.getFirstChild();
         boolean result = false;
-        if (firstChild.getType() == TokenTypes.LPAREN) {
+        if (firstChild != null && firstChild.getType() == TokenTypes.LPAREN) {
             final DetailAST parameters = firstChild.getNextSibling();
             if (parameters.getChildCount(TokenTypes.PARAMETER_DEF) == 1
                     && !parameters.getFirstChild().findFirstToken(TokenTypes.TYPE).hasChildren()) {
@@ -401,6 +461,7 @@ public class UnnecessaryParenthesesCheck extends AbstractCheck {
 
     /**
      * Check if the given token type can be found in an array of token types.
+     *
      * @param type the token type.
      * @param tokens an array of token types to search.
      * @return {@code true} if {@code type} was found in {@code
@@ -422,6 +483,7 @@ public class UnnecessaryParenthesesCheck extends AbstractCheck {
      * Returns the specified string chopped to {@code MAX_QUOTED_LENGTH}
      * plus an ellipsis (...) if the length of the string exceeds {@code
      * MAX_QUOTED_LENGTH}.
+     *
      * @param value the string to potentially chop.
      * @return the chopped string if {@code string} is longer than
      *         {@code MAX_QUOTED_LENGTH}; otherwise {@code string}.

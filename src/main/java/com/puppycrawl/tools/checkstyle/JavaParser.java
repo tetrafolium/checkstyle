@@ -32,6 +32,7 @@ import antlr.RecognitionException;
 import antlr.Token;
 import antlr.TokenStreamException;
 import antlr.TokenStreamHiddenTokenFilter;
+import antlr.TokenStreamSelector;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FileContents;
@@ -39,6 +40,7 @@ import com.puppycrawl.tools.checkstyle.api.FileText;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.grammar.GeneratedJavaLexer;
 import com.puppycrawl.tools.checkstyle.grammar.GeneratedJavaRecognizer;
+import com.puppycrawl.tools.checkstyle.grammar.GeneratedTextBlockLexer;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
 /**
@@ -71,6 +73,7 @@ public final class JavaParser {
 
     /**
      * Static helper method to parses a Java source file.
+     *
      * @param contents contains the contents of the file
      * @return the root of the AST
      * @throws CheckstyleException if the contents is not a valid Java source
@@ -81,13 +84,25 @@ public final class JavaParser {
         final Reader reader = new StringReader(fullText);
         final GeneratedJavaLexer lexer = new GeneratedJavaLexer(reader);
         lexer.setCommentListener(contents);
-        lexer.setTokenObjectClass("antlr.CommonHiddenStreamToken");
+
+        final GeneratedTextBlockLexer textBlockLexer =
+                new GeneratedTextBlockLexer(lexer.getInputState());
+
+        final String tokenObjectClass = "antlr.CommonHiddenStreamToken";
+        lexer.setTokenObjectClass(tokenObjectClass);
+        textBlockLexer.setTokenObjectClass(tokenObjectClass);
 
         final TokenStreamHiddenTokenFilter filter = new TokenStreamHiddenTokenFilter(lexer);
         filter.hide(TokenTypes.SINGLE_LINE_COMMENT);
         filter.hide(TokenTypes.BLOCK_COMMENT_BEGIN);
 
-        final GeneratedJavaRecognizer parser = new GeneratedJavaRecognizer(filter) {
+        final TokenStreamSelector selector = new TokenStreamSelector();
+        lexer.selector = selector;
+        textBlockLexer.selector = selector;
+        selector.addInputStream(textBlockLexer, "textBlockLexer");
+        selector.select(filter);
+
+        final GeneratedJavaRecognizer parser = new GeneratedJavaRecognizer(selector) {
             @Override
             public void reportError(RecognitionException ex) {
                 throw new IllegalStateException(ex);
@@ -110,6 +125,7 @@ public final class JavaParser {
 
     /**
      * Parse a text and return the parse tree.
+     *
      * @param text the text to parse
      * @param options {@link Options} to control inclusion of comment nodes
      * @return the root node of the parse tree
@@ -127,6 +143,7 @@ public final class JavaParser {
 
     /**
      * Parses Java source file.
+     *
      * @param file the file to parse
      * @param options {@link Options} to control inclusion of comment nodes
      * @return DetailAST tree
@@ -136,7 +153,7 @@ public final class JavaParser {
     public static DetailAST parseFile(File file, Options options)
             throws IOException, CheckstyleException {
         final FileText text = new FileText(file.getAbsoluteFile(),
-            System.getProperty("file.encoding", StandardCharsets.UTF_8.name()));
+            StandardCharsets.UTF_8.name());
         return parseFileText(text, options);
     }
 
@@ -144,6 +161,7 @@ public final class JavaParser {
      * Appends comment nodes to existing AST.
      * It traverses each node in AST, looks for hidden comment tokens
      * and appends found comment tokens as nodes in AST.
+     *
      * @param root of AST
      * @return root of AST with comment nodes
      */
@@ -199,6 +217,7 @@ public final class JavaParser {
     /**
      * Create comment AST from token. Depending on token type
      * SINGLE_LINE_COMMENT or BLOCK_COMMENT_BEGIN is created.
+     *
      * @param token to create the AST
      * @return DetailAST of comment node
      */
@@ -215,6 +234,7 @@ public final class JavaParser {
 
     /**
      * Create single-line comment from token.
+     *
      * @param token to create the AST
      * @return DetailAST with SINGLE_LINE_COMMENT type
      */

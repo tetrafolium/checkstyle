@@ -45,16 +45,19 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * <ul>
  * <li>
  * Property {@code excludes} - Specify packages where star imports are allowed.
- * Default value is {@code {}}.
+ * Type is {@code java.lang.String[]}.
+ * Default value is {@code ""}.
  * </li>
  * <li>
  * Property {@code allowClassImports} - Control whether to allow starred class
  * imports like {@code import java.util.*;}.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * <li>
  * Property {@code allowStaticMemberImports} - Control whether to allow starred
  * static member imports like {@code import static org.junit.Assert.*;}.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * </ul>
@@ -63,6 +66,14 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * </p>
  * <pre>
  * &lt;module name="AvoidStarImport"/&gt;
+ * </pre>
+ * <p>Example:</p>
+ * <pre>
+ * import java.util.Scanner;         // OK
+ * import java.io.*;                 // violation
+ * import static java.lang.Math.*;   // violation
+ * import java.util.*;               // violation
+ * import java.net.*;                // violation
  * </pre>
  * <p>
  * To configure the check so that star imports from packages
@@ -74,6 +85,57 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  *   &lt;property name="excludes" value="java.io,java.net,java.lang.Math"/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>Example:</p>
+ * <pre>
+ * import java.util.Scanner;         // OK
+ * import java.io.*;                 // OK
+ * import static java.lang.Math.*;   // OK
+ * import java.util.*;               // violation
+ * import java.net.*;                // OK
+ * </pre>
+ * <p>
+ * To configure the check so that star imports from all packages are allowed:
+ * </p>
+ * <pre>
+ * &lt;module name="AvoidStarImport"&gt;
+ *   &lt;property name="allowClassImports" value="true"/&gt;
+ * &lt;/module&gt;
+ * </pre>
+ * <p>Example:</p>
+ * <pre>
+ * import java.util.Scanner;         // OK
+ * import java.io.*;                 // OK
+ * import static java.lang.Math.*;   // violation
+ * import java.util.*;               // OK
+ * import java.net.*;                // OK
+ * </pre>
+ * <p>
+ * To configure the check so that starred static member imports from all packages are allowed:
+ * </p>
+ * <pre>
+ * &lt;module name="AvoidStarImport"&gt;
+ *   &lt;property name="allowStaticMemberImports" value="true"/&gt;
+ * &lt;/module&gt;
+ * </pre>
+ * <p>Example:</p>
+ * <pre>
+ * import java.util.Scanner;         // OK
+ * import java.io.*;                 // violation
+ * import static java.lang.Math.*;   // OK
+ * import java.util.*;               // violation
+ * import java.net.*;                // violation
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code import.avoidStar}
+ * </li>
+ * </ul>
  *
  * @since 3.0
  */
@@ -168,12 +230,13 @@ public class AvoidStarImportCheck
 
     @Override
     public void visitToken(final DetailAST ast) {
-        if (!allowClassImports && ast.getType() == TokenTypes.IMPORT) {
-            final DetailAST startingDot = ast.getFirstChild();
-            logsStarredImportViolation(startingDot);
+        if (ast.getType() == TokenTypes.IMPORT) {
+            if (!allowClassImports) {
+                final DetailAST startingDot = ast.getFirstChild();
+                logsStarredImportViolation(startingDot);
+            }
         }
-        else if (!allowStaticMemberImports
-            && ast.getType() == TokenTypes.STATIC_IMPORT) {
+        else if (!allowStaticMemberImports) {
             // must navigate past the static keyword
             final DetailAST startingDot = ast.getFirstChild().getNextSibling();
             logsStarredImportViolation(startingDot);
@@ -183,13 +246,14 @@ public class AvoidStarImportCheck
     /**
      * Gets the full import identifier.  If the import is a starred import and
      * it's not excluded then a violation is logged.
+     *
      * @param startingDot the starting dot for the import statement
      */
     private void logsStarredImportViolation(DetailAST startingDot) {
         final FullIdent name = FullIdent.createFullIdent(startingDot);
         final String importText = name.getText();
         if (importText.endsWith(STAR_IMPORT_SUFFIX) && !excludes.contains(importText)) {
-            log(startingDot.getLineNo(), MSG_KEY, importText);
+            log(startingDot, MSG_KEY, importText);
         }
     }
 

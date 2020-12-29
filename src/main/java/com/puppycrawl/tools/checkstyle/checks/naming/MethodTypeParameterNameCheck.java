@@ -28,11 +28,13 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * </p>
  * <ul>
  * <li>
- * Property {@code format} - Specifies valid identifiers. Default value is {@code "^[A-Z]$"}.
+ * Property {@code format} - Specifies valid identifiers.
+ * Type is {@code java.util.regex.Pattern}.
+ * Default value is {@code "^[A-Z]$"}.
  * </li>
  * </ul>
  * <p>
- * An example of how to configure the check is:
+ * To configure the check:
  * </p>
  * <pre>
  * &lt;module name=&quot;MethodTypeParameterName&quot;/&gt;
@@ -63,6 +65,17 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  *   public &lt;k, V&gt; void method4() {} // OK
  * }
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code name.invalidPattern}
+ * </li>
+ * </ul>
  *
  * @since 5.0
  */

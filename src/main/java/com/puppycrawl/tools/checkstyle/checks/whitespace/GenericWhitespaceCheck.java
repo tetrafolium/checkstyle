@@ -50,6 +50,12 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * <li> should be followed with whitespace in almost all cases,
  *   except diamond operators and when preceding method name or constructor.</li></ul>
  * <p>
+ * To configure the check:
+ * </p>
+ * <pre>
+ * &lt;module name=&quot;GenericWhitespace&quot;/&gt;
+ * </pre>
+ * <p>
  * Examples with correct spacing:
  * </p>
  * <pre>
@@ -71,11 +77,37 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * MyClass obj = new &lt;String&gt;MyClass();
  * </pre>
  * <p>
- * To configure the check:
+ * Examples with incorrect spacing:
  * </p>
  * <pre>
- * &lt;module name=&quot;GenericWhitespace&quot;/&gt;
+ * List&lt; String&gt; l; // violation, "&lt;" followed by whitespace
+ * Box b = Box. &lt;String&gt;of("foo"); // violation, "&lt;" preceded with whitespace
+ * public&lt;T&gt; void foo() {} // violation, "&lt;" not preceded with whitespace
+ *
+ * List a = new ArrayList&lt;&gt; (); // violation, "&gt;" followed by whitespace
+ * Map&lt;Integer, String&gt;m; // violation, "&gt;" not followed by whitespace
+ * Pair&lt;Integer, Integer &gt; p; // violation, "&gt;" preceded with whitespace
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code ws.followed}
+ * </li>
+ * <li>
+ * {@code ws.illegalFollow}
+ * </li>
+ * <li>
+ * {@code ws.notPreceded}
+ * </li>
+ * <li>
+ * {@code ws.preceded}
+ * </li>
+ * </ul>
  *
  * @since 5.0
  */
@@ -155,6 +187,7 @@ public class GenericWhitespaceCheck extends AbstractCheck {
 
     /**
      * Checks the token for the end of Generics.
+     *
      * @param ast the token to check
      */
     private void processEnd(DetailAST ast) {
@@ -181,6 +214,7 @@ public class GenericWhitespaceCheck extends AbstractCheck {
 
     /**
      * Process Nested generics.
+     *
      * @param ast token
      * @param line line content
      * @param after position after
@@ -211,6 +245,7 @@ public class GenericWhitespaceCheck extends AbstractCheck {
 
     /**
      * Process Single-generic.
+     *
      * @param ast token
      * @param line line content
      * @param after position after
@@ -229,6 +264,7 @@ public class GenericWhitespaceCheck extends AbstractCheck {
 
     /**
      * Checks if generic is before constructor invocation.
+     *
      * @param ast ast
      * @return true if generic before a constructor invocation
      */
@@ -241,6 +277,7 @@ public class GenericWhitespaceCheck extends AbstractCheck {
 
     /**
      * Is generic before method reference.
+     *
      * @param ast ast
      * @return true if generic before a method ref
      */
@@ -253,6 +290,7 @@ public class GenericWhitespaceCheck extends AbstractCheck {
     /**
      * Checks if current generic end ('>') is located after
      * {@link TokenTypes#METHOD_REF method reference operator}.
+     *
      * @param genericEnd {@link TokenTypes#GENERIC_END}
      * @return true if '>' follows after method reference.
      */
@@ -262,6 +300,7 @@ public class GenericWhitespaceCheck extends AbstractCheck {
 
     /**
      * Checks the token for the start of Generics.
+     *
      * @param ast the token to check
      */
     private void processStart(DetailAST ast) {
@@ -334,6 +373,7 @@ public class GenericWhitespaceCheck extends AbstractCheck {
 
     /**
      * Checks whether given character is valid to be right after generic ends.
+     *
      * @param charAfter character to check
      * @return checks if given character is valid
      */

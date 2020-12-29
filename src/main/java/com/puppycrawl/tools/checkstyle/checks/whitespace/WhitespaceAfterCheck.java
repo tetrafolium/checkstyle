@@ -35,6 +35,8 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * <ul>
  * <li>
  * Property {@code tokens} - tokens to check
+ * Type is {@code java.lang.String[]}.
+ * Validation type is {@code tokenSet}.
  * Default value is:
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COMMA">
  * COMMA</a>,
@@ -62,6 +64,22 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * <pre>
  * &lt;module name=&quot;WhitespaceAfter&quot;/&gt;
  * </pre>
+ * <p>Example:</p>
+ * <pre>
+ *  public void myTest() {
+ *      if (foo) {              // OK
+ *              //...
+ *      } else if(bar) {        // violation
+ *              //...
+ *      }
+ *
+ *      testMethod(foo, bar);   // OK
+ *      testMethod(foo,bar);    // violation
+ *
+ *      for (;;){}               // OK
+ *      for(;;){}                // violation, space after 'for' is required
+ *      }
+ * </pre>
  * <p>
  * To configure the check for whitespace only after COMMA and SEMI tokens:
  * </p>
@@ -70,6 +88,32 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  *   &lt;property name=&quot;tokens&quot; value=&quot;COMMA, SEMI&quot;/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>Example:</p>
+ * <pre>
+ *     public void myTest() {
+ *         int a; int b;           // OK
+ *         int a;int b;            // violation
+ *
+ *         testMethod(foo, bar);   // OK
+ *         testMethod(foo,bar);    // violation
+ *
+ *         for(;;) {} // OK
+ *     }
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code ws.notFollowed}
+ * </li>
+ * <li>
+ * {@code ws.typeCast}
+ * </li>
+ * </ul>
  *
  * @since 3.0
  */
@@ -134,6 +178,7 @@ public class WhitespaceAfterCheck
 
     /**
      * Checks whether token is followed by a whitespace.
+     *
      * @param targetAST Ast token.
      * @param line The line associated with the ast token.
      * @return true if ast token is followed by a whitespace.

@@ -18,12 +18,18 @@ function checkout_from {
   cd ../
 }
 
+removeFolderWithProtectedFiles() {
+  find $1 -delete
+}
+
 case $1 in
 
 sonarqube)
   # token could be generated at https://sonarcloud.io/account/security/
-  # executon on local:
-  # SONAR_TOKEN=xxxxxx PR=xxxxxx WERCKER_GIT_BRANCH=xxxxxx ./.ci/travis/travis.sh sonarqube
+  # executon on local for master:
+  # SONAR_TOKEN=xxxxxx ./.ci/wercker.sh sonarqube
+  # executon on local for non-master:
+  # SONAR_TOKEN=xxxxxx PR=xxxxxx WERCKER_GIT_BRANCH=xxxxxx ./.ci/wercker.sh sonarqube
   if [[ $PR && $PR =~ ^([0-9]*)$ ]]; then
       SONAR_PR_VARIABLES="-Dsonar.pullrequest.key=$PR"
       SONAR_PR_VARIABLES+=" -Dsonar.pullrequest.branch=$WERCKER_GIT_BRANCH"
@@ -43,8 +49,11 @@ sonarqube)
   checkout_from https://github.com/viesure/blog-sonar-build-breaker.git
   sed -i'' "s|our.sonar.server|sonarcloud.io|" \
     .ci-temp/blog-sonar-build-breaker/sonar_break_build.sh
+  sed -i'' "s|curl |curl -k |" \
+    .ci-temp/blog-sonar-build-breaker/sonar_break_build.sh
   export SONAR_API_TOKEN=$SONAR_TOKEN
   .ci-temp/blog-sonar-build-breaker/sonar_break_build.sh
+  removeFolderWithProtectedFiles .ci-temp/blog-sonar-build-breaker
   ;;
 
 
@@ -53,10 +62,13 @@ no-error-pgjdbc)
                      --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec)
   echo CS_version: ${CS_POM_VERSION}
   checkout_from https://github.com/pgjdbc/pgjdbc.git
-  cd .ci-temp/pgjdbc/pgjdbc
-  mvn -e checkstyle:check -Dcheckstyle.version=${CS_POM_VERSION}
-  cd ../../
-  rm -rf pgjdbc
+  cd .ci-temp/pgjdbc
+  # pgjdbc easily damage build, we should use stable versions
+  git checkout "7d64d""d""c2460e""e1a7c8d715308431cd3a3a3a0856"
+  ./gradlew --no-parallel --no-daemon checkstyleAll \
+            -PenableMavenLocal -Pcheckstyle.version=${CS_POM_VERSION}
+  cd ../
+ removeFolderWithProtectedFiles pgjdbc
   ;;
 
 no-error-orekit)
@@ -66,45 +78,45 @@ no-error-orekit)
   checkout_from https://github.com/Hipparchus-Math/hipparchus.git
   cd .ci-temp/hipparchus
   # checkout to version that Orekit expects
-  SHA_HIPPARCHUS="4c6c6fc45e859e""ae2d4eb091a3a3c0a7a458b8d9"
+  SHA_HIPPARCHUS="1fb""fb8a2a259a9""7a23e2a387e8fd""c5e0a8402e77"
   git checkout $SHA_HIPPARCHUS
-  mvn install -DskipTests
+  mvn -e install -DskipTests
   cd -
   checkout_from https://github.com/CS-SI/Orekit.git
   cd .ci-temp/Orekit
   # no CI is enforced in project, so to make our build stable we should
   # checkout to latest release/development (annotated tag or hash) or sha that have fix we need
   # git checkout $(git describe --abbrev=0 --tags)
-  git checkout "a7e67ce73803c67a""ad90e0b28ed77a7781dc28a9"
+  git checkout "54f5f2eb410ec42e5410ec8e5c415ff9182d3235"
   mvn -e compile checkstyle:check -Dorekit.checkstyle.version=${CS_POM_VERSION}
-  cd ../
-  rm -rf Orekit
+  cd ..
+  removeFolderWithProtectedFiles Orekit
+  removeFolderWithProtectedFiles hipparchus
   ;;
 
 no-error-xwiki)
   CS_POM_VERSION=$(mvn -e -q -Dexec.executable='echo' -Dexec.args='${project.version}' \
                      --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec)
   echo CS_version: ${CS_POM_VERSION}
-  checkout_from https://github.com/xwiki/xwiki-commons.git
+  checkout_from https://github.com/checkstyle/xwiki-commons.git
   cd .ci-temp/xwiki-commons
-  SHA_XWIKI="8a2e04689fb8e707a3457833d""d44c909a""cc43e5b"
-  git checkout $SHA_XWIKI
-  mvn -f xwiki-commons-tools/xwiki-commons-tool-verification-resources/pom.xml \
+  git checkout reflection-exclude
+  mvn -e -f xwiki-commons-tools/xwiki-commons-tool-verification-resources/pom.xml \
     install -DskipTests -Dcheckstyle.version=${CS_POM_VERSION}
   mvn -e test-compile checkstyle:check@default -Dcheckstyle.version=${CS_POM_VERSION}
-  cd ../../
-  rm -rf xwiki-commons
+  cd ..
+  removeFolderWithProtectedFiles xwiki-commons
   ;;
 
 no-error-apex-core)
   CS_POM_VERSION=$(mvn -e -q -Dexec.executable='echo' -Dexec.args='${project.version}' \
                      --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec)
   echo CS_version: ${CS_POM_VERSION}
-  checkout_from https://github.com/apache/incubator-apex-core.git
-  cd .ci-temp/incubator-apex-core
+  checkout_from https://github.com/checkstyle/apex-core
+  cd .ci-temp/apex-core
   mvn -e compile checkstyle:check -Dcheckstyle.version=${CS_POM_VERSION}
   cd ../
-  rm -rf incubator-apex-core
+  removeFolderWithProtectedFiles apex-core
   ;;
 
 no-error-equalsverifier)
@@ -115,7 +127,7 @@ no-error-equalsverifier)
   cd .ci-temp/equalsverifier
   mvn -e compile checkstyle:check -Dcheckstyle.version=${CS_POM_VERSION}
   cd ../
-  rm -rf equalsverifier
+  removeFolderWithProtectedFiles equalsverifier
   ;;
 
 no-error-hibernate-search)
@@ -129,21 +141,18 @@ no-error-hibernate-search)
      -Dpuppycrawl.checkstyle.version=${CS_POM_VERSION}
   mvn -e checkstyle:check  -Dpuppycrawl.checkstyle.version=${CS_POM_VERSION}
   cd ../
-  rm -rf hibernate-search
+  removeFolderWithProtectedFiles hibernate-search
   ;;
 
 no-error-htmlunit)
   CS_POM_VERSION=$(mvn -e -q -Dexec.executable='echo' -Dexec.args='${project.version}' \
                      --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec)
   echo CS_version: ${CS_POM_VERSION}
-  echo "checkouting project sources ..."
-  svn -q export https://svn.code.sf.net/p/htmlunit/code/trunk/htmlunit@r14923 htmlunit
-  cd htmlunit
- sed -i "s/            <version>2.28-SNAPSHOT/            <version>2.28-20171106.080245-12/" pom.xml
-  echo "Running checkstyle validation ..."
+  checkout_from https://github.com/HtmlUnit/htmlunit
+  cd .ci-temp/htmlunit
   mvn -e compile checkstyle:check -Dcheckstyle.version=${CS_POM_VERSION}
   cd ../
-  rm -rf htmlunit
+  removeFolderWithProtectedFiles htmlunit
   ;;
 
 no-error-checkstyles-sevntu)
@@ -166,7 +175,38 @@ no-error-sevntu-checks)
   mvn -e -Pno-validations verify  -Dcheckstyle.skip=false -Dcheckstyle.version=${CS_POM_VERSION} \
      -Dcheckstyle.configLocation=../../../config/checkstyle_checks.xml
   cd ../../
-  rm -rf sevntu.checkstyle
+  removeFolderWithProtectedFiles sevntu.checkstyle
+  ;;
+
+no-error-contribution)
+  set -e
+  CS_POM_VERSION=$(mvn -e -q -Dexec.executable='echo' -Dexec.args='${project.version}' \
+                     --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec)
+  echo CS_version: ${CS_POM_VERSION}
+  checkout_from https://github.com/checkstyle/contribution.git
+  cd .ci-temp/contribution
+  cd patch-diff-report-tool
+  mvn -e verify -DskipTests -Dcheckstyle.version=${CS_POM_VERSION} \
+     -Dcheckstyle.configLocation=../../../config/checkstyle_checks.xml
+  cd ../
+  cd releasenotes-builder
+  mvn -e verify -DskipTests -Dcheckstyle.version=${CS_POM_VERSION} \
+     -Dcheckstyle.configLocation=../../../config/checkstyle_checks.xml
+  cd ../../
+  removeFolderWithProtectedFiles contribution
+  ;;
+
+no-error-methods-distance)
+  set -e
+  CS_POM_VERSION=$(mvn -e -q -Dexec.executable='echo' -Dexec.args='${project.version}' \
+                     --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec)
+  echo CS_version: ${CS_POM_VERSION}
+  checkout_from https://github.com/sevntu-checkstyle/methods-distance.git
+  cd .ci-temp/methods-distance
+  mvn -e verify -DskipTests -Dcheckstyle-version=${CS_POM_VERSION} \
+     -Dcheckstyle.configLocation=../../config/checkstyle_checks.xml
+  cd ..
+  removeFolderWithProtectedFiles  methods-distance
   ;;
 
 no-error-strata)
@@ -178,11 +218,11 @@ no-error-strata)
   cd .ci-temp/Strata
   STRATA_CS_POM_VERSION=$(mvn -e -q -Dexec.executable='echo' -Dexec.args='${checkstyle.version}' \
                      --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec)
-  mvn install -e -B -Dstrict -DskipTests \
+  mvn -e install -B -Dstrict -DskipTests \
      -Dforbiddenapis.skip=true -Dcheckstyle.version=${CS_POM_VERSION} \
      -Dcheckstyle.config.suffix="-v$STRATA_CS_POM_VERSION"
   cd ../
-  rm -rf Strata
+  removeFolderWithProtectedFiles Strata
   ;;
 
 no-error-spring-integration)
@@ -196,7 +236,21 @@ no-error-spring-integration)
   PROP_CS_VERSION="checkstyleVersion"
   ./gradlew clean check --parallel -x test -P$PROP_MAVEN_LOCAL -P$PROP_CS_VERSION=${CS_POM_VERSION}
   cd ../
-  rm -rf spring-integration
+  removeFolderWithProtectedFiles spring-integration
+  ;;
+
+no-error-spring-cloud-gcp)
+  set -e
+  CS_POM_VERSION=$(mvn -e -q -Dexec.executable='echo' -Dexec.args='${project.version}' \
+                     --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec)
+  echo CS_version: ${CS_POM_VERSION}
+  checkout_from https://github.com/googlecloudplatform/spring-cloud-gcp
+  cd .ci-temp/spring-cloud-gcp
+  mvn -e checkstyle:check@checkstyle-validation \
+   -Dmaven-checkstyle-plugin.version=3.1.1 \
+   -Dpuppycrawl-tools-checkstyle.version=${CS_POM_VERSION}
+  cd ..
+  removeFolderWithProtectedFiles spring-cloud-gcp
   ;;
 
 no-exception-struts)
@@ -210,7 +264,7 @@ no-exception-struts)
   groovy ./launch.groovy --listOfProjects projects-for-wercker.properties \
       --config checks-nonjavadoc-error.xml --checkstyleVersion ${CS_POM_VERSION}
   cd ../../
-  rm -rf contribution
+  removeFolderWithProtectedFiles contribution
   ;;
 
 no-exception-checkstyle-sevntu)
@@ -226,7 +280,23 @@ no-exception-checkstyle-sevntu)
   groovy ./launch.groovy --listOfProjects projects-for-wercker.properties \
       --config checks-nonjavadoc-error.xml --checkstyleVersion ${CS_POM_VERSION}
   cd ../../
-  rm -rf contribution
+  removeFolderWithProtectedFiles contribution
+  ;;
+
+no-exception-checkstyle-sevntu-javadoc)
+  set -e
+  CS_POM_VERSION=$(mvn -e -q -Dexec.executable='echo' -Dexec.args='${project.version}' \
+                     --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec)
+  echo CS_version: ${CS_POM_VERSION}
+  checkout_from https://github.com/checkstyle/contribution.git
+  cd .ci-temp/contribution/checkstyle-tester
+  sed -i'' 's/^guava/#guava/' projects-for-wercker.properties
+  sed -i'' 's/#local-checkstyle/local-checkstyle/' projects-for-wercker.properties
+  sed -i'' 's/#sevntu-checkstyle/sevntu-checkstyle/' projects-for-wercker.properties
+  groovy ./launch.groovy --listOfProjects projects-for-wercker.properties \
+      --config checks-only-javadoc-error.xml --checkstyleVersion ${CS_POM_VERSION}
+  cd ../../
+  removeFolderWithProtectedFiles contribution
   ;;
 
 no-exception-guava)
@@ -240,7 +310,7 @@ no-exception-guava)
   groovy ./launch.groovy --listOfProjects projects-for-wercker.properties \
       --config checks-nonjavadoc-error.xml --checkstyleVersion ${CS_POM_VERSION}
   cd ../../
-  rm -rf contribution
+  removeFolderWithProtectedFiles contribution
   ;;
 
 no-exception-hibernate-orm)
@@ -254,7 +324,7 @@ no-exception-hibernate-orm)
   groovy ./launch.groovy --listOfProjects projects-for-wercker.properties \
       --config checks-nonjavadoc-error.xml --checkstyleVersion ${CS_POM_VERSION}
   cd ../../
-  rm -rf contribution
+  removeFolderWithProtectedFiles contribution
   ;;
 
 no-exception-spotbugs)
@@ -268,7 +338,21 @@ no-exception-spotbugs)
   groovy ./launch.groovy --listOfProjects projects-to-test-on.properties \
       --config checks-nonjavadoc-error.xml --checkstyleVersion ${CS_POM_VERSION}
   cd ../../
-  rm -rf contribution
+  removeFolderWithProtectedFiles contribution
+  ;;
+
+no-exception-spoon)
+  CS_POM_VERSION=$(mvn -e -q -Dexec.executable='echo' -Dexec.args='${project.version}' \
+                     --non-recursive org.codehaus.mojo:exec-maven-plugin:1.3.1:exec)
+  echo CS_version: ${CS_POM_VERSION}
+  checkout_from https://github.com/checkstyle/contribution.git
+  cd .ci-temp/contribution/checkstyle-tester
+  sed -i.'' 's/^guava/#guava/' projects-to-test-on.properties
+  sed -i.'' 's/#spoon/spoon/' projects-to-test-on.properties
+  groovy ./launch.groovy --listOfProjects projects-for-wercker.properties \
+      --config checks-nonjavadoc-error.xml --checkstyleVersion ${CS_POM_VERSION}
+  cd ../../
+  removeFolderWithProtectedFiles contribution
   ;;
 
 no-exception-spring-framework)
@@ -282,7 +366,7 @@ no-exception-spring-framework)
   groovy ./launch.groovy --listOfProjects projects-to-test-on.properties \
       --config checks-nonjavadoc-error.xml --checkstyleVersion ${CS_POM_VERSION}
   cd ../../
-  rm -rf contribution
+  removeFolderWithProtectedFiles contribution
   ;;
 
 no-exception-hbase)
@@ -296,7 +380,7 @@ no-exception-hbase)
   groovy ./launch.groovy --listOfProjects projects-to-test-on.properties \
       --config checks-nonjavadoc-error.xml --checkstyleVersion ${CS_POM_VERSION}
   cd ../../
-  rm -rf contribution
+  removeFolderWithProtectedFiles contribution
   ;;
 
 no-exception-Pmd-elasticsearch-lombok-ast)
@@ -312,7 +396,7 @@ no-exception-Pmd-elasticsearch-lombok-ast)
   groovy ./launch.groovy --listOfProjects projects-to-test-on.properties \
       --config checks-nonjavadoc-error.xml --checkstyleVersion ${CS_POM_VERSION}
   cd ../../
-  rm -rf contribution
+  removeFolderWithProtectedFiles contribution
   ;;
 
 no-exception-alot-of-projects)
@@ -331,7 +415,7 @@ no-exception-alot-of-projects)
   groovy ./launch.groovy --listOfProjects projects-to-test-on.properties \
       --config checks-nonjavadoc-error.xml --checkstyleVersion ${CS_POM_VERSION}
   cd ../../
-  rm -rf contribution
+  removeFolderWithProtectedFiles contribution
   ;;
 
 no-warning-imports-guava)
@@ -347,7 +431,7 @@ no-warning-imports-guava)
       --checkstyleVersion ${CS_POM_VERSION}
   RESULT=`grep -A 5 "&#160;Warning</td>" $REPORT | cat`
   cd ../../
-  rm -rf contribution
+  removeFolderWithProtectedFiles contribution
   if [ -z "$RESULT" ]; then
     echo "Inspection did not find any warnings"
   else
@@ -371,7 +455,7 @@ no-warning-imports-java-design-patterns)
       --checkstyleVersion ${CS_POM_VERSION}
   RESULT=`grep -A 5 "&#160;Warning</td>" $REPORT | cat`
   cd ../../
-  rm -rf contribution
+  removeFolderWithProtectedFiles contribution
   if [ -z "$RESULT" ]; then
     echo "Inspection did not find any warnings"
   else
@@ -379,6 +463,28 @@ no-warning-imports-java-design-patterns)
     echo "Some warnings have been found. Verification failed."
     sleep 5s
     exit 1
+  fi
+  ;;
+
+validate-ci-temp-empty)
+  fail=0
+  if [ -z "$(ls -A .ci-temp)" ]; then
+    echo "Empty .ci-temp/ validation did not find any warnings."
+  else
+    echo "Directory .ci-temp/ is not empty. Verification failed."
+    echo "Contents of .ci-temp/:"
+    fail=1
+  fi
+  ls -A .ci-temp --color=auto
+  exit $fail
+  ;;
+
+git-status)
+  if [ "$(git status | grep 'Changes not staged\|Untracked files')" ]; then
+    printf "Please clean up or update .gitattributes file.\nGit status output:\n"
+    git status
+    sleep 5s
+    false
   fi
   ;;
 

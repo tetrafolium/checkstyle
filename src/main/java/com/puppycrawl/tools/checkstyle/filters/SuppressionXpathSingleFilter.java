@@ -44,29 +44,40 @@ import com.puppycrawl.tools.checkstyle.api.AutomaticBean;
  * Attention: This filter only supports single suppression, and will need multiple
  * instances if users wants to suppress multiple violations.
  * </p>
+ * <p>
+ * SuppressionXpathSingleFilter can suppress Checks that have Treewalker as parent module.
+ * </p>
  * <ul>
  * <li>
  * Property {@code files} - Define a Regular Expression matched against the file
  * name associated with an audit event.
+ * Type is {@code java.lang.String}.
+ * Validation type is {@code java.util.regex.Pattern}.
  * Default value is {@code null}.
  * </li>
  * <li>
  * Property {@code checks} - Define a Regular Expression matched against the name
  * of the check associated with an audit event.
+ * Type is {@code java.lang.String}.
+ * Validation type is {@code java.util.regex.Pattern}.
  * Default value is {@code null}.
  * </li>
  * <li>
  * Property {@code message} - Define a Regular Expression matched against the message
  * of the check associated with an audit event.
+ * Type is {@code java.lang.String}.
+ * Validation type is {@code java.util.regex.Pattern}.
  * Default value is {@code null}.
  * </li>
  * <li>
  * Property {@code id} - Define a string matched against the ID of the check
  * associated with an audit event.
+ * Type is {@code java.lang.String}.
  * Default value is {@code null}.
  * </li>
  * <li>
  * Property {@code query} - Define a string xpath query.
+ * Type is {@code java.lang.String}.
  * Default value is {@code null}.
  * </li>
  * </ul>
@@ -149,9 +160,9 @@ import com.puppycrawl.tools.checkstyle.api.AutomaticBean;
  * To suppress checks for all package definitions:
  * </p>
  * <pre>
- * &lt;module name=&quot;SuppressionXpathSingleFilter&gt;
+ * &lt;module name=&quot;SuppressionXpathSingleFilter"&gt;
  *   &lt;property name=&quot;checks&quot; value=&quot;PackageName&quot;/&gt;
- *   &lt;property name=&quot;query&quot; query=&quot;/PACKAGE_DEF[@text='File']/IDENT&quot;/&gt;
+ *   &lt;property name=&quot;query&quot; value=&quot;/PACKAGE_DEF[@text='File']/IDENT&quot;/&gt;
  * &lt;/module&gt;
  * </pre>
  * <p>
@@ -395,6 +406,9 @@ import com.puppycrawl.tools.checkstyle.api.AutomaticBean;
  *   &lt;property name=&quot;checks&quot; value=&quot;[a-zA-Z0-9]*&quot;&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
  *
  * @since 8.18
  */
@@ -484,6 +498,7 @@ public class SuppressionXpathSingleFilter extends AutomaticBean implements
 
     /**
      * Setter to define a string xpath query.
+     *
      * @param query the xpath query
      */
     public void setQuery(String query) {

@@ -185,6 +185,24 @@ public class EqualsAvoidNullCheckTest extends AbstractModuleTestSupport {
     }
 
     @Test
+    public void testInputEqualsAvoidNullEnhancedInstanceof() throws Exception {
+        final DefaultConfiguration checkConfig =
+                createModuleConfig(EqualsAvoidNullCheck.class);
+
+        final String[] expected = {
+            "27:45: " + getCheckMessage(MSG_EQUALS_AVOID_NULL),
+            "30:36: " + getCheckMessage(MSG_EQUALS_AVOID_NULL),
+            "38:50: " + getCheckMessage(MSG_EQUALS_AVOID_NULL),
+            "39:38: " + getCheckMessage(MSG_EQUALS_AVOID_NULL),
+            "40:38: " + getCheckMessage(MSG_EQUALS_AVOID_NULL),
+            "40:65: " + getCheckMessage(MSG_EQUALS_AVOID_NULL),
+        };
+        verify(checkConfig,
+                getNonCompilablePath("InputEqualsAvoidNullEnhancedInstanceof.java"),
+                expected);
+    }
+
+    @Test
     public void testMisc() throws Exception {
         final DefaultConfiguration checkConfig =
                 createModuleConfig(EqualsAvoidNullCheck.class);
@@ -193,6 +211,39 @@ public class EqualsAvoidNullCheckTest extends AbstractModuleTestSupport {
             "13:17: " + getCheckMessage(MSG_EQUALS_AVOID_NULL),
         };
         verify(checkConfig, getPath("InputEqualsAvoidNullMisc.java"), expected);
+    }
+
+    @Test
+    public void testRecordsAndCompactCtors() throws Exception {
+        final DefaultConfiguration checkConfig =
+                createModuleConfig(EqualsAvoidNullCheck.class);
+
+        final String[] expected = {
+            "11:23: " + getCheckMessage(MSG_EQUALS_AVOID_NULL),
+            "18:34: " + getCheckMessage(MSG_EQUALS_AVOID_NULL),
+            "30:33: " + getCheckMessage(MSG_EQUALS_IGNORE_CASE_AVOID_NULL),
+            "37:33: " + getCheckMessage(MSG_EQUALS_IGNORE_CASE_AVOID_NULL),
+        };
+        verify(checkConfig,
+                getNonCompilablePath("InputEqualsAvoidNullRecordsAndCompactCtors.java"),
+                expected);
+    }
+
+    @Test
+    public void testEqualsAvoidNullTextBlocks() throws Exception {
+        final DefaultConfiguration checkConfig =
+            createModuleConfig(EqualsAvoidNullCheck.class);
+
+        final String[] expected = {
+            "10:28: " + getCheckMessage(MSG_EQUALS_AVOID_NULL),
+            "12:28: " + getCheckMessage(MSG_EQUALS_AVOID_NULL),
+            "19:25: " + getCheckMessage(MSG_EQUALS_AVOID_NULL),
+            "29:39: " + getCheckMessage(MSG_EQUALS_IGNORE_CASE_AVOID_NULL),
+            };
+
+        verify(checkConfig,
+            getNonCompilablePath("InputEqualsAvoidNullTextBlocks.java"),
+            expected);
     }
 
     @Test

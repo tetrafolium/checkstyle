@@ -29,6 +29,7 @@ import com.puppycrawl.tools.checkstyle.TreeWalkerFilter;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 import com.puppycrawl.tools.checkstyle.xpath.AbstractNode;
 import com.puppycrawl.tools.checkstyle.xpath.RootNode;
+import net.sf.saxon.Configuration;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.sxpath.XPathDynamicContext;
 import net.sf.saxon.sxpath.XPathEvaluator;
@@ -71,6 +72,7 @@ public class XpathFilterElement implements TreeWalkerFilter {
 
     /**
      * Creates a {@code XpathElement} instance.
+     *
      * @param files regular expression for names of filtered files
      * @param checks regular expression for filtered check classes
      * @param message regular expression for messages.
@@ -106,7 +108,8 @@ public class XpathFilterElement implements TreeWalkerFilter {
             xpathExpression = null;
         }
         else {
-            final XPathEvaluator xpathEvaluator = new XPathEvaluator();
+            final XPathEvaluator xpathEvaluator = new XPathEvaluator(
+                    Configuration.newConfiguration());
             try {
                 xpathExpression = xpathEvaluator.createExpression(xpathQuery);
             }
@@ -118,6 +121,7 @@ public class XpathFilterElement implements TreeWalkerFilter {
 
     /**
      * Creates a {@code XpathElement} instance.
+     *
      * @param files regular expression for names of filtered files
      * @param checks regular expression for filtered check classes
      * @param message regular expression for messages.
@@ -156,7 +160,8 @@ public class XpathFilterElement implements TreeWalkerFilter {
             xpathExpression = null;
         }
         else {
-            final XPathEvaluator xpathEvaluator = new XPathEvaluator();
+            final XPathEvaluator xpathEvaluator = new XPathEvaluator(
+                    Configuration.newConfiguration());
             try {
                 xpathExpression = xpathEvaluator.createExpression(xpathQuery);
             }
@@ -175,6 +180,7 @@ public class XpathFilterElement implements TreeWalkerFilter {
 
     /**
      * Is matching by file name, module id and Check name.
+     *
      * @param event event
      * @return true if it is matching
      */
@@ -188,6 +194,7 @@ public class XpathFilterElement implements TreeWalkerFilter {
 
     /**
      * Is matching by message.
+     *
      * @param event event
      * @return true if it is matching or not set.
      */
@@ -197,6 +204,7 @@ public class XpathFilterElement implements TreeWalkerFilter {
 
     /**
      * Is matching by xpath query.
+     *
      * @param event event
      * @return true if it is matching or not set.
      */
@@ -208,7 +216,7 @@ public class XpathFilterElement implements TreeWalkerFilter {
         else {
             isMatching = false;
             final List<AbstractNode> nodes = getItems(event)
-                    .stream().map(item -> (AbstractNode) item).collect(Collectors.toList());
+                    .stream().map(AbstractNode.class::cast).collect(Collectors.toList());
             for (AbstractNode abstractNode : nodes) {
                 isMatching = abstractNode.getTokenType() == event.getTokenType()
                         && abstractNode.getLineNumber() == event.getLine()
@@ -223,10 +231,11 @@ public class XpathFilterElement implements TreeWalkerFilter {
 
     /**
      * Returns list of nodes matching xpath expression given event.
+     *
      * @param event {@code TreeWalkerAuditEvent} object
      * @return list of nodes matching xpath expression given event
      */
-    private List<Item<?>> getItems(TreeWalkerAuditEvent event) {
+    private List<Item> getItems(TreeWalkerAuditEvent event) {
         final RootNode rootNode;
         if (event.getRootAst() == null) {
             rootNode = null;
@@ -234,7 +243,7 @@ public class XpathFilterElement implements TreeWalkerFilter {
         else {
             rootNode = new RootNode(event.getRootAst());
         }
-        final List<Item<?>> items;
+        final List<Item> items;
         try {
             final XPathDynamicContext xpathDynamicContext =
                     xpathExpression.createDynamicContext(rootNode);

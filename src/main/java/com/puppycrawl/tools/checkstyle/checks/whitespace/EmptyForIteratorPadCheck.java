@@ -40,6 +40,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * <ul>
  * <li>
  * Property {@code option} - Specify policy on how to pad an empty for iterator.
+ * Type is {@code com.puppycrawl.tools.checkstyle.checks.whitespace.PadOption}.
  * Default value is {@code nospace}.
  * </li>
  * </ul>
@@ -57,6 +58,20 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  *   &lt;property name=&quot;option&quot; value=&quot;space&quot;/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code ws.followed}
+ * </li>
+ * <li>
+ * {@code ws.notFollowed}
+ * </li>
+ * </ul>
  *
  * @since 3.0
  */
@@ -84,6 +99,7 @@ public class EmptyForIteratorPadCheck
 
     /**
      * Setter to specify policy on how to pad an empty for iterator.
+     *
      * @param optionStr string to decode option from
      * @throws IllegalArgumentException if unable to decode
      */

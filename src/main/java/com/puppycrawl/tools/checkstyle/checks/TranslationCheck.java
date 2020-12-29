@@ -25,7 +25,6 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
@@ -34,6 +33,7 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
@@ -107,19 +107,23 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * Property {@code fileExtensions} - Specify file type extension to identify
  * translation files. Setting this property is typically only required if your
  * translation files are preprocessed and the original files do not have
- * the extension {@code .properties} Default value is {@code .properties}.
+ * the extension {@code .properties}
+ * Type is {@code java.lang.String[]}.
+ * Default value is {@code .properties}.
  * </li>
  * <li>
  * Property {@code baseName} - Specify
  * <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ResourceBundle.html">
  * Base name</a> of resource bundles which contain message resources.
  * It helps the check to distinguish config and localization resources.
+ * Type is {@code java.util.regex.Pattern}.
  * Default value is {@code "^messages.*$"}.
  * </li>
  * <li>
  * Property {@code requiredTranslations} - Specify language codes of required
  * translations which must exist in project.
- * Default value is {@code {}}.
+ * Type is {@code java.lang.String[]}.
+ * Default value is {@code ""}.
  * </li>
  * </ul>
  * <p>
@@ -176,6 +180,20 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * Than the check will rise the following violation: "0: Properties file
  * 'messages_home_de.properties' is missing."
  * </p>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.Checker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code translation.missingKey}
+ * </li>
+ * <li>
+ * {@code translation.missingTranslationFile}
+ * </li>
+ * </ul>
  *
  * @since 3.0
  */
@@ -293,6 +311,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
 
     /**
      * Validates the correctness of user specified language codes for the check.
+     *
      * @param languageCodes user specified language codes for the check.
      * @throws IllegalArgumentException when any item of languageCodes is not valid language code
      */
@@ -310,6 +329,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
 
     /**
      * Checks whether user specified language code is correct (is contained in available locales).
+     *
      * @param userSpecifiedLanguageCode user specified language code.
      * @return true if user specified language code is correct.
      */
@@ -348,6 +368,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
 
     /**
      * Checks an existence of default translation file in the resource bundle.
+     *
      * @param bundle resource bundle.
      */
     private void checkExistenceOfDefaultTranslation(ResourceBundle bundle) {
@@ -360,6 +381,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
      * The name of translation file begins with the base name of resource bundle which is followed
      * by '_' and a language code (country and variant are optional), it ends with the extension
      * suffix.
+     *
      * @param bundle resource bundle.
      */
     private void checkExistenceOfRequiredTranslations(ResourceBundle bundle) {
@@ -372,6 +394,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
     /**
      * Returns the name of translation file which is absent in resource bundle or Guava's Optional,
      * if there is not missing translation.
+     *
      * @param bundle resource bundle.
      * @param languageCode language code.
      * @return the name of translation file which is absent in resource bundle or Guava's Optional,
@@ -408,6 +431,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
 
     /**
      * Logs that translation file is missing.
+     *
      * @param filePath file path.
      * @param fileName file name.
      */
@@ -422,6 +446,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
     /**
      * Groups a set of files into bundles.
      * Only files, which names match base name regexp pattern will be grouped.
+     *
      * @param files set of files.
      * @param baseNameRegexp base name regexp pattern.
      * @return set of ResourceBundles.
@@ -452,6 +477,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
 
     /**
      * Searches for specific resource bundle in a set of resource bundles.
+     *
      * @param bundles set of resource bundles.
      * @param targetBundle target bundle to search for.
      * @return Guava's Optional of resource bundle (present if target bundle is found).
@@ -474,6 +500,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
      * Extracts the base name (the unique prefix) of resource bundle from translation file name.
      * For example "messages" is the base name of "messages.properties",
      * "messages_de_AT.properties", "messages_en.properties", etc.
+     *
      * @param fileName the fully qualified name of the translation file.
      * @return the extracted base name.
      */
@@ -503,8 +530,9 @@ public class TranslationCheck extends AbstractFileSetCheck {
 
     /**
      * Extracts path from a file name which contains the path.
-     * For example, if file nam is /xyz/messages.properties, then the method
-     * will return /xyz/.
+     * For example, if the file name is /xyz/messages.properties,
+     * then the method will return /xyz/.
+     *
      * @param fileNameWithPath file name which contains the path.
      * @return file path.
      */
@@ -517,13 +545,14 @@ public class TranslationCheck extends AbstractFileSetCheck {
      * Checks resource files in bundle for consistency regarding their keys.
      * All files in bundle must have the same key set. If this is not the case
      * an audit event message is posted giving information which key misses in which file.
+     *
      * @param bundle resource bundle.
      */
     private void checkTranslationKeys(ResourceBundle bundle) {
         final Set<File> filesInBundle = bundle.getFiles();
         // build a map from files to the keys they contain
         final Set<String> allTranslationKeys = new HashSet<>();
-        final Map<File, Set<String>> filesAssociatedWithKeys = new HashMap<>();
+        final Map<File, Set<String>> filesAssociatedWithKeys = new TreeMap<>();
         for (File currentFile : filesInBundle) {
             final Set<String> keysInCurrentFile = getTranslationKeys(currentFile);
             allTranslationKeys.addAll(keysInCurrentFile);
@@ -535,6 +564,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
     /**
      * Compares th the specified key set with the key sets of the given translation files (arranged
      * in a map). All missing keys are reported.
+     *
      * @param fileKeys a Map from translation files to their key sets.
      * @param keysThatMustExist the set of keys to compare with.
      */
@@ -559,6 +589,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
 
     /**
      * Loads the keys from the specified translation file into a set.
+     *
      * @param file translation file.
      * @return a Set object which holds the loaded keys.
      */
@@ -579,6 +610,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
 
     /**
      * Helper method to log an exception.
+     *
      * @param exception the exception that occurred
      * @param file the file that could not be processed
      */
@@ -621,6 +653,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
 
         /**
          * Creates a ResourceBundle object with specific base name, common files extension.
+         *
          * @param baseName bundle base name.
          * @param path common path of files which are included in the resource bundle.
          * @param extension common extension of files which are included in the resource bundle.
@@ -650,6 +683,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
 
         /**
          * Adds a file into resource bundle.
+         *
          * @param file file which should be added into resource bundle.
          */
         public void addFile(File file) {
@@ -658,6 +692,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
 
         /**
          * Checks whether a resource bundle contains a file which name matches file name regexp.
+         *
          * @param fileNameRegexp file name regexp.
          * @return true if a resource bundle contains a file which name matches file name regexp.
          */

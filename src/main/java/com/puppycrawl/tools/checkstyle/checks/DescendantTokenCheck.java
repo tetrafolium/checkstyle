@@ -20,7 +20,6 @@
 package com.puppycrawl.tools.checkstyle.checks;
 
 import java.util.Arrays;
-import java.util.Set;
 
 import com.puppycrawl.tools.checkstyle.FileStatefulCheck;
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
@@ -43,38 +42,52 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  * <ul>
  * <li>
  * Property {@code limitedTokens} - Specify set of tokens with limited occurrences as descendants.
- * Default value is {@code {}}.
+ * Type is {@code java.lang.String[]}.
+ * Validation type is {@code tokenTypesSet}.
+ * Default value is {@code ""}.
  * </li>
  * <li>
  * Property {@code minimumDepth} - Specify the minimum depth for descendant counts.
+ * Type is {@code int}.
  * Default value is {@code 0}.
  * </li>
  * <li>
  * Property {@code maximumDepth} - Specify the maximum depth for descendant counts.
- * Default value is {@code java.lang.Integer.MAX_VALUE}.
+ * Type is {@code int}.
+ * Default value is {@code 2147483647}.
  * </li>
  * <li>
  * Property {@code minimumNumber} - Specify a minimum count for descendants.
+ * Type is {@code int}.
  * Default value is {@code 0}.
  * </li>
  * <li>
  * Property {@code maximumNumber} - Specify a maximum count for descendants.
- * Default value is {@code java.lang.Integer.MAX_VALUE}.
+ * Type is {@code int}.
+ * Default value is {@code 2147483647}.
  * </li>
  * <li>
  * Property {@code sumTokenCounts} - Control whether the number of tokens found
  * should be calculated from the sum of the individual token counts.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * <li>
  * Property {@code minimumMessage} - Define the violation message
  * when the minimum count is not reached.
+ * Type is {@code java.lang.String}.
  * Default value is {@code null}.
  * </li>
  * <li>
  * Property {@code maximumMessage} - Define the violation message
  * when the maximum count is exceeded.
+ * Type is {@code java.lang.String}.
  * Default value is {@code null}.
+ * </li>
+ * <li>
+ * Property {@code tokens} - tokens to check
+ * Type is {@code anyTokenTypesSet}.
+ * Default value is {@code ""}.
  * </li>
  * </ul>
  * <p>
@@ -267,6 +280,26 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  *   &lt;property name=&quot;maximumNumber&quot; value=&quot;10&quot;/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code descendant.token.max}
+ * </li>
+ * <li>
+ * {@code descendant.token.min}
+ * </li>
+ * <li>
+ * {@code descendant.token.sum.max}
+ * </li>
+ * <li>
+ * {@code descendant.token.sum.min}
+ * </li>
+ * </ul>
  *
  * @since 3.2
  */
@@ -324,6 +357,11 @@ public class DescendantTokenCheck extends AbstractCheck {
     private int[] counts = CommonUtil.EMPTY_INT_ARRAY;
 
     @Override
+    public int[] getAcceptableTokens() {
+        return TokenUtil.getAllTokenIds();
+    }
+
+    @Override
     public int[] getDefaultTokens() {
         return getRequiredTokens();
     }
@@ -349,6 +387,7 @@ public class DescendantTokenCheck extends AbstractCheck {
 
     /**
      * Log violations for each Token.
+     *
      * @param ast token
      */
     private void logAsSeparated(DetailAST ast) {
@@ -388,6 +427,7 @@ public class DescendantTokenCheck extends AbstractCheck {
 
     /**
      * Log validation as one violation.
+     *
      * @param ast current token
      */
     private void logAsTotal(DetailAST ast) {
@@ -420,6 +460,7 @@ public class DescendantTokenCheck extends AbstractCheck {
 
     /**
      * Counts the number of occurrences of descendant tokens.
+     *
      * @param ast the root token for descendants.
      * @param depth the maximum depth of the counted descendants.
      */
@@ -439,19 +480,6 @@ public class DescendantTokenCheck extends AbstractCheck {
                 child = child.getNextSibling();
             }
         }
-    }
-
-    @Override
-    public int[] getAcceptableTokens() {
-        // Any tokens set by property 'tokens' are acceptable
-        final Set<String> tokenNames = getTokenNames();
-        final int[] result = new int[tokenNames.size()];
-        int index = 0;
-        for (String name : tokenNames) {
-            result[index] = TokenUtil.getTokenId(name);
-            index++;
-        }
-        return result;
     }
 
     /**

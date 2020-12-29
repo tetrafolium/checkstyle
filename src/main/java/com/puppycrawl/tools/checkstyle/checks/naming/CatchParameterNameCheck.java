@@ -42,15 +42,47 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * </ul>
  * <ul>
  * <li>
- * Property {@code format} - Specifies valid identifiers. Default value is
- * {@code "^(e|t|ex|[a-z][a-z][a-zA-Z]+)$"}.
+ * Property {@code format} - Specifies valid identifiers.
+ * Type is {@code java.util.regex.Pattern}.
+ * Default value is {@code "^(e|t|ex|[a-z][a-z][a-zA-Z]+)$"}.
  * </li>
  * </ul>
  * <p>
- * An example of how to configure the check is:
+ * To configure the check:
  * </p>
  * <pre>
  * &lt;module name="CatchParameterName"/&gt;
+ * </pre>
+ * <p>Example:</p>
+ * <pre>
+ * public class MyTest {
+ *   public void myTest() {
+ *     try {
+ *       // ...
+ *     } catch (ArithmeticException e) { // OK
+ *       // ...
+ *     } catch (ArrayIndexOutOfBoundsException ex) { // OK
+ *       // ...
+ *     } catch (Throwable t) { // OK
+ *       // ...
+ *     } catch (IndexOutOfBoundsException e123) { // violation, digits
+ *                                // not allowed
+ *       // ...
+ *     } catch (NullPointerException ab) { // violation, should have at least
+ *                              // three characters if not e|t|ex
+ *       // ...
+ *     } catch (ArrayStoreException abc) { // OK
+ *       // ...
+ *     } catch (InterruptedException aBC) { // violation, first two characters
+ *                               // should be in lowercase
+ *       // ...
+ *     } catch (RuntimeException abC) { // OK
+ *       // ...
+ *     } catch (Exception abCD) { // OK
+ *       // ...
+ *     }
+ *   }
+ * }
  * </pre>
  * <p>
  * An example of how to configure the check for names that begin with a lower case letter,
@@ -68,11 +100,11 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  *   public void myTest() {
  *     try {
  *       // ...
- *     } catch (ArithmeticException ex) { //OK
+ *     } catch (ArithmeticException ex) { // OK
  *       // ...
- *     } catch (ArrayIndexOutOfBoundsException ex2) { //OK
+ *     } catch (ArrayIndexOutOfBoundsException ex2) { // OK
  *       // ...
- *     } catch (IOException thirdException) { //OK
+ *     } catch (IOException thirdException) { // OK
  *       // ...
  *     } catch (Exception FourthException) { // violation, the initial letter
  *                                           // should be lowercase
@@ -81,6 +113,18 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  *   }
  * }
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code name.invalidPattern}
+ * </li>
+ * </ul>
+ *
  * @since 6.14
  */
 public class CatchParameterNameCheck extends AbstractNameCheck {

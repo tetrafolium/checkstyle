@@ -68,27 +68,36 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/regex/Matcher.html#groupCount()">
  * paren counts</a>.
  * </p>
+ * <p>
+ * SuppressionWithPlainTextCommentFilter can suppress Checks that have Treewalker or
+ * Checker as parent module.
+ * </p>
  * <ul>
  * <li>
  * Property {@code offCommentFormat} - Specify comment pattern to trigger filter
  * to begin suppression.
+ * Type is {@code java.util.regex.Pattern}.
  * Default value is {@code "// CHECKSTYLE:OFF"}.
  * </li>
  * <li>
  * Property {@code onCommentFormat} - Specify comment pattern to trigger filter
  * to end suppression.
+ * Type is {@code java.util.regex.Pattern}.
  * Default value is {@code "// CHECKSTYLE:ON"}.
  * </li>
  * <li>
  * Property {@code checkFormat} - Specify check pattern to suppress.
+ * Type is {@code java.lang.String}.
  * Default value is {@code ".*"}.
  * </li>
  * <li>
  * Property {@code messageFormat} - Specify message pattern to suppress.
+ * Type is {@code java.lang.String}.
  * Default value is {@code null}.
  * </li>
  * <li>
  * Property {@code idFormat} - Specify check ID pattern to suppress.
+ * Type is {@code java.lang.String}.
  * Default value is {@code null}.
  * </li>
  * </ul>
@@ -298,6 +307,9 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  *   LAT_N REAL,
  *   LONG_W REAL);
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.Checker}
+ * </p>
  *
  * @since 8.6
  */
@@ -329,6 +341,7 @@ public class SuppressWithPlainTextCommentFilter extends AutomaticBean implements
 
     /**
      * Setter to specify comment pattern to trigger filter to begin suppression.
+     *
      * @param pattern off comment format pattern.
      */
     public final void setOffCommentFormat(Pattern pattern) {
@@ -337,6 +350,7 @@ public class SuppressWithPlainTextCommentFilter extends AutomaticBean implements
 
     /**
      * Setter to specify comment pattern to trigger filter to end suppression.
+     *
      * @param pattern  on comment format pattern.
      */
     public final void setOnCommentFormat(Pattern pattern) {
@@ -345,6 +359,7 @@ public class SuppressWithPlainTextCommentFilter extends AutomaticBean implements
 
     /**
      * Setter to specify check pattern to suppress.
+     *
      * @param format pattern for check format.
      */
     public final void setCheckFormat(String format) {
@@ -353,6 +368,7 @@ public class SuppressWithPlainTextCommentFilter extends AutomaticBean implements
 
     /**
      * Setter to specify message pattern to suppress.
+     *
      * @param format pattern for message format.
      */
     public final void setMessageFormat(String format) {
@@ -361,6 +377,7 @@ public class SuppressWithPlainTextCommentFilter extends AutomaticBean implements
 
     /**
      * Setter to specify check ID pattern to suppress.
+     *
      * @param format pattern for check ID format
      */
     public final void setIdFormat(String format) {
@@ -387,6 +404,7 @@ public class SuppressWithPlainTextCommentFilter extends AutomaticBean implements
 
     /**
      * Returns {@link FileText} instance created based on the given file name.
+     *
      * @param fileName the name of the file.
      * @return {@link FileText} instance.
      */
@@ -409,6 +427,7 @@ public class SuppressWithPlainTextCommentFilter extends AutomaticBean implements
 
     /**
      * Returns the list of {@link Suppression} instances retrieved from the given {@link FileText}.
+     *
      * @param fileText {@link FileText} instance.
      * @return list of {@link Suppression} instances.
      */
@@ -423,6 +442,7 @@ public class SuppressWithPlainTextCommentFilter extends AutomaticBean implements
 
     /**
      * Tries to extract the suppression from the given line.
+     *
      * @param fileText {@link FileText} instance.
      * @param lineNo line number.
      * @return {@link Optional} of {@link Suppression}.
@@ -449,6 +469,7 @@ public class SuppressWithPlainTextCommentFilter extends AutomaticBean implements
      * Finds the nearest {@link Suppression} instance which can suppress
      * the given {@link AuditEvent}. The nearest suppression is the suppression which scope
      * is before the line and column of the event.
+     *
      * @param suppressions {@link Suppression} instance.
      * @param event {@link AuditEvent} instance.
      * @return {@link Suppression} instance.
@@ -494,6 +515,7 @@ public class SuppressWithPlainTextCommentFilter extends AutomaticBean implements
 
         /**
          * Creates new suppression instance.
+         *
          * @param text suppression text.
          * @param lineNo suppression line number.
          * @param columnNo suppression column number.
@@ -553,6 +575,7 @@ public class SuppressWithPlainTextCommentFilter extends AutomaticBean implements
         /**
          * Indicates whether some other object is "equal to" this one.
          * Suppression on enumeration is needed so code stays consistent.
+         *
          * @noinspection EqualsCalledOnEnumConstant
          */
         @Override
@@ -582,6 +605,7 @@ public class SuppressWithPlainTextCommentFilter extends AutomaticBean implements
 
         /**
          * Checks whether the suppression matches the given {@link AuditEvent}.
+         *
          * @param event {@link AuditEvent} instance.
          * @return true if the suppression matches {@link AuditEvent}.
          */
@@ -594,6 +618,7 @@ public class SuppressWithPlainTextCommentFilter extends AutomaticBean implements
 
         /**
          * Checks whether {@link AuditEvent} is in the scope of the suppression.
+         *
          * @param event {@link AuditEvent} instance.
          * @return true if {@link AuditEvent} is in the scope of the suppression.
          */
@@ -603,6 +628,7 @@ public class SuppressWithPlainTextCommentFilter extends AutomaticBean implements
 
         /**
          * Checks whether {@link AuditEvent} source name matches the check format.
+         *
          * @param event {@link AuditEvent} instance.
          * @return true if the {@link AuditEvent} source name matches the check format.
          */
@@ -613,6 +639,7 @@ public class SuppressWithPlainTextCommentFilter extends AutomaticBean implements
 
         /**
          * Checks whether the {@link AuditEvent} module ID matches the ID format.
+         *
          * @param event {@link AuditEvent} instance.
          * @return true if the {@link AuditEvent} module ID matches the ID format.
          */
@@ -632,6 +659,7 @@ public class SuppressWithPlainTextCommentFilter extends AutomaticBean implements
 
         /**
          * Checks whether the {@link AuditEvent} message matches the message format.
+         *
          * @param event {@link AuditEvent} instance.
          * @return true if the {@link AuditEvent} message matches the message format.
          */

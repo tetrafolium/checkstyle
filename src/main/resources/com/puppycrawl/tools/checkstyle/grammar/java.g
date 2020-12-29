@@ -23,6 +23,7 @@ package com.puppycrawl.tools.checkstyle.grammar;
 import com.puppycrawl.tools.checkstyle.DetailAstImpl;
 import java.text.MessageFormat;
 import antlr.CommonHiddenStreamToken;
+import antlr.TokenStreamSelector;
 }
 
 /** Java 1.5 Recognizer
@@ -110,6 +111,17 @@ tokens {
 
     //Support of java comments has been extended
     BLOCK_COMMENT_END;COMMENT_CONTENT;
+
+    //Need to add these here to preserve order of tokens
+    SINGLE_LINE_COMMENT_CONTENT; BLOCK_COMMENT_CONTENT; STD_ESC;
+    BINARY_DIGIT; ID_START; ID_PART; INT_LITERAL; LONG_LITERAL;
+    FLOAT_LITERAL; DOUBLE_LITERAL; HEX_FLOAT_LITERAL; HEX_DOUBLE_LITERAL;
+    SIGNED_INTEGER; BINARY_EXPONENT;
+
+    PATTERN_VARIABLE_DEF; RECORD_DEF; LITERAL_record="record";
+    RECORD_COMPONENTS; RECORD_COMPONENT_DEF; COMPACT_CTOR_DEF;
+    TEXT_BLOCK_LITERAL_BEGIN; TEXT_BLOCK_CONTENT; TEXT_BLOCK_LITERAL_END;
+    LITERAL_yield="yield"; SWITCH_RULE;
 }
 
 {
@@ -198,6 +210,15 @@ tokens {
     {
         return ((currentLtLevel != 0) || ltCounter == currentLtLevel);
     }
+
+    /**
+    * This int value tracks the depth of a switch expression. Along with the
+    * IDENT to id rule at the end of the parser, this value helps us
+    * to know if the "yield" we are parsing is an IDENT, method call, class,
+    * field, etc. or if it is a java 13+ yield statement. Positive values
+    * indicate that we are within a (possibly nested) switch expression.
+    */
+    private int switchBlockDepth = 0;
 }
 
 // Compilation Unit: In Java, this is a single file.  This is the start
@@ -248,6 +269,7 @@ typeDefinitionInternal[AST modifiers]
     | interfaceDefinition[#modifiers]
     | enumDefinition[#modifiers]
     | annotationDefinition[#modifiers]
+    | recordDefinition[#modifiers]
     ;
 
 // A type specification is a type name with possible brackets afterwards
@@ -285,14 +307,14 @@ classTypeSpec[boolean addImagNode]
 classOrInterfaceType[boolean addImagNode]
     :   ({LA(1) == AT}? annotations
              | )
-            IDENT
+            id
             (options{warnWhenFollowAmbig=false;}: typeArguments[addImagNode])?
 
             (options{greedy=true; }: // match as many as possible
                 DOT^
                 ({LA(1) == AT}? annotations
                     | )
-                    IDENT
+                    id
                     (options{warnWhenFollowAmbig=false;}: typeArguments[addImagNode])?
             )*
      ;
@@ -422,15 +444,15 @@ builtInType
     |    "double"
     ;
 
-// A (possibly-qualified) java identifier.  We start with the first IDENT
-//   and expand its name by adding dots and following IDENTS
+// A (possibly-qualified) java identifier.  We start with the first id
+//   and expand its name by adding dots and following id's
 identifier
-    :    IDENT  (options{warnWhenFollowAmbig=false;}: DOT^ IDENT )*
+    :    id  (options{warnWhenFollowAmbig=false;}: DOT^ id )*
     ;
 
 identifierStar
-    :    IDENT
-        ( DOT^ IDENT )*
+    :    id
+        ( DOT^ id )*
         ( DOT^ STAR  )?
     ;
 
@@ -495,7 +517,7 @@ annotationMemberValuePairs
     ;
 
 annotationMemberValuePair!
-    :   i:IDENT a:ASSIGN v:annotationMemberValueInitializer
+    :   i:id a:ASSIGN v:annotationMemberValueInitializer
         {#annotationMemberValuePair =
             #(#[ANNOTATION_MEMBER_VALUE_PAIR,"ANNOTATION_MEMBER_VALUE_PAIR"], i, a, v);}
     ;
@@ -537,9 +559,64 @@ annotationExpression
         {#annotationExpression = #(#[EXPR,"EXPR"],#annotationExpression);}
     ;
 
+recordDefinition![AST modifiers]
+    :   r:LITERAL_record id:id
+        (tp:typeParameters)?
+        rc:recordComponentsList
+        ic:implementsClause
+        rb:recordBodyDeclaration
+        {#recordDefinition = #(#[RECORD_DEF, "RECORD_DEF"],
+                              modifiers, r, id, tp, ic, rc, rb);}
+    ;
+
+recordComponentsList
+    :   LPAREN recordComponents RPAREN
+    ;
+
+recordComponents
+    // Taken from parameterDeclarationList
+    :   (   ( recordComponent )=> recordComponent
+            ( options {warnWhenFollowAmbig=false;} :
+                ( COMMA recordComponent ) => COMMA recordComponent )*
+            ( COMMA recordComponentVariableLength )?
+        |
+            recordComponentVariableLength
+        )?
+        {## = #(#[RECORD_COMPONENTS,"RECORD_COMPONENTS"], ##);}
+    ;
+
+recordComponentVariableLength!
+    :   a:annotations t:variableLengthParameterTypeSpec e:ELLIPSIS i:id
+        d:declaratorBrackets[#t]
+        {## = #(#[RECORD_COMPONENT_DEF,"RECORD_COMPONENT_DEF"], a,
+             #([TYPE,"TYPE"],d), e, i);}
+    ;
+
+recordComponent!
+    :   a:annotations t:typeSpec[false] i:id
+        d:declaratorBrackets[#t]
+        {## = #(#[RECORD_COMPONENT_DEF,"RECORD_COMPONENT_DEF"], a,
+            #([TYPE,"TYPE"],d), i);}
+    ;
+
+recordBodyDeclaration
+    :   LCURLY
+        (   (compactConstructorDeclaration)=> compactConstructorDeclaration
+        |   field
+        |   SEMI
+        )*
+        RCURLY
+        {## = #([OBJBLOCK, "OBJBLOCK"], ##);}
+    ;
+
+compactConstructorDeclaration!
+    :    m:modifiers i:id c:constructorBody
+         {## = #(#[COMPACT_CTOR_DEF,"COMPACT_CTOR_DEF"], m, i, c);}
+    ;
+
 // Definition of a Java class
 classDefinition![AST modifiers]
-    :    c:"class" IDENT
+    :    c:"class" id:id
         // it _might_ have type parameters
         (tp:typeParameters)?
         // it _might_ have a superclass...
@@ -549,7 +626,7 @@ classDefinition![AST modifiers]
         // now parse the body of the class
         cb:classBlock
         {#classDefinition = #(#[CLASS_DEF,"CLASS_DEF"],
-                               modifiers, c, IDENT, tp, sc, ic, cb);}
+                               modifiers, c, id, tp, sc, ic, cb);}
     ;
 
 superClassClause
@@ -559,7 +636,7 @@ superClassClause
 
 // Definition of a Java Interface
 interfaceDefinition![AST modifiers]
-    :    i:"interface" IDENT
+    :    i:"interface" id:id
         // it _might_ have type parameters
         (tp:typeParameters)?
         // it might extend some other interfaces
@@ -567,25 +644,25 @@ interfaceDefinition![AST modifiers]
         // now parse the body of the interface (looks like a class...)
         cb:classBlock
         {#interfaceDefinition = #(#[INTERFACE_DEF,"INTERFACE_DEF"],
-                                    modifiers, i, IDENT,tp,ie,cb);}
+                                    modifiers, i, id,tp,ie,cb);}
     ;
 
 enumDefinition![AST modifiers]
-    :    e:ENUM IDENT
+    :    e:ENUM id:id
         // it might implement some interfaces...
         ic:implementsClause
         // now parse the body of the enum
         eb:enumBlock
         {#enumDefinition = #(#[ENUM_DEF,"ENUM_DEF"],
-                               modifiers, e, IDENT, ic, eb);}
+                               modifiers, e, id, ic, eb);}
     ;
 
 annotationDefinition![AST modifiers]
-    :    a:AT i:"interface" IDENT
+    :    a:AT i:"interface" id:id
         // now parse the body of the annotation
         ab:annotationBlock
         {#annotationDefinition = #(#[ANNOTATION_DEF,"ANNOTATION_DEF"],
-                                    modifiers, a, i, IDENT, ab);}
+                                    modifiers, a, i, id, ab);}
     ;
 
 typeParameters
@@ -616,7 +693,7 @@ typeParameter
     :
         // I'm pretty sure Antlr generates the right thing here:
         ({LA(1) == AT}? annotations | )
-        (id:IDENT) ( options{generateAmbigWarnings=false;}: typeParameterBounds )?
+        (id:id) ( options{generateAmbigWarnings=false;}: typeParameterBounds )?
         {#typeParameter = #(#[TYPE_PARAMETER,"TYPE_PARAMETER"], #typeParameter);}
     ;
 
@@ -643,7 +720,7 @@ annotationField!
             {#annotationField = #td;}
 
         |   t:typeSpec[false]               // annotation field
-            (    i:IDENT  // the name of the field
+            (    i:id  // the name of the field
 
                 LPAREN RPAREN
 
@@ -690,7 +767,7 @@ enumBlock
 //a body
 enumConstant!
     :   an:annotations
-        i:IDENT
+        i:id
         (    l:LPAREN
             args:argList
             r:RPAREN
@@ -718,7 +795,7 @@ enumConstantField!
             // This is not allowed for variable definitions, but this production
             // allows it, a semantic check could be used if you wanted.
             (tp:typeParameters)? t:typeSpec[false]  // method or variable declaration(s)
-            (    IDENT  // the name of the method
+            (    id:id  // the name of the method
 
                 // parse the formal parameter declarations.
                 LPAREN param:parameterDeclarationList RPAREN
@@ -734,7 +811,7 @@ enumConstantField!
                              mods,
                              tp,
                              #(#[TYPE,"TYPE"],rt),
-                             IDENT,
+                             id,
                              LPAREN,
                              param,
                              RPAREN,
@@ -799,7 +876,7 @@ implementsClause
 
                        |
                        t:typeSpec[false]  // method or variable declaration(s)
-                       (    IDENT  // the name of the method
+                       (    id:id  // the name of the method
 
                            // parse the formal parameter declarations.
                            LPAREN param:parameterDeclarationList RPAREN
@@ -815,7 +892,7 @@ implementsClause
                                         mods,
                                         tp,
                                         #(#[TYPE,"TYPE"],rt),
-                                        IDENT,
+                                        id,
                                         LPAREN,
                                         param,
                                         RPAREN,
@@ -897,7 +974,7 @@ variableDefinitions[AST mods, AST t]
  * It can also include possible initialization.
  */
 variableDeclarator![AST mods, AST t]
-    :    id:IDENT d:declaratorBrackets[t] v:varInitializer
+    :    id:id d:declaratorBrackets[t] v:varInitializer
         {#variableDeclarator = #(#[VARIABLE_DEF,"VARIABLE_DEF"], mods, #(#[TYPE,"TYPE"],d), id, v);}
     ;
 
@@ -944,7 +1021,7 @@ initializer
 //   for the method.
 //   This also watches for a list of exception classes in a "throws" clause.
 ctorHead
-    :    IDENT  // the name of the method
+    :    id  // the name of the method
 
         // parse the formal parameter declarations.
         LPAREN parameterDeclarationList RPAREN
@@ -979,10 +1056,10 @@ parameterDeclarationList
     ;
 
 variableLengthParameterDeclaration!
-    :    pm:parameterModifier t:variableLengthParameterTypeSpec td:ELLIPSIS IDENT
+    :    pm:parameterModifier t:variableLengthParameterTypeSpec td:ELLIPSIS id:id
         pd:declaratorBrackets[#t]
         {#variableLengthParameterDeclaration = #(#[PARAMETER_DEF,"PARAMETER_DEF"],
-                                                pm, #([TYPE,"TYPE"],pd), td, IDENT);}
+                                                pm, #([TYPE,"TYPE"],pd), td, id);}
     ;
 
 parameterModifier
@@ -1002,12 +1079,12 @@ parameterDeclaration!
     ;
 
 parameterIdent
-    :    LITERAL_this | (IDENT (DOT^ LITERAL_this)?)
+    :    LITERAL_this | (id (DOT^ LITERAL_this)?)
     ;
 
 //Added for support Java7's "multi-catch", several types separated by '|'
 catchParameterDeclaration!
-    :   pm:parameterModifier mct:multiCatchTypes id:IDENT
+    :   pm:parameterModifier mct:multiCatchTypes id:id
             {#catchParameterDeclaration =
                 #(#[PARAMETER_DEF,"PARAMETER_DEF"], pm, #([TYPE,"TYPE"],mct), id);}
     ;
@@ -1047,11 +1124,30 @@ traditionalStatement
     // A list of statements in curly braces -- start a new scope!
     :    compoundStatement
 
+        // Yield statement, must be in a switchRule to use
+        |  {this.switchBlockDepth>0}? yieldStatement
+
         // declarations are ambiguous with "ID DOT" relative to expression
         // statements.  Must backtrack to be sure.  Could use a semantic
         // predicate to test symbol table to see what the type was coming
         // up, but that's pretty hard without a symbol table ;)
         |    (declaration)=> declaration SEMI
+
+        |    (annotations recordDefinition[#null])=>
+                (a:annotations!
+                    {
+                        // We will change the annotations AST to be a modifier AST so that
+                        // if there are no annotations, we still have an empty modifier AST as we
+                        // do for classes without modifiers AND to reflect the structure of our
+                        // class def AST.
+                        #a.setType(MODIFIERS);
+                        #a.setText("MODIFIERS");
+                    }
+                recordDefinition[#a]
+                )
+
+        // switch/case statement
+        |  switchExpression
 
         // An expression statement.  This could be a method call,
         // assignment statement, or any other expression evaluated for
@@ -1062,7 +1158,7 @@ traditionalStatement
         |    m:modifiers! classDefinition[#m]
 
         // Attach a label to the front of a statement
-        |    IDENT c:COLON^ {#c.setType(LABELED_STAT);} statement
+        |    id c:COLON^ {#c.setType(LABELED_STAT);} statement
 
         // If-else statement
         |    "if"^ LPAREN expression RPAREN statement
@@ -1087,30 +1183,29 @@ traditionalStatement
         |    "do"^ statement w:"while" {#w.setType(DO_WHILE);} LPAREN expression RPAREN SEMI
 
         // get out of a loop (or switch)
-        |    "break"^ (IDENT)? SEMI
+        |    "break"^ (id)? SEMI
 
         // do next iteration of a loop
-        |    "continue"^ (IDENT)? SEMI
+        |    "continue"^ (id)? SEMI
 
         // Return an expression
         |    "return"^ (expression)? SEMI
-
-        // switch/case statement
-        |    "switch"^ LPAREN expression RPAREN LCURLY
-                ( casesGroup )*
-            RCURLY
 
         // exception try-catch block
         |    tryBlock
 
         // throw an exception
-        |    "throw"^ expression SEMI
+        |    throwStatement
 
         // synchronize a statement
         |    "synchronized"^ LPAREN expression RPAREN compoundStatement
 
         // empty statement
         |    s:SEMI {#s.setType(EMPTY_STAT);}
+    ;
+
+yieldStatement!
+    :  l:LITERAL_yield e:expression s:SEMI {## = #(l,e,s);}
     ;
 
 forStatement
@@ -1137,12 +1232,22 @@ forEachClause
     ;
 
 forEachDeclarator!
-    :    m:modifiers t:typeSpec[false] id:IDENT d:declaratorBrackets[#t]
+    :    m:modifiers t:typeSpec[false] id:id d:declaratorBrackets[#t]
         {#forEachDeclarator = #(#[VARIABLE_DEF,"VARIABLE_DEF"], m, #(#[TYPE,"TYPE"],d), id);}
     ;
 
 elseStatement
     : "else"^ statement
+    ;
+
+switchBlock
+    :   ({switchBlockDepth++;}: // inc counter since we are in a switch expression
+            LCURLY)
+                (   ( ( switchRule )+)=>( ( switchRule )+ )
+                |   ( ( casesGroup )*)=>( ( casesGroup )* )
+                )
+        ({switchBlockDepth--;}: // dec counter since we are leaving a switch expression
+            RCURLY)
     ;
 
 casesGroup
@@ -1154,14 +1259,10 @@ casesGroup
                 warnWhenFollowAmbig = false;
             }
             :
-            aCase
+            switchLabel
         )+
         (caseSList)?
         {#casesGroup = #([CASE_GROUP, "CASE_GROUP"], #casesGroup);}
-    ;
-
-aCase
-    :    ("case"^ expression | "default"^) COLON
     ;
 
 caseSList
@@ -1177,6 +1278,37 @@ caseSList
                 statement
         )+
         {#caseSList = #(#[SLIST,"SLIST"],#caseSList);}
+    ;
+
+switchRule
+    :   (       (switchLabeledExpression)=>  se:switchLabeledExpression
+        |       (switchLabeledBlock)=>       sb:switchLabeledBlock
+        |       (switchLabeledThrow)=>       st:switchLabeledThrow
+        )
+        {## = #(#[SWITCH_RULE, "SWITCH_RULE"], se, sb, st);}
+    ;
+
+switchLabeledExpression
+    :   switchLabel LAMBDA expression SEMI
+    ;
+
+switchLabeledBlock
+    :   switchLabel LAMBDA compoundStatement
+    ;
+
+switchLabeledThrow
+    :   switchLabel LAMBDA throwStatement
+    ;
+
+switchLabel
+    :   ( LITERAL_case^ caseConstant (COMMA caseConstant)*
+        | LITERAL_default^
+        )
+        (COLON)?
+    ;
+
+caseConstant
+    :   conditionalExpression {## = #(#[EXPR,"EXPR"],##);}
     ;
 
 // The initializer for a for loop
@@ -1212,6 +1344,10 @@ tryBlock
         ( finallyHandler )?
     ;
 
+throwStatement
+    : "throw"^ expression SEMI
+    ;
+
 resourceSpecification
     : LPAREN resources (SEMI)? RPAREN
       {#resourceSpecification =
@@ -1223,16 +1359,24 @@ resources
       {#resources = #([RESOURCES, "RESOURCES"], #resources);}
     ;
 
-
 resource
-    : IDENT
-      | modifiers typeSpec[true] IDENT resource_assign
-      {#resource = #([RESOURCE, "RESOURCE"], #resource);}
+    : (tryResourceDeclaration)=>  tryResourceDeclaration
+    | (primaryExpression DOT^)* id
+    {#resource = #([RESOURCE, "RESOURCE"], #resource);}
 ;
 
-resource_assign
-    : ASSIGN^ expression
-    ;
+tryResourceDeclarator![AST mods, AST t]
+    :    id:id d:declaratorBrackets[t] v:varInitializer
+        {#tryResourceDeclarator = #(#[RESOURCE, "RESOURCE"], mods, #(#[TYPE,"TYPE"],d), id, v);}
+;
+
+tryResourceDeclaration!
+    : m:parameterModifier t:typeSpec[false]
+                                    v:tryResourceDeclarator[(AST) getASTFactory().dupTree(#m),
+                                    //dupList as this also copies siblings (like TYPE_ARGUMENTS)
+                                    (AST) getASTFactory().dupList(#t)]
+    {#tryResourceDeclaration = #v;}
+;
 
 // an exception handler
 handler
@@ -1364,7 +1508,12 @@ equalityExpression
 
 // boolean relational expressions (level 5)
 relationalExpression
-    :    shiftExpression ( "instanceof"^ typeSpec[true])?
+    :    shiftExpression
+        ( "instanceof"^
+            (   (typeSpec[true] IDENT)=> patternDefinition
+            |   instanceofTypeSpec
+            )
+        )?
         (    (options{warnWhenFollowAmbig=false;} :     (    LT^
                 |    GT^
                 |    LE^
@@ -1372,10 +1521,23 @@ relationalExpression
                 )
                 shiftExpression
             )*
-
         )
     ;
 
+instanceofTypeSpec!
+    :   t:typeSpec[true]
+        {#instanceofTypeSpec = #t;}
+    ;
+
+patternDefinition!
+    :   v:patternVariableDefinition
+        {## = #v;}
+    ;
+
+patternVariableDefinition!
+    :   t:typeSpec[true] i:IDENT
+        {## = #(#[PATTERN_VARIABLE_DEF,"PATTERN_VARIABLE_DEF"], t, i);}
+    ;
 
 // bit shift expressions (level 4)
 shiftExpression
@@ -1406,32 +1568,44 @@ unaryExpression
 unaryExpressionNotPlusMinus
     :    BNOT^ unaryExpression
     |    LNOT^ unaryExpression
+    |    castExpression
+    |    switchExpression
+    ;
 
-    |    (    // subrule allows option to shut off warnings
-            options {
-                // "(int" ambig with postfixExpr due to lack of sequence
-                // info in linear approximate LL(k).  It's ok.  Shut up.
-                generateAmbigWarnings=false;
-            }
-        :    // If typecast is built in type, must be numeric operand
-            // Also, no reason to backtrack if type keyword like int, float...
-            (LPAREN builtInTypeSpec[true] RPAREN unaryExpression) =>
-            lpb:LPAREN^ {#lpb.setType(TYPECAST);} builtInTypeSpec[true] RPAREN
-            unaryExpression
+castExpression
+    :  (   // subrule allows option to shut off warnings
+                    options {
+                        // "(int" ambig with postfixExpr due to lack of sequence
+                        // info in linear approximate LL(k).  It's ok.  Shut up.
+                        generateAmbigWarnings=false;
+                    }
+                :   // If typecast is built in type, must be numeric operand
+                    // Also, no reason to backtrack if type keyword like int, float...
+                    (LPAREN builtInTypeSpec[true] RPAREN unaryExpression) =>
+                    lpb:LPAREN^ {#lpb.setType(TYPECAST);} builtInTypeSpec[true] RPAREN
+                    unaryExpression
 
-            // Have to backtrack to see if operator follows.  If no operator
-            // follows, it's a typecast.  No semantic checking needed to parse.
-            // if it _looks_ like a cast, it _is_ a cast; else it's a "(expr)"
-        |    (LPAREN typeCastParameters RPAREN unaryExpressionNotPlusMinus)=>
-            lp:LPAREN^ {#lp.setType(TYPECAST);} typeCastParameters RPAREN
-            unaryExpressionNotPlusMinus
+                    // This lambda/castExpression must stay above the unaryExpressionNotPlusMinus
+                    // typecast rule below, or typecasting w/ lambdas breaks because IDENT is
+                    // misidentified as a postfixExpression and not as part of the lambdaExpression.
+                    // See https://github.com/checkstyle/checkstyle/pull/8449#issuecomment-658278145
+                |   (LPAREN typeCastParameters RPAREN lambdaExpression) =>
+                      lpl:LPAREN^ {#lpl.setType(TYPECAST);}
+                      typeCastParameters RPAREN lambdaExpression
 
-        |   (LPAREN typeCastParameters RPAREN lambdaExpression) =>
-                lpl:LPAREN^ {#lpl.setType(TYPECAST);} typeCastParameters RPAREN
-                lambdaExpression
+                    // Have to backtrack to see if operator follows.  If no operator
+                    // follows, it's a typecast.  No semantic checking needed to parse.
+                    // if it _looks_ like a cast, it _is_ a cast; else it's a "(expr)"
+                |    (LPAREN typeCastParameters RPAREN unaryExpressionNotPlusMinus)=>
+                    lp:LPAREN^ {#lp.setType(TYPECAST);} typeCastParameters RPAREN
+                    unaryExpressionNotPlusMinus
 
-        |    postfixExpression
+                |   postfixExpression
         )
+    ;
+
+ switchExpression
+    :   "switch"^ LPAREN expression RPAREN switchBlock
     ;
 
 typeCastParameters
@@ -1444,7 +1618,7 @@ postfixExpression
         (options{warnWhenFollowAmbig=false;} :    // qualified id (id.id.id.id...) -- build the name
             DOT^
             ( (typeArguments[false])?
-              ( IDENT
+              ( id
               | "this"
               | "super" // ClassName.super.field
               )
@@ -1459,7 +1633,7 @@ postfixExpression
             dc:DOUBLE_COLON^ {#dc.setType(METHOD_REF);}
             (
                 (typeArguments[false])?
-                    (IDENT
+                    (id
                 | LITERAL_new)
             )
 
@@ -1499,7 +1673,7 @@ postfixExpression
 // the basic element of an expression
 primaryExpression
     :   (typeSpec[false] DOUBLE_COLON) => typeSpec[false]
-    |    IDENT
+    |    id
     |    constant
     |    "true"
     |    "false"
@@ -1616,6 +1790,7 @@ constant
     |   NUM_DOUBLE
     |    CHAR_LITERAL
     |    STRING_LITERAL
+    |   textBlock
     ;
 
 lambdaExpression
@@ -1623,7 +1798,7 @@ lambdaExpression
     ;
 
 lambdaParameters
-    :    IDENT
+    :    id
     |    LPAREN (parameterDeclarationList)? RPAREN
     ;
 
@@ -1631,6 +1806,21 @@ lambdaBody
     :    (options{generateAmbigWarnings=false;}: expression
     |    statement)
     ;
+
+textBlock
+    :   !c:TEXT_BLOCK_CONTENT
+        TEXT_BLOCK_LITERAL_END
+        TEXT_BLOCK_LITERAL_BEGIN
+        {#textBlock=#( TEXT_BLOCK_LITERAL_BEGIN,
+            c,TEXT_BLOCK_LITERAL_END);}
+    ;
+
+// This rule was created to remedy the "keyword as identifier" problem
+// See: https://github.com/checkstyle/checkstyle/issues/8308
+id: IDENT | recordKey | yieldKey;
+
+recordKey: "record" {#recordKey.setType(IDENT);};
+yieldKey:  "yield" {#yieldKey.setType(IDENT);};
 
 
 //----------------------------------------------------------------------------
@@ -1658,6 +1848,8 @@ options {
     {
         setColumn( getColumn() + 1 );
     }
+
+    public TokenStreamSelector selector;
 
     private CommentListener mCommentListener = null;
 
@@ -1805,6 +1997,10 @@ BLOCK_COMMENT_CONTENT
         )*
     ;
 
+TEXT_BLOCK_LITERAL_BEGIN
+    :   "\"\"\"" {selector.push("textBlockLexer");}
+    ;
+
 // character literals
 CHAR_LITERAL
     :    '\'' ( ESC | ~'\'' ) '\''
@@ -1850,6 +2046,7 @@ STD_ESC
     |    't'
     |    'b'
     |    'f'
+    |    's'
     |    '"'
     |    '\''
     |    '\\'

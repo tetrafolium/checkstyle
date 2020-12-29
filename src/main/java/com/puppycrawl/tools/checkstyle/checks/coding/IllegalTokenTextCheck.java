@@ -35,20 +35,26 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * <ul>
  * <li>
  * Property {@code format} - Define the RegExp for illegal pattern.
- * Default value is {@code "^$" (empty)}.
+ * Type is {@code java.lang.String}.
+ * Validation type is {@code java.util.regex.Pattern}.
+ * Default value is {@code "^$"}.
  * </li>
  * <li>
  * Property {@code ignoreCase} - Control whether to ignore case when matching.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * <li>
  * Property {@code message} - Define the message which is used to notify about violations;
  * if empty then the default message is used.
+ * Type is {@code java.lang.String}.
  * Default value is {@code ""}.
  * </li>
  * <li>
  * Property {@code tokens} - tokens to check
- * Default value is: empty.
+ * Type is {@code java.lang.String[]}.
+ * Validation type is {@code tokenSet}.
+ * Default value is: {@code ""}.
  * </li>
  * </ul>
  * <p>
@@ -59,6 +65,47 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  *   &lt;property name=&quot;tokens&quot; value=&quot;STRING_LITERAL&quot;/&gt;
  *   &lt;property name=&quot;format&quot; value=&quot;a href&quot;/&gt;
  * &lt;/module&gt;
+ * </pre>
+ * <p>Example:</p>
+ * <pre>
+ * public void myTest() {
+ *     String test = "a href"; // violation
+ *     String test2 = "A href"; // OK, case is sensitive
+ * }
+ * </pre>
+ * <p>
+ * To configure the check to forbid String literals containing {@code "a href"}
+ * for the ignoreCase mode:
+ * </p>
+ * <pre>
+ * &lt;module name=&quot;IllegalTokenText&quot;&gt;
+ *   &lt;property name=&quot;tokens&quot; value=&quot;STRING_LITERAL&quot;/&gt;
+ *   &lt;property name=&quot;format&quot; value=&quot;a href&quot;/&gt;
+ *   &lt;property name=&quot;ignoreCase&quot; value=&quot;true&quot;/&gt;
+ * &lt;/module&gt;
+ * </pre>
+ * <p>Example:</p>
+ * <pre>
+ * public void myTest() {
+ *     String test = "a href"; // violation
+ *     String test2 = "A href"; // violation, case is ignored
+ * }
+ * </pre>
+ * <p>
+ * To configure the check to forbid string literal text blocks containing {@code """}:
+ * </p>
+ * <pre>
+ * &lt;module name=&quot;IllegalTokenText&quot;&gt;
+ *   &lt;property name=&quot;tokens&quot; value=&quot;TEXT_BLOCK_CONTENT&quot;/&gt;
+ *   &lt;property name=&quot;format&quot; value='&quot;'/&gt;
+ * &lt;/module&gt;
+ * </pre>
+ * <p>Example:</p>
+ * <pre>
+ * public void myTest() {
+ *     final String quote = """
+ *                \""""; // violation
+ * }
  * </pre>
  * <p>
  * To configure the check to forbid leading zeros in an integer literal,
@@ -71,6 +118,28 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  *   &lt;property name=&quot;ignoreCase&quot; value=&quot;true&quot;/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>Example:</p>
+ * <pre>
+ * public void myTest() {
+ *     int test1 = 0; // OK
+ *     int test2 = 0x111; // OK
+ *     int test3 = 0X111; // OK, case is ignored
+ *     int test4 = 010; // violation
+ *     long test5 = 0L; // OK
+ *     long test6 = 010L; // violation
+ * }
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code illegal.token.text}
+ * </li>
+ * </ul>
  *
  * @since 3.2
  */
@@ -115,6 +184,7 @@ public class IllegalTokenTextCheck
             TokenTypes.COMMENT_CONTENT,
             TokenTypes.STRING_LITERAL,
             TokenTypes.CHAR_LITERAL,
+            TokenTypes.TEXT_BLOCK_CONTENT,
         };
     }
 
@@ -146,6 +216,7 @@ public class IllegalTokenTextCheck
     /**
      * Setter to define the message which is used to notify about violations;
      * if empty then the default message is used.
+     *
      * @param message custom message which should be used
      *                 to report about violations.
      */
@@ -160,6 +231,7 @@ public class IllegalTokenTextCheck
 
     /**
      * Setter to define the RegExp for illegal pattern.
+     *
      * @param format a {@code String} value
      */
     public void setFormat(String format) {
@@ -169,6 +241,7 @@ public class IllegalTokenTextCheck
 
     /**
      * Setter to control whether to ignore case when matching.
+     *
      * @param caseInsensitive true if the match is case insensitive.
      */
     public void setIgnoreCase(boolean caseInsensitive) {

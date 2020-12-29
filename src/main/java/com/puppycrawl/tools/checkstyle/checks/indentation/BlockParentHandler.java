@@ -49,6 +49,7 @@ public class BlockParentHandler extends AbstractExpressionHandler {
     private static final int[] CHECKED_CHILDREN = {
         TokenTypes.VARIABLE_DEF,
         TokenTypes.EXPR,
+        TokenTypes.ANNOTATION,
         TokenTypes.OBJBLOCK,
         TokenTypes.LITERAL_BREAK,
         TokenTypes.LITERAL_RETURN,
@@ -75,6 +76,7 @@ public class BlockParentHandler extends AbstractExpressionHandler {
 
     /**
      * Returns array of token types which should be checked among children.
+     *
      * @return array of token types to check.
      */
     protected int[] getCheckedChildren() {
@@ -151,7 +153,14 @@ public class BlockParentHandler extends AbstractExpressionHandler {
      * @return the curly brace indentation level
      */
     protected IndentLevel curlyIndent() {
-        return new IndentLevel(getIndent(), getBraceAdjustment());
+        final DetailAST lcurly = getLeftCurly();
+        IndentLevel expIndentLevel = new IndentLevel(getIndent(), getBraceAdjustment());
+        if (!isOnStartOfLine(lcurly)
+            || lcurly.getParent().getType() == TokenTypes.INSTANCE_INIT) {
+            expIndentLevel = new IndentLevel(getIndent(), 0);
+        }
+
+        return expIndentLevel;
     }
 
     /**
@@ -193,6 +202,11 @@ public class BlockParentHandler extends AbstractExpressionHandler {
         if (nonList != null) {
             final IndentLevel expected = new IndentLevel(getIndent(), getBasicOffset());
             checkExpressionSubtree(nonList, expected, false, false);
+
+            final DetailAST nonListStartAst = getFirstAstNode(nonList);
+            if (nonList != nonListStartAst) {
+                checkExpressionSubtree(nonListStartAst, expected, false, false);
+            }
         }
     }
 
@@ -240,10 +254,18 @@ public class BlockParentHandler extends AbstractExpressionHandler {
         else {
             // NOTE: switch statements usually don't have curlies
             if (!hasCurlies() || !TokenUtil.areOnSameLine(getLeftCurly(), getRightCurly())) {
+                // Note: For Annotation Array Init only:
+                // If its a annotation array init block with strict cond being false then,
+                // we want flexible child indents with any indentLevel above minimum requirement
+                // All the other block elements will follow strict discrete indentation levels.
+                final boolean doesAnnotationArrayInitFollowsStrictCond =
+                    !TokenUtil.isOfType(listChild, TokenTypes.ANNOTATION_ARRAY_INIT)
+                        || getIndentCheck().isForceStrictCondition();
+
                 checkChildren(listChild,
                         getCheckedChildren(),
                         getChildrenExpectedIndent(),
-                        true,
+                        doesAnnotationArrayInitFollowsStrictCond,
                         canChildrenBeNested());
             }
         }
@@ -251,6 +273,7 @@ public class BlockParentHandler extends AbstractExpressionHandler {
 
     /**
      * Gets indentation level expected for children.
+     *
      * @return indentation level expected for children
      */
     protected IndentLevel getChildrenExpectedIndent() {
@@ -269,6 +292,10 @@ public class BlockParentHandler extends AbstractExpressionHandler {
                         + getLineWrappingIndent());
             }
         }
+        if (hasCurlies() && isOnStartOfLine(getLeftCurly())) {
+            indentLevel = IndentLevel.addAcceptable(indentLevel,
+                    curlyIndent().getFirstIndentLevel() + getBasicOffset());
+        }
         return indentLevel;
     }
 
@@ -279,6 +306,7 @@ public class BlockParentHandler extends AbstractExpressionHandler {
 
     /**
      * A shortcut for {@code IndentationCheck} property.
+     *
      * @return value of lineWrappingIndentation property
      *         of {@code IndentationCheck}
      */

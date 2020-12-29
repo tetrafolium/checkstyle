@@ -25,13 +25,18 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.File;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -42,6 +47,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.google.common.collect.ImmutableMap;
 import com.puppycrawl.tools.checkstyle.AbstractModuleTestSupport;
 import com.puppycrawl.tools.checkstyle.Checker;
 import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
@@ -50,7 +56,18 @@ import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.Scope;
+import com.puppycrawl.tools.checkstyle.api.SeverityLevel;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.checks.LineSeparatorOption;
+import com.puppycrawl.tools.checkstyle.checks.annotation.AnnotationUseStyleCheck;
+import com.puppycrawl.tools.checkstyle.checks.blocks.BlockOption;
+import com.puppycrawl.tools.checkstyle.checks.blocks.LeftCurlyOption;
+import com.puppycrawl.tools.checkstyle.checks.blocks.RightCurlyOption;
+import com.puppycrawl.tools.checkstyle.checks.imports.ImportOrderOption;
+import com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocContentLocationOption;
+import com.puppycrawl.tools.checkstyle.checks.naming.AccessModifierOption;
+import com.puppycrawl.tools.checkstyle.checks.whitespace.PadOption;
+import com.puppycrawl.tools.checkstyle.checks.whitespace.WrapOption;
 import com.puppycrawl.tools.checkstyle.internal.utils.TestUtil;
 import com.puppycrawl.tools.checkstyle.internal.utils.XdocUtil;
 import com.puppycrawl.tools.checkstyle.internal.utils.XmlUtil;
@@ -60,6 +77,59 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
 import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 public class XdocsJavaDocsTest extends AbstractModuleTestSupport {
+    private static final Map<String, Class<?>> FULLY_QUALIFIED_CLASS_NAMES =
+            ImmutableMap.<String, Class<?>>builder()
+            .put("int", int.class)
+            .put("int[]", int[].class)
+            .put("boolean", boolean.class)
+            .put("double", double.class)
+            .put("double[]", double[].class)
+            .put("String", String.class)
+            .put("String[]", String[].class)
+            .put("Regular Expression", String.class)
+            .put("Regular Expressions", String[].class)
+            .put("Pattern", Pattern.class)
+            .put("Pattern[]", Pattern[].class)
+            .put("AccessModifierOption[]", AccessModifierOption[].class)
+            .put("BlockOption", BlockOption.class)
+            .put("ClosingParensOption", AnnotationUseStyleCheck.ClosingParensOption.class)
+            .put("ElementStyleOption", AnnotationUseStyleCheck.ElementStyleOption.class)
+            .put("File", File.class)
+            .put("ImportOrderOption", ImportOrderOption.class)
+            .put("JavadocContentLocationOption", JavadocContentLocationOption.class)
+            .put("LeftCurlyOption", LeftCurlyOption.class)
+            .put("LineSeparatorOption", LineSeparatorOption.class)
+            .put("PadOption", PadOption.class)
+            .put("RightCurlyOption", RightCurlyOption.class)
+            .put("Scope", Scope.class)
+            .put("SeverityLevel", SeverityLevel.class)
+            .put("TrailingArrayCommaOption", AnnotationUseStyleCheck.TrailingArrayCommaOption.class)
+            .put("URI", URI.class)
+            .put("WrapOption", WrapOption.class)
+            .put("PARAM_LITERAL", int[].class).build();
+
+    private static final Set<String> PATTERN_EXCEPTIONS = Collections.unmodifiableSet(
+        Arrays.stream(new String[] {
+            "ClassDataAbstractionCoupling - excludeClassesRegexps",
+            "ClassFanOutComplexity - excludeClassesRegexps",
+            "IllegalTokenText - format",
+            "ImportOrder - groups",
+            "ImportOrder - staticGroups",
+            "SuppressionSingleFilter - checks",
+            "SuppressionXpathSingleFilter - files",
+            "SuppressionXpathSingleFilter - checks",
+            "SuppressionXpathSingleFilter - message",
+        }).collect(Collectors.toSet()));
+
+    private static final Set<String> NON_BASE_TOKEN_PROPERTIES = Collections.unmodifiableSet(
+        Arrays.stream(new String[] {
+            "AtclauseOrder - target",
+            "DescendantToken - limitedTokens",
+            "IllegalType - memberModifiers",
+            "MagicNumber - constantWaiverParentToken",
+            "MultipleStringLiterals - ignoreOccurrenceContext",
+        }).collect(Collectors.toSet()));
+
     private static final List<List<Node>> CHECK_PROPERTIES = new ArrayList<>();
     private static final Map<String, String> CHECK_PROPERTY_DOC = new HashMap<>();
     private static final Map<String, String> CHECK_TEXT = new HashMap<>();
@@ -82,6 +152,7 @@ public class XdocsJavaDocsTest extends AbstractModuleTestSupport {
 
     /**
      * Test contains asserts in callstack, but idea does not see them.
+     *
      * @noinspection JUnitTestMethodWithNoAssertions
      */
     @Test
@@ -92,7 +163,7 @@ public class XdocsJavaDocsTest extends AbstractModuleTestSupport {
             final File file = path.toFile();
             final String fileName = file.getName();
 
-            if ("config_reporting.xml".equals(fileName)) {
+            if ("config_system_properties.xml".equals(fileName)) {
                 continue;
             }
 
@@ -167,12 +238,43 @@ public class XdocsJavaDocsTest extends AbstractModuleTestSupport {
                 CHECK_TEXT.put(subSectionName, createPropertiesText());
                 break;
             case "Example of Usage":
-            case "Error Messages":
+            case "Violation Messages":
+                CHECK_TEXT.put(subSectionName,
+                        createViolationMessagesText(getViolationMessages(subSection)));
+                break;
             case "Package":
             case "Parent Module":
+                CHECK_TEXT.put(subSectionName, createParentText(subSection));
+                break;
             default:
                 break;
         }
+    }
+
+    private static List<String> getViolationMessages(Node subsection) {
+        final Node child = XmlUtil.getFirstChildElement(subsection);
+        final List<String> violationMessages = new ArrayList<>();
+        for (Node row : XmlUtil.getChildrenElements(child)) {
+            violationMessages.add(row.getTextContent().trim());
+        }
+        return violationMessages;
+    }
+
+    private static String createViolationMessagesText(List<String> violationMessages) {
+        final StringBuilder result = new StringBuilder(100);
+        result.append("\n<p>\nViolation Message Keys:\n</p>\n<ul>");
+
+        for (String msg : violationMessages) {
+            result.append("\n<li>\n{@code ").append(msg).append("}\n</li>");
+        }
+
+        result.append("\n</ul>");
+        return result.toString();
+    }
+
+    private static String createParentText(Node subsection) {
+        return "\n<p>\nParent is {@code com.puppycrawl.tools.checkstyle."
+                + XmlUtil.getFirstChildElement(subsection).getTextContent().trim() + "}\n</p>";
     }
 
     private static void populateProperties(Node subSection) {
@@ -213,14 +315,32 @@ public class XdocsJavaDocsTest extends AbstractModuleTestSupport {
             result.append(temp);
             CHECK_PROPERTY_DOC.put(propertyName, temp);
 
-            if (propertyName.endsWith("token") || propertyName.endsWith("tokens")) {
-                result.append(" Default value is: ");
+            String typeText = "java.lang.String[]";
+            final String propertyType = property.get(2).getTextContent();
+            final boolean isSpecialAllTokensType = propertyType.contains("set of any supported");
+            final boolean isPropertyTokenType = isSpecialAllTokensType
+                    || propertyType.contains("subset of tokens")
+                    || propertyType.contains("subset of javadoc tokens");
+            if (!isPropertyTokenType) {
+                final String typeName =
+                        getCorrectNodeBasedOnPropertyType(property).getTextContent().trim();
+                typeText = FULLY_QUALIFIED_CLASS_NAMES.get(typeName).getTypeName();
             }
-            else {
-                result.append(" Default value is ");
+            if (isSpecialAllTokensType) {
+                typeText = "anyTokenTypesSet";
+            }
+            result.append(" Type is {@code ").append(typeText).append("}.");
+
+            if (!isSpecialAllTokensType) {
+                final String validationType = getValidationType(isPropertyTokenType, propertyName);
+                if (validationType != null) {
+                    result.append(validationType);
+                }
             }
 
-            result.append(getNodeText(property.get(3)));
+            result.append(getDefaultValueOfType(propertyName, isSpecialAllTokensType));
+
+            result.append(emptyStringArrayDefaultValue(property.get(3), isPropertyTokenType));
 
             if (result.charAt(result.length() - 1) != '.') {
                 result.append('.');
@@ -232,6 +352,56 @@ public class XdocsJavaDocsTest extends AbstractModuleTestSupport {
         result.append("\n</ul>");
 
         return result.toString();
+    }
+
+    private static Node getCorrectNodeBasedOnPropertyType(List<Node> property) {
+        final Node result;
+        if (property.get(2).getFirstChild().getFirstChild() == null) {
+            result = property.get(2).getFirstChild().getNextSibling();
+        }
+        else {
+            result = property.get(2).getFirstChild().getFirstChild();
+        }
+        return result;
+    }
+
+    private static String getDefaultValueOfType(String propertyName,
+                                                boolean isSpecialAllTokensType) {
+        final String result;
+        if (!isSpecialAllTokensType
+                && (propertyName.endsWith("token") || propertyName.endsWith(
+                "tokens"))) {
+            result = " Default value is: ";
+        }
+        else {
+            result = " Default value is ";
+        }
+        return result;
+    }
+
+    private static String getValidationType(boolean isPropertyTokenType, String propertyName) {
+        String result = null;
+        if (NON_BASE_TOKEN_PROPERTIES.contains(checkName + " - " + propertyName)) {
+            result = " Validation type is {@code tokenTypesSet}.";
+        }
+        else if (PATTERN_EXCEPTIONS.contains(checkName + " - " + propertyName)) {
+            result = " Validation type is {@code java.util.regex.Pattern}.";
+        }
+        else if (isPropertyTokenType) {
+            result = " Validation type is {@code tokenSet}.";
+        }
+        return result;
+    }
+
+    private static String emptyStringArrayDefaultValue(Node defaultValueNode,
+                                                boolean isPropertyTokenType) {
+        String defaultValueText = getNodeText(defaultValueNode);
+        if ("{@code {}}".equals(defaultValueText)
+            || "{@code all files}".equals(defaultValueText)
+            || isPropertyTokenType && "{@code empty}".equals(defaultValueText)) {
+            defaultValueText = "{@code \"\"}";
+        }
+        return defaultValueText;
     }
 
     private static String getNodeText(Node node) {
@@ -462,12 +632,20 @@ public class XdocsJavaDocsTest extends AbstractModuleTestSupport {
         }
 
         private static void visitClass(DetailAST node) {
+            String violationMessagesText = CHECK_TEXT.get("Violation Messages");
+
+            if (checkName.endsWith("Filter") || "SuppressWarningsHolder".equals(checkName)) {
+                violationMessagesText = "";
+            }
+
             if (ScopeUtil.isInScope(node, Scope.PUBLIC)) {
                 assertEquals(CHECK_TEXT.get("Description")
                         + CHECK_TEXT.computeIfAbsent("Rule Description", unused -> "")
                         + CHECK_TEXT.computeIfAbsent("Notes", unused -> "")
                         + CHECK_TEXT.computeIfAbsent("Properties", unused -> "")
-                        + CHECK_TEXT.get("Examples") + " @since "
+                        + CHECK_TEXT.get("Examples")
+                        + CHECK_TEXT.get("Parent Module")
+                        + violationMessagesText + " @since "
                         + CHECK_TEXT.get("since"), getJavaDocText(node),
                         checkName + "'s class-level JavaDoc");
             }
@@ -506,6 +684,7 @@ public class XdocsJavaDocsTest extends AbstractModuleTestSupport {
          * Returns whether an AST represents a setter method. This is similar to
          * {@link CheckUtil#isSetterMethod(DetailAST)} except this doesn't care
          * about the number of children in the method.
+         *
          * @param ast the AST to check with.
          * @return whether the AST represents a setter method.
          */

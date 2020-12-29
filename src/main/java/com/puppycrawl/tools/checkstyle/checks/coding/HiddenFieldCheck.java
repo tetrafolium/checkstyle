@@ -32,6 +32,7 @@ import com.puppycrawl.tools.checkstyle.api.Scope;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.CheckUtil;
 import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 /**
  * <p>
@@ -76,35 +77,46 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * <li>
  * Property {@code ignoreFormat} - Define the RegExp for names of variables
  * and parameters to ignore.
+ * Type is {@code java.util.regex.Pattern}.
  * Default value is {@code null}.
  * </li>
  * <li>
  * Property {@code ignoreConstructorParameter} - Control whether to ignore constructor parameters.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * <li>
  * Property {@code ignoreSetter} - Allow to ignore the parameter of a property setter method.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * <li>
  * Property {@code setterCanReturnItsClass} - Allow to expand the definition of a setter method
  * to include methods that return the class' instance.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * <li>
  * Property {@code ignoreAbstractMethods} - Control whether to ignore parameters
  * of abstract methods.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * <li>
  * Property {@code tokens} - tokens to check
+ * Type is {@code java.lang.String[]}.
+ * Validation type is {@code tokenSet}.
  * Default value is:
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
  * VARIABLE_DEF</a>,
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PARAMETER_DEF">
  * PARAMETER_DEF</a>,
+ * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#PATTERN_VARIABLE_DEF">
+ * PATTERN_VARIABLE_DEF</a>,
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#LAMBDA">
- * LAMBDA</a>.
+ * LAMBDA</a>,
+ * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RECORD_COMPONENT_DEF">
+ * RECORD_COMPONENT_DEF</a>.
  * </li>
  * </ul>
  * <p>
@@ -174,6 +186,17 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  *   &lt;property name=&quot;setterCanReturnItsClass&quot; value=&quot;true&quot;/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code hidden.field}
+ * </li>
+ * </ul>
  *
  * @since 3.0
  */
@@ -226,7 +249,10 @@ public class HiddenFieldCheck
             TokenTypes.CLASS_DEF,
             TokenTypes.ENUM_DEF,
             TokenTypes.ENUM_CONSTANT_DEF,
+            TokenTypes.PATTERN_VARIABLE_DEF,
             TokenTypes.LAMBDA,
+            TokenTypes.RECORD_DEF,
+            TokenTypes.RECORD_COMPONENT_DEF,
         };
     }
 
@@ -236,6 +262,7 @@ public class HiddenFieldCheck
             TokenTypes.CLASS_DEF,
             TokenTypes.ENUM_DEF,
             TokenTypes.ENUM_CONSTANT_DEF,
+            TokenTypes.RECORD_DEF,
         };
     }
 
@@ -250,6 +277,8 @@ public class HiddenFieldCheck
         switch (type) {
             case TokenTypes.VARIABLE_DEF:
             case TokenTypes.PARAMETER_DEF:
+            case TokenTypes.PATTERN_VARIABLE_DEF:
+            case TokenTypes.RECORD_COMPONENT_DEF:
                 processVariable(ast);
                 break;
             case TokenTypes.LAMBDA:
@@ -265,11 +294,13 @@ public class HiddenFieldCheck
      * Checks whether a lambda parameter shadows a field.
      * Note, that when parameter of lambda expression is untyped,
      * ANTLR parses the parameter as an identifier.
+     *
      * @param ast the lambda token.
      */
     private void processLambda(DetailAST ast) {
         final DetailAST firstChild = ast.getFirstChild();
-        if (firstChild.getType() == TokenTypes.IDENT) {
+        if (firstChild != null
+                && firstChild.getType() == TokenTypes.IDENT) {
             final String untypedLambdaParameterName = firstChild.getText();
             if (frame.containsStaticField(untypedLambdaParameterName)
                 || isInstanceField(firstChild, untypedLambdaParameterName)) {
@@ -297,7 +328,8 @@ public class HiddenFieldCheck
                         && typeMods.findFirstToken(TokenTypes.LITERAL_STATIC) != null;
         final String frameName;
 
-        if (type == TokenTypes.CLASS_DEF || type == TokenTypes.ENUM_DEF) {
+        if (type == TokenTypes.CLASS_DEF
+                || type == TokenTypes.ENUM_DEF) {
             frameName = ast.findFirstToken(TokenTypes.IDENT).getText();
         }
         else {
@@ -326,6 +358,17 @@ public class HiddenFieldCheck
                 child = child.getNextSibling();
             }
         }
+        if (ast.getType() == TokenTypes.RECORD_DEF) {
+            final DetailAST recordComponents =
+                ast.findFirstToken(TokenTypes.RECORD_COMPONENTS);
+
+            // For each record component definition, we will add it to this frame.
+            TokenUtil.forEachChild(recordComponents,
+                TokenTypes.RECORD_COMPONENT_DEF, node -> {
+                    final String name = node.findFirstToken(TokenTypes.IDENT).getText();
+                    newFrame.addInstanceField(name);
+                });
+        }
         // push container
         frame = newFrame;
     }
@@ -334,7 +377,8 @@ public class HiddenFieldCheck
     public void leaveToken(DetailAST ast) {
         if (ast.getType() == TokenTypes.CLASS_DEF
             || ast.getType() == TokenTypes.ENUM_DEF
-            || ast.getType() == TokenTypes.ENUM_CONSTANT_DEF) {
+            || ast.getType() == TokenTypes.ENUM_CONSTANT_DEF
+            || ast.getType() == TokenTypes.RECORD_DEF) {
             // pop
             frame = frame.getParent();
         }
@@ -344,13 +388,15 @@ public class HiddenFieldCheck
      * Process a variable token.
      * Check whether a local variable or parameter shadows a field.
      * Store a field for later comparison with local variables and parameters.
+     *
      * @param ast the variable token.
      */
     private void processVariable(DetailAST ast) {
         if (!ScopeUtil.isInInterfaceOrAnnotationBlock(ast)
             && !CheckUtil.isReceiverParameter(ast)
             && (ScopeUtil.isLocalVariableDef(ast)
-                || ast.getType() == TokenTypes.PARAMETER_DEF)) {
+                || ast.getType() == TokenTypes.PARAMETER_DEF
+                || ast.getType() == TokenTypes.PATTERN_VARIABLE_DEF)) {
             // local variable or parameter. Does it shadow a field?
             final DetailAST nameAST = ast.findFirstToken(TokenTypes.IDENT);
             final String name = nameAST.getText();
@@ -365,6 +411,7 @@ public class HiddenFieldCheck
 
     /**
      * Checks whether method or constructor parameter is ignored.
+     *
      * @param ast the parameter token.
      * @param name the parameter name.
      * @return true if parameter is ignored.
@@ -377,6 +424,7 @@ public class HiddenFieldCheck
 
     /**
      * Check for instance field.
+     *
      * @param ast token
      * @param name identifier of token
      * @return true if instance field
@@ -387,6 +435,7 @@ public class HiddenFieldCheck
 
     /**
      * Check name by regExp.
+     *
      * @param name string value to check
      * @return true is regexp is matching
      */
@@ -397,6 +446,7 @@ public class HiddenFieldCheck
     /**
      * Determines whether an AST node is in a static method or static
      * initializer.
+     *
      * @param ast the node to check.
      * @return true if ast is in a static method or a static block;
      */
@@ -494,6 +544,7 @@ public class HiddenFieldCheck
     /**
      * Capitalizes a given property name the way we expect to see it in
      * a setter name.
+     *
      * @param name a property name
      * @return capitalized property name
      */
@@ -511,6 +562,7 @@ public class HiddenFieldCheck
     /**
      * Decides whether to ignore an AST node that is the parameter of a
      * constructor.
+     *
      * @param ast the AST to check.
      * @return true if ast should be ignored because check property
      *     ignoreConstructorParameter is true and ast is a constructor parameter.
@@ -529,6 +581,7 @@ public class HiddenFieldCheck
     /**
      * Decides whether to ignore an AST node that is the parameter of an
      * abstract method.
+     *
      * @param ast the AST to check.
      * @return true if ast should be ignored because check property
      *     ignoreAbstractMethods is true and ast is a parameter of abstract methods.
@@ -548,6 +601,7 @@ public class HiddenFieldCheck
 
     /**
      * Setter to define the RegExp for names of variables and parameters to ignore.
+     *
      * @param pattern a pattern.
      */
     public void setIgnoreFormat(Pattern pattern) {
@@ -556,6 +610,7 @@ public class HiddenFieldCheck
 
     /**
      * Setter to allow to ignore the parameter of a property setter method.
+     *
      * @param ignoreSetter decide whether to ignore the parameter of
      *     a property setter method.
      */
@@ -580,6 +635,7 @@ public class HiddenFieldCheck
 
     /**
      * Setter to control whether to ignore constructor parameters.
+     *
      * @param ignoreConstructorParameter decide whether to ignore
      *     constructor parameters.
      */
@@ -590,6 +646,7 @@ public class HiddenFieldCheck
 
     /**
      * Setter to control whether to ignore parameters of abstract methods.
+     *
      * @param ignoreAbstractMethods decide whether to ignore
      *     parameters of abstract methods.
      */
@@ -620,6 +677,7 @@ public class HiddenFieldCheck
 
         /**
          * Creates new frame.
+         *
          * @param parent parent frame.
          * @param staticType is this a static inner type (class or enum).
          * @param frameName name associated with the frame, which can be a
@@ -632,6 +690,7 @@ public class HiddenFieldCheck
 
         /**
          * Adds an instance field to this FieldFrame.
+         *
          * @param field  the name of the instance field.
          */
         public void addInstanceField(String field) {
@@ -640,6 +699,7 @@ public class HiddenFieldCheck
 
         /**
          * Adds a static field to this FieldFrame.
+         *
          * @param field  the name of the instance field.
          */
         public void addStaticField(String field) {
@@ -648,6 +708,7 @@ public class HiddenFieldCheck
 
         /**
          * Determines whether this FieldFrame contains an instance field.
+         *
          * @param field the field to check.
          * @return true if this FieldFrame contains instance field field.
          */
@@ -660,6 +721,7 @@ public class HiddenFieldCheck
 
         /**
          * Determines whether this FieldFrame contains a static field.
+         *
          * @param field the field to check.
          * @return true if this FieldFrame contains static field field.
          */
@@ -671,6 +733,7 @@ public class HiddenFieldCheck
 
         /**
          * Getter for parent frame.
+         *
          * @return parent frame.
          */
         public FieldFrame getParent() {

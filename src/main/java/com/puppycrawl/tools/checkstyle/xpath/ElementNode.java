@@ -20,6 +20,7 @@
 package com.puppycrawl.tools.checkstyle.xpath;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
@@ -45,6 +46,9 @@ public class ElementNode extends AbstractNode {
     /** Constant for optimization. */
     private static final AbstractNode[] EMPTY_ABSTRACT_NODE_ARRAY = new AbstractNode[0];
 
+    /** Holder value for lazy creation of attribute node. */
+    private static final AttributeNode ATTRIBUTE_NODE_UNINITIALIZED = new AttributeNode(null, null);
+
     /** The root node. */
     private final AbstractNode root;
 
@@ -54,14 +58,14 @@ public class ElementNode extends AbstractNode {
     /** The ast node. */
     private final DetailAST detailAst;
 
-    /** Represents text of the DetailAST. */
-    private final String text;
+    /** Depth of the node. */
+    private final int depth;
 
     /** Represents index among siblings. */
     private final int indexAmongSiblings;
 
     /** The text attribute node. */
-    private AttributeNode attributeNode;
+    private AttributeNode attributeNode = ATTRIBUTE_NODE_UNINITIALIZED;
 
     /**
      * Creates a new {@code ElementNode} instance.
@@ -69,34 +73,94 @@ public class ElementNode extends AbstractNode {
      * @param root {@code Node} root of the tree
      * @param parent {@code Node} parent of the current node
      * @param detailAst reference to {@code DetailAST}
+     * @param depth the current node depth in the hierarchy
+     * @param indexAmongSiblings the current node index among the parent children nodes
      */
-    public ElementNode(AbstractNode root, AbstractNode parent, DetailAST detailAst) {
+    public ElementNode(AbstractNode root, AbstractNode parent, DetailAST detailAst,
+            int depth, int indexAmongSiblings) {
         super(root.getTreeInfo());
         this.parent = parent;
         this.root = root;
         this.detailAst = detailAst;
-        text = TokenUtil.getTokenName(detailAst.getType());
-        indexAmongSiblings = parent.getChildren().size();
-        createTextAttribute();
-        createChildren();
+        this.depth = depth;
+        this.indexAmongSiblings = indexAmongSiblings;
+    }
+
+    /**
+     * Compares current object with specified for order.
+     *
+     * @param other another {@code NodeInfo} object
+     * @return number representing order of current object to specified one
+     */
+    @Override
+    public int compareOrder(NodeInfo other) {
+        int result = 0;
+        if (other instanceof AbstractNode) {
+            result = Integer.compare(depth, ((AbstractNode) other).getDepth());
+            if (result == 0) {
+                result = compareCommonAncestorChildrenOrder(this, other);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Walks up the hierarchy until a common ancestor is found.
+     * Then compares topmost sibling nodes.
+     *
+     * @param first {@code NodeInfo} to compare
+     * @param second {@code NodeInfo} to compare
+     * @return the value {@code 0} if {@code first == second};
+     *         a value less than {@code 0} if {@code first} should be first;
+     *         a value greater than {@code 0} if {@code second} should be first.
+     */
+    private static int compareCommonAncestorChildrenOrder(NodeInfo first, NodeInfo second) {
+        NodeInfo child1 = first;
+        NodeInfo child2 = second;
+        while (!child1.getParent().equals(child2.getParent())) {
+            child1 = child1.getParent();
+            child2 = child2.getParent();
+        }
+        final int index1 = ((ElementNode) child1).indexAmongSiblings;
+        final int index2 = ((ElementNode) child2).indexAmongSiblings;
+        return Integer.compare(index1, index2);
+    }
+
+    /**
+     * Getter method for node depth.
+     *
+     * @return depth
+     */
+    @Override
+    public int getDepth() {
+        return depth;
     }
 
     /**
      * Iterates children of the current node and
      * recursively creates new Xpath-nodes.
+     *
+     * @return children list
      */
-    private void createChildren() {
-        DetailAST currentChild = detailAst.getFirstChild();
-        while (currentChild != null) {
-            final AbstractNode child = new ElementNode(root, this, currentChild);
-            addChild(child);
-            currentChild = currentChild.getNextSibling();
-        }
+    @Override
+    protected List<AbstractNode> createChildren() {
+        return XpathUtil.createChildren(root, this, detailAst.getFirstChild());
+    }
+
+    /**
+     * Determine whether the node has any children.
+     *
+     * @return {@code true} is the node has any children.
+     */
+    @Override
+    public boolean hasChildNodes() {
+        return detailAst.hasChildren();
     }
 
     /**
      * Returns attribute value. Throws {@code UnsupportedOperationException} in case,
      * when name of the attribute is not equal to 'text'.
+     *
      * @param namespace namespace
      * @param localPart actual name of the attribute
      * @return attribute value
@@ -105,12 +169,9 @@ public class ElementNode extends AbstractNode {
     public String getAttributeValue(String namespace, String localPart) {
         final String result;
         if (TEXT_ATTRIBUTE_NAME.equals(localPart)) {
-            if (attributeNode == null) {
-                result = null;
-            }
-            else {
-                result = attributeNode.getStringValue();
-            }
+            result = Optional.ofNullable(getAttributeNode())
+                .map(AttributeNode::getStringValue)
+                .orElse(null);
         }
         else {
             result = null;
@@ -120,15 +181,17 @@ public class ElementNode extends AbstractNode {
 
     /**
      * Returns local part.
+     *
      * @return local part
      */
     @Override
     public String getLocalPart() {
-        return text;
+        return TokenUtil.getTokenName(detailAst.getType());
     }
 
     /**
      * Returns type of the node.
+     *
      * @return node kind
      */
     @Override
@@ -138,6 +201,7 @@ public class ElementNode extends AbstractNode {
 
     /**
      * Returns parent.
+     *
      * @return parent
      */
     @Override
@@ -147,6 +211,7 @@ public class ElementNode extends AbstractNode {
 
     /**
      * Returns root.
+     *
      * @return root
      */
     @Override
@@ -158,65 +223,53 @@ public class ElementNode extends AbstractNode {
      * Determines axis iteration algorithm. Throws {@code UnsupportedOperationException} in case,
      * when there is no axis iterator for given axisNumber.
      *
+     * <p>Reason of suppression for resource, IOResourceOpenedButNotSafelyClosed:
+     * {@link AxisIterator} implements {@link java.io.Closeable} interface,
+     * but none of the subclasses of the {@link AxisIterator}
+     * class has non-empty {@code close()} method.
+     *
      * @param axisNumber element from {@code AxisInfo}
      * @return {@code AxisIterator} object
+     * @noinspection resource, IOResourceOpenedButNotSafelyClosed
      */
     @Override
-    public AxisIterator iterateAxis(byte axisNumber) {
+    public AxisIterator iterateAxis(int axisNumber) {
         final AxisIterator result;
         switch (axisNumber) {
             case AxisInfo.ANCESTOR:
-                try (AxisIterator iterator = new Navigator.AncestorEnumeration(this, false)) {
-                    result = iterator;
-                }
+                result = new Navigator.AncestorEnumeration(this, false);
                 break;
             case AxisInfo.ANCESTOR_OR_SELF:
-                try (AxisIterator iterator = new Navigator.AncestorEnumeration(this, true)) {
-                    result = iterator;
-                }
+                result = new Navigator.AncestorEnumeration(this, true);
                 break;
             case AxisInfo.ATTRIBUTE:
-                try (AxisIterator iterator = SingleNodeIterator.makeIterator(attributeNode)) {
-                    result = iterator;
-                }
+                result = SingleNodeIterator.makeIterator(getAttributeNode());
                 break;
             case AxisInfo.CHILD:
                 if (hasChildNodes()) {
-                    try (AxisIterator iterator = new ArrayIterator.OfNodes(
-                            getChildren().toArray(EMPTY_ABSTRACT_NODE_ARRAY))) {
-                        result = iterator;
-                    }
+                    result = new ArrayIterator.OfNodes(
+                            getChildren().toArray(EMPTY_ABSTRACT_NODE_ARRAY));
                 }
                 else {
-                    result = EmptyIterator.OfNodes.THE_INSTANCE;
+                    result = EmptyIterator.ofNodes();
                 }
                 break;
             case AxisInfo.DESCENDANT:
                 if (hasChildNodes()) {
-                    try (AxisIterator iterator =
-                                 new Navigator.DescendantEnumeration(this, false, true)) {
-                        result = iterator;
-                    }
+                    result = new Navigator.DescendantEnumeration(this, false, true);
                 }
                 else {
-                    result = EmptyIterator.OfNodes.THE_INSTANCE;
+                    result = EmptyIterator.ofNodes();
                 }
                 break;
             case AxisInfo.DESCENDANT_OR_SELF:
-                try (AxisIterator iterator =
-                             new Navigator.DescendantEnumeration(this, true, true)) {
-                    result = iterator;
-                }
+                result = new Navigator.DescendantEnumeration(this, true, true);
                 break;
             case AxisInfo.PARENT:
-                try (AxisIterator iterator = SingleNodeIterator.makeIterator(parent)) {
-                    result = iterator;
-                }
+                result = SingleNodeIterator.makeIterator(parent);
                 break;
             case AxisInfo.SELF:
-                try (AxisIterator iterator = SingleNodeIterator.makeIterator(this)) {
-                    result = iterator;
-                }
+                result = SingleNodeIterator.makeIterator(this);
                 break;
             case AxisInfo.FOLLOWING_SIBLING:
                 result = getFollowingSiblingsIterator();
@@ -225,23 +278,21 @@ public class ElementNode extends AbstractNode {
                 result = getPrecedingSiblingsIterator();
                 break;
             case AxisInfo.FOLLOWING:
-                try (AxisIterator iterator = new FollowingEnumeration(this)) {
-                    result = iterator;
-                }
+                result = new FollowingEnumeration(this);
                 break;
             case AxisInfo.PRECEDING:
-                try (AxisIterator iterator = new Navigator.PrecedingEnumeration(this, true)) {
-                    result = iterator;
-                }
+                result = new Navigator.PrecedingEnumeration(this, true);
                 break;
             default:
                 throw throwUnsupportedOperationException();
         }
+
         return result;
     }
 
     /**
      * Returns line number.
+     *
      * @return line number
      */
     @Override
@@ -251,6 +302,7 @@ public class ElementNode extends AbstractNode {
 
     /**
      * Returns column number.
+     *
      * @return column number
      */
     @Override
@@ -260,6 +312,7 @@ public class ElementNode extends AbstractNode {
 
     /**
      * Getter method for token type.
+     *
      * @return token type
      */
     @Override
@@ -269,6 +322,7 @@ public class ElementNode extends AbstractNode {
 
     /**
      * Returns underlying node.
+     *
      * @return underlying node
      */
     @Override
@@ -278,42 +332,53 @@ public class ElementNode extends AbstractNode {
 
     /**
      * Returns preceding sibling axis iterator.
+     *
+     * <p>Reason of suppression for resource, IOResourceOpenedButNotSafelyClosed:
+     * {@link AxisIterator} implements {@link java.io.Closeable} interface,
+     * but none of the subclasses of the {@link AxisIterator}
+     * class has non-empty {@code close()} method.
+     *
      * @return iterator
+     * @noinspection resource, IOResourceOpenedButNotSafelyClosed
      */
     private AxisIterator getPrecedingSiblingsIterator() {
         final AxisIterator result;
         if (indexAmongSiblings == 0) {
-            result = EmptyIterator.OfNodes.THE_INSTANCE;
+            result = EmptyIterator.ofNodes();
         }
         else {
-            try (AxisIterator iterator = new ArrayIterator.OfNodes(
-                    getPrecedingSiblings().toArray(EMPTY_ABSTRACT_NODE_ARRAY))) {
-                result = iterator;
-            }
+            result = new ArrayIterator.OfNodes(
+                    getPrecedingSiblings().toArray(EMPTY_ABSTRACT_NODE_ARRAY));
         }
         return result;
     }
 
     /**
      * Returns following sibling axis iterator.
+     *
+     * <p>Reason of suppression for resource, IOResourceOpenedButNotSafelyClosed:
+     * {@link AxisIterator} implements {@link java.io.Closeable} interface,
+     * but none of the subclasses of the {@link AxisIterator}
+     * class has non-empty {@code close()} method.
+     *
      * @return iterator
+     * @noinspection resource, IOResourceOpenedButNotSafelyClosed
      */
     private AxisIterator getFollowingSiblingsIterator() {
         final AxisIterator result;
         if (indexAmongSiblings == parent.getChildren().size() - 1) {
-            result = EmptyIterator.OfNodes.THE_INSTANCE;
+            result = EmptyIterator.ofNodes();
         }
         else {
-            try (AxisIterator iterator = new ArrayIterator.OfNodes(
-                    getFollowingSiblings().toArray(EMPTY_ABSTRACT_NODE_ARRAY))) {
-                result = iterator;
-            }
+            result = new ArrayIterator.OfNodes(
+                    getFollowingSiblings().toArray(EMPTY_ABSTRACT_NODE_ARRAY));
         }
         return result;
     }
 
     /**
      * Returns following siblings of the current node.
+     *
      * @return siblings
      */
     private List<AbstractNode> getFollowingSiblings() {
@@ -323,6 +388,7 @@ public class ElementNode extends AbstractNode {
 
     /**
      * Returns preceding siblings of the current node.
+     *
      * @return siblings
      */
     private List<AbstractNode> getPrecedingSiblings() {
@@ -334,18 +400,25 @@ public class ElementNode extends AbstractNode {
      * Checks if token type supports {@code @text} attribute,
      * extracts its value, creates {@code AttributeNode} object and returns it.
      * Value can be accessed using {@code @text} attribute.
+     *
+     * @return attribute node if possible, otherwise the {@code null} value
      */
-    private void createTextAttribute() {
-        AttributeNode attribute = null;
-        if (XpathUtil.supportsTextAttribute(detailAst)) {
-            attribute = new AttributeNode(TEXT_ATTRIBUTE_NAME,
-                    XpathUtil.getTextAttributeValue(detailAst));
+    private AttributeNode getAttributeNode() {
+        if (attributeNode == ATTRIBUTE_NODE_UNINITIALIZED) {
+            if (XpathUtil.supportsTextAttribute(detailAst)) {
+                attributeNode = new AttributeNode(TEXT_ATTRIBUTE_NAME,
+                        XpathUtil.getTextAttributeValue(detailAst));
+            }
+            else {
+                attributeNode = null;
+            }
         }
-        attributeNode = attribute;
+        return attributeNode;
     }
 
     /**
      * Returns UnsupportedOperationException exception.
+     *
      * @return UnsupportedOperationException exception
      */
     private static UnsupportedOperationException throwUnsupportedOperationException() {
@@ -363,6 +436,7 @@ public class ElementNode extends AbstractNode {
 
         /**
          * Create an iterator over the "following" axis.
+         *
          * @param start the initial context node.
          */
         /* package */ FollowingEnumeration(NodeInfo start) {
@@ -371,6 +445,7 @@ public class ElementNode extends AbstractNode {
 
         /**
          * Get the next item in the sequence.
+         *
          * @return the next Item. If there are no more nodes, return null.
          */
         @Override

@@ -25,6 +25,7 @@ import org.junit.jupiter.api.Test;
 
 import com.puppycrawl.tools.checkstyle.AbstractModuleTestSupport;
 import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
+import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
 public class NoWhitespaceBeforeCheckTest
     extends AbstractModuleTestSupport {
@@ -50,6 +51,7 @@ public class NoWhitespaceBeforeCheckTest
             "270:16: " + getCheckMessage(MSG_KEY, ";"),
             "284:1: " + getCheckMessage(MSG_KEY, ";"),
             "287:62: " + getCheckMessage(MSG_KEY, "..."),
+            "291:16: " + getCheckMessage(MSG_KEY, ":"),
         };
         verify(checkConfig, getPath("InputNoWhitespaceBeforeDefault.java"), expected);
     }
@@ -124,6 +126,16 @@ public class NoWhitespaceBeforeCheckTest
             "18:32: " + getCheckMessage(MSG_KEY, ";"),
         };
         verify(checkConfig, getPath("InputNoWhitespaceBeforeEmptyForLoop.java"), expected);
+    }
+
+    @Test
+    public void testNoWhitespaceBeforeTextBlocksWithTabIndent() throws Exception {
+        final DefaultConfiguration checkConfig = createModuleConfig(NoWhitespaceBeforeCheck.class);
+
+        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
+
+        verify(checkConfig,
+            getNonCompilablePath("InputNoWhitespaceBeforeTextBlocksTabIndent.java"), expected);
     }
 
 }

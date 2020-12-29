@@ -19,27 +19,24 @@
 
 package com.puppycrawl.tools.checkstyle.checks.design;
 
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
-
-import com.puppycrawl.tools.checkstyle.FileStatefulCheck;
+import com.puppycrawl.tools.checkstyle.StatelessCheck;
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 /**
  * <p>
- * Checks that each top-level class, interface
- * or enum resides in a source file of its own.
+ * Checks that each top-level class, interface, enum
+ * or annotation resides in a source file of its own.
  * Official description of a 'top-level' term:
  * <a href="https://docs.oracle.com/javase/specs/jls/se11/html/jls-7.html#jls-7.6">
  * 7.6. Top Level Type Declarations</a>. If file doesn't contains
- * public class, enum or interface, top-level type is the first type in file.
+ * public class, interface, enum or annotation, top-level type is the first type in file.
  * </p>
  * <p>
- * An example of check's configuration:
+ * To configure the check:
  * </p>
  * <pre>
  * &lt;module name=&quot;OneTopLevelClass&quot;/&gt;
@@ -52,38 +49,53 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * An example of code with violations:
  * </p>
  * <pre>
- * public class Foo{
- *   //methods
+ * public class Foo { // OK, first top-level class
+ *   // methods
  * }
  *
- * class Foo2{
- *   //methods
+ * class Foo2 { // violation, second top-level class
+ *   // methods
+ * }
+ *
+ * record Foo3 { // violation, third top-level "class"
+ *     // methods
  * }
  * </pre>
  * <p>
  * An example of code without public top-level type:
  * </p>
  * <pre>
- * class Foo{ // top-level class
- *   //methods
+ * class Foo { // OK, first top-level class
+ *   // methods
  * }
  *
- * class Foo2{
- *   //methods
+ * class Foo2 { // violation, second top-level class
+ *   // methods
  * }
  * </pre>
  * <p>
  * An example of code without violations:
  * </p>
  * <pre>
- * public class Foo{
- *   //methods
+ * public class Foo { // OK, only one top-level class
+ *   // methods
  * }
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code one.top.level.class}
+ * </li>
+ * </ul>
  *
  * @since 5.8
  */
-@FileStatefulCheck
+@StatelessCheck
 public class OneTopLevelClassCheck extends AbstractCheck {
 
     /**
@@ -91,15 +103,6 @@ public class OneTopLevelClassCheck extends AbstractCheck {
      * file.
      */
     public static final String MSG_KEY = "one.top.level.class";
-
-    /**
-     * True if a java source file contains a type
-     * with a public access level modifier.
-     */
-    private boolean publicTypeFound;
-
-    /** Mapping between type names and line numbers of the type declarations.*/
-    private final SortedMap<Integer, String> lineNumberTypeMap = new TreeMap<>();
 
     @Override
     public int[] getDefaultTokens() {
@@ -119,44 +122,51 @@ public class OneTopLevelClassCheck extends AbstractCheck {
 
     @Override
     public void beginTree(DetailAST rootAST) {
-        publicTypeFound = false;
-        lineNumberTypeMap.clear();
-
         DetailAST currentNode = rootAST;
+        boolean publicTypeFound = false;
+        DetailAST firstType = null;
+
         while (currentNode != null) {
-            if (currentNode.getType() == TokenTypes.CLASS_DEF
-                    || currentNode.getType() == TokenTypes.ENUM_DEF
-                    || currentNode.getType() == TokenTypes.INTERFACE_DEF) {
+            if (isTypeDef(currentNode)) {
                 if (isPublic(currentNode)) {
+                    // log the first type later
                     publicTypeFound = true;
                 }
-                else {
+                if (firstType == null) {
+                    // first type is set aside
+                    firstType = currentNode;
+                }
+                else if (!isPublic(currentNode)) {
+                    // extra non-public type, log immediately
                     final String typeName = currentNode
-                            .findFirstToken(TokenTypes.IDENT).getText();
-                    lineNumberTypeMap.put(currentNode.getLineNo(), typeName);
+                        .findFirstToken(TokenTypes.IDENT).getText();
+                    log(currentNode, MSG_KEY, typeName);
                 }
             }
             currentNode = currentNode.getNextSibling();
         }
-    }
 
-    @Override
-    public void finishTree(DetailAST rootAST) {
-        if (!lineNumberTypeMap.isEmpty()) {
-            if (!publicTypeFound) {
-                // skip first top-level type.
-                lineNumberTypeMap.remove(lineNumberTypeMap.firstKey());
-            }
-
-            for (Map.Entry<Integer, String> entry
-                    : lineNumberTypeMap.entrySet()) {
-                log(entry.getKey(), MSG_KEY, entry.getValue());
-            }
+        // if there was a public type and first type is non-public, log it
+        if (publicTypeFound && !isPublic(firstType)) {
+            final String typeName = firstType
+                .findFirstToken(TokenTypes.IDENT).getText();
+            log(firstType, MSG_KEY, typeName);
         }
     }
 
     /**
+     * Checks if an AST node is a type definition.
+     *
+     * @param node AST node to check.
+     * @return true if the node is a type (class, enum, interface, annotation) definition.
+     */
+    private static boolean isTypeDef(DetailAST node) {
+        return TokenUtil.isTypeDeclaration(node.getType());
+    }
+
+    /**
      * Checks if a type is public.
+     *
      * @param typeDef type definition node.
      * @return true if a type has a public access level modifier.
      */

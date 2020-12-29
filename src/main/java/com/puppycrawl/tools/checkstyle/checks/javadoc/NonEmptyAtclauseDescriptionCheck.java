@@ -22,21 +22,25 @@ package com.puppycrawl.tools.checkstyle.checks.javadoc;
 import com.puppycrawl.tools.checkstyle.StatelessCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailNode;
 import com.puppycrawl.tools.checkstyle.api.JavadocTokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 import com.puppycrawl.tools.checkstyle.utils.JavadocUtil;
 
 /**
  * <p>
- * Checks that the at-clause tag is followed by description.
+ * Checks that the block tag is followed by description.
  * </p>
  * <ul>
  * <li>
  * Property {@code violateExecutionOnNonTightHtml} - Control when to print violations
  * if the Javadoc being examined by this check violates the tight html rules defined at
  * <a href="https://checkstyle.org/writingjavadocchecks.html#Tight-HTML_rules">Tight-HTML Rules</a>.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * <li>
  * Property {@code javadocTokens} - javadoc tokens to check
+ * Type is {@code java.lang.String[]}.
+ * Validation type is {@code tokenSet}.
  * Default value is
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/JavadocTokenTypes.html#PARAM_LITERAL">
  * PARAM_LITERAL</a>,
@@ -51,11 +55,30 @@ import com.puppycrawl.tools.checkstyle.utils.JavadocUtil;
  * </li>
  * </ul>
  * <p>
- * Default configuration that will check {@code @param}, {@code @return},
+ * To configure the default check that will check {@code @param}, {@code @return},
  * {@code @throws}, {@code @deprecated}:
  * </p>
  * <pre>
  * &lt;module name="NonEmptyAtclauseDescription"/&gt;
+ * </pre>
+ * <p>
+ * Example:
+ * </p>
+ * <pre>
+ * class Test
+ * {
+ * &#47;**
+ * * Violation for param "b" and at tags "deprecated", "throws".
+ * * &#64;param a Some javadoc // OK
+ * * &#64;param b
+ * * &#64;deprecated
+ * * &#64;throws Exception
+ * *&#47;
+ * public int method(String a, int b) throws Exception
+ * {
+ * return 1;
+ * }
+ * }
  * </pre>
  * <p>
  * To configure the check to validate only {@code @param} and {@code @return} tags:
@@ -65,6 +88,45 @@ import com.puppycrawl.tools.checkstyle.utils.JavadocUtil;
  *   &lt;property name="javadocTokens" value="PARAM_LITERAL,RETURN_LITERAL"/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>
+ * Example:
+ * </p>
+ * <pre>
+ * class Test
+ * {
+ * &#47;**
+ * * Violation for param "b". Tags "deprecated", "throws" are ignored.
+ * * &#64;param a Some javadoc // OK
+ * * &#64;param b
+ * * &#64;deprecated
+ * * &#64;throws Exception
+ * *&#47;
+ * public int method(String a, int b) throws Exception
+ * {
+ * return 1;
+ * }
+ * }
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code javadoc.missed.html.close}
+ * </li>
+ * <li>
+ * {@code javadoc.parse.rule.error}
+ * </li>
+ * <li>
+ * {@code javadoc.wrong.singleton.html.tag}
+ * </li>
+ * <li>
+ * {@code non.empty.atclause}
+ * </li>
+ * </ul>
  *
  * @since 6.0
  */
@@ -96,14 +158,34 @@ public class NonEmptyAtclauseDescriptionCheck extends AbstractJavadocCheck {
     }
 
     /**
-     * Tests if at-clause tag is empty.
-     * @param tagNode at-clause tag.
-     * @return true, if at-clause tag is empty.
+     * Tests if block tag is empty.
+     *
+     * @param tagNode block tag.
+     * @return true, if block tag is empty.
      */
     private static boolean isEmptyTag(DetailNode tagNode) {
         final DetailNode tagDescription =
                 JavadocUtil.findFirstToken(tagNode, JavadocTokenTypes.DESCRIPTION);
-        return tagDescription == null;
+        return tagDescription == null
+            || hasOnlyEmptyText(tagDescription);
+    }
+
+    /**
+     * Tests if description node is empty (has only new lines and blank strings).
+     *
+     * @param description description node.
+     * @return true, if description node has only new lines and blank strings.
+     */
+    private static boolean hasOnlyEmptyText(DetailNode description) {
+        boolean result = true;
+        for (DetailNode child : description.getChildren()) {
+            if (child.getType() != JavadocTokenTypes.TEXT
+                    || !CommonUtil.isBlank(child.getText())) {
+                result = false;
+                break;
+            }
+        }
+        return result;
     }
 
 }

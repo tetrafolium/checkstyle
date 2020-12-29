@@ -34,6 +34,8 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  * <ul>
  * <li>
  * Property {@code tokens} - tokens to check
+ * Type is {@code java.lang.String[]}.
+ * Validation type is {@code tokenSet}.
  * Default value is:
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CLASS_DEF">
  * CLASS_DEF</a>,
@@ -46,7 +48,11 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
  * CTOR_DEF</a>,
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#VARIABLE_DEF">
- * VARIABLE_DEF</a>.
+ * VARIABLE_DEF</a>,
+ * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#RECORD_DEF">
+ * RECORD_DEF</a>,
+ * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COMPACT_CTOR_DEF">
+ * COMPACT_CTOR_DEF</a>.
  * </li>
  * </ul>
  * <p>
@@ -56,20 +62,84 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  * &lt;module name=&quot;AnnotationOnSameLine&quot;/&gt;
  * </pre>
  * <p>
- * Example to allow annotations on the same line
+ * Example:
  * </p>
  * <pre>
- * &#64;Override public int toString() { ... } // no violations
- * &#64;Before &#64;Override public void set() { ... } // no violation
+ * class Foo {
+ *
+ *   &#64;SuppressWarnings("deprecation")  // violation, annotation should be on the same line
+ *   public Foo() {
+ *   }
+ *
+ *   &#64;SuppressWarnings("unchecked") public void fun2() {  // OK
+ *   }
+ *
+ * }
+ *
+ * &#64;SuppressWarnings("unchecked") class Bar extends Foo {  // OK
+ *
+ *   &#64;Deprecated public Bar() {  // OK
+ *   }
+ *
+ *   &#64;Override  // violation, annotation should be on the same line
+ *   public void fun1() {
+ *   }
+ *
+ *   &#64;Before &#64;Override public void fun2() {  // OK
+ *   }
+ *
+ *   &#64;SuppressWarnings("deprecation")  // violation, annotation should be on the same line
+ *   &#64;Before public void fun3() {
+ *   }
+ *
+ * }
  * </pre>
  * <p>
- * Example to disallow annotations on previous line
+ * To configure the check to check for annotations applied on
+ * interfaces, variables and constructors:
  * </p>
  * <pre>
- * &#64;SuppressWarnings("deprecation") // violation
- * &#64;Override // violation
- * public int foo() { ... }
+ * &lt;module name=&quot;AnnotationOnSameLine&quot;&gt;
+ *   &lt;property name=&quot;tokens&quot;
+ *       value=&quot;INTERFACE_DEF, VARIABLE_DEF, CTOR_DEF&quot;/&gt;
+ * &lt;/module&gt;
  * </pre>
+ * <p>
+ * Example:
+ * </p>
+ * <pre>
+ * &#64;Deprecated interface Foo {  // OK
+ *
+ *   void doSomething();
+ *
+ * }
+ *
+ * class Bar implements Foo {
+ *
+ *   &#64;SuppressWarnings("deprecation")  // violation, annotation should be on the same line
+ *   public Bar() {
+ *   }
+ *
+ *   &#64;Override  // OK
+ *   public void doSomething() {
+ *   }
+ *
+ *   &#64;Nullable  // violation, annotation should be on the same line
+ *   String s;
+ *
+ * }
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code annotation.same.line}
+ * </li>
+ * </ul>
  *
  * @since 8.2
  */
@@ -88,6 +158,8 @@ public class AnnotationOnSameLineCheck extends AbstractCheck {
             TokenTypes.METHOD_DEF,
             TokenTypes.CTOR_DEF,
             TokenTypes.VARIABLE_DEF,
+            TokenTypes.RECORD_DEF,
+            TokenTypes.COMPACT_CTOR_DEF,
         };
     }
 
@@ -109,6 +181,8 @@ public class AnnotationOnSameLineCheck extends AbstractCheck {
             TokenTypes.LITERAL_NEW,
             TokenTypes.DOT,
             TokenTypes.ANNOTATION_FIELD_DEF,
+            TokenTypes.RECORD_DEF,
+            TokenTypes.COMPACT_CTOR_DEF,
         };
     }
 
@@ -133,7 +207,7 @@ public class AnnotationOnSameLineCheck extends AbstractCheck {
                     annotationNode = annotationNode.getNextSibling()) {
                 if (annotationNode.getType() == TokenTypes.ANNOTATION
                         && !TokenUtil.areOnSameLine(annotationNode, getNextNode(annotationNode))) {
-                    log(annotationNode.getLineNo(), MSG_KEY_ANNOTATION_ON_SAME_LINE,
+                    log(annotationNode, MSG_KEY_ANNOTATION_ON_SAME_LINE,
                           getAnnotationName(annotationNode));
                 }
             }
@@ -142,6 +216,7 @@ public class AnnotationOnSameLineCheck extends AbstractCheck {
 
     /**
      * Finds next node of ast tree.
+     *
      * @param node current node
      * @return node that is next to given
      */
@@ -155,6 +230,7 @@ public class AnnotationOnSameLineCheck extends AbstractCheck {
 
     /**
      * Returns the name of the given annotation.
+     *
      * @param annotation annotation node.
      * @return annotation name.
      */

@@ -10,6 +10,7 @@
             src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"/>
     <script type="text/javascript" src="js/anchors.js"/>
     <script type="text/javascript" src="js/google-analytics.js"/>
+    <script type="text/javascript" src="js/checkstyle.js"/>
     <link rel="icon" href="images/favicon.png" type="image/x-icon" />
     <link rel="shortcut icon" href="images/favicon.ico" type="image/ico" />
   </head>
@@ -52,7 +53,7 @@
          ignoredAnnotations set as in a subclass the method which has the annotation can also be
          overridden in its subclass.
         </p>
-         <p>
+        <p>
           Problem is described at "Effective Java, 2nd Edition by Joshua Bloch" book, chapter
           "Item 17: Design and document for inheritance or else prohibit it".
         </p>
@@ -159,13 +160,13 @@ public abstract class Plant {
               <td>
                 Specify annotations which allow the check to skip the method from validation.
               </td>
-              <td><a href="property_types.html#stringSet">String Set</a></td>
+              <td><a href="property_types.html#String.5B.5D">String[]</a></td>
               <td><code>After, AfterClass, Before, BeforeClass, Test</code></td>
               <td>7.2</td>
             </tr>
           </table>
         </div>
-        </subsection>
+      </subsection>
 
       <subsection name="Examples" id="DesignForExtension_Examples">
         <p>
@@ -277,6 +278,46 @@ public class FooTest {
         <source>
 &lt;module name=&quot;FinalClass&quot;/&gt;
         </source>
+        <p>
+            Example:
+        </p>
+        <source>
+final class MyClass { // OK
+  private MyClass() { }
+}
+
+class MyClass { // violation, class should be declared final
+  private MyClass() { }
+}
+
+class MyClass { // OK, since it has a public constructor
+  int field1;
+  String field2;
+  private MyClass(int value) {
+    this.field1 = value;
+    this.field2 = " ";
+  }
+  public MyClass(String value) {
+    this.field2 = value;
+    this.field1 = 0;
+  }
+}
+
+interface CheckInterface
+{
+  class MyClass { // OK, nested class in interface is always final
+    private MyClass() {}
+  }
+}
+
+public @interface Test {
+  public boolean enabled()
+  default true;
+  class MyClass { // OK, class nested in an annotation is always final
+    private MyClass() { }
+  }
+}
+        </source>
       </subsection>
 
       <subsection name="Example of Usage" id="FinalClass_Example_of_Usage">
@@ -361,6 +402,40 @@ public class StringUtils // not final to allow subclassing
         <source>
 &lt;module name=&quot;HideUtilityClassConstructor&quot;/&gt;
         </source>
+        <p>
+          Example:
+        </p>
+        <source>
+class Test { // violation, class only has a static method and a constructor
+
+  public Test() {
+  }
+
+  public static void fun() {
+  }
+}
+
+class Foo { // OK
+
+  private Foo() {
+  }
+
+  static int n;
+}
+
+class Bar { // OK
+
+  protected Bar() {
+    // prevents calls from subclass
+    throw new UnsupportedOperationException();
+  }
+}
+
+class UtilityClass { // violation, class only has a static field
+
+  static float f;
+}
+        </source>
       </subsection>
 
       <subsection name="Example of Usage" id="HideUtilityClassConstructor_Example_of_Usage">
@@ -407,7 +482,8 @@ public class StringUtils // not final to allow subclassing
       <subsection name="Description" id="InnerTypeLast_Description">
         <p>
           Checks nested (internal) classes/interfaces are declared at the bottom of the
-          primary (top-level) class after all method and field declarations.
+          primary (top-level) class after all init and static init blocks,
+          method, constructor and field declarations.
         </p>
       </subsection>
 
@@ -417,6 +493,26 @@ public class StringUtils // not final to allow subclassing
         </p>
         <source>
 &lt;module name=&quot;InnerTypeLast&quot;/&gt;
+        </source>
+        <p>Example:</p>
+        <source>
+class Test {
+    private String s; // OK
+    class InnerTest1 {}
+    public void test() {} // violation, method should be declared before inner types.
+}
+
+class Test2 {
+    static {}; // OK
+    class InnerTest1 {}
+    public Test2() {} // violation, constructor should be declared before inner types.
+}
+
+class Test3 {
+    private String s; // OK
+    public void test() {} // OK
+    class InnerTest1 {}
+}
         </source>
       </subsection>
 
@@ -495,7 +591,7 @@ public class StringUtils // not final to allow subclassing
                 Control whether marker interfaces like Serializable are
                 allowed.
               </td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>true</code></td>
               <td>3.1</td>
             </tr>
@@ -509,6 +605,39 @@ public class StringUtils // not final to allow subclassing
         </p>
         <source>
 &lt;module name=&quot;InterfaceIsType&quot;/&gt;
+        </source>
+        <p>Example:</p>
+        <source>
+public interface Test1 { // violation
+    int a = 3;
+}
+
+public interface Test2 { // OK
+
+}
+
+public interface Test3 { // OK
+    int a = 3;
+    void test();
+}
+        </source>
+        <p>
+          To configure the check to report violation so that it doesn't allow Marker Interfaces:
+        </p>
+        <source>
+&lt;module name=&quot;InterfaceIsType&quot;&gt;
+  &lt;property name=&quot;allowMarkerInterfaces&quot; value=&quot;false&quot;/&gt;
+&lt;/module&gt;
+        </source>
+        <p>Example:</p>
+        <source>
+public interface Test1 { // violation
+    int a = 3;
+}
+
+public interface Test2 { // violation
+
+}
         </source>
       </subsection>
 
@@ -591,14 +720,14 @@ public class StringUtils // not final to allow subclassing
             <tr>
               <td>format</td>
               <td>Specify pattern for exception class names.</td>
-              <td><a href="property_types.html#regexp">Regular Expression</a></td>
+              <td><a href="property_types.html#Pattern">Pattern</a></td>
               <td><code>"^.*Exception$|^.*Error$|^.*Throwable$"</code></td>
               <td>3.2</td>
             </tr>
             <tr>
               <td>extendedClassNameFormat</td>
               <td>Specify pattern for extended class names.</td>
-              <td><a href="property_types.html#regexp">Regular Expression</a></td>
+              <td><a href="property_types.html#Pattern">Pattern</a></td>
               <td><code>"^.*Exception$|^.*Error$|^.*Throwable$"</code></td>
               <td>6.2</td>
             </tr>
@@ -654,19 +783,19 @@ public class StringUtils // not final to allow subclassing
       <p>Since Checkstyle 5.8</p>
       <subsection name="Description" id="OneTopLevelClass_Description">
         <p>
-          Checks that each top-level class, interface or
-          enum resides in a source file of its own.
+          Checks that each top-level class, interface, enum
+          or annotation resides in a source file of its own.
           Official description of a 'top-level' term:<a
           href="https://docs.oracle.com/javase/specs/jls/se11/html/jls-7.html#jls-7.6">
             7.6. Top Level Type Declarations</a>.
-          If file doesn't contains public class, enum or interface,
+          If file doesn't contains public class, interface, enum or annotation,
           top-level type is the first type in file.
         </p>
       </subsection>
 
       <subsection name="Examples" id="OneTopLevelClass_Examples">
         <p>
-          An example of check's configuration:
+          To configure the check:
         </p>
         <source>
 &lt;module name="OneTopLevelClass"/&gt;
@@ -678,35 +807,45 @@ public class StringUtils // not final to allow subclassing
         <p>
           An example of code with violations:
         </p>
-        <source>
-public class Foo{
-  //methods
+        <div class="wrapper">
+          <pre>
+public class Foo { // OK, first top-level class
+  // methods
 }
 
-class Foo2{
-  //methods
+class Foo2 { // violation, second top-level class
+  // methods
 }
-        </source>
+
+record Foo3 { // violation, third top-level "class"
+  // methods
+}
+          </pre>
+        </div>
         <p>
           An example of code without public top-level type:
         </p>
-        <source>
-class Foo{ // top-level class
-  //methods
+        <div class="wrapper">
+          <pre>
+class Foo { // OK, first top-level class
+  // methods
 }
 
-class Foo2{
-  //methods
+class Foo2 { // violation, second top-level class
+  // methods
 }
-        </source>
+          </pre>
+        </div>
         <p>
           An example of code without violations:
         </p>
-        <source>
-public class Foo{
-  //methods
+        <div class="wrapper">
+          <pre>
+public class Foo { // OK, only one top-level class
+  // methods
 }
-        </source>
+          </pre>
+        </div>
       </subsection>
 
       <subsection name="Example of Usage" id="OneTopLevelClass_Example_of_Usage">
@@ -791,14 +930,14 @@ public class Foo{
             <tr>
               <td>max</td>
               <td>Specify maximum allowed number of throws statements.</td>
-              <td><a href="property_types.html#integer">Integer</a></td>
+              <td><a href="property_types.html#int">int</a></td>
               <td><code>4</code></td>
               <td>3.2</td>
             </tr>
             <tr>
               <td>ignorePrivateMethods</td>
               <td>Allow private methods to be ignored.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>true</code></td>
               <td>6.7</td>
             </tr>
@@ -808,6 +947,40 @@ public class Foo{
 
       <subsection name="Examples" id="ThrowsCount_Examples">
         <p>
+          To configure check:
+        </p>
+        <source>
+&lt;module name="ThrowsCount"/&gt;
+        </source>
+        <p>
+          Example:
+        </p>
+        <source>
+class Test {
+    public void myFunction() throws CloneNotSupportedException,
+                                ArrayIndexOutOfBoundsException,
+                                StringIndexOutOfBoundsException,
+                                IllegalStateException,
+                                NullPointerException { // violation, max allowed is 4
+        // body
+    }
+
+    public void myFunc() throws ArithmeticException,
+                                NumberFormatException { // ok
+        // body
+    }
+
+    private void privateFunc() throws CloneNotSupportedException,
+                                ClassNotFoundException,
+                                IllegalAccessException,
+                                ArithmeticException,
+                                ClassCastException { // ok, private methods are ignored
+        // body
+    }
+
+}
+        </source>
+        <p>
           To configure the check so that it doesn't allow more than two throws
           per method:
         </p>
@@ -816,7 +989,32 @@ public class Foo{
   &lt;property name=&quot;max&quot; value=&quot;2&quot;/&gt;
 &lt;/module&gt;
         </source>
+        <p>
+          Example:
+        </p>
+        <source>
+class Test {
+    public void myFunction() throws IllegalStateException,
+                                ArrayIndexOutOfBoundsException,
+                                NullPointerException { // violation, max allowed is 2
+        // body
+    }
 
+    public void myFunc() throws ArithmeticException,
+                                NumberFormatException { // ok
+        // body
+    }
+
+    private void privateFunc() throws CloneNotSupportedException,
+                                ClassNotFoundException,
+                                IllegalAccessException,
+                                ArithmeticException,
+                                ClassCastException { // ok, private methods are ignored
+        // body
+    }
+
+}
+        </source>
         <p>
           To configure the check so that it doesn't skip private methods:
         </p>
@@ -824,6 +1022,39 @@ public class Foo{
 &lt;module name=&quot;ThrowsCount&quot;&gt;
   &lt;property name=&quot;ignorePrivateMethods&quot; value=&quot;false&quot;/&gt;
 &lt;/module&gt;
+        </source>
+        <p>
+          Example:
+        </p>
+        <source>
+class Test {
+    public void myFunction() throws CloneNotSupportedException,
+                                ArrayIndexOutOfBoundsException,
+                                StringIndexOutOfBoundsException,
+                                IllegalStateException,
+                                NullPointerException { // violation, max allowed is 4
+        // body
+    }
+
+    public void myFunc() throws ArithmeticException,
+                                NumberFormatException { // ok
+        // body
+    }
+
+    private void privateFunc() throws CloneNotSupportedException,
+                                ClassNotFoundException,
+                                IllegalAccessException,
+                                ArithmeticException,
+                                ClassCastException { // violation, max allowed is 4
+        // body
+    }
+
+    private void func() throws IllegalStateException,
+                                NullPointerException { // ok
+        // body
+    }
+
+}
         </source>
       </subsection>
 
@@ -912,24 +1143,24 @@ public class Foo{
         </ul>
         <p>
           Classes known to be immutable are listed in <b>immutableClassCanonicalNames</b> by their
-          <b>canonical</b> names.
+          canonical names.
         </p>
         <p>
-          Rationale: Forcing all fields of class to have private modifier by default is good
-          in most cases, but in some cases it drawbacks in too much boilerplate get/set code.
+          Property Rationale: Forcing all fields of class to have private modifier by default is
+          good in most cases, but in some cases it drawbacks in too much boilerplate get/set code.
           One of such cases are immutable classes.
         </p>
         <p>
-          <b>Restriction</b>: Check doesn't check if class is immutable, there's no
+          Restriction: Check doesn't check if class is immutable, there's no
           checking if accessory methods are missing and all fields are immutable, we only check
-          <b>if current field is immutable or final</b>. Under the flag
+          if current field is immutable or final. Under the flag
           <b>allowPublicImmutableFields</b>, the enclosing class must also be final, to encourage
           immutability. Under the flag <b>allowPublicFinalFields</b>, the final modifier on
           the enclosing class is optional.
         </p>
         <p>
           Star imports are out of scope of this Check. So if one of type imported via
-          <b>star import</b> collides with user specified one by its short name -
+          star import collides with user specified one by its short name -
           there won't be Check's violation.
         </p>
       </subsection>
@@ -947,42 +1178,42 @@ public class Foo{
             <tr>
               <td>packageAllowed</td>
               <td>Control whether package visible members are allowed.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>false</code></td>
               <td>3.0</td>
             </tr>
             <tr>
               <td>protectedAllowed</td>
               <td>Control whether protected members are allowed.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>false</code></td>
               <td>3.0</td>
             </tr>
             <tr>
               <td>publicMemberPattern</td>
               <td>Specify pattern for public members that should be ignored.</td>
-              <td><a href="property_types.html#regexp">Regular Expression</a></td>
+              <td><a href="property_types.html#Pattern">Pattern</a></td>
               <td><code>"^serialVersionUID$"</code></td>
               <td>3.0</td>
             </tr>
             <tr>
               <td>allowPublicFinalFields</td>
               <td>Allow final fields to be declared as public.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>false</code></td>
               <td>7.0</td>
             </tr>
             <tr>
               <td>allowPublicImmutableFields</td>
               <td>Allow immutable fields to be declared as public if defined in final class.</td>
-              <td><a href="property_types.html#boolean">Boolean</a></td>
+              <td><a href="property_types.html#boolean">boolean</a></td>
               <td><code>false</code></td>
               <td>6.4</td>
             </tr>
             <tr>
               <td>immutableClassCanonicalNames</td>
               <td>Specify immutable classes canonical names.</td>
-              <td><a href="property_types.html#stringSet">String Set</a></td>
+              <td><a href="property_types.html#String.5B.5D">String[]</a></td>
               <td><code>java.io.File, java.lang.Boolean, java.lang.Byte, java.lang.Character,
                 java.lang.Double, java.lang.Float, java.lang.Integer, java.lang.Long,
                 java.lang.Short, java.lang.StackTraceElement, java.lang.String,
@@ -997,7 +1228,7 @@ public class Foo{
                 Specify the list of annotations canonical names which ignore variables in
                 consideration.
               </td>
-              <td><a href="property_types.html#stringSet">String Set</a></td>
+              <td><a href="property_types.html#String.5B.5D">String[]</a></td>
               <td><code>com.google.common.annotations.VisibleForTesting,
                 org.junit.ClassRule, org.junit.Rule</code></td>
               <td>6.5</td>

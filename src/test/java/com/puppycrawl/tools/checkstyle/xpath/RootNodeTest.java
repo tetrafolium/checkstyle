@@ -19,6 +19,7 @@
 
 package com.puppycrawl.tools.checkstyle.xpath;
 
+import static com.google.common.truth.Truth.assertWithMessage;
 import static com.puppycrawl.tools.checkstyle.internal.utils.XpathUtil.getXpathItems;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -58,6 +59,18 @@ public class RootNodeTest extends AbstractPathTestSupport {
     }
 
     @Test
+    public void testCompareOrder() {
+        try {
+            rootNode.compareOrder(null);
+            fail("Exception is excepted");
+        }
+        catch (UnsupportedOperationException ex) {
+            assertEquals("Operation is not supported",
+                ex.getMessage(), "Invalid exception message");
+        }
+    }
+
+    @Test
     public void testXpath() throws Exception {
         final String xpath = "/";
         final List<NodeInfo> nodes = getXpathItems(xpath, rootNode);
@@ -66,6 +79,13 @@ public class RootNodeTest extends AbstractPathTestSupport {
         assertTrue(firstNode instanceof RootNode,
                 "Should return true, because selected node is RootNode");
         assertEquals(firstNode, rootNode, "Result node should have same reference as expected");
+    }
+
+    @Test
+    public void testGetDepth() {
+        assertWithMessage("Root node depth should be 0")
+                .that(rootNode.getDepth())
+                .isEqualTo(0);
     }
 
     @Test
@@ -91,27 +111,42 @@ public class RootNodeTest extends AbstractPathTestSupport {
     @Test
     public void testIterate() {
         try (AxisIterator following = rootNode.iterateAxis(AxisInfo.FOLLOWING)) {
-            assertEquals(EmptyIterator.OfNodes.THE_INSTANCE, following,
+            assertEquals(EmptyIterator.ofNodes(), following,
                     "Result iterator does not match expected");
         }
         try (AxisIterator followingSibling = rootNode.iterateAxis(AxisInfo.FOLLOWING_SIBLING)) {
-            assertEquals(EmptyIterator.OfNodes.THE_INSTANCE, followingSibling,
+            assertEquals(EmptyIterator.ofNodes(), followingSibling,
                     "Result iterator does not match expected");
         }
         try (AxisIterator preceding = rootNode.iterateAxis(AxisInfo.PRECEDING)) {
-            assertEquals(EmptyIterator.OfNodes.THE_INSTANCE, preceding,
+            assertEquals(EmptyIterator.ofNodes(), preceding,
                     "Result iterator does not match expected");
         }
         try (AxisIterator precedingSibling = rootNode.iterateAxis(AxisInfo.PRECEDING_SIBLING)) {
-            assertEquals(EmptyIterator.OfNodes.THE_INSTANCE, precedingSibling,
+            assertEquals(EmptyIterator.ofNodes(), precedingSibling,
                     "Result iterator does not match expected");
         }
         try (AxisIterator parent = rootNode.iterateAxis(AxisInfo.PARENT)) {
-            assertEquals(EmptyIterator.OfNodes.THE_INSTANCE, parent,
+            assertEquals(EmptyIterator.ofNodes(), parent,
                     "Result iterator does not match expected");
         }
         try (AxisIterator parentNull = rootNode.iterateAxis(AxisInfo.PARENT, null)) {
-            assertEquals(EmptyIterator.OfNodes.THE_INSTANCE, parentNull,
+            assertEquals(EmptyIterator.ofNodes(), parentNull,
+                    "Result iterator does not match expected");
+        }
+    }
+
+    @Test
+    public void testRootWithNullDetailAst() {
+        final RootNode emptyRootNode = new RootNode(null);
+        assertFalse(emptyRootNode.hasChildNodes(), "Empty node should not have children");
+
+        try (AxisIterator iterator = emptyRootNode.iterateAxis(AxisInfo.DESCENDANT)) {
+            assertEquals(EmptyIterator.ofNodes(), iterator,
+                    "Result iterator does not match expected");
+        }
+        try (AxisIterator iterator = emptyRootNode.iterateAxis(AxisInfo.CHILD)) {
+            assertEquals(EmptyIterator.ofNodes(), iterator,
                     "Result iterator does not match expected");
         }
     }
@@ -142,9 +177,9 @@ public class RootNodeTest extends AbstractPathTestSupport {
 
     @Test
     public void testGetDeclaredNamespaces() {
+        final NamespaceBinding[] namespaceBindings = {new NamespaceBinding("prefix", "uri")};
         try {
-            rootNode.getDeclaredNamespaces(
-                    new NamespaceBinding[] {new NamespaceBinding("prefix", "uri")});
+            rootNode.getDeclaredNamespaces(namespaceBindings);
             fail("Exception is excepted");
         }
         catch (UnsupportedOperationException ex) {
@@ -370,11 +405,22 @@ public class RootNodeTest extends AbstractPathTestSupport {
     }
 
     @Test
+    public void testGetAllNamespaces() {
+        try {
+            rootNode.getAllNamespaces();
+            fail("Exception is excepted");
+        }
+        catch (UnsupportedOperationException ex) {
+            assertEquals("Operation is not supported",
+                    ex.getMessage(), "Invalid exception message");
+        }
+    }
+
+    @Test
     public void testSameNodeInfo() {
         assertTrue(rootNode.isSameNodeInfo(rootNode),
                 "Should return true, because object is being compared to itself");
         assertFalse(rootNode.isSameNodeInfo(null),
                 "Should return false, because object does not equal null");
     }
-
 }

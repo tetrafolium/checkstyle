@@ -34,10 +34,13 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * <ul>
  * <li>
  * Property {@code max} - Specify the maximum threshold allowed.
+ * Type is {@code int}.
  * Default value is {@code 30}.
  * </li>
  * <li>
  * Property {@code tokens} - tokens to check
+ * Type is {@code java.lang.String[]}.
+ * Validation type is {@code tokenSet}.
  * Default value is:
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#CTOR_DEF">
  * CTOR_DEF</a>,
@@ -46,7 +49,9 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#INSTANCE_INIT">
  * INSTANCE_INIT</a>,
  * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#STATIC_INIT">
- * STATIC_INIT</a>.
+ * STATIC_INIT</a>,
+ * <a href="https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html#COMPACT_CTOR_DEF">
+ * COMPACT_CTOR_DEF</a>.
  * </li>
  * </ul>
  * <p>
@@ -64,6 +69,17 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  *   &lt;property name="tokens" value="CTOR_DEF,METHOD_DEF"/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code executableStatementCount}
+ * </li>
+ * </ul>
  *
  * @since 3.2
  */
@@ -102,6 +118,7 @@ public final class ExecutableStatementCountCheck
             TokenTypes.INSTANCE_INIT,
             TokenTypes.STATIC_INIT,
             TokenTypes.SLIST,
+            TokenTypes.COMPACT_CTOR_DEF,
         };
     }
 
@@ -118,6 +135,7 @@ public final class ExecutableStatementCountCheck
             TokenTypes.INSTANCE_INIT,
             TokenTypes.STATIC_INIT,
             TokenTypes.SLIST,
+            TokenTypes.COMPACT_CTOR_DEF,
         };
     }
 
@@ -143,6 +161,7 @@ public final class ExecutableStatementCountCheck
             case TokenTypes.METHOD_DEF:
             case TokenTypes.INSTANCE_INIT:
             case TokenTypes.STATIC_INIT:
+            case TokenTypes.COMPACT_CTOR_DEF:
                 visitMemberDef(ast);
                 break;
             case TokenTypes.SLIST:
@@ -160,6 +179,7 @@ public final class ExecutableStatementCountCheck
             case TokenTypes.METHOD_DEF:
             case TokenTypes.INSTANCE_INIT:
             case TokenTypes.STATIC_INIT:
+            case TokenTypes.COMPACT_CTOR_DEF:
                 leaveMemberDef(ast);
                 break;
             case TokenTypes.SLIST:
@@ -172,6 +192,7 @@ public final class ExecutableStatementCountCheck
 
     /**
      * Process the start of the member definition.
+     *
      * @param ast the token representing the member definition.
      */
     private void visitMemberDef(DetailAST ast) {
@@ -203,10 +224,8 @@ public final class ExecutableStatementCountCheck
             final DetailAST contextAST = context.getAST();
             DetailAST parent = ast.getParent();
             int type = parent.getType();
-            while (type != TokenTypes.CTOR_DEF
-                && type != TokenTypes.METHOD_DEF
-                && type != TokenTypes.INSTANCE_INIT
-                && type != TokenTypes.STATIC_INIT) {
+            while (type != TokenTypes.METHOD_DEF
+                && !isConstructorOrInit(type)) {
                 parent = parent.getParent();
                 type = parent.getType();
             }
@@ -214,6 +233,19 @@ public final class ExecutableStatementCountCheck
                 context.addCount(ast.getChildCount() / 2);
             }
         }
+    }
+
+    /**
+     * Check if token type is a ctor (compact or canonical) or instance/ static initializer.
+     *
+     * @param tokenType type of token we are checking
+     * @return true if token type is constructor or initializer
+     */
+    private static boolean isConstructorOrInit(int tokenType) {
+        return tokenType == TokenTypes.CTOR_DEF
+                || tokenType == TokenTypes.INSTANCE_INIT
+                || tokenType == TokenTypes.STATIC_INIT
+                || tokenType == TokenTypes.COMPACT_CTOR_DEF;
     }
 
     /**
@@ -229,6 +261,7 @@ public final class ExecutableStatementCountCheck
 
         /**
          * Creates new member context.
+         *
          * @param ast member AST node.
          */
         /* package */ Context(DetailAST ast) {
@@ -238,6 +271,7 @@ public final class ExecutableStatementCountCheck
 
         /**
          * Increase count.
+         *
          * @param addition the count increment.
          */
         public void addCount(int addition) {
@@ -246,6 +280,7 @@ public final class ExecutableStatementCountCheck
 
         /**
          * Gets the member AST node.
+         *
          * @return the member AST node.
          */
         public DetailAST getAST() {
@@ -254,6 +289,7 @@ public final class ExecutableStatementCountCheck
 
         /**
          * Gets the count.
+         *
          * @return the count.
          */
         public int getCount() {

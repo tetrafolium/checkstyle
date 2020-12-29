@@ -35,7 +35,10 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * cases are covered, this should be expressed in the
  * default branch, e.g. by using an assertion. This way
  * the code is protected against later changes, e.g.
- * introduction of new types in an enumeration type.
+ * introduction of new types in an enumeration type. Note that
+ * the compiler requires switch expressions to be exhaustive,
+ * so this check does not enforce default branches on
+ * such expressions.
  * </p>
  * <p>
  * To configure the check:
@@ -43,6 +46,37 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * <pre>
  * &lt;module name=&quot;MissingSwitchDefault&quot;/&gt;
  * </pre>
+ * <p>Example of violation:</p>
+ * <pre>
+ * switch (i) {    // violation
+ *  case 1:
+ *    break;
+ *  case 2:
+ *    break;
+ * }
+ * </pre>
+ * <p>Example of correct code:</p>
+ * <pre>
+ * switch (i) {
+ *  case 1:
+ *    break;
+ *  case 2:
+ *    break;
+ *  default: // OK
+ *    break;
+ * }
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code missing.switch.default}
+ * </li>
+ * </ul>
  *
  * @since 3.1
  */
@@ -72,15 +106,16 @@ public class MissingSwitchDefaultCheck extends AbstractCheck {
 
     @Override
     public void visitToken(DetailAST ast) {
-        final DetailAST firstCaseGroupAst = ast.findFirstToken(TokenTypes.CASE_GROUP);
+        final DetailAST firstSwitchMemberAst = findFirstSwitchMember(ast);
 
-        if (!containsDefaultSwitch(firstCaseGroupAst)) {
-            log(ast.getLineNo(), MSG_KEY);
+        if (!containsDefaultSwitch(firstSwitchMemberAst) && !isSwitchExpression(ast)) {
+            log(ast, MSG_KEY);
         }
     }
 
     /**
      * Checks if the case group or its sibling contain the 'default' switch.
+     *
      * @param caseGroupAst first case group to check.
      * @return true if 'default' switch found.
      */
@@ -98,6 +133,30 @@ public class MissingSwitchDefaultCheck extends AbstractCheck {
         }
 
         return found;
+    }
+
+    /**
+     * Returns first CASE_GROUP or SWITCH_RULE ast.
+     *
+     * @param parent the switch statement we are checking
+     * @return ast of first switch member.
+     */
+    private static DetailAST findFirstSwitchMember(DetailAST parent) {
+        DetailAST switchMember = parent.findFirstToken(TokenTypes.CASE_GROUP);
+        if (switchMember == null) {
+            switchMember = parent.findFirstToken(TokenTypes.SWITCH_RULE);
+        }
+        return switchMember;
+    }
+
+    /**
+     * Checks if this LITERAL_SWITCH token is part of a switch expression.
+     *
+     * @param ast the switch statement we are checking
+     * @return true if part of a switch expression
+     */
+    private static boolean isSwitchExpression(DetailAST ast) {
+        return ast.getParent().getType() == TokenTypes.EXPR;
     }
 
 }

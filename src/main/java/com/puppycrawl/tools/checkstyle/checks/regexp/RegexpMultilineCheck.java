@@ -36,33 +36,40 @@ import com.puppycrawl.tools.checkstyle.api.FileText;
  * <ul>
  * <li>
  * Property {@code format} - Specify the format of the regular expression to match.
+ * Type is {@code java.lang.String}.
  * Default value is {@code "$."}.
  * </li>
  * <li>
  * Property {@code message} - Specify the message which is used to notify about
  * violations, if empty then default (hard-coded) message is used.
+ * Type is {@code java.lang.String}.
  * Default value is {@code null}.
  * </li>
  * <li>
  * Property {@code ignoreCase} - Control whether to ignore case when searching.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * <li>
  * Property {@code minimum} - Specify the minimum number of matches required in each file.
+ * Type is {@code int}.
  * Default value is {@code 0}.
  * </li>
  * <li>
  * Property {@code maximum} - Specify the maximum number of matches required in each file.
+ * Type is {@code int}.
  * Default value is {@code 0}.
  * </li>
  * <li>
  * Property {@code matchAcrossLines} - Control whether to match expressions
  * across multiple lines.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * <li>
  * Property {@code fileExtensions} - Specify the file type extension of files to process.
- * Default value is {@code all files}.
+ * Type is {@code java.lang.String[]}.
+ * Default value is {@code ""}.
  * </li>
  * </ul>
  * <p>
@@ -103,6 +110,51 @@ import com.puppycrawl.tools.checkstyle.api.FileText;
  * to be optional, like {@code .*?}. Changing the example expression to not be
  * greedy will allow multiple violations in the example to be found in the same file.
  * </p>
+ *
+ * <p>
+ * To configure the check to restrict an empty file:
+ * </p>
+ * <pre>
+ * &lt;module name=&quot;RegexpMultiline&quot;&gt;
+ *     &lt;property name=&quot;format&quot; value=&quot;^\s*$&quot; /&gt;
+ *     &lt;property name=&quot;matchAcrossLines&quot; value=&quot;true&quot; /&gt;
+ *     &lt;property name=&quot;message&quot; value=&quot;Empty file is not allowed&quot; /&gt;
+ * &lt;/module&gt;
+ * </pre>
+ * <p>
+ * Example of violation from the above config:
+ * </p>
+ * <pre>
+ * /var/tmp$ cat -n Test.java
+ * 1
+ * 2
+ * 3
+ * 4
+ * </pre>
+ * <p>Result:</p>
+ * <pre>
+ * /var/tmp/Test.java // violation, a file must not be empty.
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.Checker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code regexp.StackOverflowError}
+ * </li>
+ * <li>
+ * {@code regexp.empty}
+ * </li>
+ * <li>
+ * {@code regexp.exceeded}
+ * </li>
+ * <li>
+ * {@code regexp.minimum}
+ * </li>
+ * </ul>
  *
  * @since 5.0
  */
@@ -150,6 +202,7 @@ public class RegexpMultilineCheck extends AbstractFileSetCheck {
     /**
      * Retrieves the compile flags for the regular expression being built based
      * on {@code matchAcrossLines}.
+     *
      * @return The compile flags.
      */
     private int getRegexCompileFlags() {

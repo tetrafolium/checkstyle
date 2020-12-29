@@ -41,7 +41,7 @@ public class PackageDeclarationCheckTest extends AbstractModuleTestSupport {
         final DefaultConfiguration checkConfig = createModuleConfig(PackageDeclarationCheck.class);
 
         final String[] expected = {
-            "1: " + getCheckMessage(MSG_KEY_MISSING),
+            "1:1: " + getCheckMessage(MSG_KEY_MISSING),
         };
 
         verify(checkConfig, getPath("InputPackageDeclarationNoPackage.java"), expected);
@@ -60,9 +60,7 @@ public class PackageDeclarationCheckTest extends AbstractModuleTestSupport {
     public void testOnFileWithCommentOnly() throws Exception {
         final DefaultConfiguration checkConfig = createModuleConfig(PackageDeclarationCheck.class);
 
-        final String[] expected = {
-            "1: " + getCheckMessage(MSG_KEY_MISSING),
-        };
+        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
 
         verify(checkConfig, getPath("InputPackageDeclarationWithCommentOnly.java"), expected);
     }
@@ -72,7 +70,7 @@ public class PackageDeclarationCheckTest extends AbstractModuleTestSupport {
         final DefaultConfiguration checkConfig = createModuleConfig(PackageDeclarationCheck.class);
 
         final String[] expected = {
-            "1: " + getCheckMessage(MSG_KEY_MISMATCH),
+            "1:1: " + getCheckMessage(MSG_KEY_MISMATCH),
         };
 
         verify(checkConfig,
@@ -84,7 +82,7 @@ public class PackageDeclarationCheckTest extends AbstractModuleTestSupport {
         final DefaultConfiguration checkConfig = createModuleConfig(PackageDeclarationCheck.class);
 
         final String[] expected = {
-            "1: " + getCheckMessage(MSG_KEY_MISMATCH),
+            "1:1: " + getCheckMessage(MSG_KEY_MISMATCH),
         };
 
         verify(checkConfig,
@@ -97,7 +95,7 @@ public class PackageDeclarationCheckTest extends AbstractModuleTestSupport {
         final DefaultConfiguration checkConfig = createModuleConfig(PackageDeclarationCheck.class);
 
         final String[] expected = {
-            "1: " + getCheckMessage(MSG_KEY_MISMATCH),
+            "1:1: " + getCheckMessage(MSG_KEY_MISMATCH),
         };
 
         verify(checkConfig,
@@ -141,11 +139,21 @@ public class PackageDeclarationCheckTest extends AbstractModuleTestSupport {
     public void testNoPackage() throws Exception {
         final DefaultConfiguration checkConfig = createModuleConfig(PackageDeclarationCheck.class);
         final String[] expected = {
-            "2: " + getCheckMessage(MSG_KEY_MISSING),
+            "2:1: " + getCheckMessage(MSG_KEY_MISSING),
         };
 
         verify(checkConfig,
                 getNonCompilablePath("InputPackageDeclarationNoPackage.java"),
+                expected);
+    }
+
+    @Test
+    public void testEmptyFile() throws Exception {
+        final DefaultConfiguration checkConfig = createModuleConfig(PackageDeclarationCheck.class);
+        final String[] expected = CommonUtil.EMPTY_STRING_ARRAY;
+
+        verify(checkConfig,
+                getNonCompilablePath("InputPackageDeclarationEmptyFile.java"),
                 expected);
     }
 

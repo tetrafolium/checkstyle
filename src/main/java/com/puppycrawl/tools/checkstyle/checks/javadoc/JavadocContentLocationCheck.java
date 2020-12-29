@@ -89,11 +89,12 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  * <ul>
  * <li>
  * Property {@code location} - Specify the policy on placement of the Javadoc content.
+ * Type is {@code com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocContentLocationOption}.
  * Default value is {@code second_line}.
  * </li>
  * </ul>
  * <p>
- * By default Check validate that the Javadoc content starts from the second line:
+ * To configure the default check to validate that the Javadoc content starts from the second line:
  * </p>
  * <pre>
  * &lt;module name="JavadocContentLocationCheck"/&gt;
@@ -110,7 +111,7 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  *   * This comment is OK because it starts from the second line.
  *   *&#47;
  * &#47;** This comment is OK because it is on the single line. *&#47;
- *</pre>
+ * </pre>
  * <p>
  * To ensure that Javadoc content starts from the first line:
  * </p>
@@ -132,6 +133,20 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  *   *&#47;
  * &#47;** This single-line comment also is OK. *&#47;
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code javadoc.content.first.line}
+ * </li>
+ * <li>
+ * {@code javadoc.content.second.line}
+ * </li>
+ * </ul>
  *
  * @since 8.27
  */

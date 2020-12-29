@@ -87,15 +87,18 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * <ul>
  * <li>
  * Property {@code format} - Specify the pattern to match against.
- * Default value is {@code "^$"}(empty).
+ * Type is {@code java.util.regex.Pattern}.
+ * Default value is {@code "^$"}.
  * </li>
  * <li>
  * Property {@code message} - Specify message which is used to notify about
  * violations, if empty then the default (hard-coded) message is used.
+ * Type is {@code java.lang.String}.
  * Default value is {@code null}.
  * </li>
  * <li>
  * Property {@code illegalPattern} - Control whether the pattern is required or illegal.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * <li>
@@ -103,18 +106,24 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * of a required pattern, any negative value means no checking for duplicates,
  * any positive value is used as the maximum number of allowed duplicates,
  * if the limit is exceeded violations will be logged.
+ * Type is {@code int}.
  * Default value is {@code 0}.
  * </li>
  * <li>
  * Property {@code errorLimit} - Specify the maximum number of violations before
  * the check will abort.
+ * Type is {@code int}.
  * Default value is {@code 100}.
  * </li>
  * <li>
  * Property {@code ignoreComments} - Control whether to ignore matches found within comments.
+ * Type is {@code boolean}.
  * Default value is {@code false}.
  * </li>
  * </ul>
+ * <p>
+ * To configure the check:
+ * </p>
  * <p>
  * The following examples are mainly copied from the other 3 checks mentioned above,
  * to show how the same results can be achieved using this check in place of them.
@@ -441,6 +450,23 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  * you need to escape them like &amp;lt;. This is required so the XML parser
  * does not act on them, but instead passes the correct character to the regexp engine.
  * </p>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code duplicate.regexp}
+ * </li>
+ * <li>
+ * {@code illegal.regexp}
+ * </li>
+ * <li>
+ * {@code required.regexp}
+ * </li>
+ * </ul>
  *
  * @since 4.0
  */
@@ -521,12 +547,7 @@ public class RegexpCheck extends AbstractCheck {
      * @param message custom message which should be used in report.
      */
     public void setMessage(String message) {
-        if (message == null) {
-            this.message = "";
-        }
-        else {
-            this.message = message;
-        }
+        this.message = message;
     }
 
     /**
@@ -631,6 +652,7 @@ public class RegexpCheck extends AbstractCheck {
 
     /**
      * Check if we can stop validation.
+     *
      * @param ignore flag
      * @return true is we can continue
      */
@@ -641,6 +663,7 @@ public class RegexpCheck extends AbstractCheck {
 
     /**
      * Detect ignore situation.
+     *
      * @param startLine position of line
      * @param text file text
      * @param start line column
@@ -668,6 +691,7 @@ public class RegexpCheck extends AbstractCheck {
 
     /**
      * Displays the right message.
+     *
      * @param lineNumber the line number the message relates to.
      */
     private void logMessage(int lineNumber) {

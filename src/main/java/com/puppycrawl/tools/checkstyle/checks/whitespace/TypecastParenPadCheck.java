@@ -31,6 +31,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * <ul>
  * <li>
  * Property {@code option} - Specify policy on how to pad parentheses.
+ * Type is {@code com.puppycrawl.tools.checkstyle.checks.whitespace.PadOption}.
  * Default value is {@code nospace}.
  * </li>
  * </ul>
@@ -41,6 +42,26 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * &lt;module name=&quot;TypecastParenPad&quot;/&gt;
  * </pre>
  * <p>
+ * Example:
+ * </p>
+ * <pre>
+ * class Foo {
+ *
+ *   float f1 = 3.14f;
+ *
+ *   int n = ( int ) f1; // violation, space after left parenthesis and before right parenthesis
+ *
+ *   double d = 1.234567;
+ *
+ *   float f2 = (float ) d; // violation, space before right parenthesis
+ *
+ *   float f3 = (float) d; // OK
+ *
+ *   float f4 = ( float) d; // violation, space after left parenthesis
+ *
+ * }
+ * </pre>
+ * <p>
  * To configure the check to require spaces:
  * </p>
  * <pre>
@@ -48,6 +69,46 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  *   &lt;property name=&quot;option&quot; value=&quot;space&quot;/&gt;
  * &lt;/module&gt;
  * </pre>
+ * <p>
+ * Example:
+ * </p>
+ * <pre>
+ * class Bar {
+ *
+ *   double d1 = 3.14;
+ *
+ *   int n = ( int ) d1; // OK
+ *
+ *   int m = (int ) d1; // violation, no space after left parenthesis
+ *
+ *   double d2 = 9.8;
+ *
+ *   int x = (int) d2; // violation, no space after left parenthesis and before right parenthesis
+ *
+ *   int y = ( int) d2; // violation, no space before right parenthesis
+ *
+ * }
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code ws.followed}
+ * </li>
+ * <li>
+ * {@code ws.notFollowed}
+ * </li>
+ * <li>
+ * {@code ws.notPreceded}
+ * </li>
+ * <li>
+ * {@code ws.preceded}
+ * </li>
+ * </ul>
  *
  * @since 3.2
  */

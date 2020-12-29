@@ -25,8 +25,13 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 /**
- * <p>Checks that string literals are not used with
- * {@code ==} or <code>&#33;=</code>.
+ * <p>
+ * Checks that string literals are not used with <code>==</code> or <code>&#33;=</code>.
+ * Since <code>==</code> will compare the object references, not the actual value of the strings,
+ * <code>String.equals()</code> should be used.
+ * More information can be found
+ * <a href="http://www.thejavageek.com/2013/07/27/string-comparison-with-equals-and-assignment-operator/">
+ * in this article</a>.
  * </p>
  * <p>
  * Rationale: Novice Java programmers often use code like:
@@ -46,6 +51,36 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * <pre>
  * &lt;module name=&quot;StringLiteralEquality&quot;/&gt;
  * </pre>
+ * <p>
+ * Examples of violations:
+ * </p>
+ * <pre>
+ * String status = "pending";
+ *
+ * if (status == "done") {} // violation
+ *
+ * while (status != "done") {} // violation
+ *
+ * boolean flag = (status == "done"); // violation
+ *
+ * boolean flag = (status.equals("done")); // OK
+ *
+ * String name = "X";
+ *
+ * if (name == getName()) {}
+ * // OK, limitation that check cannot tell runtime type returned from method call
+ * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code string.literal.equality}
+ * </li>
+ * </ul>
  *
  * @since 3.2
  * @noinspection HtmlTagCanBeJavadocTag
@@ -76,12 +111,11 @@ public class StringLiteralEqualityCheck extends AbstractCheck {
 
     @Override
     public void visitToken(DetailAST ast) {
-        // no need to check for nulls here, == and != always have two children
-        final DetailAST firstChild = ast.getFirstChild();
-        final DetailAST secondChild = firstChild.getNextSibling();
+        final boolean hasStringLiteralChild =
+            ast.findFirstToken(TokenTypes.STRING_LITERAL) != null
+                || ast.findFirstToken(TokenTypes.TEXT_BLOCK_LITERAL_BEGIN) != null;
 
-        if (firstChild.getType() == TokenTypes.STRING_LITERAL
-                || secondChild.getType() == TokenTypes.STRING_LITERAL) {
+        if (hasStringLiteralChild) {
             log(ast, MSG_KEY, ast.getText());
         }
     }

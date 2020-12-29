@@ -19,8 +19,11 @@
 
 package com.puppycrawl.tools.checkstyle.checks.naming;
 
+import java.util.Objects;
+
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 /**
  * <p>
@@ -29,14 +32,21 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * <ul>
  * <li>
  * Property {@code format} - Specifies valid identifiers.
+ * Type is {@code java.util.regex.Pattern}.
  * Default value is {@code "^[a-z][a-zA-Z0-9]*$"}.
  * </li>
  * </ul>
  * <p>
- * An example of how to configure the check is:
+ * To configure the check:
  * </p>
  * <pre>
  * &lt;module name="LambdaParameterName"/&gt;
+ * </pre>
+ * <p>Code Example:</p>
+ * <pre>
+ * Function&lt;String, String&gt; function1 = s -&gt; s.toLowerCase(); // OK
+ * Function&lt;String, String&gt; function2 = S -&gt; S.toLowerCase(); // violation, name 'S'
+ *                                                // must match pattern '^[a-z][a-zA-Z0-9]*$'
  * </pre>
  * <p>
  * An example of how to configure the check for names that begin
@@ -48,24 +58,34 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * &lt;/module&gt;
  * </pre>
  * <p>
- * Example of checking with this config:
+ * Code Example:
  * </p>
  * <pre>
- * public class TestClass {
+ * class MyClass {
+ *   Function&lt;String, String&gt; function1 = str -&gt; str.toUpperCase().trim(); // OK
+ *   Function&lt;String, String&gt; function2 = _s -&gt; _s.trim(); // violation, name '_s'
+ *                                              // must match pattern '^[a-z]([a-zA-Z]+)*$'
  *
- *     Function&lt;String, String&gt; function1 = str -&gt; str.toUpperCase().trim();
- *
- *     Function&lt;String, String&gt; function2 = _s -&gt; _s.trim().toUpperCase(); // violation
- *
- *     public boolean testMethod(String sentence) {
- *         return Stream.of(sentence.split(" "))
- *             .map(word -&gt; word.trim())
- *             .anyMatch(Word -&gt; "in".equals(Word)); // violation
- *     }
- *
+ *   public boolean myMethod(String sentence) {
+ *     return Stream.of(sentence.split(" "))
+ *             .map(word -&gt; word.trim()) // OK
+ *             .anyMatch(Word -&gt; "in".equals(Word)); // violation, name 'Word'
+ *                                                      // must match pattern '^[a-z]([a-zA-Z]+)*$'
+ *   }
  * }
  *
  * </pre>
+ * <p>
+ * Parent is {@code com.puppycrawl.tools.checkstyle.TreeWalker}
+ * </p>
+ * <p>
+ * Violation Message Keys:
+ * </p>
+ * <ul>
+ * <li>
+ * {@code name.invalidPattern}
+ * </li>
+ * </ul>
  *
  * @since 8.11
  */
@@ -95,18 +115,14 @@ public class LambdaParameterNameCheck extends AbstractNameCheck {
 
     @Override
     public void visitToken(DetailAST ast) {
-        final DetailAST parametersNode = ast.findFirstToken(TokenTypes.PARAMETERS);
-        if (parametersNode == null) {
-            super.visitToken(ast);
+        final boolean isInSwitchRule = ast.getParent().getType() == TokenTypes.SWITCH_RULE;
+
+        if (Objects.nonNull(ast.findFirstToken(TokenTypes.PARAMETERS))) {
+            final DetailAST parametersNode = ast.findFirstToken(TokenTypes.PARAMETERS);
+            TokenUtil.forEachChild(parametersNode, TokenTypes.PARAMETER_DEF, super::visitToken);
         }
-        else {
-            for (DetailAST parameterDef = parametersNode.getFirstChild();
-                 parameterDef != null;
-                 parameterDef = parameterDef.getNextSibling()) {
-                if (parameterDef.getType() == TokenTypes.PARAMETER_DEF) {
-                    super.visitToken(parameterDef);
-                }
-            }
+        else if (!isInSwitchRule) {
+            super.visitToken(ast);
         }
     }
 
