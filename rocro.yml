@@ -18,7 +18,7 @@ inspecode:
           path: "/.reports/yamllint.sarif"
           format:
             type: SARIF
-      thresholds: {num-issues: 999}
+      thresholds: {num-issues: 58}
 
   tools:
 
