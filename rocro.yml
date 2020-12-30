@@ -27,19 +27,19 @@ inspecode:
 
     astyle:
       auto-fix: true
-      thresholds: {num-issues: 584}
+      thresholds: {num-issues: 455}
 
     checkstyle:
       config-file: inspecode-checkstyle.xml
       auto-fix: true
-      thresholds: {num-issues: 999}   # too many issues detected: 1030 > 1000
+      thresholds: {num-issues: 128}
 
     cpd:
       options: [--skip-lexical-errors]
-      thresholds: {num-issues: 999}   # too many issues detected: 1165 > 1000
+      thresholds: {num-issues: 5}
 
     grep:
-      thresholds: {num-issues: 22}
+      thresholds: {num-issues: 13}
 
     ### BUILD FAILURE
     ### Usage Error: *** Maven command failed:
@@ -49,11 +49,11 @@ inspecode:
     #   thresholds: {num-issues: 999}
 
     jscpd:
-      thresholds: {num-issues: 575}
+      thresholds: {num-issues: 389}
 
     misspell:
       auto-fix: true
-      thresholds: {num-issues: 31}
+      thresholds: {num-issues: 4}
 
     pmd:
       config-file: config/pmd-main.xml
@@ -62,7 +62,7 @@ inspecode:
 
     uncrustify:
       auto-fix: true
-      thresholds: {num-issues: 924}
+      thresholds: {num-issues: 722}
 
     ### Unused: analyzing unused: <stdin>: hGetContents: invalid argument (invalid byte sequence)
     ### Possibly Unused failed because the tags file had an invalid encoding. Convert the tags file to UTF-8 and try again.
