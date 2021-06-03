@@ -197,53 +197,53 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 @StatelessCheck
 public class ArrayTrailingCommaCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "array.trailing.comma";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "array.trailing.comma";
 
-    /**
-     * Control whether to always check for a trailing comma, even when an array is inline.
-     */
-    private boolean alwaysDemandTrailingComma;
+/**
+ * Control whether to always check for a trailing comma, even when an array is inline.
+ */
+private boolean alwaysDemandTrailingComma;
 
-    /**
-     * Setter to control whether to always check for a trailing comma, even when an array is inline.
-     *
-     * @param alwaysDemandTrailingComma whether to always check for a trailing comma.
-     */
-    public void setAlwaysDemandTrailingComma(boolean alwaysDemandTrailingComma) {
-        this.alwaysDemandTrailingComma = alwaysDemandTrailingComma;
-    }
+/**
+ * Setter to control whether to always check for a trailing comma, even when an array is inline.
+ *
+ * @param alwaysDemandTrailingComma whether to always check for a trailing comma.
+ */
+public void setAlwaysDemandTrailingComma(boolean alwaysDemandTrailingComma) {
+	this.alwaysDemandTrailingComma = alwaysDemandTrailingComma;
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.ARRAY_INIT};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.ARRAY_INIT};
+}
 
-    @Override
-    public void visitToken(DetailAST arrayInit) {
-        final DetailAST rcurly = arrayInit.findFirstToken(TokenTypes.RCURLY);
-        final DetailAST previousSibling = rcurly.getPreviousSibling();
+@Override
+public void visitToken(DetailAST arrayInit) {
+	final DetailAST rcurly = arrayInit.findFirstToken(TokenTypes.RCURLY);
+	final DetailAST previousSibling = rcurly.getPreviousSibling();
 
-        if (arrayInit.getChildCount() != 1
-                && (alwaysDemandTrailingComma
-                    || !TokenUtil.areOnSameLine(rcurly, previousSibling)
-                    && !TokenUtil.areOnSameLine(arrayInit, previousSibling))
-                && previousSibling.getType() != TokenTypes.COMMA) {
-            log(previousSibling, MSG_KEY);
-        }
-    }
+	if (arrayInit.getChildCount() != 1
+	    && (alwaysDemandTrailingComma
+	        || !TokenUtil.areOnSameLine(rcurly, previousSibling)
+	        && !TokenUtil.areOnSameLine(arrayInit, previousSibling))
+	    && previousSibling.getType() != TokenTypes.COMMA) {
+		log(previousSibling, MSG_KEY);
+	}
+}
 
 }

@@ -306,277 +306,277 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 @FileStatefulCheck
 public class DescendantTokenCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY_MIN = "descendant.token.min";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY_MIN = "descendant.token.min";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY_MAX = "descendant.token.max";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY_MAX = "descendant.token.max";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY_SUM_MIN = "descendant.token.sum.min";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY_SUM_MIN = "descendant.token.sum.min";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY_SUM_MAX = "descendant.token.sum.max";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY_SUM_MAX = "descendant.token.sum.max";
 
-    /** Specify the minimum depth for descendant counts. */
-    private int minimumDepth;
-    /** Specify the maximum depth for descendant counts. */
-    private int maximumDepth = Integer.MAX_VALUE;
-    /** Specify a minimum count for descendants. */
-    private int minimumNumber;
-    /** Specify a maximum count for descendants. */
-    private int maximumNumber = Integer.MAX_VALUE;
-    /**
-     * Control whether the number of tokens found should be calculated from
-     * the sum of the individual token counts.
-     */
-    private boolean sumTokenCounts;
-    /** Specify set of tokens with limited occurrences as descendants. */
-    private int[] limitedTokens = CommonUtil.EMPTY_INT_ARRAY;
-    /** Define the violation message when the minimum count is not reached. */
-    private String minimumMessage;
-    /** Define the violation message when the maximum count is exceeded. */
-    private String maximumMessage;
+/** Specify the minimum depth for descendant counts. */
+private int minimumDepth;
+/** Specify the maximum depth for descendant counts. */
+private int maximumDepth = Integer.MAX_VALUE;
+/** Specify a minimum count for descendants. */
+private int minimumNumber;
+/** Specify a maximum count for descendants. */
+private int maximumNumber = Integer.MAX_VALUE;
+/**
+ * Control whether the number of tokens found should be calculated from
+ * the sum of the individual token counts.
+ */
+private boolean sumTokenCounts;
+/** Specify set of tokens with limited occurrences as descendants. */
+private int[] limitedTokens = CommonUtil.EMPTY_INT_ARRAY;
+/** Define the violation message when the minimum count is not reached. */
+private String minimumMessage;
+/** Define the violation message when the maximum count is exceeded. */
+private String maximumMessage;
 
-    /**
-     * Counts of descendant tokens.
-     * Indexed by (token ID - 1) for performance.
-     */
-    private int[] counts = CommonUtil.EMPTY_INT_ARRAY;
+/**
+ * Counts of descendant tokens.
+ * Indexed by (token ID - 1) for performance.
+ */
+private int[] counts = CommonUtil.EMPTY_INT_ARRAY;
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return TokenUtil.getAllTokenIds();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return TokenUtil.getAllTokenIds();
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return CommonUtil.EMPTY_INT_ARRAY;
-    }
+@Override
+public int[] getRequiredTokens() {
+	return CommonUtil.EMPTY_INT_ARRAY;
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        // reset counts
-        Arrays.fill(counts, 0);
-        countTokens(ast, 0);
+@Override
+public void visitToken(DetailAST ast) {
+	// reset counts
+	Arrays.fill(counts, 0);
+	countTokens(ast, 0);
 
-        if (sumTokenCounts) {
-            logAsTotal(ast);
-        }
-        else {
-            logAsSeparated(ast);
-        }
-    }
+	if (sumTokenCounts) {
+		logAsTotal(ast);
+	}
+	else {
+		logAsSeparated(ast);
+	}
+}
 
-    /**
-     * Log violations for each Token.
-     *
-     * @param ast token
-     */
-    private void logAsSeparated(DetailAST ast) {
-        // name of this token
-        final String name = TokenUtil.getTokenName(ast.getType());
+/**
+ * Log violations for each Token.
+ *
+ * @param ast token
+ */
+private void logAsSeparated(DetailAST ast) {
+	// name of this token
+	final String name = TokenUtil.getTokenName(ast.getType());
 
-        for (int element : limitedTokens) {
-            final int tokenCount = counts[element - 1];
-            if (tokenCount < minimumNumber) {
-                final String descendantName = TokenUtil.getTokenName(element);
+	for (int element : limitedTokens) {
+		final int tokenCount = counts[element - 1];
+		if (tokenCount < minimumNumber) {
+			final String descendantName = TokenUtil.getTokenName(element);
 
-                if (minimumMessage == null) {
-                    minimumMessage = MSG_KEY_MIN;
-                }
-                log(ast,
-                    minimumMessage,
-                    String.valueOf(tokenCount),
-                    String.valueOf(minimumNumber),
-                    name,
-                    descendantName);
-            }
-            if (tokenCount > maximumNumber) {
-                final String descendantName = TokenUtil.getTokenName(element);
+			if (minimumMessage == null) {
+				minimumMessage = MSG_KEY_MIN;
+			}
+			log(ast,
+			    minimumMessage,
+			    String.valueOf(tokenCount),
+			    String.valueOf(minimumNumber),
+			    name,
+			    descendantName);
+		}
+		if (tokenCount > maximumNumber) {
+			final String descendantName = TokenUtil.getTokenName(element);
 
-                if (maximumMessage == null) {
-                    maximumMessage = MSG_KEY_MAX;
-                }
-                log(ast,
-                    maximumMessage,
-                    String.valueOf(tokenCount),
-                    String.valueOf(maximumNumber),
-                    name,
-                    descendantName);
-            }
-        }
-    }
+			if (maximumMessage == null) {
+				maximumMessage = MSG_KEY_MAX;
+			}
+			log(ast,
+			    maximumMessage,
+			    String.valueOf(tokenCount),
+			    String.valueOf(maximumNumber),
+			    name,
+			    descendantName);
+		}
+	}
+}
 
-    /**
-     * Log validation as one violation.
-     *
-     * @param ast current token
-     */
-    private void logAsTotal(DetailAST ast) {
-        // name of this token
-        final String name = TokenUtil.getTokenName(ast.getType());
+/**
+ * Log validation as one violation.
+ *
+ * @param ast current token
+ */
+private void logAsTotal(DetailAST ast) {
+	// name of this token
+	final String name = TokenUtil.getTokenName(ast.getType());
 
-        int total = 0;
-        for (int element : limitedTokens) {
-            total += counts[element - 1];
-        }
-        if (total < minimumNumber) {
-            if (minimumMessage == null) {
-                minimumMessage = MSG_KEY_SUM_MIN;
-            }
-            log(ast,
-                minimumMessage,
-                String.valueOf(total),
-                String.valueOf(minimumNumber), name);
-        }
-        if (total > maximumNumber) {
-            if (maximumMessage == null) {
-                maximumMessage = MSG_KEY_SUM_MAX;
-            }
-            log(ast,
-                maximumMessage,
-                String.valueOf(total),
-                String.valueOf(maximumNumber), name);
-        }
-    }
+	int total = 0;
+	for (int element : limitedTokens) {
+		total += counts[element - 1];
+	}
+	if (total < minimumNumber) {
+		if (minimumMessage == null) {
+			minimumMessage = MSG_KEY_SUM_MIN;
+		}
+		log(ast,
+		    minimumMessage,
+		    String.valueOf(total),
+		    String.valueOf(minimumNumber), name);
+	}
+	if (total > maximumNumber) {
+		if (maximumMessage == null) {
+			maximumMessage = MSG_KEY_SUM_MAX;
+		}
+		log(ast,
+		    maximumMessage,
+		    String.valueOf(total),
+		    String.valueOf(maximumNumber), name);
+	}
+}
 
-    /**
-     * Counts the number of occurrences of descendant tokens.
-     *
-     * @param ast the root token for descendants.
-     * @param depth the maximum depth of the counted descendants.
-     */
-    private void countTokens(DetailAST ast, int depth) {
-        if (depth <= maximumDepth) {
-            // update count
-            if (depth >= minimumDepth) {
-                final int type = ast.getType();
-                if (type <= counts.length) {
-                    counts[type - 1]++;
-                }
-            }
-            DetailAST child = ast.getFirstChild();
-            final int nextDepth = depth + 1;
-            while (child != null) {
-                countTokens(child, nextDepth);
-                child = child.getNextSibling();
-            }
-        }
-    }
+/**
+ * Counts the number of occurrences of descendant tokens.
+ *
+ * @param ast the root token for descendants.
+ * @param depth the maximum depth of the counted descendants.
+ */
+private void countTokens(DetailAST ast, int depth) {
+	if (depth <= maximumDepth) {
+		// update count
+		if (depth >= minimumDepth) {
+			final int type = ast.getType();
+			if (type <= counts.length) {
+				counts[type - 1]++;
+			}
+		}
+		DetailAST child = ast.getFirstChild();
+		final int nextDepth = depth + 1;
+		while (child != null) {
+			countTokens(child, nextDepth);
+			child = child.getNextSibling();
+		}
+	}
+}
 
-    /**
-     * Setter to specify set of tokens with limited occurrences as descendants.
-     *
-     * @param limitedTokensParam - list of tokens to ignore.
-     */
-    public void setLimitedTokens(String... limitedTokensParam) {
-        limitedTokens = new int[limitedTokensParam.length];
+/**
+ * Setter to specify set of tokens with limited occurrences as descendants.
+ *
+ * @param limitedTokensParam - list of tokens to ignore.
+ */
+public void setLimitedTokens(String... limitedTokensParam) {
+	limitedTokens = new int[limitedTokensParam.length];
 
-        int maxToken = 0;
-        for (int i = 0; i < limitedTokensParam.length; i++) {
-            limitedTokens[i] = TokenUtil.getTokenId(limitedTokensParam[i]);
-            if (limitedTokens[i] >= maxToken + 1) {
-                maxToken = limitedTokens[i];
-            }
-        }
-        counts = new int[maxToken];
-    }
+	int maxToken = 0;
+	for (int i = 0; i < limitedTokensParam.length; i++) {
+		limitedTokens[i] = TokenUtil.getTokenId(limitedTokensParam[i]);
+		if (limitedTokens[i] >= maxToken + 1) {
+			maxToken = limitedTokens[i];
+		}
+	}
+	counts = new int[maxToken];
+}
 
-    /**
-     * Setter to specify the minimum depth for descendant counts.
-     *
-     * @param minimumDepth the minimum depth for descendant counts.
-     */
-    public void setMinimumDepth(int minimumDepth) {
-        this.minimumDepth = minimumDepth;
-    }
+/**
+ * Setter to specify the minimum depth for descendant counts.
+ *
+ * @param minimumDepth the minimum depth for descendant counts.
+ */
+public void setMinimumDepth(int minimumDepth) {
+	this.minimumDepth = minimumDepth;
+}
 
-    /**
-     * Setter to specify the maximum depth for descendant counts.
-     *
-     * @param maximumDepth the maximum depth for descendant counts.
-     */
-    public void setMaximumDepth(int maximumDepth) {
-        this.maximumDepth = maximumDepth;
-    }
+/**
+ * Setter to specify the maximum depth for descendant counts.
+ *
+ * @param maximumDepth the maximum depth for descendant counts.
+ */
+public void setMaximumDepth(int maximumDepth) {
+	this.maximumDepth = maximumDepth;
+}
 
-    /**
-     * Setter to specify a minimum count for descendants.
-     *
-     * @param minimumNumber the minimum count for descendants.
-     */
-    public void setMinimumNumber(int minimumNumber) {
-        this.minimumNumber = minimumNumber;
-    }
+/**
+ * Setter to specify a minimum count for descendants.
+ *
+ * @param minimumNumber the minimum count for descendants.
+ */
+public void setMinimumNumber(int minimumNumber) {
+	this.minimumNumber = minimumNumber;
+}
 
-    /**
-      * Setter to specify a maximum count for descendants.
-      *
-      * @param maximumNumber the maximum count for descendants.
-      */
-    public void setMaximumNumber(int maximumNumber) {
-        this.maximumNumber = maximumNumber;
-    }
+/**
+ * Setter to specify a maximum count for descendants.
+ *
+ * @param maximumNumber the maximum count for descendants.
+ */
+public void setMaximumNumber(int maximumNumber) {
+	this.maximumNumber = maximumNumber;
+}
 
-    /**
-     * Setter to define the violation message when the minimum count is not reached.
-     *
-     * @param message the violation message for minimum count not reached.
-     *     Used as a {@code MessageFormat} pattern with arguments
-     *     <ul>
-     *     <li>{0} - token count</li>
-     *     <li>{1} - minimum number</li>
-     *     <li>{2} - name of token</li>
-     *     <li>{3} - name of limited token</li>
-     *     </ul>
-     */
-    public void setMinimumMessage(String message) {
-        minimumMessage = message;
-    }
+/**
+ * Setter to define the violation message when the minimum count is not reached.
+ *
+ * @param message the violation message for minimum count not reached.
+ *     Used as a {@code MessageFormat} pattern with arguments
+ *     <ul>
+ *     <li>{0} - token count</li>
+ *     <li>{1} - minimum number</li>
+ *     <li>{2} - name of token</li>
+ *     <li>{3} - name of limited token</li>
+ *     </ul>
+ */
+public void setMinimumMessage(String message) {
+	minimumMessage = message;
+}
 
-    /**
-     * Setter to define the violation message when the maximum count is exceeded.
-     *
-     * @param message the violation message for maximum count exceeded.
-     *     Used as a {@code MessageFormat} pattern with arguments
-     * <ul>
-     * <li>{0} - token count</li>
-     * <li>{1} - maximum number</li>
-     * <li>{2} - name of token</li>
-     * <li>{3} - name of limited token</li>
-     * </ul>
-     */
+/**
+ * Setter to define the violation message when the maximum count is exceeded.
+ *
+ * @param message the violation message for maximum count exceeded.
+ *     Used as a {@code MessageFormat} pattern with arguments
+ * <ul>
+ * <li>{0} - token count</li>
+ * <li>{1} - maximum number</li>
+ * <li>{2} - name of token</li>
+ * <li>{3} - name of limited token</li>
+ * </ul>
+ */
 
-    public void setMaximumMessage(String message) {
-        maximumMessage = message;
-    }
+public void setMaximumMessage(String message) {
+	maximumMessage = message;
+}
 
-    /**
-     * Setter to control whether the number of tokens found should be calculated
-     * from the sum of the individual token counts.
-     *
-     * @param sum whether to use the sum.
-     */
-    public void setSumTokenCounts(boolean sum) {
-        sumTokenCounts = sum;
-    }
+/**
+ * Setter to control whether the number of tokens found should be calculated
+ * from the sum of the individual token counts.
+ *
+ * @param sum whether to use the sum.
+ */
+public void setSumTokenCounts(boolean sum) {
+	sumTokenCounts = sum;
+}
 
 }

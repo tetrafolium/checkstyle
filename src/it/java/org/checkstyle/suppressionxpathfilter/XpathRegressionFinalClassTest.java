@@ -29,66 +29,66 @@ import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
 import com.puppycrawl.tools.checkstyle.checks.design.FinalClassCheck;
 
 public class XpathRegressionFinalClassTest extends AbstractXpathTestSupport {
-    private final String checkName = FinalClassCheck.class.getSimpleName();
+private final String checkName = FinalClassCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess = new File(getPath(
-                                                "SuppressionXpathRegressionFinalClass1.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess = new File(getPath(
+						    "SuppressionXpathRegressionFinalClass1.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(FinalClassCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(FinalClassCheck.class);
 
-        final String[] expectedViolation = {
-            "3:1: " + getCheckMessage(FinalClassCheck.class,
-                                      FinalClassCheck.MSG_KEY, "SuppressionXpathRegressionFinalClass1"),
-        };
+	final String[] expectedViolation = {
+		"3:1: " + getCheckMessage(FinalClassCheck.class,
+		                          FinalClassCheck.MSG_KEY, "SuppressionXpathRegressionFinalClass1"),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT["
-                    + "@text='SuppressionXpathRegressionFinalClass1']]",
-                    "/CLASS_DEF[./IDENT["
-                    + "@text='SuppressionXpathRegressionFinalClass1']]/MODIFIERS",
-                    "/CLASS_DEF[./IDENT["
-                    + "@text='SuppressionXpathRegressionFinalClass1']]/MODIFIERS/LITERAL_PUBLIC"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT["
+		+ "@text='SuppressionXpathRegressionFinalClass1']]",
+		"/CLASS_DEF[./IDENT["
+		+ "@text='SuppressionXpathRegressionFinalClass1']]/MODIFIERS",
+		"/CLASS_DEF[./IDENT["
+		+ "@text='SuppressionXpathRegressionFinalClass1']]/MODIFIERS/LITERAL_PUBLIC"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess = new File(getPath(
-                                                "SuppressionXpathRegressionFinalClass2.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess = new File(getPath(
+						    "SuppressionXpathRegressionFinalClass2.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(FinalClassCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(FinalClassCheck.class);
 
-        final String[] expectedViolation = {
-            "4:5: " + getCheckMessage(FinalClassCheck.class,
-                                      FinalClassCheck.MSG_KEY, "Test"),
-        };
+	final String[] expectedViolation = {
+		"4:5: " + getCheckMessage(FinalClassCheck.class,
+		                          FinalClassCheck.MSG_KEY, "Test"),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT["
-                    + "@text='SuppressionXpathRegressionFinalClass2']]"
-                    + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='Test']]",
-                    "/CLASS_DEF[./IDENT["
-                    + "@text='SuppressionXpathRegressionFinalClass2']]"
-                    + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='Test']]/MODIFIERS",
-                    "/CLASS_DEF[./IDENT["
-                    + "@text='SuppressionXpathRegressionFinalClass2']]"
-                    + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='Test']]/LITERAL_CLASS"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT["
+		+ "@text='SuppressionXpathRegressionFinalClass2']]"
+		+ "/OBJBLOCK/CLASS_DEF[./IDENT[@text='Test']]",
+		"/CLASS_DEF[./IDENT["
+		+ "@text='SuppressionXpathRegressionFinalClass2']]"
+		+ "/OBJBLOCK/CLASS_DEF[./IDENT[@text='Test']]/MODIFIERS",
+		"/CLASS_DEF[./IDENT["
+		+ "@text='SuppressionXpathRegressionFinalClass2']]"
+		+ "/OBJBLOCK/CLASS_DEF[./IDENT[@text='Test']]/LITERAL_CLASS"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 }
 

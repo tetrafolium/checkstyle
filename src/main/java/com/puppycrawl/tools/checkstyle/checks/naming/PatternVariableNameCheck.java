@@ -110,30 +110,30 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  */
 public class PatternVariableNameCheck extends AbstractNameCheck {
 
-    /** Creates a new {@code PatternVariableNameCheck} instance. */
-    public PatternVariableNameCheck() {
-        super("^[a-z][a-zA-Z0-9]*$");
-    }
+/** Creates a new {@code PatternVariableNameCheck} instance. */
+public PatternVariableNameCheck() {
+	super("^[a-z][a-zA-Z0-9]*$");
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {
-                   TokenTypes.PATTERN_VARIABLE_DEF,
-               };
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {
+		       TokenTypes.PATTERN_VARIABLE_DEF,
+	};
+}
 
-    @Override
-    protected final boolean mustCheckName(DetailAST ast) {
-        return true;
-    }
+@Override
+protected final boolean mustCheckName(DetailAST ast) {
+	return true;
+}
 }

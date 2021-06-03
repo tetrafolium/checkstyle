@@ -24,33 +24,33 @@ package com.puppycrawl.tools.checkstyle.checks.javadoc;
  */
 public enum JavadocContentLocationOption {
 
-    /**
-     * Represents a policy for the location of content starting from
-     * the same line as {@code /**}.
-     * Example:
-     * <pre>
-     * &#47;** Summary text.
-     *   * More details.
-     *   *&#47;
-     * public void method();
-     * </pre>
-     * This style is also known as "scala" style.
-     */
-    FIRST_LINE,
+	/**
+	 * Represents a policy for the location of content starting from
+	 * the same line as {@code /**}.
+	 * Example:
+	 * <pre>
+	 * &#47;** Summary text.
+	 *   * More details.
+	 *   *&#47;
+	 * public void method();
+	 * </pre>
+	 * This style is also known as "scala" style.
+	 */
+	FIRST_LINE,
 
-    /**
-     * Represents a policy for the location of content starting from
-     * the next line after {@code /**}.
-     * Example:
-     * <pre>
-     * &#47;**
-     *  * Summary text.
-     *  * More details.
-     *  *&#47;
-     * public void method();
-     * </pre>
-     * This style is common to java projects.
-     */
-    SECOND_LINE,
+	/**
+	 * Represents a policy for the location of content starting from
+	 * the next line after {@code /**}.
+	 * Example:
+	 * <pre>
+	 * &#47;**
+	 *  * Summary text.
+	 *  * More details.
+	 *  *&#47;
+	 * public void method();
+	 * </pre>
+	 * This style is common to java projects.
+	 */
+	SECOND_LINE,
 
 }

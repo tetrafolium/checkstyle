@@ -262,184 +262,184 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 @StatelessCheck
 public class RegexpOnFilenameCheck extends AbstractFileSetCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_MATCH = "regexp.filename.match";
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_MISMATCH = "regexp.filename.mismatch";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_MATCH = "regexp.filename.match";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_MISMATCH = "regexp.filename.mismatch";
 
-    /** Specify the regular expression to match the folder path against. */
-    private Pattern folderPattern;
-    /** Specify the regular expression to match the file name against. */
-    private Pattern fileNamePattern;
-    /**
-     * Control whether to look for a match or mis-match on the file name,
-     * if the fileNamePattern is supplied, otherwise it is applied on the folderPattern.
-     */
-    private boolean match = true;
-    /** Control whether to ignore the file extension for the file name match. */
-    private boolean ignoreFileNameExtensions;
+/** Specify the regular expression to match the folder path against. */
+private Pattern folderPattern;
+/** Specify the regular expression to match the file name against. */
+private Pattern fileNamePattern;
+/**
+ * Control whether to look for a match or mis-match on the file name,
+ * if the fileNamePattern is supplied, otherwise it is applied on the folderPattern.
+ */
+private boolean match = true;
+/** Control whether to ignore the file extension for the file name match. */
+private boolean ignoreFileNameExtensions;
 
-    /**
-     * Setter to specify the regular expression to match the folder path against.
-     *
-     * @param folderPattern format of folder.
-     */
-    public void setFolderPattern(Pattern folderPattern) {
-        this.folderPattern = folderPattern;
-    }
+/**
+ * Setter to specify the regular expression to match the folder path against.
+ *
+ * @param folderPattern format of folder.
+ */
+public void setFolderPattern(Pattern folderPattern) {
+	this.folderPattern = folderPattern;
+}
 
-    /**
-     * Setter to specify the regular expression to match the file name against.
-     *
-     * @param fileNamePattern format of file.
-     */
-    public void setFileNamePattern(Pattern fileNamePattern) {
-        this.fileNamePattern = fileNamePattern;
-    }
+/**
+ * Setter to specify the regular expression to match the file name against.
+ *
+ * @param fileNamePattern format of file.
+ */
+public void setFileNamePattern(Pattern fileNamePattern) {
+	this.fileNamePattern = fileNamePattern;
+}
 
-    /**
-     * Setter to control whether to look for a match or mis-match on the file name,
-     * if the fileNamePattern is supplied, otherwise it is applied on the folderPattern.
-     *
-     * @param match check's option for matching file names.
-     */
-    public void setMatch(boolean match) {
-        this.match = match;
-    }
+/**
+ * Setter to control whether to look for a match or mis-match on the file name,
+ * if the fileNamePattern is supplied, otherwise it is applied on the folderPattern.
+ *
+ * @param match check's option for matching file names.
+ */
+public void setMatch(boolean match) {
+	this.match = match;
+}
 
-    /**
-     * Setter to control whether to ignore the file extension for the file name match.
-     *
-     * @param ignoreFileNameExtensions check's option for ignoring file extension.
-     */
-    public void setIgnoreFileNameExtensions(boolean ignoreFileNameExtensions) {
-        this.ignoreFileNameExtensions = ignoreFileNameExtensions;
-    }
+/**
+ * Setter to control whether to ignore the file extension for the file name match.
+ *
+ * @param ignoreFileNameExtensions check's option for ignoring file extension.
+ */
+public void setIgnoreFileNameExtensions(boolean ignoreFileNameExtensions) {
+	this.ignoreFileNameExtensions = ignoreFileNameExtensions;
+}
 
-    @Override
-    public void init() {
-        if (fileNamePattern == null && folderPattern == null) {
-            fileNamePattern = CommonUtil.createPattern("\\s");
-        }
-    }
+@Override
+public void init() {
+	if (fileNamePattern == null && folderPattern == null) {
+		fileNamePattern = CommonUtil.createPattern("\\s");
+	}
+}
 
-    @Override
-    protected void processFiltered(File file, FileText fileText) throws CheckstyleException {
-        final String fileName = getFileName(file);
-        final String folderPath = getFolderPath(file);
+@Override
+protected void processFiltered(File file, FileText fileText) throws CheckstyleException {
+	final String fileName = getFileName(file);
+	final String folderPath = getFolderPath(file);
 
-        if (isMatchFolder(folderPath) && isMatchFile(fileName)) {
-            log();
-        }
-    }
+	if (isMatchFolder(folderPath) && isMatchFile(fileName)) {
+		log();
+	}
+}
 
-    /**
-     * Retrieves the file name from the given {@code file}.
-     *
-     * @param file Input file to examine.
-     * @return The file name.
-     */
-    private String getFileName(File file) {
-        String fileName = file.getName();
+/**
+ * Retrieves the file name from the given {@code file}.
+ *
+ * @param file Input file to examine.
+ * @return The file name.
+ */
+private String getFileName(File file) {
+	String fileName = file.getName();
 
-        if (ignoreFileNameExtensions) {
-            fileName = CommonUtil.getFileNameWithoutExtension(fileName);
-        }
+	if (ignoreFileNameExtensions) {
+		fileName = CommonUtil.getFileNameWithoutExtension(fileName);
+	}
 
-        return fileName;
-    }
+	return fileName;
+}
 
-    /**
-     * Retrieves the folder path from the given {@code file}.
-     *
-     * @param file Input file to examine.
-     * @return The folder path.
-     * @throws CheckstyleException if there is an error getting the canonical
-     *         path of the {@code file}.
-     */
-    private static String getFolderPath(File file) throws CheckstyleException {
-        try {
-            return file.getCanonicalFile().getParent();
-        }
-        catch (IOException ex) {
-            throw new CheckstyleException("unable to create canonical path names for "
-                                          + file.getAbsolutePath(), ex);
-        }
-    }
+/**
+ * Retrieves the folder path from the given {@code file}.
+ *
+ * @param file Input file to examine.
+ * @return The folder path.
+ * @throws CheckstyleException if there is an error getting the canonical
+ *         path of the {@code file}.
+ */
+private static String getFolderPath(File file) throws CheckstyleException {
+	try {
+		return file.getCanonicalFile().getParent();
+	}
+	catch (IOException ex) {
+		throw new CheckstyleException("unable to create canonical path names for "
+		                              + file.getAbsolutePath(), ex);
+	}
+}
 
-    /**
-     * Checks if the given {@code folderPath} matches the specified
-     * {@link #folderPattern}.
-     *
-     * @param folderPath Input folder path to examine.
-     * @return true if they do match.
-     */
-    private boolean isMatchFolder(String folderPath) {
-        final boolean result;
+/**
+ * Checks if the given {@code folderPath} matches the specified
+ * {@link #folderPattern}.
+ *
+ * @param folderPath Input folder path to examine.
+ * @return true if they do match.
+ */
+private boolean isMatchFolder(String folderPath) {
+	final boolean result;
 
-        // null pattern always matches, regardless of value of 'match'
-        if (folderPattern == null) {
-            result = true;
-        }
-        else {
-            // null pattern means 'match' applies to the folderPattern matching
-            final boolean useMatch = fileNamePattern != null || match;
-            result = folderPattern.matcher(folderPath).find() == useMatch;
-        }
+	// null pattern always matches, regardless of value of 'match'
+	if (folderPattern == null) {
+		result = true;
+	}
+	else {
+		// null pattern means 'match' applies to the folderPattern matching
+		final boolean useMatch = fileNamePattern != null || match;
+		result = folderPattern.matcher(folderPath).find() == useMatch;
+	}
 
-        return result;
-    }
+	return result;
+}
 
-    /**
-     * Checks if the given {@code fileName} matches the specified
-     * {@link #fileNamePattern}.
-     *
-     * @param fileName Input file name to examine.
-     * @return true if they do match.
-     */
-    private boolean isMatchFile(String fileName) {
-        // null pattern always matches, regardless of value of 'match'
-        return fileNamePattern == null || fileNamePattern.matcher(fileName).find() == match;
-    }
+/**
+ * Checks if the given {@code fileName} matches the specified
+ * {@link #fileNamePattern}.
+ *
+ * @param fileName Input file name to examine.
+ * @return true if they do match.
+ */
+private boolean isMatchFile(String fileName) {
+	// null pattern always matches, regardless of value of 'match'
+	return fileNamePattern == null || fileNamePattern.matcher(fileName).find() == match;
+}
 
-    /** Logs the violations for the check. */
-    private void log() {
-        final String folder = getStringOrDefault(folderPattern, "");
-        final String fileName = getStringOrDefault(fileNamePattern, "");
+/** Logs the violations for the check. */
+private void log() {
+	final String folder = getStringOrDefault(folderPattern, "");
+	final String fileName = getStringOrDefault(fileNamePattern, "");
 
-        if (match) {
-            log(1, MSG_MATCH, folder, fileName);
-        }
-        else {
-            log(1, MSG_MISMATCH, folder, fileName);
-        }
-    }
+	if (match) {
+		log(1, MSG_MATCH, folder, fileName);
+	}
+	else {
+		log(1, MSG_MISMATCH, folder, fileName);
+	}
+}
 
-    /**
-     * Retrieves the String form of the {@code pattern} or {@code defaultString}
-     * if null.
-     *
-     * @param pattern The pattern to convert.
-     * @param defaultString The result to use if {@code pattern} is null.
-     * @return The String form of the {@code pattern}.
-     */
-    private static String getStringOrDefault(Pattern pattern, String defaultString) {
-        final String result;
+/**
+ * Retrieves the String form of the {@code pattern} or {@code defaultString}
+ * if null.
+ *
+ * @param pattern The pattern to convert.
+ * @param defaultString The result to use if {@code pattern} is null.
+ * @return The String form of the {@code pattern}.
+ */
+private static String getStringOrDefault(Pattern pattern, String defaultString) {
+	final String result;
 
-        if (pattern == null) {
-            result = defaultString;
-        }
-        else {
-            result = pattern.toString();
-        }
+	if (pattern == null) {
+		result = defaultString;
+	}
+	else {
+		result = pattern.toString();
+	}
 
-        return result;
-    }
+	return result;
+}
 
 }

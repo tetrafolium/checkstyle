@@ -30,63 +30,63 @@ import com.puppycrawl.tools.checkstyle.checks.coding.NoCloneCheck;
 
 public class XpathRegressionNoCloneTest extends AbstractXpathTestSupport {
 
-    private final String checkName = NoCloneCheck.class.getSimpleName();
+private final String checkName = NoCloneCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionNoCloneOne.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionNoCloneOne.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(NoCloneCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(NoCloneCheck.class);
 
-        final String[] expectedViolation = {
-            "5:5: " + getCheckMessage(NoCloneCheck.class, NoCloneCheck.MSG_KEY),
-        };
+	final String[] expectedViolation = {
+		"5:5: " + getCheckMessage(NoCloneCheck.class, NoCloneCheck.MSG_KEY),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoCloneOne']]/OBJBLOCK"
-                    + "/METHOD_DEF[./IDENT[@text='clone']]",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoCloneOne']]/OBJBLOCK"
-                    + "/METHOD_DEF[./IDENT[@text='clone']]/MODIFIERS",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoCloneOne']]/OBJBLOCK"
-                    + "/METHOD_DEF[./IDENT[@text='clone']]/MODIFIERS/LITERAL_PUBLIC"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoCloneOne']]/OBJBLOCK"
+		+ "/METHOD_DEF[./IDENT[@text='clone']]",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoCloneOne']]/OBJBLOCK"
+		+ "/METHOD_DEF[./IDENT[@text='clone']]/MODIFIERS",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoCloneOne']]/OBJBLOCK"
+		+ "/METHOD_DEF[./IDENT[@text='clone']]/MODIFIERS/LITERAL_PUBLIC"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionNoCloneTwo.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionNoCloneTwo.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(NoCloneCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(NoCloneCheck.class);
 
-        final String[] expectedViolation = {
-            "6:5: " + getCheckMessage(NoCloneCheck.class, NoCloneCheck.MSG_KEY),
-        };
+	final String[] expectedViolation = {
+		"6:5: " + getCheckMessage(NoCloneCheck.class, NoCloneCheck.MSG_KEY),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoCloneTwo']]/OBJBLOCK"
-                    + "/CLASS_DEF[./IDENT[@text='InnerClass']]/OBJBLOCK"
-                    + "/METHOD_DEF[./IDENT[@text='clone']]",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoCloneTwo']]/OBJBLOCK"
-                    + "/CLASS_DEF[./IDENT[@text='InnerClass']]/OBJBLOCK/"
-                    + "METHOD_DEF[./IDENT[@text='clone']]/MODIFIERS",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoCloneTwo']]/OBJBLOCK"
-                    + "/CLASS_DEF[./IDENT[@text='InnerClass']]/OBJBLOCK"
-                    + "/METHOD_DEF[./IDENT[@text='clone']]/MODIFIERS/LITERAL_PUBLIC"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoCloneTwo']]/OBJBLOCK"
+		+ "/CLASS_DEF[./IDENT[@text='InnerClass']]/OBJBLOCK"
+		+ "/METHOD_DEF[./IDENT[@text='clone']]",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoCloneTwo']]/OBJBLOCK"
+		+ "/CLASS_DEF[./IDENT[@text='InnerClass']]/OBJBLOCK/"
+		+ "METHOD_DEF[./IDENT[@text='clone']]/MODIFIERS",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoCloneTwo']]/OBJBLOCK"
+		+ "/CLASS_DEF[./IDENT[@text='InnerClass']]/OBJBLOCK"
+		+ "/METHOD_DEF[./IDENT[@text='clone']]/MODIFIERS/LITERAL_PUBLIC"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 }

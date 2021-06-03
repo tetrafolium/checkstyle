@@ -29,56 +29,56 @@ import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
 import com.puppycrawl.tools.checkstyle.checks.coding.UnnecessarySemicolonInEnumerationCheck;
 
 public class XpathRegressionUnnecessarySemicolonInEnumerationTest
-    extends AbstractXpathTestSupport {
+	extends AbstractXpathTestSupport {
 
-    private final String checkName =
-        UnnecessarySemicolonInEnumerationCheck.class.getSimpleName();
+private final String checkName =
+	UnnecessarySemicolonInEnumerationCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess = new File(
-            getPath("SuppressionXpathRegressionUnnecessarySemicolonInEnumeration.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess = new File(
+		getPath("SuppressionXpathRegressionUnnecessarySemicolonInEnumeration.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(UnnecessarySemicolonInEnumerationCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(UnnecessarySemicolonInEnumerationCheck.class);
 
-        final String[] expectedViolation = {
-            "11:10: " + getCheckMessage(UnnecessarySemicolonInEnumerationCheck.class,
-                                        UnnecessarySemicolonInEnumerationCheck.MSG_SEMI),
-        };
+	final String[] expectedViolation = {
+		"11:10: " + getCheckMessage(UnnecessarySemicolonInEnumerationCheck.class,
+		                            UnnecessarySemicolonInEnumerationCheck.MSG_SEMI),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/ENUM_DEF[./IDENT[@text='Bad']]/OBJBLOCK/SEMI"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/ENUM_DEF[./IDENT[@text='Bad']]/OBJBLOCK/SEMI"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess = new File(getPath(
-                                                "SuppressionXpathRegressionUnnecessarySemicolonInEnumerationAll.java"
-                                            ));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess = new File(getPath(
+						    "SuppressionXpathRegressionUnnecessarySemicolonInEnumerationAll.java"
+						    ));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(UnnecessarySemicolonInEnumerationCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(UnnecessarySemicolonInEnumerationCheck.class);
 
-        final String[] expectedViolation = {
-            "4:52: " + getCheckMessage(UnnecessarySemicolonInEnumerationCheck.class,
-                                       UnnecessarySemicolonInEnumerationCheck.MSG_SEMI),
-        };
+	final String[] expectedViolation = {
+		"4:52: " + getCheckMessage(UnnecessarySemicolonInEnumerationCheck.class,
+		                           UnnecessarySemicolonInEnumerationCheck.MSG_SEMI),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/ENUM_DEF[./IDENT[@text="
-                    + "'SuppressionXpathRegressionUnnecessarySemicolonInEnumerationAll']]"
-                    + "/OBJBLOCK/SEMI"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/ENUM_DEF[./IDENT[@text="
+		+ "'SuppressionXpathRegressionUnnecessarySemicolonInEnumerationAll']]"
+		+ "/OBJBLOCK/SEMI"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
+}
 }

@@ -146,57 +146,57 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 @FileStatefulCheck
 public final class NestedTryDepthCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "nested.try.depth";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "nested.try.depth";
 
-    /** Specify maximum allowed nesting depth. */
-    private int max = 1;
-    /** Current nesting depth. */
-    private int depth;
+/** Specify maximum allowed nesting depth. */
+private int max = 1;
+/** Current nesting depth. */
+private int depth;
 
-    /**
-     * Setter to specify maximum allowed nesting depth.
-     *
-     * @param max maximum allowed nesting depth.
-     */
-    public void setMax(int max) {
-        this.max = max;
-    }
+/**
+ * Setter to specify maximum allowed nesting depth.
+ *
+ * @param max maximum allowed nesting depth.
+ */
+public void setMax(int max) {
+	this.max = max;
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.LITERAL_TRY};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.LITERAL_TRY};
+}
 
-    @Override
-    public void beginTree(DetailAST rootAST) {
-        depth = 0;
-    }
+@Override
+public void beginTree(DetailAST rootAST) {
+	depth = 0;
+}
 
-    @Override
-    public void visitToken(DetailAST literalTry) {
-        if (depth > max) {
-            log(literalTry, MSG_KEY, depth, max);
-        }
-        ++depth;
-    }
+@Override
+public void visitToken(DetailAST literalTry) {
+	if (depth > max) {
+		log(literalTry, MSG_KEY, depth, max);
+	}
+	++depth;
+}
 
-    @Override
-    public void leaveToken(DetailAST literalTry) {
-        --depth;
-    }
+@Override
+public void leaveToken(DetailAST literalTry) {
+	--depth;
+}
 
 }

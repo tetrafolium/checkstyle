@@ -98,156 +98,156 @@ import com.puppycrawl.tools.checkstyle.api.FileText;
 @StatelessCheck
 public class OrderedPropertiesCheck extends AbstractFileSetCheck {
 
-    /**
-     * Localization key for check violation.
-     */
-    public static final String MSG_KEY = "properties.notSorted.property";
-    /**
-     * Localization key for IO exception occurred on file open.
-     */
-    public static final String MSG_IO_EXCEPTION_KEY = "unable.open.cause";
-    /**
-     * Pattern matching single space.
-     */
-    private static final Pattern SPACE_PATTERN = Pattern.compile(" ");
+/**
+ * Localization key for check violation.
+ */
+public static final String MSG_KEY = "properties.notSorted.property";
+/**
+ * Localization key for IO exception occurred on file open.
+ */
+public static final String MSG_IO_EXCEPTION_KEY = "unable.open.cause";
+/**
+ * Pattern matching single space.
+ */
+private static final Pattern SPACE_PATTERN = Pattern.compile(" ");
 
-    /**
-     * Construct the check with default values.
-     */
-    public OrderedPropertiesCheck() {
-        setFileExtensions("properties");
-    }
+/**
+ * Construct the check with default values.
+ */
+public OrderedPropertiesCheck() {
+	setFileExtensions("properties");
+}
 
-    /**
-     * Processes the file and check order.
-     *
-     * @param file the file to be processed
-     * @param fileText the contents of the file.
-     * @noinspection EnumerationCanBeIteration
-     */
-    @Override
-    protected void processFiltered(File file, FileText fileText) {
-        final SequencedProperties properties = new SequencedProperties();
-        try (InputStream inputStream = Files.newInputStream(file.toPath())) {
-            properties.load(inputStream);
-        }
-        catch (IOException | IllegalArgumentException ex) {
-            log(1, MSG_IO_EXCEPTION_KEY, file.getPath(), ex.getLocalizedMessage());
-        }
+/**
+ * Processes the file and check order.
+ *
+ * @param file the file to be processed
+ * @param fileText the contents of the file.
+ * @noinspection EnumerationCanBeIteration
+ */
+@Override
+protected void processFiltered(File file, FileText fileText) {
+	final SequencedProperties properties = new SequencedProperties();
+	try (InputStream inputStream = Files.newInputStream(file.toPath())) {
+		properties.load(inputStream);
+	}
+	catch (IOException | IllegalArgumentException ex) {
+		log(1, MSG_IO_EXCEPTION_KEY, file.getPath(), ex.getLocalizedMessage());
+	}
 
-        String previousProp = "";
-        int startLineNo = 0;
+	String previousProp = "";
+	int startLineNo = 0;
 
-        final Enumeration<Object> keys = properties.keys();
+	final Enumeration<Object> keys = properties.keys();
 
-        while (keys.hasMoreElements()) {
+	while (keys.hasMoreElements()) {
 
-            final String propKey = (String) keys.nextElement();
+		final String propKey = (String) keys.nextElement();
 
-            if (String.CASE_INSENSITIVE_ORDER.compare(previousProp, propKey) > 0) {
+		if (String.CASE_INSENSITIVE_ORDER.compare(previousProp, propKey) > 0) {
 
-                final int lineNo = getLineNumber(startLineNo, fileText, previousProp, propKey);
-                log(lineNo + 1, MSG_KEY, propKey, previousProp);
-                // start searching at position of the last reported validation
-                startLineNo = lineNo;
-            }
+			final int lineNo = getLineNumber(startLineNo, fileText, previousProp, propKey);
+			log(lineNo + 1, MSG_KEY, propKey, previousProp);
+			// start searching at position of the last reported validation
+			startLineNo = lineNo;
+		}
 
-            previousProp = propKey;
-        }
-    }
+		previousProp = propKey;
+	}
+}
 
-    /**
-     * Method returns the index number where the key is detected (starting at 0).
-     * To assure that we get the correct line it starts at the point
-     * of the last occurrence.
-     * Also the previousProp should be in file before propKey.
-     *
-     * @param startLineNo start searching at line
-     * @param fileText {@link FileText} object contains the lines to process
-     * @param previousProp key name found last iteration, works only if valid
-     * @param propKey key name to look for
-     * @return index number of first occurrence. If no key found in properties file, 0 is returned
-     */
-    private static int getLineNumber(int startLineNo, FileText fileText,
-                                     String previousProp, String propKey) {
-        final int indexOfPreviousProp = getIndex(startLineNo, fileText, previousProp);
-        return getIndex(indexOfPreviousProp, fileText, propKey);
-    }
+/**
+ * Method returns the index number where the key is detected (starting at 0).
+ * To assure that we get the correct line it starts at the point
+ * of the last occurrence.
+ * Also the previousProp should be in file before propKey.
+ *
+ * @param startLineNo start searching at line
+ * @param fileText {@link FileText} object contains the lines to process
+ * @param previousProp key name found last iteration, works only if valid
+ * @param propKey key name to look for
+ * @return index number of first occurrence. If no key found in properties file, 0 is returned
+ */
+private static int getLineNumber(int startLineNo, FileText fileText,
+                                 String previousProp, String propKey) {
+	final int indexOfPreviousProp = getIndex(startLineNo, fileText, previousProp);
+	return getIndex(indexOfPreviousProp, fileText, propKey);
+}
 
-    /**
-     * Inner method to get the index number of the position of keyName.
-     *
-     * @param startLineNo start searching at line
-     * @param fileText {@link FileText} object contains the lines to process
-     * @param keyName key name to look for
-     * @return index number of first occurrence. If no key found in properties file, 0 is returned
-     */
-    private static int getIndex(int startLineNo, FileText fileText, String keyName) {
-        final Pattern keyPattern = getKeyPattern(keyName);
-        int indexNumber = 0;
-        final Matcher matcher = keyPattern.matcher("");
-        for (int index = startLineNo; index < fileText.size(); index++) {
-            final String line = fileText.get(index);
-            matcher.reset(line);
-            if (matcher.matches()) {
-                indexNumber = index;
-                break;
-            }
-        }
-        return indexNumber;
-    }
+/**
+ * Inner method to get the index number of the position of keyName.
+ *
+ * @param startLineNo start searching at line
+ * @param fileText {@link FileText} object contains the lines to process
+ * @param keyName key name to look for
+ * @return index number of first occurrence. If no key found in properties file, 0 is returned
+ */
+private static int getIndex(int startLineNo, FileText fileText, String keyName) {
+	final Pattern keyPattern = getKeyPattern(keyName);
+	int indexNumber = 0;
+	final Matcher matcher = keyPattern.matcher("");
+	for (int index = startLineNo; index < fileText.size(); index++) {
+		final String line = fileText.get(index);
+		matcher.reset(line);
+		if (matcher.matches()) {
+			indexNumber = index;
+			break;
+		}
+	}
+	return indexNumber;
+}
 
-    /**
-     * Method returns regular expression pattern given key name.
-     *
-     * @param keyName
-     *            key name to look for
-     * @return regular expression pattern given key name
-     */
-    private static Pattern getKeyPattern(String keyName) {
-        final String keyPatternString = "^" + SPACE_PATTERN.matcher(keyName)
-                                        .replaceAll(Matcher.quoteReplacement("\\\\ ")) + "[\\s:=].*";
-        return Pattern.compile(keyPatternString);
-    }
+/**
+ * Method returns regular expression pattern given key name.
+ *
+ * @param keyName
+ *            key name to look for
+ * @return regular expression pattern given key name
+ */
+private static Pattern getKeyPattern(String keyName) {
+	final String keyPatternString = "^" + SPACE_PATTERN.matcher(keyName)
+	                                .replaceAll(Matcher.quoteReplacement("\\\\ ")) + "[\\s:=].*";
+	return Pattern.compile(keyPatternString);
+}
 
-    /**
-     * Private property implementation that keeps order of properties like in file.
-     *
-     * @noinspection ClassExtendsConcreteCollection, SerializableHasSerializationMethods
-     */
-    private static class SequencedProperties extends Properties {
+/**
+ * Private property implementation that keeps order of properties like in file.
+ *
+ * @noinspection ClassExtendsConcreteCollection, SerializableHasSerializationMethods
+ */
+private static class SequencedProperties extends Properties {
 
-        private static final long serialVersionUID = 1L;
+private static final long serialVersionUID = 1L;
 
-        /**
-         * Holding the keys in the same order than in the file.
-         */
-        private final List<Object> keyList = new ArrayList<>();
+/**
+ * Holding the keys in the same order than in the file.
+ */
+private final List<Object> keyList = new ArrayList<>();
 
-        /**
-         * Returns a copy of the keys.
-         */
-        @Override
-        public synchronized Enumeration<Object> keys() {
-            return Collections.enumeration(keyList);
-        }
+/**
+ * Returns a copy of the keys.
+ */
+@Override
+public synchronized Enumeration<Object> keys() {
+	return Collections.enumeration(keyList);
+}
 
-        /**
-         * Puts the value into list by its key.
-         *
-         * @noinspection UseOfPropertiesAsHashtable
-         *
-         * @param key the hashtable key
-         * @param value the value
-         * @return the previous value of the specified key in this hashtable,
-         *      or null if it did not have one
-         * @throws NullPointerException - if the key or value is null
-         */
-        @Override
-        public synchronized Object put(Object key, Object value) {
-            keyList.add(key);
+/**
+ * Puts the value into list by its key.
+ *
+ * @noinspection UseOfPropertiesAsHashtable
+ *
+ * @param key the hashtable key
+ * @param value the value
+ * @return the previous value of the specified key in this hashtable,
+ *      or null if it did not have one
+ * @throws NullPointerException - if the key or value is null
+ */
+@Override
+public synchronized Object put(Object key, Object value) {
+	keyList.add(key);
 
-            return super.put(key, value);
-        }
-    }
+	return super.put(key, value);
+}
+}
 }

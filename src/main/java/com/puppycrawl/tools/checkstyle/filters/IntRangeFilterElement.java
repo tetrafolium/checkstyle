@@ -26,46 +26,46 @@ import java.util.Objects;
  */
 class IntRangeFilterElement implements IntFilterElement {
 
-    /** Lower bound of the range. */
-    private final Integer lowerBound;
+/** Lower bound of the range. */
+private final Integer lowerBound;
 
-    /** Upper bound of the range. */
-    private final Integer upperBound;
+/** Upper bound of the range. */
+private final Integer upperBound;
 
-    /**
-     * Constructs a {@code IntRangeFilterElement} with a
-     * lower bound and an upper bound for the range.
-     *
-     * @param lowerBound the lower bound of the range.
-     * @param upperBound the upper bound of the range.
-     */
-    /* package */ IntRangeFilterElement(int lowerBound, int upperBound) {
-        this.lowerBound = lowerBound;
-        this.upperBound = upperBound;
-    }
+/**
+ * Constructs a {@code IntRangeFilterElement} with a
+ * lower bound and an upper bound for the range.
+ *
+ * @param lowerBound the lower bound of the range.
+ * @param upperBound the upper bound of the range.
+ */
+/* package */ IntRangeFilterElement(int lowerBound, int upperBound) {
+	this.lowerBound = lowerBound;
+	this.upperBound = upperBound;
+}
 
-    @Override
-    public boolean accept(int intValue) {
-        return lowerBound.compareTo(intValue) <= 0
-               && upperBound.compareTo(intValue) >= 0;
-    }
+@Override
+public boolean accept(int intValue) {
+	return lowerBound.compareTo(intValue) <= 0
+	       && upperBound.compareTo(intValue) >= 0;
+}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(lowerBound, upperBound);
-    }
+@Override
+public int hashCode() {
+	return Objects.hash(lowerBound, upperBound);
+}
 
-    @Override
-    public boolean equals(Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        final IntRangeFilterElement intRangeFilter = (IntRangeFilterElement) other;
-        return Objects.equals(lowerBound, intRangeFilter.lowerBound)
-               && Objects.equals(upperBound, intRangeFilter.upperBound);
-    }
+@Override
+public boolean equals(Object other) {
+	if (this == other) {
+		return true;
+	}
+	if (other == null || getClass() != other.getClass()) {
+		return false;
+	}
+	final IntRangeFilterElement intRangeFilter = (IntRangeFilterElement) other;
+	return Objects.equals(lowerBound, intRangeFilter.lowerBound)
+	       && Objects.equals(upperBound, intRangeFilter.upperBound);
+}
 
 }

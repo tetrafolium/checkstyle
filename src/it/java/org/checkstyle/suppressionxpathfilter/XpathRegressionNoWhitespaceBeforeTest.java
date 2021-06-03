@@ -30,82 +30,82 @@ import com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceBeforeCheck
 
 public class XpathRegressionNoWhitespaceBeforeTest extends AbstractXpathTestSupport {
 
-    private final String checkName = NoWhitespaceBeforeCheck.class.getSimpleName();
+private final String checkName = NoWhitespaceBeforeCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testNoWhitespaceBefore() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionNoWhitespaceBefore.java"));
+@Test
+public void testNoWhitespaceBefore() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionNoWhitespaceBefore.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(NoWhitespaceBeforeCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(NoWhitespaceBeforeCheck.class);
 
-        final String[] expectedViolation = {
-            "4:13: " + getCheckMessage(NoWhitespaceBeforeCheck.class,
-                                       NoWhitespaceBeforeCheck.MSG_KEY, ";"),
-        };
+	final String[] expectedViolation = {
+		"4:13: " + getCheckMessage(NoWhitespaceBeforeCheck.class,
+		                           NoWhitespaceBeforeCheck.MSG_KEY, ";"),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceBefore']]/OBJBLOCK"
-                    + "/VARIABLE_DEF[./IDENT[@text='bad']]/SEMI"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceBefore']]/OBJBLOCK"
+		+ "/VARIABLE_DEF[./IDENT[@text='bad']]/SEMI"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testTokens() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionNoWhitespaceBeforeTokens.java"));
+@Test
+public void testTokens() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionNoWhitespaceBeforeTokens.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(NoWhitespaceBeforeCheck.class);
-        moduleConfig.addAttribute("tokens", "DOT");
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(NoWhitespaceBeforeCheck.class);
+	moduleConfig.addAttribute("tokens", "DOT");
 
-        final String[] expectedViolation = {
-            "4:17: " + getCheckMessage(NoWhitespaceBeforeCheck.class,
-                                       NoWhitespaceBeforeCheck.MSG_KEY, "."),
-        };
+	final String[] expectedViolation = {
+		"4:17: " + getCheckMessage(NoWhitespaceBeforeCheck.class,
+		                           NoWhitespaceBeforeCheck.MSG_KEY, "."),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceBeforeTokens']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]"
-                    + "/TYPE/DOT[./IDENT[@text='String']]"
-                    + "/DOT[./IDENT[@text='java']]"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceBeforeTokens']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]"
+		+ "/TYPE/DOT[./IDENT[@text='String']]"
+		+ "/DOT[./IDENT[@text='java']]"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testAllowLineBreaks() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionNoWhitespaceBeforeLineBreaks.java"));
+@Test
+public void testAllowLineBreaks() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionNoWhitespaceBeforeLineBreaks.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(NoWhitespaceBeforeCheck.class);
-        moduleConfig.addAttribute("allowLineBreaks", "false");
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(NoWhitespaceBeforeCheck.class);
+	moduleConfig.addAttribute("allowLineBreaks", "false");
 
-        final String[] expectedViolation = {
-            "6:13: " + getCheckMessage(NoWhitespaceBeforeCheck.class,
-                                       NoWhitespaceBeforeCheck.MSG_KEY, ","),
-        };
+	final String[] expectedViolation = {
+		"6:13: " + getCheckMessage(NoWhitespaceBeforeCheck.class,
+		                           NoWhitespaceBeforeCheck.MSG_KEY, ","),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceBeforeLineBreaks']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]"
-                    + "/SLIST/VARIABLE_DEF[./IDENT[@text='array']]"
-                    + "/ASSIGN/ARRAY_INIT/COMMA"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceBeforeLineBreaks']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]"
+		+ "/SLIST/VARIABLE_DEF[./IDENT[@text='array']]"
+		+ "/ASSIGN/ARRAY_INIT/COMMA"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 }

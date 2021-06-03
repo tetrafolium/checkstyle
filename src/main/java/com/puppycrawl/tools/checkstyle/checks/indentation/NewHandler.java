@@ -28,99 +28,99 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  */
 public class NewHandler extends AbstractExpressionHandler {
 
-    /** The AST which is handled by this handler. */
-    private final DetailAST mainAst;
+/** The AST which is handled by this handler. */
+private final DetailAST mainAst;
 
-    /**
-     * Construct an instance of this handler with the given indentation check,
-     * abstract syntax tree, and parent handler.
-     *
-     * @param indentCheck   the indentation check
-     * @param ast           the abstract syntax tree
-     * @param parent        the parent handler
-     */
-    public NewHandler(IndentationCheck indentCheck,
-                      DetailAST ast,
-                      AbstractExpressionHandler parent) {
-        super(indentCheck, "operator new", ast, parent);
-        mainAst = ast;
-    }
+/**
+ * Construct an instance of this handler with the given indentation check,
+ * abstract syntax tree, and parent handler.
+ *
+ * @param indentCheck   the indentation check
+ * @param ast           the abstract syntax tree
+ * @param parent        the parent handler
+ */
+public NewHandler(IndentationCheck indentCheck,
+                  DetailAST ast,
+                  AbstractExpressionHandler parent) {
+	super(indentCheck, "operator new", ast, parent);
+	mainAst = ast;
+}
 
-    @Override
-    public void checkIndentation() {
-        // if new is on the line start and it is not the part of assignment.
-        if (isOnStartOfLine(mainAst)
-                && !isNewKeywordFollowedByAssign()) {
-            final int columnNo = expandedTabsColumnNo(mainAst);
-            final IndentLevel level = getIndentImpl();
+@Override
+public void checkIndentation() {
+	// if new is on the line start and it is not the part of assignment.
+	if (isOnStartOfLine(mainAst)
+	    && !isNewKeywordFollowedByAssign()) {
+		final int columnNo = expandedTabsColumnNo(mainAst);
+		final IndentLevel level = getIndentImpl();
 
-            if (columnNo < level.getFirstIndentLevel()) {
-                logError(mainAst, "", columnNo, level);
-            }
-        }
+		if (columnNo < level.getFirstIndentLevel()) {
+			logError(mainAst, "", columnNo, level);
+		}
+	}
 
-        final DetailAST firstChild = mainAst.getFirstChild();
-        if (firstChild != null) {
-            checkExpressionSubtree(firstChild, getIndent(), false, false);
-        }
+	final DetailAST firstChild = mainAst.getFirstChild();
+	if (firstChild != null) {
+		checkExpressionSubtree(firstChild, getIndent(), false, false);
+	}
 
-        final DetailAST lparen = mainAst.findFirstToken(TokenTypes.LPAREN);
-        checkLeftParen(lparen);
-    }
+	final DetailAST lparen = mainAst.findFirstToken(TokenTypes.LPAREN);
+	checkLeftParen(lparen);
+}
 
-    @Override
-    public IndentLevel getSuggestedChildIndent(AbstractExpressionHandler child) {
-        final int offset;
-        if (TokenUtil.isOfType(child.getMainAst(), TokenTypes.OBJBLOCK)) {
-            offset = getBasicOffset();
-        }
-        else {
-            offset = getLineWrappingIndent();
-        }
-        return new IndentLevel(getIndent(), offset);
-    }
+@Override
+public IndentLevel getSuggestedChildIndent(AbstractExpressionHandler child) {
+	final int offset;
+	if (TokenUtil.isOfType(child.getMainAst(), TokenTypes.OBJBLOCK)) {
+		offset = getBasicOffset();
+	}
+	else {
+		offset = getLineWrappingIndent();
+	}
+	return new IndentLevel(getIndent(), offset);
+}
 
-    @Override
-    protected IndentLevel getIndentImpl() {
-        IndentLevel result;
-        // if our expression isn't first on the line, just use the start
-        // of the line
-        if (getLineStart(mainAst) == mainAst.getColumnNo()) {
-            result = super.getIndentImpl();
+@Override
+protected IndentLevel getIndentImpl() {
+	IndentLevel result;
+	// if our expression isn't first on the line, just use the start
+	// of the line
+	if (getLineStart(mainAst) == mainAst.getColumnNo()) {
+		result = super.getIndentImpl();
 
-            if (isNewKeywordFollowedByAssign()) {
-                result = new IndentLevel(result, getLineWrappingIndent());
-            }
-        }
-        else {
-            result = new IndentLevel(getLineStart(mainAst));
-        }
+		if (isNewKeywordFollowedByAssign()) {
+			result = new IndentLevel(result, getLineWrappingIndent());
+		}
+	}
+	else {
+		result = new IndentLevel(getLineStart(mainAst));
+	}
 
-        return result;
-    }
+	return result;
+}
 
-    /**
-     * Checks if the 'new' keyword is followed by an assignment.
-     *
-     * @return true if new keyword is followed by assignment.
-     */
-    private boolean isNewKeywordFollowedByAssign() {
-        return mainAst.getParent().getParent().getType() == TokenTypes.ASSIGN;
-    }
+/**
+ * Checks if the 'new' keyword is followed by an assignment.
+ *
+ * @return true if new keyword is followed by assignment.
+ */
+private boolean isNewKeywordFollowedByAssign() {
+	return mainAst.getParent().getParent().getType() == TokenTypes.ASSIGN;
+}
 
-    /**
-     * A shortcut for {@code IndentationCheck} property.
-     *
-     * @return value of lineWrappingIndentation property
-     *         of {@code IndentationCheck}
-     */
-    private int getLineWrappingIndent() {
-        return getIndentCheck().getLineWrappingIndentation();
-    }
+/**
+ * A shortcut for {@code IndentationCheck} property.
+ *
+ * @return value of lineWrappingIndentation property
+ *         of {@code IndentationCheck}
+ */
+private int getLineWrappingIndent() {
+	return getIndentCheck().getLineWrappingIndentation();
+}
 
-    @Override
-    protected boolean shouldIncreaseIndent() {
-        return false;
-    }
+@Override
+protected boolean shouldIncreaseIndent() {
+	return false;
+}
 
 }

@@ -65,53 +65,53 @@ import com.puppycrawl.tools.checkstyle.api.SeverityLevel;
  * @since 3.2
  */
 public class SeverityMatchFilter
-    extends AutomaticBean
-    implements Filter {
+	extends AutomaticBean
+	implements Filter {
 
-    /** Specify the severity level of this filter. */
-    private SeverityLevel severity = SeverityLevel.ERROR;
+/** Specify the severity level of this filter. */
+private SeverityLevel severity = SeverityLevel.ERROR;
 
-    /**
-     * Control whether the filter accepts an audit event if and only if there
-     * is a match between the event's severity level and property severity.
-     * If acceptOnMatch is {@code false}, then the filter accepts an audit event
-     * if and only if there is not a match between the event's severity level
-     * and property severity.
-     */
-    private boolean acceptOnMatch = true;
+/**
+ * Control whether the filter accepts an audit event if and only if there
+ * is a match between the event's severity level and property severity.
+ * If acceptOnMatch is {@code false}, then the filter accepts an audit event
+ * if and only if there is not a match between the event's severity level
+ * and property severity.
+ */
+private boolean acceptOnMatch = true;
 
-    /**
-     * Setter to specify the severity level of this filter.
-     *
-     * @param severity  The new severity level
-     * @see SeverityLevel
-     */
-    public final void setSeverity(SeverityLevel severity) {
-        this.severity = severity;
-    }
+/**
+ * Setter to specify the severity level of this filter.
+ *
+ * @param severity  The new severity level
+ * @see SeverityLevel
+ */
+public final void setSeverity(SeverityLevel severity) {
+	this.severity = severity;
+}
 
-    /**
-     * Setter to control whether the filter accepts an audit event if and only if there
-     * is a match between the event's severity level and property severity.
-     * If acceptOnMatch is {@code false}, then the filter accepts an audit event
-     * if and only if there is not a match between the event's severity level and property severity.
-     *
-     * @param acceptOnMatch if true, accept on matches; if
-     *     false, reject on matches.
-     */
-    public final void setAcceptOnMatch(boolean acceptOnMatch) {
-        this.acceptOnMatch = acceptOnMatch;
-    }
+/**
+ * Setter to control whether the filter accepts an audit event if and only if there
+ * is a match between the event's severity level and property severity.
+ * If acceptOnMatch is {@code false}, then the filter accepts an audit event
+ * if and only if there is not a match between the event's severity level and property severity.
+ *
+ * @param acceptOnMatch if true, accept on matches; if
+ *     false, reject on matches.
+ */
+public final void setAcceptOnMatch(boolean acceptOnMatch) {
+	this.acceptOnMatch = acceptOnMatch;
+}
 
-    @Override
-    protected void finishLocalSetup() {
-        // No code by default
-    }
+@Override
+protected void finishLocalSetup() {
+	// No code by default
+}
 
-    @Override
-    public boolean accept(AuditEvent event) {
-        final boolean severityMatches = severity == event.getSeverityLevel();
-        return acceptOnMatch == severityMatches;
-    }
+@Override
+public boolean accept(AuditEvent event) {
+	final boolean severityMatches = severity == event.getSeverityLevel();
+	return acceptOnMatch == severityMatches;
+}
 
 }

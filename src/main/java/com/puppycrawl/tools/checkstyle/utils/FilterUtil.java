@@ -30,25 +30,25 @@ import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
  */
 public final class FilterUtil {
 
-    /** Stop instances being created. **/
-    private FilterUtil() {
-    }
+/** Stop instances being created. **/
+private FilterUtil() {
+}
 
-    /**
-     * Checks if suppression source with given fileName exists.
-     *
-     * @param fileName name of the suppressions file.
-     * @return true if suppression file exists, otherwise false
-     */
-    public static boolean isFileExists(String fileName) {
-        boolean suppressionSourceExists;
-        try (InputStream stream = CommonUtil.getUriByFilename(fileName).toURL().openStream()) {
-            suppressionSourceExists = true;
-        }
-        catch (CheckstyleException | IOException ignored) {
-            suppressionSourceExists = false;
-        }
-        return suppressionSourceExists;
-    }
+/**
+ * Checks if suppression source with given fileName exists.
+ *
+ * @param fileName name of the suppressions file.
+ * @return true if suppression file exists, otherwise false
+ */
+public static boolean isFileExists(String fileName) {
+	boolean suppressionSourceExists;
+	try (InputStream stream = CommonUtil.getUriByFilename(fileName).toURL().openStream()) {
+		suppressionSourceExists = true;
+	}
+	catch (CheckstyleException | IOException ignored) {
+		suppressionSourceExists = false;
+	}
+	return suppressionSourceExists;
+}
 
 }

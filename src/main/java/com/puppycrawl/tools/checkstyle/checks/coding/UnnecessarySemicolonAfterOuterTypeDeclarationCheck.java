@@ -125,40 +125,40 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
 @StatelessCheck
 public final class UnnecessarySemicolonAfterOuterTypeDeclarationCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_SEMI = "unnecessary.semicolon";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_SEMI = "unnecessary.semicolon";
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getAcceptableTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getAcceptableTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return new int[] {
-                   TokenTypes.CLASS_DEF,
-                   TokenTypes.INTERFACE_DEF,
-                   TokenTypes.ENUM_DEF,
-                   TokenTypes.ANNOTATION_DEF,
-                   TokenTypes.RECORD_DEF,
-               };
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return new int[] {
+		       TokenTypes.CLASS_DEF,
+		       TokenTypes.INTERFACE_DEF,
+		       TokenTypes.ENUM_DEF,
+		       TokenTypes.ANNOTATION_DEF,
+		       TokenTypes.RECORD_DEF,
+	};
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return CommonUtil.EMPTY_INT_ARRAY;
-    }
+@Override
+public int[] getRequiredTokens() {
+	return CommonUtil.EMPTY_INT_ARRAY;
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        final DetailAST nextSibling = ast.getNextSibling();
-        if (nextSibling != null
-                && ScopeUtil.isOuterMostType(ast)
-                && nextSibling.getType() == TokenTypes.SEMI) {
-            log(nextSibling, MSG_SEMI);
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	final DetailAST nextSibling = ast.getNextSibling();
+	if (nextSibling != null
+	    && ScopeUtil.isOuterMostType(ast)
+	    && nextSibling.getType() == TokenTypes.SEMI) {
+		log(nextSibling, MSG_SEMI);
+	}
+}
 }

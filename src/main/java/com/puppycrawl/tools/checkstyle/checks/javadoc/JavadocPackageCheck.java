@@ -85,68 +85,68 @@ import com.puppycrawl.tools.checkstyle.api.FileText;
 @GlobalStatefulCheck
 public class JavadocPackageCheck extends AbstractFileSetCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_LEGACY_PACKAGE_HTML = "javadoc.legacyPackageHtml";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_LEGACY_PACKAGE_HTML = "javadoc.legacyPackageHtml";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_PACKAGE_INFO = "javadoc.packageInfo";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_PACKAGE_INFO = "javadoc.packageInfo";
 
-    /** The directories checked. */
-    private final Set<File> directoriesChecked = ConcurrentHashMap.newKeySet();
+/** The directories checked. */
+private final Set<File> directoriesChecked = ConcurrentHashMap.newKeySet();
 
-    /** Allow legacy {@code package.html} file to be used. */
-    private boolean allowLegacy;
+/** Allow legacy {@code package.html} file to be used. */
+private boolean allowLegacy;
 
-    /**
-     * Creates a new instance.
-     */
-    public JavadocPackageCheck() {
-        // java, not html!
-        // The rule is: Every JAVA file should have a package.html sibling
-        setFileExtensions("java");
-    }
+/**
+ * Creates a new instance.
+ */
+public JavadocPackageCheck() {
+	// java, not html!
+	// The rule is: Every JAVA file should have a package.html sibling
+	setFileExtensions("java");
+}
 
-    @Override
-    protected void processFiltered(File file, FileText fileText) throws CheckstyleException {
-        // Check if already processed directory
-        final File dir;
-        try {
-            dir = file.getCanonicalFile().getParentFile();
-        }
-        catch (IOException ex) {
-            throw new CheckstyleException(
-                "Exception while getting canonical path to file " + file.getPath(), ex);
-        }
-        final boolean isDirChecked = !directoriesChecked.add(dir);
-        if (!isDirChecked) {
-            // Check for the preferred file.
-            final File packageInfo = new File(dir, "package-info.java");
-            final File packageHtml = new File(dir, "package.html");
+@Override
+protected void processFiltered(File file, FileText fileText) throws CheckstyleException {
+	// Check if already processed directory
+	final File dir;
+	try {
+		dir = file.getCanonicalFile().getParentFile();
+	}
+	catch (IOException ex) {
+		throw new CheckstyleException(
+			      "Exception while getting canonical path to file " + file.getPath(), ex);
+	}
+	final boolean isDirChecked = !directoriesChecked.add(dir);
+	if (!isDirChecked) {
+		// Check for the preferred file.
+		final File packageInfo = new File(dir, "package-info.java");
+		final File packageHtml = new File(dir, "package.html");
 
-            if (packageInfo.exists()) {
-                if (packageHtml.exists()) {
-                    log(1, MSG_LEGACY_PACKAGE_HTML);
-                }
-            }
-            else if (!allowLegacy || !packageHtml.exists()) {
-                log(1, MSG_PACKAGE_INFO);
-            }
-        }
-    }
+		if (packageInfo.exists()) {
+			if (packageHtml.exists()) {
+				log(1, MSG_LEGACY_PACKAGE_HTML);
+			}
+		}
+		else if (!allowLegacy || !packageHtml.exists()) {
+			log(1, MSG_PACKAGE_INFO);
+		}
+	}
+}
 
-    /**
-     * Setter to allow legacy {@code package.html} file to be used.
-     *
-     * @param allowLegacy whether to allow support.
-     */
-    public void setAllowLegacy(boolean allowLegacy) {
-        this.allowLegacy = allowLegacy;
-    }
+/**
+ * Setter to allow legacy {@code package.html} file to be used.
+ *
+ * @param allowLegacy whether to allow support.
+ */
+public void setAllowLegacy(boolean allowLegacy) {
+	this.allowLegacy = allowLegacy;
+}
 
 }

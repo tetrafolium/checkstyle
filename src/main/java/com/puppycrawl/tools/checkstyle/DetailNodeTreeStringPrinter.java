@@ -38,143 +38,143 @@ import com.puppycrawl.tools.checkstyle.utils.JavadocUtil;
  */
 public final class DetailNodeTreeStringPrinter {
 
-    /** OS specific line separator. */
-    private static final String LINE_SEPARATOR = System.getProperty("line.separator");
+/** OS specific line separator. */
+private static final String LINE_SEPARATOR = System.getProperty("line.separator");
 
-    /** Prevent instances. */
-    private DetailNodeTreeStringPrinter() {
-        // no code
-    }
+/** Prevent instances. */
+private DetailNodeTreeStringPrinter() {
+	// no code
+}
 
-    /**
-     * Parse a file and print the parse tree.
-     *
-     * @param file the file to print.
-     * @return parse tree as a string
-     * @throws IOException if the file could not be read.
-     */
-    public static String printFileAst(File file) throws IOException {
-        return printTree(parseFile(file), "", "");
-    }
+/**
+ * Parse a file and print the parse tree.
+ *
+ * @param file the file to print.
+ * @return parse tree as a string
+ * @throws IOException if the file could not be read.
+ */
+public static String printFileAst(File file) throws IOException {
+	return printTree(parseFile(file), "", "");
+}
 
-    /**
-     * Parse block comment DetailAST as Javadoc DetailNode tree.
-     *
-     * @param blockComment DetailAST
-     * @return DetailNode tree
-     */
-    public static DetailNode parseJavadocAsDetailNode(DetailAST blockComment) {
-        final JavadocDetailNodeParser parser = new JavadocDetailNodeParser();
-        final ParseStatus status = parser.parseJavadocAsDetailNode(blockComment);
-        if (status.getParseErrorMessage() != null) {
-            throw new IllegalArgumentException(getParseErrorMessage(status.getParseErrorMessage()));
-        }
-        return status.getTree();
-    }
+/**
+ * Parse block comment DetailAST as Javadoc DetailNode tree.
+ *
+ * @param blockComment DetailAST
+ * @return DetailNode tree
+ */
+public static DetailNode parseJavadocAsDetailNode(DetailAST blockComment) {
+	final JavadocDetailNodeParser parser = new JavadocDetailNodeParser();
+	final ParseStatus status = parser.parseJavadocAsDetailNode(blockComment);
+	if (status.getParseErrorMessage() != null) {
+		throw new IllegalArgumentException(getParseErrorMessage(status.getParseErrorMessage()));
+	}
+	return status.getTree();
+}
 
-    /**
-     * Parse javadoc comment to DetailNode tree.
-     *
-     * @param javadocComment javadoc comment content
-     * @return tree
-     */
-    private static DetailNode parseJavadocAsDetailNode(String javadocComment) {
-        final DetailAST blockComment = CommonUtil.createBlockCommentNode(javadocComment);
-        return parseJavadocAsDetailNode(blockComment);
-    }
+/**
+ * Parse javadoc comment to DetailNode tree.
+ *
+ * @param javadocComment javadoc comment content
+ * @return tree
+ */
+private static DetailNode parseJavadocAsDetailNode(String javadocComment) {
+	final DetailAST blockComment = CommonUtil.createBlockCommentNode(javadocComment);
+	return parseJavadocAsDetailNode(blockComment);
+}
 
-    /**
-     * Builds error message base on ParseErrorMessage's message key, its arguments, etc.
-     *
-     * @param parseErrorMessage ParseErrorMessage
-     * @return error message
-     */
-    private static String getParseErrorMessage(ParseErrorMessage parseErrorMessage) {
-        final LocalizedMessage lmessage = new LocalizedMessage(
-            parseErrorMessage.getLineNumber(),
-            "com.puppycrawl.tools.checkstyle.checks.javadoc.messages",
-            parseErrorMessage.getMessageKey(),
-            parseErrorMessage.getMessageArguments(),
-            "",
-            DetailNodeTreeStringPrinter.class,
-            null);
-        return "[ERROR:" + parseErrorMessage.getLineNumber() + "] " + lmessage.getMessage();
-    }
+/**
+ * Builds error message base on ParseErrorMessage's message key, its arguments, etc.
+ *
+ * @param parseErrorMessage ParseErrorMessage
+ * @return error message
+ */
+private static String getParseErrorMessage(ParseErrorMessage parseErrorMessage) {
+	final LocalizedMessage lmessage = new LocalizedMessage(
+		parseErrorMessage.getLineNumber(),
+		"com.puppycrawl.tools.checkstyle.checks.javadoc.messages",
+		parseErrorMessage.getMessageKey(),
+		parseErrorMessage.getMessageArguments(),
+		"",
+		DetailNodeTreeStringPrinter.class,
+		null);
+	return "[ERROR:" + parseErrorMessage.getLineNumber() + "] " + lmessage.getMessage();
+}
 
-    /**
-     * Print AST.
-     *
-     * @param ast the root AST node.
-     * @param rootPrefix prefix for the root node
-     * @param prefix prefix for other nodes
-     * @return string AST.
-     */
-    public static String printTree(DetailNode ast, String rootPrefix, String prefix) {
-        final StringBuilder messageBuilder = new StringBuilder(1024);
-        DetailNode node = ast;
-        while (node != null) {
-            if (node.getType() == JavadocTokenTypes.JAVADOC) {
-                messageBuilder.append(rootPrefix);
-            }
-            else {
-                messageBuilder.append(prefix);
-            }
-            messageBuilder.append(getIndentation(node))
-            .append(JavadocUtil.getTokenName(node.getType())).append(" -> ")
-            .append(JavadocUtil.escapeAllControlChars(node.getText())).append(" [")
-            .append(node.getLineNumber()).append(':').append(node.getColumnNumber())
-            .append(']').append(LINE_SEPARATOR)
-            .append(printTree(JavadocUtil.getFirstChild(node), rootPrefix, prefix));
-            node = JavadocUtil.getNextSibling(node);
-        }
-        return messageBuilder.toString();
-    }
+/**
+ * Print AST.
+ *
+ * @param ast the root AST node.
+ * @param rootPrefix prefix for the root node
+ * @param prefix prefix for other nodes
+ * @return string AST.
+ */
+public static String printTree(DetailNode ast, String rootPrefix, String prefix) {
+	final StringBuilder messageBuilder = new StringBuilder(1024);
+	DetailNode node = ast;
+	while (node != null) {
+		if (node.getType() == JavadocTokenTypes.JAVADOC) {
+			messageBuilder.append(rootPrefix);
+		}
+		else {
+			messageBuilder.append(prefix);
+		}
+		messageBuilder.append(getIndentation(node))
+		.append(JavadocUtil.getTokenName(node.getType())).append(" -> ")
+		.append(JavadocUtil.escapeAllControlChars(node.getText())).append(" [")
+		.append(node.getLineNumber()).append(':').append(node.getColumnNumber())
+		.append(']').append(LINE_SEPARATOR)
+		.append(printTree(JavadocUtil.getFirstChild(node), rootPrefix, prefix));
+		node = JavadocUtil.getNextSibling(node);
+	}
+	return messageBuilder.toString();
+}
 
-    /**
-     * Get indentation for a node.
-     *
-     * @param node the DetailNode to get the indentation for.
-     * @return the indentation in String format.
-     */
-    private static String getIndentation(DetailNode node) {
-        final boolean isLastChild = JavadocUtil.getNextSibling(node) == null;
-        DetailNode currentNode = node;
-        final StringBuilder indentation = new StringBuilder(1024);
-        while (currentNode.getParent() != null) {
-            currentNode = currentNode.getParent();
-            if (currentNode.getParent() == null) {
-                if (isLastChild) {
-                    // only ASCII symbols must be used due to
-                    // problems with running tests on Windows
-                    indentation.append("`--");
-                }
-                else {
-                    indentation.append("|--");
-                }
-            }
-            else {
-                if (JavadocUtil.getNextSibling(currentNode) == null) {
-                    indentation.insert(0, "    ");
-                }
-                else {
-                    indentation.insert(0, "|   ");
-                }
-            }
-        }
-        return indentation.toString();
-    }
+/**
+ * Get indentation for a node.
+ *
+ * @param node the DetailNode to get the indentation for.
+ * @return the indentation in String format.
+ */
+private static String getIndentation(DetailNode node) {
+	final boolean isLastChild = JavadocUtil.getNextSibling(node) == null;
+	DetailNode currentNode = node;
+	final StringBuilder indentation = new StringBuilder(1024);
+	while (currentNode.getParent() != null) {
+		currentNode = currentNode.getParent();
+		if (currentNode.getParent() == null) {
+			if (isLastChild) {
+				// only ASCII symbols must be used due to
+				// problems with running tests on Windows
+				indentation.append("`--");
+			}
+			else {
+				indentation.append("|--");
+			}
+		}
+		else {
+			if (JavadocUtil.getNextSibling(currentNode) == null) {
+				indentation.insert(0, "    ");
+			}
+			else {
+				indentation.insert(0, "|   ");
+			}
+		}
+	}
+	return indentation.toString();
+}
 
-    /**
-     * Parse a file and return the parse tree.
-     *
-     * @param file the file to parse.
-     * @return the root node of the parse tree.
-     * @throws IOException if the file could not be read.
-     */
-    private static DetailNode parseFile(File file) throws IOException {
-        final FileText text = new FileText(file.getAbsoluteFile(),
-                                           System.getProperty("file.encoding", StandardCharsets.UTF_8.name()));
-        return parseJavadocAsDetailNode(text.getFullText().toString());
-    }
+/**
+ * Parse a file and return the parse tree.
+ *
+ * @param file the file to parse.
+ * @return the root node of the parse tree.
+ * @throws IOException if the file could not be read.
+ */
+private static DetailNode parseFile(File file) throws IOException {
+	final FileText text = new FileText(file.getAbsoluteFile(),
+	                                   System.getProperty("file.encoding", StandardCharsets.UTF_8.name()));
+	return parseJavadocAsDetailNode(text.getFullText().toString());
+}
 
 }

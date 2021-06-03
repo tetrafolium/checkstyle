@@ -73,54 +73,54 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 @StatelessCheck
 public class AnonInnerLengthCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "maxLen.anonInner";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "maxLen.anonInner";
 
-    /** Default maximum number of lines. */
-    private static final int DEFAULT_MAX = 20;
+/** Default maximum number of lines. */
+private static final int DEFAULT_MAX = 20;
 
-    /** Specify the maximum number of lines allowed. */
-    private int max = DEFAULT_MAX;
+/** Specify the maximum number of lines allowed. */
+private int max = DEFAULT_MAX;
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.LITERAL_NEW};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.LITERAL_NEW};
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        final DetailAST openingBrace = ast.findFirstToken(TokenTypes.OBJBLOCK);
-        if (openingBrace != null) {
-            final DetailAST closingBrace =
-                openingBrace.findFirstToken(TokenTypes.RCURLY);
-            final int length =
-                closingBrace.getLineNo() - openingBrace.getLineNo() + 1;
-            if (length > max) {
-                log(ast, MSG_KEY, length, max);
-            }
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	final DetailAST openingBrace = ast.findFirstToken(TokenTypes.OBJBLOCK);
+	if (openingBrace != null) {
+		final DetailAST closingBrace =
+			openingBrace.findFirstToken(TokenTypes.RCURLY);
+		final int length =
+			closingBrace.getLineNo() - openingBrace.getLineNo() + 1;
+		if (length > max) {
+			log(ast, MSG_KEY, length, max);
+		}
+	}
+}
 
-    /**
-     * Setter to specify the maximum number of lines allowed.
-     *
-     * @param length the maximum length of an anonymous inner class.
-     */
-    public void setMax(int length) {
-        max = length;
-    }
+/**
+ * Setter to specify the maximum number of lines allowed.
+ *
+ * @param length the maximum length of an anonymous inner class.
+ */
+public void setMax(int length) {
+	max = length;
+}
 
 }

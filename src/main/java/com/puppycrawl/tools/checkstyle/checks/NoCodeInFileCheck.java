@@ -76,34 +76,34 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 @StatelessCheck
 public class NoCodeInFileCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY_NO_CODE = "nocode.in.file";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY_NO_CODE = "nocode.in.file";
 
-    /** Line number used to log violation when no AST nodes are present in file. */
-    private static final int DEFAULT_LINE_NUMBER = 1;
+/** Line number used to log violation when no AST nodes are present in file. */
+private static final int DEFAULT_LINE_NUMBER = 1;
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return CommonUtil.EMPTY_INT_ARRAY;
-    }
+@Override
+public int[] getRequiredTokens() {
+	return CommonUtil.EMPTY_INT_ARRAY;
+}
 
-    @Override
-    public void finishTree(DetailAST ast) {
-        if (ast == null) {
-            log(DEFAULT_LINE_NUMBER, MSG_KEY_NO_CODE);
-        }
-    }
+@Override
+public void finishTree(DetailAST ast) {
+	if (ast == null) {
+		log(DEFAULT_LINE_NUMBER, MSG_KEY_NO_CODE);
+	}
+}
 }

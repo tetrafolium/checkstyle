@@ -30,36 +30,36 @@ import com.puppycrawl.tools.checkstyle.checks.UpperEllCheck;
 
 public class XpathRegressionUpperEllTest extends AbstractXpathTestSupport {
 
-    private final String checkName = UpperEllCheck.class.getSimpleName();
+private final String checkName = UpperEllCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testUpperEll() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionUpperEll.java"));
+@Test
+public void testUpperEll() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionUpperEll.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(UpperEllCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(UpperEllCheck.class);
 
-        final String[] expectedViolation = {
-            "4:16: " + getCheckMessage(UpperEllCheck.class,
-                                       UpperEllCheck.MSG_KEY),
-        };
+	final String[] expectedViolation = {
+		"4:16: " + getCheckMessage(UpperEllCheck.class,
+		                           UpperEllCheck.MSG_KEY),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUpperEll']]/OBJBLOCK"
-                    + "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR[./NUM_LONG[@text='0l']]",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUpperEll']]/OBJBLOCK"
-                    + "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR"
-                    + "/NUM_LONG[@text='0l']"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUpperEll']]/OBJBLOCK"
+		+ "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR[./NUM_LONG[@text='0l']]",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUpperEll']]/OBJBLOCK"
+		+ "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR"
+		+ "/NUM_LONG[@text='0l']"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
 }

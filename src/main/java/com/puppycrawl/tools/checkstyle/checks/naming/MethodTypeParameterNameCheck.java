@@ -80,35 +80,35 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * @since 5.0
  */
 public class MethodTypeParameterNameCheck
-    extends AbstractNameCheck {
+	extends AbstractNameCheck {
 
-    /** Creates a new {@code MethodTypeParameterNameCheck} instance. */
-    public MethodTypeParameterNameCheck() {
-        super("^[A-Z]$");
-    }
+/** Creates a new {@code MethodTypeParameterNameCheck} instance. */
+public MethodTypeParameterNameCheck() {
+	super("^[A-Z]$");
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {
-                   TokenTypes.TYPE_PARAMETER,
-               };
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {
+		       TokenTypes.TYPE_PARAMETER,
+	};
+}
 
-    @Override
-    protected final boolean mustCheckName(DetailAST ast) {
-        final DetailAST location =
-            ast.getParent().getParent();
-        return location.getType() == TokenTypes.METHOD_DEF;
-    }
+@Override
+protected final boolean mustCheckName(DetailAST ast) {
+	final DetailAST location =
+		ast.getParent().getParent();
+	return location.getType() == TokenTypes.METHOD_DEF;
+}
 
 }

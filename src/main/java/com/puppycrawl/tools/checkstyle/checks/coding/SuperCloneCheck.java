@@ -80,9 +80,9 @@ import com.puppycrawl.tools.checkstyle.StatelessCheck;
 @StatelessCheck
 public class SuperCloneCheck extends AbstractSuperCheck {
 
-    @Override
-    protected String getMethodName() {
-        return "clone";
-    }
+@Override
+protected String getMethodName() {
+	return "clone";
+}
 
 }

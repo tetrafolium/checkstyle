@@ -27,22 +27,22 @@ package com.puppycrawl.tools.checkstyle.checks.imports;
  */
 public enum MismatchStrategy {
 
-    /**
-     * In a case if matching allow/disallow rule was not found,
-     * decision should be delegated to the parent and continue checking.
-     */
-    DELEGATE_TO_PARENT,
+	/**
+	 * In a case if matching allow/disallow rule was not found,
+	 * decision should be delegated to the parent and continue checking.
+	 */
+	DELEGATE_TO_PARENT,
 
-    /**
-     * In a case if matching allow/disallow rule was not found,
-     * import will be allowed by default.
-     */
-    ALLOWED,
+	/**
+	 * In a case if matching allow/disallow rule was not found,
+	 * import will be allowed by default.
+	 */
+	ALLOWED,
 
-    /**
-     * In a case if matching allow/disallow rule was not found,
-     * import will be disallowed by default.
-     */
-    DISALLOWED,
+	/**
+	 * In a case if matching allow/disallow rule was not found,
+	 * import will be disallowed by default.
+	 */
+	DISALLOWED,
 
 }

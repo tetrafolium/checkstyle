@@ -31,61 +31,61 @@ import com.puppycrawl.tools.checkstyle.checks.coding.DefaultComesLastCheck;
 
 public class XpathRegressionDefaultComesLastTest extends AbstractXpathTestSupport {
 
-    private final String checkName = DefaultComesLastCheck.class.getSimpleName();
+private final String checkName = DefaultComesLastCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionDefaultComesLastOne.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionDefaultComesLastOne.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(DefaultComesLastCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(DefaultComesLastCheck.class);
 
-        final String[] expectedViolation = {
-            "8:13: " + getCheckMessage(DefaultComesLastCheck.class,
-                                       DefaultComesLastCheck.MSG_KEY),
-        };
+	final String[] expectedViolation = {
+		"8:13: " + getCheckMessage(DefaultComesLastCheck.class,
+		                           DefaultComesLastCheck.MSG_KEY),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionDefaultComesLastOne']]/OBJBLOCK"
-                    + "/METHOD_DEF[./IDENT[@text='test']]/SLIST/LITERAL_SWITCH/CASE_GROUP["
-                    + "./SLIST/EXPR/ASSIGN/IDENT[@text='id']]",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionDefaultComesLastOne']]/OBJBLOCK"
-                    + "/METHOD_DEF[./IDENT[@text='test']]/SLIST/LITERAL_SWITCH/CASE_GROUP"
-                    + "/LITERAL_DEFAULT"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionDefaultComesLastOne']]/OBJBLOCK"
+		+ "/METHOD_DEF[./IDENT[@text='test']]/SLIST/LITERAL_SWITCH/CASE_GROUP["
+		+ "./SLIST/EXPR/ASSIGN/IDENT[@text='id']]",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionDefaultComesLastOne']]/OBJBLOCK"
+		+ "/METHOD_DEF[./IDENT[@text='test']]/SLIST/LITERAL_SWITCH/CASE_GROUP"
+		+ "/LITERAL_DEFAULT"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionDefaultComesLastTwo.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionDefaultComesLastTwo.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(DefaultComesLastCheck.class);
-        moduleConfig.addAttribute("skipIfLastAndSharedWithCase", "true");
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(DefaultComesLastCheck.class);
+	moduleConfig.addAttribute("skipIfLastAndSharedWithCase", "true");
 
-        final String[] expectedViolation = {
-            "15:13: " + getCheckMessage(DefaultComesLastCheck.class,
-                                        DefaultComesLastCheck.MSG_KEY_SKIP_IF_LAST_AND_SHARED_WITH_CASE),
-        };
+	final String[] expectedViolation = {
+		"15:13: " + getCheckMessage(DefaultComesLastCheck.class,
+		                            DefaultComesLastCheck.MSG_KEY_SKIP_IF_LAST_AND_SHARED_WITH_CASE),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionDefaultComesLastTwo']]/OBJBLOCK"
-                    + "/METHOD_DEF[./IDENT[@text='test']]/SLIST/LITERAL_SWITCH/CASE_GROUP"
-                    + "/LITERAL_DEFAULT"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionDefaultComesLastTwo']]/OBJBLOCK"
+		+ "/METHOD_DEF[./IDENT[@text='test']]/SLIST/LITERAL_SWITCH/CASE_GROUP"
+		+ "/LITERAL_DEFAULT"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
 }

@@ -211,243 +211,243 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  */
 @StatelessCheck
 public class InterfaceMemberImpliedModifierCheck
-    extends AbstractCheck {
+	extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties" file.
-     */
-    public static final String MSG_KEY = "interface.implied.modifier";
+/**
+ * A key is pointing to the warning message text in "messages.properties" file.
+ */
+public static final String MSG_KEY = "interface.implied.modifier";
 
-    /** Name for 'public' access modifier. */
-    private static final String PUBLIC_ACCESS_MODIFIER = "public";
+/** Name for 'public' access modifier. */
+private static final String PUBLIC_ACCESS_MODIFIER = "public";
 
-    /** Name for 'abstract' keyword. */
-    private static final String ABSTRACT_KEYWORD = "abstract";
+/** Name for 'abstract' keyword. */
+private static final String ABSTRACT_KEYWORD = "abstract";
 
-    /** Name for 'static' keyword. */
-    private static final String STATIC_KEYWORD = "static";
+/** Name for 'static' keyword. */
+private static final String STATIC_KEYWORD = "static";
 
-    /** Name for 'final' keyword. */
-    private static final String FINAL_KEYWORD = "final";
+/** Name for 'final' keyword. */
+private static final String FINAL_KEYWORD = "final";
 
-    /**
-     * Control whether to enforce that {@code public} is explicitly coded
-     * on interface fields.
-     */
-    private boolean violateImpliedPublicField = true;
+/**
+ * Control whether to enforce that {@code public} is explicitly coded
+ * on interface fields.
+ */
+private boolean violateImpliedPublicField = true;
 
-    /**
-     * Control whether to enforce that {@code static} is explicitly coded
-     * on interface fields.
-     */
-    private boolean violateImpliedStaticField = true;
+/**
+ * Control whether to enforce that {@code static} is explicitly coded
+ * on interface fields.
+ */
+private boolean violateImpliedStaticField = true;
 
-    /**
-     * Control whether to enforce that {@code final} is explicitly coded
-     * on interface fields.
-     */
-    private boolean violateImpliedFinalField = true;
+/**
+ * Control whether to enforce that {@code final} is explicitly coded
+ * on interface fields.
+ */
+private boolean violateImpliedFinalField = true;
 
-    /**
-     * Control whether to enforce that {@code public} is explicitly coded
-     * on interface methods.
-     */
-    private boolean violateImpliedPublicMethod = true;
+/**
+ * Control whether to enforce that {@code public} is explicitly coded
+ * on interface methods.
+ */
+private boolean violateImpliedPublicMethod = true;
 
-    /**
-     * Control whether to enforce that {@code abstract} is explicitly coded
-     * on interface methods.
-     */
-    private boolean violateImpliedAbstractMethod = true;
+/**
+ * Control whether to enforce that {@code abstract} is explicitly coded
+ * on interface methods.
+ */
+private boolean violateImpliedAbstractMethod = true;
 
-    /**
-     * Control whether to enforce that {@code public} is explicitly coded
-     * on interface nested types.
-     */
-    private boolean violateImpliedPublicNested = true;
+/**
+ * Control whether to enforce that {@code public} is explicitly coded
+ * on interface nested types.
+ */
+private boolean violateImpliedPublicNested = true;
 
-    /**
-     * Control whether to enforce that {@code static} is explicitly coded
-     * on interface nested types.
-     */
-    private boolean violateImpliedStaticNested = true;
+/**
+ * Control whether to enforce that {@code static} is explicitly coded
+ * on interface nested types.
+ */
+private boolean violateImpliedStaticNested = true;
 
-    /**
-     * Setter to control whether to enforce that {@code public} is explicitly coded
-     * on interface fields.
-     *
-     * @param violateImpliedPublicField
-     *        True to perform the check, false to turn the check off.
-     */
-    public void setViolateImpliedPublicField(boolean violateImpliedPublicField) {
-        this.violateImpliedPublicField = violateImpliedPublicField;
-    }
+/**
+ * Setter to control whether to enforce that {@code public} is explicitly coded
+ * on interface fields.
+ *
+ * @param violateImpliedPublicField
+ *        True to perform the check, false to turn the check off.
+ */
+public void setViolateImpliedPublicField(boolean violateImpliedPublicField) {
+	this.violateImpliedPublicField = violateImpliedPublicField;
+}
 
-    /**
-     * Setter to control whether to enforce that {@code static} is explicitly coded
-     * on interface fields.
-     *
-     * @param violateImpliedStaticField
-     *        True to perform the check, false to turn the check off.
-     */
-    public void setViolateImpliedStaticField(boolean violateImpliedStaticField) {
-        this.violateImpliedStaticField = violateImpliedStaticField;
-    }
+/**
+ * Setter to control whether to enforce that {@code static} is explicitly coded
+ * on interface fields.
+ *
+ * @param violateImpliedStaticField
+ *        True to perform the check, false to turn the check off.
+ */
+public void setViolateImpliedStaticField(boolean violateImpliedStaticField) {
+	this.violateImpliedStaticField = violateImpliedStaticField;
+}
 
-    /**
-     * Setter to control whether to enforce that {@code final} is explicitly coded
-     * on interface fields.
-     *
-     * @param violateImpliedFinalField
-     *        True to perform the check, false to turn the check off.
-     */
-    public void setViolateImpliedFinalField(boolean violateImpliedFinalField) {
-        this.violateImpliedFinalField = violateImpliedFinalField;
-    }
+/**
+ * Setter to control whether to enforce that {@code final} is explicitly coded
+ * on interface fields.
+ *
+ * @param violateImpliedFinalField
+ *        True to perform the check, false to turn the check off.
+ */
+public void setViolateImpliedFinalField(boolean violateImpliedFinalField) {
+	this.violateImpliedFinalField = violateImpliedFinalField;
+}
 
-    /**
-     * Setter to control whether to enforce that {@code public} is explicitly coded
-     * on interface methods.
-     *
-     * @param violateImpliedPublicMethod
-     *        True to perform the check, false to turn the check off.
-     */
-    public void setViolateImpliedPublicMethod(boolean violateImpliedPublicMethod) {
-        this.violateImpliedPublicMethod = violateImpliedPublicMethod;
-    }
+/**
+ * Setter to control whether to enforce that {@code public} is explicitly coded
+ * on interface methods.
+ *
+ * @param violateImpliedPublicMethod
+ *        True to perform the check, false to turn the check off.
+ */
+public void setViolateImpliedPublicMethod(boolean violateImpliedPublicMethod) {
+	this.violateImpliedPublicMethod = violateImpliedPublicMethod;
+}
 
-    /**
-     * Setter to control whether to enforce that {@code abstract} is explicitly coded
-     * on interface methods.
-     *
-     * @param violateImpliedAbstractMethod
-     *        True to perform the check, false to turn the check off.
-     */
-    public void setViolateImpliedAbstractMethod(boolean violateImpliedAbstractMethod) {
-        this.violateImpliedAbstractMethod = violateImpliedAbstractMethod;
-    }
+/**
+ * Setter to control whether to enforce that {@code abstract} is explicitly coded
+ * on interface methods.
+ *
+ * @param violateImpliedAbstractMethod
+ *        True to perform the check, false to turn the check off.
+ */
+public void setViolateImpliedAbstractMethod(boolean violateImpliedAbstractMethod) {
+	this.violateImpliedAbstractMethod = violateImpliedAbstractMethod;
+}
 
-    /**
-     * Setter to control whether to enforce that {@code public} is explicitly coded
-     * on interface nested types.
-     *
-     * @param violateImpliedPublicNested
-     *        True to perform the check, false to turn the check off.
-     */
-    public void setViolateImpliedPublicNested(boolean violateImpliedPublicNested) {
-        this.violateImpliedPublicNested = violateImpliedPublicNested;
-    }
+/**
+ * Setter to control whether to enforce that {@code public} is explicitly coded
+ * on interface nested types.
+ *
+ * @param violateImpliedPublicNested
+ *        True to perform the check, false to turn the check off.
+ */
+public void setViolateImpliedPublicNested(boolean violateImpliedPublicNested) {
+	this.violateImpliedPublicNested = violateImpliedPublicNested;
+}
 
-    /**
-     * Setter to control whether to enforce that {@code static} is explicitly coded
-     * on interface nested types.
-     *
-     * @param violateImpliedStaticNested
-     *        True to perform the check, false to turn the check off.
-     */
-    public void setViolateImpliedStaticNested(boolean violateImpliedStaticNested) {
-        this.violateImpliedStaticNested = violateImpliedStaticNested;
-    }
+/**
+ * Setter to control whether to enforce that {@code static} is explicitly coded
+ * on interface nested types.
+ *
+ * @param violateImpliedStaticNested
+ *        True to perform the check, false to turn the check off.
+ */
+public void setViolateImpliedStaticNested(boolean violateImpliedStaticNested) {
+	this.violateImpliedStaticNested = violateImpliedStaticNested;
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getAcceptableTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getAcceptableTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return getAcceptableTokens();
-    }
+@Override
+public int[] getRequiredTokens() {
+	return getAcceptableTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return new int[] {
-                   TokenTypes.METHOD_DEF,
-                   TokenTypes.VARIABLE_DEF,
-                   TokenTypes.INTERFACE_DEF,
-                   TokenTypes.CLASS_DEF,
-                   TokenTypes.ENUM_DEF,
-               };
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return new int[] {
+		       TokenTypes.METHOD_DEF,
+		       TokenTypes.VARIABLE_DEF,
+		       TokenTypes.INTERFACE_DEF,
+		       TokenTypes.CLASS_DEF,
+		       TokenTypes.ENUM_DEF,
+	};
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        if (ScopeUtil.isInInterfaceBlock(ast) && !ScopeUtil.isInCodeBlock(ast)) {
-            switch (ast.getType()) {
-            case TokenTypes.METHOD_DEF:
-                processMethod(ast);
-                break;
-            case TokenTypes.VARIABLE_DEF:
-                processField(ast);
-                break;
-            case TokenTypes.CLASS_DEF:
-            case TokenTypes.INTERFACE_DEF:
-            case TokenTypes.ENUM_DEF:
-                processNestedType(ast);
-                break;
-            default:
-                throw new IllegalStateException(ast.toString());
-            }
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	if (ScopeUtil.isInInterfaceBlock(ast) && !ScopeUtil.isInCodeBlock(ast)) {
+		switch (ast.getType()) {
+		case TokenTypes.METHOD_DEF:
+			processMethod(ast);
+			break;
+		case TokenTypes.VARIABLE_DEF:
+			processField(ast);
+			break;
+		case TokenTypes.CLASS_DEF:
+		case TokenTypes.INTERFACE_DEF:
+		case TokenTypes.ENUM_DEF:
+			processNestedType(ast);
+			break;
+		default:
+			throw new IllegalStateException(ast.toString());
+		}
+	}
+}
 
-    /**
-     * Check method in interface.
-     *
-     * @param ast the method AST
-     */
-    private void processMethod(DetailAST ast) {
-        final DetailAST modifiers = ast.findFirstToken(TokenTypes.MODIFIERS);
-        if (violateImpliedPublicMethod
-                && modifiers.findFirstToken(TokenTypes.LITERAL_PRIVATE) == null
-                && modifiers.findFirstToken(TokenTypes.LITERAL_PUBLIC) == null) {
-            log(ast, MSG_KEY, PUBLIC_ACCESS_MODIFIER);
-        }
-        if (violateImpliedAbstractMethod
-                && modifiers.findFirstToken(TokenTypes.LITERAL_PRIVATE) == null
-                && modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) == null
-                && modifiers.findFirstToken(TokenTypes.LITERAL_DEFAULT) == null
-                && modifiers.findFirstToken(TokenTypes.ABSTRACT) == null) {
-            log(ast, MSG_KEY, ABSTRACT_KEYWORD);
-        }
-    }
+/**
+ * Check method in interface.
+ *
+ * @param ast the method AST
+ */
+private void processMethod(DetailAST ast) {
+	final DetailAST modifiers = ast.findFirstToken(TokenTypes.MODIFIERS);
+	if (violateImpliedPublicMethod
+	    && modifiers.findFirstToken(TokenTypes.LITERAL_PRIVATE) == null
+	    && modifiers.findFirstToken(TokenTypes.LITERAL_PUBLIC) == null) {
+		log(ast, MSG_KEY, PUBLIC_ACCESS_MODIFIER);
+	}
+	if (violateImpliedAbstractMethod
+	    && modifiers.findFirstToken(TokenTypes.LITERAL_PRIVATE) == null
+	    && modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) == null
+	    && modifiers.findFirstToken(TokenTypes.LITERAL_DEFAULT) == null
+	    && modifiers.findFirstToken(TokenTypes.ABSTRACT) == null) {
+		log(ast, MSG_KEY, ABSTRACT_KEYWORD);
+	}
+}
 
-    /**
-     * Check field in interface.
-     *
-     * @param ast the field AST
-     */
-    private void processField(DetailAST ast) {
-        final DetailAST modifiers = ast.findFirstToken(TokenTypes.MODIFIERS);
-        if (violateImpliedPublicField
-                && modifiers.findFirstToken(TokenTypes.LITERAL_PUBLIC) == null) {
-            log(ast, MSG_KEY, PUBLIC_ACCESS_MODIFIER);
-        }
-        if (violateImpliedStaticField
-                && modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) == null) {
-            log(ast, MSG_KEY, STATIC_KEYWORD);
-        }
-        if (violateImpliedFinalField
-                && modifiers.findFirstToken(TokenTypes.FINAL) == null) {
-            log(ast, MSG_KEY, FINAL_KEYWORD);
-        }
-    }
+/**
+ * Check field in interface.
+ *
+ * @param ast the field AST
+ */
+private void processField(DetailAST ast) {
+	final DetailAST modifiers = ast.findFirstToken(TokenTypes.MODIFIERS);
+	if (violateImpliedPublicField
+	    && modifiers.findFirstToken(TokenTypes.LITERAL_PUBLIC) == null) {
+		log(ast, MSG_KEY, PUBLIC_ACCESS_MODIFIER);
+	}
+	if (violateImpliedStaticField
+	    && modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) == null) {
+		log(ast, MSG_KEY, STATIC_KEYWORD);
+	}
+	if (violateImpliedFinalField
+	    && modifiers.findFirstToken(TokenTypes.FINAL) == null) {
+		log(ast, MSG_KEY, FINAL_KEYWORD);
+	}
+}
 
-    /**
-     * Check nested types in interface.
-     *
-     * @param ast the nested type AST
-     */
-    private void processNestedType(DetailAST ast) {
-        final DetailAST modifiers = ast.findFirstToken(TokenTypes.MODIFIERS);
-        if (violateImpliedPublicNested
-                && modifiers.findFirstToken(TokenTypes.LITERAL_PUBLIC) == null) {
-            log(ast, MSG_KEY, PUBLIC_ACCESS_MODIFIER);
-        }
-        if (violateImpliedStaticNested
-                && modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) == null) {
-            log(ast, MSG_KEY, STATIC_KEYWORD);
-        }
-    }
+/**
+ * Check nested types in interface.
+ *
+ * @param ast the nested type AST
+ */
+private void processNestedType(DetailAST ast) {
+	final DetailAST modifiers = ast.findFirstToken(TokenTypes.MODIFIERS);
+	if (violateImpliedPublicNested
+	    && modifiers.findFirstToken(TokenTypes.LITERAL_PUBLIC) == null) {
+		log(ast, MSG_KEY, PUBLIC_ACCESS_MODIFIER);
+	}
+	if (violateImpliedStaticNested
+	    && modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) == null) {
+		log(ast, MSG_KEY, STATIC_KEYWORD);
+	}
+}
 
 }

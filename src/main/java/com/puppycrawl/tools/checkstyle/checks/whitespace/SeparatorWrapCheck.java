@@ -159,81 +159,81 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
  */
 @StatelessCheck
 public class SeparatorWrapCheck
-    extends AbstractCheck {
+	extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_LINE_PREVIOUS = "line.previous";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_LINE_PREVIOUS = "line.previous";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_LINE_NEW = "line.new";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_LINE_NEW = "line.new";
 
-    /** Specify policy on how to wrap lines. */
-    private WrapOption option = WrapOption.EOL;
+/** Specify policy on how to wrap lines. */
+private WrapOption option = WrapOption.EOL;
 
-    /**
-     * Setter to specify policy on how to wrap lines.
-     *
-     * @param optionStr string to decode option from
-     * @throws IllegalArgumentException if unable to decode
-     */
-    public void setOption(String optionStr) {
-        option = WrapOption.valueOf(optionStr.trim().toUpperCase(Locale.ENGLISH));
-    }
+/**
+ * Setter to specify policy on how to wrap lines.
+ *
+ * @param optionStr string to decode option from
+ * @throws IllegalArgumentException if unable to decode
+ */
+public void setOption(String optionStr) {
+	option = WrapOption.valueOf(optionStr.trim().toUpperCase(Locale.ENGLISH));
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return new int[] {
-                   TokenTypes.DOT,
-                   TokenTypes.COMMA,
-               };
-    }
+@Override
+public int[] getDefaultTokens() {
+	return new int[] {
+		       TokenTypes.DOT,
+		       TokenTypes.COMMA,
+	};
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return new int[] {
-                   TokenTypes.DOT,
-                   TokenTypes.COMMA,
-                   TokenTypes.SEMI,
-                   TokenTypes.ELLIPSIS,
-                   TokenTypes.AT,
-                   TokenTypes.LPAREN,
-                   TokenTypes.RPAREN,
-                   TokenTypes.ARRAY_DECLARATOR,
-                   TokenTypes.RBRACK,
-                   TokenTypes.METHOD_REF,
-               };
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return new int[] {
+		       TokenTypes.DOT,
+		       TokenTypes.COMMA,
+		       TokenTypes.SEMI,
+		       TokenTypes.ELLIPSIS,
+		       TokenTypes.AT,
+		       TokenTypes.LPAREN,
+		       TokenTypes.RPAREN,
+		       TokenTypes.ARRAY_DECLARATOR,
+		       TokenTypes.RBRACK,
+		       TokenTypes.METHOD_REF,
+	};
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return CommonUtil.EMPTY_INT_ARRAY;
-    }
+@Override
+public int[] getRequiredTokens() {
+	return CommonUtil.EMPTY_INT_ARRAY;
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        final String text = ast.getText();
-        final int colNo = ast.getColumnNo();
-        final int lineNo = ast.getLineNo();
-        final String currentLine = getLines()[lineNo - 1];
-        final String substringAfterToken =
-            currentLine.substring(colNo + text.length()).trim();
-        final String substringBeforeToken =
-            currentLine.substring(0, colNo).trim();
+@Override
+public void visitToken(DetailAST ast) {
+	final String text = ast.getText();
+	final int colNo = ast.getColumnNo();
+	final int lineNo = ast.getLineNo();
+	final String currentLine = getLines()[lineNo - 1];
+	final String substringAfterToken =
+		currentLine.substring(colNo + text.length()).trim();
+	final String substringBeforeToken =
+		currentLine.substring(0, colNo).trim();
 
-        if (option == WrapOption.EOL
-                && substringBeforeToken.isEmpty()) {
-            log(ast, MSG_LINE_PREVIOUS, text);
-        }
-        else if (option == WrapOption.NL
-                 && substringAfterToken.isEmpty()) {
-            log(ast, MSG_LINE_NEW, text);
-        }
-    }
+	if (option == WrapOption.EOL
+	    && substringBeforeToken.isEmpty()) {
+		log(ast, MSG_LINE_PREVIOUS, text);
+	}
+	else if (option == WrapOption.NL
+	         && substringAfterToken.isEmpty()) {
+		log(ast, MSG_LINE_NEW, text);
+	}
+}
 
 }

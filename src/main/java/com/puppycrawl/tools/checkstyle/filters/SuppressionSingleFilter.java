@@ -199,106 +199,106 @@ import com.puppycrawl.tools.checkstyle.api.Filter;
  */
 public class SuppressionSingleFilter extends AutomaticBean implements Filter {
 
-    /**
-     * SuppressFilterElement instance.
-     */
-    private SuppressFilterElement filter;
-    /**
-     * Define the RegExp for matching against the file name associated with an audit event.
-     */
-    private Pattern files;
-    /**
-     * Define the RegExp for matching against the name of the check associated with an audit event.
-     */
-    private Pattern checks;
-    /**
-     * Define the RegExp for matching against the message of the check associated with an audit
-     * event.
-     */
-    private Pattern message;
-    /**
-     * Specify a string matched against the ID of the check associated with an audit event.
-     */
-    private String id;
-    /**
-     * Specify a comma-separated list of values, where each value is an integer or a range of
-     * integers denoted by integer-integer.
-     */
-    private String lines;
-    /**
-     * Specify a comma-separated list of values, where each value is an integer or a range of
-     * integers denoted by integer-integer.
-     */
-    private String columns;
+/**
+ * SuppressFilterElement instance.
+ */
+private SuppressFilterElement filter;
+/**
+ * Define the RegExp for matching against the file name associated with an audit event.
+ */
+private Pattern files;
+/**
+ * Define the RegExp for matching against the name of the check associated with an audit event.
+ */
+private Pattern checks;
+/**
+ * Define the RegExp for matching against the message of the check associated with an audit
+ * event.
+ */
+private Pattern message;
+/**
+ * Specify a string matched against the ID of the check associated with an audit event.
+ */
+private String id;
+/**
+ * Specify a comma-separated list of values, where each value is an integer or a range of
+ * integers denoted by integer-integer.
+ */
+private String lines;
+/**
+ * Specify a comma-separated list of values, where each value is an integer or a range of
+ * integers denoted by integer-integer.
+ */
+private String columns;
 
-    /**
-     * Setter to define the RegExp for matching against the file name associated with an audit
-     * event.
-     *
-     * @param files regular expression for filtered file names
-     */
-    public void setFiles(Pattern files) {
-        this.files = files;
-    }
+/**
+ * Setter to define the RegExp for matching against the file name associated with an audit
+ * event.
+ *
+ * @param files regular expression for filtered file names
+ */
+public void setFiles(Pattern files) {
+	this.files = files;
+}
 
-    /**
-     * Setter to define the RegExp for matching against the name of the check associated with an
-     * audit event.
-     *
-     * @param checks the name of the check
-     */
-    public void setChecks(String checks) {
-        this.checks = Pattern.compile(checks);
-    }
+/**
+ * Setter to define the RegExp for matching against the name of the check associated with an
+ * audit event.
+ *
+ * @param checks the name of the check
+ */
+public void setChecks(String checks) {
+	this.checks = Pattern.compile(checks);
+}
 
-    /**
-     * Setter to define the RegExp for matching against the message of the check associated with
-     * an audit event.
-     *
-     * @param message the message of the check
-     */
-    public void setMessage(Pattern message) {
-        this.message = message;
-    }
+/**
+ * Setter to define the RegExp for matching against the message of the check associated with
+ * an audit event.
+ *
+ * @param message the message of the check
+ */
+public void setMessage(Pattern message) {
+	this.message = message;
+}
 
-    /**
-     * Setter to specify a string matched against the ID of the check associated with an audit
-     * event.
-     *
-     * @param id the ID of the check
-     */
-    public void setId(String id) {
-        this.id = id;
-    }
+/**
+ * Setter to specify a string matched against the ID of the check associated with an audit
+ * event.
+ *
+ * @param id the ID of the check
+ */
+public void setId(String id) {
+	this.id = id;
+}
 
-    /**
-     * Setter to specify a comma-separated list of values, where each value is an integer or a
-     * range of integers denoted by integer-integer.
-     *
-     * @param lines the lines of the check
-     */
-    public void setLines(String lines) {
-        this.lines = lines;
-    }
+/**
+ * Setter to specify a comma-separated list of values, where each value is an integer or a
+ * range of integers denoted by integer-integer.
+ *
+ * @param lines the lines of the check
+ */
+public void setLines(String lines) {
+	this.lines = lines;
+}
 
-    /**
-     * Setter to specify a comma-separated list of values, where each value is an integer or a
-     * range of integers denoted by integer-integer.
-     *
-     * @param columns the columns of the check
-     */
-    public void setColumns(String columns) {
-        this.columns = columns;
-    }
+/**
+ * Setter to specify a comma-separated list of values, where each value is an integer or a
+ * range of integers denoted by integer-integer.
+ *
+ * @param columns the columns of the check
+ */
+public void setColumns(String columns) {
+	this.columns = columns;
+}
 
-    @Override
-    protected void finishLocalSetup() {
-        filter = new SuppressFilterElement(files, checks, message, id, lines, columns);
-    }
+@Override
+protected void finishLocalSetup() {
+	filter = new SuppressFilterElement(files, checks, message, id, lines, columns);
+}
 
-    @Override
-    public boolean accept(AuditEvent event) {
-        return filter.accept(event);
-    }
+@Override
+public boolean accept(AuditEvent event) {
+	return filter.accept(event);
+}
 
 }

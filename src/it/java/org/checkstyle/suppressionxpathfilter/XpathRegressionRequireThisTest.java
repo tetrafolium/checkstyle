@@ -30,58 +30,58 @@ import com.puppycrawl.tools.checkstyle.checks.coding.RequireThisCheck;
 
 public class XpathRegressionRequireThisTest extends AbstractXpathTestSupport {
 
-    private final String checkName = RequireThisCheck.class.getSimpleName();
+private final String checkName = RequireThisCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionRequireThisOne.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionRequireThisOne.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(RequireThisCheck.class);
-        moduleConfig.addAttribute("validateOnlyOverlapping", "false");
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(RequireThisCheck.class);
+	moduleConfig.addAttribute("validateOnlyOverlapping", "false");
 
-        final String[] expectedViolation = {
-            "7:9: " + getCheckMessage(RequireThisCheck.class,
-                                      RequireThisCheck.MSG_VARIABLE, "age", ""),
-        };
+	final String[] expectedViolation = {
+		"7:9: " + getCheckMessage(RequireThisCheck.class,
+		                          RequireThisCheck.MSG_VARIABLE, "age", ""),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionRequireThisOne']]/OBJBLOCK"
-                    + "/METHOD_DEF[./IDENT[@text='changeAge']]/SLIST/EXPR/ASSIGN"
-                    + "/IDENT[@text='age']"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionRequireThisOne']]/OBJBLOCK"
+		+ "/METHOD_DEF[./IDENT[@text='changeAge']]/SLIST/EXPR/ASSIGN"
+		+ "/IDENT[@text='age']"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionRequireThisTwo.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionRequireThisTwo.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(RequireThisCheck.class);
-        moduleConfig.addAttribute("validateOnlyOverlapping", "false");
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(RequireThisCheck.class);
+	moduleConfig.addAttribute("validateOnlyOverlapping", "false");
 
-        final String[] expectedViolation = {
-            "9:9: " + getCheckMessage(RequireThisCheck.class,
-                                      RequireThisCheck.MSG_METHOD, "method1", ""),
-        };
+	final String[] expectedViolation = {
+		"9:9: " + getCheckMessage(RequireThisCheck.class,
+		                          RequireThisCheck.MSG_METHOD, "method1", ""),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionRequireThisTwo']]/OBJBLOCK"
-                    + "/METHOD_DEF[./IDENT[@text='method2']]/SLIST/EXPR"
-                    + "/METHOD_CALL/IDENT[@text='method1']"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionRequireThisTwo']]/OBJBLOCK"
+		+ "/METHOD_DEF[./IDENT[@text='method2']]/SLIST/EXPR"
+		+ "/METHOD_CALL/IDENT[@text='method1']"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 }

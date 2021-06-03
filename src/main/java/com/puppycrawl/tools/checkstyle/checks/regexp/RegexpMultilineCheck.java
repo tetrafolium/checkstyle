@@ -161,116 +161,116 @@ import com.puppycrawl.tools.checkstyle.api.FileText;
 @StatelessCheck
 public class RegexpMultilineCheck extends AbstractFileSetCheck {
 
-    /** Specify the format of the regular expression to match. */
-    private String format = "$.";
-    /**
-     * Specify the message which is used to notify about violations,
-     * if empty then default (hard-coded) message is used.
-     */
-    private String message;
-    /** Specify the minimum number of matches required in each file. */
-    private int minimum;
-    /** Specify the maximum number of matches required in each file. */
-    private int maximum;
-    /** Control whether to ignore case when searching. */
-    private boolean ignoreCase;
-    /** Control whether to match expressions across multiple lines. */
-    private boolean matchAcrossLines;
+/** Specify the format of the regular expression to match. */
+private String format = "$.";
+/**
+ * Specify the message which is used to notify about violations,
+ * if empty then default (hard-coded) message is used.
+ */
+private String message;
+/** Specify the minimum number of matches required in each file. */
+private int minimum;
+/** Specify the maximum number of matches required in each file. */
+private int maximum;
+/** Control whether to ignore case when searching. */
+private boolean ignoreCase;
+/** Control whether to match expressions across multiple lines. */
+private boolean matchAcrossLines;
 
-    /** The detector to use. */
-    private MultilineDetector detector;
+/** The detector to use. */
+private MultilineDetector detector;
 
-    @Override
-    public void beginProcessing(String charset) {
-        final DetectorOptions options = DetectorOptions.newBuilder()
-                                        .reporter(this)
-                                        .compileFlags(getRegexCompileFlags())
-                                        .format(format)
-                                        .message(message)
-                                        .minimum(minimum)
-                                        .maximum(maximum)
-                                        .ignoreCase(ignoreCase)
-                                        .build();
-        detector = new MultilineDetector(options);
-    }
+@Override
+public void beginProcessing(String charset) {
+	final DetectorOptions options = DetectorOptions.newBuilder()
+	                                .reporter(this)
+	                                .compileFlags(getRegexCompileFlags())
+	                                .format(format)
+	                                .message(message)
+	                                .minimum(minimum)
+	                                .maximum(maximum)
+	                                .ignoreCase(ignoreCase)
+	                                .build();
+	detector = new MultilineDetector(options);
+}
 
-    @Override
-    protected void processFiltered(File file, FileText fileText) {
-        detector.processLines(fileText);
-    }
+@Override
+protected void processFiltered(File file, FileText fileText) {
+	detector.processLines(fileText);
+}
 
-    /**
-     * Retrieves the compile flags for the regular expression being built based
-     * on {@code matchAcrossLines}.
-     *
-     * @return The compile flags.
-     */
-    private int getRegexCompileFlags() {
-        final int result;
+/**
+ * Retrieves the compile flags for the regular expression being built based
+ * on {@code matchAcrossLines}.
+ *
+ * @return The compile flags.
+ */
+private int getRegexCompileFlags() {
+	final int result;
 
-        if (matchAcrossLines) {
-            result = Pattern.DOTALL;
-        }
-        else {
-            result = Pattern.MULTILINE;
-        }
+	if (matchAcrossLines) {
+		result = Pattern.DOTALL;
+	}
+	else {
+		result = Pattern.MULTILINE;
+	}
 
-        return result;
-    }
+	return result;
+}
 
-    /**
-     * Setter to specify the format of the regular expression to match.
-     *
-     * @param format the format of the regular expression to match.
-     */
-    public void setFormat(String format) {
-        this.format = format;
-    }
+/**
+ * Setter to specify the format of the regular expression to match.
+ *
+ * @param format the format of the regular expression to match.
+ */
+public void setFormat(String format) {
+	this.format = format;
+}
 
-    /**
-     * Setter to specify the message which is used to notify about violations,
-     * if empty then default (hard-coded) message is used.
-     *
-     * @param message the message to report for a match.
-     */
-    public void setMessage(String message) {
-        this.message = message;
-    }
+/**
+ * Setter to specify the message which is used to notify about violations,
+ * if empty then default (hard-coded) message is used.
+ *
+ * @param message the message to report for a match.
+ */
+public void setMessage(String message) {
+	this.message = message;
+}
 
-    /**
-     * Setter to specify the minimum number of matches required in each file.
-     *
-     * @param minimum the minimum number of matches required in each file.
-     */
-    public void setMinimum(int minimum) {
-        this.minimum = minimum;
-    }
+/**
+ * Setter to specify the minimum number of matches required in each file.
+ *
+ * @param minimum the minimum number of matches required in each file.
+ */
+public void setMinimum(int minimum) {
+	this.minimum = minimum;
+}
 
-    /**
-     * Setter to specify the maximum number of matches required in each file.
-     *
-     * @param maximum the maximum number of matches required in each file.
-     */
-    public void setMaximum(int maximum) {
-        this.maximum = maximum;
-    }
+/**
+ * Setter to specify the maximum number of matches required in each file.
+ *
+ * @param maximum the maximum number of matches required in each file.
+ */
+public void setMaximum(int maximum) {
+	this.maximum = maximum;
+}
 
-    /**
-     * Setter to control whether to ignore case when searching.
-     *
-     * @param ignoreCase whether to ignore case when searching.
-     */
-    public void setIgnoreCase(boolean ignoreCase) {
-        this.ignoreCase = ignoreCase;
-    }
+/**
+ * Setter to control whether to ignore case when searching.
+ *
+ * @param ignoreCase whether to ignore case when searching.
+ */
+public void setIgnoreCase(boolean ignoreCase) {
+	this.ignoreCase = ignoreCase;
+}
 
-    /**
-     * Setter to control whether to match expressions across multiple lines.
-     *
-     * @param matchAcrossLines whether to match expressions across multiple lines.
-     */
-    public void setMatchAcrossLines(boolean matchAcrossLines) {
-        this.matchAcrossLines = matchAcrossLines;
-    }
+/**
+ * Setter to control whether to match expressions across multiple lines.
+ *
+ * @param matchAcrossLines whether to match expressions across multiple lines.
+ */
+public void setMatchAcrossLines(boolean matchAcrossLines) {
+	this.matchAcrossLines = matchAcrossLines;
+}
 
 }

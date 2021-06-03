@@ -30,19 +30,19 @@ import java.util.Collection;
  */
 public interface Context {
 
-    /**
-     * Searches for the value with the specified attribute key in this context.
-     *
-     * @param key the attribute key.
-     * @return the value in this context with the specified attribute key value.
-     */
-    Object get(String key);
+/**
+ * Searches for the value with the specified attribute key in this context.
+ *
+ * @param key the attribute key.
+ * @return the value in this context with the specified attribute key value.
+ */
+Object get(String key);
 
-    /**
-     * Returns the names of all attributes of this context.
-     *
-     * @return the names of all attributes of this context.
-     */
-    Collection<String> getAttributeNames();
+/**
+ * Returns the names of all attributes of this context.
+ *
+ * @return the names of all attributes of this context.
+ */
+Collection<String> getAttributeNames();
 
 }

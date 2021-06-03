@@ -32,60 +32,60 @@ import com.puppycrawl.tools.checkstyle.checks.metrics.NPathComplexityCheck;
 // -@cs[AbbreviationAsWordInName] Test should be named as its main class.
 public class XpathRegressionNPathComplexityTest extends AbstractXpathTestSupport {
 
-    private final String checkName = NPathComplexityCheck.class.getSimpleName();
+private final String checkName = NPathComplexityCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionNPathComplexityOne.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionNPathComplexityOne.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(NPathComplexityCheck.class);
-        moduleConfig.addAttribute("max", "0");
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(NPathComplexityCheck.class);
+	moduleConfig.addAttribute("max", "0");
 
-        final String[] expectedViolation = {
-            "4:5: " + getCheckMessage(NPathComplexityCheck.class,
-                                      NPathComplexityCheck.MSG_KEY, 3, 0),
-        };
+	final String[] expectedViolation = {
+		"4:5: " + getCheckMessage(NPathComplexityCheck.class,
+		                          NPathComplexityCheck.MSG_KEY, 3, 0),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNPathComplexityOne']]/OBJBLOCK"
-                    + "/METHOD_DEF[./IDENT[@text='test']]",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNPathComplexityOne']]/OBJBLOCK"
-                    + "/METHOD_DEF[./IDENT[@text='test']]/MODIFIERS",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNPathComplexityOne']]/OBJBLOCK"
-                    + "/METHOD_DEF[./IDENT[@text='test']]/MODIFIERS/LITERAL_PUBLIC"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNPathComplexityOne']]/OBJBLOCK"
+		+ "/METHOD_DEF[./IDENT[@text='test']]",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNPathComplexityOne']]/OBJBLOCK"
+		+ "/METHOD_DEF[./IDENT[@text='test']]/MODIFIERS",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNPathComplexityOne']]/OBJBLOCK"
+		+ "/METHOD_DEF[./IDENT[@text='test']]/MODIFIERS/LITERAL_PUBLIC"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionNPathComplexityTwo.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionNPathComplexityTwo.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(NPathComplexityCheck.class);
-        moduleConfig.addAttribute("max", "0");
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(NPathComplexityCheck.class);
+	moduleConfig.addAttribute("max", "0");
 
-        final String[] expectedViolation = {
-            "4:5: " + getCheckMessage(NPathComplexityCheck.class,
-                                      NPathComplexityCheck.MSG_KEY, 3, 0),
-        };
+	final String[] expectedViolation = {
+		"4:5: " + getCheckMessage(NPathComplexityCheck.class,
+		                          NPathComplexityCheck.MSG_KEY, 3, 0),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNPathComplexityTwo']]"
-                    + "/OBJBLOCK/STATIC_INIT"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNPathComplexityTwo']]"
+		+ "/OBJBLOCK/STATIC_INIT"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 }

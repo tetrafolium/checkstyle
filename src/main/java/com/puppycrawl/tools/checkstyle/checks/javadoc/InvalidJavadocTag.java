@@ -24,51 +24,51 @@ package com.puppycrawl.tools.checkstyle.checks.javadoc;
  */
 public final class InvalidJavadocTag {
 
-    /** The line in which the invalid tag occurs. */
-    private final int line;
-    /** The column in which the invalid tag occurs. */
-    private final int col;
-    /** The name of the invalid tag. */
-    private final String name;
+/** The line in which the invalid tag occurs. */
+private final int line;
+/** The column in which the invalid tag occurs. */
+private final int col;
+/** The name of the invalid tag. */
+private final String name;
 
-    /**
-     * Creates an instance.
-     *
-     * @param line the line of the tag
-     * @param col the column of the tag
-     * @param name the name of the invalid tag
-     */
-    public InvalidJavadocTag(int line, int col, String name) {
-        this.line = line;
-        this.col = col;
-        this.name = name;
-    }
+/**
+ * Creates an instance.
+ *
+ * @param line the line of the tag
+ * @param col the column of the tag
+ * @param name the name of the invalid tag
+ */
+public InvalidJavadocTag(int line, int col, String name) {
+	this.line = line;
+	this.col = col;
+	this.name = name;
+}
 
-    /**
-     *  Getter for line field.
-     *
-     *  @return line field
-     */
-    public int getLine() {
-        return line;
-    }
+/**
+ *  Getter for line field.
+ *
+ *  @return line field
+ */
+public int getLine() {
+	return line;
+}
 
-    /**
-     *  Getter for col field.
-     *
-     *  @return col field
-     */
-    public int getCol() {
-        return col;
-    }
+/**
+ *  Getter for col field.
+ *
+ *  @return col field
+ */
+public int getCol() {
+	return col;
+}
 
-    /**
-     *  Getter for name field.
-     *
-     *  @return name field
-     */
-    public String getName() {
-        return name;
-    }
+/**
+ *  Getter for name field.
+ *
+ *  @return name field
+ */
+public String getName() {
+	return name;
+}
 
 }

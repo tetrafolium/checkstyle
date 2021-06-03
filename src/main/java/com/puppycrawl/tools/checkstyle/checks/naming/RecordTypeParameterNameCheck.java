@@ -72,33 +72,33 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  */
 public class RecordTypeParameterNameCheck extends AbstractNameCheck {
 
-    /** Creates a new {@code RecordTypeParameterNameCheck} instance. */
-    public RecordTypeParameterNameCheck() {
-        super("^[A-Z]$");
-    }
+/** Creates a new {@code RecordTypeParameterNameCheck} instance. */
+public RecordTypeParameterNameCheck() {
+	super("^[A-Z]$");
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public final int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public final int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {
-                   TokenTypes.TYPE_PARAMETER,
-               };
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {
+		       TokenTypes.TYPE_PARAMETER,
+	};
+}
 
-    @Override
-    protected final boolean mustCheckName(DetailAST ast) {
-        final DetailAST location =
-            ast.getParent().getParent();
-        return location.getType() == TokenTypes.RECORD_DEF;
-    }
+@Override
+protected final boolean mustCheckName(DetailAST ast) {
+	final DetailAST location =
+		ast.getParent().getParent();
+	return location.getType() == TokenTypes.RECORD_DEF;
+}
 
 }

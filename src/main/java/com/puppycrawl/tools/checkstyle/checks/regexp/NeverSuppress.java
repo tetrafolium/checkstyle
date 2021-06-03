@@ -25,17 +25,17 @@ package com.puppycrawl.tools.checkstyle.checks.regexp;
  */
 public final class NeverSuppress implements MatchSuppressor {
 
-    /** The shared instance. */
-    public static final MatchSuppressor INSTANCE = new NeverSuppress();
+/** The shared instance. */
+public static final MatchSuppressor INSTANCE = new NeverSuppress();
 
-    /** Stop creation of instances. */
-    private NeverSuppress() {
-    }
+/** Stop creation of instances. */
+private NeverSuppress() {
+}
 
-    @Override
-    public boolean shouldSuppress(int startLineNo, int startColNo,
-                                  int endLineNo, int endColNo) {
-        return false;
-    }
+@Override
+public boolean shouldSuppress(int startLineNo, int startColNo,
+                              int endLineNo, int endColNo) {
+	return false;
+}
 
 }

@@ -79,39 +79,39 @@ import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
 @StatelessCheck
 public class PackageAnnotationCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "annotation.package.location";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "annotation.package.location";
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {
-                   TokenTypes.PACKAGE_DEF,
-               };
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {
+		       TokenTypes.PACKAGE_DEF,
+	};
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public void visitToken(final DetailAST ast) {
-        final boolean containsAnnotation =
-            AnnotationUtil.containsAnnotation(ast);
-        final boolean inPackageInfo =
-            getFileContents().inPackageInfo();
+@Override
+public void visitToken(final DetailAST ast) {
+	final boolean containsAnnotation =
+		AnnotationUtil.containsAnnotation(ast);
+	final boolean inPackageInfo =
+		getFileContents().inPackageInfo();
 
-        if (containsAnnotation && !inPackageInfo) {
-            log(ast, MSG_KEY);
-        }
-    }
+	if (containsAnnotation && !inPackageInfo) {
+		log(ast, MSG_KEY);
+	}
+}
 
 }

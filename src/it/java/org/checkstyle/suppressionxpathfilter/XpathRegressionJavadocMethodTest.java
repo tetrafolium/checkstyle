@@ -34,135 +34,135 @@ import com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck;
 
 public class XpathRegressionJavadocMethodTest extends AbstractXpathTestSupport {
 
-    private final String checkName = JavadocMethodCheck.class.getSimpleName();
+private final String checkName = JavadocMethodCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionJavadocMethodOne.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionJavadocMethodOne.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(JavadocMethodCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(JavadocMethodCheck.class);
 
-        final String[] expectedViolation = {
-            "14:5: " + getCheckMessage(JavadocMethodCheck.class, MSG_INVALID_INHERIT_DOC),
-        };
+	final String[] expectedViolation = {
+		"14:5: " + getCheckMessage(JavadocMethodCheck.class, MSG_INVALID_INHERIT_DOC),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocMethodOne']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='uninheritableMethod']]",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocMethodOne']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='uninheritableMethod']]/MODIFIERS",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocMethodOne']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='uninheritableMethod']]/MODIFIERS"
-                    + "/LITERAL_PRIVATE");
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocMethodOne']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='uninheritableMethod']]",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocMethodOne']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='uninheritableMethod']]/MODIFIERS",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocMethodOne']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='uninheritableMethod']]/MODIFIERS"
+		+ "/LITERAL_PRIVATE");
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionJavadocMethodTwo.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionJavadocMethodTwo.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(JavadocMethodCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(JavadocMethodCheck.class);
 
-        final String[] expectedViolation = {
-            "13:31: " + getCheckMessage(JavadocMethodCheck.class, MSG_EXPECTED_TAG,
-                                        "@param", "x"),
-        };
+	final String[] expectedViolation = {
+		"13:31: " + getCheckMessage(JavadocMethodCheck.class, MSG_EXPECTED_TAG,
+		                            "@param", "x"),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocMethodTwo']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='checkParam']]/PARAMETERS"
-                    + "/PARAMETER_DEF/IDENT[@text='x']");
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocMethodTwo']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='checkParam']]/PARAMETERS"
+		+ "/PARAMETER_DEF/IDENT[@text='x']");
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testThree() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionJavadocMethodThree.java"));
+@Test
+public void testThree() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionJavadocMethodThree.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(JavadocMethodCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(JavadocMethodCheck.class);
 
-        final String[] expectedViolation = {
-            "14:13: " + getCheckMessage(JavadocMethodCheck.class, MSG_EXPECTED_TAG,
-                                        "@param", "<T>"),
-        };
+	final String[] expectedViolation = {
+		"14:13: " + getCheckMessage(JavadocMethodCheck.class, MSG_EXPECTED_TAG,
+		                            "@param", "<T>"),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocMethodThree']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='checkTypeParam']]/TYPE_PARAMETERS"
-                    + "/TYPE_PARAMETER[./IDENT[@text='T']]",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocMethodThree']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='checkTypeParam']]/TYPE_PARAMETERS"
-                    + "/TYPE_PARAMETER/IDENT[@text='T']");
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocMethodThree']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='checkTypeParam']]/TYPE_PARAMETERS"
+		+ "/TYPE_PARAMETER[./IDENT[@text='T']]",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocMethodThree']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='checkTypeParam']]/TYPE_PARAMETERS"
+		+ "/TYPE_PARAMETER/IDENT[@text='T']");
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testFour() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionJavadocMethodFour.java"));
+@Test
+public void testFour() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionJavadocMethodFour.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(JavadocMethodCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(JavadocMethodCheck.class);
 
-        moduleConfig.addAttribute("validateThrows", "true");
+	moduleConfig.addAttribute("validateThrows", "true");
 
-        final String[] expectedViolation = {
-            "12:30: " + getCheckMessage(JavadocMethodCheck.class, MSG_EXPECTED_TAG,
-                                        "@throws", "Exception"),
-        };
+	final String[] expectedViolation = {
+		"12:30: " + getCheckMessage(JavadocMethodCheck.class, MSG_EXPECTED_TAG,
+		                            "@throws", "Exception"),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocMethodFour']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]"
-                    + "/LITERAL_THROWS/IDENT[@text='Exception']");
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocMethodFour']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]"
+		+ "/LITERAL_THROWS/IDENT[@text='Exception']");
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testFive() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionJavadocMethodFive.java"));
+@Test
+public void testFive() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionJavadocMethodFive.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(JavadocMethodCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(JavadocMethodCheck.class);
 
-        moduleConfig.addAttribute("validateThrows", "true");
+	moduleConfig.addAttribute("validateThrows", "true");
 
-        final String[] expectedViolation = {
-            "13:19: " + getCheckMessage(JavadocMethodCheck.class, MSG_EXPECTED_TAG,
-                                        "@throws", "org.apache.tools.ant.BuildException"),
-        };
+	final String[] expectedViolation = {
+		"13:19: " + getCheckMessage(JavadocMethodCheck.class, MSG_EXPECTED_TAG,
+		                            "@throws", "org.apache.tools.ant.BuildException"),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocMethodFive']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='bar']]/SLIST"
-                    + "/LITERAL_THROW/EXPR/LITERAL_NEW"
-                    + "/DOT[./IDENT[@text='BuildException']]"
-                    + "/DOT[./IDENT[@text='ant']]"
-                    + "/DOT[./IDENT[@text='tools']]"
-                    + "/DOT/IDENT[@text='org']");
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocMethodFive']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='bar']]/SLIST"
+		+ "/LITERAL_THROW/EXPR/LITERAL_NEW"
+		+ "/DOT[./IDENT[@text='BuildException']]"
+		+ "/DOT[./IDENT[@text='ant']]"
+		+ "/DOT[./IDENT[@text='tools']]"
+		+ "/DOT/IDENT[@text='org']");
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
 }

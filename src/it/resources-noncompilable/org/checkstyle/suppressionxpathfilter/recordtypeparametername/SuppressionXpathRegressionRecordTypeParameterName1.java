@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.LinkedHashMap;
 
 record Other <foo extends Serializable & Cloneable> // warn
-(LinkedHashMap<String, Node> linkedHashMap) {
+        (LinkedHashMap<String, Node> linkedHashMap) {
 
 }
 

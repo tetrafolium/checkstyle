@@ -79,43 +79,43 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  */
 @StatelessCheck
 public class SimplifyBooleanExpressionCheck
-    extends AbstractCheck {
+	extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "simplify.expression";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "simplify.expression";
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.LITERAL_TRUE, TokenTypes.LITERAL_FALSE};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.LITERAL_TRUE, TokenTypes.LITERAL_FALSE};
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        final DetailAST parent = ast.getParent();
-        switch (parent.getType()) {
-        case TokenTypes.NOT_EQUAL:
-        case TokenTypes.EQUAL:
-        case TokenTypes.LNOT:
-        case TokenTypes.LOR:
-        case TokenTypes.LAND:
-            log(parent, MSG_KEY);
-            break;
-        default:
-            break;
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	final DetailAST parent = ast.getParent();
+	switch (parent.getType()) {
+	case TokenTypes.NOT_EQUAL:
+	case TokenTypes.EQUAL:
+	case TokenTypes.LNOT:
+	case TokenTypes.LOR:
+	case TokenTypes.LAND:
+		log(parent, MSG_KEY);
+		break;
+	default:
+		break;
+	}
+}
 
 }

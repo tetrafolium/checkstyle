@@ -30,133 +30,133 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  */
 public class CodeSelectorPresentation {
 
-    /** DetailAST or DetailNode node. */
-    private final Object node;
-    /** Mapping. */
-    private final List<Integer> lines2position;
-    /** Selection start position. */
-    private int selectionStart;
-    /** Selection end position. */
-    private int selectionEnd;
+/** DetailAST or DetailNode node. */
+private final Object node;
+/** Mapping. */
+private final List<Integer> lines2position;
+/** Selection start position. */
+private int selectionStart;
+/** Selection end position. */
+private int selectionEnd;
 
-    /**
-     * Constructor.
-     *
-     * @param ast ast node.
-     * @param lines2position list to map lines.
-     * @noinspection AssignmentOrReturnOfFieldWithMutableType
-     */
-    public CodeSelectorPresentation(DetailAST ast, List<Integer> lines2position) {
-        node = ast;
-        this.lines2position = lines2position;
-    }
+/**
+ * Constructor.
+ *
+ * @param ast ast node.
+ * @param lines2position list to map lines.
+ * @noinspection AssignmentOrReturnOfFieldWithMutableType
+ */
+public CodeSelectorPresentation(DetailAST ast, List<Integer> lines2position) {
+	node = ast;
+	this.lines2position = lines2position;
+}
 
-    /**
-     * Constructor.
-     *
-     * @param node DetailNode node.
-     * @param lines2position list to map lines.
-     * @noinspection AssignmentOrReturnOfFieldWithMutableType
-     */
-    public CodeSelectorPresentation(DetailNode node, List<Integer> lines2position) {
-        this.node = node;
-        this.lines2position = lines2position;
-    }
+/**
+ * Constructor.
+ *
+ * @param node DetailNode node.
+ * @param lines2position list to map lines.
+ * @noinspection AssignmentOrReturnOfFieldWithMutableType
+ */
+public CodeSelectorPresentation(DetailNode node, List<Integer> lines2position) {
+	this.node = node;
+	this.lines2position = lines2position;
+}
 
-    /**
-     * Returns selection start position.
-     *
-     * @return selection start position.
-     */
-    public int getSelectionStart() {
-        return selectionStart;
-    }
+/**
+ * Returns selection start position.
+ *
+ * @return selection start position.
+ */
+public int getSelectionStart() {
+	return selectionStart;
+}
 
-    /**
-     * Returns selection end position.
-     *
-     * @return selection end position.
-     */
-    public int getSelectionEnd() {
-        return selectionEnd;
-    }
+/**
+ * Returns selection end position.
+ *
+ * @return selection end position.
+ */
+public int getSelectionEnd() {
+	return selectionEnd;
+}
 
-    /**
-     * Find start and end selection positions from AST line and Column.
-     */
-    public void findSelectionPositions() {
-        if (node instanceof DetailAST) {
-            findSelectionPositions((DetailAST) node);
-        }
-        else {
-            findSelectionPositions((DetailNode) node);
-        }
-    }
+/**
+ * Find start and end selection positions from AST line and Column.
+ */
+public void findSelectionPositions() {
+	if (node instanceof DetailAST) {
+		findSelectionPositions((DetailAST) node);
+	}
+	else {
+		findSelectionPositions((DetailNode) node);
+	}
+}
 
-    /**
-     * Find start and end selection positions from AST line and Column.
-     *
-     * @param ast DetailAST node for which selection finds
-     */
-    private void findSelectionPositions(DetailAST ast) {
-        selectionStart = lines2position.get(ast.getLineNo()) + ast.getColumnNo();
+/**
+ * Find start and end selection positions from AST line and Column.
+ *
+ * @param ast DetailAST node for which selection finds
+ */
+private void findSelectionPositions(DetailAST ast) {
+	selectionStart = lines2position.get(ast.getLineNo()) + ast.getColumnNo();
 
-        if (ast.hasChildren() || !TokenUtil.getTokenName(ast.getType()).equals(ast.getText())) {
-            selectionEnd = findLastPosition(ast);
-        }
-        else {
-            selectionEnd = selectionStart;
-        }
-    }
+	if (ast.hasChildren() || !TokenUtil.getTokenName(ast.getType()).equals(ast.getText())) {
+		selectionEnd = findLastPosition(ast);
+	}
+	else {
+		selectionEnd = selectionStart;
+	}
+}
 
-    /**
-     * Find start and end selection positions from DetailNode line and Column.
-     *
-     * @param detailNode DetailNode node for which selection finds
-     */
-    private void findSelectionPositions(DetailNode detailNode) {
-        selectionStart = lines2position.get(detailNode.getLineNumber())
-                         + detailNode.getColumnNumber();
+/**
+ * Find start and end selection positions from DetailNode line and Column.
+ *
+ * @param detailNode DetailNode node for which selection finds
+ */
+private void findSelectionPositions(DetailNode detailNode) {
+	selectionStart = lines2position.get(detailNode.getLineNumber())
+	                 + detailNode.getColumnNumber();
 
-        selectionEnd = findLastPosition(detailNode);
-    }
+	selectionEnd = findLastPosition(detailNode);
+}
 
-    /**
-     * Finds the last position of node without children.
-     *
-     * @param astNode DetailAST node.
-     * @return Last position of node without children.
-     */
-    private int findLastPosition(final DetailAST astNode) {
-        final int lastPosition;
-        if (astNode.hasChildren()) {
-            lastPosition = findLastPosition(astNode.getLastChild());
-        }
-        else {
-            lastPosition = lines2position.get(astNode.getLineNo()) + astNode.getColumnNo()
-                           + astNode.getText().length();
-        }
-        return lastPosition;
-    }
+/**
+ * Finds the last position of node without children.
+ *
+ * @param astNode DetailAST node.
+ * @return Last position of node without children.
+ */
+private int findLastPosition(final DetailAST astNode) {
+	final int lastPosition;
+	if (astNode.hasChildren()) {
+		lastPosition = findLastPosition(astNode.getLastChild());
+	}
+	else {
+		lastPosition = lines2position.get(astNode.getLineNo()) + astNode.getColumnNo()
+		               + astNode.getText().length();
+	}
+	return lastPosition;
+}
 
-    /**
-     * Finds the last position of node without children.
-     *
-     * @param detailNode DetailNode node.
-     * @return Last position of node without children.
-     */
-    private int findLastPosition(final DetailNode detailNode) {
-        final int lastPosition;
-        if (detailNode.getChildren().length == 0) {
-            lastPosition = lines2position.get(detailNode.getLineNumber())
-                           + detailNode.getColumnNumber() + detailNode.getText().length();
-        }
-        else {
-            final DetailNode lastChild =
-                detailNode.getChildren()[detailNode.getChildren().length - 1];
-            lastPosition = findLastPosition(lastChild);
-        }
-        return lastPosition;
-    }
+/**
+ * Finds the last position of node without children.
+ *
+ * @param detailNode DetailNode node.
+ * @return Last position of node without children.
+ */
+private int findLastPosition(final DetailNode detailNode) {
+	final int lastPosition;
+	if (detailNode.getChildren().length == 0) {
+		lastPosition = lines2position.get(detailNode.getLineNumber())
+		               + detailNode.getColumnNumber() + detailNode.getText().length();
+	}
+	else {
+		final DetailNode lastChild =
+			detailNode.getChildren()[detailNode.getChildren().length - 1];
+		lastPosition = findLastPosition(lastChild);
+	}
+	return lastPosition;
+}
 
 }

@@ -28,54 +28,54 @@ package com.puppycrawl.tools.checkstyle.api;
  */
 public interface DetailNode {
 
-    /**
-     * Node type.
-     *
-     * @return node type.
-     * @see JavadocTokenTypes
-     */
-    int getType();
+/**
+ * Node type.
+ *
+ * @return node type.
+ * @see JavadocTokenTypes
+ */
+int getType();
 
-    /**
-     * Node text.
-     *
-     * @return node text
-     */
-    String getText();
+/**
+ * Node text.
+ *
+ * @return node text
+ */
+String getText();
 
-    /**
-     * Node line number.
-     *
-     * @return node line number
-     */
-    int getLineNumber();
+/**
+ * Node line number.
+ *
+ * @return node line number
+ */
+int getLineNumber();
 
-    /**
-     * Node column number.
-     *
-     * @return node column number.
-     */
-    int getColumnNumber();
+/**
+ * Node column number.
+ *
+ * @return node column number.
+ */
+int getColumnNumber();
 
-    /**
-     * Array of children.
-     *
-     * @return array of children
-     */
-    DetailNode[] getChildren();
+/**
+ * Array of children.
+ *
+ * @return array of children
+ */
+DetailNode[] getChildren();
 
-    /**
-     * Parent node.
-     *
-     * @return parent node.
-     */
-    DetailNode getParent();
+/**
+ * Parent node.
+ *
+ * @return parent node.
+ */
+DetailNode getParent();
 
-    /**
-     * Node index among parent's children.
-     *
-     * @return index
-     */
-    int getIndex();
+/**
+ * Node index among parent's children.
+ *
+ * @return index
+ */
+int getIndex();
 
 }

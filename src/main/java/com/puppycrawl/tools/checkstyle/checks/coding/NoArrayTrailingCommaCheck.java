@@ -84,33 +84,33 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 @StatelessCheck
 public class NoArrayTrailingCommaCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "no.array.trailing.comma";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "no.array.trailing.comma";
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.ARRAY_INIT};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.ARRAY_INIT};
+}
 
-    @Override
-    public void visitToken(DetailAST arrayInit) {
-        final DetailAST rcurly = arrayInit.findFirstToken(TokenTypes.RCURLY);
-        final DetailAST previousSibling = rcurly.getPreviousSibling();
-        if (previousSibling != null && previousSibling.getType() == TokenTypes.COMMA) {
-            log(previousSibling, MSG_KEY);
-        }
-    }
+@Override
+public void visitToken(DetailAST arrayInit) {
+	final DetailAST rcurly = arrayInit.findFirstToken(TokenTypes.RCURLY);
+	final DetailAST previousSibling = rcurly.getPreviousSibling();
+	if (previousSibling != null && previousSibling.getType() == TokenTypes.COMMA) {
+		log(previousSibling, MSG_KEY);
+	}
+}
 }

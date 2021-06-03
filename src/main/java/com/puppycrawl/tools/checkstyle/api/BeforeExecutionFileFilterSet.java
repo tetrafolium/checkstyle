@@ -29,58 +29,58 @@ import java.util.Set;
  * event is rejected. Otherwise, the event is accepted.
  */
 public final class BeforeExecutionFileFilterSet
-    implements BeforeExecutionFileFilter {
+	implements BeforeExecutionFileFilter {
 
-    /** Filter set. */
-    private final Set<BeforeExecutionFileFilter> beforeExecutionFileFilters = new HashSet<>();
+/** Filter set. */
+private final Set<BeforeExecutionFileFilter> beforeExecutionFileFilters = new HashSet<>();
 
-    /**
-     * Adds a Filter to the set.
-     *
-     * @param filter the Filter to add.
-     */
-    public void addBeforeExecutionFileFilter(BeforeExecutionFileFilter filter) {
-        beforeExecutionFileFilters.add(filter);
-    }
+/**
+ * Adds a Filter to the set.
+ *
+ * @param filter the Filter to add.
+ */
+public void addBeforeExecutionFileFilter(BeforeExecutionFileFilter filter) {
+	beforeExecutionFileFilters.add(filter);
+}
 
-    /**
-     * Removes filter.
-     *
-     * @param filter filter to remove.
-     */
-    public void removeBeforeExecutionFileFilter(BeforeExecutionFileFilter filter) {
-        beforeExecutionFileFilters.remove(filter);
-    }
+/**
+ * Removes filter.
+ *
+ * @param filter filter to remove.
+ */
+public void removeBeforeExecutionFileFilter(BeforeExecutionFileFilter filter) {
+	beforeExecutionFileFilters.remove(filter);
+}
 
-    /**
-     * Returns the Filters of the filter set.
-     *
-     * @return the Filters of the filter set.
-     */
-    public Set<BeforeExecutionFileFilter> getBeforeExecutionFileFilters() {
-        return Collections.unmodifiableSet(beforeExecutionFileFilters);
-    }
+/**
+ * Returns the Filters of the filter set.
+ *
+ * @return the Filters of the filter set.
+ */
+public Set<BeforeExecutionFileFilter> getBeforeExecutionFileFilters() {
+	return Collections.unmodifiableSet(beforeExecutionFileFilters);
+}
 
-    @Override
-    public String toString() {
-        return beforeExecutionFileFilters.toString();
-    }
+@Override
+public String toString() {
+	return beforeExecutionFileFilters.toString();
+}
 
-    @Override
-    public boolean accept(String uri) {
-        boolean result = true;
-        for (BeforeExecutionFileFilter filter : beforeExecutionFileFilters) {
-            if (!filter.accept(uri)) {
-                result = false;
-                break;
-            }
-        }
-        return result;
-    }
+@Override
+public boolean accept(String uri) {
+	boolean result = true;
+	for (BeforeExecutionFileFilter filter : beforeExecutionFileFilters) {
+		if (!filter.accept(uri)) {
+			result = false;
+			break;
+		}
+	}
+	return result;
+}
 
-    /** Clears the BeforeExecutionFileFilterSet. */
-    public void clear() {
-        beforeExecutionFileFilters.clear();
-    }
+/** Clears the BeforeExecutionFileFilterSet. */
+public void clear() {
+	beforeExecutionFileFilters.clear();
+}
 
 }

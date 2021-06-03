@@ -107,61 +107,61 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 @StatelessCheck
 public class AvoidDoubleBraceInitializationCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "avoid.double.brace.init";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "avoid.double.brace.init";
 
-    /**
-     * List of token types that are used in {@link #HAS_MEMBERS} predicate.
-     */
-    private static final List<Integer> IGNORED_TYPES = Arrays.asList(
-                TokenTypes.INSTANCE_INIT,
-                TokenTypes.SEMI,
-                TokenTypes.LCURLY,
-                TokenTypes.RCURLY
-            );
+/**
+ * List of token types that are used in {@link #HAS_MEMBERS} predicate.
+ */
+private static final List<Integer> IGNORED_TYPES = Arrays.asList(
+	TokenTypes.INSTANCE_INIT,
+	TokenTypes.SEMI,
+	TokenTypes.LCURLY,
+	TokenTypes.RCURLY
+	);
 
-    /**
-     * Predicate for tokens that is used in {@link #hasOnlyInitialization(DetailAST)}.
-     */
-    private static final Predicate<DetailAST> HAS_MEMBERS =
-        token -> !IGNORED_TYPES.contains(token.getType());
+/**
+ * Predicate for tokens that is used in {@link #hasOnlyInitialization(DetailAST)}.
+ */
+private static final Predicate<DetailAST> HAS_MEMBERS =
+	token->!IGNORED_TYPES.contains(token.getType());
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.OBJBLOCK};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.OBJBLOCK};
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        if (ast.getParent().getType() == TokenTypes.LITERAL_NEW
-                && hasOnlyInitialization(ast)) {
-            log(ast, MSG_KEY);
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	if (ast.getParent().getType() == TokenTypes.LITERAL_NEW
+	    && hasOnlyInitialization(ast)) {
+		log(ast, MSG_KEY);
+	}
+}
 
-    /**
-     * Checks that block has at least one instance init block and no other class members.
-     *
-     * @param objBlock token to check
-     * @return true if there is least one instance init block and no other class members,
-     *     false otherwise
-     */
-    private static boolean hasOnlyInitialization(DetailAST objBlock) {
-        final boolean hasInitBlock = objBlock.findFirstToken(TokenTypes.INSTANCE_INIT) != null;
-        return hasInitBlock
-               && !TokenUtil.findFirstTokenByPredicate(objBlock, HAS_MEMBERS).isPresent();
-    }
+/**
+ * Checks that block has at least one instance init block and no other class members.
+ *
+ * @param objBlock token to check
+ * @return true if there is least one instance init block and no other class members,
+ *     false otherwise
+ */
+private static boolean hasOnlyInitialization(DetailAST objBlock) {
+	final boolean hasInitBlock = objBlock.findFirstToken(TokenTypes.INSTANCE_INIT) != null;
+	return hasInitBlock
+	       && !TokenUtil.findFirstTokenByPredicate(objBlock, HAS_MEMBERS).isPresent();
+}
 }

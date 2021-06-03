@@ -29,48 +29,48 @@ import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
 import com.puppycrawl.tools.checkstyle.checks.sizes.LambdaBodyLengthCheck;
 
 public class XpathRegressionLambdaBodyLengthTest
-    extends AbstractXpathTestSupport {
+	extends AbstractXpathTestSupport {
 
-    private static final Class<LambdaBodyLengthCheck> CLASS =
-        LambdaBodyLengthCheck.class;
+private static final Class<LambdaBodyLengthCheck> CLASS =
+	LambdaBodyLengthCheck.class;
 
-    @Override
-    protected String getCheckName() {
-        return CLASS.getSimpleName();
-    }
+@Override
+protected String getCheckName() {
+	return CLASS.getSimpleName();
+}
 
-    @Test
-    public void testDefault() throws Exception {
-        final File fileToProcess = new File(getPath(
-                                                "SuppressionXpathRegressionLambdaBodyLength1.java"));
-        final DefaultConfiguration moduleConfig = createModuleConfig(CLASS);
-        final String[] expectedViolation = {
-            "7:48: " + getCheckMessage(CLASS, LambdaBodyLengthCheck.MSG_KEY, 11, 10),
-        };
+@Test
+public void testDefault() throws Exception {
+	final File fileToProcess = new File(getPath(
+						    "SuppressionXpathRegressionLambdaBodyLength1.java"));
+	final DefaultConfiguration moduleConfig = createModuleConfig(CLASS);
+	final String[] expectedViolation = {
+		"7:48: " + getCheckMessage(CLASS, LambdaBodyLengthCheck.MSG_KEY, 11, 10),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionLambdaBodyLength1']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/SLIST"
-                    + "/VARIABLE_DEF[./IDENT[@text='trimmer']]/ASSIGN/LAMBDA");
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionLambdaBodyLength1']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/SLIST"
+		+ "/VARIABLE_DEF[./IDENT[@text='trimmer']]/ASSIGN/LAMBDA");
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
+}
 
-    @Test
-    public void testMaxIsNotDefault() throws Exception {
-        final File fileToProcess = new File(getPath(
-                                                "SuppressionXpathRegressionLambdaBodyLength2.java"));
-        final DefaultConfiguration moduleConfig = createModuleConfig(CLASS);
-        moduleConfig.addAttribute("max", "5");
-        final String[] expectedViolation = {
-            "7:25: " + getCheckMessage(CLASS, LambdaBodyLengthCheck.MSG_KEY, 6, 5),
-        };
+@Test
+public void testMaxIsNotDefault() throws Exception {
+	final File fileToProcess = new File(getPath(
+						    "SuppressionXpathRegressionLambdaBodyLength2.java"));
+	final DefaultConfiguration moduleConfig = createModuleConfig(CLASS);
+	moduleConfig.addAttribute("max", "5");
+	final String[] expectedViolation = {
+		"7:25: " + getCheckMessage(CLASS, LambdaBodyLengthCheck.MSG_KEY, 6, 5),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionLambdaBodyLength2']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/SLIST"
-                    + "/VARIABLE_DEF[./IDENT[@text='r']]/ASSIGN/LAMBDA");
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionLambdaBodyLength2']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/SLIST"
+		+ "/VARIABLE_DEF[./IDENT[@text='r']]/ASSIGN/LAMBDA");
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
+}
 }

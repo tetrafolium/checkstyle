@@ -8,8 +8,8 @@ import java.lang.annotation.Target;
 }
 
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD})
-@interface Annotation  {
+@interface Annotation {
 
-    String value() default "";
+String value() default "";
 
 }

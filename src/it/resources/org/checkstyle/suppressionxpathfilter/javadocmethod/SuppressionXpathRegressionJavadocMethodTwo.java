@@ -5,13 +5,13 @@ package org.checkstyle.suppressionxpathfilter.javadocmethod;
  */
 public class SuppressionXpathRegressionJavadocMethodTwo {
 
-    /**
-     * Needs a param tag for x.
-     *
-     * @return identity
-     */
-    public int checkParam(int x) { //warn
-        return x;
-    }
+/**
+ * Needs a param tag for x.
+ *
+ * @return identity
+ */
+public int checkParam(int x) {     //warn
+	return x;
+}
 
 }

@@ -140,44 +140,44 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 @StatelessCheck
 public class IllegalIdentifierNameCheck extends AbstractNameCheck {
 
-    /**
-     * Creates a new {@code IllegalIdentifierNameCheck} instance.
-     */
-    public IllegalIdentifierNameCheck() {
-        super("(?i)^(?!(record|yield|var|permits|sealed|_)$).+$");
-    }
+/**
+ * Creates a new {@code IllegalIdentifierNameCheck} instance.
+ */
+public IllegalIdentifierNameCheck() {
+	super("(?i)^(?!(record|yield|var|permits|sealed|_)$).+$");
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getAcceptableTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getAcceptableTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return new int[] {
-                   TokenTypes.CLASS_DEF,
-                   TokenTypes.INTERFACE_DEF,
-                   TokenTypes.ENUM_DEF,
-                   TokenTypes.ANNOTATION_DEF,
-                   TokenTypes.ANNOTATION_FIELD_DEF,
-                   TokenTypes.PARAMETER_DEF,
-                   TokenTypes.VARIABLE_DEF,
-                   TokenTypes.METHOD_DEF,
-                   TokenTypes.ENUM_CONSTANT_DEF,
-                   TokenTypes.PATTERN_VARIABLE_DEF,
-                   TokenTypes.RECORD_DEF,
-                   TokenTypes.RECORD_COMPONENT_DEF,
-               };
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return new int[] {
+		       TokenTypes.CLASS_DEF,
+		       TokenTypes.INTERFACE_DEF,
+		       TokenTypes.ENUM_DEF,
+		       TokenTypes.ANNOTATION_DEF,
+		       TokenTypes.ANNOTATION_FIELD_DEF,
+		       TokenTypes.PARAMETER_DEF,
+		       TokenTypes.VARIABLE_DEF,
+		       TokenTypes.METHOD_DEF,
+		       TokenTypes.ENUM_CONSTANT_DEF,
+		       TokenTypes.PATTERN_VARIABLE_DEF,
+		       TokenTypes.RECORD_DEF,
+		       TokenTypes.RECORD_COMPONENT_DEF,
+	};
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return CommonUtil.EMPTY_INT_ARRAY;
-    }
+@Override
+public int[] getRequiredTokens() {
+	return CommonUtil.EMPTY_INT_ARRAY;
+}
 
-    @Override
-    protected boolean mustCheckName(DetailAST ast) {
-        return ast.findFirstToken(TokenTypes.IDENT) != null;
-    }
+@Override
+protected boolean mustCheckName(DetailAST ast) {
+	return ast.findFirstToken(TokenTypes.IDENT) != null;
+}
 
 }

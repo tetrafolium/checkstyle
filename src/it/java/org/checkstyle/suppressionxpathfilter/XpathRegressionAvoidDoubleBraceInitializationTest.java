@@ -30,62 +30,62 @@ import com.puppycrawl.tools.checkstyle.checks.coding.AvoidDoubleBraceInitializat
 
 public class XpathRegressionAvoidDoubleBraceInitializationTest extends AbstractXpathTestSupport {
 
-    private final Class<AvoidDoubleBraceInitializationCheck> clazz =
-        AvoidDoubleBraceInitializationCheck.class;
+private final Class<AvoidDoubleBraceInitializationCheck> clazz =
+	AvoidDoubleBraceInitializationCheck.class;
 
-    @Override
-    protected String getCheckName() {
-        return clazz.getSimpleName();
-    }
+@Override
+protected String getCheckName() {
+	return clazz.getSimpleName();
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess = new File(
-            getPath("SuppressionXpathRegressionAvoidDoubleBraceInitialization.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess = new File(
+		getPath("SuppressionXpathRegressionAvoidDoubleBraceInitialization.java"));
 
-        final DefaultConfiguration moduleConfig = createModuleConfig(clazz);
+	final DefaultConfiguration moduleConfig = createModuleConfig(clazz);
 
-        final String[] expectedViolation = {
-            "6:41: " + getCheckMessage(clazz, AvoidDoubleBraceInitializationCheck.MSG_KEY),
-        };
+	final String[] expectedViolation = {
+		"6:41: " + getCheckMessage(clazz, AvoidDoubleBraceInitializationCheck.MSG_KEY),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAvoidDoubleBraceInitialization']]"
-                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='list']]/ASSIGN/EXPR/"
-                    + "LITERAL_NEW[./IDENT[@text='ArrayList']]/OBJBLOCK",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAvoidDoubleBraceInitialization']]"
-                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='list']]/ASSIGN/EXPR/"
-                    + "LITERAL_NEW[./IDENT[@text='ArrayList']]/OBJBLOCK/LCURLY"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAvoidDoubleBraceInitialization']]"
+		+ "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='list']]/ASSIGN/EXPR/"
+		+ "LITERAL_NEW[./IDENT[@text='ArrayList']]/OBJBLOCK",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAvoidDoubleBraceInitialization']]"
+		+ "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='list']]/ASSIGN/EXPR/"
+		+ "LITERAL_NEW[./IDENT[@text='ArrayList']]/OBJBLOCK/LCURLY"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess = new File(
-            getPath("SuppressionXpathRegressionAvoidDoubleBraceInitializationTwo.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess = new File(
+		getPath("SuppressionXpathRegressionAvoidDoubleBraceInitializationTwo.java"));
 
-        final DefaultConfiguration moduleConfig = createModuleConfig(clazz);
+	final DefaultConfiguration moduleConfig = createModuleConfig(clazz);
 
-        final String[] expectedViolation = {
-            "7:31: " + getCheckMessage(clazz, AvoidDoubleBraceInitializationCheck.MSG_KEY),
-        };
+	final String[] expectedViolation = {
+		"7:31: " + getCheckMessage(clazz, AvoidDoubleBraceInitializationCheck.MSG_KEY),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text="
-                    + "'SuppressionXpathRegressionAvoidDoubleBraceInitializationTwo']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]"
-                    + "/SLIST/EXPR/LITERAL_NEW[./IDENT[@text='HashSet']]"
-                    + "/OBJBLOCK",
-                    "/CLASS_DEF[./IDENT[@text="
-                    + "'SuppressionXpathRegressionAvoidDoubleBraceInitializationTwo']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]"
-                    + "/SLIST/EXPR/LITERAL_NEW[./IDENT[@text='HashSet']]"
-                    + "/OBJBLOCK/LCURLY"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text="
+		+ "'SuppressionXpathRegressionAvoidDoubleBraceInitializationTwo']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]"
+		+ "/SLIST/EXPR/LITERAL_NEW[./IDENT[@text='HashSet']]"
+		+ "/OBJBLOCK",
+		"/CLASS_DEF[./IDENT[@text="
+		+ "'SuppressionXpathRegressionAvoidDoubleBraceInitializationTwo']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]"
+		+ "/SLIST/EXPR/LITERAL_NEW[./IDENT[@text='HashSet']]"
+		+ "/OBJBLOCK/LCURLY"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
+}
 
 }

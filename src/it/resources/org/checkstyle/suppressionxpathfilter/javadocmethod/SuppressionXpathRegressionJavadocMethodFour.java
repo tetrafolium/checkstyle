@@ -6,11 +6,11 @@ package org.checkstyle.suppressionxpathfilter.javadocmethod;
  */
 public class SuppressionXpathRegressionJavadocMethodFour {
 
-    /**
-     * Needs a throws tag.
-     */
-    public void foo() throws Exception { //warn
+/**
+ * Needs a throws tag.
+ */
+public void foo() throws Exception {     //warn
 
-    }
+}
 
 }

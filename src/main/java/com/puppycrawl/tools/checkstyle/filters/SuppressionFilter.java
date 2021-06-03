@@ -221,64 +221,64 @@ import com.puppycrawl.tools.checkstyle.utils.FilterUtil;
  */
 public class SuppressionFilter extends AutomaticBean implements Filter, ExternalResourceHolder {
 
-    /** Specify the location of the <em>suppressions XML document</em> file. */
-    private String file;
-    /**
-     * Control what to do when the file is not existing. If {@code optional} is
-     * set to {@code false} the file must exist, or else it ends with error.
-     * On the other hand if optional is {@code true} and file is not found,
-     * the filter accept all audit events.
-     */
-    private boolean optional;
-    /** Set of individual suppresses. */
-    private FilterSet filters = new FilterSet();
+/** Specify the location of the <em>suppressions XML document</em> file. */
+private String file;
+/**
+ * Control what to do when the file is not existing. If {@code optional} is
+ * set to {@code false} the file must exist, or else it ends with error.
+ * On the other hand if optional is {@code true} and file is not found,
+ * the filter accept all audit events.
+ */
+private boolean optional;
+/** Set of individual suppresses. */
+private FilterSet filters = new FilterSet();
 
-    /**
-     * Setter to specify the location of the <em>suppressions XML document</em> file.
-     *
-     * @param fileName name of the suppressions file.
-     */
-    public void setFile(String fileName) {
-        file = fileName;
-    }
+/**
+ * Setter to specify the location of the <em>suppressions XML document</em> file.
+ *
+ * @param fileName name of the suppressions file.
+ */
+public void setFile(String fileName) {
+	file = fileName;
+}
 
-    /**
-     * Setter to control what to do when the file is not existing.
-     * If {@code optional} is set to {@code false} the file must exist, or else
-     * it ends with error. On the other hand if optional is {@code true}
-     * and file is not found, the filter accept all audit events.
-     *
-     * @param optional tells if config file existence is optional.
-     */
-    public void setOptional(boolean optional) {
-        this.optional = optional;
-    }
+/**
+ * Setter to control what to do when the file is not existing.
+ * If {@code optional} is set to {@code false} the file must exist, or else
+ * it ends with error. On the other hand if optional is {@code true}
+ * and file is not found, the filter accept all audit events.
+ *
+ * @param optional tells if config file existence is optional.
+ */
+public void setOptional(boolean optional) {
+	this.optional = optional;
+}
 
-    @Override
-    public boolean accept(AuditEvent event) {
-        return filters.accept(event);
-    }
+@Override
+public boolean accept(AuditEvent event) {
+	return filters.accept(event);
+}
 
-    @Override
-    protected void finishLocalSetup() throws CheckstyleException {
-        if (file != null) {
-            if (optional) {
-                if (FilterUtil.isFileExists(file)) {
-                    filters = SuppressionsLoader.loadSuppressions(file);
-                }
-                else {
-                    filters = new FilterSet();
-                }
-            }
-            else {
-                filters = SuppressionsLoader.loadSuppressions(file);
-            }
-        }
-    }
+@Override
+protected void finishLocalSetup() throws CheckstyleException {
+	if (file != null) {
+		if (optional) {
+			if (FilterUtil.isFileExists(file)) {
+				filters = SuppressionsLoader.loadSuppressions(file);
+			}
+			else {
+				filters = new FilterSet();
+			}
+		}
+		else {
+			filters = SuppressionsLoader.loadSuppressions(file);
+		}
+	}
+}
 
-    @Override
-    public Set<String> getExternalResourceLocations() {
-        return Collections.singleton(file);
-    }
+@Override
+public Set<String> getExternalResourceLocations() {
+	return Collections.singleton(file);
+}
 
 }

@@ -449,177 +449,177 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 @FileStatefulCheck
 public class ImportControlCheck extends AbstractCheck implements ExternalResourceHolder {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_MISSING_FILE = "import.control.missing.file";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_MISSING_FILE = "import.control.missing.file";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_UNKNOWN_PKG = "import.control.unknown.pkg";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_UNKNOWN_PKG = "import.control.unknown.pkg";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_DISALLOWED = "import.control.disallowed";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_DISALLOWED = "import.control.disallowed";
 
-    /**
-     * A part of message for exception.
-     */
-    private static final String UNABLE_TO_LOAD = "Unable to load ";
+/**
+ * A part of message for exception.
+ */
+private static final String UNABLE_TO_LOAD = "Unable to load ";
 
-    /**
-     * Specify the location of the file containing the import control configuration.
-     * It can be a regular file, URL or resource path. It will try loading the path
-     * as a URL first, then as a file, and finally as a resource.
-     */
-    private URI file;
+/**
+ * Specify the location of the file containing the import control configuration.
+ * It can be a regular file, URL or resource path. It will try loading the path
+ * as a URL first, then as a file, and finally as a resource.
+ */
+private URI file;
 
-    /**
-     * Specify the regular expression of file paths to which this check should apply.
-     * Files that don't match the pattern will not be checked. The pattern will
-     * be matched against the full absolute file path.
-     */
-    private Pattern path = Pattern.compile(".*");
-    /** Whether to process the current file. */
-    private boolean processCurrentFile;
+/**
+ * Specify the regular expression of file paths to which this check should apply.
+ * Files that don't match the pattern will not be checked. The pattern will
+ * be matched against the full absolute file path.
+ */
+private Pattern path = Pattern.compile(".*");
+/** Whether to process the current file. */
+private boolean processCurrentFile;
 
-    /** The root package controller. */
-    private PkgImportControl root;
-    /** The package doing the import. */
-    private String packageName;
-    /** The file name doing the import. */
-    private String fileName;
+/** The root package controller. */
+private PkgImportControl root;
+/** The package doing the import. */
+private String packageName;
+/** The file name doing the import. */
+private String fileName;
 
-    /**
-     * The package controller for the current file. Used for performance
-     * optimisation.
-     */
-    private AbstractImportControl currentImportControl;
+/**
+ * The package controller for the current file. Used for performance
+ * optimisation.
+ */
+private AbstractImportControl currentImportControl;
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.PACKAGE_DEF, TokenTypes.IMPORT, TokenTypes.STATIC_IMPORT, };
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.PACKAGE_DEF, TokenTypes.IMPORT, TokenTypes.STATIC_IMPORT, };
+}
 
-    @Override
-    public void beginTree(DetailAST rootAST) {
-        currentImportControl = null;
-        processCurrentFile = path.matcher(getFileContents().getFileName()).find();
-        fileName = getFileContents().getText().getFile().getName();
+@Override
+public void beginTree(DetailAST rootAST) {
+	currentImportControl = null;
+	processCurrentFile = path.matcher(getFileContents().getFileName()).find();
+	fileName = getFileContents().getText().getFile().getName();
 
-        final int period = fileName.lastIndexOf('.');
+	final int period = fileName.lastIndexOf('.');
 
-        if (period != -1) {
-            fileName = fileName.substring(0, period);
-        }
-    }
+	if (period != -1) {
+		fileName = fileName.substring(0, period);
+	}
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        if (processCurrentFile) {
-            if (ast.getType() == TokenTypes.PACKAGE_DEF) {
-                if (root == null) {
-                    log(ast, MSG_MISSING_FILE);
-                }
-                else {
-                    packageName = getPackageText(ast);
-                    currentImportControl = root.locateFinest(packageName, fileName);
-                    if (currentImportControl == null) {
-                        log(ast, MSG_UNKNOWN_PKG);
-                    }
-                }
-            }
-            else if (currentImportControl != null) {
-                final String importText = getImportText(ast);
-                final AccessResult access = currentImportControl.checkAccess(packageName, fileName,
-                                            importText);
-                if (access != AccessResult.ALLOWED) {
-                    log(ast, MSG_DISALLOWED, importText);
-                }
-            }
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	if (processCurrentFile) {
+		if (ast.getType() == TokenTypes.PACKAGE_DEF) {
+			if (root == null) {
+				log(ast, MSG_MISSING_FILE);
+			}
+			else {
+				packageName = getPackageText(ast);
+				currentImportControl = root.locateFinest(packageName, fileName);
+				if (currentImportControl == null) {
+					log(ast, MSG_UNKNOWN_PKG);
+				}
+			}
+		}
+		else if (currentImportControl != null) {
+			final String importText = getImportText(ast);
+			final AccessResult access = currentImportControl.checkAccess(packageName, fileName,
+			                                                             importText);
+			if (access != AccessResult.ALLOWED) {
+				log(ast, MSG_DISALLOWED, importText);
+			}
+		}
+	}
+}
 
-    @Override
-    public Set<String> getExternalResourceLocations() {
-        return Collections.singleton(file.toString());
-    }
+@Override
+public Set<String> getExternalResourceLocations() {
+	return Collections.singleton(file.toString());
+}
 
-    /**
-     * Returns package text.
-     *
-     * @param ast PACKAGE_DEF ast node
-     * @return String that represents full package name
-     */
-    private static String getPackageText(DetailAST ast) {
-        final DetailAST nameAST = ast.getLastChild().getPreviousSibling();
-        return FullIdent.createFullIdent(nameAST).getText();
-    }
+/**
+ * Returns package text.
+ *
+ * @param ast PACKAGE_DEF ast node
+ * @return String that represents full package name
+ */
+private static String getPackageText(DetailAST ast) {
+	final DetailAST nameAST = ast.getLastChild().getPreviousSibling();
+	return FullIdent.createFullIdent(nameAST).getText();
+}
 
-    /**
-     * Returns import text.
-     *
-     * @param ast ast node that represents import
-     * @return String that represents importing class
-     */
-    private static String getImportText(DetailAST ast) {
-        final FullIdent imp;
-        if (ast.getType() == TokenTypes.IMPORT) {
-            imp = FullIdent.createFullIdentBelow(ast);
-        }
-        else {
-            // know it is a static import
-            imp = FullIdent.createFullIdent(ast
-                                            .getFirstChild().getNextSibling());
-        }
-        return imp.getText();
-    }
+/**
+ * Returns import text.
+ *
+ * @param ast ast node that represents import
+ * @return String that represents importing class
+ */
+private static String getImportText(DetailAST ast) {
+	final FullIdent imp;
+	if (ast.getType() == TokenTypes.IMPORT) {
+		imp = FullIdent.createFullIdentBelow(ast);
+	}
+	else {
+		// know it is a static import
+		imp = FullIdent.createFullIdent(ast
+		                                .getFirstChild().getNextSibling());
+	}
+	return imp.getText();
+}
 
-    /**
-     * Setter to specify the location of the file containing the import control configuration.
-     * It can be a regular file, URL or resource path. It will try loading the path
-     * as a URL first, then as a file, and finally as a resource.
-     *
-     * @param uri the uri of the file to load.
-     * @throws IllegalArgumentException on error loading the file.
-     */
-    public void setFile(URI uri) {
-        // Handle empty param
-        if (uri != null) {
-            try {
-                root = ImportControlLoader.load(uri);
-                file = uri;
-            }
-            catch (CheckstyleException ex) {
-                throw new IllegalArgumentException(UNABLE_TO_LOAD + uri, ex);
-            }
-        }
-    }
+/**
+ * Setter to specify the location of the file containing the import control configuration.
+ * It can be a regular file, URL or resource path. It will try loading the path
+ * as a URL first, then as a file, and finally as a resource.
+ *
+ * @param uri the uri of the file to load.
+ * @throws IllegalArgumentException on error loading the file.
+ */
+public void setFile(URI uri) {
+	// Handle empty param
+	if (uri != null) {
+		try {
+			root = ImportControlLoader.load(uri);
+			file = uri;
+		}
+		catch (CheckstyleException ex) {
+			throw new IllegalArgumentException(UNABLE_TO_LOAD + uri, ex);
+		}
+	}
+}
 
-    /**
-     * Setter to specify the regular expression of file paths to which this check should apply.
-     * Files that don't match the pattern will not be checked. The pattern will be matched
-     * against the full absolute file path.
-     *
-     * @param pattern the file path regex this check should apply to.
-     */
-    public void setPath(Pattern pattern) {
-        path = pattern;
-    }
+/**
+ * Setter to specify the regular expression of file paths to which this check should apply.
+ * Files that don't match the pattern will not be checked. The pattern will be matched
+ * against the full absolute file path.
+ *
+ * @param pattern the file path regex this check should apply to.
+ */
+public void setPath(Pattern pattern) {
+	path = pattern;
+}
 
 }

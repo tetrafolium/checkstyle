@@ -149,131 +149,131 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 @StatelessCheck
 public class AtclauseOrderCheck extends AbstractJavadocCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "at.clause.order";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "at.clause.order";
 
-    /**
-     * Default order of atclauses.
-     */
-    private static final String[] DEFAULT_ORDER = {
-        "@author", "@version",
-        "@param", "@return",
-        "@throws", "@exception",
-        "@see", "@since",
-        "@serial", "@serialField",
-        "@serialData", "@deprecated",
-    };
+/**
+ * Default order of atclauses.
+ */
+private static final String[] DEFAULT_ORDER = {
+	"@author", "@version",
+	"@param", "@return",
+	"@throws", "@exception",
+	"@see", "@since",
+	"@serial", "@serialField",
+	"@serialData", "@deprecated",
+};
 
-    /**
-     * Specify the list of block tags targeted.
-     */
-    private List<Integer> target = Arrays.asList(
-                                       TokenTypes.CLASS_DEF,
-                                       TokenTypes.INTERFACE_DEF,
-                                       TokenTypes.ENUM_DEF,
-                                       TokenTypes.METHOD_DEF,
-                                       TokenTypes.CTOR_DEF,
-                                       TokenTypes.VARIABLE_DEF,
-                                       TokenTypes.RECORD_DEF,
-                                       TokenTypes.COMPACT_CTOR_DEF
-                                   );
+/**
+ * Specify the list of block tags targeted.
+ */
+private List<Integer> target = Arrays.asList(
+	TokenTypes.CLASS_DEF,
+	TokenTypes.INTERFACE_DEF,
+	TokenTypes.ENUM_DEF,
+	TokenTypes.METHOD_DEF,
+	TokenTypes.CTOR_DEF,
+	TokenTypes.VARIABLE_DEF,
+	TokenTypes.RECORD_DEF,
+	TokenTypes.COMPACT_CTOR_DEF
+	);
 
-    /**
-     * Specify the order by tags.
-     */
-    private List<String> tagOrder = Arrays.asList(DEFAULT_ORDER);
+/**
+ * Specify the order by tags.
+ */
+private List<String> tagOrder = Arrays.asList(DEFAULT_ORDER);
 
-    /**
-     * Setter to specify the list of block tags targeted.
-     *
-     * @param targets user's targets.
-     */
-    public void setTarget(String... targets) {
-        final List<Integer> customTarget = new ArrayList<>();
-        for (String temp : targets) {
-            customTarget.add(TokenUtil.getTokenId(temp.trim()));
-        }
-        target = customTarget;
-    }
+/**
+ * Setter to specify the list of block tags targeted.
+ *
+ * @param targets user's targets.
+ */
+public void setTarget(String... targets) {
+	final List<Integer> customTarget = new ArrayList<>();
+	for (String temp : targets) {
+		customTarget.add(TokenUtil.getTokenId(temp.trim()));
+	}
+	target = customTarget;
+}
 
-    /**
-     * Setter to specify the order by tags.
-     *
-     * @param orders user's orders.
-     */
-    public void setTagOrder(String... orders) {
-        final List<String> customOrder = new ArrayList<>();
-        for (String order : orders) {
-            customOrder.add(order.trim());
-        }
-        tagOrder = customOrder;
-    }
+/**
+ * Setter to specify the order by tags.
+ *
+ * @param orders user's orders.
+ */
+public void setTagOrder(String... orders) {
+	final List<String> customOrder = new ArrayList<>();
+	for (String order : orders) {
+		customOrder.add(order.trim());
+	}
+	tagOrder = customOrder;
+}
 
-    @Override
-    public int[] getDefaultJavadocTokens() {
-        return new int[] {
-                   JavadocTokenTypes.JAVADOC,
-               };
-    }
+@Override
+public int[] getDefaultJavadocTokens() {
+	return new int[] {
+		       JavadocTokenTypes.JAVADOC,
+	};
+}
 
-    @Override
-    public int[] getRequiredJavadocTokens() {
-        return getAcceptableJavadocTokens();
-    }
+@Override
+public int[] getRequiredJavadocTokens() {
+	return getAcceptableJavadocTokens();
+}
 
-    @Override
-    public void visitJavadocToken(DetailNode ast) {
-        final int parentType = getParentType(getBlockCommentAst());
+@Override
+public void visitJavadocToken(DetailNode ast) {
+	final int parentType = getParentType(getBlockCommentAst());
 
-        if (target.contains(parentType)) {
-            checkOrderInTagSection(ast);
-        }
-    }
+	if (target.contains(parentType)) {
+		checkOrderInTagSection(ast);
+	}
+}
 
-    /**
-     * Checks order of atclauses in tag section node.
-     *
-     * @param javadoc Javadoc root node.
-     */
-    private void checkOrderInTagSection(DetailNode javadoc) {
-        int maxIndexOfPreviousTag = 0;
+/**
+ * Checks order of atclauses in tag section node.
+ *
+ * @param javadoc Javadoc root node.
+ */
+private void checkOrderInTagSection(DetailNode javadoc) {
+	int maxIndexOfPreviousTag = 0;
 
-        for (DetailNode node : javadoc.getChildren()) {
-            if (node.getType() == JavadocTokenTypes.JAVADOC_TAG) {
-                final String tagText = JavadocUtil.getFirstChild(node).getText();
-                final int indexOfCurrentTag = tagOrder.indexOf(tagText);
+	for (DetailNode node : javadoc.getChildren()) {
+		if (node.getType() == JavadocTokenTypes.JAVADOC_TAG) {
+			final String tagText = JavadocUtil.getFirstChild(node).getText();
+			final int indexOfCurrentTag = tagOrder.indexOf(tagText);
 
-                if (indexOfCurrentTag != -1) {
-                    if (indexOfCurrentTag < maxIndexOfPreviousTag) {
-                        log(node.getLineNumber(), MSG_KEY, tagOrder.toString());
-                    }
-                    else {
-                        maxIndexOfPreviousTag = indexOfCurrentTag;
-                    }
-                }
-            }
-        }
-    }
+			if (indexOfCurrentTag != -1) {
+				if (indexOfCurrentTag < maxIndexOfPreviousTag) {
+					log(node.getLineNumber(), MSG_KEY, tagOrder.toString());
+				}
+				else {
+					maxIndexOfPreviousTag = indexOfCurrentTag;
+				}
+			}
+		}
+	}
+}
 
-    /**
-     * Returns type of parent node.
-     *
-     * @param commentBlock child node.
-     * @return parent type.
-     */
-    private static int getParentType(DetailAST commentBlock) {
-        final DetailAST parentNode = commentBlock.getParent();
-        int result = 0;
-        if (parentNode != null) {
-            result = parentNode.getType();
-            if (result == TokenTypes.TYPE || result == TokenTypes.MODIFIERS) {
-                result = parentNode.getParent().getType();
-            }
-        }
-        return result;
-    }
+/**
+ * Returns type of parent node.
+ *
+ * @param commentBlock child node.
+ * @return parent type.
+ */
+private static int getParentType(DetailAST commentBlock) {
+	final DetailAST parentNode = commentBlock.getParent();
+	int result = 0;
+	if (parentNode != null) {
+		result = parentNode.getType();
+		if (result == TokenTypes.TYPE || result == TokenTypes.MODIFIERS) {
+			result = parentNode.getParent().getType();
+		}
+	}
+	return result;
+}
 
 }

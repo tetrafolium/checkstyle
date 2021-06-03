@@ -30,120 +30,120 @@ import com.puppycrawl.tools.checkstyle.checks.imports.ImportOrderCheck;
 
 public class XpathRegressionImportOrderTest extends AbstractXpathTestSupport {
 
-    private final String checkName = ImportOrderCheck.class.getSimpleName();
+private final String checkName = ImportOrderCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionImportOrderOne.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionImportOrderOne.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(ImportOrderCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(ImportOrderCheck.class);
 
-        final String[] expectedViolation = {
-            "4:1: " + getCheckMessage(ImportOrderCheck.class,
-                                      ImportOrderCheck.MSG_ORDERING, "java.util.Set"),
-        };
+	final String[] expectedViolation = {
+		"4:1: " + getCheckMessage(ImportOrderCheck.class,
+		                          ImportOrderCheck.MSG_ORDERING, "java.util.Set"),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/IMPORT"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/IMPORT"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionImportOrderTwo.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionImportOrderTwo.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(ImportOrderCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(ImportOrderCheck.class);
 
-        final String[] expectedViolation = {
-            "5:1: " + getCheckMessage(ImportOrderCheck.class,
-                                      ImportOrderCheck.MSG_SEPARATED_IN_GROUP, "java.util.Set"),
-        };
+	final String[] expectedViolation = {
+		"5:1: " + getCheckMessage(ImportOrderCheck.class,
+		                          ImportOrderCheck.MSG_SEPARATED_IN_GROUP, "java.util.Set"),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/IMPORT[./DOT/IDENT[@text='Set']]"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/IMPORT[./DOT/IDENT[@text='Set']]"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testThree() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionImportOrderThree.java"));
+@Test
+public void testThree() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionImportOrderThree.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(ImportOrderCheck.class);
-        moduleConfig.addAttribute("groups", "/^java\\./,javax,org");
-        moduleConfig.addAttribute("separated", "true");
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(ImportOrderCheck.class);
+	moduleConfig.addAttribute("groups", "/^java\\./,javax,org");
+	moduleConfig.addAttribute("separated", "true");
 
-        final String[] expectedViolation = {
-            "4:1: " + getCheckMessage(ImportOrderCheck.class,
-                                      ImportOrderCheck.MSG_SEPARATION, "org.junit.*"),
-        };
+	final String[] expectedViolation = {
+		"4:1: " + getCheckMessage(ImportOrderCheck.class,
+		                          ImportOrderCheck.MSG_SEPARATION, "org.junit.*"),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/IMPORT[./DOT/DOT/IDENT[@text='org']]"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/IMPORT[./DOT/DOT/IDENT[@text='org']]"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testFour() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionImportOrderFour.java"));
+@Test
+public void testFour() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionImportOrderFour.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(ImportOrderCheck.class);
-        moduleConfig.addAttribute("option", "inflow");
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(ImportOrderCheck.class);
+	moduleConfig.addAttribute("option", "inflow");
 
-        final String[] expectedViolation = {
-            "5:1: " + getCheckMessage(ImportOrderCheck.class,
-                                      ImportOrderCheck.MSG_ORDERING, "java.lang.Math.PI"),
-        };
+	final String[] expectedViolation = {
+		"5:1: " + getCheckMessage(ImportOrderCheck.class,
+		                          ImportOrderCheck.MSG_ORDERING, "java.lang.Math.PI"),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/STATIC_IMPORT"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/STATIC_IMPORT"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testFive() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionImportOrderFive.java"));
+@Test
+public void testFive() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionImportOrderFive.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(ImportOrderCheck.class);
-        moduleConfig.addAttribute("groups", "/^java\\./,javax,org");
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(ImportOrderCheck.class);
+	moduleConfig.addAttribute("groups", "/^java\\./,javax,org");
 
-        final String[] expectedViolation = {
-            "5:1: " + getCheckMessage(ImportOrderCheck.class,
-                                      ImportOrderCheck.MSG_ORDERING, "java.util.Date"),
-        };
+	final String[] expectedViolation = {
+		"5:1: " + getCheckMessage(ImportOrderCheck.class,
+		                          ImportOrderCheck.MSG_ORDERING, "java.util.Date"),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/IMPORT[./DOT/IDENT[@text='Date']]"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/IMPORT[./DOT/IDENT[@text='Date']]"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
 }

@@ -196,340 +196,340 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 @FileStatefulCheck
 public class JavaNCSSCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_METHOD = "ncss.method";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_METHOD = "ncss.method";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_CLASS = "ncss.class";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_CLASS = "ncss.class";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_RECORD = "ncss.record";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_RECORD = "ncss.record";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_FILE = "ncss.file";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_FILE = "ncss.file";
 
-    /** Default constant for max file ncss. */
-    private static final int FILE_MAX_NCSS = 2000;
+/** Default constant for max file ncss. */
+private static final int FILE_MAX_NCSS = 2000;
 
-    /** Default constant for max file ncss. */
-    private static final int CLASS_MAX_NCSS = 1500;
+/** Default constant for max file ncss. */
+private static final int CLASS_MAX_NCSS = 1500;
 
-    /** Default constant for max record ncss. */
-    private static final int RECORD_MAX_NCSS = 150;
+/** Default constant for max record ncss. */
+private static final int RECORD_MAX_NCSS = 150;
 
-    /** Default constant for max method ncss. */
-    private static final int METHOD_MAX_NCSS = 50;
+/** Default constant for max method ncss. */
+private static final int METHOD_MAX_NCSS = 50;
 
-    /**
-     * Specify the maximum allowed number of non commenting lines in a file
-     * including all top level and nested classes.
-     */
-    private int fileMaximum = FILE_MAX_NCSS;
+/**
+ * Specify the maximum allowed number of non commenting lines in a file
+ * including all top level and nested classes.
+ */
+private int fileMaximum = FILE_MAX_NCSS;
 
-    /** Specify the maximum allowed number of non commenting lines in a class. */
-    private int classMaximum = CLASS_MAX_NCSS;
+/** Specify the maximum allowed number of non commenting lines in a class. */
+private int classMaximum = CLASS_MAX_NCSS;
 
-    /** Specify the maximum allowed number of non commenting lines in a record. */
-    private int recordMaximum = RECORD_MAX_NCSS;
+/** Specify the maximum allowed number of non commenting lines in a record. */
+private int recordMaximum = RECORD_MAX_NCSS;
 
-    /** Specify the maximum allowed number of non commenting lines in a method. */
-    private int methodMaximum = METHOD_MAX_NCSS;
+/** Specify the maximum allowed number of non commenting lines in a method. */
+private int methodMaximum = METHOD_MAX_NCSS;
 
-    /** List containing the stacked counters. */
-    private Deque<Counter> counters;
+/** List containing the stacked counters. */
+private Deque<Counter> counters;
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {
-                   TokenTypes.CLASS_DEF,
-                   TokenTypes.INTERFACE_DEF,
-                   TokenTypes.METHOD_DEF,
-                   TokenTypes.CTOR_DEF,
-                   TokenTypes.INSTANCE_INIT,
-                   TokenTypes.STATIC_INIT,
-                   TokenTypes.PACKAGE_DEF,
-                   TokenTypes.IMPORT,
-                   TokenTypes.VARIABLE_DEF,
-                   TokenTypes.CTOR_CALL,
-                   TokenTypes.SUPER_CTOR_CALL,
-                   TokenTypes.LITERAL_IF,
-                   TokenTypes.LITERAL_ELSE,
-                   TokenTypes.LITERAL_WHILE,
-                   TokenTypes.LITERAL_DO,
-                   TokenTypes.LITERAL_FOR,
-                   TokenTypes.LITERAL_SWITCH,
-                   TokenTypes.LITERAL_BREAK,
-                   TokenTypes.LITERAL_CONTINUE,
-                   TokenTypes.LITERAL_RETURN,
-                   TokenTypes.LITERAL_THROW,
-                   TokenTypes.LITERAL_SYNCHRONIZED,
-                   TokenTypes.LITERAL_CATCH,
-                   TokenTypes.LITERAL_FINALLY,
-                   TokenTypes.EXPR,
-                   TokenTypes.LABELED_STAT,
-                   TokenTypes.LITERAL_CASE,
-                   TokenTypes.LITERAL_DEFAULT,
-                   TokenTypes.RECORD_DEF,
-                   TokenTypes.COMPACT_CTOR_DEF,
-               };
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {
+		       TokenTypes.CLASS_DEF,
+		       TokenTypes.INTERFACE_DEF,
+		       TokenTypes.METHOD_DEF,
+		       TokenTypes.CTOR_DEF,
+		       TokenTypes.INSTANCE_INIT,
+		       TokenTypes.STATIC_INIT,
+		       TokenTypes.PACKAGE_DEF,
+		       TokenTypes.IMPORT,
+		       TokenTypes.VARIABLE_DEF,
+		       TokenTypes.CTOR_CALL,
+		       TokenTypes.SUPER_CTOR_CALL,
+		       TokenTypes.LITERAL_IF,
+		       TokenTypes.LITERAL_ELSE,
+		       TokenTypes.LITERAL_WHILE,
+		       TokenTypes.LITERAL_DO,
+		       TokenTypes.LITERAL_FOR,
+		       TokenTypes.LITERAL_SWITCH,
+		       TokenTypes.LITERAL_BREAK,
+		       TokenTypes.LITERAL_CONTINUE,
+		       TokenTypes.LITERAL_RETURN,
+		       TokenTypes.LITERAL_THROW,
+		       TokenTypes.LITERAL_SYNCHRONIZED,
+		       TokenTypes.LITERAL_CATCH,
+		       TokenTypes.LITERAL_FINALLY,
+		       TokenTypes.EXPR,
+		       TokenTypes.LABELED_STAT,
+		       TokenTypes.LITERAL_CASE,
+		       TokenTypes.LITERAL_DEFAULT,
+		       TokenTypes.RECORD_DEF,
+		       TokenTypes.COMPACT_CTOR_DEF,
+	};
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public void beginTree(DetailAST rootAST) {
-        counters = new ArrayDeque<>();
+@Override
+public void beginTree(DetailAST rootAST) {
+	counters = new ArrayDeque<>();
 
-        // add a counter for the file
-        counters.push(new Counter());
-    }
+	// add a counter for the file
+	counters.push(new Counter());
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        final int tokenType = ast.getType();
+@Override
+public void visitToken(DetailAST ast) {
+	final int tokenType = ast.getType();
 
-        if (tokenType == TokenTypes.CLASS_DEF
-                || tokenType == TokenTypes.RECORD_DEF
-                || isMethodOrCtorOrInitDefinition(tokenType)) {
-            // add a counter for this class/method
-            counters.push(new Counter());
-        }
+	if (tokenType == TokenTypes.CLASS_DEF
+	    || tokenType == TokenTypes.RECORD_DEF
+	    || isMethodOrCtorOrInitDefinition(tokenType)) {
+		// add a counter for this class/method
+		counters.push(new Counter());
+	}
 
-        // check if token is countable
-        if (isCountable(ast)) {
-            // increment the stacked counters
-            counters.forEach(Counter::increment);
-        }
-    }
+	// check if token is countable
+	if (isCountable(ast)) {
+		// increment the stacked counters
+		counters.forEach(Counter::increment);
+	}
+}
 
-    @Override
-    public void leaveToken(DetailAST ast) {
-        final int tokenType = ast.getType();
+@Override
+public void leaveToken(DetailAST ast) {
+	final int tokenType = ast.getType();
 
-        if (isMethodOrCtorOrInitDefinition(tokenType)) {
-            // pop counter from the stack
-            final Counter counter = counters.pop();
+	if (isMethodOrCtorOrInitDefinition(tokenType)) {
+		// pop counter from the stack
+		final Counter counter = counters.pop();
 
-            final int count = counter.getCount();
-            if (count > methodMaximum) {
-                log(ast, MSG_METHOD, count, methodMaximum);
-            }
-        }
-        else if (tokenType == TokenTypes.CLASS_DEF) {
-            // pop counter from the stack
-            final Counter counter = counters.pop();
+		final int count = counter.getCount();
+		if (count > methodMaximum) {
+			log(ast, MSG_METHOD, count, methodMaximum);
+		}
+	}
+	else if (tokenType == TokenTypes.CLASS_DEF) {
+		// pop counter from the stack
+		final Counter counter = counters.pop();
 
-            final int count = counter.getCount();
-            if (count > classMaximum) {
-                log(ast, MSG_CLASS, count, classMaximum);
-            }
-        }
-        else if (tokenType == TokenTypes.RECORD_DEF) {
-            // pop counter from the stack
-            final Counter counter = counters.pop();
+		final int count = counter.getCount();
+		if (count > classMaximum) {
+			log(ast, MSG_CLASS, count, classMaximum);
+		}
+	}
+	else if (tokenType == TokenTypes.RECORD_DEF) {
+		// pop counter from the stack
+		final Counter counter = counters.pop();
 
-            final int count = counter.getCount();
-            if (count > recordMaximum) {
-                log(ast, MSG_RECORD, count, recordMaximum);
-            }
-        }
-    }
+		final int count = counter.getCount();
+		if (count > recordMaximum) {
+			log(ast, MSG_RECORD, count, recordMaximum);
+		}
+	}
+}
 
-    @Override
-    public void finishTree(DetailAST rootAST) {
-        // pop counter from the stack
-        final Counter counter = counters.pop();
+@Override
+public void finishTree(DetailAST rootAST) {
+	// pop counter from the stack
+	final Counter counter = counters.pop();
 
-        final int count = counter.getCount();
-        if (count > fileMaximum) {
-            log(rootAST, MSG_FILE, count, fileMaximum);
-        }
-    }
+	final int count = counter.getCount();
+	if (count > fileMaximum) {
+		log(rootAST, MSG_FILE, count, fileMaximum);
+	}
+}
 
-    /**
-     * Setter to specify the maximum allowed number of non commenting lines
-     * in a file including all top level and nested classes.
-     *
-     * @param fileMaximum
-     *            the maximum ncss
-     */
-    public void setFileMaximum(int fileMaximum) {
-        this.fileMaximum = fileMaximum;
-    }
+/**
+ * Setter to specify the maximum allowed number of non commenting lines
+ * in a file including all top level and nested classes.
+ *
+ * @param fileMaximum
+ *            the maximum ncss
+ */
+public void setFileMaximum(int fileMaximum) {
+	this.fileMaximum = fileMaximum;
+}
 
-    /**
-     * Setter to specify the maximum allowed number of non commenting lines in a class.
-     *
-     * @param classMaximum
-     *            the maximum ncss
-     */
-    public void setClassMaximum(int classMaximum) {
-        this.classMaximum = classMaximum;
-    }
+/**
+ * Setter to specify the maximum allowed number of non commenting lines in a class.
+ *
+ * @param classMaximum
+ *            the maximum ncss
+ */
+public void setClassMaximum(int classMaximum) {
+	this.classMaximum = classMaximum;
+}
 
-    /**
-     * Setter to specify the maximum allowed number of non commenting lines in a record.
-     *
-     * @param recordMaximum
-     *            the maximum ncss
-     */
-    public void setRecordMaximum(int recordMaximum) {
-        this.recordMaximum = recordMaximum;
-    }
+/**
+ * Setter to specify the maximum allowed number of non commenting lines in a record.
+ *
+ * @param recordMaximum
+ *            the maximum ncss
+ */
+public void setRecordMaximum(int recordMaximum) {
+	this.recordMaximum = recordMaximum;
+}
 
-    /**
-     * Setter to specify the maximum allowed number of non commenting lines in a method.
-     *
-     * @param methodMaximum
-     *            the maximum ncss
-     */
-    public void setMethodMaximum(int methodMaximum) {
-        this.methodMaximum = methodMaximum;
-    }
+/**
+ * Setter to specify the maximum allowed number of non commenting lines in a method.
+ *
+ * @param methodMaximum
+ *            the maximum ncss
+ */
+public void setMethodMaximum(int methodMaximum) {
+	this.methodMaximum = methodMaximum;
+}
 
-    /**
-     * Checks if a token is countable for the ncss metric.
-     *
-     * @param ast
-     *            the AST
-     * @return true if the token is countable
-     */
-    private static boolean isCountable(DetailAST ast) {
-        boolean countable = true;
+/**
+ * Checks if a token is countable for the ncss metric.
+ *
+ * @param ast
+ *            the AST
+ * @return true if the token is countable
+ */
+private static boolean isCountable(DetailAST ast) {
+	boolean countable = true;
 
-        final int tokenType = ast.getType();
+	final int tokenType = ast.getType();
 
-        // check if an expression is countable
-        if (tokenType == TokenTypes.EXPR) {
-            countable = isExpressionCountable(ast);
-        }
-        // check if an variable definition is countable
-        else if (tokenType == TokenTypes.VARIABLE_DEF) {
-            countable = isVariableDefCountable(ast);
-        }
-        return countable;
-    }
+	// check if an expression is countable
+	if (tokenType == TokenTypes.EXPR) {
+		countable = isExpressionCountable(ast);
+	}
+	// check if an variable definition is countable
+	else if (tokenType == TokenTypes.VARIABLE_DEF) {
+		countable = isVariableDefCountable(ast);
+	}
+	return countable;
+}
 
-    /**
-     * Checks if a variable definition is countable.
-     *
-     * @param ast the AST
-     * @return true if the variable definition is countable, false otherwise
-     */
-    private static boolean isVariableDefCountable(DetailAST ast) {
-        boolean countable = false;
+/**
+ * Checks if a variable definition is countable.
+ *
+ * @param ast the AST
+ * @return true if the variable definition is countable, false otherwise
+ */
+private static boolean isVariableDefCountable(DetailAST ast) {
+	boolean countable = false;
 
-        // count variable definitions only if they are direct child to a slist or
-        // object block
-        final int parentType = ast.getParent().getType();
+	// count variable definitions only if they are direct child to a slist or
+	// object block
+	final int parentType = ast.getParent().getType();
 
-        if (parentType == TokenTypes.SLIST
-                || parentType == TokenTypes.OBJBLOCK) {
-            final DetailAST prevSibling = ast.getPreviousSibling();
+	if (parentType == TokenTypes.SLIST
+	    || parentType == TokenTypes.OBJBLOCK) {
+		final DetailAST prevSibling = ast.getPreviousSibling();
 
-            // is countable if no previous sibling is found or
-            // the sibling is no COMMA.
-            // This is done because multiple assignment on one line are counted
-            // as 1
-            countable = prevSibling == null
-                        || prevSibling.getType() != TokenTypes.COMMA;
-        }
+		// is countable if no previous sibling is found or
+		// the sibling is no COMMA.
+		// This is done because multiple assignment on one line are counted
+		// as 1
+		countable = prevSibling == null
+		            || prevSibling.getType() != TokenTypes.COMMA;
+	}
 
-        return countable;
-    }
+	return countable;
+}
 
-    /**
-     * Checks if an expression is countable for the ncss metric.
-     *
-     * @param ast the AST
-     * @return true if the expression is countable, false otherwise
-     */
-    private static boolean isExpressionCountable(DetailAST ast) {
-        final boolean countable;
+/**
+ * Checks if an expression is countable for the ncss metric.
+ *
+ * @param ast the AST
+ * @return true if the expression is countable, false otherwise
+ */
+private static boolean isExpressionCountable(DetailAST ast) {
+	final boolean countable;
 
-        // count expressions only if they are direct child to a slist (method
-        // body, for loop...)
-        // or direct child of label,if,else,do,while,for
-        final int parentType = ast.getParent().getType();
-        switch (parentType) {
-        case TokenTypes.SLIST:
-        case TokenTypes.LABELED_STAT:
-        case TokenTypes.LITERAL_FOR:
-        case TokenTypes.LITERAL_DO:
-        case TokenTypes.LITERAL_WHILE:
-        case TokenTypes.LITERAL_IF:
-        case TokenTypes.LITERAL_ELSE:
-            // don't count if or loop conditions
-            final DetailAST prevSibling = ast.getPreviousSibling();
-            countable = prevSibling == null
-                        || prevSibling.getType() != TokenTypes.LPAREN;
-            break;
-        default:
-            countable = false;
-            break;
-        }
-        return countable;
-    }
+	// count expressions only if they are direct child to a slist (method
+	// body, for loop...)
+	// or direct child of label,if,else,do,while,for
+	final int parentType = ast.getParent().getType();
+	switch (parentType) {
+	case TokenTypes.SLIST:
+	case TokenTypes.LABELED_STAT:
+	case TokenTypes.LITERAL_FOR:
+	case TokenTypes.LITERAL_DO:
+	case TokenTypes.LITERAL_WHILE:
+	case TokenTypes.LITERAL_IF:
+	case TokenTypes.LITERAL_ELSE:
+		// don't count if or loop conditions
+		final DetailAST prevSibling = ast.getPreviousSibling();
+		countable = prevSibling == null
+		            || prevSibling.getType() != TokenTypes.LPAREN;
+		break;
+	default:
+		countable = false;
+		break;
+	}
+	return countable;
+}
 
-    /**
-     * Checks if a token is a method, constructor, or compact constructor definition.
-     *
-     * @param tokenType the type of token we are checking
-     * @return true if token type is method or ctor definition, false otherwise
-     */
-    private static boolean isMethodOrCtorOrInitDefinition(int tokenType) {
-        return tokenType == TokenTypes.METHOD_DEF
-               || tokenType == TokenTypes.COMPACT_CTOR_DEF
-               || tokenType == TokenTypes.CTOR_DEF
-               || tokenType == TokenTypes.STATIC_INIT
-               || tokenType == TokenTypes.INSTANCE_INIT;
-    }
+/**
+ * Checks if a token is a method, constructor, or compact constructor definition.
+ *
+ * @param tokenType the type of token we are checking
+ * @return true if token type is method or ctor definition, false otherwise
+ */
+private static boolean isMethodOrCtorOrInitDefinition(int tokenType) {
+	return tokenType == TokenTypes.METHOD_DEF
+	       || tokenType == TokenTypes.COMPACT_CTOR_DEF
+	       || tokenType == TokenTypes.CTOR_DEF
+	       || tokenType == TokenTypes.STATIC_INIT
+	       || tokenType == TokenTypes.INSTANCE_INIT;
+}
 
-    /**
-     * Class representing a counter.
-     *
-     */
-    private static class Counter {
+/**
+ * Class representing a counter.
+ *
+ */
+private static class Counter {
 
-        /** The counters internal integer. */
-        private int count;
+/** The counters internal integer. */
+private int count;
 
-        /**
-         * Increments the counter.
-         */
-        public void increment() {
-            count++;
-        }
+/**
+ * Increments the counter.
+ */
+public void increment() {
+	count++;
+}
 
-        /**
-         * Gets the counters value.
-         *
-         * @return the counter
-         */
-        public int getCount() {
-            return count;
-        }
+/**
+ * Gets the counters value.
+ *
+ * @return the counter
+ */
+public int getCount() {
+	return count;
+}
 
-    }
+}
 
 }

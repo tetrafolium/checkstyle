@@ -166,100 +166,100 @@ import com.puppycrawl.tools.checkstyle.api.FileText;
  */
 @StatelessCheck
 public class NewlineAtEndOfFileCheck
-    extends AbstractFileSetCheck {
+	extends AbstractFileSetCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY_UNABLE_OPEN = "unable.open";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY_UNABLE_OPEN = "unable.open";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY_NO_NEWLINE_EOF = "noNewlineAtEOF";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY_NO_NEWLINE_EOF = "noNewlineAtEOF";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY_WRONG_ENDING = "wrong.line.end";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY_WRONG_ENDING = "wrong.line.end";
 
-    /** Specify the type of line separator. */
-    private LineSeparatorOption lineSeparator = LineSeparatorOption.LF_CR_CRLF;
+/** Specify the type of line separator. */
+private LineSeparatorOption lineSeparator = LineSeparatorOption.LF_CR_CRLF;
 
-    @Override
-    protected void processFiltered(File file, FileText fileText) {
-        try {
-            readAndCheckFile(file);
-        }
-        catch (final IOException ignored) {
-            log(1, MSG_KEY_UNABLE_OPEN, file.getPath());
-        }
-    }
+@Override
+protected void processFiltered(File file, FileText fileText) {
+	try {
+		readAndCheckFile(file);
+	}
+	catch (final IOException ignored) {
+		log(1, MSG_KEY_UNABLE_OPEN, file.getPath());
+	}
+}
 
-    /**
-     * Setter to specify the type of line separator.
-     *
-     * @param lineSeparatorParam The line separator to set
-     * @throws IllegalArgumentException If the specified line separator is not
-     *         one of 'crlf', 'lf', 'cr', 'lf_cr_crlf' or 'system'
-     */
-    public void setLineSeparator(String lineSeparatorParam) {
-        lineSeparator =
-            Enum.valueOf(LineSeparatorOption.class, lineSeparatorParam.trim()
-                         .toUpperCase(Locale.ENGLISH));
-    }
+/**
+ * Setter to specify the type of line separator.
+ *
+ * @param lineSeparatorParam The line separator to set
+ * @throws IllegalArgumentException If the specified line separator is not
+ *         one of 'crlf', 'lf', 'cr', 'lf_cr_crlf' or 'system'
+ */
+public void setLineSeparator(String lineSeparatorParam) {
+	lineSeparator =
+		Enum.valueOf(LineSeparatorOption.class, lineSeparatorParam.trim()
+		             .toUpperCase(Locale.ENGLISH));
+}
 
-    /**
-     * Reads the file provided and checks line separators.
-     *
-     * @param file the file to be processed
-     * @throws IOException When an IO error occurred while reading from the
-     *         file provided
-     */
-    private void readAndCheckFile(File file) throws IOException {
-        // Cannot use lines as the line separators have been removed!
-        try (RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r")) {
-            if (lineSeparator == LineSeparatorOption.LF
-                    && endsWithNewline(randomAccessFile, LineSeparatorOption.CRLF)) {
-                log(1, MSG_KEY_WRONG_ENDING, file.getPath());
-            }
-            else if (!endsWithNewline(randomAccessFile, lineSeparator)) {
-                log(1, MSG_KEY_NO_NEWLINE_EOF, file.getPath());
-            }
-        }
-    }
+/**
+ * Reads the file provided and checks line separators.
+ *
+ * @param file the file to be processed
+ * @throws IOException When an IO error occurred while reading from the
+ *         file provided
+ */
+private void readAndCheckFile(File file) throws IOException {
+	// Cannot use lines as the line separators have been removed!
+	try (RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r")) {
+		if (lineSeparator == LineSeparatorOption.LF
+		    && endsWithNewline(randomAccessFile, LineSeparatorOption.CRLF)) {
+			log(1, MSG_KEY_WRONG_ENDING, file.getPath());
+		}
+		else if (!endsWithNewline(randomAccessFile, lineSeparator)) {
+			log(1, MSG_KEY_NO_NEWLINE_EOF, file.getPath());
+		}
+	}
+}
 
-    /**
-     * Checks whether the content provided by the Reader ends with the platform
-     * specific line separator.
-     *
-     * @param file The reader for the content to check
-     * @param separator The line separator
-     * @return boolean Whether the content ends with a line separator
-     * @throws IOException When an IO error occurred while reading from the
-     *         provided reader
-     */
-    private static boolean endsWithNewline(RandomAccessFile file, LineSeparatorOption separator)
-    throws IOException {
-        final boolean result;
-        final int len = separator.length();
-        if (file.length() < len) {
-            result = false;
-        }
-        else {
-            file.seek(file.length() - len);
-            final byte[] lastBytes = new byte[len];
-            final int readBytes = file.read(lastBytes);
-            if (readBytes != len) {
-                throw new IOException("Unable to read " + len + " bytes, got "
-                                      + readBytes);
-            }
-            result = separator.matches(lastBytes);
-        }
-        return result;
-    }
+/**
+ * Checks whether the content provided by the Reader ends with the platform
+ * specific line separator.
+ *
+ * @param file The reader for the content to check
+ * @param separator The line separator
+ * @return boolean Whether the content ends with a line separator
+ * @throws IOException When an IO error occurred while reading from the
+ *         provided reader
+ */
+private static boolean endsWithNewline(RandomAccessFile file, LineSeparatorOption separator)
+throws IOException {
+	final boolean result;
+	final int len = separator.length();
+	if (file.length() < len) {
+		result = false;
+	}
+	else {
+		file.seek(file.length() - len);
+		final byte[] lastBytes = new byte[len];
+		final int readBytes = file.read(lastBytes);
+		if (readBytes != len) {
+			throw new IOException("Unable to read " + len + " bytes, got "
+			                      + readBytes);
+		}
+		result = separator.matches(lastBytes);
+	}
+	return result;
+}
 
 }

@@ -2,21 +2,21 @@ package org.checkstyle.suppressionxpathfilter.unnecessarysemicolonafteroutertype
 
 interface SuppressionXpathRegressionUnnecessarySemicolonAfterOuterTypeDeclarationInnerTypes {
 
-    class Inner1 {
+class Inner1 {
 
-    }; // OK
+};     // OK
 
-    enum Inner2 {
+enum Inner2 {
 
-    }; // OK
+};     // OK
 
-    interface Inner3 {
+interface Inner3 {
 
-    }; // OK
+};     // OK
 
-    @interface Inner4 {
+@interface Inner4 {
 
-    }; // OK
+};     // OK
 
 }; //warn
 

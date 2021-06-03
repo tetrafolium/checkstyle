@@ -135,107 +135,107 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 @StatelessCheck
 public class RecordComponentNumberCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "too.many.components";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "too.many.components";
 
-    /** Default maximum number of allowed components. */
-    private static final int DEFAULT_MAX_COMPONENTS = 8;
+/** Default maximum number of allowed components. */
+private static final int DEFAULT_MAX_COMPONENTS = 8;
 
-    /** Specify the maximum number of components allowed in the header of a record definition. */
-    private int max = DEFAULT_MAX_COMPONENTS;
+/** Specify the maximum number of components allowed in the header of a record definition. */
+private int max = DEFAULT_MAX_COMPONENTS;
 
-    /**
-     * Access modifiers of record definitions where the number
-     * of record components should be checked.
-     */
-    private AccessModifierOption[] accessModifiers = {
-        AccessModifierOption.PUBLIC,
-        AccessModifierOption.PROTECTED,
-        AccessModifierOption.PACKAGE,
-        AccessModifierOption.PRIVATE,
-    };
+/**
+ * Access modifiers of record definitions where the number
+ * of record components should be checked.
+ */
+private AccessModifierOption[] accessModifiers = {
+	AccessModifierOption.PUBLIC,
+	AccessModifierOption.PROTECTED,
+	AccessModifierOption.PACKAGE,
+	AccessModifierOption.PRIVATE,
+};
 
-    /**
-     * Setter to specify the maximum number of components allowed in the header
-     * of a record definition.
-     *
-     * @param value the maximum allowed.
-     */
-    public void setMax(int value) {
-        max = value;
-    }
+/**
+ * Setter to specify the maximum number of components allowed in the header
+ * of a record definition.
+ *
+ * @param value the maximum allowed.
+ */
+public void setMax(int value) {
+	max = value;
+}
 
-    /**
-     * Setter to access modifiers of record definitions where the number of record
-     * components should be checked.
-     *
-     * @param accessModifiers access modifiers of record definitions which should be checked.
-     */
-    public void setAccessModifiers(AccessModifierOption... accessModifiers) {
-        this.accessModifiers =
-            Arrays.copyOf(accessModifiers, accessModifiers.length);
-    }
+/**
+ * Setter to access modifiers of record definitions where the number of record
+ * components should be checked.
+ *
+ * @param accessModifiers access modifiers of record definitions which should be checked.
+ */
+public void setAccessModifiers(AccessModifierOption... accessModifiers) {
+	this.accessModifiers =
+		Arrays.copyOf(accessModifiers, accessModifiers.length);
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getAcceptableTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getAcceptableTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return new int[] {
-                   TokenTypes.RECORD_DEF,
-               };
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return new int[] {
+		       TokenTypes.RECORD_DEF,
+	};
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return getAcceptableTokens();
-    }
+@Override
+public int[] getRequiredTokens() {
+	return getAcceptableTokens();
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        final DetailAST modifiers =
-            ast.findFirstToken(TokenTypes.MODIFIERS);
-        final AccessModifierOption accessModifier =
-            CheckUtil.getAccessModifierFromModifiersToken(modifiers);
+@Override
+public void visitToken(DetailAST ast) {
+	final DetailAST modifiers =
+		ast.findFirstToken(TokenTypes.MODIFIERS);
+	final AccessModifierOption accessModifier =
+		CheckUtil.getAccessModifierFromModifiersToken(modifiers);
 
-        if (matchAccessModifiers(accessModifier)) {
-            final DetailAST recordComponents =
-                ast.findFirstToken(TokenTypes.RECORD_COMPONENTS);
-            final int componentCount = countComponents(recordComponents);
+	if (matchAccessModifiers(accessModifier)) {
+		final DetailAST recordComponents =
+			ast.findFirstToken(TokenTypes.RECORD_COMPONENTS);
+		final int componentCount = countComponents(recordComponents);
 
-            if (componentCount > max) {
-                log(ast, MSG_KEY, componentCount, max);
-            }
-        }
-    }
+		if (componentCount > max) {
+			log(ast, MSG_KEY, componentCount, max);
+		}
+	}
+}
 
-    /**
-     * Method to count the number of record components in this record definition.
-     *
-     * @param recordComponents the ast to check
-     * @return the number of record components in this record definition
-     */
-    private static int countComponents(DetailAST recordComponents) {
-        final AtomicInteger count = new AtomicInteger(0);
-        TokenUtil.forEachChild(recordComponents,
-                               TokenTypes.RECORD_COMPONENT_DEF,
-                               node -> count.getAndIncrement());
-        return count.get();
-    }
+/**
+ * Method to count the number of record components in this record definition.
+ *
+ * @param recordComponents the ast to check
+ * @return the number of record components in this record definition
+ */
+private static int countComponents(DetailAST recordComponents) {
+	final AtomicInteger count = new AtomicInteger(0);
+	TokenUtil.forEachChild(recordComponents,
+	                       TokenTypes.RECORD_COMPONENT_DEF,
+	                       node->count.getAndIncrement());
+	return count.get();
+}
 
-    /**
-     * Checks whether a record definition has the correct access modifier to be checked.
-     *
-     * @param accessModifier the access modifier of the record definition.
-     * @return whether the record definition matches the expected access modifier.
-     */
-    private boolean matchAccessModifiers(final AccessModifierOption accessModifier) {
-        return Arrays.stream(accessModifiers)
-               .anyMatch(modifier -> modifier == accessModifier);
-    }
+/**
+ * Checks whether a record definition has the correct access modifier to be checked.
+ *
+ * @param accessModifier the access modifier of the record definition.
+ * @return whether the record definition matches the expected access modifier.
+ */
+private boolean matchAccessModifiers(final AccessModifierOption accessModifier) {
+	return Arrays.stream(accessModifiers)
+	       .anyMatch(modifier->modifier == accessModifier);
+}
 }

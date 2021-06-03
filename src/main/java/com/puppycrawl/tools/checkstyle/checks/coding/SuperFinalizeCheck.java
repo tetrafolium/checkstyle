@@ -56,9 +56,9 @@ import com.puppycrawl.tools.checkstyle.StatelessCheck;
 @StatelessCheck
 public class SuperFinalizeCheck extends AbstractSuperCheck {
 
-    @Override
-    protected String getMethodName() {
-        return "finalize";
-    }
+@Override
+protected String getMethodName() {
+	return "finalize";
+}
 
 }

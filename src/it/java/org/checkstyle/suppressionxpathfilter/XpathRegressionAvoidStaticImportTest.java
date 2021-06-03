@@ -29,54 +29,54 @@ import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
 import com.puppycrawl.tools.checkstyle.checks.imports.AvoidStaticImportCheck;
 
 public class XpathRegressionAvoidStaticImportTest
-    extends AbstractXpathTestSupport {
+	extends AbstractXpathTestSupport {
 
-    private static final Class<AvoidStaticImportCheck> CLASS =
-        AvoidStaticImportCheck.class;
+private static final Class<AvoidStaticImportCheck> CLASS =
+	AvoidStaticImportCheck.class;
 
-    @Override
-    protected String getCheckName() {
-        return CLASS.getSimpleName();
-    }
+@Override
+protected String getCheckName() {
+	return CLASS.getSimpleName();
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess = new File(getPath(
-                                                "SuppressionXpathRegressionAvoidStaticImport1.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess = new File(getPath(
+						    "SuppressionXpathRegressionAvoidStaticImport1.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(CLASS);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(CLASS);
 
-        final String[] expectedViolation = {
-            "3:42: " + getCheckMessage(CLASS,
-                                       AvoidStaticImportCheck.MSG_KEY, "javax.swing.WindowConstants.*"),
-        };
+	final String[] expectedViolation = {
+		"3:42: " + getCheckMessage(CLASS,
+		                           AvoidStaticImportCheck.MSG_KEY, "javax.swing.WindowConstants.*"),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/STATIC_IMPORT/DOT"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/STATIC_IMPORT/DOT"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess = new File(getPath(
-                                                "SuppressionXpathRegressionAvoidStaticImport2.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess = new File(getPath(
+						    "SuppressionXpathRegressionAvoidStaticImport2.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(CLASS);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(CLASS);
 
-        final String[] expectedViolation = {
-            "3:27: " + getCheckMessage(CLASS,
-                                       AvoidStaticImportCheck.MSG_KEY, "java.io.File.createTempFile"),
-        };
+	final String[] expectedViolation = {
+		"3:27: " + getCheckMessage(CLASS,
+		                           AvoidStaticImportCheck.MSG_KEY, "java.io.File.createTempFile"),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/STATIC_IMPORT/DOT[./IDENT[@text='createTempFile']]"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/STATIC_IMPORT/DOT[./IDENT[@text='createTempFile']]"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
+}
 
 }

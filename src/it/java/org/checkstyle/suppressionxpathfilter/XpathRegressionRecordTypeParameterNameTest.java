@@ -31,62 +31,62 @@ import com.puppycrawl.tools.checkstyle.checks.naming.RecordTypeParameterNameChec
 
 public class XpathRegressionRecordTypeParameterNameTest extends AbstractXpathTestSupport {
 
-    private final String checkName = RecordTypeParameterNameCheck.class.getSimpleName();
+private final String checkName = RecordTypeParameterNameCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess = new File(getNonCompilablePath(
-                                                "SuppressionXpathRegressionRecordTypeParameterName1.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess = new File(getNonCompilablePath(
+						    "SuppressionXpathRegressionRecordTypeParameterName1.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(RecordTypeParameterNameCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(RecordTypeParameterNameCheck.class);
 
-        final String pattern = "^[A-Z]$";
+	final String pattern = "^[A-Z]$";
 
-        final String[] expectedViolation = {
-            "7:15: " + getCheckMessage(RecordTypeParameterNameCheck.class,
-                                       AbstractNameCheck.MSG_INVALID_PATTERN, "foo", pattern),
-        };
+	final String[] expectedViolation = {
+		"7:15: " + getCheckMessage(RecordTypeParameterNameCheck.class,
+		                           AbstractNameCheck.MSG_INVALID_PATTERN, "foo", pattern),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/RECORD_DEF[./IDENT[@text='Other']]/"
-                    + "TYPE_PARAMETERS/TYPE_PARAMETER[./IDENT[@text='foo']]",
-                    "/RECORD_DEF[./IDENT[@text='Other']]/TYPE_PARAMETERS/"
-                    + "TYPE_PARAMETER/IDENT[@text='foo']"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/RECORD_DEF[./IDENT[@text='Other']]/"
+		+ "TYPE_PARAMETERS/TYPE_PARAMETER[./IDENT[@text='foo']]",
+		"/RECORD_DEF[./IDENT[@text='Other']]/TYPE_PARAMETERS/"
+		+ "TYPE_PARAMETER/IDENT[@text='foo']"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess = new File(getNonCompilablePath(
-                                                "SuppressionXpathRegressionRecordTypeParameterName2.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess = new File(getNonCompilablePath(
+						    "SuppressionXpathRegressionRecordTypeParameterName2.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(RecordTypeParameterNameCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(RecordTypeParameterNameCheck.class);
 
-        final String pattern = "^[A-Z]$";
+	final String pattern = "^[A-Z]$";
 
-        final String[] expectedViolation = {
-            "4:44: " + getCheckMessage(RecordTypeParameterNameCheck.class,
-                                       AbstractNameCheck.MSG_INVALID_PATTERN, "t", pattern),
-        };
+	final String[] expectedViolation = {
+		"4:44: " + getCheckMessage(RecordTypeParameterNameCheck.class,
+		                           AbstractNameCheck.MSG_INVALID_PATTERN, "t", pattern),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/RECORD_DEF[./IDENT[@text='InputRecordTypeParameterName']]"
-                    + "/TYPE_PARAMETERS/TYPE_PARAMETER[./IDENT[@text='t']]",
-                    "/RECORD_DEF[./IDENT[@text='InputRecordTypeParameterName']]"
-                    + "/TYPE_PARAMETERS/TYPE_PARAMETER/IDENT[@text='t']"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/RECORD_DEF[./IDENT[@text='InputRecordTypeParameterName']]"
+		+ "/TYPE_PARAMETERS/TYPE_PARAMETER[./IDENT[@text='t']]",
+		"/RECORD_DEF[./IDENT[@text='InputRecordTypeParameterName']]"
+		+ "/TYPE_PARAMETERS/TYPE_PARAMETER/IDENT[@text='t']"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 }

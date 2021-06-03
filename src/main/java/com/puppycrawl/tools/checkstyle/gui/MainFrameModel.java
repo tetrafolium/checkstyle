@@ -36,222 +36,222 @@ import com.puppycrawl.tools.checkstyle.api.FileText;
  */
 public class MainFrameModel {
 
-    /**
-     * Parsing modes which available in GUI.
-     */
-    public enum ParseMode {
+/**
+ * Parsing modes which available in GUI.
+ */
+public enum ParseMode {
 
-        /** Only Java tokens without comments. */
-        PLAIN_JAVA("Plain Java"),
+	/** Only Java tokens without comments. */
+	PLAIN_JAVA("Plain Java"),
 
-        /** Java tokens and comment nodes (singleline comments and block comments). */
-        JAVA_WITH_COMMENTS("Java with comments"),
+	/** Java tokens and comment nodes (singleline comments and block comments). */
+	JAVA_WITH_COMMENTS("Java with comments"),
 
-        /**
-         * Java tokens, comments and Javadoc comments nodes
-         * (which are parsed from block comments).
-         */
-        JAVA_WITH_JAVADOC_AND_COMMENTS("Java with comments and Javadocs");
+	/**
+	 * Java tokens, comments and Javadoc comments nodes
+	 * (which are parsed from block comments).
+	 */
+	JAVA_WITH_JAVADOC_AND_COMMENTS("Java with comments and Javadocs");
 
-        /**
-         * Mode's short description.
-         */
-        private final String description;
+	/**
+	 * Mode's short description.
+	 */
+	private final String description;
 
-        /**
-         * Provides description.
-         *
-         * @param descr description
-         */
-        ParseMode(String descr) {
-            description = descr;
-        }
+	/**
+	 * Provides description.
+	 *
+	 * @param descr description
+	 */
+	ParseMode(String descr) {
+		description = descr;
+	}
 
-        @Override
-        public String toString() {
-            return description;
-        }
+	@Override
+	public String toString() {
+		return description;
+	}
 
-    }
+}
 
-    /** Parse tree model. */
-    private final ParseTreeTableModel parseTreeTableModel;
+/** Parse tree model. */
+private final ParseTreeTableModel parseTreeTableModel;
 
-    /** Lines to position map. */
-    private List<Integer> linesToPosition = new ArrayList<>();
+/** Lines to position map. */
+private List<Integer> linesToPosition = new ArrayList<>();
 
-    /** Current mode. */
-    private ParseMode parseMode = ParseMode.PLAIN_JAVA;
+/** Current mode. */
+private ParseMode parseMode = ParseMode.PLAIN_JAVA;
 
-    /** The file which is being parsed. */
-    private File currentFile;
+/** The file which is being parsed. */
+private File currentFile;
 
-    /** Text for a frame's text area. */
-    private String text;
+/** Text for a frame's text area. */
+private String text;
 
-    /** Title for the main frame. */
-    private String title = "Checkstyle GUI";
+/** Title for the main frame. */
+private String title = "Checkstyle GUI";
 
-    /** Whether the reload action is enabled. */
-    private boolean reloadActionEnabled;
+/** Whether the reload action is enabled. */
+private boolean reloadActionEnabled;
 
-    /** Instantiate the model. */
-    public MainFrameModel() {
-        parseTreeTableModel = new ParseTreeTableModel(null);
-    }
+/** Instantiate the model. */
+public MainFrameModel() {
+	parseTreeTableModel = new ParseTreeTableModel(null);
+}
 
-    /**
-     * Set current parse mode.
-     *
-     * @param mode ParseMode enum.
-     */
-    public void setParseMode(ParseMode mode) {
-        parseMode = mode;
-    }
+/**
+ * Set current parse mode.
+ *
+ * @param mode ParseMode enum.
+ */
+public void setParseMode(ParseMode mode) {
+	parseMode = mode;
+}
 
-    /**
-     * Get parse tree table model.
-     *
-     * @return parse tree table model.
-     */
-    public ParseTreeTableModel getParseTreeTableModel() {
-        return parseTreeTableModel;
-    }
+/**
+ * Get parse tree table model.
+ *
+ * @return parse tree table model.
+ */
+public ParseTreeTableModel getParseTreeTableModel() {
+	return parseTreeTableModel;
+}
 
-    /**
-     * Get text to display in a text area.
-     *
-     * @return text to display in a text area.
-     */
-    public String getText() {
-        return text;
-    }
+/**
+ * Get text to display in a text area.
+ *
+ * @return text to display in a text area.
+ */
+public String getText() {
+	return text;
+}
 
-    /**
-     * Returns title for the main frame.
-     *
-     * @return title for the main frame.
-     */
-    public String getTitle() {
-        return title;
-    }
+/**
+ * Returns title for the main frame.
+ *
+ * @return title for the main frame.
+ */
+public String getTitle() {
+	return title;
+}
 
-    /**
-     * Returns true if the reload action is enabled, false otherwise.
-     *
-     * @return true if the reload action is enabled.
-     */
-    public boolean isReloadActionEnabled() {
-        return reloadActionEnabled;
-    }
+/**
+ * Returns true if the reload action is enabled, false otherwise.
+ *
+ * @return true if the reload action is enabled.
+ */
+public boolean isReloadActionEnabled() {
+	return reloadActionEnabled;
+}
 
-    /**
-     * Whether a file chooser should accept the file as a source file.
-     *
-     * @param file the file to check.
-     * @return true if the file should be accepted.
-     */
-    public static boolean shouldAcceptFile(File file) {
-        return file.isDirectory() || file.getName().endsWith(".java");
-    }
+/**
+ * Whether a file chooser should accept the file as a source file.
+ *
+ * @param file the file to check.
+ * @return true if the file should be accepted.
+ */
+public static boolean shouldAcceptFile(File file) {
+	return file.isDirectory() || file.getName().endsWith(".java");
+}
 
-    /**
-     * Get the directory of the last loaded file.
-     *
-     * @return directory of the last loaded file.
-     */
-    public File getLastDirectory() {
-        File lastDirectory = null;
-        if (currentFile != null) {
-            lastDirectory = new File(currentFile.getParent());
-        }
-        return lastDirectory;
-    }
+/**
+ * Get the directory of the last loaded file.
+ *
+ * @return directory of the last loaded file.
+ */
+public File getLastDirectory() {
+	File lastDirectory = null;
+	if (currentFile != null) {
+		lastDirectory = new File(currentFile.getParent());
+	}
+	return lastDirectory;
+}
 
-    /**
-     * Get current file.
-     *
-     * @return current file.
-     */
-    public File getCurrentFile() {
-        return currentFile;
-    }
+/**
+ * Get current file.
+ *
+ * @return current file.
+ */
+public File getCurrentFile() {
+	return currentFile;
+}
 
-    /**
-     * Get lines to position map.
-     * It returns unmodifiable collection to
-     * prevent additional overhead of copying
-     * and possible state modifications.
-     *
-     * @return lines to position map.
-     */
-    public List<Integer> getLinesToPosition() {
-        return new ArrayList<>(linesToPosition);
-    }
+/**
+ * Get lines to position map.
+ * It returns unmodifiable collection to
+ * prevent additional overhead of copying
+ * and possible state modifications.
+ *
+ * @return lines to position map.
+ */
+public List<Integer> getLinesToPosition() {
+	return new ArrayList<>(linesToPosition);
+}
 
-    /**
-     * Open file and load the file.
-     *
-     * @param file the file to open.
-     * @throws CheckstyleException if the file can not be parsed.
-     * @throws IllegalArgumentException if parseMode is unknown
-     */
-    public void openFile(File file) throws CheckstyleException {
-        if (file != null) {
-            try {
-                currentFile = file;
-                title = "Checkstyle GUI : " + file.getName();
-                reloadActionEnabled = true;
-                final DetailAST parseTree;
+/**
+ * Open file and load the file.
+ *
+ * @param file the file to open.
+ * @throws CheckstyleException if the file can not be parsed.
+ * @throws IllegalArgumentException if parseMode is unknown
+ */
+public void openFile(File file) throws CheckstyleException {
+	if (file != null) {
+		try {
+			currentFile = file;
+			title = "Checkstyle GUI : " + file.getName();
+			reloadActionEnabled = true;
+			final DetailAST parseTree;
 
-                switch (parseMode) {
-                case PLAIN_JAVA:
-                    parseTree = JavaParser.parseFile(file, JavaParser.Options.WITHOUT_COMMENTS);
-                    break;
-                case JAVA_WITH_COMMENTS:
-                case JAVA_WITH_JAVADOC_AND_COMMENTS:
-                    parseTree = JavaParser.parseFile(file, JavaParser.Options.WITH_COMMENTS);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unknown mode: " + parseMode);
-                }
+			switch (parseMode) {
+			case PLAIN_JAVA:
+				parseTree = JavaParser.parseFile(file, JavaParser.Options.WITHOUT_COMMENTS);
+				break;
+			case JAVA_WITH_COMMENTS:
+			case JAVA_WITH_JAVADOC_AND_COMMENTS:
+				parseTree = JavaParser.parseFile(file, JavaParser.Options.WITH_COMMENTS);
+				break;
+			default:
+				throw new IllegalArgumentException("Unknown mode: " + parseMode);
+			}
 
-                parseTreeTableModel.setParseTree(parseTree);
-                parseTreeTableModel.setParseMode(parseMode);
-                final String[] sourceLines = getFileText(file).toLinesArray();
+			parseTreeTableModel.setParseTree(parseTree);
+			parseTreeTableModel.setParseMode(parseMode);
+			final String[] sourceLines = getFileText(file).toLinesArray();
 
-                final List<Integer> linesToPositionTemp = new ArrayList<>();
-                // starts line counting at 1
-                linesToPositionTemp.add(0);
+			final List<Integer> linesToPositionTemp = new ArrayList<>();
+			// starts line counting at 1
+			linesToPositionTemp.add(0);
 
-                final StringBuilder sb = new StringBuilder(1024);
-                // insert the contents of the file to the text area
-                for (final String element : sourceLines) {
-                    linesToPositionTemp.add(sb.length());
-                    sb.append(element).append(System.lineSeparator());
-                }
-                linesToPosition = linesToPositionTemp;
-                text = sb.toString();
-            }
-            catch (IOException ex) {
-                final String exceptionMsg = String.format(Locale.ROOT,
-                                            "%s occurred while opening file %s.",
-                                            ex.getClass().getSimpleName(), file.getPath());
-                throw new CheckstyleException(exceptionMsg, ex);
-            }
-        }
-    }
+			final StringBuilder sb = new StringBuilder(1024);
+			// insert the contents of the file to the text area
+			for (final String element : sourceLines) {
+				linesToPositionTemp.add(sb.length());
+				sb.append(element).append(System.lineSeparator());
+			}
+			linesToPosition = linesToPositionTemp;
+			text = sb.toString();
+		}
+		catch (IOException ex) {
+			final String exceptionMsg = String.format(Locale.ROOT,
+			                                          "%s occurred while opening file %s.",
+			                                          ex.getClass().getSimpleName(), file.getPath());
+			throw new CheckstyleException(exceptionMsg, ex);
+		}
+	}
+}
 
-    /**
-     * Get FileText from a file.
-     *
-     * @param file the file to get the FileText from.
-     * @return the FileText.
-     * @throws IOException if the file could not be read.
-     */
-    private static FileText getFileText(File file) throws IOException {
-        return new FileText(file.getAbsoluteFile(),
-                            System.getProperty("file.encoding", StandardCharsets.UTF_8.name()));
-    }
+/**
+ * Get FileText from a file.
+ *
+ * @param file the file to get the FileText from.
+ * @return the FileText.
+ * @throws IOException if the file could not be read.
+ */
+private static FileText getFileText(File file) throws IOException {
+	return new FileText(file.getAbsoluteFile(),
+	                    System.getProperty("file.encoding", StandardCharsets.UTF_8.name()));
+}
 
 }

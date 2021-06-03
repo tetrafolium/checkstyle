@@ -45,107 +45,107 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  *
  */
 public abstract class AbstractAccessControlNameCheck
-    extends AbstractNameCheck {
+	extends AbstractNameCheck {
 
-    /** If true, applies the check be public members. */
-    private boolean applyToPublic = true;
+/** If true, applies the check be public members. */
+private boolean applyToPublic = true;
 
-    /** If true, applies the check be protected members. */
-    private boolean applyToProtected = true;
+/** If true, applies the check be protected members. */
+private boolean applyToProtected = true;
 
-    /** If true, applies the check be "package" members. */
-    private boolean applyToPackage = true;
+/** If true, applies the check be "package" members. */
+private boolean applyToPackage = true;
 
-    /** If true, applies the check be private members. */
-    private boolean applyToPrivate = true;
+/** If true, applies the check be private members. */
+private boolean applyToPrivate = true;
 
-    /**
-     * Creates a new {@code AbstractAccessControlNameCheck} instance.
-     *
-     * @param format
-     *                format to check with
-     */
-    protected AbstractAccessControlNameCheck(String format) {
-        super(format);
-    }
+/**
+ * Creates a new {@code AbstractAccessControlNameCheck} instance.
+ *
+ * @param format
+ *                format to check with
+ */
+protected AbstractAccessControlNameCheck(String format) {
+	super(format);
+}
 
-    @Override
-    protected boolean mustCheckName(DetailAST ast) {
-        return shouldCheckInScope(ast.findFirstToken(TokenTypes.MODIFIERS));
-    }
+@Override
+protected boolean mustCheckName(DetailAST ast) {
+	return shouldCheckInScope(ast.findFirstToken(TokenTypes.MODIFIERS));
+}
 
-    /**
-     * Should we check member with given modifiers.
-     *
-     * @param modifiers
-     *                modifiers of member to check.
-     * @return true if we should check such member.
-     */
-    protected boolean shouldCheckInScope(DetailAST modifiers) {
-        final boolean isProtected = modifiers
-                                    .findFirstToken(TokenTypes.LITERAL_PROTECTED) != null;
-        final boolean isPrivate = modifiers
-                                  .findFirstToken(TokenTypes.LITERAL_PRIVATE) != null;
-        final boolean isPublic = isPublic(modifiers);
+/**
+ * Should we check member with given modifiers.
+ *
+ * @param modifiers
+ *                modifiers of member to check.
+ * @return true if we should check such member.
+ */
+protected boolean shouldCheckInScope(DetailAST modifiers) {
+	final boolean isProtected = modifiers
+	                            .findFirstToken(TokenTypes.LITERAL_PROTECTED) != null;
+	final boolean isPrivate = modifiers
+	                          .findFirstToken(TokenTypes.LITERAL_PRIVATE) != null;
+	final boolean isPublic = isPublic(modifiers);
 
-        final boolean isPackage = !(isPublic || isProtected || isPrivate);
+	final boolean isPackage = !(isPublic || isProtected || isPrivate);
 
-        return applyToPublic && isPublic
-               || applyToProtected && isProtected
-               || applyToPackage && isPackage
-               || applyToPrivate && isPrivate;
-    }
+	return applyToPublic && isPublic
+	       || applyToProtected && isProtected
+	       || applyToPackage && isPackage
+	       || applyToPrivate && isPrivate;
+}
 
-    /**
-     * Checks if given modifiers has public access.
-     * There are 2 cases - it is either has explicit modifier, or it is
-     * in annotation or interface.
-     *
-     * @param modifiers - modifiers to check
-     * @return true if public
-     */
-    private static boolean isPublic(DetailAST modifiers) {
-        return modifiers.findFirstToken(TokenTypes.LITERAL_PUBLIC) != null
-               || ScopeUtil.isInAnnotationBlock(modifiers)
-               || ScopeUtil.isInInterfaceBlock(modifiers)
-               // interface methods can be private
-               && modifiers.findFirstToken(TokenTypes.LITERAL_PRIVATE) == null;
-    }
+/**
+ * Checks if given modifiers has public access.
+ * There are 2 cases - it is either has explicit modifier, or it is
+ * in annotation or interface.
+ *
+ * @param modifiers - modifiers to check
+ * @return true if public
+ */
+private static boolean isPublic(DetailAST modifiers) {
+	return modifiers.findFirstToken(TokenTypes.LITERAL_PUBLIC) != null
+	       || ScopeUtil.isInAnnotationBlock(modifiers)
+	       || ScopeUtil.isInInterfaceBlock(modifiers)
+	       // interface methods can be private
+	       && modifiers.findFirstToken(TokenTypes.LITERAL_PRIVATE) == null;
+}
 
-    /**
-     * Sets whether we should apply the check to public members.
-     *
-     * @param applyTo new value of the property.
-     */
-    public void setApplyToPublic(boolean applyTo) {
-        applyToPublic = applyTo;
-    }
+/**
+ * Sets whether we should apply the check to public members.
+ *
+ * @param applyTo new value of the property.
+ */
+public void setApplyToPublic(boolean applyTo) {
+	applyToPublic = applyTo;
+}
 
-    /**
-     * Sets whether we should apply the check to protected members.
-     *
-     * @param applyTo new value of the property.
-     */
-    public void setApplyToProtected(boolean applyTo) {
-        applyToProtected = applyTo;
-    }
+/**
+ * Sets whether we should apply the check to protected members.
+ *
+ * @param applyTo new value of the property.
+ */
+public void setApplyToProtected(boolean applyTo) {
+	applyToProtected = applyTo;
+}
 
-    /**
-     * Sets whether we should apply the check to package-private members.
-     *
-     * @param applyTo new value of the property.
-     */
-    public void setApplyToPackage(boolean applyTo) {
-        applyToPackage = applyTo;
-    }
+/**
+ * Sets whether we should apply the check to package-private members.
+ *
+ * @param applyTo new value of the property.
+ */
+public void setApplyToPackage(boolean applyTo) {
+	applyToPackage = applyTo;
+}
 
-    /**
-     * Sets whether we should apply the check to private members.
-     *
-     * @param applyTo new value of the property.
-     */
-    public void setApplyToPrivate(boolean applyTo) {
-        applyToPrivate = applyTo;
-    }
+/**
+ * Sets whether we should apply the check to private members.
+ *
+ * @param applyTo new value of the property.
+ */
+public void setApplyToPrivate(boolean applyTo) {
+	applyToPrivate = applyTo;
+}
 
 }

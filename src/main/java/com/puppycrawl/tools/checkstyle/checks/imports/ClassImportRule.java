@@ -24,42 +24,42 @@ package com.puppycrawl.tools.checkstyle.checks.imports;
  */
 class ClassImportRule extends AbstractImportRule {
 
-    /** Package to control access to. */
-    private final String className;
+/** Package to control access to. */
+private final String className;
 
-    /**
-     * Constructs an instance.
-     *
-     * @param allow whether to allow access.
-     * @param localOnly whether the rule is to be applied locally only
-     * @param className the class to apply the rule on.
-     * @param regExp whether the class name is to be interpreted as a regular
-     *        expression.
-     */
-    /* package */  ClassImportRule(final boolean allow, final boolean localOnly,
-                                   final String className, final boolean regExp) {
-        super(allow, localOnly, regExp);
-        this.className = className;
-    }
+/**
+ * Constructs an instance.
+ *
+ * @param allow whether to allow access.
+ * @param localOnly whether the rule is to be applied locally only
+ * @param className the class to apply the rule on.
+ * @param regExp whether the class name is to be interpreted as a regular
+ *        expression.
+ */
+/* package */ ClassImportRule(final boolean allow, final boolean localOnly,
+                              final String className, final boolean regExp) {
+	super(allow, localOnly, regExp);
+	this.className = className;
+}
 
-    /**
-     * Verifies whether a class name is used.
-     *
-     * @param forImport the import to check.
-     * @return a result {@link AccessResult} indicating whether it can be used.
-     */
-    @Override
-    public AccessResult verifyImport(final String forImport) {
-        final boolean classMatch;
+/**
+ * Verifies whether a class name is used.
+ *
+ * @param forImport the import to check.
+ * @return a result {@link AccessResult} indicating whether it can be used.
+ */
+@Override
+public AccessResult verifyImport(final String forImport) {
+	final boolean classMatch;
 
-        if (isRegExp()) {
-            classMatch = forImport.matches(className);
-        }
-        else {
-            classMatch = forImport.equals(className);
-        }
+	if (isRegExp()) {
+		classMatch = forImport.matches(className);
+	}
+	else {
+		classMatch = forImport.equals(className);
+	}
 
-        return calculateResult(classMatch);
-    }
+	return calculateResult(classMatch);
+}
 
 }

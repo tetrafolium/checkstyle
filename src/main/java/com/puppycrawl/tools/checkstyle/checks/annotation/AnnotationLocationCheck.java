@@ -225,249 +225,249 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 @StatelessCheck
 public class AnnotationLocationCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY_ANNOTATION_LOCATION_ALONE = "annotation.location.alone";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY_ANNOTATION_LOCATION_ALONE = "annotation.location.alone";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY_ANNOTATION_LOCATION = "annotation.location";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY_ANNOTATION_LOCATION = "annotation.location";
 
-    /**
-     * Allow single parameterless annotation to be located on the same line as
-     * target element.
-     */
-    private boolean allowSamelineSingleParameterlessAnnotation = true;
+/**
+ * Allow single parameterless annotation to be located on the same line as
+ * target element.
+ */
+private boolean allowSamelineSingleParameterlessAnnotation = true;
 
-    /**
-     * Allow one and only parameterized annotation to be located on the same line as
-     * target element.
-     */
-    private boolean allowSamelineParameterizedAnnotation;
+/**
+ * Allow one and only parameterized annotation to be located on the same line as
+ * target element.
+ */
+private boolean allowSamelineParameterizedAnnotation;
 
-    /**
-     * Allow annotation(s) to be located on the same line as
-     * target element.
-     */
-    private boolean allowSamelineMultipleAnnotations;
+/**
+ * Allow annotation(s) to be located on the same line as
+ * target element.
+ */
+private boolean allowSamelineMultipleAnnotations;
 
-    /**
-     * Setter to allow single parameterless annotation to be located on the same line as
-     * target element.
-     *
-     * @param allow User's value of allowSamelineSingleParameterlessAnnotation.
-     */
-    public final void setAllowSamelineSingleParameterlessAnnotation(boolean allow) {
-        allowSamelineSingleParameterlessAnnotation = allow;
-    }
+/**
+ * Setter to allow single parameterless annotation to be located on the same line as
+ * target element.
+ *
+ * @param allow User's value of allowSamelineSingleParameterlessAnnotation.
+ */
+public final void setAllowSamelineSingleParameterlessAnnotation(boolean allow) {
+	allowSamelineSingleParameterlessAnnotation = allow;
+}
 
-    /**
-     * Setter to allow one and only parameterized annotation to be located on the same line as
-     * target element.
-     *
-     * @param allow User's value of allowSamelineParameterizedAnnotation.
-     */
-    public final void setAllowSamelineParameterizedAnnotation(boolean allow) {
-        allowSamelineParameterizedAnnotation = allow;
-    }
+/**
+ * Setter to allow one and only parameterized annotation to be located on the same line as
+ * target element.
+ *
+ * @param allow User's value of allowSamelineParameterizedAnnotation.
+ */
+public final void setAllowSamelineParameterizedAnnotation(boolean allow) {
+	allowSamelineParameterizedAnnotation = allow;
+}
 
-    /**
-     * Setter to allow annotation(s) to be located on the same line as
-     * target element.
-     *
-     * @param allow User's value of allowSamelineMultipleAnnotations.
-     */
-    public final void setAllowSamelineMultipleAnnotations(boolean allow) {
-        allowSamelineMultipleAnnotations = allow;
-    }
+/**
+ * Setter to allow annotation(s) to be located on the same line as
+ * target element.
+ *
+ * @param allow User's value of allowSamelineMultipleAnnotations.
+ */
+public final void setAllowSamelineMultipleAnnotations(boolean allow) {
+	allowSamelineMultipleAnnotations = allow;
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return new int[] {
-                   TokenTypes.CLASS_DEF,
-                   TokenTypes.INTERFACE_DEF,
-                   TokenTypes.PACKAGE_DEF,
-                   TokenTypes.ENUM_CONSTANT_DEF,
-                   TokenTypes.ENUM_DEF,
-                   TokenTypes.METHOD_DEF,
-                   TokenTypes.CTOR_DEF,
-                   TokenTypes.VARIABLE_DEF,
-                   TokenTypes.RECORD_DEF,
-                   TokenTypes.COMPACT_CTOR_DEF,
-               };
-    }
+@Override
+public int[] getDefaultTokens() {
+	return new int[] {
+		       TokenTypes.CLASS_DEF,
+		       TokenTypes.INTERFACE_DEF,
+		       TokenTypes.PACKAGE_DEF,
+		       TokenTypes.ENUM_CONSTANT_DEF,
+		       TokenTypes.ENUM_DEF,
+		       TokenTypes.METHOD_DEF,
+		       TokenTypes.CTOR_DEF,
+		       TokenTypes.VARIABLE_DEF,
+		       TokenTypes.RECORD_DEF,
+		       TokenTypes.COMPACT_CTOR_DEF,
+	};
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return new int[] {
-                   TokenTypes.CLASS_DEF,
-                   TokenTypes.INTERFACE_DEF,
-                   TokenTypes.PACKAGE_DEF,
-                   TokenTypes.ENUM_CONSTANT_DEF,
-                   TokenTypes.ENUM_DEF,
-                   TokenTypes.METHOD_DEF,
-                   TokenTypes.CTOR_DEF,
-                   TokenTypes.VARIABLE_DEF,
-                   TokenTypes.ANNOTATION_DEF,
-                   TokenTypes.ANNOTATION_FIELD_DEF,
-                   TokenTypes.RECORD_DEF,
-                   TokenTypes.COMPACT_CTOR_DEF,
-               };
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return new int[] {
+		       TokenTypes.CLASS_DEF,
+		       TokenTypes.INTERFACE_DEF,
+		       TokenTypes.PACKAGE_DEF,
+		       TokenTypes.ENUM_CONSTANT_DEF,
+		       TokenTypes.ENUM_DEF,
+		       TokenTypes.METHOD_DEF,
+		       TokenTypes.CTOR_DEF,
+		       TokenTypes.VARIABLE_DEF,
+		       TokenTypes.ANNOTATION_DEF,
+		       TokenTypes.ANNOTATION_FIELD_DEF,
+		       TokenTypes.RECORD_DEF,
+		       TokenTypes.COMPACT_CTOR_DEF,
+	};
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return CommonUtil.EMPTY_INT_ARRAY;
-    }
+@Override
+public int[] getRequiredTokens() {
+	return CommonUtil.EMPTY_INT_ARRAY;
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        // ignore variable def tokens that are not field definitions
-        if (ast.getType() != TokenTypes.VARIABLE_DEF
-                || ast.getParent().getType() == TokenTypes.OBJBLOCK) {
-            DetailAST node = ast.findFirstToken(TokenTypes.MODIFIERS);
-            if (node == null) {
-                node = ast.findFirstToken(TokenTypes.ANNOTATIONS);
-            }
-            checkAnnotations(node, getExpectedAnnotationIndentation(node));
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	// ignore variable def tokens that are not field definitions
+	if (ast.getType() != TokenTypes.VARIABLE_DEF
+	    || ast.getParent().getType() == TokenTypes.OBJBLOCK) {
+		DetailAST node = ast.findFirstToken(TokenTypes.MODIFIERS);
+		if (node == null) {
+			node = ast.findFirstToken(TokenTypes.ANNOTATIONS);
+		}
+		checkAnnotations(node, getExpectedAnnotationIndentation(node));
+	}
+}
 
-    /**
-     * Returns an expected annotation indentation.
-     * The expected indentation should be the same as the indentation of the target node.
-     *
-     * @param node modifiers or annotations node.
-     * @return the annotation indentation.
-     */
-    private static int getExpectedAnnotationIndentation(DetailAST node) {
-        return node.getColumnNo();
-    }
+/**
+ * Returns an expected annotation indentation.
+ * The expected indentation should be the same as the indentation of the target node.
+ *
+ * @param node modifiers or annotations node.
+ * @return the annotation indentation.
+ */
+private static int getExpectedAnnotationIndentation(DetailAST node) {
+	return node.getColumnNo();
+}
 
-    /**
-     * Checks annotations positions in code:
-     * 1) Checks whether the annotations locations are correct.
-     * 2) Checks whether the annotations have the valid indentation level.
-     *
-     * @param modifierNode modifiers node.
-     * @param correctIndentation correct indentation of the annotation.
-     */
-    private void checkAnnotations(DetailAST modifierNode, int correctIndentation) {
-        DetailAST annotation = modifierNode.getFirstChild();
+/**
+ * Checks annotations positions in code:
+ * 1) Checks whether the annotations locations are correct.
+ * 2) Checks whether the annotations have the valid indentation level.
+ *
+ * @param modifierNode modifiers node.
+ * @param correctIndentation correct indentation of the annotation.
+ */
+private void checkAnnotations(DetailAST modifierNode, int correctIndentation) {
+	DetailAST annotation = modifierNode.getFirstChild();
 
-        while (annotation != null && annotation.getType() == TokenTypes.ANNOTATION) {
-            final boolean hasParameters = isParameterized(annotation);
+	while (annotation != null && annotation.getType() == TokenTypes.ANNOTATION) {
+		final boolean hasParameters = isParameterized(annotation);
 
-            if (!isCorrectLocation(annotation, hasParameters)) {
-                log(annotation,
-                    MSG_KEY_ANNOTATION_LOCATION_ALONE, getAnnotationName(annotation));
-            }
-            else if (annotation.getColumnNo() != correctIndentation && !hasNodeBefore(annotation)) {
-                log(annotation, MSG_KEY_ANNOTATION_LOCATION,
-                    getAnnotationName(annotation), annotation.getColumnNo(), correctIndentation);
-            }
-            annotation = annotation.getNextSibling();
-        }
-    }
+		if (!isCorrectLocation(annotation, hasParameters)) {
+			log(annotation,
+			    MSG_KEY_ANNOTATION_LOCATION_ALONE, getAnnotationName(annotation));
+		}
+		else if (annotation.getColumnNo() != correctIndentation && !hasNodeBefore(annotation)) {
+			log(annotation, MSG_KEY_ANNOTATION_LOCATION,
+			    getAnnotationName(annotation), annotation.getColumnNo(), correctIndentation);
+		}
+		annotation = annotation.getNextSibling();
+	}
+}
 
-    /**
-     * Checks whether an annotation has parameters.
-     *
-     * @param annotation annotation node.
-     * @return true if the annotation has parameters.
-     */
-    private static boolean isParameterized(DetailAST annotation) {
-        return TokenUtil.findFirstTokenByPredicate(annotation, ast -> {
-            return ast.getType() == TokenTypes.EXPR
-            || ast.getType() == TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR;
-        }).isPresent();
-    }
+/**
+ * Checks whether an annotation has parameters.
+ *
+ * @param annotation annotation node.
+ * @return true if the annotation has parameters.
+ */
+private static boolean isParameterized(DetailAST annotation) {
+	return TokenUtil.findFirstTokenByPredicate(annotation, ast->{
+			return ast.getType() == TokenTypes.EXPR
+			|| ast.getType() == TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR;
+		}).isPresent();
+}
 
-    /**
-     * Returns the name of the given annotation.
-     *
-     * @param annotation annotation node.
-     * @return annotation name.
-     */
-    private static String getAnnotationName(DetailAST annotation) {
-        DetailAST identNode = annotation.findFirstToken(TokenTypes.IDENT);
-        if (identNode == null) {
-            identNode = annotation.findFirstToken(TokenTypes.DOT).findFirstToken(TokenTypes.IDENT);
-        }
-        return identNode.getText();
-    }
+/**
+ * Returns the name of the given annotation.
+ *
+ * @param annotation annotation node.
+ * @return annotation name.
+ */
+private static String getAnnotationName(DetailAST annotation) {
+	DetailAST identNode = annotation.findFirstToken(TokenTypes.IDENT);
+	if (identNode == null) {
+		identNode = annotation.findFirstToken(TokenTypes.DOT).findFirstToken(TokenTypes.IDENT);
+	}
+	return identNode.getText();
+}
 
-    /**
-     * Checks whether an annotation has a correct location.
-     * Annotation location is considered correct
-     * if {@link AnnotationLocationCheck#allowSamelineMultipleAnnotations} is set to true.
-     * The method also:
-     * 1) checks parameterized annotation location considering
-     * the value of {@link AnnotationLocationCheck#allowSamelineParameterizedAnnotation};
-     * 2) checks parameterless annotation location considering
-     * the value of {@link AnnotationLocationCheck#allowSamelineSingleParameterlessAnnotation};
-     * 3) checks annotation location;
-     *
-     * @param annotation annotation node.
-     * @param hasParams whether an annotation has parameters.
-     * @return true if the annotation has a correct location.
-     */
-    private boolean isCorrectLocation(DetailAST annotation, boolean hasParams) {
-        final boolean allowingCondition;
+/**
+ * Checks whether an annotation has a correct location.
+ * Annotation location is considered correct
+ * if {@link AnnotationLocationCheck#allowSamelineMultipleAnnotations} is set to true.
+ * The method also:
+ * 1) checks parameterized annotation location considering
+ * the value of {@link AnnotationLocationCheck#allowSamelineParameterizedAnnotation};
+ * 2) checks parameterless annotation location considering
+ * the value of {@link AnnotationLocationCheck#allowSamelineSingleParameterlessAnnotation};
+ * 3) checks annotation location;
+ *
+ * @param annotation annotation node.
+ * @param hasParams whether an annotation has parameters.
+ * @return true if the annotation has a correct location.
+ */
+private boolean isCorrectLocation(DetailAST annotation, boolean hasParams) {
+	final boolean allowingCondition;
 
-        if (hasParams) {
-            allowingCondition = allowSamelineParameterizedAnnotation;
-        }
-        else {
-            allowingCondition = allowSamelineSingleParameterlessAnnotation;
-        }
-        return allowSamelineMultipleAnnotations
-               || allowingCondition && !hasNodeBefore(annotation)
-               || !hasNodeBeside(annotation);
-    }
+	if (hasParams) {
+		allowingCondition = allowSamelineParameterizedAnnotation;
+	}
+	else {
+		allowingCondition = allowSamelineSingleParameterlessAnnotation;
+	}
+	return allowSamelineMultipleAnnotations
+	       || allowingCondition && !hasNodeBefore(annotation)
+	       || !hasNodeBeside(annotation);
+}
 
-    /**
-     * Checks whether an annotation node has any node before on the same line.
-     *
-     * @param annotation annotation node.
-     * @return true if an annotation node has any node before on the same line.
-     */
-    private static boolean hasNodeBefore(DetailAST annotation) {
-        final int annotationLineNo = annotation.getLineNo();
-        final DetailAST previousNode = annotation.getPreviousSibling();
+/**
+ * Checks whether an annotation node has any node before on the same line.
+ *
+ * @param annotation annotation node.
+ * @return true if an annotation node has any node before on the same line.
+ */
+private static boolean hasNodeBefore(DetailAST annotation) {
+	final int annotationLineNo = annotation.getLineNo();
+	final DetailAST previousNode = annotation.getPreviousSibling();
 
-        return previousNode != null && annotationLineNo == previousNode.getLineNo();
-    }
+	return previousNode != null && annotationLineNo == previousNode.getLineNo();
+}
 
-    /**
-     * Checks whether an annotation node has any node before or after on the same line.
-     *
-     * @param annotation annotation node.
-     * @return true if an annotation node has any node before or after on the same line.
-     */
-    private static boolean hasNodeBeside(DetailAST annotation) {
-        return hasNodeBefore(annotation) || hasNodeAfter(annotation);
-    }
+/**
+ * Checks whether an annotation node has any node before or after on the same line.
+ *
+ * @param annotation annotation node.
+ * @return true if an annotation node has any node before or after on the same line.
+ */
+private static boolean hasNodeBeside(DetailAST annotation) {
+	return hasNodeBefore(annotation) || hasNodeAfter(annotation);
+}
 
-    /**
-     * Checks whether an annotation node has any node after on the same line.
-     *
-     * @param annotation annotation node.
-     * @return true if an annotation node has any node after on the same line.
-     */
-    private static boolean hasNodeAfter(DetailAST annotation) {
-        final int annotationLineNo = annotation.getLineNo();
-        DetailAST nextNode = annotation.getNextSibling();
+/**
+ * Checks whether an annotation node has any node after on the same line.
+ *
+ * @param annotation annotation node.
+ * @return true if an annotation node has any node after on the same line.
+ */
+private static boolean hasNodeAfter(DetailAST annotation) {
+	final int annotationLineNo = annotation.getLineNo();
+	DetailAST nextNode = annotation.getNextSibling();
 
-        if (nextNode == null) {
-            nextNode = annotation.getParent().getNextSibling();
-        }
+	if (nextNode == null) {
+		nextNode = annotation.getParent().getNextSibling();
+	}
 
-        return annotationLineNo == nextNode.getLineNo();
-    }
+	return annotationLineNo == nextNode.getLineNo();
+}
 
 }

@@ -73,34 +73,34 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 @StatelessCheck
 public final class AvoidNoArgumentSuperConstructorCallCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_CTOR = "super.constructor.call";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_CTOR = "super.constructor.call";
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {
-                   TokenTypes.SUPER_CTOR_CALL,
-               };
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {
+		       TokenTypes.SUPER_CTOR_CALL,
+	};
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        if (ast.getFirstChild().getType() == TokenTypes.LPAREN
-                && ast.findFirstToken(TokenTypes.ELIST).getChildCount() == 0) {
-            log(ast, MSG_CTOR);
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	if (ast.getFirstChild().getType() == TokenTypes.LPAREN
+	    && ast.findFirstToken(TokenTypes.ELIST).getChildCount() == 0) {
+		log(ast, MSG_CTOR);
+	}
+}
 }

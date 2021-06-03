@@ -31,92 +31,92 @@ import com.puppycrawl.tools.checkstyle.checks.whitespace.NoLineWrapCheck;
 
 public class XpathRegressionNoLineWrapTest extends AbstractXpathTestSupport {
 
-    @Override
-    protected String getCheckName() {
-        return NoLineWrapCheck.class.getSimpleName();
-    }
+@Override
+protected String getCheckName() {
+	return NoLineWrapCheck.class.getSimpleName();
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess = new File(
-            getPath("SuppressionXpathRegressionNoLineWrap1.java")
-        );
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess = new File(
+		getPath("SuppressionXpathRegressionNoLineWrap1.java")
+		);
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(NoLineWrapCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(NoLineWrapCheck.class);
 
-        final String[] expectedViolation = {
-            "1:1: " + getCheckMessage(NoLineWrapCheck.class,
-                                      NoLineWrapCheck.MSG_KEY, "package"),
-        };
+	final String[] expectedViolation = {
+		"1:1: " + getCheckMessage(NoLineWrapCheck.class,
+		                          NoLineWrapCheck.MSG_KEY, "package"),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/PACKAGE_DEF"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/PACKAGE_DEF"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess = new File(
-            getPath("SuppressionXpathRegressionNoLineWrap2.java")
-        );
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess = new File(
+		getPath("SuppressionXpathRegressionNoLineWrap2.java")
+		);
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(NoLineWrapCheck.class);
-        moduleConfig.addAttribute("tokens", "METHOD_DEF");
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(NoLineWrapCheck.class);
+	moduleConfig.addAttribute("tokens", "METHOD_DEF");
 
-        final String[] expectedViolation = {
-            "4:5: " + getCheckMessage(NoLineWrapCheck.class,
-                                      NoLineWrapCheck.MSG_KEY, "METHOD_DEF"),
-        };
+	final String[] expectedViolation = {
+		"4:5: " + getCheckMessage(NoLineWrapCheck.class,
+		                          NoLineWrapCheck.MSG_KEY, "METHOD_DEF"),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoLineWrap2']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test2']]",
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoLineWrap2']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test2']]",
 
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoLineWrap2']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test2']]"
-                    + "/MODIFIERS",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoLineWrap2']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test2']]"
+		+ "/MODIFIERS",
 
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoLineWrap2']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test2']]"
-                    + "/MODIFIERS/LITERAL_PUBLIC"
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoLineWrap2']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test2']]"
+		+ "/MODIFIERS/LITERAL_PUBLIC"
 
-                );
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
+}
 
-    @Test
-    public void testThree() throws Exception {
-        final File fileToProcess = new File(
-            getPath("SuppressionXpathRegressionNoLineWrap3.java")
-        );
+@Test
+public void testThree() throws Exception {
+	final File fileToProcess = new File(
+		getPath("SuppressionXpathRegressionNoLineWrap3.java")
+		);
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(NoLineWrapCheck.class);
-        moduleConfig.addAttribute("tokens", "CTOR_DEF");
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(NoLineWrapCheck.class);
+	moduleConfig.addAttribute("tokens", "CTOR_DEF");
 
-        final String[] expectedViolation = {
-            "4:5: " + getCheckMessage(NoLineWrapCheck.class,
-                                      NoLineWrapCheck.MSG_KEY, "CTOR_DEF"),
-        };
+	final String[] expectedViolation = {
+		"4:5: " + getCheckMessage(NoLineWrapCheck.class,
+		                          NoLineWrapCheck.MSG_KEY, "CTOR_DEF"),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoLineWrap3']]"
-                    + "/OBJBLOCK/CTOR_DEF[./IDENT[@text='SuppressionXpathRegressionNoLineWrap3']]",
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoLineWrap3']]"
+		+ "/OBJBLOCK/CTOR_DEF[./IDENT[@text='SuppressionXpathRegressionNoLineWrap3']]",
 
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoLineWrap3']]"
-                    + "/OBJBLOCK/CTOR_DEF[./IDENT[@text='SuppressionXpathRegressionNoLineWrap3']]"
-                    + "/MODIFIERS",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoLineWrap3']]"
+		+ "/OBJBLOCK/CTOR_DEF[./IDENT[@text='SuppressionXpathRegressionNoLineWrap3']]"
+		+ "/MODIFIERS",
 
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoLineWrap3']]"
-                    + "/OBJBLOCK/CTOR_DEF/IDENT[@text='SuppressionXpathRegressionNoLineWrap3']"
-                );
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoLineWrap3']]"
+		+ "/OBJBLOCK/CTOR_DEF/IDENT[@text='SuppressionXpathRegressionNoLineWrap3']"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
+}
 
 }

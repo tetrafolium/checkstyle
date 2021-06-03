@@ -31,27 +31,27 @@ import com.puppycrawl.tools.checkstyle.api.Context;
  */
 public final class DefaultContext implements Context {
 
-    /** Stores the context entries. */
-    private final Map<String, Object> entries = new HashMap<>();
+/** Stores the context entries. */
+private final Map<String, Object> entries = new HashMap<>();
 
-    @Override
-    public Object get(String key) {
-        return entries.get(key);
-    }
+@Override
+public Object get(String key) {
+	return entries.get(key);
+}
 
-    @Override
-    public Collection<String> getAttributeNames() {
-        return new HashSet<>(entries.keySet());
-    }
+@Override
+public Collection<String> getAttributeNames() {
+	return new HashSet<>(entries.keySet());
+}
 
-    /**
-     * Adds a context entry.
-     *
-     * @param key the context key
-     * @param value the value for key
-     */
-    public void add(String key, Object value) {
-        entries.put(key, value);
-    }
+/**
+ * Adds a context entry.
+ *
+ * @param key the context key
+ * @param value the value for key
+ */
+public void add(String key, Object value) {
+	entries.put(key, value);
+}
 
 }

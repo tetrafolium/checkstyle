@@ -1,9 +1,9 @@
 package org.checkstyle.suppressionxpathfilter.onetoplevelclass;
 
 public class SuppressionXpathRegressionOneTopLevelClass {
-    // methods
+// methods
 }
 
 class ViolatingSecondClass { //warn
-    // methods
+// methods
 }

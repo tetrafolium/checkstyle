@@ -30,52 +30,52 @@ import com.puppycrawl.tools.checkstyle.checks.coding.NoEnumTrailingCommaCheck;
 
 public class XpathRegressionNoEnumTrailingCommaTest extends AbstractXpathTestSupport {
 
-    private final String checkName = NoEnumTrailingCommaCheck.class.getSimpleName();
+private final String checkName = NoEnumTrailingCommaCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess = new File(getPath(
-                                                "SuppressionXpathRegressionNoEnumTrailingCommaOne.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess = new File(getPath(
+						    "SuppressionXpathRegressionNoEnumTrailingCommaOne.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(NoEnumTrailingCommaCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(NoEnumTrailingCommaCheck.class);
 
-        final String[] expectedViolation = {
-            "7:12: " + getCheckMessage(NoEnumTrailingCommaCheck.class,
-                                       NoEnumTrailingCommaCheck.MSG_KEY),
-        };
+	final String[] expectedViolation = {
+		"7:12: " + getCheckMessage(NoEnumTrailingCommaCheck.class,
+		                           NoEnumTrailingCommaCheck.MSG_KEY),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoEnumTrailingCommaOne']]"
-                    + "/OBJBLOCK/ENUM_DEF[./IDENT[@text='Foo3']]/OBJBLOCK/COMMA[2]"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoEnumTrailingCommaOne']]"
+		+ "/OBJBLOCK/ENUM_DEF[./IDENT[@text='Foo3']]/OBJBLOCK/COMMA[2]"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess = new File(getPath(
-                                                "SuppressionXpathRegressionNoEnumTrailingCommaTwo.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess = new File(getPath(
+						    "SuppressionXpathRegressionNoEnumTrailingCommaTwo.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(NoEnumTrailingCommaCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(NoEnumTrailingCommaCheck.class);
 
-        final String[] expectedViolation = {
-            "5:25: " + getCheckMessage(NoEnumTrailingCommaCheck.class,
-                                       NoEnumTrailingCommaCheck.MSG_KEY),
-        };
+	final String[] expectedViolation = {
+		"5:25: " + getCheckMessage(NoEnumTrailingCommaCheck.class,
+		                           NoEnumTrailingCommaCheck.MSG_KEY),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoEnumTrailingCommaTwo']]"
-                    + "/OBJBLOCK/ENUM_DEF[./IDENT[@text='Foo6']]/OBJBLOCK/COMMA[2]"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoEnumTrailingCommaTwo']]"
+		+ "/OBJBLOCK/ENUM_DEF[./IDENT[@text='Foo6']]/OBJBLOCK/COMMA[2]"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
+}
 }

@@ -30,57 +30,57 @@ import com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAroundCheck;
 
 public class XpathRegressionWhitespaceAroundTest extends AbstractXpathTestSupport {
 
-    private final String checkName = WhitespaceAroundCheck.class.getSimpleName();
+private final String checkName = WhitespaceAroundCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testWhitespaceAroundNotPreceded() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionWhitespaceAroundNotPreceded.java"));
+@Test
+public void testWhitespaceAroundNotPreceded() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionWhitespaceAroundNotPreceded.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(WhitespaceAroundCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(WhitespaceAroundCheck.class);
 
-        final String[] expectedViolation = {
-            "4:12: " + getCheckMessage(WhitespaceAroundCheck.class,
-                                       WhitespaceAroundCheck.MSG_WS_NOT_PRECEDED, "="),
-        };
+	final String[] expectedViolation = {
+		"4:12: " + getCheckMessage(WhitespaceAroundCheck.class,
+		                           WhitespaceAroundCheck.MSG_WS_NOT_PRECEDED, "="),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT["
-                    + "@text='SuppressionXpathRegressionWhitespaceAroundNotPreceded']]/OBJBLOCK"
-                    + "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT["
+		+ "@text='SuppressionXpathRegressionWhitespaceAroundNotPreceded']]/OBJBLOCK"
+		+ "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testWhitespaceAroundNotFollowed() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionWhitespaceAroundNotFollowed.java"));
+@Test
+public void testWhitespaceAroundNotFollowed() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionWhitespaceAroundNotFollowed.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(WhitespaceAroundCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(WhitespaceAroundCheck.class);
 
-        final String[] expectedViolation = {
-            "4:13: " + getCheckMessage(WhitespaceAroundCheck.class,
-                                       WhitespaceAroundCheck.MSG_WS_NOT_FOLLOWED, "="),
-        };
+	final String[] expectedViolation = {
+		"4:13: " + getCheckMessage(WhitespaceAroundCheck.class,
+		                           WhitespaceAroundCheck.MSG_WS_NOT_FOLLOWED, "="),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT["
-                    + "@text='SuppressionXpathRegressionWhitespaceAroundNotFollowed']]/OBJBLOCK"
-                    + "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT["
+		+ "@text='SuppressionXpathRegressionWhitespaceAroundNotFollowed']]/OBJBLOCK"
+		+ "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
 }

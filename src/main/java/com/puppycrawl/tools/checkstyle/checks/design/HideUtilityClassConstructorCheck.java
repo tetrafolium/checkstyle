@@ -108,188 +108,188 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 @StatelessCheck
 public class HideUtilityClassConstructorCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "hide.utility.class";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "hide.utility.class";
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.CLASS_DEF};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.CLASS_DEF};
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        // abstract class could not have private constructor
-        if (!isAbstract(ast)) {
-            final boolean hasStaticModifier = isStatic(ast);
+@Override
+public void visitToken(DetailAST ast) {
+	// abstract class could not have private constructor
+	if (!isAbstract(ast)) {
+		final boolean hasStaticModifier = isStatic(ast);
 
-            final Details details = new Details(ast);
-            details.invoke();
+		final Details details = new Details(ast);
+		details.invoke();
 
-            final boolean hasDefaultCtor = details.isHasDefaultCtor();
-            final boolean hasPublicCtor = details.isHasPublicCtor();
-            final boolean hasNonStaticMethodOrField = details.isHasNonStaticMethodOrField();
-            final boolean hasNonPrivateStaticMethodOrField =
-                details.isHasNonPrivateStaticMethodOrField();
+		final boolean hasDefaultCtor = details.isHasDefaultCtor();
+		final boolean hasPublicCtor = details.isHasPublicCtor();
+		final boolean hasNonStaticMethodOrField = details.isHasNonStaticMethodOrField();
+		final boolean hasNonPrivateStaticMethodOrField =
+			details.isHasNonPrivateStaticMethodOrField();
 
-            final boolean hasAccessibleCtor = hasDefaultCtor || hasPublicCtor;
+		final boolean hasAccessibleCtor = hasDefaultCtor || hasPublicCtor;
 
-            // figure out if class extends java.lang.object directly
-            // keep it simple for now and get a 99% solution
-            final boolean extendsJlo =
-                ast.findFirstToken(TokenTypes.EXTENDS_CLAUSE) == null;
+		// figure out if class extends java.lang.object directly
+		// keep it simple for now and get a 99% solution
+		final boolean extendsJlo =
+			ast.findFirstToken(TokenTypes.EXTENDS_CLAUSE) == null;
 
-            final boolean isUtilClass = extendsJlo
-                                        && !hasNonStaticMethodOrField && hasNonPrivateStaticMethodOrField;
+		final boolean isUtilClass = extendsJlo
+		                            && !hasNonStaticMethodOrField && hasNonPrivateStaticMethodOrField;
 
-            if (isUtilClass && hasAccessibleCtor && !hasStaticModifier) {
-                log(ast, MSG_KEY);
-            }
-        }
-    }
+		if (isUtilClass && hasAccessibleCtor && !hasStaticModifier) {
+			log(ast, MSG_KEY);
+		}
+	}
+}
 
-    /**
-     * Returns true if given class is abstract or false.
-     *
-     * @param ast class definition for check.
-     * @return true if a given class declared as abstract.
-     */
-    private static boolean isAbstract(DetailAST ast) {
-        return ast.findFirstToken(TokenTypes.MODIFIERS)
-               .findFirstToken(TokenTypes.ABSTRACT) != null;
-    }
+/**
+ * Returns true if given class is abstract or false.
+ *
+ * @param ast class definition for check.
+ * @return true if a given class declared as abstract.
+ */
+private static boolean isAbstract(DetailAST ast) {
+	return ast.findFirstToken(TokenTypes.MODIFIERS)
+	       .findFirstToken(TokenTypes.ABSTRACT) != null;
+}
 
-    /**
-     * Returns true if given class is static or false.
-     *
-     * @param ast class definition for check.
-     * @return true if a given class declared as static.
-     */
-    private static boolean isStatic(DetailAST ast) {
-        return ast.findFirstToken(TokenTypes.MODIFIERS)
-               .findFirstToken(TokenTypes.LITERAL_STATIC) != null;
-    }
+/**
+ * Returns true if given class is static or false.
+ *
+ * @param ast class definition for check.
+ * @return true if a given class declared as static.
+ */
+private static boolean isStatic(DetailAST ast) {
+	return ast.findFirstToken(TokenTypes.MODIFIERS)
+	       .findFirstToken(TokenTypes.LITERAL_STATIC) != null;
+}
 
-    /**
-     * Details of class that are required for validation.
-     */
-    private static class Details {
+/**
+ * Details of class that are required for validation.
+ */
+private static class Details {
 
-        /** Class ast. */
-        private final DetailAST ast;
-        /** Result of details gathering. */
-        private boolean hasNonStaticMethodOrField;
-        /** Result of details gathering. */
-        private boolean hasNonPrivateStaticMethodOrField;
-        /** Result of details gathering. */
-        private boolean hasDefaultCtor;
-        /** Result of details gathering. */
-        private boolean hasPublicCtor;
+/** Class ast. */
+private final DetailAST ast;
+/** Result of details gathering. */
+private boolean hasNonStaticMethodOrField;
+/** Result of details gathering. */
+private boolean hasNonPrivateStaticMethodOrField;
+/** Result of details gathering. */
+private boolean hasDefaultCtor;
+/** Result of details gathering. */
+private boolean hasPublicCtor;
 
-        /**
-         * C-tor.
-         *
-         * @param ast class ast
-         * */
-        /* package */ Details(DetailAST ast) {
-            this.ast = ast;
-        }
+/**
+ * C-tor.
+ *
+ * @param ast class ast
+ * */
+/* package */ Details(DetailAST ast) {
+	this.ast = ast;
+}
 
-        /**
-         * Getter.
-         *
-         * @return boolean
-         */
-        public boolean isHasNonStaticMethodOrField() {
-            return hasNonStaticMethodOrField;
-        }
+/**
+ * Getter.
+ *
+ * @return boolean
+ */
+public boolean isHasNonStaticMethodOrField() {
+	return hasNonStaticMethodOrField;
+}
 
-        /**
-         * Getter.
-         *
-         * @return boolean
-         */
-        public boolean isHasNonPrivateStaticMethodOrField() {
-            return hasNonPrivateStaticMethodOrField;
-        }
+/**
+ * Getter.
+ *
+ * @return boolean
+ */
+public boolean isHasNonPrivateStaticMethodOrField() {
+	return hasNonPrivateStaticMethodOrField;
+}
 
-        /**
-         * Getter.
-         *
-         * @return boolean
-         */
-        public boolean isHasDefaultCtor() {
-            return hasDefaultCtor;
-        }
+/**
+ * Getter.
+ *
+ * @return boolean
+ */
+public boolean isHasDefaultCtor() {
+	return hasDefaultCtor;
+}
 
-        /**
-         * Getter.
-         *
-         * @return boolean
-         */
-        public boolean isHasPublicCtor() {
-            return hasPublicCtor;
-        }
+/**
+ * Getter.
+ *
+ * @return boolean
+ */
+public boolean isHasPublicCtor() {
+	return hasPublicCtor;
+}
 
-        /**
-         * Main method to gather statistics.
-         */
-        public void invoke() {
-            final DetailAST objBlock = ast.findFirstToken(TokenTypes.OBJBLOCK);
-            hasNonStaticMethodOrField = false;
-            hasNonPrivateStaticMethodOrField = false;
-            hasDefaultCtor = true;
-            hasPublicCtor = false;
-            DetailAST child = objBlock.getFirstChild();
+/**
+ * Main method to gather statistics.
+ */
+public void invoke() {
+	final DetailAST objBlock = ast.findFirstToken(TokenTypes.OBJBLOCK);
+	hasNonStaticMethodOrField = false;
+	hasNonPrivateStaticMethodOrField = false;
+	hasDefaultCtor = true;
+	hasPublicCtor = false;
+	DetailAST child = objBlock.getFirstChild();
 
-            while (child != null) {
-                final int type = child.getType();
-                if (type == TokenTypes.METHOD_DEF
-                        || type == TokenTypes.VARIABLE_DEF) {
-                    final DetailAST modifiers =
-                        child.findFirstToken(TokenTypes.MODIFIERS);
-                    final boolean isStatic =
-                        modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) != null;
+	while (child != null) {
+		final int type = child.getType();
+		if (type == TokenTypes.METHOD_DEF
+		    || type == TokenTypes.VARIABLE_DEF) {
+			final DetailAST modifiers =
+				child.findFirstToken(TokenTypes.MODIFIERS);
+			final boolean isStatic =
+				modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) != null;
 
-                    if (isStatic) {
-                        final boolean isPrivate =
-                            modifiers.findFirstToken(TokenTypes.LITERAL_PRIVATE) != null;
+			if (isStatic) {
+				final boolean isPrivate =
+					modifiers.findFirstToken(TokenTypes.LITERAL_PRIVATE) != null;
 
-                        if (!isPrivate) {
-                            hasNonPrivateStaticMethodOrField = true;
-                        }
-                    }
-                    else {
-                        hasNonStaticMethodOrField = true;
-                    }
-                }
-                if (type == TokenTypes.CTOR_DEF) {
-                    hasDefaultCtor = false;
-                    final DetailAST modifiers =
-                        child.findFirstToken(TokenTypes.MODIFIERS);
-                    if (modifiers.findFirstToken(TokenTypes.LITERAL_PRIVATE) == null
-                            && modifiers.findFirstToken(TokenTypes.LITERAL_PROTECTED) == null) {
-                        // treat package visible as public
-                        // for the purpose of this Check
-                        hasPublicCtor = true;
-                    }
-                }
-                child = child.getNextSibling();
-            }
-        }
+				if (!isPrivate) {
+					hasNonPrivateStaticMethodOrField = true;
+				}
+			}
+			else {
+				hasNonStaticMethodOrField = true;
+			}
+		}
+		if (type == TokenTypes.CTOR_DEF) {
+			hasDefaultCtor = false;
+			final DetailAST modifiers =
+				child.findFirstToken(TokenTypes.MODIFIERS);
+			if (modifiers.findFirstToken(TokenTypes.LITERAL_PRIVATE) == null
+			    && modifiers.findFirstToken(TokenTypes.LITERAL_PROTECTED) == null) {
+				// treat package visible as public
+				// for the purpose of this Check
+				hasPublicCtor = true;
+			}
+		}
+		child = child.getNextSibling();
+	}
+}
 
-    }
+}
 
 }

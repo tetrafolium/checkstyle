@@ -30,57 +30,57 @@ import com.puppycrawl.tools.checkstyle.checks.OuterTypeFilenameCheck;
 
 public class XpathRegressionOuterTypeFilenameTest extends AbstractXpathTestSupport {
 
-    private final String checkName = OuterTypeFilenameCheck.class.getSimpleName();
+private final String checkName = OuterTypeFilenameCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testNoPublic() throws Exception {
-        final File fileToProcess = new File(getPath(
-                                                "SuppressionXpathRegressionOuterTypeFilename1.java"));
+@Test
+public void testNoPublic() throws Exception {
+	final File fileToProcess = new File(getPath(
+						    "SuppressionXpathRegressionOuterTypeFilename1.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(OuterTypeFilenameCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(OuterTypeFilenameCheck.class);
 
-        final String[] expectedViolation = {
-            "3:1: " + getCheckMessage(OuterTypeFilenameCheck.class,
-                                      OuterTypeFilenameCheck.MSG_KEY),
-        };
+	final String[] expectedViolation = {
+		"3:1: " + getCheckMessage(OuterTypeFilenameCheck.class,
+		                          OuterTypeFilenameCheck.MSG_KEY),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='Class1']]",
-                    "/CLASS_DEF[./IDENT[@text='Class1']]/MODIFIERS",
-                    "/CLASS_DEF[./IDENT[@text='Class1']]/LITERAL_CLASS"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='Class1']]",
+		"/CLASS_DEF[./IDENT[@text='Class1']]/MODIFIERS",
+		"/CLASS_DEF[./IDENT[@text='Class1']]/LITERAL_CLASS"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testNested() throws Exception {
-        final File fileToProcess = new File(getPath(
-                                                "SuppressionXpathRegressionOuterTypeFilename2.java"));
+@Test
+public void testNested() throws Exception {
+	final File fileToProcess = new File(getPath(
+						    "SuppressionXpathRegressionOuterTypeFilename2.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(OuterTypeFilenameCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(OuterTypeFilenameCheck.class);
 
-        final String[] expectedViolation = {
-            "3:1: " + getCheckMessage(OuterTypeFilenameCheck.class,
-                                      OuterTypeFilenameCheck.MSG_KEY),
-        };
+	final String[] expectedViolation = {
+		"3:1: " + getCheckMessage(OuterTypeFilenameCheck.class,
+		                          OuterTypeFilenameCheck.MSG_KEY),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='Test']]",
-                    "/CLASS_DEF[./IDENT[@text='Test']]/MODIFIERS",
-                    "/CLASS_DEF[./IDENT[@text='Test']]/LITERAL_CLASS"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='Test']]",
+		"/CLASS_DEF[./IDENT[@text='Test']]/MODIFIERS",
+		"/CLASS_DEF[./IDENT[@text='Test']]/LITERAL_CLASS"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
 }

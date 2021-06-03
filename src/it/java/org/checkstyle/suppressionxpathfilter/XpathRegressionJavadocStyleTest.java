@@ -30,29 +30,29 @@ import com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocStyleCheck;
 
 public class XpathRegressionJavadocStyleTest extends AbstractXpathTestSupport {
 
-    private final String checkName = JavadocStyleCheck.class.getSimpleName();
+private final String checkName = JavadocStyleCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess = new File(getPath("SuppressionXpathRegression"
-                                            + File.separator + "package-info.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess = new File(getPath("SuppressionXpathRegression"
+	                                            + File.separator + "package-info.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(JavadocStyleCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(JavadocStyleCheck.class);
 
-        final String[] expectedViolation = {
-            "1:1: " + getCheckMessage(JavadocStyleCheck.class,
-                                      JavadocStyleCheck.MSG_JAVADOC_MISSING),
-        };
+	final String[] expectedViolation = {
+		"1:1: " + getCheckMessage(JavadocStyleCheck.class,
+		                          JavadocStyleCheck.MSG_JAVADOC_MISSING),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList("/PACKAGE_DEF");
+	final List<String> expectedXpathQueries = Collections.singletonList("/PACKAGE_DEF");
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 }

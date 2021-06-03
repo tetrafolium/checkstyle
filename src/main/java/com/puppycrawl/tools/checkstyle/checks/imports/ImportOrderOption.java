@@ -26,83 +26,83 @@ package com.puppycrawl.tools.checkstyle.checks.imports;
  */
 public enum ImportOrderOption {
 
-    /**
-     * Represents the policy that static imports are all at the top.
-     * For example:
-     *
-     * <pre>
-     *  import static java.awt.Button.ABORT;
-     *  import static java.io.File.createTempFile;
-     *  import static javax.swing.WindowConstants.*;
-     *
-     *  import java.awt.Button;
-     *  import java.awt.event.ActionEvent;
-     * </pre>
-     */
-    TOP,
+	/**
+	 * Represents the policy that static imports are all at the top.
+	 * For example:
+	 *
+	 * <pre>
+	 *  import static java.awt.Button.ABORT;
+	 *  import static java.io.File.createTempFile;
+	 *  import static javax.swing.WindowConstants.*;
+	 *
+	 *  import java.awt.Button;
+	 *  import java.awt.event.ActionEvent;
+	 * </pre>
+	 */
+	TOP,
 
-    /**
-     * Represents the policy that static imports are above the local group.
-     * For example:
-     *
-     * <pre>
-     *  import static java.awt.Button.A;
-     *  import static javax.swing.WindowConstants.*;
-     *  import java.awt.Dialog;
-     *  import javax.swing.JComponent;
-     *
-     *  import static java.io.File.createTempFile;
-     *  import java.io.File;
-     *  import java.io.IOException;
-     * </pre>
-     */
-    ABOVE,
+	/**
+	 * Represents the policy that static imports are above the local group.
+	 * For example:
+	 *
+	 * <pre>
+	 *  import static java.awt.Button.A;
+	 *  import static javax.swing.WindowConstants.*;
+	 *  import java.awt.Dialog;
+	 *  import javax.swing.JComponent;
+	 *
+	 *  import static java.io.File.createTempFile;
+	 *  import java.io.File;
+	 *  import java.io.IOException;
+	 * </pre>
+	 */
+	ABOVE,
 
-    /**
-     * Represents the policy that static imports are processed like non static
-     * imports. For example:
-     *
-     * <pre>
-     *  import java.awt.Button;
-     *  import static java.awt.Button.ABORT;
-     *  import java.awt.Dialog;
-     *
-     *  import static javax.swing.WindowConstants.HIDE_ON_CLOSE;
-     *  import javax.swing.JComponent;
-     * </pre>
-     */
-    INFLOW,
+	/**
+	 * Represents the policy that static imports are processed like non static
+	 * imports. For example:
+	 *
+	 * <pre>
+	 *  import java.awt.Button;
+	 *  import static java.awt.Button.ABORT;
+	 *  import java.awt.Dialog;
+	 *
+	 *  import static javax.swing.WindowConstants.HIDE_ON_CLOSE;
+	 *  import javax.swing.JComponent;
+	 * </pre>
+	 */
+	INFLOW,
 
-    /**
-     * Represents the policy that static imports are under the local group.
-     * For example:
-     *
-     * <pre>
-     *  import java.awt.Dialog;
-     *  import javax.swing.JComponent;
-     *  import static java.awt.Button.A;
-     *  import static javax.swing.WindowConstants.*;
-     *
-     *  import java.io.File;
-     *  import java.io.IOException;
-     *  import static java.io.File.createTempFile;
-     * </pre>
-     */
-    UNDER,
+	/**
+	 * Represents the policy that static imports are under the local group.
+	 * For example:
+	 *
+	 * <pre>
+	 *  import java.awt.Dialog;
+	 *  import javax.swing.JComponent;
+	 *  import static java.awt.Button.A;
+	 *  import static javax.swing.WindowConstants.*;
+	 *
+	 *  import java.io.File;
+	 *  import java.io.IOException;
+	 *  import static java.io.File.createTempFile;
+	 * </pre>
+	 */
+	UNDER,
 
-    /**
-     * Represents the policy that static imports are all at the bottom.
-     * For example:
-     *
-     * <pre>
-     *  import java.awt.Button;
-     *  import java.awt.event.ActionEvent;
-     *
-     *  import static java.awt.Button.ABORT;
-     *  import static java.io.File.createTempFile;
-     *  import static javax.swing.WindowConstants.*;
-     * </pre>
-     */
-    BOTTOM,
+	/**
+	 * Represents the policy that static imports are all at the bottom.
+	 * For example:
+	 *
+	 * <pre>
+	 *  import java.awt.Button;
+	 *  import java.awt.event.ActionEvent;
+	 *
+	 *  import static java.awt.Button.ABORT;
+	 *  import static java.io.File.createTempFile;
+	 *  import static javax.swing.WindowConstants.*;
+	 * </pre>
+	 */
+	BOTTOM,
 
 }
