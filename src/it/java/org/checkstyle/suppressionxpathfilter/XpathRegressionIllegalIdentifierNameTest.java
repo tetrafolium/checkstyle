@@ -31,59 +31,59 @@ import com.puppycrawl.tools.checkstyle.checks.naming.IllegalIdentifierNameCheck;
 
 public class XpathRegressionIllegalIdentifierNameTest extends AbstractXpathTestSupport {
 
-    private final String checkName = IllegalIdentifierNameCheck.class.getSimpleName();
+private final String checkName = IllegalIdentifierNameCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess = new File(getNonCompilablePath(
-                                                "SuppressionXpathRegressionIllegalIdentifierNameTestOne.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess = new File(getNonCompilablePath(
+						    "SuppressionXpathRegressionIllegalIdentifierNameTestOne.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(IllegalIdentifierNameCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(IllegalIdentifierNameCheck.class);
 
-        final String format = "(?i)^(?!(record|yield|var|permits|sealed|_)$).+$";
+	final String format = "(?i)^(?!(record|yield|var|permits|sealed|_)$).+$";
 
-        final String[] expectedViolation = {
-            "10:20: " + getCheckMessage(IllegalIdentifierNameCheck.class,
-                                        AbstractNameCheck.MSG_INVALID_PATTERN, "yield", format),
-        };
+	final String[] expectedViolation = {
+		"10:20: " + getCheckMessage(IllegalIdentifierNameCheck.class,
+		                            AbstractNameCheck.MSG_INVALID_PATTERN, "yield", format),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/RECORD_DEF[./IDENT[@text='SuppressionXpathRegressionIllegalIdentifierNameTestOne'"
-                    + "]]/RECORD_COMPONENTS/RECORD_COMPONENT_DEF/IDENT[@text='yield']"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/RECORD_DEF[./IDENT[@text='SuppressionXpathRegressionIllegalIdentifierNameTestOne'"
+		+ "]]/RECORD_COMPONENTS/RECORD_COMPONENT_DEF/IDENT[@text='yield']"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess = new File(getNonCompilablePath(
-                                                "SuppressionXpathRegressionIllegalIdentifierNameTestTwo.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess = new File(getNonCompilablePath(
+						    "SuppressionXpathRegressionIllegalIdentifierNameTestTwo.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(IllegalIdentifierNameCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(IllegalIdentifierNameCheck.class);
 
-        final String format = "(?i)^(?!(record|yield|var|permits|sealed|_)$).+$";
+	final String format = "(?i)^(?!(record|yield|var|permits|sealed|_)$).+$";
 
-        final String[] expectedViolation = {
-            "9:17: " + getCheckMessage(IllegalIdentifierNameCheck.class,
-                                       AbstractNameCheck.MSG_INVALID_PATTERN, "yield", format),
-        };
+	final String[] expectedViolation = {
+		"9:17: " + getCheckMessage(IllegalIdentifierNameCheck.class,
+		                           AbstractNameCheck.MSG_INVALID_PATTERN, "yield", format),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionIllegalIdentifierNameTestTwo']"
-                    + "]/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]/PARAMETERS/PARAMETER_DEF"
-                    + "/IDENT[@text='yield']"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionIllegalIdentifierNameTestTwo']"
+		+ "]/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]/PARAMETERS/PARAMETER_DEF"
+		+ "/IDENT[@text='yield']"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 }

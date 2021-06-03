@@ -96,35 +96,35 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * @since 5.0
  */
 public class ClassTypeParameterNameCheck
-    extends AbstractNameCheck {
+	extends AbstractNameCheck {
 
-    /** Creates a new {@code ClassTypeParameterNameCheck} instance. */
-    public ClassTypeParameterNameCheck() {
-        super("^[A-Z]$");
-    }
+/** Creates a new {@code ClassTypeParameterNameCheck} instance. */
+public ClassTypeParameterNameCheck() {
+	super("^[A-Z]$");
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public final int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public final int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {
-                   TokenTypes.TYPE_PARAMETER,
-               };
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {
+		       TokenTypes.TYPE_PARAMETER,
+	};
+}
 
-    @Override
-    protected final boolean mustCheckName(DetailAST ast) {
-        final DetailAST location =
-            ast.getParent().getParent();
-        return location.getType() == TokenTypes.CLASS_DEF;
-    }
+@Override
+protected final boolean mustCheckName(DetailAST ast) {
+	final DetailAST location =
+		ast.getParent().getParent();
+	return location.getType() == TokenTypes.CLASS_DEF;
+}
 
 }

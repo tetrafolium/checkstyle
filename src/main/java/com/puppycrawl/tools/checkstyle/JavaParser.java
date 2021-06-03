@@ -50,214 +50,214 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 // -@cs[ClassDataAbstractionCoupling] No way to split up class usage.
 public final class JavaParser {
 
-    /**
-     * Enum to be used for test if comments should be used.
-     */
-    public enum Options {
+/**
+ * Enum to be used for test if comments should be used.
+ */
+public enum Options {
 
-        /**
-         * Comments nodes should be processed.
-         */
-        WITH_COMMENTS,
+	/**
+	 * Comments nodes should be processed.
+	 */
+	WITH_COMMENTS,
 
-        /**
-         * Comments nodes should be ignored.
-         */
-        WITHOUT_COMMENTS,
+	/**
+	 * Comments nodes should be ignored.
+	 */
+	WITHOUT_COMMENTS,
 
-    }
+}
 
-    /** Stop instances being created. **/
-    private JavaParser() {
-    }
+/** Stop instances being created. **/
+private JavaParser() {
+}
 
-    /**
-     * Static helper method to parses a Java source file.
-     *
-     * @param contents contains the contents of the file
-     * @return the root of the AST
-     * @throws CheckstyleException if the contents is not a valid Java source
-     */
-    public static DetailAST parse(FileContents contents)
-    throws CheckstyleException {
-        final String fullText = contents.getText().getFullText().toString();
-        final Reader reader = new StringReader(fullText);
-        final GeneratedJavaLexer lexer = new GeneratedJavaLexer(reader);
-        lexer.setCommentListener(contents);
+/**
+ * Static helper method to parses a Java source file.
+ *
+ * @param contents contains the contents of the file
+ * @return the root of the AST
+ * @throws CheckstyleException if the contents is not a valid Java source
+ */
+public static DetailAST parse(FileContents contents)
+throws CheckstyleException {
+	final String fullText = contents.getText().getFullText().toString();
+	final Reader reader = new StringReader(fullText);
+	final GeneratedJavaLexer lexer = new GeneratedJavaLexer(reader);
+	lexer.setCommentListener(contents);
 
-        final GeneratedTextBlockLexer textBlockLexer =
-            new GeneratedTextBlockLexer(lexer.getInputState());
+	final GeneratedTextBlockLexer textBlockLexer =
+		new GeneratedTextBlockLexer(lexer.getInputState());
 
-        final String tokenObjectClass = "antlr.CommonHiddenStreamToken";
-        lexer.setTokenObjectClass(tokenObjectClass);
-        textBlockLexer.setTokenObjectClass(tokenObjectClass);
+	final String tokenObjectClass = "antlr.CommonHiddenStreamToken";
+	lexer.setTokenObjectClass(tokenObjectClass);
+	textBlockLexer.setTokenObjectClass(tokenObjectClass);
 
-        final TokenStreamHiddenTokenFilter filter = new TokenStreamHiddenTokenFilter(lexer);
-        filter.hide(TokenTypes.SINGLE_LINE_COMMENT);
-        filter.hide(TokenTypes.BLOCK_COMMENT_BEGIN);
+	final TokenStreamHiddenTokenFilter filter = new TokenStreamHiddenTokenFilter(lexer);
+	filter.hide(TokenTypes.SINGLE_LINE_COMMENT);
+	filter.hide(TokenTypes.BLOCK_COMMENT_BEGIN);
 
-        final TokenStreamSelector selector = new TokenStreamSelector();
-        lexer.selector = selector;
-        textBlockLexer.selector = selector;
-        selector.addInputStream(textBlockLexer, "textBlockLexer");
-        selector.select(filter);
+	final TokenStreamSelector selector = new TokenStreamSelector();
+	lexer.selector = selector;
+	textBlockLexer.selector = selector;
+	selector.addInputStream(textBlockLexer, "textBlockLexer");
+	selector.select(filter);
 
-        final GeneratedJavaRecognizer parser = new GeneratedJavaRecognizer(selector) {
-            @Override
-            public void reportError(RecognitionException ex) {
-                throw new IllegalStateException(ex);
-            }
-        };
-        parser.setFilename(contents.getFileName());
-        parser.setASTNodeClass(DetailAstImpl.class.getName());
-        try {
-            parser.compilationUnit();
-        }
-        catch (RecognitionException | TokenStreamException | IllegalStateException ex) {
-            final String exceptionMsg = String.format(Locale.ROOT,
-                                        "%s occurred while parsing file %s.",
-                                        ex.getClass().getSimpleName(), contents.getFileName());
-            throw new CheckstyleException(exceptionMsg, ex);
-        }
+	final GeneratedJavaRecognizer parser = new GeneratedJavaRecognizer(selector) {
+		@Override
+		public void reportError(RecognitionException ex) {
+			throw new IllegalStateException(ex);
+		}
+	};
+	parser.setFilename(contents.getFileName());
+	parser.setASTNodeClass(DetailAstImpl.class.getName());
+	try {
+		parser.compilationUnit();
+	}
+	catch (RecognitionException | TokenStreamException | IllegalStateException ex) {
+		final String exceptionMsg = String.format(Locale.ROOT,
+		                                          "%s occurred while parsing file %s.",
+		                                          ex.getClass().getSimpleName(), contents.getFileName());
+		throw new CheckstyleException(exceptionMsg, ex);
+	}
 
-        return (DetailAST) parser.getAST();
-    }
+	return (DetailAST) parser.getAST();
+}
 
-    /**
-     * Parse a text and return the parse tree.
-     *
-     * @param text the text to parse
-     * @param options {@link Options} to control inclusion of comment nodes
-     * @return the root node of the parse tree
-     * @throws CheckstyleException if the text is not a valid Java source
-     */
-    public static DetailAST parseFileText(FileText text, Options options)
-    throws CheckstyleException {
-        final FileContents contents = new FileContents(text);
-        DetailAST ast = parse(contents);
-        if (options == Options.WITH_COMMENTS) {
-            ast = appendHiddenCommentNodes(ast);
-        }
-        return ast;
-    }
+/**
+ * Parse a text and return the parse tree.
+ *
+ * @param text the text to parse
+ * @param options {@link Options} to control inclusion of comment nodes
+ * @return the root node of the parse tree
+ * @throws CheckstyleException if the text is not a valid Java source
+ */
+public static DetailAST parseFileText(FileText text, Options options)
+throws CheckstyleException {
+	final FileContents contents = new FileContents(text);
+	DetailAST ast = parse(contents);
+	if (options == Options.WITH_COMMENTS) {
+		ast = appendHiddenCommentNodes(ast);
+	}
+	return ast;
+}
 
-    /**
-     * Parses Java source file.
-     *
-     * @param file the file to parse
-     * @param options {@link Options} to control inclusion of comment nodes
-     * @return DetailAST tree
-     * @throws IOException if the file could not be read
-     * @throws CheckstyleException if the file is not a valid Java source file
-     */
-    public static DetailAST parseFile(File file, Options options)
-    throws IOException, CheckstyleException {
-        final FileText text = new FileText(file.getAbsoluteFile(),
-                                           StandardCharsets.UTF_8.name());
-        return parseFileText(text, options);
-    }
+/**
+ * Parses Java source file.
+ *
+ * @param file the file to parse
+ * @param options {@link Options} to control inclusion of comment nodes
+ * @return DetailAST tree
+ * @throws IOException if the file could not be read
+ * @throws CheckstyleException if the file is not a valid Java source file
+ */
+public static DetailAST parseFile(File file, Options options)
+throws IOException, CheckstyleException {
+	final FileText text = new FileText(file.getAbsoluteFile(),
+	                                   StandardCharsets.UTF_8.name());
+	return parseFileText(text, options);
+}
 
-    /**
-     * Appends comment nodes to existing AST.
-     * It traverses each node in AST, looks for hidden comment tokens
-     * and appends found comment tokens as nodes in AST.
-     *
-     * @param root of AST
-     * @return root of AST with comment nodes
-     */
-    public static DetailAST appendHiddenCommentNodes(DetailAST root) {
-        DetailAST result = root;
-        DetailAST curNode = root;
-        DetailAST lastNode = root;
+/**
+ * Appends comment nodes to existing AST.
+ * It traverses each node in AST, looks for hidden comment tokens
+ * and appends found comment tokens as nodes in AST.
+ *
+ * @param root of AST
+ * @return root of AST with comment nodes
+ */
+public static DetailAST appendHiddenCommentNodes(DetailAST root) {
+	DetailAST result = root;
+	DetailAST curNode = root;
+	DetailAST lastNode = root;
 
-        while (curNode != null) {
-            lastNode = curNode;
+	while (curNode != null) {
+		lastNode = curNode;
 
-            CommonHiddenStreamToken tokenBefore = ((CommonASTWithHiddenTokens) curNode)
-                                                  .getHiddenBefore();
-            DetailAST currentSibling = curNode;
-            while (tokenBefore != null) {
-                final DetailAST newCommentNode =
-                    createCommentAstFromToken(tokenBefore);
+		CommonHiddenStreamToken tokenBefore = ((CommonASTWithHiddenTokens) curNode)
+		                                      .getHiddenBefore();
+		DetailAST currentSibling = curNode;
+		while (tokenBefore != null) {
+			final DetailAST newCommentNode =
+				createCommentAstFromToken(tokenBefore);
 
-                ((DetailAstImpl) currentSibling).addPreviousSibling(newCommentNode);
+			((DetailAstImpl) currentSibling).addPreviousSibling(newCommentNode);
 
-                if (currentSibling == result) {
-                    result = newCommentNode;
-                }
+			if (currentSibling == result) {
+				result = newCommentNode;
+			}
 
-                currentSibling = newCommentNode;
-                tokenBefore = tokenBefore.getHiddenBefore();
-            }
+			currentSibling = newCommentNode;
+			tokenBefore = tokenBefore.getHiddenBefore();
+		}
 
-            DetailAST toVisit = curNode.getFirstChild();
-            while (curNode != null && toVisit == null) {
-                toVisit = curNode.getNextSibling();
-                curNode = curNode.getParent();
-            }
-            curNode = toVisit;
-        }
-        if (lastNode != null) {
-            CommonHiddenStreamToken tokenAfter = ((CommonASTWithHiddenTokens) lastNode)
-                                                 .getHiddenAfter();
-            DetailAST currentSibling = lastNode;
-            while (tokenAfter != null) {
-                final DetailAST newCommentNode =
-                    createCommentAstFromToken(tokenAfter);
+		DetailAST toVisit = curNode.getFirstChild();
+		while (curNode != null && toVisit == null) {
+			toVisit = curNode.getNextSibling();
+			curNode = curNode.getParent();
+		}
+		curNode = toVisit;
+	}
+	if (lastNode != null) {
+		CommonHiddenStreamToken tokenAfter = ((CommonASTWithHiddenTokens) lastNode)
+		                                     .getHiddenAfter();
+		DetailAST currentSibling = lastNode;
+		while (tokenAfter != null) {
+			final DetailAST newCommentNode =
+				createCommentAstFromToken(tokenAfter);
 
-                ((DetailAstImpl) currentSibling).addNextSibling(newCommentNode);
+			((DetailAstImpl) currentSibling).addNextSibling(newCommentNode);
 
-                currentSibling = newCommentNode;
-                tokenAfter = tokenAfter.getHiddenAfter();
-            }
-        }
-        return result;
-    }
+			currentSibling = newCommentNode;
+			tokenAfter = tokenAfter.getHiddenAfter();
+		}
+	}
+	return result;
+}
 
-    /**
-     * Create comment AST from token. Depending on token type
-     * SINGLE_LINE_COMMENT or BLOCK_COMMENT_BEGIN is created.
-     *
-     * @param token to create the AST
-     * @return DetailAST of comment node
-     */
-    private static DetailAST createCommentAstFromToken(Token token) {
-        final DetailAST commentAst;
-        if (token.getType() == TokenTypes.SINGLE_LINE_COMMENT) {
-            commentAst = createSlCommentNode(token);
-        }
-        else {
-            commentAst = CommonUtil.createBlockCommentNode(token);
-        }
-        return commentAst;
-    }
+/**
+ * Create comment AST from token. Depending on token type
+ * SINGLE_LINE_COMMENT or BLOCK_COMMENT_BEGIN is created.
+ *
+ * @param token to create the AST
+ * @return DetailAST of comment node
+ */
+private static DetailAST createCommentAstFromToken(Token token) {
+	final DetailAST commentAst;
+	if (token.getType() == TokenTypes.SINGLE_LINE_COMMENT) {
+		commentAst = createSlCommentNode(token);
+	}
+	else {
+		commentAst = CommonUtil.createBlockCommentNode(token);
+	}
+	return commentAst;
+}
 
-    /**
-     * Create single-line comment from token.
-     *
-     * @param token to create the AST
-     * @return DetailAST with SINGLE_LINE_COMMENT type
-     */
-    private static DetailAST createSlCommentNode(Token token) {
-        final DetailAstImpl slComment = new DetailAstImpl();
-        slComment.setType(TokenTypes.SINGLE_LINE_COMMENT);
-        slComment.setText("//");
+/**
+ * Create single-line comment from token.
+ *
+ * @param token to create the AST
+ * @return DetailAST with SINGLE_LINE_COMMENT type
+ */
+private static DetailAST createSlCommentNode(Token token) {
+	final DetailAstImpl slComment = new DetailAstImpl();
+	slComment.setType(TokenTypes.SINGLE_LINE_COMMENT);
+	slComment.setText("//");
 
-        // column counting begins from 0
-        slComment.setColumnNo(token.getColumn() - 1);
-        slComment.setLineNo(token.getLine());
+	// column counting begins from 0
+	slComment.setColumnNo(token.getColumn() - 1);
+	slComment.setLineNo(token.getLine());
 
-        final DetailAstImpl slCommentContent = new DetailAstImpl();
-        slCommentContent.setType(TokenTypes.COMMENT_CONTENT);
+	final DetailAstImpl slCommentContent = new DetailAstImpl();
+	slCommentContent.setType(TokenTypes.COMMENT_CONTENT);
 
-        // column counting begins from 0
-        // plus length of '//'
-        slCommentContent.setColumnNo(token.getColumn() - 1 + 2);
-        slCommentContent.setLineNo(token.getLine());
-        slCommentContent.setText(token.getText());
+	// column counting begins from 0
+	// plus length of '//'
+	slCommentContent.setColumnNo(token.getColumn() - 1 + 2);
+	slCommentContent.setLineNo(token.getLine());
+	slCommentContent.setText(token.getText());
 
-        slComment.addChild(slCommentContent);
-        return slComment;
-    }
+	slComment.addChild(slCommentContent);
+	return slComment;
+}
 
 }

@@ -26,58 +26,58 @@ package com.puppycrawl.tools.checkstyle.api;
  */
 public interface TextBlock {
 
-    /**
-     * The text content of the text block.
-     * Each line is represented by one array entry.
-     * The linebreak characters are not part of the text content.
-     *
-     * @return the text content of the text block.
-     */
-    String[] getText();
+/**
+ * The text content of the text block.
+ * Each line is represented by one array entry.
+ * The linebreak characters are not part of the text content.
+ *
+ * @return the text content of the text block.
+ */
+String[] getText();
 
-    /**
-     * The line in the input file where the text block starts.
-     * Counting starts from 1.
-     *
-     * @return first line of the text block
-     */
-    int getStartLineNo();
+/**
+ * The line in the input file where the text block starts.
+ * Counting starts from 1.
+ *
+ * @return first line of the text block
+ */
+int getStartLineNo();
 
-    /**
-     * The last line of the text block in the input file.
-     * Counting starts from 1.
-     *
-     * @return last line of the text block
-     */
-    int getEndLineNo();
+/**
+ * The last line of the text block in the input file.
+ * Counting starts from 1.
+ *
+ * @return last line of the text block
+ */
+int getEndLineNo();
 
-    /**
-     * The column in the input file where the text block starts.
-     * Counting starts from 0.
-     *
-     * @return first line of the text block
-     */
-    int getStartColNo();
+/**
+ * The column in the input file where the text block starts.
+ * Counting starts from 0.
+ *
+ * @return first line of the text block
+ */
+int getStartColNo();
 
-    /**
-     * The column in the input file where the text block ends.
-     * Counting starts from 0.
-     *
-     * @return last line of the text block
-     */
-    int getEndColNo();
+/**
+ * The column in the input file where the text block ends.
+ * Counting starts from 0.
+ *
+ * @return last line of the text block
+ */
+int getEndColNo();
 
-    /**
-     * Checks if this comment intersects with a specified
-     * part of the file.
-     *
-     * @param startLineNo the starting line number in the file
-     * @param startColNo the starting column number in the file
-     * @param endLineNo the ending line number in the file
-     * @param endColNo the ending column number in the file
-     * @return true if the positions intersects with this comment.
-     */
-    boolean intersects(int startLineNo, int startColNo,
-                       int endLineNo, int endColNo);
+/**
+ * Checks if this comment intersects with a specified
+ * part of the file.
+ *
+ * @param startLineNo the starting line number in the file
+ * @param startColNo the starting column number in the file
+ * @param endLineNo the ending line number in the file
+ * @param endColNo the ending column number in the file
+ * @return true if the positions intersects with this comment.
+ */
+boolean intersects(int startLineNo, int startColNo,
+                   int endLineNo, int endColNo);
 
 }

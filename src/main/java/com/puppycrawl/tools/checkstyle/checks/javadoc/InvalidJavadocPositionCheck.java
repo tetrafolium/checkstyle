@@ -71,42 +71,42 @@ import com.puppycrawl.tools.checkstyle.utils.JavadocUtil;
 @StatelessCheck
 public class InvalidJavadocPositionCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "invalid.position";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "invalid.position";
 
-    @Override
-    public int[] getDefaultTokens() {
-        return new int[] {
-                   TokenTypes.BLOCK_COMMENT_BEGIN,
-               };
-    }
+@Override
+public int[] getDefaultTokens() {
+	return new int[] {
+		       TokenTypes.BLOCK_COMMENT_BEGIN,
+	};
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getDefaultTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getDefaultTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return getDefaultTokens();
-    }
+@Override
+public int[] getRequiredTokens() {
+	return getDefaultTokens();
+}
 
-    @Override
-    public boolean isCommentNodesRequired() {
-        return true;
-    }
+@Override
+public boolean isCommentNodesRequired() {
+	return true;
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        final String commentContent = JavadocUtil.getBlockCommentContent(ast);
+@Override
+public void visitToken(DetailAST ast) {
+	final String commentContent = JavadocUtil.getBlockCommentContent(ast);
 
-        if (JavadocUtil.isJavadocComment(commentContent)
-                && !JavadocUtil.isCorrectJavadocPosition(ast)) {
-            log(ast, MSG_KEY);
-        }
-    }
+	if (JavadocUtil.isJavadocComment(commentContent)
+	    && !JavadocUtil.isCorrectJavadocPosition(ast)) {
+		log(ast, MSG_KEY);
+	}
+}
 
 }

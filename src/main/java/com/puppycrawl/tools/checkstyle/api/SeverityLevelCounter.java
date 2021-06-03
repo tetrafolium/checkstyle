@@ -28,66 +28,66 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public final class SeverityLevelCounter implements AuditListener {
 
-    /** The severity level to watch out for. */
-    private final SeverityLevel level;
+/** The severity level to watch out for. */
+private final SeverityLevel level;
 
-    /** Keeps track of the number of counted events. */
-    private final AtomicInteger count = new AtomicInteger();
+/** Keeps track of the number of counted events. */
+private final AtomicInteger count = new AtomicInteger();
 
-    /**
-     * Creates a new counter.
-     *
-     * @param level the severity level events need to have, must be non-null.
-     * @throws IllegalArgumentException when level is null
-     */
-    public SeverityLevelCounter(SeverityLevel level) {
-        if (level == null) {
-            throw new IllegalArgumentException("'level' cannot be null");
-        }
-        this.level = level;
-    }
+/**
+ * Creates a new counter.
+ *
+ * @param level the severity level events need to have, must be non-null.
+ * @throws IllegalArgumentException when level is null
+ */
+public SeverityLevelCounter(SeverityLevel level) {
+	if (level == null) {
+		throw new IllegalArgumentException("'level' cannot be null");
+	}
+	this.level = level;
+}
 
-    @Override
-    public void addError(AuditEvent event) {
-        if (level == event.getSeverityLevel()) {
-            count.incrementAndGet();
-        }
-    }
+@Override
+public void addError(AuditEvent event) {
+	if (level == event.getSeverityLevel()) {
+		count.incrementAndGet();
+	}
+}
 
-    @Override
-    public void addException(AuditEvent event, Throwable throwable) {
-        if (level == SeverityLevel.ERROR) {
-            count.incrementAndGet();
-        }
-    }
+@Override
+public void addException(AuditEvent event, Throwable throwable) {
+	if (level == SeverityLevel.ERROR) {
+		count.incrementAndGet();
+	}
+}
 
-    @Override
-    public void auditStarted(AuditEvent event) {
-        count.set(0);
-    }
+@Override
+public void auditStarted(AuditEvent event) {
+	count.set(0);
+}
 
-    @Override
-    public void fileStarted(AuditEvent event) {
-        // No code by default, should be overridden only by demand at subclasses
-    }
+@Override
+public void fileStarted(AuditEvent event) {
+	// No code by default, should be overridden only by demand at subclasses
+}
 
-    @Override
-    public void auditFinished(AuditEvent event) {
-        // No code by default, should be overridden only by demand at subclasses
-    }
+@Override
+public void auditFinished(AuditEvent event) {
+	// No code by default, should be overridden only by demand at subclasses
+}
 
-    @Override
-    public void fileFinished(AuditEvent event) {
-        // No code by default, should be overridden only by demand at subclasses
-    }
+@Override
+public void fileFinished(AuditEvent event) {
+	// No code by default, should be overridden only by demand at subclasses
+}
 
-    /**
-     * Returns the number of counted events since audit started.
-     *
-     * @return the number of counted events since audit started.
-     */
-    public int getCount() {
-        return count.get();
-    }
+/**
+ * Returns the number of counted events since audit started.
+ *
+ * @return the number of counted events since audit started.
+ */
+public int getCount() {
+	return count.get();
+}
 
 }

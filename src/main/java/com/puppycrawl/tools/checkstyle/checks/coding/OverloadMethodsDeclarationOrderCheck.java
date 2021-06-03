@@ -77,78 +77,78 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 @StatelessCheck
 public class OverloadMethodsDeclarationOrderCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "overload.methods.declaration";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "overload.methods.declaration";
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {
-                   TokenTypes.OBJBLOCK,
-               };
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {
+		       TokenTypes.OBJBLOCK,
+	};
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        final int parentType = ast.getParent().getType();
+@Override
+public void visitToken(DetailAST ast) {
+	final int parentType = ast.getParent().getType();
 
-        final int[] tokenTypes = {
-            TokenTypes.CLASS_DEF,
-            TokenTypes.ENUM_DEF,
-            TokenTypes.INTERFACE_DEF,
-            TokenTypes.LITERAL_NEW,
-            TokenTypes.RECORD_DEF,
-        };
+	final int[] tokenTypes = {
+		TokenTypes.CLASS_DEF,
+		TokenTypes.ENUM_DEF,
+		TokenTypes.INTERFACE_DEF,
+		TokenTypes.LITERAL_NEW,
+		TokenTypes.RECORD_DEF,
+	};
 
-        if (TokenUtil.isOfType(parentType, tokenTypes)) {
-            checkOverloadMethodsGrouping(ast);
-        }
-    }
+	if (TokenUtil.isOfType(parentType, tokenTypes)) {
+		checkOverloadMethodsGrouping(ast);
+	}
+}
 
-    /**
-     * Checks that if overload methods are grouped together they should not be
-     * separated from each other.
-     *
-     * @param objectBlock
-     *        is a class, interface or enum object block.
-     */
-    private void checkOverloadMethodsGrouping(DetailAST objectBlock) {
-        final int allowedDistance = 1;
-        DetailAST currentToken = objectBlock.getFirstChild();
-        final Map<String, Integer> methodIndexMap = new HashMap<>();
-        final Map<String, Integer> methodLineNumberMap = new HashMap<>();
-        int currentIndex = 0;
-        while (currentToken != null) {
-            if (currentToken.getType() == TokenTypes.METHOD_DEF) {
-                currentIndex++;
-                final String methodName =
-                    currentToken.findFirstToken(TokenTypes.IDENT).getText();
-                if (methodIndexMap.containsKey(methodName)) {
-                    final int previousIndex = methodIndexMap.get(methodName);
-                    if (currentIndex - previousIndex > allowedDistance) {
-                        final int previousLineWithOverloadMethod =
-                            methodLineNumberMap.get(methodName);
-                        log(currentToken, MSG_KEY,
-                            previousLineWithOverloadMethod);
-                    }
-                }
-                methodIndexMap.put(methodName, currentIndex);
-                methodLineNumberMap.put(methodName, currentToken.getLineNo());
-            }
-            currentToken = currentToken.getNextSibling();
-        }
-    }
+/**
+ * Checks that if overload methods are grouped together they should not be
+ * separated from each other.
+ *
+ * @param objectBlock
+ *        is a class, interface or enum object block.
+ */
+private void checkOverloadMethodsGrouping(DetailAST objectBlock) {
+	final int allowedDistance = 1;
+	DetailAST currentToken = objectBlock.getFirstChild();
+	final Map<String, Integer> methodIndexMap = new HashMap<>();
+	final Map<String, Integer> methodLineNumberMap = new HashMap<>();
+	int currentIndex = 0;
+	while (currentToken != null) {
+		if (currentToken.getType() == TokenTypes.METHOD_DEF) {
+			currentIndex++;
+			final String methodName =
+				currentToken.findFirstToken(TokenTypes.IDENT).getText();
+			if (methodIndexMap.containsKey(methodName)) {
+				final int previousIndex = methodIndexMap.get(methodName);
+				if (currentIndex - previousIndex > allowedDistance) {
+					final int previousLineWithOverloadMethod =
+						methodLineNumberMap.get(methodName);
+					log(currentToken, MSG_KEY,
+					    previousLineWithOverloadMethod);
+				}
+			}
+			methodIndexMap.put(methodName, currentIndex);
+			methodLineNumberMap.put(methodName, currentToken.getLineNo());
+		}
+		currentToken = currentToken.getNextSibling();
+	}
+}
 
 }

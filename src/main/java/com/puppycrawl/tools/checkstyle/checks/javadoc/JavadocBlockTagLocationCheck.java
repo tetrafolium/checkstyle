@@ -146,109 +146,109 @@ import com.puppycrawl.tools.checkstyle.api.JavadocTokenTypes;
 @StatelessCheck
 public class JavadocBlockTagLocationCheck extends AbstractJavadocCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties" file.
-     */
-    public static final String MSG_BLOCK_TAG_LOCATION = "javadoc.blockTagLocation";
+/**
+ * A key is pointing to the warning message text in "messages.properties" file.
+ */
+public static final String MSG_BLOCK_TAG_LOCATION = "javadoc.blockTagLocation";
 
-    /**
-     * This regexp is used to extract the javadoc tags.
-     */
-    private static final Pattern JAVADOC_BLOCK_TAG_PATTERN = Pattern.compile("\\s@(\\w+)");
+/**
+ * This regexp is used to extract the javadoc tags.
+ */
+private static final Pattern JAVADOC_BLOCK_TAG_PATTERN = Pattern.compile("\\s@(\\w+)");
 
-    /**
-     * Block tags from Java 11
-     * <a href="https://docs.oracle.com/en/java/javase/11/docs/specs/doc-comment-spec.html">
-     * Documentation Comment Specification</a>.
-     */
-    private static final String[] DEFAULT_TAGS = {
-        "author",
-        "deprecated",
-        "exception",
-        "hidden",
-        "param",
-        "provides",
-        "return",
-        "see",
-        "serial",
-        "serialData",
-        "serialField",
-        "since",
-        "throws",
-        "uses",
-        "version",
-    };
+/**
+ * Block tags from Java 11
+ * <a href="https://docs.oracle.com/en/java/javase/11/docs/specs/doc-comment-spec.html">
+ * Documentation Comment Specification</a>.
+ */
+private static final String[] DEFAULT_TAGS = {
+	"author",
+	"deprecated",
+	"exception",
+	"hidden",
+	"param",
+	"provides",
+	"return",
+	"see",
+	"serial",
+	"serialData",
+	"serialField",
+	"since",
+	"throws",
+	"uses",
+	"version",
+};
 
-    /**
-     * Specify the javadoc tags to process.
-     */
-    private Set<String> tags;
+/**
+ * Specify the javadoc tags to process.
+ */
+private Set<String> tags;
 
-    /**
-     * Creates a new {@code JavadocBlockTagLocationCheck} instance with default settings.
-     */
-    public JavadocBlockTagLocationCheck() {
-        setTags(DEFAULT_TAGS);
-    }
+/**
+ * Creates a new {@code JavadocBlockTagLocationCheck} instance with default settings.
+ */
+public JavadocBlockTagLocationCheck() {
+	setTags(DEFAULT_TAGS);
+}
 
-    /**
-     * Setter to specify the javadoc tags to process.
-     *
-     * @param values user's values.
-     */
-    public final void setTags(String... values) {
-        tags = Arrays.stream(values).collect(Collectors.toSet());
-    }
+/**
+ * Setter to specify the javadoc tags to process.
+ *
+ * @param values user's values.
+ */
+public final void setTags(String... values) {
+	tags = Arrays.stream(values).collect(Collectors.toSet());
+}
 
-    /**
-     * The javadoc tokens that this check must be registered for. According to
-     * <a href="https://docs.oracle.com/en/java/javase/11/docs/specs/doc-comment-spec.html#block-tags">
-     * the specs</a> each block tag must appear at the beginning of a line, otherwise
-     * it will be interpreted as a plain text. This check looks for a block tag
-     * in the javadoc text, thus it needs the {@code TEXT} tokens.
-     *
-     * @return the javadoc token set this must be registered for.
-     * @see JavadocTokenTypes
-     */
-    @Override
-    public int[] getRequiredJavadocTokens() {
-        return new int[] {
-                   JavadocTokenTypes.TEXT,
-               };
-    }
+/**
+ * The javadoc tokens that this check must be registered for. According to
+ * <a href="https://docs.oracle.com/en/java/javase/11/docs/specs/doc-comment-spec.html#block-tags">
+ * the specs</a> each block tag must appear at the beginning of a line, otherwise
+ * it will be interpreted as a plain text. This check looks for a block tag
+ * in the javadoc text, thus it needs the {@code TEXT} tokens.
+ *
+ * @return the javadoc token set this must be registered for.
+ * @see JavadocTokenTypes
+ */
+@Override
+public int[] getRequiredJavadocTokens() {
+	return new int[] {
+		       JavadocTokenTypes.TEXT,
+	};
+}
 
-    @Override
-    public int[] getAcceptableJavadocTokens() {
-        return getRequiredJavadocTokens();
-    }
+@Override
+public int[] getAcceptableJavadocTokens() {
+	return getRequiredJavadocTokens();
+}
 
-    @Override
-    public int[] getDefaultJavadocTokens() {
-        return getRequiredJavadocTokens();
-    }
+@Override
+public int[] getDefaultJavadocTokens() {
+	return getRequiredJavadocTokens();
+}
 
-    @Override
-    public void visitJavadocToken(DetailNode ast) {
-        if (!isCommentOrInlineTag(ast.getParent())) {
-            final Matcher tagMatcher = JAVADOC_BLOCK_TAG_PATTERN.matcher(ast.getText());
-            while (tagMatcher.find()) {
-                final String tagName = tagMatcher.group(1);
-                if (tags.contains(tagName)) {
-                    log(ast.getLineNumber(), MSG_BLOCK_TAG_LOCATION, tagName);
-                }
-            }
-        }
-    }
+@Override
+public void visitJavadocToken(DetailNode ast) {
+	if (!isCommentOrInlineTag(ast.getParent())) {
+		final Matcher tagMatcher = JAVADOC_BLOCK_TAG_PATTERN.matcher(ast.getText());
+		while (tagMatcher.find()) {
+			final String tagName = tagMatcher.group(1);
+			if (tags.contains(tagName)) {
+				log(ast.getLineNumber(), MSG_BLOCK_TAG_LOCATION, tagName);
+			}
+		}
+	}
+}
 
-    /**
-     * Checks if the node can contain an unescaped block tag without violation.
-     *
-     * @param node to check
-     * @return {@code true} if node is {@code @code}, {@code @literal} or HTML comment.
-     */
-    private static boolean isCommentOrInlineTag(DetailNode node) {
-        return node.getType() == JavadocTokenTypes.JAVADOC_INLINE_TAG
-               || node.getType() == JavadocTokenTypes.HTML_COMMENT;
-    }
+/**
+ * Checks if the node can contain an unescaped block tag without violation.
+ *
+ * @param node to check
+ * @return {@code true} if node is {@code @code}, {@code @literal} or HTML comment.
+ */
+private static boolean isCommentOrInlineTag(DetailNode node) {
+	return node.getType() == JavadocTokenTypes.JAVADOC_INLINE_TAG
+	       || node.getType() == JavadocTokenTypes.HTML_COMMENT;
+}
 
 }

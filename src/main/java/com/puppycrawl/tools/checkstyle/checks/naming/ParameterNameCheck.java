@@ -173,129 +173,129 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  */
 public class ParameterNameCheck extends AbstractNameCheck {
 
-    /**
-     * Allows to skip methods with Override annotation from validation.
-     */
-    private boolean ignoreOverridden;
+/**
+ * Allows to skip methods with Override annotation from validation.
+ */
+private boolean ignoreOverridden;
 
-    /** Access modifiers of methods where parameters are checked. */
-    private AccessModifierOption[] accessModifiers = {
-        AccessModifierOption.PUBLIC,
-        AccessModifierOption.PROTECTED,
-        AccessModifierOption.PACKAGE,
-        AccessModifierOption.PRIVATE,
-    };
+/** Access modifiers of methods where parameters are checked. */
+private AccessModifierOption[] accessModifiers = {
+	AccessModifierOption.PUBLIC,
+	AccessModifierOption.PROTECTED,
+	AccessModifierOption.PACKAGE,
+	AccessModifierOption.PRIVATE,
+};
 
-    /**
-     * Creates a new {@code ParameterNameCheck} instance.
-     */
-    public ParameterNameCheck() {
-        super("^[a-z][a-zA-Z0-9]*$");
-    }
+/**
+ * Creates a new {@code ParameterNameCheck} instance.
+ */
+public ParameterNameCheck() {
+	super("^[a-z][a-zA-Z0-9]*$");
+}
 
-    /**
-     * Setter to allows to skip methods with Override annotation from validation.
-     *
-     * @param ignoreOverridden Flag for skipping methods with Override annotation.
-     */
-    public void setIgnoreOverridden(boolean ignoreOverridden) {
-        this.ignoreOverridden = ignoreOverridden;
-    }
+/**
+ * Setter to allows to skip methods with Override annotation from validation.
+ *
+ * @param ignoreOverridden Flag for skipping methods with Override annotation.
+ */
+public void setIgnoreOverridden(boolean ignoreOverridden) {
+	this.ignoreOverridden = ignoreOverridden;
+}
 
-    /**
-     * Setter to access modifiers of methods where parameters are checked.
-     *
-     * @param accessModifiers access modifiers of methods which should be checked.
-     */
-    public void setAccessModifiers(AccessModifierOption... accessModifiers) {
-        this.accessModifiers =
-            Arrays.copyOf(accessModifiers, accessModifiers.length);
-    }
+/**
+ * Setter to access modifiers of methods where parameters are checked.
+ *
+ * @param accessModifiers access modifiers of methods which should be checked.
+ */
+public void setAccessModifiers(AccessModifierOption... accessModifiers) {
+	this.accessModifiers =
+		Arrays.copyOf(accessModifiers, accessModifiers.length);
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.PARAMETER_DEF};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.PARAMETER_DEF};
+}
 
-    @Override
-    protected boolean mustCheckName(DetailAST ast) {
-        boolean checkName = true;
-        if (ignoreOverridden && isOverriddenMethod(ast)
-                || ast.getParent().getType() == TokenTypes.LITERAL_CATCH
-                || ast.getParent().getParent().getType() == TokenTypes.LAMBDA
-                || CheckUtil.isReceiverParameter(ast)
-                || !matchAccessModifiers(getAccessModifier(ast))) {
-            checkName = false;
-        }
-        return checkName;
-    }
+@Override
+protected boolean mustCheckName(DetailAST ast) {
+	boolean checkName = true;
+	if (ignoreOverridden && isOverriddenMethod(ast)
+	    || ast.getParent().getType() == TokenTypes.LITERAL_CATCH
+	    || ast.getParent().getParent().getType() == TokenTypes.LAMBDA
+	    || CheckUtil.isReceiverParameter(ast)
+	    || !matchAccessModifiers(getAccessModifier(ast))) {
+		checkName = false;
+	}
+	return checkName;
+}
 
-    /**
-     * Returns the access modifier of the method/constructor at the specified AST. If
-     * the method is in an interface or annotation block, the access modifier is assumed
-     * to be public.
-     *
-     * @param ast the token of the method/constructor.
-     * @return the access modifier of the method/constructor.
-     */
-    private static AccessModifierOption getAccessModifier(final DetailAST ast) {
-        final AccessModifierOption accessModifier;
+/**
+ * Returns the access modifier of the method/constructor at the specified AST. If
+ * the method is in an interface or annotation block, the access modifier is assumed
+ * to be public.
+ *
+ * @param ast the token of the method/constructor.
+ * @return the access modifier of the method/constructor.
+ */
+private static AccessModifierOption getAccessModifier(final DetailAST ast) {
+	final AccessModifierOption accessModifier;
 
-        if (ScopeUtil.isInInterfaceOrAnnotationBlock(ast)) {
-            accessModifier = AccessModifierOption.PUBLIC;
-        }
-        else {
-            final DetailAST params = ast.getParent();
-            final DetailAST meth = params.getParent();
-            final DetailAST modsToken = meth.findFirstToken(TokenTypes.MODIFIERS);
-            accessModifier = CheckUtil.getAccessModifierFromModifiersToken(modsToken);
-        }
+	if (ScopeUtil.isInInterfaceOrAnnotationBlock(ast)) {
+		accessModifier = AccessModifierOption.PUBLIC;
+	}
+	else {
+		final DetailAST params = ast.getParent();
+		final DetailAST meth = params.getParent();
+		final DetailAST modsToken = meth.findFirstToken(TokenTypes.MODIFIERS);
+		accessModifier = CheckUtil.getAccessModifierFromModifiersToken(modsToken);
+	}
 
-        return accessModifier;
-    }
+	return accessModifier;
+}
 
-    /**
-     * Checks whether a method has the correct access modifier to be checked.
-     *
-     * @param accessModifier the access modifier of the method.
-     * @return whether the method matches the expected access modifier.
-     */
-    private boolean matchAccessModifiers(final AccessModifierOption accessModifier) {
-        return Arrays.stream(accessModifiers)
-               .anyMatch(modifier -> modifier == accessModifier);
-    }
+/**
+ * Checks whether a method has the correct access modifier to be checked.
+ *
+ * @param accessModifier the access modifier of the method.
+ * @return whether the method matches the expected access modifier.
+ */
+private boolean matchAccessModifiers(final AccessModifierOption accessModifier) {
+	return Arrays.stream(accessModifiers)
+	       .anyMatch(modifier->modifier == accessModifier);
+}
 
-    /**
-     * Checks whether a method is annotated with Override annotation.
-     *
-     * @param ast method parameter definition token.
-     * @return true if a method is annotated with Override annotation.
-     */
-    private static boolean isOverriddenMethod(DetailAST ast) {
-        boolean overridden = false;
+/**
+ * Checks whether a method is annotated with Override annotation.
+ *
+ * @param ast method parameter definition token.
+ * @return true if a method is annotated with Override annotation.
+ */
+private static boolean isOverriddenMethod(DetailAST ast) {
+	boolean overridden = false;
 
-        final DetailAST parent = ast.getParent().getParent();
-        final Optional<DetailAST> annotation =
-            Optional.ofNullable(parent.getFirstChild().getFirstChild());
+	final DetailAST parent = ast.getParent().getParent();
+	final Optional<DetailAST> annotation =
+		Optional.ofNullable(parent.getFirstChild().getFirstChild());
 
-        if (annotation.isPresent()) {
-            final Optional<DetailAST> overrideToken =
-                Optional.ofNullable(annotation.get().findFirstToken(TokenTypes.IDENT));
-            if (overrideToken.isPresent() && "Override".equals(overrideToken.get().getText())) {
-                overridden = true;
-            }
-        }
-        return overridden;
-    }
+	if (annotation.isPresent()) {
+		final Optional<DetailAST> overrideToken =
+			Optional.ofNullable(annotation.get().findFirstToken(TokenTypes.IDENT));
+		if (overrideToken.isPresent() && "Override".equals(overrideToken.get().getText())) {
+			overridden = true;
+		}
+	}
+	return overridden;
+}
 
 }

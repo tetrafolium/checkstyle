@@ -30,50 +30,50 @@ import com.puppycrawl.tools.checkstyle.checks.annotation.PackageAnnotationCheck;
 
 public class XpathRegressionPackageAnnotationTest extends AbstractXpathTestSupport {
 
-    private final String checkName = PackageAnnotationCheck.class.getSimpleName();
+private final String checkName = PackageAnnotationCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess =
-            new File(getNonCompilablePath(
-                         "SuppressionXpathRegressionPackageAnnotationOne.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess =
+		new File(getNonCompilablePath(
+				 "SuppressionXpathRegressionPackageAnnotationOne.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(PackageAnnotationCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(PackageAnnotationCheck.class);
 
-        final String[] expectedViolation = {
-            "4:1: " + getCheckMessage(PackageAnnotationCheck.class,
-                                      PackageAnnotationCheck.MSG_KEY),
-        };
+	final String[] expectedViolation = {
+		"4:1: " + getCheckMessage(PackageAnnotationCheck.class,
+		                          PackageAnnotationCheck.MSG_KEY),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList("/PACKAGE_DEF");
+	final List<String> expectedXpathQueries = Collections.singletonList("/PACKAGE_DEF");
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess =
-            new File(getNonCompilablePath(
-                         "SuppressionXpathRegressionPackageAnnotationTwo.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess =
+		new File(getNonCompilablePath(
+				 "SuppressionXpathRegressionPackageAnnotationTwo.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(PackageAnnotationCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(PackageAnnotationCheck.class);
 
-        final String[] expectedViolation = {
-            "4:1: " + getCheckMessage(PackageAnnotationCheck.class,
-                                      PackageAnnotationCheck.MSG_KEY),
-        };
+	final String[] expectedViolation = {
+		"4:1: " + getCheckMessage(PackageAnnotationCheck.class,
+		                          PackageAnnotationCheck.MSG_KEY),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList("/PACKAGE_DEF");
+	final List<String> expectedXpathQueries = Collections.singletonList("/PACKAGE_DEF");
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 }

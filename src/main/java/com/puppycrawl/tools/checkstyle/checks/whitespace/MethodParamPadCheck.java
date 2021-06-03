@@ -147,107 +147,107 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 
 @StatelessCheck
 public class MethodParamPadCheck
-    extends AbstractCheck {
+	extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_LINE_PREVIOUS = "line.previous";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_LINE_PREVIOUS = "line.previous";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_WS_PRECEDED = "ws.preceded";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_WS_PRECEDED = "ws.preceded";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_WS_NOT_PRECEDED = "ws.notPreceded";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_WS_NOT_PRECEDED = "ws.notPreceded";
 
-    /**
-     * Allow a line break between the identifier and left parenthesis.
-     */
-    private boolean allowLineBreaks;
+/**
+ * Allow a line break between the identifier and left parenthesis.
+ */
+private boolean allowLineBreaks;
 
-    /** Specify policy on how to pad method parameter. */
-    private PadOption option = PadOption.NOSPACE;
+/** Specify policy on how to pad method parameter. */
+private PadOption option = PadOption.NOSPACE;
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getAcceptableTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getAcceptableTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return new int[] {
-                   TokenTypes.CTOR_DEF,
-                   TokenTypes.LITERAL_NEW,
-                   TokenTypes.METHOD_CALL,
-                   TokenTypes.METHOD_DEF,
-                   TokenTypes.SUPER_CTOR_CALL,
-                   TokenTypes.ENUM_CONSTANT_DEF,
-                   TokenTypes.RECORD_DEF,
-               };
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return new int[] {
+		       TokenTypes.CTOR_DEF,
+		       TokenTypes.LITERAL_NEW,
+		       TokenTypes.METHOD_CALL,
+		       TokenTypes.METHOD_DEF,
+		       TokenTypes.SUPER_CTOR_CALL,
+		       TokenTypes.ENUM_CONSTANT_DEF,
+		       TokenTypes.RECORD_DEF,
+	};
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return CommonUtil.EMPTY_INT_ARRAY;
-    }
+@Override
+public int[] getRequiredTokens() {
+	return CommonUtil.EMPTY_INT_ARRAY;
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        final DetailAST parenAST;
-        if (ast.getType() == TokenTypes.METHOD_CALL) {
-            parenAST = ast;
-        }
-        else {
-            parenAST = ast.findFirstToken(TokenTypes.LPAREN);
-            // array construction => parenAST == null
-        }
+@Override
+public void visitToken(DetailAST ast) {
+	final DetailAST parenAST;
+	if (ast.getType() == TokenTypes.METHOD_CALL) {
+		parenAST = ast;
+	}
+	else {
+		parenAST = ast.findFirstToken(TokenTypes.LPAREN);
+		// array construction => parenAST == null
+	}
 
-        if (parenAST != null) {
-            final String line = getLines()[parenAST.getLineNo() - 1];
-            if (CommonUtil.hasWhitespaceBefore(parenAST.getColumnNo(), line)) {
-                if (!allowLineBreaks) {
-                    log(parenAST, MSG_LINE_PREVIOUS, parenAST.getText());
-                }
-            }
-            else {
-                final int before = parenAST.getColumnNo() - 1;
-                if (option == PadOption.NOSPACE
-                        && Character.isWhitespace(line.charAt(before))) {
-                    log(parenAST, MSG_WS_PRECEDED, parenAST.getText());
-                }
-                else if (option == PadOption.SPACE
-                         && !Character.isWhitespace(line.charAt(before))) {
-                    log(parenAST, MSG_WS_NOT_PRECEDED, parenAST.getText());
-                }
-            }
-        }
-    }
+	if (parenAST != null) {
+		final String line = getLines()[parenAST.getLineNo() - 1];
+		if (CommonUtil.hasWhitespaceBefore(parenAST.getColumnNo(), line)) {
+			if (!allowLineBreaks) {
+				log(parenAST, MSG_LINE_PREVIOUS, parenAST.getText());
+			}
+		}
+		else {
+			final int before = parenAST.getColumnNo() - 1;
+			if (option == PadOption.NOSPACE
+			    && Character.isWhitespace(line.charAt(before))) {
+				log(parenAST, MSG_WS_PRECEDED, parenAST.getText());
+			}
+			else if (option == PadOption.SPACE
+			         && !Character.isWhitespace(line.charAt(before))) {
+				log(parenAST, MSG_WS_NOT_PRECEDED, parenAST.getText());
+			}
+		}
+	}
+}
 
-    /**
-     * Setter to allow a line break between the identifier and left parenthesis.
-     *
-     * @param allowLineBreaks whether whitespace should be
-     *     flagged at line breaks.
-     */
-    public void setAllowLineBreaks(boolean allowLineBreaks) {
-        this.allowLineBreaks = allowLineBreaks;
-    }
+/**
+ * Setter to allow a line break between the identifier and left parenthesis.
+ *
+ * @param allowLineBreaks whether whitespace should be
+ *     flagged at line breaks.
+ */
+public void setAllowLineBreaks(boolean allowLineBreaks) {
+	this.allowLineBreaks = allowLineBreaks;
+}
 
-    /**
-     * Setter to specify policy on how to pad method parameter.
-     *
-     * @param optionStr string to decode option from
-     * @throws IllegalArgumentException if unable to decode
-     */
-    public void setOption(String optionStr) {
-        option = PadOption.valueOf(optionStr.trim().toUpperCase(Locale.ENGLISH));
-    }
+/**
+ * Setter to specify policy on how to pad method parameter.
+ *
+ * @param optionStr string to decode option from
+ * @throws IllegalArgumentException if unable to decode
+ */
+public void setOption(String optionStr) {
+	option = PadOption.valueOf(optionStr.trim().toUpperCase(Locale.ENGLISH));
+}
 
 }

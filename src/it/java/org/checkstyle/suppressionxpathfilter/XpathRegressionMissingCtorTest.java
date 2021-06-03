@@ -30,64 +30,64 @@ import com.puppycrawl.tools.checkstyle.checks.coding.MissingCtorCheck;
 
 public class XpathRegressionMissingCtorTest extends AbstractXpathTestSupport {
 
-    private final String checkName = MissingCtorCheck.class.getSimpleName();
+private final String checkName = MissingCtorCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess = new File(getPath(
-                                                "SuppressionXpathRegressionMissingCtor1.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess = new File(getPath(
+						    "SuppressionXpathRegressionMissingCtor1.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(MissingCtorCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(MissingCtorCheck.class);
 
-        final String[] expectedViolation = {
-            "3:1: " + getCheckMessage(MissingCtorCheck.class,
-                                      MissingCtorCheck.MSG_KEY),
-        };
+	final String[] expectedViolation = {
+		"3:1: " + getCheckMessage(MissingCtorCheck.class,
+		                          MissingCtorCheck.MSG_KEY),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMissingCtor1']]",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMissingCtor1']]/MODIFIERS",
-                    "/CLASS_DEF[./IDENT["
-                    + "@text='SuppressionXpathRegressionMissingCtor1']]/MODIFIERS/LITERAL_PUBLIC"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMissingCtor1']]",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMissingCtor1']]/MODIFIERS",
+		"/CLASS_DEF[./IDENT["
+		+ "@text='SuppressionXpathRegressionMissingCtor1']]/MODIFIERS/LITERAL_PUBLIC"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess = new File(getPath(
-                                                "SuppressionXpathRegressionMissingCtor2.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess = new File(getPath(
+						    "SuppressionXpathRegressionMissingCtor2.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(MissingCtorCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(MissingCtorCheck.class);
 
-        final String[] expectedViolation = {
-            "9:5: " + getCheckMessage(MissingCtorCheck.class,
-                                      MissingCtorCheck.MSG_KEY),
-        };
+	final String[] expectedViolation = {
+		"9:5: " + getCheckMessage(MissingCtorCheck.class,
+		                          MissingCtorCheck.MSG_KEY),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT["
-                    + "@text='SuppressionXpathRegressionMissingCtor2']]"
-                    + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='InnerClass']]",
-                    "/CLASS_DEF[./IDENT["
-                    + "@text='SuppressionXpathRegressionMissingCtor2']]"
-                    + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='InnerClass']]/MODIFIERS",
-                    "/CLASS_DEF[./IDENT["
-                    + "@text='SuppressionXpathRegressionMissingCtor2']]"
-                    + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='InnerClass']]/LITERAL_CLASS"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT["
+		+ "@text='SuppressionXpathRegressionMissingCtor2']]"
+		+ "/OBJBLOCK/CLASS_DEF[./IDENT[@text='InnerClass']]",
+		"/CLASS_DEF[./IDENT["
+		+ "@text='SuppressionXpathRegressionMissingCtor2']]"
+		+ "/OBJBLOCK/CLASS_DEF[./IDENT[@text='InnerClass']]/MODIFIERS",
+		"/CLASS_DEF[./IDENT["
+		+ "@text='SuppressionXpathRegressionMissingCtor2']]"
+		+ "/OBJBLOCK/CLASS_DEF[./IDENT[@text='InnerClass']]/LITERAL_CLASS"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
 }

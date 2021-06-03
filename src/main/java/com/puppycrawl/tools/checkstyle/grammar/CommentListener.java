@@ -27,33 +27,33 @@ package com.puppycrawl.tools.checkstyle.grammar;
  */
 public interface CommentListener {
 
-    /**
-     * Report the location of a single line comment that extends from the
-     * given point to the end of the line. The type of comment is identified
-     * by a String whose value depends on the language being parsed, but would
-     * typically be the delimiter for the comment.
-     *
-     * @param type an identifier for what type of comment it is.
-     * @param startLineNo the starting line number
-     * @param startColNo the starting column number
-     */
-    void reportSingleLineComment(String type,
-                                 int startLineNo, int startColNo);
+/**
+ * Report the location of a single line comment that extends from the
+ * given point to the end of the line. The type of comment is identified
+ * by a String whose value depends on the language being parsed, but would
+ * typically be the delimiter for the comment.
+ *
+ * @param type an identifier for what type of comment it is.
+ * @param startLineNo the starting line number
+ * @param startColNo the starting column number
+ */
+void reportSingleLineComment(String type,
+                             int startLineNo, int startColNo);
 
-    /**
-     * Report the location of a block comment that can span multiple lines.
-     * The type of comment is identified by a String whose value depends on
-     * the language being parsed, but would typically be the delimiter for the
-     * comment.
-     *
-     * @param type an identifier for what type of comment it is.
-     * @param startLineNo the starting line number
-     * @param startColNo the starting column number
-     * @param endLineNo the ending line number
-     * @param endColNo the ending column number
-     */
-    void reportBlockComment(String type,
-                            int startLineNo, int startColNo,
-                            int endLineNo, int endColNo);
+/**
+ * Report the location of a block comment that can span multiple lines.
+ * The type of comment is identified by a String whose value depends on
+ * the language being parsed, but would typically be the delimiter for the
+ * comment.
+ *
+ * @param type an identifier for what type of comment it is.
+ * @param startLineNo the starting line number
+ * @param startColNo the starting column number
+ * @param endLineNo the ending line number
+ * @param endColNo the ending column number
+ */
+void reportBlockComment(String type,
+                        int startLineNo, int startColNo,
+                        int endLineNo, int endColNo);
 
 }

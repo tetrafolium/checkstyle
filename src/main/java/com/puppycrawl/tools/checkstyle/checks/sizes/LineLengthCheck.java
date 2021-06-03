@@ -121,54 +121,54 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 @StatelessCheck
 public class LineLengthCheck extends AbstractFileSetCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "maxLineLen";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "maxLineLen";
 
-    /** Default maximum number of columns in a line. */
-    private static final int DEFAULT_MAX_COLUMNS = 80;
+/** Default maximum number of columns in a line. */
+private static final int DEFAULT_MAX_COLUMNS = 80;
 
-    /** Patterns matching package, import, and import static statements. */
-    private static final Pattern IGNORE_PATTERN = Pattern.compile("^(package|import) .*");
+/** Patterns matching package, import, and import static statements. */
+private static final Pattern IGNORE_PATTERN = Pattern.compile("^(package|import) .*");
 
-    /** Specify the maximum line length allowed. */
-    private int max = DEFAULT_MAX_COLUMNS;
+/** Specify the maximum line length allowed. */
+private int max = DEFAULT_MAX_COLUMNS;
 
-    /** Specify pattern for lines to ignore. */
-    private Pattern ignorePattern = Pattern.compile("^$");
+/** Specify pattern for lines to ignore. */
+private Pattern ignorePattern = Pattern.compile("^$");
 
-    @Override
-    protected void processFiltered(File file, FileText fileText) {
-        for (int i = 0; i < fileText.size(); i++) {
-            final String line = fileText.get(i);
-            final int realLength = CommonUtil.lengthExpandedTabs(
-                                       line, line.codePointCount(0, line.length()), getTabWidth());
+@Override
+protected void processFiltered(File file, FileText fileText) {
+	for (int i = 0; i < fileText.size(); i++) {
+		final String line = fileText.get(i);
+		final int realLength = CommonUtil.lengthExpandedTabs(
+			line, line.codePointCount(0, line.length()), getTabWidth());
 
-            if (realLength > max && !IGNORE_PATTERN.matcher(line).find()
-                    && !ignorePattern.matcher(line).find()) {
-                log(i + 1, MSG_KEY, max, realLength);
-            }
-        }
-    }
+		if (realLength > max && !IGNORE_PATTERN.matcher(line).find()
+		    && !ignorePattern.matcher(line).find()) {
+			log(i + 1, MSG_KEY, max, realLength);
+		}
+	}
+}
 
-    /**
-     * Setter to specify the maximum line length allowed.
-     *
-     * @param length the maximum length of a line
-     */
-    public void setMax(int length) {
-        max = length;
-    }
+/**
+ * Setter to specify the maximum line length allowed.
+ *
+ * @param length the maximum length of a line
+ */
+public void setMax(int length) {
+	max = length;
+}
 
-    /**
-     * Setter to specify pattern for lines to ignore.
-     *
-     * @param pattern a pattern.
-     */
-    public final void setIgnorePattern(Pattern pattern) {
-        ignorePattern = pattern;
-    }
+/**
+ * Setter to specify pattern for lines to ignore.
+ *
+ * @param pattern a pattern.
+ */
+public final void setIgnorePattern(Pattern pattern) {
+	ignorePattern = pattern;
+}
 
 }

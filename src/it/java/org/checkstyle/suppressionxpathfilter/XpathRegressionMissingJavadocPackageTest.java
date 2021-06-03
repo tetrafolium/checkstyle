@@ -30,52 +30,52 @@ import com.puppycrawl.tools.checkstyle.checks.javadoc.MissingJavadocPackageCheck
 
 public class XpathRegressionMissingJavadocPackageTest extends AbstractXpathTestSupport {
 
-    private final String checkName = MissingJavadocPackageCheck.class.getSimpleName();
+private final String checkName = MissingJavadocPackageCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testBlockComment() throws Exception {
-        final File fileToProcess = new File(getPath(
-                                                "blockcomment/package-info.java"));
+@Test
+public void testBlockComment() throws Exception {
+	final File fileToProcess = new File(getPath(
+						    "blockcomment/package-info.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(MissingJavadocPackageCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(MissingJavadocPackageCheck.class);
 
-        final String[] expectedViolation = {
-            "4:1: " + getCheckMessage(MissingJavadocPackageCheck.class,
-                                      MissingJavadocPackageCheck.MSG_PKG_JAVADOC_MISSING),
-        };
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/PACKAGE_DEF"
-                );
+	final String[] expectedViolation = {
+		"4:1: " + getCheckMessage(MissingJavadocPackageCheck.class,
+		                          MissingJavadocPackageCheck.MSG_PKG_JAVADOC_MISSING),
+	};
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/PACKAGE_DEF"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testNoJavadoc() throws Exception {
-        final File fileToProcess = new File(getPath(
-                                                "nojavadoc/package-info.java"));
+@Test
+public void testNoJavadoc() throws Exception {
+	final File fileToProcess = new File(getPath(
+						    "nojavadoc/package-info.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(MissingJavadocPackageCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(MissingJavadocPackageCheck.class);
 
-        final String[] expectedViolation = {
-            "1:1: " + getCheckMessage(MissingJavadocPackageCheck.class,
-                                      MissingJavadocPackageCheck.MSG_PKG_JAVADOC_MISSING),
-        };
+	final String[] expectedViolation = {
+		"1:1: " + getCheckMessage(MissingJavadocPackageCheck.class,
+		                          MissingJavadocPackageCheck.MSG_PKG_JAVADOC_MISSING),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/PACKAGE_DEF"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/PACKAGE_DEF"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
 }

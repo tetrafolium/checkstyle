@@ -116,120 +116,120 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  */
 @StatelessCheck
 public class SimplifyBooleanReturnCheck
-    extends AbstractCheck {
+	extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "simplify.boolReturn";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "simplify.boolReturn";
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.LITERAL_IF};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.LITERAL_IF};
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        // LITERAL_IF has the following four or five children:
-        // '('
-        // condition
-        // ')'
-        // thenStatement
-        // [ LITERAL_ELSE (with the elseStatement as a child) ]
+@Override
+public void visitToken(DetailAST ast) {
+	// LITERAL_IF has the following four or five children:
+	// '('
+	// condition
+	// ')'
+	// thenStatement
+	// [ LITERAL_ELSE (with the elseStatement as a child) ]
 
-        // don't bother if this is not if then else
-        final DetailAST elseLiteral =
-            ast.findFirstToken(TokenTypes.LITERAL_ELSE);
-        if (elseLiteral != null) {
-            final DetailAST elseStatement = elseLiteral.getFirstChild();
+	// don't bother if this is not if then else
+	final DetailAST elseLiteral =
+		ast.findFirstToken(TokenTypes.LITERAL_ELSE);
+	if (elseLiteral != null) {
+		final DetailAST elseStatement = elseLiteral.getFirstChild();
 
-            // skip '(' and ')'
-            final DetailAST condition = ast.getFirstChild().getNextSibling();
-            final DetailAST thenStatement = condition.getNextSibling().getNextSibling();
+		// skip '(' and ')'
+		final DetailAST condition = ast.getFirstChild().getNextSibling();
+		final DetailAST thenStatement = condition.getNextSibling().getNextSibling();
 
-            if (canReturnOnlyBooleanLiteral(thenStatement)
-                    && canReturnOnlyBooleanLiteral(elseStatement)) {
-                log(ast, MSG_KEY);
-            }
-        }
-    }
+		if (canReturnOnlyBooleanLiteral(thenStatement)
+		    && canReturnOnlyBooleanLiteral(elseStatement)) {
+			log(ast, MSG_KEY);
+		}
+	}
+}
 
-    /**
-     * Returns if an AST is a return statement with a boolean literal
-     * or a compound statement that contains only such a return statement.
-     *
-     * <p>Returns {@code true} iff ast represents
-     * <br/>
-     * <pre>
-     * return true/false;
-     * </pre>
-     * or
-     * <br/>
-     * <pre>
-     * {
-     *   return true/false;
-     * }
-     * </pre>
-     *
-     * @param ast the syntax tree to check
-     * @return if ast is a return statement with a boolean literal.
-     */
-    private static boolean canReturnOnlyBooleanLiteral(DetailAST ast) {
-        boolean result = true;
-        if (!isBooleanLiteralReturnStatement(ast)) {
-            final DetailAST firstStatement = ast.getFirstChild();
-            result = isBooleanLiteralReturnStatement(firstStatement);
-        }
-        return result;
-    }
+/**
+ * Returns if an AST is a return statement with a boolean literal
+ * or a compound statement that contains only such a return statement.
+ *
+ * <p>Returns {@code true} iff ast represents
+ * <br/>
+ * <pre>
+ * return true/false;
+ * </pre>
+ * or
+ * <br/>
+ * <pre>
+ * {
+ *   return true/false;
+ * }
+ * </pre>
+ *
+ * @param ast the syntax tree to check
+ * @return if ast is a return statement with a boolean literal.
+ */
+private static boolean canReturnOnlyBooleanLiteral(DetailAST ast) {
+	boolean result = true;
+	if (!isBooleanLiteralReturnStatement(ast)) {
+		final DetailAST firstStatement = ast.getFirstChild();
+		result = isBooleanLiteralReturnStatement(firstStatement);
+	}
+	return result;
+}
 
-    /**
-     * Returns if an AST is a return statement with a boolean literal.
-     *
-     * <p>Returns {@code true} iff ast represents
-     * <br/>
-     * <pre>
-     * return true/false;
-     * </pre>
-     *
-     * @param ast the syntax tree to check
-     * @return if ast is a return statement with a boolean literal.
-     */
-    private static boolean isBooleanLiteralReturnStatement(DetailAST ast) {
-        boolean booleanReturnStatement = false;
+/**
+ * Returns if an AST is a return statement with a boolean literal.
+ *
+ * <p>Returns {@code true} iff ast represents
+ * <br/>
+ * <pre>
+ * return true/false;
+ * </pre>
+ *
+ * @param ast the syntax tree to check
+ * @return if ast is a return statement with a boolean literal.
+ */
+private static boolean isBooleanLiteralReturnStatement(DetailAST ast) {
+	boolean booleanReturnStatement = false;
 
-        if (ast != null && ast.getType() == TokenTypes.LITERAL_RETURN) {
-            final DetailAST expr = ast.getFirstChild();
+	if (ast != null && ast.getType() == TokenTypes.LITERAL_RETURN) {
+		final DetailAST expr = ast.getFirstChild();
 
-            if (expr.getType() != TokenTypes.SEMI) {
-                final DetailAST value = expr.getFirstChild();
-                booleanReturnStatement = isBooleanLiteralType(value.getType());
-            }
-        }
-        return booleanReturnStatement;
-    }
+		if (expr.getType() != TokenTypes.SEMI) {
+			final DetailAST value = expr.getFirstChild();
+			booleanReturnStatement = isBooleanLiteralType(value.getType());
+		}
+	}
+	return booleanReturnStatement;
+}
 
-    /**
-     * Checks if a token type is a literal true or false.
-     *
-     * @param tokenType the TokenType
-     * @return true iff tokenType is LITERAL_TRUE or LITERAL_FALSE
-     */
-    private static boolean isBooleanLiteralType(final int tokenType) {
-        final boolean isTrue = tokenType == TokenTypes.LITERAL_TRUE;
-        final boolean isFalse = tokenType == TokenTypes.LITERAL_FALSE;
-        return isTrue || isFalse;
-    }
+/**
+ * Checks if a token type is a literal true or false.
+ *
+ * @param tokenType the TokenType
+ * @return true iff tokenType is LITERAL_TRUE or LITERAL_FALSE
+ */
+private static boolean isBooleanLiteralType(final int tokenType) {
+	final boolean isTrue = tokenType == TokenTypes.LITERAL_TRUE;
+	final boolean isFalse = tokenType == TokenTypes.LITERAL_FALSE;
+	return isTrue || isFalse;
+}
 
 }

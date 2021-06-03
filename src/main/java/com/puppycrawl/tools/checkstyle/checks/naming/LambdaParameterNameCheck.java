@@ -91,44 +91,44 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  */
 public class LambdaParameterNameCheck extends AbstractNameCheck {
 
-    /** Creates new instance of {@code LambdaParameterNameCheck}. */
-    public LambdaParameterNameCheck() {
-        super("^[a-z][a-zA-Z0-9]*$");
-    }
+/** Creates new instance of {@code LambdaParameterNameCheck}. */
+public LambdaParameterNameCheck() {
+	super("^[a-z][a-zA-Z0-9]*$");
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {
-                   TokenTypes.LAMBDA,
-               };
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {
+		       TokenTypes.LAMBDA,
+	};
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        final boolean isInSwitchRule = ast.getParent().getType() == TokenTypes.SWITCH_RULE;
+@Override
+public void visitToken(DetailAST ast) {
+	final boolean isInSwitchRule = ast.getParent().getType() == TokenTypes.SWITCH_RULE;
 
-        if (Objects.nonNull(ast.findFirstToken(TokenTypes.PARAMETERS))) {
-            final DetailAST parametersNode = ast.findFirstToken(TokenTypes.PARAMETERS);
-            TokenUtil.forEachChild(parametersNode, TokenTypes.PARAMETER_DEF, super::visitToken);
-        }
-        else if (!isInSwitchRule) {
-            super.visitToken(ast);
-        }
-    }
+	if (Objects.nonNull(ast.findFirstToken(TokenTypes.PARAMETERS))) {
+		final DetailAST parametersNode = ast.findFirstToken(TokenTypes.PARAMETERS);
+		TokenUtil.forEachChild(parametersNode, TokenTypes.PARAMETER_DEF, super::visitToken);
+	}
+	else if (!isInSwitchRule) {
+		super.visitToken(ast);
+	}
+}
 
-    @Override
-    protected boolean mustCheckName(DetailAST ast) {
-        return true;
-    }
+@Override
+protected boolean mustCheckName(DetailAST ast) {
+	return true;
+}
 
 }

@@ -10,6 +10,6 @@ import java.lang.annotation.Target;
 @Target({ElementType.CONSTRUCTOR, ElementType.FIELD, ElementType.TYPE})
 @interface ClassAnnotation {
 
-    String value() default "";
+String value() default "";
 
 }

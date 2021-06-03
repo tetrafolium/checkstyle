@@ -303,535 +303,535 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 @StatelessCheck
 public class EmptyLineSeparatorCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message empty.line.separator in "messages.properties"
-     * file.
-     */
-    public static final String MSG_SHOULD_BE_SEPARATED = "empty.line.separator";
+/**
+ * A key is pointing to the warning message empty.line.separator in "messages.properties"
+ * file.
+ */
+public static final String MSG_SHOULD_BE_SEPARATED = "empty.line.separator";
 
-    /**
-     * A key is pointing to the warning message empty.line.separator.multiple.lines
-     *  in "messages.properties"
-     * file.
-     */
-    public static final String MSG_MULTIPLE_LINES = "empty.line.separator.multiple.lines";
+/**
+ * A key is pointing to the warning message empty.line.separator.multiple.lines
+ *  in "messages.properties"
+ * file.
+ */
+public static final String MSG_MULTIPLE_LINES = "empty.line.separator.multiple.lines";
 
-    /**
-     * A key is pointing to the warning message empty.line.separator.lines.after
-     * in "messages.properties" file.
-     */
-    public static final String MSG_MULTIPLE_LINES_AFTER =
-        "empty.line.separator.multiple.lines.after";
+/**
+ * A key is pointing to the warning message empty.line.separator.lines.after
+ * in "messages.properties" file.
+ */
+public static final String MSG_MULTIPLE_LINES_AFTER =
+	"empty.line.separator.multiple.lines.after";
 
-    /**
-     * A key is pointing to the warning message empty.line.separator.multiple.lines.inside
-     * in "messages.properties" file.
-     */
-    public static final String MSG_MULTIPLE_LINES_INSIDE =
-        "empty.line.separator.multiple.lines.inside";
+/**
+ * A key is pointing to the warning message empty.line.separator.multiple.lines.inside
+ * in "messages.properties" file.
+ */
+public static final String MSG_MULTIPLE_LINES_INSIDE =
+	"empty.line.separator.multiple.lines.inside";
 
-    /** Allow no empty line between fields. */
-    private boolean allowNoEmptyLineBetweenFields;
+/** Allow no empty line between fields. */
+private boolean allowNoEmptyLineBetweenFields;
 
-    /** Allow multiple empty lines between class members. */
-    private boolean allowMultipleEmptyLines = true;
+/** Allow multiple empty lines between class members. */
+private boolean allowMultipleEmptyLines = true;
 
-    /** Allow multiple empty lines inside class members. */
-    private boolean allowMultipleEmptyLinesInsideClassMembers = true;
+/** Allow multiple empty lines inside class members. */
+private boolean allowMultipleEmptyLinesInsideClassMembers = true;
 
-    /**
-     * Setter to allow no empty line between fields.
-     *
-     * @param allow
-     *        User's value.
-     */
-    public final void setAllowNoEmptyLineBetweenFields(boolean allow) {
-        allowNoEmptyLineBetweenFields = allow;
-    }
+/**
+ * Setter to allow no empty line between fields.
+ *
+ * @param allow
+ *        User's value.
+ */
+public final void setAllowNoEmptyLineBetweenFields(boolean allow) {
+	allowNoEmptyLineBetweenFields = allow;
+}
 
-    /**
-     * Setter to allow multiple empty lines between class members.
-     *
-     * @param allow User's value.
-     */
-    public void setAllowMultipleEmptyLines(boolean allow) {
-        allowMultipleEmptyLines = allow;
-    }
+/**
+ * Setter to allow multiple empty lines between class members.
+ *
+ * @param allow User's value.
+ */
+public void setAllowMultipleEmptyLines(boolean allow) {
+	allowMultipleEmptyLines = allow;
+}
 
-    /**
-     * Setter to allow multiple empty lines inside class members.
-     *
-     * @param allow User's value.
-     */
-    public void setAllowMultipleEmptyLinesInsideClassMembers(boolean allow) {
-        allowMultipleEmptyLinesInsideClassMembers = allow;
-    }
+/**
+ * Setter to allow multiple empty lines inside class members.
+ *
+ * @param allow User's value.
+ */
+public void setAllowMultipleEmptyLinesInsideClassMembers(boolean allow) {
+	allowMultipleEmptyLinesInsideClassMembers = allow;
+}
 
-    @Override
-    public boolean isCommentNodesRequired() {
-        return true;
-    }
+@Override
+public boolean isCommentNodesRequired() {
+	return true;
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getAcceptableTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getAcceptableTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return new int[] {
-                   TokenTypes.PACKAGE_DEF,
-                   TokenTypes.IMPORT,
-                   TokenTypes.STATIC_IMPORT,
-                   TokenTypes.CLASS_DEF,
-                   TokenTypes.INTERFACE_DEF,
-                   TokenTypes.ENUM_DEF,
-                   TokenTypes.STATIC_INIT,
-                   TokenTypes.INSTANCE_INIT,
-                   TokenTypes.METHOD_DEF,
-                   TokenTypes.CTOR_DEF,
-                   TokenTypes.VARIABLE_DEF,
-                   TokenTypes.RECORD_DEF,
-                   TokenTypes.COMPACT_CTOR_DEF,
-               };
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return new int[] {
+		       TokenTypes.PACKAGE_DEF,
+		       TokenTypes.IMPORT,
+		       TokenTypes.STATIC_IMPORT,
+		       TokenTypes.CLASS_DEF,
+		       TokenTypes.INTERFACE_DEF,
+		       TokenTypes.ENUM_DEF,
+		       TokenTypes.STATIC_INIT,
+		       TokenTypes.INSTANCE_INIT,
+		       TokenTypes.METHOD_DEF,
+		       TokenTypes.CTOR_DEF,
+		       TokenTypes.VARIABLE_DEF,
+		       TokenTypes.RECORD_DEF,
+		       TokenTypes.COMPACT_CTOR_DEF,
+	};
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return CommonUtil.EMPTY_INT_ARRAY;
-    }
+@Override
+public int[] getRequiredTokens() {
+	return CommonUtil.EMPTY_INT_ARRAY;
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        checkComments(ast);
-        if (hasMultipleLinesBefore(ast)) {
-            log(ast, MSG_MULTIPLE_LINES, ast.getText());
-        }
-        if (!allowMultipleEmptyLinesInsideClassMembers) {
-            processMultipleLinesInside(ast);
-        }
-        if (ast.getType() == TokenTypes.PACKAGE_DEF) {
-            checkCommentInModifiers(ast);
-        }
-        DetailAST nextToken = ast.getNextSibling();
-        while (isComment(nextToken)) {
-            nextToken = nextToken.getNextSibling();
-        }
-        if (nextToken != null) {
-            checkToken(ast, nextToken);
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	checkComments(ast);
+	if (hasMultipleLinesBefore(ast)) {
+		log(ast, MSG_MULTIPLE_LINES, ast.getText());
+	}
+	if (!allowMultipleEmptyLinesInsideClassMembers) {
+		processMultipleLinesInside(ast);
+	}
+	if (ast.getType() == TokenTypes.PACKAGE_DEF) {
+		checkCommentInModifiers(ast);
+	}
+	DetailAST nextToken = ast.getNextSibling();
+	while (isComment(nextToken)) {
+		nextToken = nextToken.getNextSibling();
+	}
+	if (nextToken != null) {
+		checkToken(ast, nextToken);
+	}
+}
 
-    /**
-     * Checks that token and next token are separated.
-     *
-     * @param ast token to validate
-     * @param nextToken next sibling of the token
-     */
-    private void checkToken(DetailAST ast, DetailAST nextToken) {
-        final int astType = ast.getType();
-        switch (astType) {
-        case TokenTypes.VARIABLE_DEF:
-            processVariableDef(ast, nextToken);
-            break;
-        case TokenTypes.IMPORT:
-        case TokenTypes.STATIC_IMPORT:
-            processImport(ast, nextToken);
-            break;
-        case TokenTypes.PACKAGE_DEF:
-            processPackage(ast, nextToken);
-            break;
-        default:
-            if (nextToken.getType() == TokenTypes.RCURLY) {
-                if (hasNotAllowedTwoEmptyLinesBefore(nextToken)) {
-                    log(ast, MSG_MULTIPLE_LINES_AFTER, ast.getText());
-                }
-            }
-            else if (!hasEmptyLineAfter(ast)) {
-                log(nextToken, MSG_SHOULD_BE_SEPARATED,
-                    nextToken.getText());
-            }
-        }
-    }
+/**
+ * Checks that token and next token are separated.
+ *
+ * @param ast token to validate
+ * @param nextToken next sibling of the token
+ */
+private void checkToken(DetailAST ast, DetailAST nextToken) {
+	final int astType = ast.getType();
+	switch (astType) {
+	case TokenTypes.VARIABLE_DEF:
+		processVariableDef(ast, nextToken);
+		break;
+	case TokenTypes.IMPORT:
+	case TokenTypes.STATIC_IMPORT:
+		processImport(ast, nextToken);
+		break;
+	case TokenTypes.PACKAGE_DEF:
+		processPackage(ast, nextToken);
+		break;
+	default:
+		if (nextToken.getType() == TokenTypes.RCURLY) {
+			if (hasNotAllowedTwoEmptyLinesBefore(nextToken)) {
+				log(ast, MSG_MULTIPLE_LINES_AFTER, ast.getText());
+			}
+		}
+		else if (!hasEmptyLineAfter(ast)) {
+			log(nextToken, MSG_SHOULD_BE_SEPARATED,
+			    nextToken.getText());
+		}
+	}
+}
 
-    /**
-     * Checks that packageDef token is separated from comment in modifiers.
-     *
-     * @param packageDef package def token
-     */
-    private void checkCommentInModifiers(DetailAST packageDef) {
-        final Optional<DetailAST> comment = findCommentUnder(packageDef);
-        if (comment.isPresent()) {
-            log(comment.get(), MSG_SHOULD_BE_SEPARATED, comment.get().getText());
-        }
-    }
+/**
+ * Checks that packageDef token is separated from comment in modifiers.
+ *
+ * @param packageDef package def token
+ */
+private void checkCommentInModifiers(DetailAST packageDef) {
+	final Optional<DetailAST> comment = findCommentUnder(packageDef);
+	if (comment.isPresent()) {
+		log(comment.get(), MSG_SHOULD_BE_SEPARATED, comment.get().getText());
+	}
+}
 
-    /**
-     * Log violation in case there are multiple empty lines inside constructor,
-     * initialization block or method.
-     *
-     * @param ast the ast to check.
-     */
-    private void processMultipleLinesInside(DetailAST ast) {
-        final int astType = ast.getType();
-        if (isClassMemberBlock(astType)) {
-            final List<Integer> emptyLines = getEmptyLines(ast);
-            final List<Integer> emptyLinesToLog = getEmptyLinesToLog(emptyLines);
+/**
+ * Log violation in case there are multiple empty lines inside constructor,
+ * initialization block or method.
+ *
+ * @param ast the ast to check.
+ */
+private void processMultipleLinesInside(DetailAST ast) {
+	final int astType = ast.getType();
+	if (isClassMemberBlock(astType)) {
+		final List<Integer> emptyLines = getEmptyLines(ast);
+		final List<Integer> emptyLinesToLog = getEmptyLinesToLog(emptyLines);
 
-            for (Integer lineNo : emptyLinesToLog) {
-                // Checkstyle counts line numbers from 0 but IDE from 1
-                log(lineNo + 1, MSG_MULTIPLE_LINES_INSIDE);
-            }
-        }
-    }
+		for (Integer lineNo : emptyLinesToLog) {
+			// Checkstyle counts line numbers from 0 but IDE from 1
+			log(lineNo + 1, MSG_MULTIPLE_LINES_INSIDE);
+		}
+	}
+}
 
-    /**
-     * Whether the AST is a class member block.
-     *
-     * @param astType the AST to check.
-     * @return true if the AST is a class member block.
-     */
-    private static boolean isClassMemberBlock(int astType) {
-        return TokenUtil.isOfType(astType,
-                                  TokenTypes.STATIC_INIT, TokenTypes.INSTANCE_INIT, TokenTypes.METHOD_DEF,
-                                  TokenTypes.CTOR_DEF, TokenTypes.COMPACT_CTOR_DEF);
-    }
+/**
+ * Whether the AST is a class member block.
+ *
+ * @param astType the AST to check.
+ * @return true if the AST is a class member block.
+ */
+private static boolean isClassMemberBlock(int astType) {
+	return TokenUtil.isOfType(astType,
+	                          TokenTypes.STATIC_INIT, TokenTypes.INSTANCE_INIT, TokenTypes.METHOD_DEF,
+	                          TokenTypes.CTOR_DEF, TokenTypes.COMPACT_CTOR_DEF);
+}
 
-    /**
-     * Get list of empty lines.
-     *
-     * @param ast the ast to check.
-     * @return list of line numbers for empty lines.
-     */
-    private List<Integer> getEmptyLines(DetailAST ast) {
-        final DetailAST lastToken = ast.getLastChild().getLastChild();
-        int lastTokenLineNo = 0;
-        if (lastToken != null) {
-            // -1 as count starts from 0
-            // -2 as last token line cannot be empty, because it is a RCURLY
-            lastTokenLineNo = lastToken.getLineNo() - 2;
-        }
-        final List<Integer> emptyLines = new ArrayList<>();
-        final FileContents fileContents = getFileContents();
+/**
+ * Get list of empty lines.
+ *
+ * @param ast the ast to check.
+ * @return list of line numbers for empty lines.
+ */
+private List<Integer> getEmptyLines(DetailAST ast) {
+	final DetailAST lastToken = ast.getLastChild().getLastChild();
+	int lastTokenLineNo = 0;
+	if (lastToken != null) {
+		// -1 as count starts from 0
+		// -2 as last token line cannot be empty, because it is a RCURLY
+		lastTokenLineNo = lastToken.getLineNo() - 2;
+	}
+	final List<Integer> emptyLines = new ArrayList<>();
+	final FileContents fileContents = getFileContents();
 
-        for (int lineNo = ast.getLineNo(); lineNo <= lastTokenLineNo; lineNo++) {
-            if (fileContents.lineIsBlank(lineNo)) {
-                emptyLines.add(lineNo);
-            }
-        }
-        return emptyLines;
-    }
+	for (int lineNo = ast.getLineNo(); lineNo <= lastTokenLineNo; lineNo++) {
+		if (fileContents.lineIsBlank(lineNo)) {
+			emptyLines.add(lineNo);
+		}
+	}
+	return emptyLines;
+}
 
-    /**
-     * Get list of empty lines to log.
-     *
-     * @param emptyLines list of empty lines.
-     * @return list of empty lines to log.
-     */
-    private static List<Integer> getEmptyLinesToLog(List<Integer> emptyLines) {
-        final List<Integer> emptyLinesToLog = new ArrayList<>();
-        if (emptyLines.size() >= 2) {
-            int previousEmptyLineNo = emptyLines.get(0);
-            for (int emptyLineNo : emptyLines) {
-                if (previousEmptyLineNo + 1 == emptyLineNo) {
-                    emptyLinesToLog.add(emptyLineNo);
-                }
-                previousEmptyLineNo = emptyLineNo;
-            }
-        }
-        return emptyLinesToLog;
-    }
+/**
+ * Get list of empty lines to log.
+ *
+ * @param emptyLines list of empty lines.
+ * @return list of empty lines to log.
+ */
+private static List<Integer> getEmptyLinesToLog(List<Integer> emptyLines) {
+	final List<Integer> emptyLinesToLog = new ArrayList<>();
+	if (emptyLines.size() >= 2) {
+		int previousEmptyLineNo = emptyLines.get(0);
+		for (int emptyLineNo : emptyLines) {
+			if (previousEmptyLineNo + 1 == emptyLineNo) {
+				emptyLinesToLog.add(emptyLineNo);
+			}
+			previousEmptyLineNo = emptyLineNo;
+		}
+	}
+	return emptyLinesToLog;
+}
 
-    /**
-     * Whether the token has not allowed multiple empty lines before.
-     *
-     * @param ast the ast to check.
-     * @return true if the token has not allowed multiple empty lines before.
-     */
-    private boolean hasMultipleLinesBefore(DetailAST ast) {
-        boolean result = false;
-        if ((ast.getType() != TokenTypes.VARIABLE_DEF
-                || isTypeField(ast))
-                && hasNotAllowedTwoEmptyLinesBefore(ast)) {
-            result = true;
-        }
-        return result;
-    }
+/**
+ * Whether the token has not allowed multiple empty lines before.
+ *
+ * @param ast the ast to check.
+ * @return true if the token has not allowed multiple empty lines before.
+ */
+private boolean hasMultipleLinesBefore(DetailAST ast) {
+	boolean result = false;
+	if ((ast.getType() != TokenTypes.VARIABLE_DEF
+	     || isTypeField(ast))
+	    && hasNotAllowedTwoEmptyLinesBefore(ast)) {
+		result = true;
+	}
+	return result;
+}
 
-    /**
-     * Process Package.
-     *
-     * @param ast token
-     * @param nextToken next token
-     */
-    private void processPackage(DetailAST ast, DetailAST nextToken) {
-        if (ast.getLineNo() > 1 && !hasEmptyLineBefore(ast)) {
-            if (getFileContents().getFileName().endsWith("package-info.java")) {
-                if (!ast.getFirstChild().hasChildren() && !isPrecededByJavadoc(ast)) {
-                    log(ast, MSG_SHOULD_BE_SEPARATED, ast.getText());
-                }
-            }
-            else {
-                log(ast, MSG_SHOULD_BE_SEPARATED, ast.getText());
-            }
-        }
-        if (!hasEmptyLineAfter(ast)) {
-            log(nextToken, MSG_SHOULD_BE_SEPARATED, nextToken.getText());
-        }
-    }
+/**
+ * Process Package.
+ *
+ * @param ast token
+ * @param nextToken next token
+ */
+private void processPackage(DetailAST ast, DetailAST nextToken) {
+	if (ast.getLineNo() > 1 && !hasEmptyLineBefore(ast)) {
+		if (getFileContents().getFileName().endsWith("package-info.java")) {
+			if (!ast.getFirstChild().hasChildren() && !isPrecededByJavadoc(ast)) {
+				log(ast, MSG_SHOULD_BE_SEPARATED, ast.getText());
+			}
+		}
+		else {
+			log(ast, MSG_SHOULD_BE_SEPARATED, ast.getText());
+		}
+	}
+	if (!hasEmptyLineAfter(ast)) {
+		log(nextToken, MSG_SHOULD_BE_SEPARATED, nextToken.getText());
+	}
+}
 
-    /**
-     * Process Import.
-     *
-     * @param ast token
-     * @param nextToken next token
-     */
-    private void processImport(DetailAST ast, DetailAST nextToken) {
-        if (!TokenUtil.isOfType(nextToken, TokenTypes.IMPORT, TokenTypes.STATIC_IMPORT)
-                && !hasEmptyLineAfter(ast)) {
-            log(nextToken, MSG_SHOULD_BE_SEPARATED, nextToken.getText());
-        }
-    }
+/**
+ * Process Import.
+ *
+ * @param ast token
+ * @param nextToken next token
+ */
+private void processImport(DetailAST ast, DetailAST nextToken) {
+	if (!TokenUtil.isOfType(nextToken, TokenTypes.IMPORT, TokenTypes.STATIC_IMPORT)
+	    && !hasEmptyLineAfter(ast)) {
+		log(nextToken, MSG_SHOULD_BE_SEPARATED, nextToken.getText());
+	}
+}
 
-    /**
-     * Process Variable.
-     *
-     * @param ast token
-     * @param nextToken next Token
-     */
-    private void processVariableDef(DetailAST ast, DetailAST nextToken) {
-        if (isTypeField(ast) && !hasEmptyLineAfter(ast)
-                && isViolatingEmptyLineBetweenFieldsPolicy(nextToken)) {
-            log(nextToken, MSG_SHOULD_BE_SEPARATED,
-                nextToken.getText());
-        }
-    }
+/**
+ * Process Variable.
+ *
+ * @param ast token
+ * @param nextToken next Token
+ */
+private void processVariableDef(DetailAST ast, DetailAST nextToken) {
+	if (isTypeField(ast) && !hasEmptyLineAfter(ast)
+	    && isViolatingEmptyLineBetweenFieldsPolicy(nextToken)) {
+		log(nextToken, MSG_SHOULD_BE_SEPARATED,
+		    nextToken.getText());
+	}
+}
 
-    /**
-     * Checks whether token placement violates policy of empty line between fields.
-     *
-     * @param detailAST token to be analyzed
-     * @return true if policy is violated and warning should be raised; false otherwise
-     */
-    private boolean isViolatingEmptyLineBetweenFieldsPolicy(DetailAST detailAST) {
-        return detailAST.getType() != TokenTypes.RCURLY
-               && (!allowNoEmptyLineBetweenFields
-                   || !TokenUtil.isOfType(detailAST, TokenTypes.COMMA, TokenTypes.VARIABLE_DEF));
-    }
+/**
+ * Checks whether token placement violates policy of empty line between fields.
+ *
+ * @param detailAST token to be analyzed
+ * @return true if policy is violated and warning should be raised; false otherwise
+ */
+private boolean isViolatingEmptyLineBetweenFieldsPolicy(DetailAST detailAST) {
+	return detailAST.getType() != TokenTypes.RCURLY
+	       && (!allowNoEmptyLineBetweenFields
+	           || !TokenUtil.isOfType(detailAST, TokenTypes.COMMA, TokenTypes.VARIABLE_DEF));
+}
 
-    /**
-     * Checks if a token has empty two previous lines and multiple empty lines is not allowed.
-     *
-     * @param token DetailAST token
-     * @return true, if token has empty two lines before and allowMultipleEmptyLines is false
-     */
-    private boolean hasNotAllowedTwoEmptyLinesBefore(DetailAST token) {
-        return !allowMultipleEmptyLines && hasEmptyLineBefore(token)
-               && isPrePreviousLineEmpty(token);
-    }
+/**
+ * Checks if a token has empty two previous lines and multiple empty lines is not allowed.
+ *
+ * @param token DetailAST token
+ * @return true, if token has empty two lines before and allowMultipleEmptyLines is false
+ */
+private boolean hasNotAllowedTwoEmptyLinesBefore(DetailAST token) {
+	return !allowMultipleEmptyLines && hasEmptyLineBefore(token)
+	       && isPrePreviousLineEmpty(token);
+}
 
-    /**
-     * Check if group of comments located right before token has more than one previous empty line.
-     *
-     * @param token DetailAST token
-     */
-    private void checkComments(DetailAST token) {
-        if (!allowMultipleEmptyLines) {
-            if (TokenUtil.isOfType(token,
-                                   TokenTypes.PACKAGE_DEF, TokenTypes.IMPORT,
-                                   TokenTypes.STATIC_IMPORT, TokenTypes.STATIC_INIT)) {
-                DetailAST previousNode = token.getPreviousSibling();
-                while (isCommentInBeginningOfLine(previousNode)) {
-                    if (hasEmptyLineBefore(previousNode) && isPrePreviousLineEmpty(previousNode)) {
-                        log(previousNode, MSG_MULTIPLE_LINES, previousNode.getText());
-                    }
-                    previousNode = previousNode.getPreviousSibling();
-                }
-            }
-            else {
-                checkCommentsInsideToken(token);
-            }
-        }
-    }
+/**
+ * Check if group of comments located right before token has more than one previous empty line.
+ *
+ * @param token DetailAST token
+ */
+private void checkComments(DetailAST token) {
+	if (!allowMultipleEmptyLines) {
+		if (TokenUtil.isOfType(token,
+		                       TokenTypes.PACKAGE_DEF, TokenTypes.IMPORT,
+		                       TokenTypes.STATIC_IMPORT, TokenTypes.STATIC_INIT)) {
+			DetailAST previousNode = token.getPreviousSibling();
+			while (isCommentInBeginningOfLine(previousNode)) {
+				if (hasEmptyLineBefore(previousNode) && isPrePreviousLineEmpty(previousNode)) {
+					log(previousNode, MSG_MULTIPLE_LINES, previousNode.getText());
+				}
+				previousNode = previousNode.getPreviousSibling();
+			}
+		}
+		else {
+			checkCommentsInsideToken(token);
+		}
+	}
+}
 
-    /**
-     * Check if group of comments located at the start of token has more than one previous empty
-     * line.
-     *
-     * @param token DetailAST token
-     */
-    private void checkCommentsInsideToken(DetailAST token) {
-        final List<DetailAST> childNodes = new LinkedList<>();
-        DetailAST childNode = token.getLastChild();
-        while (childNode != null) {
-            if (childNode.getType() == TokenTypes.MODIFIERS) {
-                for (DetailAST node = token.getFirstChild().getLastChild();
-                        node != null;
-                        node = node.getPreviousSibling()) {
-                    if (isCommentInBeginningOfLine(node)) {
-                        childNodes.add(node);
-                    }
-                }
-            }
-            else if (isCommentInBeginningOfLine(childNode)) {
-                childNodes.add(childNode);
-            }
-            childNode = childNode.getPreviousSibling();
-        }
-        for (DetailAST node : childNodes) {
-            if (hasEmptyLineBefore(node) && isPrePreviousLineEmpty(node)) {
-                log(node, MSG_MULTIPLE_LINES, node.getText());
-            }
-        }
-    }
+/**
+ * Check if group of comments located at the start of token has more than one previous empty
+ * line.
+ *
+ * @param token DetailAST token
+ */
+private void checkCommentsInsideToken(DetailAST token) {
+	final List<DetailAST> childNodes = new LinkedList<>();
+	DetailAST childNode = token.getLastChild();
+	while (childNode != null) {
+		if (childNode.getType() == TokenTypes.MODIFIERS) {
+			for (DetailAST node = token.getFirstChild().getLastChild();
+			     node != null;
+			     node = node.getPreviousSibling()) {
+				if (isCommentInBeginningOfLine(node)) {
+					childNodes.add(node);
+				}
+			}
+		}
+		else if (isCommentInBeginningOfLine(childNode)) {
+			childNodes.add(childNode);
+		}
+		childNode = childNode.getPreviousSibling();
+	}
+	for (DetailAST node : childNodes) {
+		if (hasEmptyLineBefore(node) && isPrePreviousLineEmpty(node)) {
+			log(node, MSG_MULTIPLE_LINES, node.getText());
+		}
+	}
+}
 
-    /**
-     * Checks if a token has empty pre-previous line.
-     *
-     * @param token DetailAST token.
-     * @return true, if token has empty lines before.
-     */
-    private boolean isPrePreviousLineEmpty(DetailAST token) {
-        boolean result = false;
-        final int lineNo = token.getLineNo();
-        // 3 is the number of the pre-previous line because the numbering starts from zero.
-        final int number = 3;
-        if (lineNo >= number) {
-            final String prePreviousLine = getLines()[lineNo - number];
-            result = CommonUtil.isBlank(prePreviousLine);
-        }
-        return result;
-    }
+/**
+ * Checks if a token has empty pre-previous line.
+ *
+ * @param token DetailAST token.
+ * @return true, if token has empty lines before.
+ */
+private boolean isPrePreviousLineEmpty(DetailAST token) {
+	boolean result = false;
+	final int lineNo = token.getLineNo();
+	// 3 is the number of the pre-previous line because the numbering starts from zero.
+	final int number = 3;
+	if (lineNo >= number) {
+		final String prePreviousLine = getLines()[lineNo - number];
+		result = CommonUtil.isBlank(prePreviousLine);
+	}
+	return result;
+}
 
-    /**
-     * Checks if token have empty line after.
-     *
-     * @param token token.
-     * @return true if token have empty line after.
-     */
-    private boolean hasEmptyLineAfter(DetailAST token) {
-        DetailAST lastToken = token.getLastChild().getLastChild();
-        if (lastToken == null) {
-            lastToken = token.getLastChild();
-        }
-        DetailAST nextToken = token.getNextSibling();
-        if (isComment(nextToken)) {
-            nextToken = nextToken.getNextSibling();
-        }
-        // Start of the next token
-        final int nextBegin = nextToken.getLineNo();
-        // End of current token.
-        final int currentEnd = lastToken.getLineNo();
-        return hasEmptyLine(currentEnd + 1, nextBegin - 1);
-    }
+/**
+ * Checks if token have empty line after.
+ *
+ * @param token token.
+ * @return true if token have empty line after.
+ */
+private boolean hasEmptyLineAfter(DetailAST token) {
+	DetailAST lastToken = token.getLastChild().getLastChild();
+	if (lastToken == null) {
+		lastToken = token.getLastChild();
+	}
+	DetailAST nextToken = token.getNextSibling();
+	if (isComment(nextToken)) {
+		nextToken = nextToken.getNextSibling();
+	}
+	// Start of the next token
+	final int nextBegin = nextToken.getLineNo();
+	// End of current token.
+	final int currentEnd = lastToken.getLineNo();
+	return hasEmptyLine(currentEnd + 1, nextBegin - 1);
+}
 
-    /**
-     * Finds comment in next sibling of given packageDef.
-     *
-     * @param packageDef token to check
-     * @return comment under the token
-     */
-    private static Optional<DetailAST> findCommentUnder(DetailAST packageDef) {
-        return Optional.ofNullable(packageDef.getNextSibling())
-               .map(sibling -> sibling.findFirstToken(TokenTypes.MODIFIERS))
-               .map(DetailAST::getFirstChild)
-               .filter(EmptyLineSeparatorCheck::isComment)
-               .filter(comment -> comment.getLineNo() == packageDef.getLineNo() + 1);
-    }
+/**
+ * Finds comment in next sibling of given packageDef.
+ *
+ * @param packageDef token to check
+ * @return comment under the token
+ */
+private static Optional<DetailAST> findCommentUnder(DetailAST packageDef) {
+	return Optional.ofNullable(packageDef.getNextSibling())
+	       .map(sibling->sibling.findFirstToken(TokenTypes.MODIFIERS))
+	       .map(DetailAST::getFirstChild)
+	       .filter(EmptyLineSeparatorCheck::isComment)
+	       .filter(comment->comment.getLineNo() == packageDef.getLineNo() + 1);
+}
 
-    /**
-     * Checks, whether there are empty lines within the specified line range. Line numbering is
-     * started from 1 for parameter values
-     *
-     * @param startLine number of the first line in the range
-     * @param endLine number of the second line in the range
-     * @return {@code true} if found any blank line within the range, {@code false}
-     *         otherwise
-     */
-    private boolean hasEmptyLine(int startLine, int endLine) {
-        // Initial value is false - blank line not found
-        boolean result = false;
-        final FileContents fileContents = getFileContents();
-        for (int line = startLine; line <= endLine; line++) {
-            // Check, if the line is blank. Lines are numbered from 0, so subtract 1
-            if (fileContents.lineIsBlank(line - 1)) {
-                result = true;
-                break;
-            }
-        }
-        return result;
-    }
+/**
+ * Checks, whether there are empty lines within the specified line range. Line numbering is
+ * started from 1 for parameter values
+ *
+ * @param startLine number of the first line in the range
+ * @param endLine number of the second line in the range
+ * @return {@code true} if found any blank line within the range, {@code false}
+ *         otherwise
+ */
+private boolean hasEmptyLine(int startLine, int endLine) {
+	// Initial value is false - blank line not found
+	boolean result = false;
+	final FileContents fileContents = getFileContents();
+	for (int line = startLine; line <= endLine; line++) {
+		// Check, if the line is blank. Lines are numbered from 0, so subtract 1
+		if (fileContents.lineIsBlank(line - 1)) {
+			result = true;
+			break;
+		}
+	}
+	return result;
+}
 
-    /**
-     * Checks if a token has a empty line before.
-     *
-     * @param token token.
-     * @return true, if token have empty line before.
-     */
-    private boolean hasEmptyLineBefore(DetailAST token) {
-        boolean result = false;
-        final int lineNo = token.getLineNo();
-        if (lineNo != 1) {
-            // [lineNo - 2] is the number of the previous line as the numbering starts from zero.
-            final String lineBefore = getLines()[lineNo - 2];
-            result = CommonUtil.isBlank(lineBefore);
-        }
-        return result;
-    }
+/**
+ * Checks if a token has a empty line before.
+ *
+ * @param token token.
+ * @return true, if token have empty line before.
+ */
+private boolean hasEmptyLineBefore(DetailAST token) {
+	boolean result = false;
+	final int lineNo = token.getLineNo();
+	if (lineNo != 1) {
+		// [lineNo - 2] is the number of the previous line as the numbering starts from zero.
+		final String lineBefore = getLines()[lineNo - 2];
+		result = CommonUtil.isBlank(lineBefore);
+	}
+	return result;
+}
 
-    /**
-     * Check if token is comment, which starting in beginning of line.
-     *
-     * @param comment comment token for check.
-     * @return true, if token is comment, which starting in beginning of line.
-     */
-    private boolean isCommentInBeginningOfLine(DetailAST comment) {
-        // [comment.getLineNo() - 1] is the number of the previous line as the numbering starts
-        // from zero.
-        boolean result = false;
-        if (comment != null) {
-            final String lineWithComment = getLines()[comment.getLineNo() - 1].trim();
-            result = lineWithComment.startsWith("//") || lineWithComment.startsWith("/*");
-        }
-        return result;
-    }
+/**
+ * Check if token is comment, which starting in beginning of line.
+ *
+ * @param comment comment token for check.
+ * @return true, if token is comment, which starting in beginning of line.
+ */
+private boolean isCommentInBeginningOfLine(DetailAST comment) {
+	// [comment.getLineNo() - 1] is the number of the previous line as the numbering starts
+	// from zero.
+	boolean result = false;
+	if (comment != null) {
+		final String lineWithComment = getLines()[comment.getLineNo() - 1].trim();
+		result = lineWithComment.startsWith("//") || lineWithComment.startsWith("/*");
+	}
+	return result;
+}
 
-    /**
-     * Check if token is preceded by javadoc comment.
-     *
-     * @param token token for check.
-     * @return true, if token is preceded by javadoc comment.
-     */
-    private static boolean isPrecededByJavadoc(DetailAST token) {
-        boolean result = false;
-        final DetailAST previous = token.getPreviousSibling();
-        if (previous.getType() == TokenTypes.BLOCK_COMMENT_BEGIN
-                && JavadocUtil.isJavadocComment(previous.getFirstChild().getText())) {
-            result = true;
-        }
-        return result;
-    }
+/**
+ * Check if token is preceded by javadoc comment.
+ *
+ * @param token token for check.
+ * @return true, if token is preceded by javadoc comment.
+ */
+private static boolean isPrecededByJavadoc(DetailAST token) {
+	boolean result = false;
+	final DetailAST previous = token.getPreviousSibling();
+	if (previous.getType() == TokenTypes.BLOCK_COMMENT_BEGIN
+	    && JavadocUtil.isJavadocComment(previous.getFirstChild().getText())) {
+		result = true;
+	}
+	return result;
+}
 
-    /**
-     * Check if token is a comment.
-     *
-     * @param ast ast node
-     * @return true, if given ast is comment.
-     */
-    private static boolean isComment(DetailAST ast) {
-        return TokenUtil.isOfType(ast,
-                                  TokenTypes.SINGLE_LINE_COMMENT, TokenTypes.BLOCK_COMMENT_BEGIN);
-    }
+/**
+ * Check if token is a comment.
+ *
+ * @param ast ast node
+ * @return true, if given ast is comment.
+ */
+private static boolean isComment(DetailAST ast) {
+	return TokenUtil.isOfType(ast,
+	                          TokenTypes.SINGLE_LINE_COMMENT, TokenTypes.BLOCK_COMMENT_BEGIN);
+}
 
-    /**
-     * If variable definition is a type field.
-     *
-     * @param variableDef variable definition.
-     * @return true variable definition is a type field.
-     */
-    private static boolean isTypeField(DetailAST variableDef) {
-        return TokenUtil.isOfType(variableDef.getParent().getParent(),
-                                  TokenTypes.CLASS_DEF, TokenTypes.RECORD_DEF);
-    }
+/**
+ * If variable definition is a type field.
+ *
+ * @param variableDef variable definition.
+ * @return true variable definition is a type field.
+ */
+private static boolean isTypeField(DetailAST variableDef) {
+	return TokenUtil.isOfType(variableDef.getParent().getParent(),
+	                          TokenTypes.CLASS_DEF, TokenTypes.RECORD_DEF);
+}
 
 }

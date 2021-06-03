@@ -30,66 +30,66 @@ import com.puppycrawl.tools.checkstyle.checks.UncommentedMainCheck;
 
 public class XpathRegressionUncommentedMainTest extends AbstractXpathTestSupport {
 
-    private final Class<UncommentedMainCheck> clazz =
-        UncommentedMainCheck.class;
+private final Class<UncommentedMainCheck> clazz =
+	UncommentedMainCheck.class;
 
-    @Override
-    protected String getCheckName() {
-        return clazz.getSimpleName();
-    }
+@Override
+protected String getCheckName() {
+	return clazz.getSimpleName();
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionUncommentedMain.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionUncommentedMain.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(UncommentedMainCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(UncommentedMainCheck.class);
 
-        final String[] expectedViolation = {
-            "4:5: " + getCheckMessage(UncommentedMainCheck.class,
-                                      UncommentedMainCheck.MSG_KEY),
-        };
+	final String[] expectedViolation = {
+		"4:5: " + getCheckMessage(UncommentedMainCheck.class,
+		                          UncommentedMainCheck.MSG_KEY),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUncommentedMain']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='main']]",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUncommentedMain']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='main']]/MODIFIERS",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUncommentedMain']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='main']]/MODIFIERS/LITERAL_PUBLIC"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUncommentedMain']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='main']]",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUncommentedMain']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='main']]/MODIFIERS",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUncommentedMain']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='main']]/MODIFIERS/LITERAL_PUBLIC"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionUncommentedMainTwo.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionUncommentedMainTwo.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(UncommentedMainCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(UncommentedMainCheck.class);
 
-        final String[] expectedViolation = {
-            "5:9: " + getCheckMessage(UncommentedMainCheck.class,
-                                      UncommentedMainCheck.MSG_KEY),
-        };
+	final String[] expectedViolation = {
+		"5:9: " + getCheckMessage(UncommentedMainCheck.class,
+		                          UncommentedMainCheck.MSG_KEY),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUncommentedMainTwo']]"
-                    + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='Launcher']"
-                    + "]/OBJBLOCK/METHOD_DEF[./IDENT[@text='main']]",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUncommentedMainTwo']]"
-                    + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='Launcher']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='main']]/MODIFIERS",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUncommentedMainTwo']]"
-                    + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='Launcher']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='main']]/MODIFIERS/LITERAL_PUBLIC"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUncommentedMainTwo']]"
+		+ "/OBJBLOCK/CLASS_DEF[./IDENT[@text='Launcher']"
+		+ "]/OBJBLOCK/METHOD_DEF[./IDENT[@text='main']]",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUncommentedMainTwo']]"
+		+ "/OBJBLOCK/CLASS_DEF[./IDENT[@text='Launcher']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='main']]/MODIFIERS",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUncommentedMainTwo']]"
+		+ "/OBJBLOCK/CLASS_DEF[./IDENT[@text='Launcher']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='main']]/MODIFIERS/LITERAL_PUBLIC"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 }

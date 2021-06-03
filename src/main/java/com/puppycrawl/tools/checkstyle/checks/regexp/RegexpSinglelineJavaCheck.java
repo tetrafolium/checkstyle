@@ -209,111 +209,111 @@ import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
 @StatelessCheck
 public class RegexpSinglelineJavaCheck extends AbstractCheck {
 
-    /** Specify the format of the regular expression to match. */
-    private String format = "$.";
-    /**
-     * Specify the message which is used to notify about violations,
-     * if empty then default (hard-coded) message is used.
-     */
-    private String message;
-    /** Specify the minimum number of matches required in each file. */
-    private int minimum;
-    /** Specify the maximum number of matches required in each file. */
-    private int maximum;
-    /** Control whether to ignore case when searching. */
-    private boolean ignoreCase;
-    /** Control whether to ignore text in comments when searching. */
-    private boolean ignoreComments;
+/** Specify the format of the regular expression to match. */
+private String format = "$.";
+/**
+ * Specify the message which is used to notify about violations,
+ * if empty then default (hard-coded) message is used.
+ */
+private String message;
+/** Specify the minimum number of matches required in each file. */
+private int minimum;
+/** Specify the maximum number of matches required in each file. */
+private int maximum;
+/** Control whether to ignore case when searching. */
+private boolean ignoreCase;
+/** Control whether to ignore text in comments when searching. */
+private boolean ignoreComments;
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return CommonUtil.EMPTY_INT_ARRAY;
-    }
+@Override
+public int[] getRequiredTokens() {
+	return CommonUtil.EMPTY_INT_ARRAY;
+}
 
-    @Override
-    public void beginTree(DetailAST rootAST) {
-        MatchSuppressor suppressor = null;
-        if (ignoreComments) {
-            suppressor = new CommentSuppressor(getFileContents());
-        }
+@Override
+public void beginTree(DetailAST rootAST) {
+	MatchSuppressor suppressor = null;
+	if (ignoreComments) {
+		suppressor = new CommentSuppressor(getFileContents());
+	}
 
-        final DetectorOptions options = DetectorOptions.newBuilder()
-                                        .reporter(this)
-                                        .compileFlags(0)
-                                        .suppressor(suppressor)
-                                        .format(format)
-                                        .message(message)
-                                        .minimum(minimum)
-                                        .maximum(maximum)
-                                        .ignoreCase(ignoreCase)
-                                        .build();
-        final SinglelineDetector detector = new SinglelineDetector(options);
-        detector.processLines(getFileContents().getText());
-    }
+	final DetectorOptions options = DetectorOptions.newBuilder()
+	                                .reporter(this)
+	                                .compileFlags(0)
+	                                .suppressor(suppressor)
+	                                .format(format)
+	                                .message(message)
+	                                .minimum(minimum)
+	                                .maximum(maximum)
+	                                .ignoreCase(ignoreCase)
+	                                .build();
+	final SinglelineDetector detector = new SinglelineDetector(options);
+	detector.processLines(getFileContents().getText());
+}
 
-    /**
-     * Setter to specify the format of the regular expression to match.
-     *
-     * @param format the format of the regular expression to match.
-     */
-    public void setFormat(String format) {
-        this.format = format;
-    }
+/**
+ * Setter to specify the format of the regular expression to match.
+ *
+ * @param format the format of the regular expression to match.
+ */
+public void setFormat(String format) {
+	this.format = format;
+}
 
-    /**
-     * Setter to specify the message which is used to notify about violations,
-     * if empty then default (hard-coded) message is used.
-     *
-     * @param message the message to report for a match.
-     */
-    public void setMessage(String message) {
-        this.message = message;
-    }
+/**
+ * Setter to specify the message which is used to notify about violations,
+ * if empty then default (hard-coded) message is used.
+ *
+ * @param message the message to report for a match.
+ */
+public void setMessage(String message) {
+	this.message = message;
+}
 
-    /**
-     * Setter to specify the minimum number of matches required in each file.
-     *
-     * @param minimum the minimum number of matches required in each file.
-     */
-    public void setMinimum(int minimum) {
-        this.minimum = minimum;
-    }
+/**
+ * Setter to specify the minimum number of matches required in each file.
+ *
+ * @param minimum the minimum number of matches required in each file.
+ */
+public void setMinimum(int minimum) {
+	this.minimum = minimum;
+}
 
-    /**
-     * Setter to specify the maximum number of matches required in each file.
-     *
-     * @param maximum the maximum number of matches required in each file.
-     */
-    public void setMaximum(int maximum) {
-        this.maximum = maximum;
-    }
+/**
+ * Setter to specify the maximum number of matches required in each file.
+ *
+ * @param maximum the maximum number of matches required in each file.
+ */
+public void setMaximum(int maximum) {
+	this.maximum = maximum;
+}
 
-    /**
-     * Setter to control whether to ignore case when searching.
-     *
-     * @param ignoreCase whether to ignore case when searching.
-     */
-    public void setIgnoreCase(boolean ignoreCase) {
-        this.ignoreCase = ignoreCase;
-    }
+/**
+ * Setter to control whether to ignore case when searching.
+ *
+ * @param ignoreCase whether to ignore case when searching.
+ */
+public void setIgnoreCase(boolean ignoreCase) {
+	this.ignoreCase = ignoreCase;
+}
 
-    /**
-     * Setter to control whether to ignore text in comments when searching.
-     *
-     * @param ignore whether to ignore text in comments when searching.
-     */
-    public void setIgnoreComments(boolean ignore) {
-        ignoreComments = ignore;
-    }
+/**
+ * Setter to control whether to ignore text in comments when searching.
+ *
+ * @param ignore whether to ignore text in comments when searching.
+ */
+public void setIgnoreComments(boolean ignore) {
+	ignoreComments = ignore;
+}
 
 }

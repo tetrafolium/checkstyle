@@ -83,137 +83,137 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 @FileStatefulCheck
 public final class MutableExceptionCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "mutable.exception";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "mutable.exception";
 
-    /** Default value for format and extendedClassNameFormat properties. */
-    private static final String DEFAULT_FORMAT = "^.*Exception$|^.*Error$|^.*Throwable$";
-    /** Stack of checking information for classes. */
-    private final Deque<Boolean> checkingStack = new ArrayDeque<>();
-    /** Specify pattern for extended class names. */
-    private Pattern extendedClassNameFormat = Pattern.compile(DEFAULT_FORMAT);
-    /** Should we check current class or not. */
-    private boolean checking;
-    /** Specify pattern for exception class names. */
-    private Pattern format = Pattern.compile(DEFAULT_FORMAT);
+/** Default value for format and extendedClassNameFormat properties. */
+private static final String DEFAULT_FORMAT = "^.*Exception$|^.*Error$|^.*Throwable$";
+/** Stack of checking information for classes. */
+private final Deque<Boolean> checkingStack = new ArrayDeque<>();
+/** Specify pattern for extended class names. */
+private Pattern extendedClassNameFormat = Pattern.compile(DEFAULT_FORMAT);
+/** Should we check current class or not. */
+private boolean checking;
+/** Specify pattern for exception class names. */
+private Pattern format = Pattern.compile(DEFAULT_FORMAT);
 
-    /**
-     * Setter to specify pattern for extended class names.
-     *
-     * @param extendedClassNameFormat a {@code String} value
-     */
-    public void setExtendedClassNameFormat(Pattern extendedClassNameFormat) {
-        this.extendedClassNameFormat = extendedClassNameFormat;
-    }
+/**
+ * Setter to specify pattern for extended class names.
+ *
+ * @param extendedClassNameFormat a {@code String} value
+ */
+public void setExtendedClassNameFormat(Pattern extendedClassNameFormat) {
+	this.extendedClassNameFormat = extendedClassNameFormat;
+}
 
-    /**
-     * Setter to specify pattern for exception class names.
-     *
-     * @param pattern the new pattern
-     */
-    public void setFormat(Pattern pattern) {
-        format = pattern;
-    }
+/**
+ * Setter to specify pattern for exception class names.
+ *
+ * @param pattern the new pattern
+ */
+public void setFormat(Pattern pattern) {
+	format = pattern;
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.CLASS_DEF, TokenTypes.VARIABLE_DEF};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.CLASS_DEF, TokenTypes.VARIABLE_DEF};
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        switch (ast.getType()) {
-        case TokenTypes.CLASS_DEF:
-            visitClassDef(ast);
-            break;
-        case TokenTypes.VARIABLE_DEF:
-            visitVariableDef(ast);
-            break;
-        default:
-            throw new IllegalStateException(ast.toString());
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	switch (ast.getType()) {
+	case TokenTypes.CLASS_DEF:
+		visitClassDef(ast);
+		break;
+	case TokenTypes.VARIABLE_DEF:
+		visitVariableDef(ast);
+		break;
+	default:
+		throw new IllegalStateException(ast.toString());
+	}
+}
 
-    @Override
-    public void leaveToken(DetailAST ast) {
-        if (ast.getType() == TokenTypes.CLASS_DEF) {
-            leaveClassDef();
-        }
-    }
+@Override
+public void leaveToken(DetailAST ast) {
+	if (ast.getType() == TokenTypes.CLASS_DEF) {
+		leaveClassDef();
+	}
+}
 
-    /**
-     * Called when we start processing class definition.
-     *
-     * @param ast class definition node
-     */
-    private void visitClassDef(DetailAST ast) {
-        checkingStack.push(checking);
-        checking = isNamedAsException(ast) && isExtendedClassNamedAsException(ast);
-    }
+/**
+ * Called when we start processing class definition.
+ *
+ * @param ast class definition node
+ */
+private void visitClassDef(DetailAST ast) {
+	checkingStack.push(checking);
+	checking = isNamedAsException(ast) && isExtendedClassNamedAsException(ast);
+}
 
-    /** Called when we leave class definition. */
-    private void leaveClassDef() {
-        checking = checkingStack.pop();
-    }
+/** Called when we leave class definition. */
+private void leaveClassDef() {
+	checking = checkingStack.pop();
+}
 
-    /**
-     * Checks variable definition.
-     *
-     * @param ast variable def node for check
-     */
-    private void visitVariableDef(DetailAST ast) {
-        if (checking && ast.getParent().getType() == TokenTypes.OBJBLOCK) {
-            final DetailAST modifiersAST =
-                ast.findFirstToken(TokenTypes.MODIFIERS);
+/**
+ * Checks variable definition.
+ *
+ * @param ast variable def node for check
+ */
+private void visitVariableDef(DetailAST ast) {
+	if (checking && ast.getParent().getType() == TokenTypes.OBJBLOCK) {
+		final DetailAST modifiersAST =
+			ast.findFirstToken(TokenTypes.MODIFIERS);
 
-            if (modifiersAST.findFirstToken(TokenTypes.FINAL) == null) {
-                log(ast, MSG_KEY, ast.findFirstToken(TokenTypes.IDENT).getText());
-            }
-        }
-    }
+		if (modifiersAST.findFirstToken(TokenTypes.FINAL) == null) {
+			log(ast, MSG_KEY, ast.findFirstToken(TokenTypes.IDENT).getText());
+		}
+	}
+}
 
-    /**
-     * Checks that a class name conforms to specified format.
-     *
-     * @param ast class definition node
-     * @return true if a class name conforms to specified format
-     */
-    private boolean isNamedAsException(DetailAST ast) {
-        final String className = ast.findFirstToken(TokenTypes.IDENT).getText();
-        return format.matcher(className).find();
-    }
+/**
+ * Checks that a class name conforms to specified format.
+ *
+ * @param ast class definition node
+ * @return true if a class name conforms to specified format
+ */
+private boolean isNamedAsException(DetailAST ast) {
+	final String className = ast.findFirstToken(TokenTypes.IDENT).getText();
+	return format.matcher(className).find();
+}
 
-    /**
-     * Checks that if extended class name conforms to specified format.
-     *
-     * @param ast class definition node
-     * @return true if extended class name conforms to specified format
-     */
-    private boolean isExtendedClassNamedAsException(DetailAST ast) {
-        boolean result = false;
-        final DetailAST extendsClause = ast.findFirstToken(TokenTypes.EXTENDS_CLAUSE);
-        if (extendsClause != null) {
-            DetailAST currentNode = extendsClause;
-            while (currentNode.getLastChild() != null) {
-                currentNode = currentNode.getLastChild();
-            }
-            final String extendedClassName = currentNode.getText();
-            result = extendedClassNameFormat.matcher(extendedClassName).matches();
-        }
-        return result;
-    }
+/**
+ * Checks that if extended class name conforms to specified format.
+ *
+ * @param ast class definition node
+ * @return true if extended class name conforms to specified format
+ */
+private boolean isExtendedClassNamedAsException(DetailAST ast) {
+	boolean result = false;
+	final DetailAST extendsClause = ast.findFirstToken(TokenTypes.EXTENDS_CLAUSE);
+	if (extendsClause != null) {
+		DetailAST currentNode = extendsClause;
+		while (currentNode.getLastChild() != null) {
+			currentNode = currentNode.getLastChild();
+		}
+		final String extendedClassName = currentNode.getText();
+		result = extendedClassNameFormat.matcher(extendedClassName).matches();
+	}
+	return result;
+}
 
 }

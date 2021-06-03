@@ -24,61 +24,61 @@ package com.puppycrawl.tools.checkstyle.checks.imports;
  */
 class PkgImportRule extends AbstractImportRule {
 
-    /** Package to control access to. */
-    private final String pkgName;
+/** Package to control access to. */
+private final String pkgName;
 
-    /** Indicates if the package name must be an exact match. */
-    private final boolean exactMatch;
+/** Indicates if the package name must be an exact match. */
+private final boolean exactMatch;
 
-    /**
-     * Constructs an instance.
-     *
-     * @param allow whether to allow access.
-     * @param localOnly whether the rule is to be applied locally only
-     * @param pkgName the package to apply the rule on.
-     * @param exactMatch whether the package name must match exactly.
-     * @param regExp whether the package name is to be interpreted as a regular
-     *        expression.
-     */
-    /* package */ PkgImportRule(final boolean allow, final boolean localOnly,
-                                final String pkgName, final boolean exactMatch, final boolean regExp) {
-        super(allow, localOnly, regExp);
-        this.pkgName = pkgName;
-        this.exactMatch = exactMatch;
-    }
+/**
+ * Constructs an instance.
+ *
+ * @param allow whether to allow access.
+ * @param localOnly whether the rule is to be applied locally only
+ * @param pkgName the package to apply the rule on.
+ * @param exactMatch whether the package name must match exactly.
+ * @param regExp whether the package name is to be interpreted as a regular
+ *        expression.
+ */
+/* package */ PkgImportRule(final boolean allow, final boolean localOnly,
+                            final String pkgName, final boolean exactMatch, final boolean regExp) {
+	super(allow, localOnly, regExp);
+	this.pkgName = pkgName;
+	this.exactMatch = exactMatch;
+}
 
-    /**
-     * Verifies whether a package name is used.
-     *
-     * @param forImport the import to check.
-     * @return a result {@link AccessResult} indicating whether it can be used.
-     */
-    @Override
-    public AccessResult verifyImport(final String forImport) {
-        // First check that we actually match the package.
-        // Then check if matched and f we must be an exact match.
-        // In this case, the text after the first "." must not contain
-        // another "." as this indicates that it is not an exact match.
+/**
+ * Verifies whether a package name is used.
+ *
+ * @param forImport the import to check.
+ * @return a result {@link AccessResult} indicating whether it can be used.
+ */
+@Override
+public AccessResult verifyImport(final String forImport) {
+	// First check that we actually match the package.
+	// Then check if matched and f we must be an exact match.
+	// In this case, the text after the first "." must not contain
+	// another "." as this indicates that it is not an exact match.
 
-        boolean pkgMatch;
+	boolean pkgMatch;
 
-        if (isRegExp()) {
-            pkgMatch = forImport.matches(pkgName + "\\..*");
+	if (isRegExp()) {
+		pkgMatch = forImport.matches(pkgName + "\\..*");
 
-            if (pkgMatch && exactMatch) {
-                pkgMatch = !forImport.matches(pkgName + "\\..*\\..*");
-            }
-        }
-        else {
-            pkgMatch = forImport.startsWith(pkgName + ".");
+		if (pkgMatch && exactMatch) {
+			pkgMatch = !forImport.matches(pkgName + "\\..*\\..*");
+		}
+	}
+	else {
+		pkgMatch = forImport.startsWith(pkgName + ".");
 
-            if (pkgMatch && exactMatch) {
-                pkgMatch = forImport.indexOf('.',
-                                             pkgName.length() + 1) == -1;
-            }
-        }
+		if (pkgMatch && exactMatch) {
+			pkgMatch = forImport.indexOf('.',
+			                             pkgName.length() + 1) == -1;
+		}
+	}
 
-        return calculateResult(pkgMatch);
-    }
+	return calculateResult(pkgMatch);
+}
 
 }

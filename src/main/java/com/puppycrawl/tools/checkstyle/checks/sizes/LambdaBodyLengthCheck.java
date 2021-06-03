@@ -141,94 +141,94 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 @StatelessCheck
 public class LambdaBodyLengthCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "maxLen.lambdaBody";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "maxLen.lambdaBody";
 
-    /** Default maximum number of lines. */
-    private static final int DEFAULT_MAX = 10;
+/** Default maximum number of lines. */
+private static final int DEFAULT_MAX = 10;
 
-    /** Specify the maximum number of lines allowed. */
-    private int max = DEFAULT_MAX;
+/** Specify the maximum number of lines allowed. */
+private int max = DEFAULT_MAX;
 
-    /**
-     * Setter to specify the maximum number of lines allowed.
-     *
-     * @param length the maximum length of lambda body.
-     */
-    public void setMax(int length) {
-        max = length;
-    }
+/**
+ * Setter to specify the maximum number of lines allowed.
+ *
+ * @param length the maximum length of lambda body.
+ */
+public void setMax(int length) {
+	max = length;
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.LAMBDA};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.LAMBDA};
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        if (ast.getParent().getType() != TokenTypes.SWITCH_RULE) {
-            final int length = getLength(ast);
-            if (length > max) {
-                log(ast, MSG_KEY, length, max);
-            }
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	if (ast.getParent().getType() != TokenTypes.SWITCH_RULE) {
+		final int length = getLength(ast);
+		if (length > max) {
+			log(ast, MSG_KEY, length, max);
+		}
+	}
+}
 
-    private static int getLength(DetailAST ast) {
-        final DetailAST lambdaBody = ast.getLastChild();
-        final int length;
-        if (lambdaBody.getType() == TokenTypes.SLIST) {
-            length = lambdaBody.getLastChild().getLineNo() - lambdaBody.getLineNo();
-        }
-        else {
-            length = getLastNodeLineNumber(lambdaBody) - getFirstNodeLineNumber(lambdaBody);
-        }
-        return length + 1;
-    }
+private static int getLength(DetailAST ast) {
+	final DetailAST lambdaBody = ast.getLastChild();
+	final int length;
+	if (lambdaBody.getType() == TokenTypes.SLIST) {
+		length = lambdaBody.getLastChild().getLineNo() - lambdaBody.getLineNo();
+	}
+	else {
+		length = getLastNodeLineNumber(lambdaBody) - getFirstNodeLineNumber(lambdaBody);
+	}
+	return length + 1;
+}
 
-    /**
-     * Get last child node in the tree line number.
-     *
-     * @param lambdaBody lambda body node.
-     * @return last child node in the tree line number.
-     */
-    private static int getLastNodeLineNumber(DetailAST lambdaBody) {
-        DetailAST node = lambdaBody;
-        int result;
-        do {
-            result = node.getLineNo();
-            node = node.getLastChild();
-        } while (node != null);
-        return result;
-    }
+/**
+ * Get last child node in the tree line number.
+ *
+ * @param lambdaBody lambda body node.
+ * @return last child node in the tree line number.
+ */
+private static int getLastNodeLineNumber(DetailAST lambdaBody) {
+	DetailAST node = lambdaBody;
+	int result;
+	do {
+		result = node.getLineNo();
+		node = node.getLastChild();
+	} while (node != null);
+	return result;
+}
 
-    /**
-     * Get first child node in the tree line number.
-     *
-     * @param lambdaBody lambda body node.
-     * @return first child node in the tree line number.
-     */
-    private static int getFirstNodeLineNumber(DetailAST lambdaBody) {
-        DetailAST node = lambdaBody;
-        int result;
-        do {
-            result = node.getLineNo();
-            node = node.getFirstChild();
-        } while (node != null);
-        return result;
-    }
+/**
+ * Get first child node in the tree line number.
+ *
+ * @param lambdaBody lambda body node.
+ * @return first child node in the tree line number.
+ */
+private static int getFirstNodeLineNumber(DetailAST lambdaBody) {
+	DetailAST node = lambdaBody;
+	int result;
+	do {
+		result = node.getLineNo();
+		node = node.getFirstChild();
+	} while (node != null);
+	return result;
+}
 
 }

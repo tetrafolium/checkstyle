@@ -43,216 +43,216 @@ import org.xml.sax.SAXException;
  */
 public final class XmlMetaReader {
 
-    /** Name tag of metadata XML files. */
-    private static final String XML_TAG_NAME = "name";
+/** Name tag of metadata XML files. */
+private static final String XML_TAG_NAME = "name";
 
-    /** Description tag of metadata XML files. */
-    private static final String XML_TAG_DESCRIPTION = "description";
+/** Description tag of metadata XML files. */
+private static final String XML_TAG_DESCRIPTION = "description";
 
-    /**
-     * Do no allow {@code XmlMetaReader} instances to be created.
-     */
-    private XmlMetaReader() {
-    }
+/**
+ * Do no allow {@code XmlMetaReader} instances to be created.
+ */
+private XmlMetaReader() {
+}
 
-    /**
-     * Utility to load all the metadata files present in the checkstyle JAR including third parties'
-     * module metadata files.
-     * checkstyle metadata files are grouped in a folder hierarchy similar to that of their
-     * corresponding source files.
-     * Third party(e.g. SevNTU Checks) metadata files are prefixed with {@code checkstylemeta-}
-     * to their file names.
-     *
-     * @param thirdPartyPackages list of fully qualified third party package names(can be only a
-     *                           hint, e.g. for SevNTU it can be com.github.sevntu / com.github)
-     * @return list of module details found in the classpath satisfying the above conditions
-     */
-    public static List<ModuleDetails> readAllModulesIncludingThirdPartyIfAny(
-        String... thirdPartyPackages) {
-        final Set<String> standardModuleFileNames =
-            new Reflections("com.puppycrawl.tools.checkstyle.meta",
-                            new ResourcesScanner()).getResources(Pattern.compile(".*\\.xml"));
-        final Set<String> allMetadataSources = new HashSet<>(standardModuleFileNames);
-        for (String packageName : thirdPartyPackages) {
-            final Set<String> thirdPartyModuleFileNames =
-                new Reflections(packageName, new ResourcesScanner())
-            .getResources(Pattern.compile(".*checkstylemeta-.*\\.xml"));
-            allMetadataSources.addAll(thirdPartyModuleFileNames);
-        }
+/**
+ * Utility to load all the metadata files present in the checkstyle JAR including third parties'
+ * module metadata files.
+ * checkstyle metadata files are grouped in a folder hierarchy similar to that of their
+ * corresponding source files.
+ * Third party(e.g. SevNTU Checks) metadata files are prefixed with {@code checkstylemeta-}
+ * to their file names.
+ *
+ * @param thirdPartyPackages list of fully qualified third party package names(can be only a
+ *                           hint, e.g. for SevNTU it can be com.github.sevntu / com.github)
+ * @return list of module details found in the classpath satisfying the above conditions
+ */
+public static List<ModuleDetails> readAllModulesIncludingThirdPartyIfAny(
+	String... thirdPartyPackages) {
+	final Set<String> standardModuleFileNames =
+		new Reflections("com.puppycrawl.tools.checkstyle.meta",
+		                new ResourcesScanner()).getResources(Pattern.compile(".*\\.xml"));
+	final Set<String> allMetadataSources = new HashSet<>(standardModuleFileNames);
+	for (String packageName : thirdPartyPackages) {
+		final Set<String> thirdPartyModuleFileNames =
+			new Reflections(packageName, new ResourcesScanner())
+			.getResources(Pattern.compile(".*checkstylemeta-.*\\.xml"));
+		allMetadataSources.addAll(thirdPartyModuleFileNames);
+	}
 
-        final List<ModuleDetails> result = new ArrayList<>();
-        for (String fileName : allMetadataSources) {
-            final ModuleType moduleType;
-            if (fileName.endsWith("FileFilter.xml")) {
-                moduleType = ModuleType.FILEFILTER;
-            }
-            else if (fileName.endsWith("Filter.xml")) {
-                moduleType = ModuleType.FILTER;
-            }
-            else {
-                moduleType = ModuleType.CHECK;
-            }
-            final ModuleDetails moduleDetails;
-            try {
-                moduleDetails = read(XmlMetaReader.class.getResourceAsStream("/" + fileName),
-                                     moduleType);
-            }
-            catch (ParserConfigurationException | IOException | SAXException ex) {
-                throw new IllegalStateException("Problem to read all modules including third "
-                                                + "party if any. Problem detected at file: " + fileName, ex);
-            }
-            result.add(moduleDetails);
-        }
+	final List<ModuleDetails> result = new ArrayList<>();
+	for (String fileName : allMetadataSources) {
+		final ModuleType moduleType;
+		if (fileName.endsWith("FileFilter.xml")) {
+			moduleType = ModuleType.FILEFILTER;
+		}
+		else if (fileName.endsWith("Filter.xml")) {
+			moduleType = ModuleType.FILTER;
+		}
+		else {
+			moduleType = ModuleType.CHECK;
+		}
+		final ModuleDetails moduleDetails;
+		try {
+			moduleDetails = read(XmlMetaReader.class.getResourceAsStream("/" + fileName),
+			                     moduleType);
+		}
+		catch (ParserConfigurationException | IOException | SAXException ex) {
+			throw new IllegalStateException("Problem to read all modules including third "
+			                                + "party if any. Problem detected at file: " + fileName, ex);
+		}
+		result.add(moduleDetails);
+	}
 
-        return result;
-    }
+	return result;
+}
 
-    /**
-     * Read the module details from the supplied input stream of the module's XML metadata file.
-     *
-     * @param moduleMetadataStream input stream object of a module's metadata file
-     * @param moduleType type of module
-     * @return module detail object extracted from the XML metadata file
-     * @throws ParserConfigurationException if a parser configuration exception occurs
-     * @throws IOException if a IO exception occurs
-     * @throws SAXException if a SAX exception occurs during parsing the XML file
-     */
-    public static ModuleDetails read(InputStream moduleMetadataStream, ModuleType moduleType)
-    throws ParserConfigurationException, IOException, SAXException {
-        final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        final DocumentBuilder builder = factory.newDocumentBuilder();
-        final Document document = builder.parse(moduleMetadataStream);
-        final Element root = document.getDocumentElement();
-        final Element element = getDirectChildsByTag(root, "module").get(0);
-        Element module = null;
-        final ModuleDetails moduleDetails = new ModuleDetails();
-        if (moduleType == ModuleType.CHECK) {
-            module = getDirectChildsByTag(element, "check").get(0);
-            moduleDetails.setModuleType(ModuleType.CHECK);
-        }
-        else if (moduleType == ModuleType.FILTER) {
-            module = getDirectChildsByTag(element, "filter").get(0);
-            moduleDetails.setModuleType(ModuleType.FILTER);
-        }
-        else if (moduleType == ModuleType.FILEFILTER) {
-            module = getDirectChildsByTag(element, "file-filter").get(0);
-            moduleDetails.setModuleType(ModuleType.FILEFILTER);
-        }
-        ModuleDetails result = null;
-        if (module != null) {
-            result = createModule(module, moduleDetails);
-        }
-        return result;
-    }
+/**
+ * Read the module details from the supplied input stream of the module's XML metadata file.
+ *
+ * @param moduleMetadataStream input stream object of a module's metadata file
+ * @param moduleType type of module
+ * @return module detail object extracted from the XML metadata file
+ * @throws ParserConfigurationException if a parser configuration exception occurs
+ * @throws IOException if a IO exception occurs
+ * @throws SAXException if a SAX exception occurs during parsing the XML file
+ */
+public static ModuleDetails read(InputStream moduleMetadataStream, ModuleType moduleType)
+throws ParserConfigurationException, IOException, SAXException {
+	final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+	final DocumentBuilder builder = factory.newDocumentBuilder();
+	final Document document = builder.parse(moduleMetadataStream);
+	final Element root = document.getDocumentElement();
+	final Element element = getDirectChildsByTag(root, "module").get(0);
+	Element module = null;
+	final ModuleDetails moduleDetails = new ModuleDetails();
+	if (moduleType == ModuleType.CHECK) {
+		module = getDirectChildsByTag(element, "check").get(0);
+		moduleDetails.setModuleType(ModuleType.CHECK);
+	}
+	else if (moduleType == ModuleType.FILTER) {
+		module = getDirectChildsByTag(element, "filter").get(0);
+		moduleDetails.setModuleType(ModuleType.FILTER);
+	}
+	else if (moduleType == ModuleType.FILEFILTER) {
+		module = getDirectChildsByTag(element, "file-filter").get(0);
+		moduleDetails.setModuleType(ModuleType.FILEFILTER);
+	}
+	ModuleDetails result = null;
+	if (module != null) {
+		result = createModule(module, moduleDetails);
+	}
+	return result;
+}
 
-    /**
-     * Create the module detail object from XML metadata.
-     *
-     * @param mod root XML document element
-     * @param moduleDetails module detail object, which is to be updated
-     * @return module detail object containing all metadata
-     */
-    private static ModuleDetails createModule(Element mod, ModuleDetails moduleDetails) {
-        moduleDetails.setName(getAttributeValue(mod, XML_TAG_NAME));
-        moduleDetails.setFullQualifiedName(getAttributeValue(mod, "fully-qualified-name"));
-        moduleDetails.setParent(getAttributeValue(mod, "parent"));
-        moduleDetails.setDescription(getDirectChildsByTag(mod, XML_TAG_DESCRIPTION).get(0)
-                                     .getFirstChild().getNodeValue());
-        final List<Element> properties = getDirectChildsByTag(mod, "properties");
-        if (!properties.isEmpty()) {
-            final List<ModulePropertyDetails> modulePropertyDetailsList =
-                createProperties(properties.get(0));
-            moduleDetails.addToProperties(modulePropertyDetailsList);
-        }
-        final List<String> messageKeys =
-            getListContentByAttribute(mod,
-                                      "message-keys", "message-key", "key");
-        if (messageKeys != null) {
-            moduleDetails.addToViolationMessages(messageKeys);
-        }
-        return moduleDetails;
-    }
+/**
+ * Create the module detail object from XML metadata.
+ *
+ * @param mod root XML document element
+ * @param moduleDetails module detail object, which is to be updated
+ * @return module detail object containing all metadata
+ */
+private static ModuleDetails createModule(Element mod, ModuleDetails moduleDetails) {
+	moduleDetails.setName(getAttributeValue(mod, XML_TAG_NAME));
+	moduleDetails.setFullQualifiedName(getAttributeValue(mod, "fully-qualified-name"));
+	moduleDetails.setParent(getAttributeValue(mod, "parent"));
+	moduleDetails.setDescription(getDirectChildsByTag(mod, XML_TAG_DESCRIPTION).get(0)
+	                             .getFirstChild().getNodeValue());
+	final List<Element> properties = getDirectChildsByTag(mod, "properties");
+	if (!properties.isEmpty()) {
+		final List<ModulePropertyDetails> modulePropertyDetailsList =
+			createProperties(properties.get(0));
+		moduleDetails.addToProperties(modulePropertyDetailsList);
+	}
+	final List<String> messageKeys =
+		getListContentByAttribute(mod,
+		                          "message-keys", "message-key", "key");
+	if (messageKeys != null) {
+		moduleDetails.addToViolationMessages(messageKeys);
+	}
+	return moduleDetails;
+}
 
-    /**
-     * Create module property details from the XML metadata.
-     *
-     * @param properties parent document element which contains property's metadata
-     * @return list of property details object created
-     */
-    private static List<ModulePropertyDetails> createProperties(Element properties) {
-        final List<ModulePropertyDetails> result = new ArrayList<>();
-        final NodeList propertyList = properties.getElementsByTagName("property");
-        for (int i = 0; i < propertyList.getLength(); i++) {
-            final ModulePropertyDetails propertyDetails = new ModulePropertyDetails();
-            final Element prop = (Element) propertyList.item(i);
-            propertyDetails.setName(getAttributeValue(prop, XML_TAG_NAME));
-            propertyDetails.setType(getAttributeValue(prop, "type"));
-            final String defaultValueTag = "default-value";
-            if (prop.hasAttribute(defaultValueTag)) {
-                propertyDetails.setDefaultValue(getAttributeValue(prop, defaultValueTag));
-            }
-            final String validationTypeTag = "validation-type";
-            if (prop.hasAttribute(validationTypeTag)) {
-                propertyDetails.setValidationType(getAttributeValue(prop, validationTypeTag));
-            }
-            propertyDetails.setDescription(getDirectChildsByTag(prop, XML_TAG_DESCRIPTION)
-                                           .get(0).getFirstChild().getNodeValue());
-            result.add(propertyDetails);
-        }
-        return result;
-    }
+/**
+ * Create module property details from the XML metadata.
+ *
+ * @param properties parent document element which contains property's metadata
+ * @return list of property details object created
+ */
+private static List<ModulePropertyDetails> createProperties(Element properties) {
+	final List<ModulePropertyDetails> result = new ArrayList<>();
+	final NodeList propertyList = properties.getElementsByTagName("property");
+	for (int i = 0; i < propertyList.getLength(); i++) {
+		final ModulePropertyDetails propertyDetails = new ModulePropertyDetails();
+		final Element prop = (Element) propertyList.item(i);
+		propertyDetails.setName(getAttributeValue(prop, XML_TAG_NAME));
+		propertyDetails.setType(getAttributeValue(prop, "type"));
+		final String defaultValueTag = "default-value";
+		if (prop.hasAttribute(defaultValueTag)) {
+			propertyDetails.setDefaultValue(getAttributeValue(prop, defaultValueTag));
+		}
+		final String validationTypeTag = "validation-type";
+		if (prop.hasAttribute(validationTypeTag)) {
+			propertyDetails.setValidationType(getAttributeValue(prop, validationTypeTag));
+		}
+		propertyDetails.setDescription(getDirectChildsByTag(prop, XML_TAG_DESCRIPTION)
+		                               .get(0).getFirstChild().getNodeValue());
+		result.add(propertyDetails);
+	}
+	return result;
+}
 
-    /**
-     * Utility to get the list contents by the attribute specified.
-     *
-     * @param element doc element
-     * @param listParent parent element of list
-     * @param listOption child list element
-     * @param attribute attribute key
-     * @return list of strings containing the XML list data
-     */
-    private static List<String> getListContentByAttribute(Element element, String listParent,
-            String listOption, String attribute) {
-        final List<Element> children = getDirectChildsByTag(element, listParent);
-        List<String> result = null;
-        if (!children.isEmpty()) {
-            final NodeList nodeList = children.get(0).getElementsByTagName(listOption);
-            final List<String> listContent = new ArrayList<>();
-            for (int j = 0; j < nodeList.getLength(); j++) {
-                listContent.add(getAttributeValue((Element) nodeList.item(j), attribute));
-            }
-            result = listContent;
-        }
-        return result;
-    }
+/**
+ * Utility to get the list contents by the attribute specified.
+ *
+ * @param element doc element
+ * @param listParent parent element of list
+ * @param listOption child list element
+ * @param attribute attribute key
+ * @return list of strings containing the XML list data
+ */
+private static List<String> getListContentByAttribute(Element element, String listParent,
+                                                      String listOption, String attribute) {
+	final List<Element> children = getDirectChildsByTag(element, listParent);
+	List<String> result = null;
+	if (!children.isEmpty()) {
+		final NodeList nodeList = children.get(0).getElementsByTagName(listOption);
+		final List<String> listContent = new ArrayList<>();
+		for (int j = 0; j < nodeList.getLength(); j++) {
+			listContent.add(getAttributeValue((Element) nodeList.item(j), attribute));
+		}
+		result = listContent;
+	}
+	return result;
+}
 
-    /**
-     * Utility to get the children of an element by tag name.
-     *
-     * @param element parent element
-     * @param sTagName tag name of children required
-     * @return list of elements retrieved
-     */
-    private static List<Element> getDirectChildsByTag(Element element, String sTagName) {
-        final NodeList children = element.getElementsByTagName(sTagName);
-        final List<Element> res = new ArrayList<>();
-        for (int i = 0; i < children.getLength(); i++) {
-            if (children.item(i).getParentNode().equals(element)) {
-                res.add((Element) children.item(i));
-            }
-        }
-        return res;
-    }
+/**
+ * Utility to get the children of an element by tag name.
+ *
+ * @param element parent element
+ * @param sTagName tag name of children required
+ * @return list of elements retrieved
+ */
+private static List<Element> getDirectChildsByTag(Element element, String sTagName) {
+	final NodeList children = element.getElementsByTagName(sTagName);
+	final List<Element> res = new ArrayList<>();
+	for (int i = 0; i < children.getLength(); i++) {
+		if (children.item(i).getParentNode().equals(element)) {
+			res.add((Element) children.item(i));
+		}
+	}
+	return res;
+}
 
-    /**
-     * Utility to get attribute value of an element.
-     *
-     * @param element target element
-     * @param attribute attribute key
-     * @return attribute value
-     */
-    private static String getAttributeValue(Element element, String attribute) {
-        return element.getAttributes().getNamedItem(attribute).getNodeValue();
-    }
+/**
+ * Utility to get attribute value of an element.
+ *
+ * @param element target element
+ * @param attribute attribute key
+ * @return attribute value
+ */
+private static String getAttributeValue(Element element, String attribute) {
+	return element.getAttributes().getNamedItem(attribute).getNodeValue();
+}
 
 }

@@ -29,54 +29,54 @@ import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
 import com.puppycrawl.tools.checkstyle.checks.TrailingCommentCheck;
 
 public class XpathRegressionTrailingCommentTest extends AbstractXpathTestSupport {
-    private final String checkName = TrailingCommentCheck.class.getSimpleName();
+private final String checkName = TrailingCommentCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess = new File(getPath(
-                                                "SuppressionXpathRegressionTrailingComment1.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess = new File(getPath(
+						    "SuppressionXpathRegressionTrailingComment1.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(TrailingCommentCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(TrailingCommentCheck.class);
 
-        final String[] expectedViolation = {
-            "4:12: " + getCheckMessage(TrailingCommentCheck.class,
-                                       TrailingCommentCheck.MSG_KEY),
-        };
+	final String[] expectedViolation = {
+		"4:12: " + getCheckMessage(TrailingCommentCheck.class,
+		                           TrailingCommentCheck.MSG_KEY),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionTrailingComment1']]"
-                    + "/OBJBLOCK/SINGLE_LINE_COMMENT"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionTrailingComment1']]"
+		+ "/OBJBLOCK/SINGLE_LINE_COMMENT"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess = new File(getPath(
-                                                "SuppressionXpathRegressionTrailingComment2.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess = new File(getPath(
+						    "SuppressionXpathRegressionTrailingComment2.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(TrailingCommentCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(TrailingCommentCheck.class);
 
-        final String[] expectedViolation = {
-            "4:40: " + getCheckMessage(TrailingCommentCheck.class,
-                                       TrailingCommentCheck.MSG_KEY),
-        };
+	final String[] expectedViolation = {
+		"4:40: " + getCheckMessage(TrailingCommentCheck.class,
+		                           TrailingCommentCheck.MSG_KEY),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionTrailingComment2']]"
-                    + "/OBJBLOCK/SINGLE_LINE_COMMENT"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionTrailingComment2']]"
+		+ "/OBJBLOCK/SINGLE_LINE_COMMENT"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 }

@@ -5,14 +5,14 @@ import java.lang.annotation.Target;
 
 @EnumAnnotation("bar") enum SuppressionXpathRegressionAnnotationLocationEnum { //warn
 
-    SuppressionXpathRegressionAnnotationLocationEnum() {
-    }
+	SuppressionXpathRegressionAnnotationLocationEnum() {
+	}
 
 }
 
 @Target({ElementType.FIELD, ElementType.TYPE})
-@interface EnumAnnotation  {
+@interface EnumAnnotation {
 
-    String value() default "";
+String value() default "";
 
 }

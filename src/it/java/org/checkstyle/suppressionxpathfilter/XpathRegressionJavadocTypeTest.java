@@ -34,86 +34,86 @@ import com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTypeCheck;
 
 public class XpathRegressionJavadocTypeTest extends AbstractXpathTestSupport {
 
-    private final String checkName = JavadocTypeCheck.class.getSimpleName();
+private final String checkName = JavadocTypeCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionJavadocTypeOne.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionJavadocTypeOne.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(JavadocTypeCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(JavadocTypeCheck.class);
 
-        moduleConfig.addAttribute("authorFormat", "\\S");
+	moduleConfig.addAttribute("authorFormat", "\\S");
 
-        final String[] expectedViolation = {
-            "6:1: " + getCheckMessage(JavadocTypeCheck.class,
-                                      MSG_MISSING_TAG, "@author"),
-        };
+	final String[] expectedViolation = {
+		"6:1: " + getCheckMessage(JavadocTypeCheck.class,
+		                          MSG_MISSING_TAG, "@author"),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeOne']]",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeOne']]"
-                    + "/MODIFIERS",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeOne']]"
-                    + "/MODIFIERS/LITERAL_PUBLIC");
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeOne']]",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeOne']]"
+		+ "/MODIFIERS",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeOne']]"
+		+ "/MODIFIERS/LITERAL_PUBLIC");
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionJavadocTypeTwo.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionJavadocTypeTwo.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(JavadocTypeCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(JavadocTypeCheck.class);
 
-        moduleConfig.addAttribute("authorFormat", "foo");
+	moduleConfig.addAttribute("authorFormat", "foo");
 
-        final String[] expectedViolation = {
-            "7:1: " + getCheckMessage(JavadocTypeCheck.class,
-                                      MSG_TAG_FORMAT, "@author", "foo"),
-        };
+	final String[] expectedViolation = {
+		"7:1: " + getCheckMessage(JavadocTypeCheck.class,
+		                          MSG_TAG_FORMAT, "@author", "foo"),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeTwo']]",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeTwo']]"
-                    + "/MODIFIERS",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeTwo']]"
-                    + "/MODIFIERS/LITERAL_PUBLIC");
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeTwo']]",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeTwo']]"
+		+ "/MODIFIERS",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeTwo']]"
+		+ "/MODIFIERS/LITERAL_PUBLIC");
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testThree() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionJavadocTypeThree.java"));
+@Test
+public void testThree() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionJavadocTypeThree.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(JavadocTypeCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(JavadocTypeCheck.class);
 
-        final String[] expectedViolation = {
-            "8:1: " + getCheckMessage(JavadocTypeCheck.class,
-                                      MSG_MISSING_TAG, JavadocTagInfo.PARAM.getText() + " <C>"),
-        };
+	final String[] expectedViolation = {
+		"8:1: " + getCheckMessage(JavadocTypeCheck.class,
+		                          MSG_MISSING_TAG, JavadocTagInfo.PARAM.getText() + " <C>"),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeThree']]",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeThree']]"
-                    + "/MODIFIERS",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeThree']]"
-                    + "/MODIFIERS/LITERAL_PUBLIC");
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeThree']]",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeThree']]"
+		+ "/MODIFIERS",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeThree']]"
+		+ "/MODIFIERS/LITERAL_PUBLIC");
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 }

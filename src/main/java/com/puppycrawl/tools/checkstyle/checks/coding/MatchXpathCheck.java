@@ -217,71 +217,71 @@ import net.sf.saxon.trans.XPathException;
 @StatelessCheck
 public class MatchXpathCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text provided by user.
-     */
-    public static final String MSG_KEY = "matchxpath.match";
+/**
+ * A key is pointing to the warning message text provided by user.
+ */
+public static final String MSG_KEY = "matchxpath.match";
 
-    /** Specify Xpath query. */
-    private String query = "";
+/** Specify Xpath query. */
+private String query = "";
 
-    /** Xpath expression. */
-    private XPathExpression xpathExpression;
+/** Xpath expression. */
+private XPathExpression xpathExpression;
 
-    /**
-     * Setter to specify Xpath query.
-     *
-     * @param query Xpath query.
-     */
-    public void setQuery(String query) {
-        this.query = query;
-        if (!query.isEmpty()) {
-            try {
-                final XPathEvaluator xpathEvaluator =
-                    new XPathEvaluator(Configuration.newConfiguration());
-                xpathExpression = xpathEvaluator.createExpression(query);
-            }
-            catch (XPathException ex) {
-                throw new IllegalStateException("Creating Xpath expression failed: " + query, ex);
-            }
-        }
-    }
+/**
+ * Setter to specify Xpath query.
+ *
+ * @param query Xpath query.
+ */
+public void setQuery(String query) {
+	this.query = query;
+	if (!query.isEmpty()) {
+		try {
+			final XPathEvaluator xpathEvaluator =
+				new XPathEvaluator(Configuration.newConfiguration());
+			xpathExpression = xpathEvaluator.createExpression(query);
+		}
+		catch (XPathException ex) {
+			throw new IllegalStateException("Creating Xpath expression failed: " + query, ex);
+		}
+	}
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return CommonUtil.EMPTY_INT_ARRAY;
-    }
+@Override
+public int[] getRequiredTokens() {
+	return CommonUtil.EMPTY_INT_ARRAY;
+}
 
-    @Override
-    public void beginTree(DetailAST rootAST) {
-        if (xpathExpression != null) {
-            final List<DetailAST> matchingNodes = findMatchingNodesByXpathQuery(rootAST);
-            matchingNodes.forEach(node -> log(node, MSG_KEY));
-        }
-    }
+@Override
+public void beginTree(DetailAST rootAST) {
+	if (xpathExpression != null) {
+		final List<DetailAST> matchingNodes = findMatchingNodesByXpathQuery(rootAST);
+		matchingNodes.forEach(node->log(node, MSG_KEY));
+	}
+}
 
-    private List<DetailAST> findMatchingNodesByXpathQuery(DetailAST rootAST) {
-        try {
-            final RootNode rootNode = new RootNode(rootAST);
-            final XPathDynamicContext xpathDynamicContext =
-                xpathExpression.createDynamicContext(rootNode);
-            final List<Item> matchingItems = xpathExpression.evaluate(xpathDynamicContext);
-            return matchingItems.stream()
-                   .map(item -> ((AbstractNode) item).getUnderlyingNode())
-                   .collect(Collectors.toList());
-        }
-        catch (XPathException ex) {
-            throw new IllegalStateException("Evaluation of Xpath query failed: " + query, ex);
-        }
-    }
+private List<DetailAST> findMatchingNodesByXpathQuery(DetailAST rootAST) {
+	try {
+		final RootNode rootNode = new RootNode(rootAST);
+		final XPathDynamicContext xpathDynamicContext =
+			xpathExpression.createDynamicContext(rootNode);
+		final List<Item> matchingItems = xpathExpression.evaluate(xpathDynamicContext);
+		return matchingItems.stream()
+		       .map(item->((AbstractNode) item).getUnderlyingNode())
+		       .collect(Collectors.toList());
+	}
+	catch (XPathException ex) {
+		throw new IllegalStateException("Evaluation of Xpath query failed: " + query, ex);
+	}
+}
 }

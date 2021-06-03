@@ -27,12 +27,12 @@ import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 @FunctionalInterface
 public interface AuditEventFormatter {
 
-    /**
-     * Formats an event message.
-     *
-     * @param event audit event.
-     * @return string representation of event message.
-     */
-    String format(AuditEvent event);
+/**
+ * Formats an event message.
+ *
+ * @param event audit event.
+ * @return string representation of event message.
+ */
+String format(AuditEvent event);
 
 }

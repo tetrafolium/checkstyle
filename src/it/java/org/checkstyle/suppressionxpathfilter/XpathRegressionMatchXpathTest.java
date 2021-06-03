@@ -31,60 +31,60 @@ import com.puppycrawl.tools.checkstyle.checks.coding.MatchXpathCheck;
 
 public class XpathRegressionMatchXpathTest extends AbstractXpathTestSupport {
 
-    private final String checkName = MatchXpathCheck.class.getSimpleName();
+private final String checkName = MatchXpathCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionMatchXpathOne.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionMatchXpathOne.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(MatchXpathCheck.class);
-        moduleConfig.addAttribute("query", "//METHOD_DEF[./IDENT[@text='test']]");
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(MatchXpathCheck.class);
+	moduleConfig.addAttribute("query", "//METHOD_DEF[./IDENT[@text='test']]");
 
-        final String[] expectedViolation = {
-            "4:5: " + getCheckMessage(MatchXpathCheck.class, MatchXpathCheck.MSG_KEY),
-        };
+	final String[] expectedViolation = {
+		"4:5: " + getCheckMessage(MatchXpathCheck.class, MatchXpathCheck.MSG_KEY),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMatchXpathOne']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMatchXpathOne']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/MODIFIERS",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMatchXpathOne']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/MODIFIERS/LITERAL_PUBLIC"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMatchXpathOne']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMatchXpathOne']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/MODIFIERS",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMatchXpathOne']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/MODIFIERS/LITERAL_PUBLIC"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionMatchXpathTwo.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionMatchXpathTwo.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(MatchXpathCheck.class);
-        moduleConfig.addAttribute("query", "//LITERAL_THROWS[./IDENT[@text='Throwable' or "
-                                  + "@text='RuntimeException' or ends-with(@text, 'Error')]]");
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(MatchXpathCheck.class);
+	moduleConfig.addAttribute("query", "//LITERAL_THROWS[./IDENT[@text='Throwable' or "
+	                          + "@text='RuntimeException' or ends-with(@text, 'Error')]]");
 
-        final String[] expectedViolation = {
-            "4:25: " + getCheckMessage(MatchXpathCheck.class, MatchXpathCheck.MSG_KEY),
-        };
+	final String[] expectedViolation = {
+		"4:25: " + getCheckMessage(MatchXpathCheck.class, MatchXpathCheck.MSG_KEY),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMatchXpathTwo']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='func1']]"
-                    + "/LITERAL_THROWS[./IDENT[@text='RuntimeException']]"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMatchXpathTwo']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='func1']]"
+		+ "/LITERAL_THROWS[./IDENT[@text='RuntimeException']]"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 }

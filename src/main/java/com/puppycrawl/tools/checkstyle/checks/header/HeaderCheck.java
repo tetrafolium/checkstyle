@@ -136,81 +136,81 @@ import com.puppycrawl.tools.checkstyle.api.FileText;
 @StatelessCheck
 public class HeaderCheck extends AbstractHeaderCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_MISSING = "header.missing";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_MISSING = "header.missing";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_MISMATCH = "header.mismatch";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_MISMATCH = "header.mismatch";
 
-    /** Empty array to avoid instantiations. */
-    private static final int[] EMPTY_INT_ARRAY = new int[0];
+/** Empty array to avoid instantiations. */
+private static final int[] EMPTY_INT_ARRAY = new int[0];
 
-    /** Specify the line numbers to ignore. */
-    private int[] ignoreLines = EMPTY_INT_ARRAY;
+/** Specify the line numbers to ignore. */
+private int[] ignoreLines = EMPTY_INT_ARRAY;
 
-    /**
-     * Returns true if lineNo is header lines or false.
-     *
-     * @param lineNo a line number
-     * @return if {@code lineNo} is one of the ignored header lines.
-     */
-    private boolean isIgnoreLine(int lineNo) {
-        return Arrays.binarySearch(ignoreLines, lineNo) >= 0;
-    }
+/**
+ * Returns true if lineNo is header lines or false.
+ *
+ * @param lineNo a line number
+ * @return if {@code lineNo} is one of the ignored header lines.
+ */
+private boolean isIgnoreLine(int lineNo) {
+	return Arrays.binarySearch(ignoreLines, lineNo) >= 0;
+}
 
-    /**
-     * Checks if a code line matches the required header line.
-     *
-     * @param lineNumber the line number to check against the header
-     * @param line the line contents
-     * @return true if and only if the line matches the required header line
-     */
-    private boolean isMatch(int lineNumber, String line) {
-        // skip lines we are meant to ignore
-        return isIgnoreLine(lineNumber + 1)
-               || getHeaderLines().get(lineNumber).equals(line);
-    }
+/**
+ * Checks if a code line matches the required header line.
+ *
+ * @param lineNumber the line number to check against the header
+ * @param line the line contents
+ * @return true if and only if the line matches the required header line
+ */
+private boolean isMatch(int lineNumber, String line) {
+	// skip lines we are meant to ignore
+	return isIgnoreLine(lineNumber + 1)
+	       || getHeaderLines().get(lineNumber).equals(line);
+}
 
-    /**
-     * Setter to specify the line numbers to ignore.
-     *
-     * @param list comma separated list of line numbers to ignore in header.
-     */
-    public void setIgnoreLines(int... list) {
-        if (list.length == 0) {
-            ignoreLines = EMPTY_INT_ARRAY;
-        }
-        else {
-            ignoreLines = new int[list.length];
-            System.arraycopy(list, 0, ignoreLines, 0, list.length);
-            Arrays.sort(ignoreLines);
-        }
-    }
+/**
+ * Setter to specify the line numbers to ignore.
+ *
+ * @param list comma separated list of line numbers to ignore in header.
+ */
+public void setIgnoreLines(int... list) {
+	if (list.length == 0) {
+		ignoreLines = EMPTY_INT_ARRAY;
+	}
+	else {
+		ignoreLines = new int[list.length];
+		System.arraycopy(list, 0, ignoreLines, 0, list.length);
+		Arrays.sort(ignoreLines);
+	}
+}
 
-    @Override
-    protected void processFiltered(File file, FileText fileText) {
-        if (getHeaderLines().size() > fileText.size()) {
-            log(1, MSG_MISSING);
-        }
-        else {
-            for (int i = 0; i < getHeaderLines().size(); i++) {
-                if (!isMatch(i, fileText.get(i))) {
-                    log(i + 1, MSG_MISMATCH, getHeaderLines().get(i));
-                    break;
-                }
-            }
-        }
-    }
+@Override
+protected void processFiltered(File file, FileText fileText) {
+	if (getHeaderLines().size() > fileText.size()) {
+		log(1, MSG_MISSING);
+	}
+	else {
+		for (int i = 0; i < getHeaderLines().size(); i++) {
+			if (!isMatch(i, fileText.get(i))) {
+				log(i + 1, MSG_MISMATCH, getHeaderLines().get(i));
+				break;
+			}
+		}
+	}
+}
 
-    @Override
-    protected void postProcessHeaderLines() {
-        // no code
-    }
+@Override
+protected void postProcessHeaderLines() {
+	// no code
+}
 
 }

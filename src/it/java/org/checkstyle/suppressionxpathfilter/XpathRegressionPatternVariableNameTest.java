@@ -31,121 +31,121 @@ import com.puppycrawl.tools.checkstyle.checks.naming.PatternVariableNameCheck;
 
 public class XpathRegressionPatternVariableNameTest extends AbstractXpathTestSupport {
 
-    private final String checkName = PatternVariableNameCheck.class.getSimpleName();
+private final String checkName = PatternVariableNameCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess =
-            new File(getNonCompilablePath(
-                         "SuppressionXpathRegressionPatternVariableName1.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess =
+		new File(getNonCompilablePath(
+				 "SuppressionXpathRegressionPatternVariableName1.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(PatternVariableNameCheck.class);
-        final String defaultPattern = "^[a-z][a-zA-Z0-9]*$";
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(PatternVariableNameCheck.class);
+	final String defaultPattern = "^[a-z][a-zA-Z0-9]*$";
 
-        final String[] expectedViolation = {
-            "6:33: " + getCheckMessage(PatternVariableNameCheck.class,
-                                       AbstractNameCheck.MSG_INVALID_PATTERN,
-                                       "STRING1", defaultPattern),
-        };
+	final String[] expectedViolation = {
+		"6:33: " + getCheckMessage(PatternVariableNameCheck.class,
+		                           AbstractNameCheck.MSG_INVALID_PATTERN,
+		                           "STRING1", defaultPattern),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionPatternVariableName1']]"
-                    + "/OBJBLOCK/CTOR_DEF[./IDENT[@text='MyClass']]/SLIST/LITERAL_IF/EXPR/"
-                    + "LITERAL_INSTANCEOF[./IDENT[@text='o1']]/PATTERN_VARIABLE_DEF/"
-                    + "IDENT[@text='STRING1']"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionPatternVariableName1']]"
+		+ "/OBJBLOCK/CTOR_DEF[./IDENT[@text='MyClass']]/SLIST/LITERAL_IF/EXPR/"
+		+ "LITERAL_INSTANCEOF[./IDENT[@text='o1']]/PATTERN_VARIABLE_DEF/"
+		+ "IDENT[@text='STRING1']"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess =
-            new File(getNonCompilablePath(
-                         "SuppressionXpathRegressionPatternVariableName2.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess =
+		new File(getNonCompilablePath(
+				 "SuppressionXpathRegressionPatternVariableName2.java"));
 
-        final String nonDefaultPattern = "^_[a-zA-Z0-9]*$";
+	final String nonDefaultPattern = "^_[a-zA-Z0-9]*$";
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(PatternVariableNameCheck.class);
-        moduleConfig.addAttribute("format", nonDefaultPattern);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(PatternVariableNameCheck.class);
+	moduleConfig.addAttribute("format", nonDefaultPattern);
 
-        final String[] expectedViolation = {
-            "6:34: " + getCheckMessage(PatternVariableNameCheck.class,
-                                       AbstractNameCheck.MSG_INVALID_PATTERN, "s", nonDefaultPattern),
-        };
+	final String[] expectedViolation = {
+		"6:34: " + getCheckMessage(PatternVariableNameCheck.class,
+		                           AbstractNameCheck.MSG_INVALID_PATTERN, "s", nonDefaultPattern),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionPatternVariableName2']]"
-                    + "/OBJBLOCK/CTOR_DEF[./IDENT[@text='MyClass']]/SLIST/LITERAL_IF/EXPR/"
-                    + "LITERAL_INSTANCEOF[./IDENT[@text='o1']]/"
-                    + "PATTERN_VARIABLE_DEF/IDENT[@text='s']"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionPatternVariableName2']]"
+		+ "/OBJBLOCK/CTOR_DEF[./IDENT[@text='MyClass']]/SLIST/LITERAL_IF/EXPR/"
+		+ "LITERAL_INSTANCEOF[./IDENT[@text='o1']]/"
+		+ "PATTERN_VARIABLE_DEF/IDENT[@text='s']"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testThree() throws Exception {
-        final File fileToProcess =
-            new File(getNonCompilablePath(
-                         "SuppressionXpathRegressionPatternVariableName3.java"));
+@Test
+public void testThree() throws Exception {
+	final File fileToProcess =
+		new File(getNonCompilablePath(
+				 "SuppressionXpathRegressionPatternVariableName3.java"));
 
-        final String nonDefaultPattern = "^[a-z](_?[a-zA-Z0-9]+)*$";
+	final String nonDefaultPattern = "^[a-z](_?[a-zA-Z0-9]+)*$";
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(PatternVariableNameCheck.class);
-        moduleConfig.addAttribute("format", nonDefaultPattern);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(PatternVariableNameCheck.class);
+	moduleConfig.addAttribute("format", nonDefaultPattern);
 
-        final String[] expectedViolation = {
-            "6:34: " + getCheckMessage(PatternVariableNameCheck.class,
-                                       AbstractNameCheck.MSG_INVALID_PATTERN, "STR", nonDefaultPattern),
-        };
+	final String[] expectedViolation = {
+		"6:34: " + getCheckMessage(PatternVariableNameCheck.class,
+		                           AbstractNameCheck.MSG_INVALID_PATTERN, "STR", nonDefaultPattern),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionPatternVariableName3']]"
-                    + "/OBJBLOCK/CTOR_DEF[./IDENT[@text='MyClass']]/SLIST/LITERAL_IF/"
-                    + "EXPR/LITERAL_INSTANCEOF[./IDENT[@text='o1']]/"
-                    + "PATTERN_VARIABLE_DEF/IDENT[@text='STR']"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionPatternVariableName3']]"
+		+ "/OBJBLOCK/CTOR_DEF[./IDENT[@text='MyClass']]/SLIST/LITERAL_IF/"
+		+ "EXPR/LITERAL_INSTANCEOF[./IDENT[@text='o1']]/"
+		+ "PATTERN_VARIABLE_DEF/IDENT[@text='STR']"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testFour() throws Exception {
-        final File fileToProcess =
-            new File(getNonCompilablePath(
-                         "SuppressionXpathRegressionPatternVariableName4.java"));
+@Test
+public void testFour() throws Exception {
+	final File fileToProcess =
+		new File(getNonCompilablePath(
+				 "SuppressionXpathRegressionPatternVariableName4.java"));
 
-        final String nonDefaultPattern = "^[a-z][_a-zA-Z0-9]{2,}$";
+	final String nonDefaultPattern = "^[a-z][_a-zA-Z0-9]{2,}$";
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(PatternVariableNameCheck.class);
-        moduleConfig.addAttribute("format", nonDefaultPattern);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(PatternVariableNameCheck.class);
+	moduleConfig.addAttribute("format", nonDefaultPattern);
 
-        final String[] expectedViolation = {
-            "6:34: " + getCheckMessage(PatternVariableNameCheck.class,
-                                       AbstractNameCheck.MSG_INVALID_PATTERN, "st", nonDefaultPattern),
-        };
+	final String[] expectedViolation = {
+		"6:34: " + getCheckMessage(PatternVariableNameCheck.class,
+		                           AbstractNameCheck.MSG_INVALID_PATTERN, "st", nonDefaultPattern),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionPatternVariableName1']]"
-                    + "/OBJBLOCK/CTOR_DEF[./IDENT[@text='MyClass']]/SLIST/LITERAL_IF/EXPR/"
-                    + "LITERAL_INSTANCEOF[./IDENT[@text='o1']]/"
-                    + "PATTERN_VARIABLE_DEF/IDENT[@text='st']"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionPatternVariableName1']]"
+		+ "/OBJBLOCK/CTOR_DEF[./IDENT[@text='MyClass']]/SLIST/LITERAL_IF/EXPR/"
+		+ "LITERAL_INSTANCEOF[./IDENT[@text='o1']]/"
+		+ "PATTERN_VARIABLE_DEF/IDENT[@text='st']"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 }

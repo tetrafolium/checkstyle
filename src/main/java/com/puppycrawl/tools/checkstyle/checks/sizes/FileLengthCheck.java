@@ -77,32 +77,32 @@ import com.puppycrawl.tools.checkstyle.api.FileText;
 @StatelessCheck
 public class FileLengthCheck extends AbstractFileSetCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "maxLen.file";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "maxLen.file";
 
-    /** Default maximum number of lines. */
-    private static final int DEFAULT_MAX_LINES = 2000;
+/** Default maximum number of lines. */
+private static final int DEFAULT_MAX_LINES = 2000;
 
-    /** Specify the maximum number of lines allowed. */
-    private int max = DEFAULT_MAX_LINES;
+/** Specify the maximum number of lines allowed. */
+private int max = DEFAULT_MAX_LINES;
 
-    @Override
-    protected void processFiltered(File file, FileText fileText) {
-        if (fileText.size() > max) {
-            log(1, MSG_KEY, fileText.size(), max);
-        }
-    }
+@Override
+protected void processFiltered(File file, FileText fileText) {
+	if (fileText.size() > max) {
+		log(1, MSG_KEY, fileText.size(), max);
+	}
+}
 
-    /**
-     * Setter to specify the maximum number of lines allowed.
-     *
-     * @param length the maximum length of a Java source file
-     */
-    public void setMax(int length) {
-        max = length;
-    }
+/**
+ * Setter to specify the maximum number of lines allowed.
+ *
+ * @param length the maximum length of a Java source file
+ */
+public void setMax(int length) {
+	max = length;
+}
 
 }

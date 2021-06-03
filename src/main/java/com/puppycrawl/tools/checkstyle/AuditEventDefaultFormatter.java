@@ -33,93 +33,93 @@ import com.puppycrawl.tools.checkstyle.api.SeverityLevel;
  */
 public class AuditEventDefaultFormatter implements AuditEventFormatter {
 
-    /** Length of all separators. */
-    private static final int LENGTH_OF_ALL_SEPARATORS = 10;
+/** Length of all separators. */
+private static final int LENGTH_OF_ALL_SEPARATORS = 10;
 
-    /** Suffix of module names like XXXXCheck. */
-    private static final String SUFFIX = "Check";
+/** Suffix of module names like XXXXCheck. */
+private static final String SUFFIX = "Check";
 
-    @Override
-    public String format(AuditEvent event) {
-        final String fileName = event.getFileName();
-        final String message = event.getMessage();
+@Override
+public String format(AuditEvent event) {
+	final String fileName = event.getFileName();
+	final String message = event.getMessage();
 
-        final SeverityLevel severityLevel = event.getSeverityLevel();
-        final String severityLevelName;
-        if (severityLevel == SeverityLevel.WARNING) {
-            // We change the name of severity level intentionally
-            // to shorten the length of the log message.
-            severityLevelName = "WARN";
-        }
-        else {
-            severityLevelName = severityLevel.getName().toUpperCase(Locale.US);
-        }
+	final SeverityLevel severityLevel = event.getSeverityLevel();
+	final String severityLevelName;
+	if (severityLevel == SeverityLevel.WARNING) {
+		// We change the name of severity level intentionally
+		// to shorten the length of the log message.
+		severityLevelName = "WARN";
+	}
+	else {
+		severityLevelName = severityLevel.getName().toUpperCase(Locale.US);
+	}
 
-        // Avoid StringBuffer.expandCapacity
-        final int bufLen = calculateBufferLength(event, severityLevelName.length());
-        final StringBuilder sb = new StringBuilder(bufLen);
+	// Avoid StringBuffer.expandCapacity
+	final int bufLen = calculateBufferLength(event, severityLevelName.length());
+	final StringBuilder sb = new StringBuilder(bufLen);
 
-        sb.append('[').append(severityLevelName).append("] ")
-        .append(fileName).append(':').append(event.getLine());
-        if (event.getColumn() > 0) {
-            sb.append(':').append(event.getColumn());
-        }
-        sb.append(": ").append(message).append(" [");
-        if (event.getModuleId() == null) {
-            final String checkShortName = getCheckShortName(event);
-            sb.append(checkShortName);
-        }
-        else {
-            sb.append(event.getModuleId());
-        }
-        sb.append(']');
+	sb.append('[').append(severityLevelName).append("] ")
+	.append(fileName).append(':').append(event.getLine());
+	if (event.getColumn() > 0) {
+		sb.append(':').append(event.getColumn());
+	}
+	sb.append(": ").append(message).append(" [");
+	if (event.getModuleId() == null) {
+		final String checkShortName = getCheckShortName(event);
+		sb.append(checkShortName);
+	}
+	else {
+		sb.append(event.getModuleId());
+	}
+	sb.append(']');
 
-        return sb.toString();
-    }
+	return sb.toString();
+}
 
-    /**
-     * Returns the length of the buffer for StringBuilder.
-     * bufferLength = fileNameLength + messageLength + lengthOfAllSeparators +
-     * + severityNameLength + checkNameLength.
-     *
-     * @param event audit event.
-     * @param severityLevelNameLength length of severity level name.
-     * @return the length of the buffer for StringBuilder.
-     */
-    private static int calculateBufferLength(AuditEvent event, int severityLevelNameLength) {
-        return LENGTH_OF_ALL_SEPARATORS + event.getFileName().length()
-               + event.getMessage().length() + severityLevelNameLength
-               + getCheckShortName(event).length();
-    }
+/**
+ * Returns the length of the buffer for StringBuilder.
+ * bufferLength = fileNameLength + messageLength + lengthOfAllSeparators +
+ * + severityNameLength + checkNameLength.
+ *
+ * @param event audit event.
+ * @param severityLevelNameLength length of severity level name.
+ * @return the length of the buffer for StringBuilder.
+ */
+private static int calculateBufferLength(AuditEvent event, int severityLevelNameLength) {
+	return LENGTH_OF_ALL_SEPARATORS + event.getFileName().length()
+	       + event.getMessage().length() + severityLevelNameLength
+	       + getCheckShortName(event).length();
+}
 
-    /**
-     * Returns check name without 'Check' suffix.
-     *
-     * @param event audit event.
-     * @return check name without 'Check' suffix.
-     */
-    private static String getCheckShortName(AuditEvent event) {
-        final String checkFullName = event.getSourceName();
-        final String checkShortName;
-        final int lastDotIndex = checkFullName.lastIndexOf('.');
-        if (lastDotIndex == -1) {
-            if (checkFullName.endsWith(SUFFIX)) {
-                checkShortName = checkFullName.substring(0, checkFullName.lastIndexOf(SUFFIX));
-            }
-            else {
-                checkShortName = checkFullName;
-            }
-        }
-        else {
-            if (checkFullName.endsWith(SUFFIX)) {
-                checkShortName = checkFullName.substring(lastDotIndex + 1,
-                                 checkFullName.lastIndexOf(SUFFIX));
-            }
-            else {
-                checkShortName = checkFullName.substring(lastDotIndex + 1);
-            }
-        }
-        return checkShortName;
-    }
+/**
+ * Returns check name without 'Check' suffix.
+ *
+ * @param event audit event.
+ * @return check name without 'Check' suffix.
+ */
+private static String getCheckShortName(AuditEvent event) {
+	final String checkFullName = event.getSourceName();
+	final String checkShortName;
+	final int lastDotIndex = checkFullName.lastIndexOf('.');
+	if (lastDotIndex == -1) {
+		if (checkFullName.endsWith(SUFFIX)) {
+			checkShortName = checkFullName.substring(0, checkFullName.lastIndexOf(SUFFIX));
+		}
+		else {
+			checkShortName = checkFullName;
+		}
+	}
+	else {
+		if (checkFullName.endsWith(SUFFIX)) {
+			checkShortName = checkFullName.substring(lastDotIndex + 1,
+			                                         checkFullName.lastIndexOf(SUFFIX));
+		}
+		else {
+			checkShortName = checkFullName.substring(lastDotIndex + 1);
+		}
+	}
+	return checkShortName;
+}
 
 }

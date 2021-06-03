@@ -31,55 +31,55 @@ import com.puppycrawl.tools.checkstyle.checks.coding.PackageDeclarationCheck;
 
 public class XpathRegressionPackageDeclarationTest extends AbstractXpathTestSupport {
 
-    private final String checkName = PackageDeclarationCheck.class.getSimpleName();
+private final String checkName = PackageDeclarationCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void test1() throws Exception {
-        final File fileToProcess =
-            new File(getNonCompilablePath("SuppressionXpathRegression1.java"));
+@Test
+public void test1() throws Exception {
+	final File fileToProcess =
+		new File(getNonCompilablePath("SuppressionXpathRegression1.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(PackageDeclarationCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(PackageDeclarationCheck.class);
 
-        final String[] expectedViolation = {
-            "2:1: " + getCheckMessage(PackageDeclarationCheck.class,
-                                      PackageDeclarationCheck.MSG_KEY_MISMATCH),
-        };
+	final String[] expectedViolation = {
+		"2:1: " + getCheckMessage(PackageDeclarationCheck.class,
+		                          PackageDeclarationCheck.MSG_KEY_MISMATCH),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/PACKAGE_DEF"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/PACKAGE_DEF"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void test2() throws Exception {
-        final File fileToProcess =
-            new File(getNonCompilablePath("SuppressionXpathRegression2.java"));
+@Test
+public void test2() throws Exception {
+	final File fileToProcess =
+		new File(getNonCompilablePath("SuppressionXpathRegression2.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(PackageDeclarationCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(PackageDeclarationCheck.class);
 
-        final String[] expectedViolation = {
-            "3:1: " + getCheckMessage(PackageDeclarationCheck.class,
-                                      PackageDeclarationCheck.MSG_KEY_MISSING),
-        };
+	final String[] expectedViolation = {
+		"3:1: " + getCheckMessage(PackageDeclarationCheck.class,
+		                          PackageDeclarationCheck.MSG_KEY_MISSING),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegression2']]",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegression2']]/MODIFIERS",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegression2']]/MODIFIERS/LITERAL_PUBLIC"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegression2']]",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegression2']]/MODIFIERS",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegression2']]/MODIFIERS/LITERAL_PUBLIC"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
 }

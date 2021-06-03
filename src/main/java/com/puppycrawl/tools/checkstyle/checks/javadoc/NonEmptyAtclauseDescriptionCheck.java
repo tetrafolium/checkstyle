@@ -133,59 +133,59 @@ import com.puppycrawl.tools.checkstyle.utils.JavadocUtil;
 @StatelessCheck
 public class NonEmptyAtclauseDescriptionCheck extends AbstractJavadocCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "non.empty.atclause";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "non.empty.atclause";
 
-    @Override
-    public int[] getDefaultJavadocTokens() {
-        return new int[] {
-                   JavadocTokenTypes.PARAM_LITERAL,
-                   JavadocTokenTypes.RETURN_LITERAL,
-                   JavadocTokenTypes.THROWS_LITERAL,
-                   JavadocTokenTypes.EXCEPTION_LITERAL,
-                   JavadocTokenTypes.DEPRECATED_LITERAL,
-               };
-    }
+@Override
+public int[] getDefaultJavadocTokens() {
+	return new int[] {
+		       JavadocTokenTypes.PARAM_LITERAL,
+		       JavadocTokenTypes.RETURN_LITERAL,
+		       JavadocTokenTypes.THROWS_LITERAL,
+		       JavadocTokenTypes.EXCEPTION_LITERAL,
+		       JavadocTokenTypes.DEPRECATED_LITERAL,
+	};
+}
 
-    @Override
-    public void visitJavadocToken(DetailNode ast) {
-        if (isEmptyTag(ast.getParent())) {
-            log(ast.getLineNumber(), MSG_KEY, ast.getText());
-        }
-    }
+@Override
+public void visitJavadocToken(DetailNode ast) {
+	if (isEmptyTag(ast.getParent())) {
+		log(ast.getLineNumber(), MSG_KEY, ast.getText());
+	}
+}
 
-    /**
-     * Tests if block tag is empty.
-     *
-     * @param tagNode block tag.
-     * @return true, if block tag is empty.
-     */
-    private static boolean isEmptyTag(DetailNode tagNode) {
-        final DetailNode tagDescription =
-            JavadocUtil.findFirstToken(tagNode, JavadocTokenTypes.DESCRIPTION);
-        return tagDescription == null
-               || hasOnlyEmptyText(tagDescription);
-    }
+/**
+ * Tests if block tag is empty.
+ *
+ * @param tagNode block tag.
+ * @return true, if block tag is empty.
+ */
+private static boolean isEmptyTag(DetailNode tagNode) {
+	final DetailNode tagDescription =
+		JavadocUtil.findFirstToken(tagNode, JavadocTokenTypes.DESCRIPTION);
+	return tagDescription == null
+	       || hasOnlyEmptyText(tagDescription);
+}
 
-    /**
-     * Tests if description node is empty (has only new lines and blank strings).
-     *
-     * @param description description node.
-     * @return true, if description node has only new lines and blank strings.
-     */
-    private static boolean hasOnlyEmptyText(DetailNode description) {
-        boolean result = true;
-        for (DetailNode child : description.getChildren()) {
-            if (child.getType() != JavadocTokenTypes.TEXT
-                    || !CommonUtil.isBlank(child.getText())) {
-                result = false;
-                break;
-            }
-        }
-        return result;
-    }
+/**
+ * Tests if description node is empty (has only new lines and blank strings).
+ *
+ * @param description description node.
+ * @return true, if description node has only new lines and blank strings.
+ */
+private static boolean hasOnlyEmptyText(DetailNode description) {
+	boolean result = true;
+	for (DetailNode child : description.getChildren()) {
+		if (child.getType() != JavadocTokenTypes.TEXT
+		    || !CommonUtil.isBlank(child.getText())) {
+			result = false;
+			break;
+		}
+	}
+	return result;
+}
 
 }

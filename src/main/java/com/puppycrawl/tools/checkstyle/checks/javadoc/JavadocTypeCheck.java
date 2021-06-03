@@ -202,387 +202,387 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
  */
 @StatelessCheck
 public class JavadocTypeCheck
-    extends AbstractCheck {
+	extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_UNKNOWN_TAG = "javadoc.unknownTag";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_UNKNOWN_TAG = "javadoc.unknownTag";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_TAG_FORMAT = "type.tagFormat";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_TAG_FORMAT = "type.tagFormat";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_MISSING_TAG = "type.missingTag";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_MISSING_TAG = "type.missingTag";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_UNUSED_TAG = "javadoc.unusedTag";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_UNUSED_TAG = "javadoc.unusedTag";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_UNUSED_TAG_GENERAL = "javadoc.unusedTagGeneral";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_UNUSED_TAG_GENERAL = "javadoc.unusedTagGeneral";
 
-    /** Open angle bracket literal. */
-    private static final String OPEN_ANGLE_BRACKET = "<";
+/** Open angle bracket literal. */
+private static final String OPEN_ANGLE_BRACKET = "<";
 
-    /** Close angle bracket literal. */
-    private static final String CLOSE_ANGLE_BRACKET = ">";
+/** Close angle bracket literal. */
+private static final String CLOSE_ANGLE_BRACKET = ">";
 
-    /** Space literal. */
-    private static final String SPACE = " ";
+/** Space literal. */
+private static final String SPACE = " ";
 
-    /** Pattern to match type name within angle brackets in javadoc param tag. */
-    private static final Pattern TYPE_NAME_IN_JAVADOC_TAG =
-        Pattern.compile("\\s*<([^>]+)>.*");
+/** Pattern to match type name within angle brackets in javadoc param tag. */
+private static final Pattern TYPE_NAME_IN_JAVADOC_TAG =
+	Pattern.compile("\\s*<([^>]+)>.*");
 
-    /** Pattern to split type name field in javadoc param tag. */
-    private static final Pattern TYPE_NAME_IN_JAVADOC_TAG_SPLITTER =
-        Pattern.compile("\\s+");
+/** Pattern to split type name field in javadoc param tag. */
+private static final Pattern TYPE_NAME_IN_JAVADOC_TAG_SPLITTER =
+	Pattern.compile("\\s+");
 
-    /** Specify the visibility scope where Javadoc comments are checked. */
-    private Scope scope = Scope.PRIVATE;
-    /** Specify the visibility scope where Javadoc comments are not checked. */
-    private Scope excludeScope;
-    /** Specify the pattern for {@code @author} tag. */
-    private Pattern authorFormat;
-    /** Specify the pattern for {@code @version} tag. */
-    private Pattern versionFormat;
-    /**
-     * Control whether to ignore violations when a class has type parameters but
-     * does not have matching param tags in the Javadoc.
-     */
-    private boolean allowMissingParamTags;
-    /** Control whether to ignore violations when a Javadoc tag is not recognised. */
-    private boolean allowUnknownTags;
+/** Specify the visibility scope where Javadoc comments are checked. */
+private Scope scope = Scope.PRIVATE;
+/** Specify the visibility scope where Javadoc comments are not checked. */
+private Scope excludeScope;
+/** Specify the pattern for {@code @author} tag. */
+private Pattern authorFormat;
+/** Specify the pattern for {@code @version} tag. */
+private Pattern versionFormat;
+/**
+ * Control whether to ignore violations when a class has type parameters but
+ * does not have matching param tags in the Javadoc.
+ */
+private boolean allowMissingParamTags;
+/** Control whether to ignore violations when a Javadoc tag is not recognised. */
+private boolean allowUnknownTags;
 
-    /**
-     * Specify the list of annotations that allow missed documentation.
-     * Only short names are allowed, e.g. {@code Generated}.
-     */
-    private List<String> allowedAnnotations = Collections.singletonList("Generated");
+/**
+ * Specify the list of annotations that allow missed documentation.
+ * Only short names are allowed, e.g. {@code Generated}.
+ */
+private List<String> allowedAnnotations = Collections.singletonList("Generated");
 
-    /**
-     * Setter to specify the visibility scope where Javadoc comments are checked.
-     *
-     * @param scope a scope.
-     */
-    public void setScope(Scope scope) {
-        this.scope = scope;
-    }
+/**
+ * Setter to specify the visibility scope where Javadoc comments are checked.
+ *
+ * @param scope a scope.
+ */
+public void setScope(Scope scope) {
+	this.scope = scope;
+}
 
-    /**
-     * Setter to specify the visibility scope where Javadoc comments are not checked.
-     *
-     * @param excludeScope a scope.
-     */
-    public void setExcludeScope(Scope excludeScope) {
-        this.excludeScope = excludeScope;
-    }
+/**
+ * Setter to specify the visibility scope where Javadoc comments are not checked.
+ *
+ * @param excludeScope a scope.
+ */
+public void setExcludeScope(Scope excludeScope) {
+	this.excludeScope = excludeScope;
+}
 
-    /**
-     * Setter to specify the pattern for {@code @author} tag.
-     *
-     * @param pattern a pattern.
-     */
-    public void setAuthorFormat(Pattern pattern) {
-        authorFormat = pattern;
-    }
+/**
+ * Setter to specify the pattern for {@code @author} tag.
+ *
+ * @param pattern a pattern.
+ */
+public void setAuthorFormat(Pattern pattern) {
+	authorFormat = pattern;
+}
 
-    /**
-     * Setter to specify the pattern for {@code @version} tag.
-     *
-     * @param pattern a pattern.
-     */
-    public void setVersionFormat(Pattern pattern) {
-        versionFormat = pattern;
-    }
+/**
+ * Setter to specify the pattern for {@code @version} tag.
+ *
+ * @param pattern a pattern.
+ */
+public void setVersionFormat(Pattern pattern) {
+	versionFormat = pattern;
+}
 
-    /**
-     * Setter to control whether to ignore violations when a class has type parameters but
-     * does not have matching param tags in the Javadoc.
-     *
-     * @param flag a {@code Boolean} value
-     */
-    public void setAllowMissingParamTags(boolean flag) {
-        allowMissingParamTags = flag;
-    }
+/**
+ * Setter to control whether to ignore violations when a class has type parameters but
+ * does not have matching param tags in the Javadoc.
+ *
+ * @param flag a {@code Boolean} value
+ */
+public void setAllowMissingParamTags(boolean flag) {
+	allowMissingParamTags = flag;
+}
 
-    /**
-     * Setter to control whether to ignore violations when a Javadoc tag is not recognised.
-     *
-     * @param flag a {@code Boolean} value
-     */
-    public void setAllowUnknownTags(boolean flag) {
-        allowUnknownTags = flag;
-    }
+/**
+ * Setter to control whether to ignore violations when a Javadoc tag is not recognised.
+ *
+ * @param flag a {@code Boolean} value
+ */
+public void setAllowUnknownTags(boolean flag) {
+	allowUnknownTags = flag;
+}
 
-    /**
-     * Setter to specify the list of annotations that allow missed documentation.
-     * Only short names are allowed, e.g. {@code Generated}.
-     *
-     * @param userAnnotations user's value.
-     */
-    public void setAllowedAnnotations(String... userAnnotations) {
-        allowedAnnotations = Arrays.asList(userAnnotations);
-    }
+/**
+ * Setter to specify the list of annotations that allow missed documentation.
+ * Only short names are allowed, e.g. {@code Generated}.
+ *
+ * @param userAnnotations user's value.
+ */
+public void setAllowedAnnotations(String... userAnnotations) {
+	allowedAnnotations = Arrays.asList(userAnnotations);
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getAcceptableTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getAcceptableTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return new int[] {
-                   TokenTypes.INTERFACE_DEF,
-                   TokenTypes.CLASS_DEF,
-                   TokenTypes.ENUM_DEF,
-                   TokenTypes.ANNOTATION_DEF,
-                   TokenTypes.RECORD_DEF,
-               };
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return new int[] {
+		       TokenTypes.INTERFACE_DEF,
+		       TokenTypes.CLASS_DEF,
+		       TokenTypes.ENUM_DEF,
+		       TokenTypes.ANNOTATION_DEF,
+		       TokenTypes.RECORD_DEF,
+	};
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return CommonUtil.EMPTY_INT_ARRAY;
-    }
+@Override
+public int[] getRequiredTokens() {
+	return CommonUtil.EMPTY_INT_ARRAY;
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        if (shouldCheck(ast)) {
-            final FileContents contents = getFileContents();
-            final int lineNo = ast.getLineNo();
-            final TextBlock textBlock = contents.getJavadocBefore(lineNo);
-            if (textBlock != null) {
-                final List<JavadocTag> tags = getJavadocTags(textBlock);
-                if (ScopeUtil.isOuterMostType(ast)) {
-                    // don't check author/version for inner classes
-                    checkTag(ast, tags, JavadocTagInfo.AUTHOR.getName(),
-                             authorFormat);
-                    checkTag(ast, tags, JavadocTagInfo.VERSION.getName(),
-                             versionFormat);
-                }
+@Override
+public void visitToken(DetailAST ast) {
+	if (shouldCheck(ast)) {
+		final FileContents contents = getFileContents();
+		final int lineNo = ast.getLineNo();
+		final TextBlock textBlock = contents.getJavadocBefore(lineNo);
+		if (textBlock != null) {
+			final List<JavadocTag> tags = getJavadocTags(textBlock);
+			if (ScopeUtil.isOuterMostType(ast)) {
+				// don't check author/version for inner classes
+				checkTag(ast, tags, JavadocTagInfo.AUTHOR.getName(),
+				         authorFormat);
+				checkTag(ast, tags, JavadocTagInfo.VERSION.getName(),
+				         versionFormat);
+			}
 
-                final List<String> typeParamNames =
-                    CheckUtil.getTypeParameterNames(ast);
-                final List<String> recordComponentNames =
-                    getRecordComponentNames(ast);
+			final List<String> typeParamNames =
+				CheckUtil.getTypeParameterNames(ast);
+			final List<String> recordComponentNames =
+				getRecordComponentNames(ast);
 
-                if (!allowMissingParamTags) {
+			if (!allowMissingParamTags) {
 
-                    typeParamNames.forEach(typeParamName -> {
-                        checkTypeParamTag(ast, tags, typeParamName);
-                    });
+				typeParamNames.forEach(typeParamName->{
+						checkTypeParamTag(ast, tags, typeParamName);
+					});
 
-                    recordComponentNames.forEach(componentName -> {
-                        checkComponentParamTag(ast, tags, componentName);
-                    });
-                }
+				recordComponentNames.forEach(componentName->{
+						checkComponentParamTag(ast, tags, componentName);
+					});
+			}
 
-                checkUnusedParamTags(tags, typeParamNames, recordComponentNames);
-            }
-        }
-    }
+			checkUnusedParamTags(tags, typeParamNames, recordComponentNames);
+		}
+	}
+}
 
-    /**
-     * Whether we should check this node.
-     *
-     * @param ast a given node.
-     * @return whether we should check a given node.
-     */
-    private boolean shouldCheck(DetailAST ast) {
-        final Scope customScope;
+/**
+ * Whether we should check this node.
+ *
+ * @param ast a given node.
+ * @return whether we should check a given node.
+ */
+private boolean shouldCheck(DetailAST ast) {
+	final Scope customScope;
 
-        if (ScopeUtil.isInInterfaceOrAnnotationBlock(ast)) {
-            customScope = Scope.PUBLIC;
-        }
-        else {
-            final DetailAST mods = ast.findFirstToken(TokenTypes.MODIFIERS);
-            customScope = ScopeUtil.getScopeFromMods(mods);
-        }
-        final Scope surroundingScope = ScopeUtil.getSurroundingScope(ast);
+	if (ScopeUtil.isInInterfaceOrAnnotationBlock(ast)) {
+		customScope = Scope.PUBLIC;
+	}
+	else {
+		final DetailAST mods = ast.findFirstToken(TokenTypes.MODIFIERS);
+		customScope = ScopeUtil.getScopeFromMods(mods);
+	}
+	final Scope surroundingScope = ScopeUtil.getSurroundingScope(ast);
 
-        return customScope.isIn(scope)
-               && (surroundingScope == null || surroundingScope.isIn(scope))
-               && (excludeScope == null
-                   || !customScope.isIn(excludeScope)
-                   || surroundingScope != null
-                   && !surroundingScope.isIn(excludeScope))
-               && !AnnotationUtil.containsAnnotation(ast, allowedAnnotations);
-    }
+	return customScope.isIn(scope)
+	       && (surroundingScope == null || surroundingScope.isIn(scope))
+	       && (excludeScope == null
+	           || !customScope.isIn(excludeScope)
+	           || surroundingScope != null
+	           && !surroundingScope.isIn(excludeScope))
+	       && !AnnotationUtil.containsAnnotation(ast, allowedAnnotations);
+}
 
-    /**
-     * Gets all standalone tags from a given javadoc.
-     *
-     * @param textBlock the Javadoc comment to process.
-     * @return all standalone tags from the given javadoc.
-     */
-    private List<JavadocTag> getJavadocTags(TextBlock textBlock) {
-        final JavadocTags tags = JavadocUtil.getJavadocTags(textBlock,
-                                 JavadocUtil.JavadocTagType.BLOCK);
-        if (!allowUnknownTags) {
-            for (final InvalidJavadocTag tag : tags.getInvalidTags()) {
-                log(tag.getLine(), tag.getCol(), MSG_UNKNOWN_TAG,
-                    tag.getName());
-            }
-        }
-        return tags.getValidTags();
-    }
+/**
+ * Gets all standalone tags from a given javadoc.
+ *
+ * @param textBlock the Javadoc comment to process.
+ * @return all standalone tags from the given javadoc.
+ */
+private List<JavadocTag> getJavadocTags(TextBlock textBlock) {
+	final JavadocTags tags = JavadocUtil.getJavadocTags(textBlock,
+	                                                    JavadocUtil.JavadocTagType.BLOCK);
+	if (!allowUnknownTags) {
+		for (final InvalidJavadocTag tag : tags.getInvalidTags()) {
+			log(tag.getLine(), tag.getCol(), MSG_UNKNOWN_TAG,
+			    tag.getName());
+		}
+	}
+	return tags.getValidTags();
+}
 
-    /**
-     * Verifies that a type definition has a required tag.
-     *
-     * @param ast the AST node for the type definition.
-     * @param tags tags from the Javadoc comment for the type definition.
-     * @param tagName the required tag name.
-     * @param formatPattern regexp for the tag value.
-     */
-    private void checkTag(DetailAST ast, List<JavadocTag> tags, String tagName,
-                          Pattern formatPattern) {
-        if (formatPattern != null) {
-            boolean hasTag = false;
-            final String tagPrefix = "@";
+/**
+ * Verifies that a type definition has a required tag.
+ *
+ * @param ast the AST node for the type definition.
+ * @param tags tags from the Javadoc comment for the type definition.
+ * @param tagName the required tag name.
+ * @param formatPattern regexp for the tag value.
+ */
+private void checkTag(DetailAST ast, List<JavadocTag> tags, String tagName,
+                      Pattern formatPattern) {
+	if (formatPattern != null) {
+		boolean hasTag = false;
+		final String tagPrefix = "@";
 
-            for (final JavadocTag tag :tags) {
-                if (tag.getTagName().equals(tagName)) {
-                    hasTag = true;
-                    if (!formatPattern.matcher(tag.getFirstArg()).find()) {
-                        log(ast, MSG_TAG_FORMAT, tagPrefix + tagName, formatPattern.pattern());
-                    }
-                }
-            }
-            if (!hasTag) {
-                log(ast, MSG_MISSING_TAG, tagPrefix + tagName);
-            }
-        }
-    }
+		for (final JavadocTag tag :tags) {
+			if (tag.getTagName().equals(tagName)) {
+				hasTag = true;
+				if (!formatPattern.matcher(tag.getFirstArg()).find()) {
+					log(ast, MSG_TAG_FORMAT, tagPrefix + tagName, formatPattern.pattern());
+				}
+			}
+		}
+		if (!hasTag) {
+			log(ast, MSG_MISSING_TAG, tagPrefix + tagName);
+		}
+	}
+}
 
-    /**
-     * Verifies that a record definition has the specified param tag for
-     * the specified record component name.
-     *
-     * @param ast the AST node for the record definition.
-     * @param tags tags from the Javadoc comment for the record definition.
-     * @param recordComponentName the name of the type parameter
-     */
-    private void checkComponentParamTag(DetailAST ast,
-                                        List<JavadocTag> tags,
-                                        String recordComponentName) {
+/**
+ * Verifies that a record definition has the specified param tag for
+ * the specified record component name.
+ *
+ * @param ast the AST node for the record definition.
+ * @param tags tags from the Javadoc comment for the record definition.
+ * @param recordComponentName the name of the type parameter
+ */
+private void checkComponentParamTag(DetailAST ast,
+                                    List<JavadocTag> tags,
+                                    String recordComponentName) {
 
-        final boolean found = tags
-                              .stream()
-                              .filter(JavadocTag::isParamTag)
-                              .anyMatch(tag -> tag.getFirstArg().indexOf(recordComponentName) == 0);
+	final boolean found = tags
+	                      .stream()
+	                      .filter(JavadocTag::isParamTag)
+	                      .anyMatch(tag->tag.getFirstArg().indexOf(recordComponentName) == 0);
 
-        if (!found) {
-            log(ast, MSG_MISSING_TAG, JavadocTagInfo.PARAM.getText()
-                + SPACE + recordComponentName);
-        }
-    }
+	if (!found) {
+		log(ast, MSG_MISSING_TAG, JavadocTagInfo.PARAM.getText()
+		    + SPACE + recordComponentName);
+	}
+}
 
-    /**
-     * Verifies that a type definition has the specified param tag for
-     * the specified type parameter name.
-     *
-     * @param ast the AST node for the type definition.
-     * @param tags tags from the Javadoc comment for the type definition.
-     * @param typeParamName the name of the type parameter
-     */
-    private void checkTypeParamTag(DetailAST ast,
-                                   List<JavadocTag> tags, String typeParamName) {
-        final String typeParamNameWithBrackets =
-            OPEN_ANGLE_BRACKET + typeParamName + CLOSE_ANGLE_BRACKET;
+/**
+ * Verifies that a type definition has the specified param tag for
+ * the specified type parameter name.
+ *
+ * @param ast the AST node for the type definition.
+ * @param tags tags from the Javadoc comment for the type definition.
+ * @param typeParamName the name of the type parameter
+ */
+private void checkTypeParamTag(DetailAST ast,
+                               List<JavadocTag> tags, String typeParamName) {
+	final String typeParamNameWithBrackets =
+		OPEN_ANGLE_BRACKET + typeParamName + CLOSE_ANGLE_BRACKET;
 
-        final boolean found = tags
-                              .stream()
-                              .filter(JavadocTag::isParamTag)
-                              .anyMatch(tag -> tag.getFirstArg().indexOf(typeParamNameWithBrackets) == 0);
+	final boolean found = tags
+	                      .stream()
+	                      .filter(JavadocTag::isParamTag)
+	                      .anyMatch(tag->tag.getFirstArg().indexOf(typeParamNameWithBrackets) == 0);
 
-        if (!found) {
-            log(ast, MSG_MISSING_TAG, JavadocTagInfo.PARAM.getText()
-                + SPACE + typeParamNameWithBrackets);
-        }
-    }
+	if (!found) {
+		log(ast, MSG_MISSING_TAG, JavadocTagInfo.PARAM.getText()
+		    + SPACE + typeParamNameWithBrackets);
+	}
+}
 
-    /**
-     * Checks for unused param tags for type parameters and record components.
-     *
-     * @param tags tags from the Javadoc comment for the type definition.
-     * @param typeParamNames names of type parameters
-     * @param recordComponentNames list of record component names in this definition
-     */
-    private void checkUnusedParamTags(
-        List<JavadocTag> tags,
-        List<String> typeParamNames,
-        List<String> recordComponentNames) {
+/**
+ * Checks for unused param tags for type parameters and record components.
+ *
+ * @param tags tags from the Javadoc comment for the type definition.
+ * @param typeParamNames names of type parameters
+ * @param recordComponentNames list of record component names in this definition
+ */
+private void checkUnusedParamTags(
+	List<JavadocTag> tags,
+	List<String> typeParamNames,
+	List<String> recordComponentNames) {
 
-        for (final JavadocTag tag: tags) {
-            if (tag.isParamTag()) {
-                final String paramName = extractParamNameFromTag(tag);
-                final boolean found = typeParamNames.contains(paramName)
-                                      || recordComponentNames.contains(paramName);
+	for (final JavadocTag tag: tags) {
+		if (tag.isParamTag()) {
+			final String paramName = extractParamNameFromTag(tag);
+			final boolean found = typeParamNames.contains(paramName)
+			                      || recordComponentNames.contains(paramName);
 
-                if (!found) {
-                    final String actualParamName =
-                        TYPE_NAME_IN_JAVADOC_TAG_SPLITTER.split(tag.getFirstArg())[0];
-                    log(tag.getLineNo(), tag.getColumnNo(),
-                        MSG_UNUSED_TAG,
-                        JavadocTagInfo.PARAM.getText(), actualParamName);
-                }
-            }
-        }
+			if (!found) {
+				final String actualParamName =
+					TYPE_NAME_IN_JAVADOC_TAG_SPLITTER.split(tag.getFirstArg())[0];
+				log(tag.getLineNo(), tag.getColumnNo(),
+				    MSG_UNUSED_TAG,
+				    JavadocTagInfo.PARAM.getText(), actualParamName);
+			}
+		}
+	}
 
-    }
+}
 
-    /**
-     * Extracts parameter name from tag.
-     *
-     * @param tag javadoc tag to extract parameter name
-     * @return extracts type parameter name from tag
-     */
-    private static String extractParamNameFromTag(JavadocTag tag) {
-        final String typeParamName;
-        final Matcher matchInAngleBrackets =
-            TYPE_NAME_IN_JAVADOC_TAG.matcher(tag.getFirstArg());
-        if (matchInAngleBrackets.find()) {
-            typeParamName = matchInAngleBrackets.group(1).trim();
-        }
-        else {
-            typeParamName = TYPE_NAME_IN_JAVADOC_TAG_SPLITTER.split(tag.getFirstArg())[0];
-        }
-        return typeParamName;
-    }
+/**
+ * Extracts parameter name from tag.
+ *
+ * @param tag javadoc tag to extract parameter name
+ * @return extracts type parameter name from tag
+ */
+private static String extractParamNameFromTag(JavadocTag tag) {
+	final String typeParamName;
+	final Matcher matchInAngleBrackets =
+		TYPE_NAME_IN_JAVADOC_TAG.matcher(tag.getFirstArg());
+	if (matchInAngleBrackets.find()) {
+		typeParamName = matchInAngleBrackets.group(1).trim();
+	}
+	else {
+		typeParamName = TYPE_NAME_IN_JAVADOC_TAG_SPLITTER.split(tag.getFirstArg())[0];
+	}
+	return typeParamName;
+}
 
-    /**
-     * Collects the record components in a record definition.
-     *
-     * @param node the possible record definition ast.
-     * @return the list of record components in this record definition.
-     */
-    private static List<String> getRecordComponentNames(DetailAST node) {
-        final DetailAST components = node.findFirstToken(TokenTypes.RECORD_COMPONENTS);
-        final List<String> componentList = new ArrayList<>();
+/**
+ * Collects the record components in a record definition.
+ *
+ * @param node the possible record definition ast.
+ * @return the list of record components in this record definition.
+ */
+private static List<String> getRecordComponentNames(DetailAST node) {
+	final DetailAST components = node.findFirstToken(TokenTypes.RECORD_COMPONENTS);
+	final List<String> componentList = new ArrayList<>();
 
-        if (components != null) {
-            TokenUtil.forEachChild(components,
-            TokenTypes.RECORD_COMPONENT_DEF, component -> {
-                final DetailAST ident = component.findFirstToken(TokenTypes.IDENT);
-                componentList.add(ident.getText());
-            });
-        }
+	if (components != null) {
+		TokenUtil.forEachChild(components,
+		                       TokenTypes.RECORD_COMPONENT_DEF, component->{
+				final DetailAST ident = component.findFirstToken(TokenTypes.IDENT);
+				componentList.add(ident.getText());
+			});
+	}
 
-        return componentList;
-    }
+	return componentList;
+}
 }

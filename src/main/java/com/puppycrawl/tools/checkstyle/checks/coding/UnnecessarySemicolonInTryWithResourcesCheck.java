@@ -98,50 +98,50 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 @StatelessCheck
 public final class UnnecessarySemicolonInTryWithResourcesCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_SEMI = "unnecessary.semicolon";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_SEMI = "unnecessary.semicolon";
 
-    /** Allow unnecessary semicolon if closing paren is not on the same line. */
-    private boolean allowWhenNoBraceAfterSemicolon = true;
+/** Allow unnecessary semicolon if closing paren is not on the same line. */
+private boolean allowWhenNoBraceAfterSemicolon = true;
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {
-                   TokenTypes.RESOURCE_SPECIFICATION,
-               };
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {
+		       TokenTypes.RESOURCE_SPECIFICATION,
+	};
+}
 
-    /**
-     * Setter to allow unnecessary semicolon if closing paren is not on the same line.
-     *
-     * @param allowWhenNoBraceAfterSemicolon a value to set.
-     */
-    public void setAllowWhenNoBraceAfterSemicolon(boolean allowWhenNoBraceAfterSemicolon) {
-        this.allowWhenNoBraceAfterSemicolon = allowWhenNoBraceAfterSemicolon;
-    }
+/**
+ * Setter to allow unnecessary semicolon if closing paren is not on the same line.
+ *
+ * @param allowWhenNoBraceAfterSemicolon a value to set.
+ */
+public void setAllowWhenNoBraceAfterSemicolon(boolean allowWhenNoBraceAfterSemicolon) {
+	this.allowWhenNoBraceAfterSemicolon = allowWhenNoBraceAfterSemicolon;
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        final DetailAST closingParen = ast.getLastChild();
-        final DetailAST tokenBeforeCloseParen = closingParen.getPreviousSibling();
-        if (tokenBeforeCloseParen.getType() == TokenTypes.SEMI
-                && (!allowWhenNoBraceAfterSemicolon
-                    || TokenUtil.areOnSameLine(closingParen, tokenBeforeCloseParen))) {
-            log(tokenBeforeCloseParen, MSG_SEMI);
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	final DetailAST closingParen = ast.getLastChild();
+	final DetailAST tokenBeforeCloseParen = closingParen.getPreviousSibling();
+	if (tokenBeforeCloseParen.getType() == TokenTypes.SEMI
+	    && (!allowWhenNoBraceAfterSemicolon
+	        || TokenUtil.areOnSameLine(closingParen, tokenBeforeCloseParen))) {
+		log(tokenBeforeCloseParen, MSG_SEMI);
+	}
+}
 
 }

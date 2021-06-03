@@ -38,123 +38,123 @@ import java.util.List;
  **/
 public final class FullIdent {
 
-    /** The list holding subsequent elements of identifier. **/
-    private final List<String> elements = new ArrayList<>();
-    /** The topmost and leftmost AST of the full identifier. */
-    private DetailAST detailAst;
+/** The list holding subsequent elements of identifier. **/
+private final List<String> elements = new ArrayList<>();
+/** The topmost and leftmost AST of the full identifier. */
+private DetailAST detailAst;
 
-    /** Hide default constructor. */
-    private FullIdent() {
-    }
+/** Hide default constructor. */
+private FullIdent() {
+}
 
-    /**
-     * Creates a new FullIdent starting from the child of the specified node.
-     *
-     * @param ast the parent node from where to start from
-     * @return a {@code FullIdent} value
-     */
-    public static FullIdent createFullIdentBelow(DetailAST ast) {
-        return createFullIdent(ast.getFirstChild());
-    }
+/**
+ * Creates a new FullIdent starting from the child of the specified node.
+ *
+ * @param ast the parent node from where to start from
+ * @return a {@code FullIdent} value
+ */
+public static FullIdent createFullIdentBelow(DetailAST ast) {
+	return createFullIdent(ast.getFirstChild());
+}
 
-    /**
-     * Creates a new FullIdent starting from the specified node.
-     *
-     * @param ast the node to start from
-     * @return a {@code FullIdent} value
-     */
-    public static FullIdent createFullIdent(DetailAST ast) {
-        final FullIdent ident = new FullIdent();
-        extractFullIdent(ident, ast);
-        return ident;
-    }
+/**
+ * Creates a new FullIdent starting from the specified node.
+ *
+ * @param ast the node to start from
+ * @return a {@code FullIdent} value
+ */
+public static FullIdent createFullIdent(DetailAST ast) {
+	final FullIdent ident = new FullIdent();
+	extractFullIdent(ident, ast);
+	return ident;
+}
 
-    /**
-     * Recursively extract a FullIdent.
-     *
-     * @param full the FullIdent to add to
-     * @param ast the node to recurse from
-     */
-    private static void extractFullIdent(FullIdent full, DetailAST ast) {
-        if (ast != null) {
-            if (ast.getType() == TokenTypes.DOT) {
-                extractFullIdent(full, ast.getFirstChild());
-                full.append(".");
-                extractFullIdent(
-                    full, ast.getFirstChild().getNextSibling());
-            }
-            else if (ast.getType() == TokenTypes.ARRAY_DECLARATOR) {
-                extractFullIdent(full, ast.getFirstChild());
-                full.append("[]");
-            }
-            else {
-                full.append(ast);
-            }
-        }
-    }
+/**
+ * Recursively extract a FullIdent.
+ *
+ * @param full the FullIdent to add to
+ * @param ast the node to recurse from
+ */
+private static void extractFullIdent(FullIdent full, DetailAST ast) {
+	if (ast != null) {
+		if (ast.getType() == TokenTypes.DOT) {
+			extractFullIdent(full, ast.getFirstChild());
+			full.append(".");
+			extractFullIdent(
+				full, ast.getFirstChild().getNextSibling());
+		}
+		else if (ast.getType() == TokenTypes.ARRAY_DECLARATOR) {
+			extractFullIdent(full, ast.getFirstChild());
+			full.append("[]");
+		}
+		else {
+			full.append(ast);
+		}
+	}
+}
 
-    /**
-     * Gets the text.
-     *
-     * @return the text
-     */
-    public String getText() {
-        return String.join("", elements);
-    }
+/**
+ * Gets the text.
+ *
+ * @return the text
+ */
+public String getText() {
+	return String.join("", elements);
+}
 
-    /**
-     * Gets the topmost leftmost DetailAST for this FullIdent.
-     *
-     * @return the topmost leftmost ast
-     */
-    public DetailAST getDetailAst() {
-        return detailAst;
-    }
+/**
+ * Gets the topmost leftmost DetailAST for this FullIdent.
+ *
+ * @return the topmost leftmost ast
+ */
+public DetailAST getDetailAst() {
+	return detailAst;
+}
 
-    /**
-     * Gets the line number.
-     *
-     * @return the line number
-     */
-    public int getLineNo() {
-        return detailAst.getLineNo();
-    }
+/**
+ * Gets the line number.
+ *
+ * @return the line number
+ */
+public int getLineNo() {
+	return detailAst.getLineNo();
+}
 
-    /**
-     * Gets the column number.
-     *
-     * @return the column number
-     */
-    public int getColumnNo() {
-        return detailAst.getColumnNo();
-    }
+/**
+ * Gets the column number.
+ *
+ * @return the column number
+ */
+public int getColumnNo() {
+	return detailAst.getColumnNo();
+}
 
-    @Override
-    public String toString() {
-        return String.join("", elements)
-               + "[" + detailAst.getLineNo() + "x" + detailAst.getColumnNo() + "]";
-    }
+@Override
+public String toString() {
+	return String.join("", elements)
+	       + "[" + detailAst.getLineNo() + "x" + detailAst.getColumnNo() + "]";
+}
 
-    /**
-     * Append the specified text.
-     *
-     * @param text the text to append
-     */
-    private void append(String text) {
-        elements.add(text);
-    }
+/**
+ * Append the specified text.
+ *
+ * @param text the text to append
+ */
+private void append(String text) {
+	elements.add(text);
+}
 
-    /**
-     * Append the specified token and also recalibrate the first line and
-     * column.
-     *
-     * @param ast the token to append
-     */
-    private void append(DetailAST ast) {
-        elements.add(ast.getText());
-        if (detailAst == null) {
-            detailAst = ast;
-        }
-    }
+/**
+ * Append the specified token and also recalibrate the first line and
+ * column.
+ *
+ * @param ast the token to append
+ */
+private void append(DetailAST ast) {
+	elements.add(ast.getText());
+	if (detailAst == null) {
+		detailAst = ast;
+	}
+}
 
 }

@@ -105,35 +105,35 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 @StatelessCheck
 public class NoEnumTrailingCommaCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "no.enum.trailing.comma";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "no.enum.trailing.comma";
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.ENUM_CONSTANT_DEF};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.ENUM_CONSTANT_DEF};
+}
 
-    @Override
-    public void visitToken(DetailAST detailAST) {
-        final DetailAST nextSibling = detailAST.getNextSibling();
-        if (nextSibling.getType() == TokenTypes.COMMA) {
-            final DetailAST nextToNextSibling = nextSibling.getNextSibling();
-            if (nextToNextSibling.getType() != TokenTypes.ENUM_CONSTANT_DEF) {
-                log(nextSibling, MSG_KEY);
-            }
-        }
-    }
+@Override
+public void visitToken(DetailAST detailAST) {
+	final DetailAST nextSibling = detailAST.getNextSibling();
+	if (nextSibling.getType() == TokenTypes.COMMA) {
+		final DetailAST nextToNextSibling = nextSibling.getNextSibling();
+		if (nextToNextSibling.getType() != TokenTypes.ENUM_CONSTANT_DEF) {
+			log(nextSibling, MSG_KEY);
+		}
+	}
+}
 }

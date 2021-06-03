@@ -114,271 +114,271 @@ import com.puppycrawl.tools.checkstyle.utils.JavadocUtil;
 @FileStatefulCheck
 public class UnusedImportsCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "import.unused";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "import.unused";
 
-    /** Regex to match class names. */
-    private static final Pattern CLASS_NAME = CommonUtil.createPattern(
-                "((:?[\\p{L}_$][\\p{L}\\p{N}_$]*\\.)*[\\p{L}_$][\\p{L}\\p{N}_$]*)");
-    /** Regex to match the first class name. */
-    private static final Pattern FIRST_CLASS_NAME = CommonUtil.createPattern(
-                "^" + CLASS_NAME);
-    /** Regex to match argument names. */
-    private static final Pattern ARGUMENT_NAME = CommonUtil.createPattern(
-                "[(,]\\s*" + CLASS_NAME.pattern());
+/** Regex to match class names. */
+private static final Pattern CLASS_NAME = CommonUtil.createPattern(
+	"((:?[\\p{L}_$][\\p{L}\\p{N}_$]*\\.)*[\\p{L}_$][\\p{L}\\p{N}_$]*)");
+/** Regex to match the first class name. */
+private static final Pattern FIRST_CLASS_NAME = CommonUtil.createPattern(
+	"^" + CLASS_NAME);
+/** Regex to match argument names. */
+private static final Pattern ARGUMENT_NAME = CommonUtil.createPattern(
+	"[(,]\\s*" + CLASS_NAME.pattern());
 
-    /** Regexp pattern to match java.lang package. */
-    private static final Pattern JAVA_LANG_PACKAGE_PATTERN =
-        CommonUtil.createPattern("^java\\.lang\\.[a-zA-Z]+$");
+/** Regexp pattern to match java.lang package. */
+private static final Pattern JAVA_LANG_PACKAGE_PATTERN =
+	CommonUtil.createPattern("^java\\.lang\\.[a-zA-Z]+$");
 
-    /** Suffix for the star import. */
-    private static final String STAR_IMPORT_SUFFIX = ".*";
+/** Suffix for the star import. */
+private static final String STAR_IMPORT_SUFFIX = ".*";
 
-    /** Set of the imports. */
-    private final Set<FullIdent> imports = new HashSet<>();
+/** Set of the imports. */
+private final Set<FullIdent> imports = new HashSet<>();
 
-    /** Set of references - possibly to imports or other things. */
-    private final Set<String> referenced = new HashSet<>();
+/** Set of references - possibly to imports or other things. */
+private final Set<String> referenced = new HashSet<>();
 
-    /** Flag to indicate when time to start collecting references. */
-    private boolean collect;
-    /** Control whether to process Javadoc comments. */
-    private boolean processJavadoc = true;
+/** Flag to indicate when time to start collecting references. */
+private boolean collect;
+/** Control whether to process Javadoc comments. */
+private boolean processJavadoc = true;
 
-    /**
-     * Setter to control whether to process Javadoc comments.
-     *
-     * @param value Flag for processing Javadoc comments.
-     */
-    public void setProcessJavadoc(boolean value) {
-        processJavadoc = value;
-    }
+/**
+ * Setter to control whether to process Javadoc comments.
+ *
+ * @param value Flag for processing Javadoc comments.
+ */
+public void setProcessJavadoc(boolean value) {
+	processJavadoc = value;
+}
 
-    @Override
-    public void beginTree(DetailAST rootAST) {
-        collect = false;
-        imports.clear();
-        referenced.clear();
-    }
+@Override
+public void beginTree(DetailAST rootAST) {
+	collect = false;
+	imports.clear();
+	referenced.clear();
+}
 
-    @Override
-    public void finishTree(DetailAST rootAST) {
-        // loop over all the imports to see if referenced.
-        imports.stream()
-        .filter(imprt -> isUnusedImport(imprt.getText()))
-        .forEach(imprt -> log(imprt.getDetailAst(), MSG_KEY, imprt.getText()));
-    }
+@Override
+public void finishTree(DetailAST rootAST) {
+	// loop over all the imports to see if referenced.
+	imports.stream()
+	.filter(imprt->isUnusedImport(imprt.getText()))
+	.forEach(imprt->log(imprt.getDetailAst(), MSG_KEY, imprt.getText()));
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {
-                   TokenTypes.IDENT,
-                   TokenTypes.IMPORT,
-                   TokenTypes.STATIC_IMPORT,
-                   // Definitions that may contain Javadoc...
-                   TokenTypes.PACKAGE_DEF,
-                   TokenTypes.ANNOTATION_DEF,
-                   TokenTypes.ANNOTATION_FIELD_DEF,
-                   TokenTypes.ENUM_DEF,
-                   TokenTypes.ENUM_CONSTANT_DEF,
-                   TokenTypes.CLASS_DEF,
-                   TokenTypes.INTERFACE_DEF,
-                   TokenTypes.METHOD_DEF,
-                   TokenTypes.CTOR_DEF,
-                   TokenTypes.VARIABLE_DEF,
-                   TokenTypes.RECORD_DEF,
-                   TokenTypes.COMPACT_CTOR_DEF,
-               };
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {
+		       TokenTypes.IDENT,
+		       TokenTypes.IMPORT,
+		       TokenTypes.STATIC_IMPORT,
+		       // Definitions that may contain Javadoc...
+		       TokenTypes.PACKAGE_DEF,
+		       TokenTypes.ANNOTATION_DEF,
+		       TokenTypes.ANNOTATION_FIELD_DEF,
+		       TokenTypes.ENUM_DEF,
+		       TokenTypes.ENUM_CONSTANT_DEF,
+		       TokenTypes.CLASS_DEF,
+		       TokenTypes.INTERFACE_DEF,
+		       TokenTypes.METHOD_DEF,
+		       TokenTypes.CTOR_DEF,
+		       TokenTypes.VARIABLE_DEF,
+		       TokenTypes.RECORD_DEF,
+		       TokenTypes.COMPACT_CTOR_DEF,
+	};
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        if (ast.getType() == TokenTypes.IDENT) {
-            if (collect) {
-                processIdent(ast);
-            }
-        }
-        else if (ast.getType() == TokenTypes.IMPORT) {
-            processImport(ast);
-        }
-        else if (ast.getType() == TokenTypes.STATIC_IMPORT) {
-            processStaticImport(ast);
-        }
-        else {
-            collect = true;
-            if (processJavadoc) {
-                collectReferencesFromJavadoc(ast);
-            }
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	if (ast.getType() == TokenTypes.IDENT) {
+		if (collect) {
+			processIdent(ast);
+		}
+	}
+	else if (ast.getType() == TokenTypes.IMPORT) {
+		processImport(ast);
+	}
+	else if (ast.getType() == TokenTypes.STATIC_IMPORT) {
+		processStaticImport(ast);
+	}
+	else {
+		collect = true;
+		if (processJavadoc) {
+			collectReferencesFromJavadoc(ast);
+		}
+	}
+}
 
-    /**
-     * Checks whether an import is unused.
-     *
-     * @param imprt an import.
-     * @return true if an import is unused.
-     */
-    private boolean isUnusedImport(String imprt) {
-        final Matcher javaLangPackageMatcher = JAVA_LANG_PACKAGE_PATTERN.matcher(imprt);
-        return !referenced.contains(CommonUtil.baseClassName(imprt))
-               || javaLangPackageMatcher.matches();
-    }
+/**
+ * Checks whether an import is unused.
+ *
+ * @param imprt an import.
+ * @return true if an import is unused.
+ */
+private boolean isUnusedImport(String imprt) {
+	final Matcher javaLangPackageMatcher = JAVA_LANG_PACKAGE_PATTERN.matcher(imprt);
+	return !referenced.contains(CommonUtil.baseClassName(imprt))
+	       || javaLangPackageMatcher.matches();
+}
 
-    /**
-     * Collects references made by IDENT.
-     *
-     * @param ast the IDENT node to process
-     */
-    private void processIdent(DetailAST ast) {
-        final DetailAST parent = ast.getParent();
-        final int parentType = parent.getType();
-        if (parentType != TokenTypes.DOT
-                && parentType != TokenTypes.METHOD_DEF
-                || parentType == TokenTypes.DOT
-                && ast.getNextSibling() != null) {
-            referenced.add(ast.getText());
-        }
-    }
+/**
+ * Collects references made by IDENT.
+ *
+ * @param ast the IDENT node to process
+ */
+private void processIdent(DetailAST ast) {
+	final DetailAST parent = ast.getParent();
+	final int parentType = parent.getType();
+	if (parentType != TokenTypes.DOT
+	    && parentType != TokenTypes.METHOD_DEF
+	    || parentType == TokenTypes.DOT
+	    && ast.getNextSibling() != null) {
+		referenced.add(ast.getText());
+	}
+}
 
-    /**
-     * Collects the details of imports.
-     *
-     * @param ast node containing the import details
-     */
-    private void processImport(DetailAST ast) {
-        final FullIdent name = FullIdent.createFullIdentBelow(ast);
-        if (!name.getText().endsWith(STAR_IMPORT_SUFFIX)) {
-            imports.add(name);
-        }
-    }
+/**
+ * Collects the details of imports.
+ *
+ * @param ast node containing the import details
+ */
+private void processImport(DetailAST ast) {
+	final FullIdent name = FullIdent.createFullIdentBelow(ast);
+	if (!name.getText().endsWith(STAR_IMPORT_SUFFIX)) {
+		imports.add(name);
+	}
+}
 
-    /**
-     * Collects the details of static imports.
-     *
-     * @param ast node containing the static import details
-     */
-    private void processStaticImport(DetailAST ast) {
-        final FullIdent name =
-            FullIdent.createFullIdent(
-                ast.getFirstChild().getNextSibling());
-        if (!name.getText().endsWith(STAR_IMPORT_SUFFIX)) {
-            imports.add(name);
-        }
-    }
+/**
+ * Collects the details of static imports.
+ *
+ * @param ast node containing the static import details
+ */
+private void processStaticImport(DetailAST ast) {
+	final FullIdent name =
+		FullIdent.createFullIdent(
+			ast.getFirstChild().getNextSibling());
+	if (!name.getText().endsWith(STAR_IMPORT_SUFFIX)) {
+		imports.add(name);
+	}
+}
 
-    /**
-     * Collects references made in Javadoc comments.
-     *
-     * @param ast node to inspect for Javadoc
-     */
-    private void collectReferencesFromJavadoc(DetailAST ast) {
-        final FileContents contents = getFileContents();
-        final int lineNo = ast.getLineNo();
-        final TextBlock textBlock = contents.getJavadocBefore(lineNo);
-        if (textBlock != null) {
-            referenced.addAll(collectReferencesFromJavadoc(textBlock));
-        }
-    }
+/**
+ * Collects references made in Javadoc comments.
+ *
+ * @param ast node to inspect for Javadoc
+ */
+private void collectReferencesFromJavadoc(DetailAST ast) {
+	final FileContents contents = getFileContents();
+	final int lineNo = ast.getLineNo();
+	final TextBlock textBlock = contents.getJavadocBefore(lineNo);
+	if (textBlock != null) {
+		referenced.addAll(collectReferencesFromJavadoc(textBlock));
+	}
+}
 
-    /**
-     * Process a javadoc {@link TextBlock} and return the set of classes
-     * referenced within.
-     *
-     * @param textBlock The javadoc block to parse
-     * @return a set of classes referenced in the javadoc block
-     */
-    private static Set<String> collectReferencesFromJavadoc(TextBlock textBlock) {
-        final List<JavadocTag> tags = new ArrayList<>();
-        // gather all the inline tags, like @link
-        // INLINE tags inside BLOCKs get hidden when using ALL
-        tags.addAll(getValidTags(textBlock, JavadocUtil.JavadocTagType.INLINE));
-        // gather all the block-level tags, like @throws and @see
-        tags.addAll(getValidTags(textBlock, JavadocUtil.JavadocTagType.BLOCK));
+/**
+ * Process a javadoc {@link TextBlock} and return the set of classes
+ * referenced within.
+ *
+ * @param textBlock The javadoc block to parse
+ * @return a set of classes referenced in the javadoc block
+ */
+private static Set<String> collectReferencesFromJavadoc(TextBlock textBlock) {
+	final List<JavadocTag> tags = new ArrayList<>();
+	// gather all the inline tags, like @link
+	// INLINE tags inside BLOCKs get hidden when using ALL
+	tags.addAll(getValidTags(textBlock, JavadocUtil.JavadocTagType.INLINE));
+	// gather all the block-level tags, like @throws and @see
+	tags.addAll(getValidTags(textBlock, JavadocUtil.JavadocTagType.BLOCK));
 
-        final Set<String> references = new HashSet<>();
+	final Set<String> references = new HashSet<>();
 
-        tags.stream()
-        .filter(JavadocTag::canReferenceImports)
-        .forEach(tag -> references.addAll(processJavadocTag(tag)));
-        return references;
-    }
+	tags.stream()
+	.filter(JavadocTag::canReferenceImports)
+	.forEach(tag->references.addAll(processJavadocTag(tag)));
+	return references;
+}
 
-    /**
-     * Returns the list of valid tags found in a javadoc {@link TextBlock}.
-     *
-     * @param cmt The javadoc block to parse
-     * @param tagType The type of tags we're interested in
-     * @return the list of tags
-     */
-    private static List<JavadocTag> getValidTags(TextBlock cmt,
-            JavadocUtil.JavadocTagType tagType) {
-        return JavadocUtil.getJavadocTags(cmt, tagType).getValidTags();
-    }
+/**
+ * Returns the list of valid tags found in a javadoc {@link TextBlock}.
+ *
+ * @param cmt The javadoc block to parse
+ * @param tagType The type of tags we're interested in
+ * @return the list of tags
+ */
+private static List<JavadocTag> getValidTags(TextBlock cmt,
+                                             JavadocUtil.JavadocTagType tagType) {
+	return JavadocUtil.getJavadocTags(cmt, tagType).getValidTags();
+}
 
-    /**
-     * Returns a list of references found in a javadoc {@link JavadocTag}.
-     *
-     * @param tag The javadoc tag to parse
-     * @return A list of references found in this tag
-     */
-    private static Set<String> processJavadocTag(JavadocTag tag) {
-        final Set<String> references = new HashSet<>();
-        final String identifier = tag.getFirstArg().trim();
-        for (Pattern pattern : new Pattern[]
-                {FIRST_CLASS_NAME, ARGUMENT_NAME}) {
-            references.addAll(matchPattern(identifier, pattern));
-        }
-        return references;
-    }
+/**
+ * Returns a list of references found in a javadoc {@link JavadocTag}.
+ *
+ * @param tag The javadoc tag to parse
+ * @return A list of references found in this tag
+ */
+private static Set<String> processJavadocTag(JavadocTag tag) {
+	final Set<String> references = new HashSet<>();
+	final String identifier = tag.getFirstArg().trim();
+	for (Pattern pattern : new Pattern[]
+	     {FIRST_CLASS_NAME, ARGUMENT_NAME}) {
+		references.addAll(matchPattern(identifier, pattern));
+	}
+	return references;
+}
 
-    /**
-     * Extracts a list of texts matching a {@link Pattern} from a
-     * {@link String}.
-     *
-     * @param identifier The String to match the pattern against
-     * @param pattern The Pattern used to extract the texts
-     * @return A list of texts which matched the pattern
-     */
-    private static Set<String> matchPattern(String identifier, Pattern pattern) {
-        final Set<String> references = new HashSet<>();
-        final Matcher matcher = pattern.matcher(identifier);
-        while (matcher.find()) {
-            references.add(topLevelType(matcher.group(1)));
-        }
-        return references;
-    }
+/**
+ * Extracts a list of texts matching a {@link Pattern} from a
+ * {@link String}.
+ *
+ * @param identifier The String to match the pattern against
+ * @param pattern The Pattern used to extract the texts
+ * @return A list of texts which matched the pattern
+ */
+private static Set<String> matchPattern(String identifier, Pattern pattern) {
+	final Set<String> references = new HashSet<>();
+	final Matcher matcher = pattern.matcher(identifier);
+	while (matcher.find()) {
+		references.add(topLevelType(matcher.group(1)));
+	}
+	return references;
+}
 
-    /**
-     * If the given type string contains "." (e.g. "Map.Entry"), returns the
-     * top level type (e.g. "Map"), as that is what must be imported for the
-     * type to resolve. Otherwise, returns the type as-is.
-     *
-     * @param type A possibly qualified type name
-     * @return The simple name of the top level type
-     */
-    private static String topLevelType(String type) {
-        final String topLevelType;
-        final int dotIndex = type.indexOf('.');
-        if (dotIndex == -1) {
-            topLevelType = type;
-        }
-        else {
-            topLevelType = type.substring(0, dotIndex);
-        }
-        return topLevelType;
-    }
+/**
+ * If the given type string contains "." (e.g. "Map.Entry"), returns the
+ * top level type (e.g. "Map"), as that is what must be imported for the
+ * type to resolve. Otherwise, returns the type as-is.
+ *
+ * @param type A possibly qualified type name
+ * @return The simple name of the top level type
+ */
+private static String topLevelType(String type) {
+	final String topLevelType;
+	final int dotIndex = type.indexOf('.');
+	if (dotIndex == -1) {
+		topLevelType = type;
+	}
+	else {
+		topLevelType = type.substring(0, dotIndex);
+	}
+	return topLevelType;
+}
 
 }

@@ -88,36 +88,36 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 @StatelessCheck
 public class StringLiteralEqualityCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "string.literal.equality";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "string.literal.equality";
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.EQUAL, TokenTypes.NOT_EQUAL};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.EQUAL, TokenTypes.NOT_EQUAL};
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        final boolean hasStringLiteralChild =
-            ast.findFirstToken(TokenTypes.STRING_LITERAL) != null
-            || ast.findFirstToken(TokenTypes.TEXT_BLOCK_LITERAL_BEGIN) != null;
+@Override
+public void visitToken(DetailAST ast) {
+	final boolean hasStringLiteralChild =
+		ast.findFirstToken(TokenTypes.STRING_LITERAL) != null
+		|| ast.findFirstToken(TokenTypes.TEXT_BLOCK_LITERAL_BEGIN) != null;
 
-        if (hasStringLiteralChild) {
-            log(ast, MSG_KEY, ast.getText());
-        }
-    }
+	if (hasStringLiteralChild) {
+		log(ast, MSG_KEY, ast.getText());
+	}
+}
 
 }

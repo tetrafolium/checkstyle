@@ -32,66 +32,66 @@ import com.puppycrawl.tools.checkstyle.api.LineColumn;
  */
 public final class BlockTagUtil {
 
-    /** Block tag pattern for a first line. */
-    private static final Pattern BLOCK_TAG_PATTERN_FIRST_LINE = Pattern.compile(
-                "/\\*{2,}\\s*@(\\p{Alpha}+)\\s");
+/** Block tag pattern for a first line. */
+private static final Pattern BLOCK_TAG_PATTERN_FIRST_LINE = Pattern.compile(
+	"/\\*{2,}\\s*@(\\p{Alpha}+)\\s");
 
-    /** Block tag pattern. */
-    private static final Pattern BLOCK_TAG_PATTERN = Pattern.compile(
-                "^\\s*\\**\\s*@(\\p{Alpha}+)\\s");
+/** Block tag pattern. */
+private static final Pattern BLOCK_TAG_PATTERN = Pattern.compile(
+	"^\\s*\\**\\s*@(\\p{Alpha}+)\\s");
 
-    /** Closing tag. */
-    private static final String JAVADOC_CLOSING_TAG = "*/";
+/** Closing tag. */
+private static final String JAVADOC_CLOSING_TAG = "*/";
 
-    /** Prevent instantiation. */
-    private BlockTagUtil() {
-    }
+/** Prevent instantiation. */
+private BlockTagUtil() {
+}
 
-    /**
-     * Extract the block tags from a Javadoc comment.
-     *
-     * @param lines The text of the comment, as separate lines.
-     * @return The tags extracted from the block.
-     */
-    public static List<TagInfo> extractBlockTags(String... lines) {
-        final List<TagInfo> tags = new ArrayList<>();
+/**
+ * Extract the block tags from a Javadoc comment.
+ *
+ * @param lines The text of the comment, as separate lines.
+ * @return The tags extracted from the block.
+ */
+public static List<TagInfo> extractBlockTags(String... lines) {
+	final List<TagInfo> tags = new ArrayList<>();
 
-        for (int i = 0; i < lines.length; i++) {
-            // Starting lines of a comment have a different first line pattern.
-            final boolean isFirstLine = i == 0;
-            final Pattern pattern;
-            if (isFirstLine) {
-                pattern = BLOCK_TAG_PATTERN_FIRST_LINE;
-            }
-            else {
-                pattern = BLOCK_TAG_PATTERN;
-            }
+	for (int i = 0; i < lines.length; i++) {
+		// Starting lines of a comment have a different first line pattern.
+		final boolean isFirstLine = i == 0;
+		final Pattern pattern;
+		if (isFirstLine) {
+			pattern = BLOCK_TAG_PATTERN_FIRST_LINE;
+		}
+		else {
+			pattern = BLOCK_TAG_PATTERN;
+		}
 
-            final String line = lines[i];
-            final Matcher tagMatcher = pattern.matcher(line);
+		final String line = lines[i];
+		final Matcher tagMatcher = pattern.matcher(line);
 
-            if (tagMatcher.find()) {
-                final String tagName = tagMatcher.group(1);
+		if (tagMatcher.find()) {
+			final String tagName = tagMatcher.group(1);
 
-                // offset of one for the @ character
-                final int colNum = tagMatcher.start(1) - 1;
-                final int lineNum = i + 1;
+			// offset of one for the @ character
+			final int colNum = tagMatcher.start(1) - 1;
+			final int lineNum = i + 1;
 
-                final String remainder = line.substring(tagMatcher.end(1));
-                String tagValue = remainder.trim();
+			final String remainder = line.substring(tagMatcher.end(1));
+			String tagValue = remainder.trim();
 
-                // Handle the case where we're on the last line of a Javadoc comment.
-                if (tagValue.endsWith(JAVADOC_CLOSING_TAG)) {
-                    final int endIndex = tagValue.length() - JAVADOC_CLOSING_TAG.length();
-                    tagValue = tagValue.substring(0, endIndex).trim();
-                }
+			// Handle the case where we're on the last line of a Javadoc comment.
+			if (tagValue.endsWith(JAVADOC_CLOSING_TAG)) {
+				final int endIndex = tagValue.length() - JAVADOC_CLOSING_TAG.length();
+				tagValue = tagValue.substring(0, endIndex).trim();
+			}
 
-                final LineColumn position = new LineColumn(lineNum, colNum);
-                tags.add(new TagInfo(tagName, tagValue, position));
-            }
-        }
+			final LineColumn position = new LineColumn(lineNum, colNum);
+			tags.add(new TagInfo(tagName, tagValue, position));
+		}
+	}
 
-        return tags;
-    }
+	return tags;
+}
 
 }

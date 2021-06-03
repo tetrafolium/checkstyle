@@ -98,82 +98,82 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 @StatelessCheck
 public class OneTopLevelClassCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "one.top.level.class";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "one.top.level.class";
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    // ZERO tokens as Check do Traverse of Tree himself, he does not need to subscribed to Tokens
-    @Override
-    public int[] getRequiredTokens() {
-        return CommonUtil.EMPTY_INT_ARRAY;
-    }
+// ZERO tokens as Check do Traverse of Tree himself, he does not need to subscribed to Tokens
+@Override
+public int[] getRequiredTokens() {
+	return CommonUtil.EMPTY_INT_ARRAY;
+}
 
-    @Override
-    public void beginTree(DetailAST rootAST) {
-        DetailAST currentNode = rootAST;
-        boolean publicTypeFound = false;
-        DetailAST firstType = null;
+@Override
+public void beginTree(DetailAST rootAST) {
+	DetailAST currentNode = rootAST;
+	boolean publicTypeFound = false;
+	DetailAST firstType = null;
 
-        while (currentNode != null) {
-            if (isTypeDef(currentNode)) {
-                if (isPublic(currentNode)) {
-                    // log the first type later
-                    publicTypeFound = true;
-                }
-                if (firstType == null) {
-                    // first type is set aside
-                    firstType = currentNode;
-                }
-                else if (!isPublic(currentNode)) {
-                    // extra non-public type, log immediately
-                    final String typeName = currentNode
-                                            .findFirstToken(TokenTypes.IDENT).getText();
-                    log(currentNode, MSG_KEY, typeName);
-                }
-            }
-            currentNode = currentNode.getNextSibling();
-        }
+	while (currentNode != null) {
+		if (isTypeDef(currentNode)) {
+			if (isPublic(currentNode)) {
+				// log the first type later
+				publicTypeFound = true;
+			}
+			if (firstType == null) {
+				// first type is set aside
+				firstType = currentNode;
+			}
+			else if (!isPublic(currentNode)) {
+				// extra non-public type, log immediately
+				final String typeName = currentNode
+				                        .findFirstToken(TokenTypes.IDENT).getText();
+				log(currentNode, MSG_KEY, typeName);
+			}
+		}
+		currentNode = currentNode.getNextSibling();
+	}
 
-        // if there was a public type and first type is non-public, log it
-        if (publicTypeFound && !isPublic(firstType)) {
-            final String typeName = firstType
-                                    .findFirstToken(TokenTypes.IDENT).getText();
-            log(firstType, MSG_KEY, typeName);
-        }
-    }
+	// if there was a public type and first type is non-public, log it
+	if (publicTypeFound && !isPublic(firstType)) {
+		final String typeName = firstType
+		                        .findFirstToken(TokenTypes.IDENT).getText();
+		log(firstType, MSG_KEY, typeName);
+	}
+}
 
-    /**
-     * Checks if an AST node is a type definition.
-     *
-     * @param node AST node to check.
-     * @return true if the node is a type (class, enum, interface, annotation) definition.
-     */
-    private static boolean isTypeDef(DetailAST node) {
-        return TokenUtil.isTypeDeclaration(node.getType());
-    }
+/**
+ * Checks if an AST node is a type definition.
+ *
+ * @param node AST node to check.
+ * @return true if the node is a type (class, enum, interface, annotation) definition.
+ */
+private static boolean isTypeDef(DetailAST node) {
+	return TokenUtil.isTypeDeclaration(node.getType());
+}
 
-    /**
-     * Checks if a type is public.
-     *
-     * @param typeDef type definition node.
-     * @return true if a type has a public access level modifier.
-     */
-    private static boolean isPublic(DetailAST typeDef) {
-        final DetailAST modifiers =
-            typeDef.findFirstToken(TokenTypes.MODIFIERS);
-        return modifiers.findFirstToken(TokenTypes.LITERAL_PUBLIC) != null;
-    }
+/**
+ * Checks if a type is public.
+ *
+ * @param typeDef type definition node.
+ * @return true if a type has a public access level modifier.
+ */
+private static boolean isPublic(DetailAST typeDef) {
+	final DetailAST modifiers =
+		typeDef.findFirstToken(TokenTypes.MODIFIERS);
+	return modifiers.findFirstToken(TokenTypes.LITERAL_PUBLIC) != null;
+}
 
 }

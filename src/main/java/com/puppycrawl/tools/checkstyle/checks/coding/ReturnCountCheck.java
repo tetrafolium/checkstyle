@@ -156,223 +156,223 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 @FileStatefulCheck
 public final class ReturnCountCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "return.count";
-    /**
-     * A key pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY_VOID = "return.countVoid";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "return.count";
+/**
+ * A key pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY_VOID = "return.countVoid";
 
-    /** Stack of method contexts. */
-    private final Deque<Context> contextStack = new ArrayDeque<>();
+/** Stack of method contexts. */
+private final Deque<Context> contextStack = new ArrayDeque<>();
 
-    /** Specify method names to ignore. */
-    private Pattern format = Pattern.compile("^equals$");
+/** Specify method names to ignore. */
+private Pattern format = Pattern.compile("^equals$");
 
-    /** Specify maximum allowed number of return statements in non-void methods/lambdas. */
-    private int max = 2;
-    /** Specify maximum allowed number of return statements in void methods/constructors/lambdas. */
-    private int maxForVoid = 1;
-    /** Current method context. */
-    private Context context;
+/** Specify maximum allowed number of return statements in non-void methods/lambdas. */
+private int max = 2;
+/** Specify maximum allowed number of return statements in void methods/constructors/lambdas. */
+private int maxForVoid = 1;
+/** Current method context. */
+private Context context;
 
-    @Override
-    public int[] getDefaultTokens() {
-        return new int[] {
-                   TokenTypes.CTOR_DEF,
-                   TokenTypes.METHOD_DEF,
-                   TokenTypes.LAMBDA,
-                   TokenTypes.LITERAL_RETURN,
-               };
-    }
+@Override
+public int[] getDefaultTokens() {
+	return new int[] {
+		       TokenTypes.CTOR_DEF,
+		       TokenTypes.METHOD_DEF,
+		       TokenTypes.LAMBDA,
+		       TokenTypes.LITERAL_RETURN,
+	};
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.LITERAL_RETURN};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.LITERAL_RETURN};
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return new int[] {
-                   TokenTypes.CTOR_DEF,
-                   TokenTypes.METHOD_DEF,
-                   TokenTypes.LAMBDA,
-                   TokenTypes.LITERAL_RETURN,
-               };
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return new int[] {
+		       TokenTypes.CTOR_DEF,
+		       TokenTypes.METHOD_DEF,
+		       TokenTypes.LAMBDA,
+		       TokenTypes.LITERAL_RETURN,
+	};
+}
 
-    /**
-     * Setter to specify method names to ignore.
-     *
-     * @param pattern a pattern.
-     */
-    public void setFormat(Pattern pattern) {
-        format = pattern;
-    }
+/**
+ * Setter to specify method names to ignore.
+ *
+ * @param pattern a pattern.
+ */
+public void setFormat(Pattern pattern) {
+	format = pattern;
+}
 
-    /**
-     * Setter to specify maximum allowed number of return statements
-     * in non-void methods/lambdas.
-     *
-     * @param max maximum allowed number of return statements.
-     */
-    public void setMax(int max) {
-        this.max = max;
-    }
+/**
+ * Setter to specify maximum allowed number of return statements
+ * in non-void methods/lambdas.
+ *
+ * @param max maximum allowed number of return statements.
+ */
+public void setMax(int max) {
+	this.max = max;
+}
 
-    /**
-     * Setter to specify maximum allowed number of return statements
-     * in void methods/constructors/lambdas.
-     *
-     * @param maxForVoid maximum allowed number of return statements for void methods.
-     */
-    public void setMaxForVoid(int maxForVoid) {
-        this.maxForVoid = maxForVoid;
-    }
+/**
+ * Setter to specify maximum allowed number of return statements
+ * in void methods/constructors/lambdas.
+ *
+ * @param maxForVoid maximum allowed number of return statements for void methods.
+ */
+public void setMaxForVoid(int maxForVoid) {
+	this.maxForVoid = maxForVoid;
+}
 
-    @Override
-    public void beginTree(DetailAST rootAST) {
-        context = new Context(false);
-        contextStack.clear();
-    }
+@Override
+public void beginTree(DetailAST rootAST) {
+	context = new Context(false);
+	contextStack.clear();
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        switch (ast.getType()) {
-        case TokenTypes.CTOR_DEF:
-        case TokenTypes.METHOD_DEF:
-            visitMethodDef(ast);
-            break;
-        case TokenTypes.LAMBDA:
-            visitLambda();
-            break;
-        case TokenTypes.LITERAL_RETURN:
-            visitReturn(ast);
-            break;
-        default:
-            throw new IllegalStateException(ast.toString());
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	switch (ast.getType()) {
+	case TokenTypes.CTOR_DEF:
+	case TokenTypes.METHOD_DEF:
+		visitMethodDef(ast);
+		break;
+	case TokenTypes.LAMBDA:
+		visitLambda();
+		break;
+	case TokenTypes.LITERAL_RETURN:
+		visitReturn(ast);
+		break;
+	default:
+		throw new IllegalStateException(ast.toString());
+	}
+}
 
-    @Override
-    public void leaveToken(DetailAST ast) {
-        switch (ast.getType()) {
-        case TokenTypes.CTOR_DEF:
-        case TokenTypes.METHOD_DEF:
-        case TokenTypes.LAMBDA:
-            leave(ast);
-            break;
-        case TokenTypes.LITERAL_RETURN:
-            // Do nothing
-            break;
-        default:
-            throw new IllegalStateException(ast.toString());
-        }
-    }
+@Override
+public void leaveToken(DetailAST ast) {
+	switch (ast.getType()) {
+	case TokenTypes.CTOR_DEF:
+	case TokenTypes.METHOD_DEF:
+	case TokenTypes.LAMBDA:
+		leave(ast);
+		break;
+	case TokenTypes.LITERAL_RETURN:
+		// Do nothing
+		break;
+	default:
+		throw new IllegalStateException(ast.toString());
+	}
+}
 
-    /**
-     * Creates new method context and places old one on the stack.
-     *
-     * @param ast method definition for check.
-     */
-    private void visitMethodDef(DetailAST ast) {
-        contextStack.push(context);
-        final DetailAST methodNameAST = ast.findFirstToken(TokenTypes.IDENT);
-        final boolean check = !format.matcher(methodNameAST.getText()).find();
-        context = new Context(check);
-    }
+/**
+ * Creates new method context and places old one on the stack.
+ *
+ * @param ast method definition for check.
+ */
+private void visitMethodDef(DetailAST ast) {
+	contextStack.push(context);
+	final DetailAST methodNameAST = ast.findFirstToken(TokenTypes.IDENT);
+	final boolean check = !format.matcher(methodNameAST.getText()).find();
+	context = new Context(check);
+}
 
-    /**
-     * Checks number of return statements and restore previous context.
-     *
-     * @param ast node to leave.
-     */
-    private void leave(DetailAST ast) {
-        context.checkCount(ast);
-        context = contextStack.pop();
-    }
+/**
+ * Checks number of return statements and restore previous context.
+ *
+ * @param ast node to leave.
+ */
+private void leave(DetailAST ast) {
+	context.checkCount(ast);
+	context = contextStack.pop();
+}
 
-    /**
-     * Creates new lambda context and places old one on the stack.
-     */
-    private void visitLambda() {
-        contextStack.push(context);
-        context = new Context(true);
-    }
+/**
+ * Creates new lambda context and places old one on the stack.
+ */
+private void visitLambda() {
+	contextStack.push(context);
+	context = new Context(true);
+}
 
-    /**
-     * Examines the return statement and tells context about it.
-     *
-     * @param ast return statement to check.
-     */
-    private void visitReturn(DetailAST ast) {
-        // we can't identify which max to use for lambdas, so we can only assign
-        // after the first return statement is seen
-        if (ast.getFirstChild().getType() == TokenTypes.SEMI) {
-            context.visitLiteralReturn(maxForVoid, true);
-        }
-        else {
-            context.visitLiteralReturn(max, false);
-        }
-    }
+/**
+ * Examines the return statement and tells context about it.
+ *
+ * @param ast return statement to check.
+ */
+private void visitReturn(DetailAST ast) {
+	// we can't identify which max to use for lambdas, so we can only assign
+	// after the first return statement is seen
+	if (ast.getFirstChild().getType() == TokenTypes.SEMI) {
+		context.visitLiteralReturn(maxForVoid, true);
+	}
+	else {
+		context.visitLiteralReturn(max, false);
+	}
+}
 
-    /**
-     * Class to encapsulate information about one method.
-     */
-    private class Context {
+/**
+ * Class to encapsulate information about one method.
+ */
+private class Context {
 
-        /** Whether we should check this method or not. */
-        private final boolean checking;
-        /** Counter for return statements. */
-        private int count;
-        /** Maximum allowed number of return statements. */
-        private Integer maxAllowed;
-        /** Identifies if context is void. */
-        private boolean isVoidContext;
+/** Whether we should check this method or not. */
+private final boolean checking;
+/** Counter for return statements. */
+private int count;
+/** Maximum allowed number of return statements. */
+private Integer maxAllowed;
+/** Identifies if context is void. */
+private boolean isVoidContext;
 
-        /**
-         * Creates new method context.
-         *
-         * @param checking should we check this method or not.
-         */
-        /* package */ Context(boolean checking) {
-            this.checking = checking;
-        }
+/**
+ * Creates new method context.
+ *
+ * @param checking should we check this method or not.
+ */
+/* package */ Context(boolean checking) {
+	this.checking = checking;
+}
 
-        /**
-         * Increase the number of return statements and set context return type.
-         *
-         * @param maxAssigned Maximum allowed number of return statements.
-         * @param voidReturn Identifies if context is void.
-         */
-        public void visitLiteralReturn(int maxAssigned, Boolean voidReturn) {
-            isVoidContext = voidReturn;
-            maxAllowed = maxAssigned;
+/**
+ * Increase the number of return statements and set context return type.
+ *
+ * @param maxAssigned Maximum allowed number of return statements.
+ * @param voidReturn Identifies if context is void.
+ */
+public void visitLiteralReturn(int maxAssigned, Boolean voidReturn) {
+	isVoidContext = voidReturn;
+	maxAllowed = maxAssigned;
 
-            ++count;
-        }
+	++count;
+}
 
-        /**
-         * Checks if number of return statements in the method are more
-         * than allowed.
-         *
-         * @param ast method def associated with this context.
-         */
-        public void checkCount(DetailAST ast) {
-            if (checking && maxAllowed != null && count > maxAllowed) {
-                if (isVoidContext) {
-                    log(ast, MSG_KEY_VOID, count, maxAllowed);
-                }
-                else {
-                    log(ast, MSG_KEY, count, maxAllowed);
-                }
-            }
-        }
+/**
+ * Checks if number of return statements in the method are more
+ * than allowed.
+ *
+ * @param ast method def associated with this context.
+ */
+public void checkCount(DetailAST ast) {
+	if (checking && maxAllowed != null && count > maxAllowed) {
+		if (isVoidContext) {
+			log(ast, MSG_KEY_VOID, count, maxAllowed);
+		}
+		else {
+			log(ast, MSG_KEY, count, maxAllowed);
+		}
+	}
+}
 
-    }
+}
 
 }

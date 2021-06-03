@@ -83,80 +83,80 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 @StatelessCheck
 public class MissingSwitchDefaultCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "missing.switch.default";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "missing.switch.default";
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.LITERAL_SWITCH};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.LITERAL_SWITCH};
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        final DetailAST firstSwitchMemberAst = findFirstSwitchMember(ast);
+@Override
+public void visitToken(DetailAST ast) {
+	final DetailAST firstSwitchMemberAst = findFirstSwitchMember(ast);
 
-        if (!containsDefaultSwitch(firstSwitchMemberAst) && !isSwitchExpression(ast)) {
-            log(ast, MSG_KEY);
-        }
-    }
+	if (!containsDefaultSwitch(firstSwitchMemberAst) && !isSwitchExpression(ast)) {
+		log(ast, MSG_KEY);
+	}
+}
 
-    /**
-     * Checks if the case group or its sibling contain the 'default' switch.
-     *
-     * @param caseGroupAst first case group to check.
-     * @return true if 'default' switch found.
-     */
-    private static boolean containsDefaultSwitch(DetailAST caseGroupAst) {
-        DetailAST nextAst = caseGroupAst;
-        boolean found = false;
+/**
+ * Checks if the case group or its sibling contain the 'default' switch.
+ *
+ * @param caseGroupAst first case group to check.
+ * @return true if 'default' switch found.
+ */
+private static boolean containsDefaultSwitch(DetailAST caseGroupAst) {
+	DetailAST nextAst = caseGroupAst;
+	boolean found = false;
 
-        while (nextAst != null) {
-            if (nextAst.findFirstToken(TokenTypes.LITERAL_DEFAULT) != null) {
-                found = true;
-                break;
-            }
+	while (nextAst != null) {
+		if (nextAst.findFirstToken(TokenTypes.LITERAL_DEFAULT) != null) {
+			found = true;
+			break;
+		}
 
-            nextAst = nextAst.getNextSibling();
-        }
+		nextAst = nextAst.getNextSibling();
+	}
 
-        return found;
-    }
+	return found;
+}
 
-    /**
-     * Returns first CASE_GROUP or SWITCH_RULE ast.
-     *
-     * @param parent the switch statement we are checking
-     * @return ast of first switch member.
-     */
-    private static DetailAST findFirstSwitchMember(DetailAST parent) {
-        DetailAST switchMember = parent.findFirstToken(TokenTypes.CASE_GROUP);
-        if (switchMember == null) {
-            switchMember = parent.findFirstToken(TokenTypes.SWITCH_RULE);
-        }
-        return switchMember;
-    }
+/**
+ * Returns first CASE_GROUP or SWITCH_RULE ast.
+ *
+ * @param parent the switch statement we are checking
+ * @return ast of first switch member.
+ */
+private static DetailAST findFirstSwitchMember(DetailAST parent) {
+	DetailAST switchMember = parent.findFirstToken(TokenTypes.CASE_GROUP);
+	if (switchMember == null) {
+		switchMember = parent.findFirstToken(TokenTypes.SWITCH_RULE);
+	}
+	return switchMember;
+}
 
-    /**
-     * Checks if this LITERAL_SWITCH token is part of a switch expression.
-     *
-     * @param ast the switch statement we are checking
-     * @return true if part of a switch expression
-     */
-    private static boolean isSwitchExpression(DetailAST ast) {
-        return ast.getParent().getType() == TokenTypes.EXPR;
-    }
+/**
+ * Checks if this LITERAL_SWITCH token is part of a switch expression.
+ *
+ * @param ast the switch statement we are checking
+ * @return true if part of a switch expression
+ */
+private static boolean isSwitchExpression(DetailAST ast) {
+	return ast.getParent().getType() == TokenTypes.EXPR;
+}
 
 }

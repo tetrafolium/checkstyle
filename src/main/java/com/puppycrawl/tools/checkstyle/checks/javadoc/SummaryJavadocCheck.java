@@ -153,235 +153,235 @@ import com.puppycrawl.tools.checkstyle.utils.JavadocUtil;
 @StatelessCheck
 public class SummaryJavadocCheck extends AbstractJavadocCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_SUMMARY_FIRST_SENTENCE = "summary.first.sentence";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_SUMMARY_FIRST_SENTENCE = "summary.first.sentence";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_SUMMARY_JAVADOC = "summary.javaDoc";
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_SUMMARY_JAVADOC_MISSING = "summary.javaDoc.missing";
-    /**
-     * This regexp is used to convert multiline javadoc to single line without stars.
-     */
-    private static final Pattern JAVADOC_MULTILINE_TO_SINGLELINE_PATTERN =
-        Pattern.compile("\n[ ]+(\\*)|^[ ]+(\\*)");
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_SUMMARY_JAVADOC = "summary.javaDoc";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_SUMMARY_JAVADOC_MISSING = "summary.javaDoc.missing";
+/**
+ * This regexp is used to convert multiline javadoc to single line without stars.
+ */
+private static final Pattern JAVADOC_MULTILINE_TO_SINGLELINE_PATTERN =
+	Pattern.compile("\n[ ]+(\\*)|^[ ]+(\\*)");
 
-    /** Period literal. */
-    private static final String PERIOD = ".";
+/** Period literal. */
+private static final String PERIOD = ".";
 
-    /** Set of allowed Tokens tags in summary java doc. */
-    private static final Set<Integer> ALLOWED_TYPES = Collections.unmodifiableSet(
-                new HashSet<>(Arrays.asList(JavadocTokenTypes.TEXT,
-                                            JavadocTokenTypes.WS))
-            );
+/** Set of allowed Tokens tags in summary java doc. */
+private static final Set<Integer> ALLOWED_TYPES = Collections.unmodifiableSet(
+	new HashSet<>(Arrays.asList(JavadocTokenTypes.TEXT,
+	                            JavadocTokenTypes.WS))
+	);
 
-    /** Specify the regexp for forbidden summary fragments. */
-    private Pattern forbiddenSummaryFragments = CommonUtil.createPattern("^$");
+/** Specify the regexp for forbidden summary fragments. */
+private Pattern forbiddenSummaryFragments = CommonUtil.createPattern("^$");
 
-    /** Specify the period symbol at the end of first javadoc sentence. */
-    private String period = PERIOD;
+/** Specify the period symbol at the end of first javadoc sentence. */
+private String period = PERIOD;
 
-    /**
-     * Setter to specify the regexp for forbidden summary fragments.
-     *
-     * @param pattern a pattern.
-     */
-    public void setForbiddenSummaryFragments(Pattern pattern) {
-        forbiddenSummaryFragments = pattern;
-    }
+/**
+ * Setter to specify the regexp for forbidden summary fragments.
+ *
+ * @param pattern a pattern.
+ */
+public void setForbiddenSummaryFragments(Pattern pattern) {
+	forbiddenSummaryFragments = pattern;
+}
 
-    /**
-     * Setter to specify the period symbol at the end of first javadoc sentence.
-     *
-     * @param period period's value.
-     */
-    public void setPeriod(String period) {
-        this.period = period;
-    }
+/**
+ * Setter to specify the period symbol at the end of first javadoc sentence.
+ *
+ * @param period period's value.
+ */
+public void setPeriod(String period) {
+	this.period = period;
+}
 
-    @Override
-    public int[] getDefaultJavadocTokens() {
-        return new int[] {
-                   JavadocTokenTypes.JAVADOC,
-               };
-    }
+@Override
+public int[] getDefaultJavadocTokens() {
+	return new int[] {
+		       JavadocTokenTypes.JAVADOC,
+	};
+}
 
-    @Override
-    public int[] getRequiredJavadocTokens() {
-        return getAcceptableJavadocTokens();
-    }
+@Override
+public int[] getRequiredJavadocTokens() {
+	return getAcceptableJavadocTokens();
+}
 
-    @Override
-    public void visitJavadocToken(DetailNode ast) {
-        if (!startsWithInheritDoc(ast)) {
-            final String summaryDoc = getSummarySentence(ast);
-            if (summaryDoc.isEmpty()) {
-                log(ast.getLineNumber(), MSG_SUMMARY_JAVADOC_MISSING);
-            }
-            else if (!period.isEmpty()) {
-                final String firstSentence = getFirstSentence(ast);
-                final int endOfSentence = firstSentence.lastIndexOf(period);
-                if (!summaryDoc.contains(period)) {
-                    log(ast.getLineNumber(), MSG_SUMMARY_FIRST_SENTENCE);
-                }
-                if (endOfSentence != -1
-                        && containsForbiddenFragment(firstSentence.substring(0, endOfSentence))) {
-                    log(ast.getLineNumber(), MSG_SUMMARY_JAVADOC);
-                }
-            }
-        }
-    }
+@Override
+public void visitJavadocToken(DetailNode ast) {
+	if (!startsWithInheritDoc(ast)) {
+		final String summaryDoc = getSummarySentence(ast);
+		if (summaryDoc.isEmpty()) {
+			log(ast.getLineNumber(), MSG_SUMMARY_JAVADOC_MISSING);
+		}
+		else if (!period.isEmpty()) {
+			final String firstSentence = getFirstSentence(ast);
+			final int endOfSentence = firstSentence.lastIndexOf(period);
+			if (!summaryDoc.contains(period)) {
+				log(ast.getLineNumber(), MSG_SUMMARY_FIRST_SENTENCE);
+			}
+			if (endOfSentence != -1
+			    && containsForbiddenFragment(firstSentence.substring(0, endOfSentence))) {
+				log(ast.getLineNumber(), MSG_SUMMARY_JAVADOC);
+			}
+		}
+	}
+}
 
-    /**
-     * Checks if the node starts with an {&#64;inheritDoc}.
-     *
-     * @param root The root node to examine.
-     * @return {@code true} if the javadoc starts with an {&#64;inheritDoc}.
-     */
-    private static boolean startsWithInheritDoc(DetailNode root) {
-        boolean found = false;
-        final DetailNode[] children = root.getChildren();
+/**
+ * Checks if the node starts with an {&#64;inheritDoc}.
+ *
+ * @param root The root node to examine.
+ * @return {@code true} if the javadoc starts with an {&#64;inheritDoc}.
+ */
+private static boolean startsWithInheritDoc(DetailNode root) {
+	boolean found = false;
+	final DetailNode[] children = root.getChildren();
 
-        for (int i = 0; !found; i++) {
-            final DetailNode child = children[i];
-            if (child.getType() == JavadocTokenTypes.JAVADOC_INLINE_TAG
-                    && child.getChildren()[1].getType() == JavadocTokenTypes.INHERIT_DOC_LITERAL) {
-                found = true;
-            }
-            else if (child.getType() != JavadocTokenTypes.LEADING_ASTERISK
-                     && !CommonUtil.isBlank(child.getText())) {
-                break;
-            }
-        }
+	for (int i = 0; !found; i++) {
+		final DetailNode child = children[i];
+		if (child.getType() == JavadocTokenTypes.JAVADOC_INLINE_TAG
+		    && child.getChildren()[1].getType() == JavadocTokenTypes.INHERIT_DOC_LITERAL) {
+			found = true;
+		}
+		else if (child.getType() != JavadocTokenTypes.LEADING_ASTERISK
+		         && !CommonUtil.isBlank(child.getText())) {
+			break;
+		}
+	}
 
-        return found;
-    }
+	return found;
+}
 
-    /**
-     * Checks if period is at the end of sentence.
-     *
-     * @param ast Javadoc root node.
-     * @return violation string
-     */
-    private static String getSummarySentence(DetailNode ast) {
-        boolean flag = true;
-        final StringBuilder result = new StringBuilder(256);
-        for (DetailNode child : ast.getChildren()) {
-            if (ALLOWED_TYPES.contains(child.getType())) {
-                result.append(child.getText());
-            }
-            else if (child.getType() == JavadocTokenTypes.HTML_ELEMENT
-                     && CommonUtil.isBlank(result.toString().trim())) {
-                result.append(getStringInsideTag(result.toString(),
-                                                 child.getChildren()[0].getChildren()[0]));
-            }
-            else if (child.getType() == JavadocTokenTypes.JAVADOC_TAG) {
-                flag = false;
-            }
-            if (!flag) {
-                break;
-            }
-        }
-        return result.toString().trim();
-    }
+/**
+ * Checks if period is at the end of sentence.
+ *
+ * @param ast Javadoc root node.
+ * @return violation string
+ */
+private static String getSummarySentence(DetailNode ast) {
+	boolean flag = true;
+	final StringBuilder result = new StringBuilder(256);
+	for (DetailNode child : ast.getChildren()) {
+		if (ALLOWED_TYPES.contains(child.getType())) {
+			result.append(child.getText());
+		}
+		else if (child.getType() == JavadocTokenTypes.HTML_ELEMENT
+		         && CommonUtil.isBlank(result.toString().trim())) {
+			result.append(getStringInsideTag(result.toString(),
+			                                 child.getChildren()[0].getChildren()[0]));
+		}
+		else if (child.getType() == JavadocTokenTypes.JAVADOC_TAG) {
+			flag = false;
+		}
+		if (!flag) {
+			break;
+		}
+	}
+	return result.toString().trim();
+}
 
-    /**
-     * Concatenates string within text of html tags.
-     *
-     * @param result javadoc string
-     * @param detailNode javadoc tag node
-     * @return java doc tag content appended in result
-     */
-    private static String getStringInsideTag(String result, DetailNode detailNode) {
-        final StringBuilder contents = new StringBuilder(result);
-        DetailNode tempNode = detailNode;
-        while (tempNode != null) {
-            if (tempNode.getType() == JavadocTokenTypes.TEXT) {
-                contents.append(tempNode.getText());
-            }
-            tempNode = JavadocUtil.getNextSibling(tempNode);
-        }
-        return contents.toString();
-    }
+/**
+ * Concatenates string within text of html tags.
+ *
+ * @param result javadoc string
+ * @param detailNode javadoc tag node
+ * @return java doc tag content appended in result
+ */
+private static String getStringInsideTag(String result, DetailNode detailNode) {
+	final StringBuilder contents = new StringBuilder(result);
+	DetailNode tempNode = detailNode;
+	while (tempNode != null) {
+		if (tempNode.getType() == JavadocTokenTypes.TEXT) {
+			contents.append(tempNode.getText());
+		}
+		tempNode = JavadocUtil.getNextSibling(tempNode);
+	}
+	return contents.toString();
+}
 
-    /**
-     * Finds and returns first sentence.
-     *
-     * @param ast Javadoc root node.
-     * @return first sentence.
-     */
-    private static String getFirstSentence(DetailNode ast) {
-        final StringBuilder result = new StringBuilder(256);
-        final String periodSuffix = PERIOD + ' ';
-        for (DetailNode child : ast.getChildren()) {
-            final String text;
-            if (child.getChildren().length == 0) {
-                text = child.getText();
-            }
-            else {
-                text = getFirstSentence(child);
-            }
+/**
+ * Finds and returns first sentence.
+ *
+ * @param ast Javadoc root node.
+ * @return first sentence.
+ */
+private static String getFirstSentence(DetailNode ast) {
+	final StringBuilder result = new StringBuilder(256);
+	final String periodSuffix = PERIOD + ' ';
+	for (DetailNode child : ast.getChildren()) {
+		final String text;
+		if (child.getChildren().length == 0) {
+			text = child.getText();
+		}
+		else {
+			text = getFirstSentence(child);
+		}
 
-            if (text.contains(periodSuffix)) {
-                result.append(text, 0, text.indexOf(periodSuffix) + 1);
-                break;
-            }
+		if (text.contains(periodSuffix)) {
+			result.append(text, 0, text.indexOf(periodSuffix) + 1);
+			break;
+		}
 
-            result.append(text);
-        }
-        return result.toString();
-    }
+		result.append(text);
+	}
+	return result.toString();
+}
 
-    /**
-     * Tests if first sentence contains forbidden summary fragment.
-     *
-     * @param firstSentence String with first sentence.
-     * @return true, if first sentence contains forbidden summary fragment.
-     */
-    private boolean containsForbiddenFragment(String firstSentence) {
-        final String javadocText = JAVADOC_MULTILINE_TO_SINGLELINE_PATTERN
-                                   .matcher(firstSentence).replaceAll(" ").trim();
-        return forbiddenSummaryFragments.matcher(trimExcessWhitespaces(javadocText)).find();
-    }
+/**
+ * Tests if first sentence contains forbidden summary fragment.
+ *
+ * @param firstSentence String with first sentence.
+ * @return true, if first sentence contains forbidden summary fragment.
+ */
+private boolean containsForbiddenFragment(String firstSentence) {
+	final String javadocText = JAVADOC_MULTILINE_TO_SINGLELINE_PATTERN
+	                           .matcher(firstSentence).replaceAll(" ").trim();
+	return forbiddenSummaryFragments.matcher(trimExcessWhitespaces(javadocText)).find();
+}
 
-    /**
-     * Trims the given {@code text} of duplicate whitespaces.
-     *
-     * @param text The text to transform.
-     * @return The finalized form of the text.
-     */
-    private static String trimExcessWhitespaces(String text) {
-        final StringBuilder result = new StringBuilder(100);
-        boolean previousWhitespace = true;
+/**
+ * Trims the given {@code text} of duplicate whitespaces.
+ *
+ * @param text The text to transform.
+ * @return The finalized form of the text.
+ */
+private static String trimExcessWhitespaces(String text) {
+	final StringBuilder result = new StringBuilder(100);
+	boolean previousWhitespace = true;
 
-        for (char letter : text.toCharArray()) {
-            final char print;
-            if (Character.isWhitespace(letter)) {
-                if (previousWhitespace) {
-                    continue;
-                }
+	for (char letter : text.toCharArray()) {
+		final char print;
+		if (Character.isWhitespace(letter)) {
+			if (previousWhitespace) {
+				continue;
+			}
 
-                previousWhitespace = true;
-                print = ' ';
-            }
-            else {
-                previousWhitespace = false;
-                print = letter;
-            }
+			previousWhitespace = true;
+			print = ' ';
+		}
+		else {
+			previousWhitespace = false;
+			print = letter;
+		}
 
-            result.append(print);
-        }
+		result.append(print);
+	}
 
-        return result.toString();
-    }
+	return result.toString();
+}
 
 }

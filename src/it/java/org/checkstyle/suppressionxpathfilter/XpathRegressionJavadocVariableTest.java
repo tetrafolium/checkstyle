@@ -30,66 +30,66 @@ import com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck;
 
 public class XpathRegressionJavadocVariableTest extends AbstractXpathTestSupport {
 
-    private final String checkName = JavadocVariableCheck.class.getSimpleName();
+private final String checkName = JavadocVariableCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionJavadocVariableOne.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionJavadocVariableOne.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(JavadocVariableCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(JavadocVariableCheck.class);
 
-        final String[] expectedViolation = {
-            "5:5: " + getCheckMessage(JavadocVariableCheck.class,
-                                      JavadocVariableCheck.MSG_JAVADOC_MISSING),
-        };
+	final String[] expectedViolation = {
+		"5:5: " + getCheckMessage(JavadocVariableCheck.class,
+		                          JavadocVariableCheck.MSG_JAVADOC_MISSING),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocVariableOne']]/OBJBLOCK"
-                    + "/VARIABLE_DEF[./IDENT[@text='age']]",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocVariableOne']]/OBJBLOCK"
-                    + "/VARIABLE_DEF[./IDENT[@text='age']]/MODIFIERS",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocVariableOne']]/OBJBLOCK"
-                    + "/VARIABLE_DEF[./IDENT[@text='age']]/MODIFIERS/LITERAL_PRIVATE"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocVariableOne']]/OBJBLOCK"
+		+ "/VARIABLE_DEF[./IDENT[@text='age']]",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocVariableOne']]/OBJBLOCK"
+		+ "/VARIABLE_DEF[./IDENT[@text='age']]/MODIFIERS",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocVariableOne']]/OBJBLOCK"
+		+ "/VARIABLE_DEF[./IDENT[@text='age']]/MODIFIERS/LITERAL_PRIVATE"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionJavadocVariableTwo.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionJavadocVariableTwo.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(JavadocVariableCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(JavadocVariableCheck.class);
 
-        final String[] expectedViolation = {
-            "6:9: " + getCheckMessage(JavadocVariableCheck.class,
-                                      JavadocVariableCheck.MSG_JAVADOC_MISSING),
-        };
+	final String[] expectedViolation = {
+		"6:9: " + getCheckMessage(JavadocVariableCheck.class,
+		                          JavadocVariableCheck.MSG_JAVADOC_MISSING),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocVariableTwo']]/OBJBLOCK"
-                    + "/CLASS_DEF[./IDENT[@text='InnerInner2']]/OBJBLOCK"
-                    + "/VARIABLE_DEF[./IDENT[@text='fData']]",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocVariableTwo']]/OBJBLOCK"
-                    + "/CLASS_DEF[./IDENT[@text='InnerInner2']]/OBJBLOCK"
-                    + "/VARIABLE_DEF[./IDENT[@text='fData']]/MODIFIERS",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocVariableTwo']]/OBJBLOCK"
-                    + "/CLASS_DEF[./IDENT[@text='InnerInner2']]/OBJBLOCK"
-                    + "/VARIABLE_DEF[./IDENT[@text='fData']]/MODIFIERS"
-                    + "/LITERAL_PUBLIC"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocVariableTwo']]/OBJBLOCK"
+		+ "/CLASS_DEF[./IDENT[@text='InnerInner2']]/OBJBLOCK"
+		+ "/VARIABLE_DEF[./IDENT[@text='fData']]",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocVariableTwo']]/OBJBLOCK"
+		+ "/CLASS_DEF[./IDENT[@text='InnerInner2']]/OBJBLOCK"
+		+ "/VARIABLE_DEF[./IDENT[@text='fData']]/MODIFIERS",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocVariableTwo']]/OBJBLOCK"
+		+ "/CLASS_DEF[./IDENT[@text='InnerInner2']]/OBJBLOCK"
+		+ "/VARIABLE_DEF[./IDENT[@text='fData']]/MODIFIERS"
+		+ "/LITERAL_PUBLIC"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 }

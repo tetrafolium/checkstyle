@@ -202,396 +202,396 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 @StatelessCheck
 public final class AnnotationUseStyleCheck extends AbstractCheck {
 
-    /**
-     * Defines the styles for defining elements in an annotation.
-     */
-    public enum ElementStyleOption {
+/**
+ * Defines the styles for defining elements in an annotation.
+ */
+public enum ElementStyleOption {
 
-        /**
-         * Expanded example
-         *
-         * <pre>@SuppressWarnings(value={"unchecked","unused",})</pre>.
-         */
-        EXPANDED,
+	/**
+	 * Expanded example
+	 *
+	 * <pre>@SuppressWarnings(value={"unchecked","unused",})</pre>.
+	 */
+	EXPANDED,
 
-        /**
-         * Compact example
-         *
-         * <pre>@SuppressWarnings({"unchecked","unused",})</pre>
-         * <br>or<br>
-         * <pre>@SuppressWarnings("unchecked")</pre>.
-         */
-        COMPACT,
+	/**
+	 * Compact example
+	 *
+	 * <pre>@SuppressWarnings({"unchecked","unused",})</pre>
+	 * <br>or<br>
+	 * <pre>@SuppressWarnings("unchecked")</pre>.
+	 */
+	COMPACT,
 
-        /**
-         * Compact example
-         *
-         * <pre>@SuppressWarnings("unchecked")</pre>.
-         */
-        COMPACT_NO_ARRAY,
+	/**
+	 * Compact example
+	 *
+	 * <pre>@SuppressWarnings("unchecked")</pre>.
+	 */
+	COMPACT_NO_ARRAY,
 
-        /**
-         * Mixed styles.
-         */
-        IGNORE,
+	/**
+	 * Mixed styles.
+	 */
+	IGNORE,
 
-    }
+}
 
-    /**
-     * Defines the two styles for defining
-     * elements in an annotation.
-     *
-     */
-    public enum TrailingArrayCommaOption {
+/**
+ * Defines the two styles for defining
+ * elements in an annotation.
+ *
+ */
+public enum TrailingArrayCommaOption {
 
-        /**
-         * With comma example
-         *
-         * <pre>@SuppressWarnings(value={"unchecked","unused",})</pre>.
-         */
-        ALWAYS,
+	/**
+	 * With comma example
+	 *
+	 * <pre>@SuppressWarnings(value={"unchecked","unused",})</pre>.
+	 */
+	ALWAYS,
 
-        /**
-         * Without comma example
-         *
-         * <pre>@SuppressWarnings(value={"unchecked","unused"})</pre>.
-         */
-        NEVER,
+	/**
+	 * Without comma example
+	 *
+	 * <pre>@SuppressWarnings(value={"unchecked","unused"})</pre>.
+	 */
+	NEVER,
 
-        /**
-         * Mixed styles.
-         */
-        IGNORE,
+	/**
+	 * Mixed styles.
+	 */
+	IGNORE,
 
-    }
+}
 
-    /**
-     * Defines the two styles for defining
-     * elements in an annotation.
-     *
-     */
-    public enum ClosingParensOption {
+/**
+ * Defines the two styles for defining
+ * elements in an annotation.
+ *
+ */
+public enum ClosingParensOption {
 
-        /**
-         * With parens example
-         *
-         * <pre>@Deprecated()</pre>.
-         */
-        ALWAYS,
+	/**
+	 * With parens example
+	 *
+	 * <pre>@Deprecated()</pre>.
+	 */
+	ALWAYS,
 
-        /**
-         * Without parens example
-         *
-         * <pre>@Deprecated</pre>.
-         */
-        NEVER,
+	/**
+	 * Without parens example
+	 *
+	 * <pre>@Deprecated</pre>.
+	 */
+	NEVER,
 
-        /**
-         * Mixed styles.
-         */
-        IGNORE,
+	/**
+	 * Mixed styles.
+	 */
+	IGNORE,
 
-    }
+}
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY_ANNOTATION_INCORRECT_STYLE =
-        "annotation.incorrect.style";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY_ANNOTATION_INCORRECT_STYLE =
+	"annotation.incorrect.style";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY_ANNOTATION_PARENS_MISSING =
-        "annotation.parens.missing";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY_ANNOTATION_PARENS_MISSING =
+	"annotation.parens.missing";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY_ANNOTATION_PARENS_PRESENT =
-        "annotation.parens.present";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY_ANNOTATION_PARENS_PRESENT =
+	"annotation.parens.present";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY_ANNOTATION_TRAILING_COMMA_MISSING =
-        "annotation.trailing.comma.missing";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY_ANNOTATION_TRAILING_COMMA_MISSING =
+	"annotation.trailing.comma.missing";
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY_ANNOTATION_TRAILING_COMMA_PRESENT =
-        "annotation.trailing.comma.present";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY_ANNOTATION_TRAILING_COMMA_PRESENT =
+	"annotation.trailing.comma.present";
 
-    /**
-     * The element name used to receive special linguistic support
-     * for annotation use.
-     */
-    private static final String ANNOTATION_ELEMENT_SINGLE_NAME =
-        "value";
+/**
+ * The element name used to receive special linguistic support
+ * for annotation use.
+ */
+private static final String ANNOTATION_ELEMENT_SINGLE_NAME =
+	"value";
 
-    /**
-     * Define the annotation element styles.
-     */
-    private ElementStyleOption elementStyle = ElementStyleOption.COMPACT_NO_ARRAY;
+/**
+ * Define the annotation element styles.
+ */
+private ElementStyleOption elementStyle = ElementStyleOption.COMPACT_NO_ARRAY;
 
-    // defaulting to NEVER because of the strange compiler behavior
-    /**
-     * Define the policy for trailing comma in arrays.
-     */
-    private TrailingArrayCommaOption trailingArrayComma = TrailingArrayCommaOption.NEVER;
+// defaulting to NEVER because of the strange compiler behavior
+/**
+ * Define the policy for trailing comma in arrays.
+ */
+private TrailingArrayCommaOption trailingArrayComma = TrailingArrayCommaOption.NEVER;
 
-    /**
-     * Define the policy for ending parenthesis.
-     */
-    private ClosingParensOption closingParens = ClosingParensOption.NEVER;
+/**
+ * Define the policy for ending parenthesis.
+ */
+private ClosingParensOption closingParens = ClosingParensOption.NEVER;
 
-    /**
-     * Setter to define the annotation element styles.
-     *
-     * @param style string representation
-     */
-    public void setElementStyle(final String style) {
-        elementStyle = getOption(ElementStyleOption.class, style);
-    }
+/**
+ * Setter to define the annotation element styles.
+ *
+ * @param style string representation
+ */
+public void setElementStyle(final String style) {
+	elementStyle = getOption(ElementStyleOption.class, style);
+}
 
-    /**
-     * Setter to define the policy for trailing comma in arrays.
-     *
-     * @param comma string representation
-     */
-    public void setTrailingArrayComma(final String comma) {
-        trailingArrayComma = getOption(TrailingArrayCommaOption.class, comma);
-    }
+/**
+ * Setter to define the policy for trailing comma in arrays.
+ *
+ * @param comma string representation
+ */
+public void setTrailingArrayComma(final String comma) {
+	trailingArrayComma = getOption(TrailingArrayCommaOption.class, comma);
+}
 
-    /**
-     * Setter to define the policy for ending parenthesis.
-     *
-     * @param parens string representation
-     */
-    public void setClosingParens(final String parens) {
-        closingParens = getOption(ClosingParensOption.class, parens);
-    }
+/**
+ * Setter to define the policy for ending parenthesis.
+ *
+ * @param parens string representation
+ */
+public void setClosingParens(final String parens) {
+	closingParens = getOption(ClosingParensOption.class, parens);
+}
 
-    /**
-     * Retrieves an {@link Enum Enum} type from a @{link String String}.
-     *
-     * @param <T> the enum type
-     * @param enumClass the enum class
-     * @param value the string representing the enum
-     * @return the enum type
-     * @throws IllegalArgumentException when unable to parse value
-     */
-    private static <T extends Enum<T>> T getOption(final Class<T> enumClass,
-            final String value) {
-        try {
-            return Enum.valueOf(enumClass, value.trim().toUpperCase(Locale.ENGLISH));
-        }
-        catch (final IllegalArgumentException iae) {
-            throw new IllegalArgumentException("unable to parse " + value, iae);
-        }
-    }
+/**
+ * Retrieves an {@link Enum Enum} type from a @{link String String}.
+ *
+ * @param <T> the enum type
+ * @param enumClass the enum class
+ * @param value the string representing the enum
+ * @return the enum type
+ * @throws IllegalArgumentException when unable to parse value
+ */
+private static <T extends Enum<T> > T getOption(final Class<T> enumClass,
+                                                final String value) {
+	try {
+		return Enum.valueOf(enumClass, value.trim().toUpperCase(Locale.ENGLISH));
+	}
+	catch (final IllegalArgumentException iae) {
+		throw new IllegalArgumentException("unable to parse " + value, iae);
+	}
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {
-                   TokenTypes.ANNOTATION,
-               };
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {
+		       TokenTypes.ANNOTATION,
+	};
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public void visitToken(final DetailAST ast) {
-        checkStyleType(ast);
-        checkCheckClosingParensOption(ast);
-        checkTrailingComma(ast);
-    }
+@Override
+public void visitToken(final DetailAST ast) {
+	checkStyleType(ast);
+	checkCheckClosingParensOption(ast);
+	checkTrailingComma(ast);
+}
 
-    /**
-     * Checks to see if the
-     * {@link ElementStyleOption AnnotationElementStyleOption}
-     * is correct.
-     *
-     * @param annotation the annotation token
-     */
-    private void checkStyleType(final DetailAST annotation) {
-        switch (elementStyle) {
-        case COMPACT_NO_ARRAY:
-            checkCompactNoArrayStyle(annotation);
-            break;
-        case COMPACT:
-            checkCompactStyle(annotation);
-            break;
-        case EXPANDED:
-            checkExpandedStyle(annotation);
-            break;
-        case IGNORE:
-        default:
-            break;
-        }
-    }
+/**
+ * Checks to see if the
+ * {@link ElementStyleOption AnnotationElementStyleOption}
+ * is correct.
+ *
+ * @param annotation the annotation token
+ */
+private void checkStyleType(final DetailAST annotation) {
+	switch (elementStyle) {
+	case COMPACT_NO_ARRAY:
+		checkCompactNoArrayStyle(annotation);
+		break;
+	case COMPACT:
+		checkCompactStyle(annotation);
+		break;
+	case EXPANDED:
+		checkExpandedStyle(annotation);
+		break;
+	case IGNORE:
+	default:
+		break;
+	}
+}
 
-    /**
-     * Checks for expanded style type violations.
-     *
-     * @param annotation the annotation token
-     */
-    private void checkExpandedStyle(final DetailAST annotation) {
-        final int valuePairCount =
-            annotation.getChildCount(TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR);
+/**
+ * Checks for expanded style type violations.
+ *
+ * @param annotation the annotation token
+ */
+private void checkExpandedStyle(final DetailAST annotation) {
+	final int valuePairCount =
+		annotation.getChildCount(TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR);
 
-        if (valuePairCount == 0 && hasArguments(annotation)) {
-            log(annotation, MSG_KEY_ANNOTATION_INCORRECT_STYLE, ElementStyleOption.EXPANDED);
-        }
-    }
+	if (valuePairCount == 0 && hasArguments(annotation)) {
+		log(annotation, MSG_KEY_ANNOTATION_INCORRECT_STYLE, ElementStyleOption.EXPANDED);
+	}
+}
 
-    /**
-     * Checks that annotation has arguments.
-     *
-     * @param annotation to check
-     * @return true if annotation has arguments, false otherwise
-     */
-    private static boolean hasArguments(DetailAST annotation) {
-        final DetailAST firstToken = annotation.findFirstToken(TokenTypes.LPAREN);
-        return firstToken != null && firstToken.getNextSibling().getType() != TokenTypes.RPAREN;
-    }
+/**
+ * Checks that annotation has arguments.
+ *
+ * @param annotation to check
+ * @return true if annotation has arguments, false otherwise
+ */
+private static boolean hasArguments(DetailAST annotation) {
+	final DetailAST firstToken = annotation.findFirstToken(TokenTypes.LPAREN);
+	return firstToken != null && firstToken.getNextSibling().getType() != TokenTypes.RPAREN;
+}
 
-    /**
-     * Checks for compact style type violations.
-     *
-     * @param annotation the annotation token
-     */
-    private void checkCompactStyle(final DetailAST annotation) {
-        final int valuePairCount =
-            annotation.getChildCount(
-                TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR);
+/**
+ * Checks for compact style type violations.
+ *
+ * @param annotation the annotation token
+ */
+private void checkCompactStyle(final DetailAST annotation) {
+	final int valuePairCount =
+		annotation.getChildCount(
+			TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR);
 
-        final DetailAST valuePair =
-            annotation.findFirstToken(
-                TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR);
+	final DetailAST valuePair =
+		annotation.findFirstToken(
+			TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR);
 
-        if (valuePairCount == 1
-                && ANNOTATION_ELEMENT_SINGLE_NAME.equals(
-                    valuePair.getFirstChild().getText())) {
-            log(annotation, MSG_KEY_ANNOTATION_INCORRECT_STYLE,
-                ElementStyleOption.COMPACT);
-        }
-    }
+	if (valuePairCount == 1
+	    && ANNOTATION_ELEMENT_SINGLE_NAME.equals(
+		    valuePair.getFirstChild().getText())) {
+		log(annotation, MSG_KEY_ANNOTATION_INCORRECT_STYLE,
+		    ElementStyleOption.COMPACT);
+	}
+}
 
-    /**
-     * Checks for compact no array style type violations.
-     *
-     * @param annotation the annotation token
-     */
-    private void checkCompactNoArrayStyle(final DetailAST annotation) {
-        final DetailAST arrayInit =
-            annotation.findFirstToken(TokenTypes.ANNOTATION_ARRAY_INIT);
+/**
+ * Checks for compact no array style type violations.
+ *
+ * @param annotation the annotation token
+ */
+private void checkCompactNoArrayStyle(final DetailAST annotation) {
+	final DetailAST arrayInit =
+		annotation.findFirstToken(TokenTypes.ANNOTATION_ARRAY_INIT);
 
-        // in compact style with one value
-        if (arrayInit != null
-                && arrayInit.getChildCount(TokenTypes.EXPR) == 1) {
-            log(annotation, MSG_KEY_ANNOTATION_INCORRECT_STYLE,
-                ElementStyleOption.COMPACT_NO_ARRAY);
-        }
-        // in expanded style with pairs
-        else {
-            DetailAST ast = annotation.getFirstChild();
-            while (ast != null) {
-                final DetailAST nestedArrayInit =
-                    ast.findFirstToken(TokenTypes.ANNOTATION_ARRAY_INIT);
-                if (nestedArrayInit != null
-                        && nestedArrayInit.getChildCount(TokenTypes.EXPR) == 1) {
-                    log(annotation, MSG_KEY_ANNOTATION_INCORRECT_STYLE,
-                        ElementStyleOption.COMPACT_NO_ARRAY);
-                }
-                ast = ast.getNextSibling();
-            }
-        }
-    }
+	// in compact style with one value
+	if (arrayInit != null
+	    && arrayInit.getChildCount(TokenTypes.EXPR) == 1) {
+		log(annotation, MSG_KEY_ANNOTATION_INCORRECT_STYLE,
+		    ElementStyleOption.COMPACT_NO_ARRAY);
+	}
+	// in expanded style with pairs
+	else {
+		DetailAST ast = annotation.getFirstChild();
+		while (ast != null) {
+			final DetailAST nestedArrayInit =
+				ast.findFirstToken(TokenTypes.ANNOTATION_ARRAY_INIT);
+			if (nestedArrayInit != null
+			    && nestedArrayInit.getChildCount(TokenTypes.EXPR) == 1) {
+				log(annotation, MSG_KEY_ANNOTATION_INCORRECT_STYLE,
+				    ElementStyleOption.COMPACT_NO_ARRAY);
+			}
+			ast = ast.getNextSibling();
+		}
+	}
+}
 
-    /**
-     * Checks to see if the trailing comma is present if required or
-     * prohibited.
-     *
-     * @param annotation the annotation token
-     */
-    private void checkTrailingComma(final DetailAST annotation) {
-        if (trailingArrayComma != TrailingArrayCommaOption.IGNORE) {
-            DetailAST child = annotation.getFirstChild();
+/**
+ * Checks to see if the trailing comma is present if required or
+ * prohibited.
+ *
+ * @param annotation the annotation token
+ */
+private void checkTrailingComma(final DetailAST annotation) {
+	if (trailingArrayComma != TrailingArrayCommaOption.IGNORE) {
+		DetailAST child = annotation.getFirstChild();
 
-            while (child != null) {
-                DetailAST arrayInit = null;
+		while (child != null) {
+			DetailAST arrayInit = null;
 
-                if (child.getType() == TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR) {
-                    arrayInit = child.findFirstToken(TokenTypes.ANNOTATION_ARRAY_INIT);
-                }
-                else if (child.getType() == TokenTypes.ANNOTATION_ARRAY_INIT) {
-                    arrayInit = child;
-                }
+			if (child.getType() == TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR) {
+				arrayInit = child.findFirstToken(TokenTypes.ANNOTATION_ARRAY_INIT);
+			}
+			else if (child.getType() == TokenTypes.ANNOTATION_ARRAY_INIT) {
+				arrayInit = child;
+			}
 
-                if (arrayInit != null) {
-                    logCommaViolation(arrayInit);
-                }
-                child = child.getNextSibling();
-            }
-        }
-    }
+			if (arrayInit != null) {
+				logCommaViolation(arrayInit);
+			}
+			child = child.getNextSibling();
+		}
+	}
+}
 
-    /**
-     * Logs a trailing array comma violation if one exists.
-     *
-     * @param ast the array init
-     * {@link TokenTypes#ANNOTATION_ARRAY_INIT ANNOTATION_ARRAY_INIT}.
-     */
-    private void logCommaViolation(final DetailAST ast) {
-        final DetailAST rCurly = ast.findFirstToken(TokenTypes.RCURLY);
+/**
+ * Logs a trailing array comma violation if one exists.
+ *
+ * @param ast the array init
+ * {@link TokenTypes#ANNOTATION_ARRAY_INIT ANNOTATION_ARRAY_INIT}.
+ */
+private void logCommaViolation(final DetailAST ast) {
+	final DetailAST rCurly = ast.findFirstToken(TokenTypes.RCURLY);
 
-        // comma can be null if array is empty
-        final DetailAST comma = rCurly.getPreviousSibling();
+	// comma can be null if array is empty
+	final DetailAST comma = rCurly.getPreviousSibling();
 
-        if (trailingArrayComma == TrailingArrayCommaOption.ALWAYS) {
-            if (comma == null || comma.getType() != TokenTypes.COMMA) {
-                log(rCurly, MSG_KEY_ANNOTATION_TRAILING_COMMA_MISSING);
-            }
-        }
-        else if (comma != null && comma.getType() == TokenTypes.COMMA) {
-            log(comma, MSG_KEY_ANNOTATION_TRAILING_COMMA_PRESENT);
-        }
-    }
+	if (trailingArrayComma == TrailingArrayCommaOption.ALWAYS) {
+		if (comma == null || comma.getType() != TokenTypes.COMMA) {
+			log(rCurly, MSG_KEY_ANNOTATION_TRAILING_COMMA_MISSING);
+		}
+	}
+	else if (comma != null && comma.getType() == TokenTypes.COMMA) {
+		log(comma, MSG_KEY_ANNOTATION_TRAILING_COMMA_PRESENT);
+	}
+}
 
-    /**
-     * Checks to see if the closing parenthesis are present if required or
-     * prohibited.
-     *
-     * @param ast the annotation token
-     */
-    private void checkCheckClosingParensOption(final DetailAST ast) {
-        if (closingParens != ClosingParensOption.IGNORE) {
-            final DetailAST paren = ast.getLastChild();
+/**
+ * Checks to see if the closing parenthesis are present if required or
+ * prohibited.
+ *
+ * @param ast the annotation token
+ */
+private void checkCheckClosingParensOption(final DetailAST ast) {
+	if (closingParens != ClosingParensOption.IGNORE) {
+		final DetailAST paren = ast.getLastChild();
 
-            if (closingParens == ClosingParensOption.ALWAYS) {
-                if (paren.getType() != TokenTypes.RPAREN) {
-                    log(ast, MSG_KEY_ANNOTATION_PARENS_MISSING);
-                }
-            }
-            else if (paren.getPreviousSibling().getType() == TokenTypes.LPAREN) {
-                log(ast, MSG_KEY_ANNOTATION_PARENS_PRESENT);
-            }
-        }
-    }
+		if (closingParens == ClosingParensOption.ALWAYS) {
+			if (paren.getType() != TokenTypes.RPAREN) {
+				log(ast, MSG_KEY_ANNOTATION_PARENS_MISSING);
+			}
+		}
+		else if (paren.getPreviousSibling().getType() == TokenTypes.LPAREN) {
+			log(ast, MSG_KEY_ANNOTATION_PARENS_PRESENT);
+		}
+	}
+}
 
 }

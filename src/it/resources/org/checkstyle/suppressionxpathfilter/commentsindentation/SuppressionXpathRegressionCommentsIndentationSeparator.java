@@ -1,12 +1,12 @@
 package org.checkstyle.suppressionxpathfilter.commentsindentation;
 
 public class SuppressionXpathRegressionCommentsIndentationSeparator {
-    public void main(String[] args) {
-        int n;
-    }
+public void main(String[] args) {
+	int n;
+}
 
-    /////////////// Comment separator // warn
+/////////////// Comment separator // warn
 
-    public void foo() {
-    }
+public void foo() {
+}
 }

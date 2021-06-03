@@ -31,53 +31,53 @@ import com.puppycrawl.tools.checkstyle.checks.coding.MissingSwitchDefaultCheck;
 
 public class XpathRegressionMissingSwitchDefaultTest extends AbstractXpathTestSupport {
 
-    private final Class<MissingSwitchDefaultCheck> clss = MissingSwitchDefaultCheck.class;
+private final Class<MissingSwitchDefaultCheck> clss = MissingSwitchDefaultCheck.class;
 
-    @Override
-    protected String getCheckName() {
-        return clss.getSimpleName();
-    }
+@Override
+protected String getCheckName() {
+	return clss.getSimpleName();
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionMissingSwitchDefaultOne.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionMissingSwitchDefaultOne.java"));
 
-        final DefaultConfiguration moduleConfig = createModuleConfig(clss);
-        final String[] expectedViolation = {
-            "6:9: " + getCheckMessage(clss, MissingSwitchDefaultCheck.MSG_KEY),
-        };
+	final DefaultConfiguration moduleConfig = createModuleConfig(clss);
+	final String[] expectedViolation = {
+		"6:9: " + getCheckMessage(clss, MissingSwitchDefaultCheck.MSG_KEY),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMissingSwitchDefaultOne']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test1']]"
-                    + "/SLIST/LITERAL_SWITCH"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMissingSwitchDefaultOne']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test1']]"
+		+ "/SLIST/LITERAL_SWITCH"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionMissingSwitchDefaultTwo.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionMissingSwitchDefaultTwo.java"));
 
-        final DefaultConfiguration moduleConfig = createModuleConfig(clss);
+	final DefaultConfiguration moduleConfig = createModuleConfig(clss);
 
-        final String[] expectedViolation = {
-            "12:17: " + getCheckMessage(clss, MissingSwitchDefaultCheck.MSG_KEY),
-        };
+	final String[] expectedViolation = {
+		"12:17: " + getCheckMessage(clss, MissingSwitchDefaultCheck.MSG_KEY),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMissingSwitchDefaultTwo']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test2']]"
-                    + "/SLIST/LITERAL_SWITCH/CASE_GROUP/SLIST",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMissingSwitchDefaultTwo']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test2']]"
-                    + "/SLIST/LITERAL_SWITCH/CASE_GROUP/SLIST/"
-                    + "LITERAL_SWITCH"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMissingSwitchDefaultTwo']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test2']]"
+		+ "/SLIST/LITERAL_SWITCH/CASE_GROUP/SLIST",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMissingSwitchDefaultTwo']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test2']]"
+		+ "/SLIST/LITERAL_SWITCH/CASE_GROUP/SLIST/"
+		+ "LITERAL_SWITCH"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
+}
 }

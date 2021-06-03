@@ -28,80 +28,80 @@ import java.io.Serializable;
  */
 public class ThreadModeSettings implements Serializable {
 
-    /** A checker module name. */
-    public static final String CHECKER_MODULE_NAME = Checker.class.getSimpleName();
+/** A checker module name. */
+public static final String CHECKER_MODULE_NAME = Checker.class.getSimpleName();
 
-    /** A multi thread checker module name. */
-    public static final String MULTI_THREAD_CHECKER_MODULE_NAME =
-        Checker.class.getSimpleName();
+/** A multi thread checker module name. */
+public static final String MULTI_THREAD_CHECKER_MODULE_NAME =
+	Checker.class.getSimpleName();
 
-    /** A three walker module name. */
-    public static final String TREE_WALKER_MODULE_NAME = TreeWalker.class.getSimpleName();
+/** A three walker module name. */
+public static final String TREE_WALKER_MODULE_NAME = TreeWalker.class.getSimpleName();
 
-    /** A multi thread three walker module name. */
-    public static final String MULTI_THREAD_TREE_WALKER_MODULE_NAME =
-        TreeWalker.class.getSimpleName();
+/** A multi thread three walker module name. */
+public static final String MULTI_THREAD_TREE_WALKER_MODULE_NAME =
+	TreeWalker.class.getSimpleName();
 
-    /** A single thread mode settings instance. */
-    public static final ThreadModeSettings SINGLE_THREAD_MODE_INSTANCE =
-        new ThreadModeSettings(1, 1);
+/** A single thread mode settings instance. */
+public static final ThreadModeSettings SINGLE_THREAD_MODE_INSTANCE =
+	new ThreadModeSettings(1, 1);
 
-    private static final long serialVersionUID = 1L;
+private static final long serialVersionUID = 1L;
 
-    /** The checker threads number. */
-    private final int checkerThreadsNumber;
-    /** The tree walker threads number. */
-    private final int treeWalkerThreadsNumber;
+/** The checker threads number. */
+private final int checkerThreadsNumber;
+/** The tree walker threads number. */
+private final int treeWalkerThreadsNumber;
 
-    /**
-     * Initializes the thread mode configuration.
-     *
-     * @param checkerThreadsNumber the Checker threads number
-     * @param treeWalkerThreadsNumber the TreeWalker threads number
-     */
-    public ThreadModeSettings(int checkerThreadsNumber, int treeWalkerThreadsNumber) {
-        this.checkerThreadsNumber = checkerThreadsNumber;
-        this.treeWalkerThreadsNumber = treeWalkerThreadsNumber;
-    }
+/**
+ * Initializes the thread mode configuration.
+ *
+ * @param checkerThreadsNumber the Checker threads number
+ * @param treeWalkerThreadsNumber the TreeWalker threads number
+ */
+public ThreadModeSettings(int checkerThreadsNumber, int treeWalkerThreadsNumber) {
+	this.checkerThreadsNumber = checkerThreadsNumber;
+	this.treeWalkerThreadsNumber = treeWalkerThreadsNumber;
+}
 
-    /**
-     * Gets the number of threads for the Checker module.
-     *
-     * @return the number of threads for the Checker module.
-     */
-    public int getCheckerThreadsNumber() {
-        return checkerThreadsNumber;
-    }
+/**
+ * Gets the number of threads for the Checker module.
+ *
+ * @return the number of threads for the Checker module.
+ */
+public int getCheckerThreadsNumber() {
+	return checkerThreadsNumber;
+}
 
-    /**
-     * Gets the number of threads for the TreeWalker module.
-     *
-     * @return the number of threads for the TreeWalker module.
-     */
-    public int getTreeWalkerThreadsNumber() {
-        return treeWalkerThreadsNumber;
-    }
+/**
+ * Gets the number of threads for the TreeWalker module.
+ *
+ * @return the number of threads for the TreeWalker module.
+ */
+public int getTreeWalkerThreadsNumber() {
+	return treeWalkerThreadsNumber;
+}
 
-    /**
-     * Resolves the module name according to the thread settings.
-     *
-     * @param name The original module name.
-     * @return resolved module name.
-     * @throws IllegalArgumentException when name is Checker or TreeWalker
-     */
-    public final String resolveName(String name) {
-        if (checkerThreadsNumber > 1) {
-            if (CHECKER_MODULE_NAME.equals(name)) {
-                throw new IllegalArgumentException(
-                    "Multi thread mode for Checker module is not implemented");
-            }
-            if (TREE_WALKER_MODULE_NAME.equals(name)) {
-                throw new IllegalArgumentException(
-                    "Multi thread mode for TreeWalker module is not implemented");
-            }
-        }
+/**
+ * Resolves the module name according to the thread settings.
+ *
+ * @param name The original module name.
+ * @return resolved module name.
+ * @throws IllegalArgumentException when name is Checker or TreeWalker
+ */
+public final String resolveName(String name) {
+	if (checkerThreadsNumber > 1) {
+		if (CHECKER_MODULE_NAME.equals(name)) {
+			throw new IllegalArgumentException(
+				      "Multi thread mode for Checker module is not implemented");
+		}
+		if (TREE_WALKER_MODULE_NAME.equals(name)) {
+			throw new IllegalArgumentException(
+				      "Multi thread mode for TreeWalker module is not implemented");
+		}
+	}
 
-        return name;
-    }
+	return name;
+}
 
 }

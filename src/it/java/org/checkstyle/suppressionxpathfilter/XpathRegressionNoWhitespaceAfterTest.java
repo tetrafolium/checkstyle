@@ -31,95 +31,95 @@ import com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceAfterCheck;
 
 public class XpathRegressionNoWhitespaceAfterTest extends AbstractXpathTestSupport {
 
-    private final String checkName = NoWhitespaceAfterCheck.class.getSimpleName();
+private final String checkName = NoWhitespaceAfterCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testNoWhitespaceAfter() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionNoWhitespaceAfter.java"));
+@Test
+public void testNoWhitespaceAfter() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionNoWhitespaceAfter.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(NoWhitespaceAfterCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(NoWhitespaceAfterCheck.class);
 
-        final String[] expectedViolation = {
-            "4:15: " + getCheckMessage(NoWhitespaceAfterCheck.class,
-                                       NoWhitespaceAfterCheck.MSG_KEY, "-"),
-        };
+	final String[] expectedViolation = {
+		"4:15: " + getCheckMessage(NoWhitespaceAfterCheck.class,
+		                           NoWhitespaceAfterCheck.MSG_KEY, "-"),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceAfter']]/OBJBLOCK"
-                    + "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceAfter']]/OBJBLOCK"
-                    + "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR/UNARY_MINUS["
-                    + "./NUM_INT[@text='1']]"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceAfter']]/OBJBLOCK"
+		+ "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceAfter']]/OBJBLOCK"
+		+ "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR/UNARY_MINUS["
+		+ "./NUM_INT[@text='1']]"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testTokens() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionNoWhitespaceAfterTokens.java"));
+@Test
+public void testTokens() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionNoWhitespaceAfterTokens.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(NoWhitespaceAfterCheck.class);
-        moduleConfig.addAttribute("tokens", "DOT");
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(NoWhitespaceAfterCheck.class);
+	moduleConfig.addAttribute("tokens", "DOT");
 
-        final String[] expectedViolation = {
-            "4:16: " + getCheckMessage(NoWhitespaceAfterCheck.class,
-                                       NoWhitespaceAfterCheck.MSG_KEY, "."),
-        };
+	final String[] expectedViolation = {
+		"4:16: " + getCheckMessage(NoWhitespaceAfterCheck.class,
+		                           NoWhitespaceAfterCheck.MSG_KEY, "."),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceAfterTokens']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]"
-                    + "/TYPE/DOT[./IDENT[@text='String']]"
-                    + "/DOT[./IDENT[@text='java']]"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceAfterTokens']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]"
+		+ "/TYPE/DOT[./IDENT[@text='String']]"
+		+ "/DOT[./IDENT[@text='java']]"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testAllowLineBreaks() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionNoWhitespaceAfterLineBreaks.java"));
+@Test
+public void testAllowLineBreaks() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionNoWhitespaceAfterLineBreaks.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(NoWhitespaceAfterCheck.class);
-        moduleConfig.addAttribute("allowLineBreaks", "false");
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(NoWhitespaceAfterCheck.class);
+	moduleConfig.addAttribute("allowLineBreaks", "false");
 
-        final String[] expectedViolation = {
-            "6:13: " + getCheckMessage(NoWhitespaceAfterCheck.class,
-                                       NoWhitespaceAfterCheck.MSG_KEY, "."),
-        };
+	final String[] expectedViolation = {
+		"6:13: " + getCheckMessage(NoWhitespaceAfterCheck.class,
+		                           NoWhitespaceAfterCheck.MSG_KEY, "."),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceAfterLineBreaks']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]"
-                    + "/SLIST/VARIABLE_DEF[./IDENT[@text='s']]",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceAfterLineBreaks']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]"
-                    + "/SLIST/VARIABLE_DEF[./IDENT[@text='s']]"
-                    + "/MODIFIERS",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceAfterLineBreaks']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]"
-                    + "/SLIST/VARIABLE_DEF[./IDENT[@text='s']]/TYPE",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceAfterLineBreaks']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]"
-                    + "/SLIST/VARIABLE_DEF[./IDENT[@text='s']]"
-                    + "/TYPE/DOT[./IDENT[@text='String']]"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceAfterLineBreaks']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]"
+		+ "/SLIST/VARIABLE_DEF[./IDENT[@text='s']]",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceAfterLineBreaks']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]"
+		+ "/SLIST/VARIABLE_DEF[./IDENT[@text='s']]"
+		+ "/MODIFIERS",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceAfterLineBreaks']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]"
+		+ "/SLIST/VARIABLE_DEF[./IDENT[@text='s']]/TYPE",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoWhitespaceAfterLineBreaks']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]"
+		+ "/SLIST/VARIABLE_DEF[./IDENT[@text='s']]"
+		+ "/TYPE/DOT[./IDENT[@text='String']]"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 }

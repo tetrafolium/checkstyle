@@ -10,16 +10,16 @@ import java.lang.annotation.Target;
 
 @Repeatable(InterfaceAnnotations.class)
 @Target({ElementType.METHOD, ElementType.PARAMETER, ElementType.TYPE})
-@interface InterfaceAnnotation  {
+@interface InterfaceAnnotation {
 
-    String value() default "";
+String value() default "";
 
 }
 
 @Target({ElementType.METHOD, ElementType.PARAMETER, ElementType.TYPE})
 @interface InterfaceAnnotations {
 
-    InterfaceAnnotation[] value();
+InterfaceAnnotation[] value();
 
 }
 

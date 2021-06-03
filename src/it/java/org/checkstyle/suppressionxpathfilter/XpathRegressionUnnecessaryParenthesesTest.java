@@ -31,213 +31,213 @@ import com.puppycrawl.tools.checkstyle.checks.coding.UnnecessaryParenthesesCheck
 
 public class XpathRegressionUnnecessaryParenthesesTest extends AbstractXpathTestSupport {
 
-    @Override
-    protected String getCheckName() {
-        return UnnecessaryParenthesesCheck.class.getSimpleName();
-    }
+@Override
+protected String getCheckName() {
+	return UnnecessaryParenthesesCheck.class.getSimpleName();
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess = new File(
-            getPath("SuppressionXpathRegressionUnnecessaryParentheses1.java")
-        );
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess = new File(
+		getPath("SuppressionXpathRegressionUnnecessaryParentheses1.java")
+		);
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(UnnecessaryParenthesesCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(UnnecessaryParenthesesCheck.class);
 
-        final String[] expectedViolation = {
-            "4:13: " + getCheckMessage(UnnecessaryParenthesesCheck.class,
-                                       UnnecessaryParenthesesCheck.MSG_ASSIGN),
-        };
+	final String[] expectedViolation = {
+		"4:13: " + getCheckMessage(UnnecessaryParenthesesCheck.class,
+		                           UnnecessaryParenthesesCheck.MSG_ASSIGN),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUnnecessaryParentheses1']]"
-                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='a']]"
-                    + "/ASSIGN/EXPR",
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUnnecessaryParentheses1']]"
+		+ "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='a']]"
+		+ "/ASSIGN/EXPR",
 
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUnnecessaryParentheses1']]"
-                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='a']]"
-                    + "/ASSIGN/EXPR/LPAREN"
-                );
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUnnecessaryParentheses1']]"
+		+ "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='a']]"
+		+ "/ASSIGN/EXPR/LPAREN"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess = new File(
-            getPath("SuppressionXpathRegressionUnnecessaryParentheses2.java")
-        );
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess = new File(
+		getPath("SuppressionXpathRegressionUnnecessaryParentheses2.java")
+		);
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(UnnecessaryParenthesesCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(UnnecessaryParenthesesCheck.class);
 
-        final String[] expectedViolation = {
-            "5:13: " + getCheckMessage(UnnecessaryParenthesesCheck.class,
-                                       UnnecessaryParenthesesCheck.MSG_EXPR),
-        };
+	final String[] expectedViolation = {
+		"5:13: " + getCheckMessage(UnnecessaryParenthesesCheck.class,
+		                           UnnecessaryParenthesesCheck.MSG_EXPR),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUnnecessaryParentheses2']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]"
-                    + "/SLIST/LITERAL_IF/EXPR",
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUnnecessaryParentheses2']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]"
+		+ "/SLIST/LITERAL_IF/EXPR",
 
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUnnecessaryParentheses2']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]"
-                    + "/SLIST/LITERAL_IF/EXPR/LPAREN"
-                );
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUnnecessaryParentheses2']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]"
+		+ "/SLIST/LITERAL_IF/EXPR/LPAREN"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
+}
 
-    @Test
-    public void testThree() throws Exception {
-        final File fileToProcess = new File(
-            getPath("SuppressionXpathRegressionUnnecessaryParentheses3.java")
-        );
+@Test
+public void testThree() throws Exception {
+	final File fileToProcess = new File(
+		getPath("SuppressionXpathRegressionUnnecessaryParentheses3.java")
+		);
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(UnnecessaryParenthesesCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(UnnecessaryParenthesesCheck.class);
 
-        final String[] expectedViolation = {
-            "7:35: " + getCheckMessage(UnnecessaryParenthesesCheck.class,
-                                       UnnecessaryParenthesesCheck.MSG_LAMBDA),
-        };
+	final String[] expectedViolation = {
+		"7:35: " + getCheckMessage(UnnecessaryParenthesesCheck.class,
+		                           UnnecessaryParenthesesCheck.MSG_LAMBDA),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUnnecessaryParentheses3']]"
-                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='predicate']]"
-                    + "/ASSIGN/LAMBDA"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUnnecessaryParentheses3']]"
+		+ "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='predicate']]"
+		+ "/ASSIGN/LAMBDA"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
+}
 
-    @Test
-    public void testFour() throws Exception {
-        final File fileToProcess = new File(
-            getPath("SuppressionXpathRegressionUnnecessaryParentheses4.java")
-        );
+@Test
+public void testFour() throws Exception {
+	final File fileToProcess = new File(
+		getPath("SuppressionXpathRegressionUnnecessaryParentheses4.java")
+		);
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(UnnecessaryParenthesesCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(UnnecessaryParenthesesCheck.class);
 
-        final String[] expectedViolation = {
-            "5:18: " + getCheckMessage(UnnecessaryParenthesesCheck.class,
-                                       UnnecessaryParenthesesCheck.MSG_IDENT, "a"),
-        };
+	final String[] expectedViolation = {
+		"5:18: " + getCheckMessage(UnnecessaryParenthesesCheck.class,
+		                           UnnecessaryParenthesesCheck.MSG_IDENT, "a"),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUnnecessaryParentheses4']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]"
-                    + "/SLIST/VARIABLE_DEF[./IDENT[@text='b']]"
-                    + "/ASSIGN/EXPR/PLUS/IDENT[@text='a']"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUnnecessaryParentheses4']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]"
+		+ "/SLIST/VARIABLE_DEF[./IDENT[@text='b']]"
+		+ "/ASSIGN/EXPR/PLUS/IDENT[@text='a']"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
+}
 
-    @Test
-    public void testFive() throws Exception {
-        final File fileToProcess = new File(
-            getPath("SuppressionXpathRegressionUnnecessaryParentheses5.java")
-        );
+@Test
+public void testFive() throws Exception {
+	final File fileToProcess = new File(
+		getPath("SuppressionXpathRegressionUnnecessaryParentheses5.java")
+		);
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(UnnecessaryParenthesesCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(UnnecessaryParenthesesCheck.class);
 
-        final String[] expectedViolation = {
-            "5:23: " + getCheckMessage(UnnecessaryParenthesesCheck.class,
-                                       UnnecessaryParenthesesCheck.MSG_STRING, "\"Checkstyle\""),
-        };
+	final String[] expectedViolation = {
+		"5:23: " + getCheckMessage(UnnecessaryParenthesesCheck.class,
+		                           UnnecessaryParenthesesCheck.MSG_STRING, "\"Checkstyle\""),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUnnecessaryParentheses5']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]"
-                    + "/SLIST/VARIABLE_DEF[./IDENT[@text='str']]"
-                    + "/ASSIGN/EXPR/PLUS/STRING_LITERAL[@text='Checkstyle']"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUnnecessaryParentheses5']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]"
+		+ "/SLIST/VARIABLE_DEF[./IDENT[@text='str']]"
+		+ "/ASSIGN/EXPR/PLUS/STRING_LITERAL[@text='Checkstyle']"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
+}
 
-    @Test
-    public void testSix() throws Exception {
-        final File fileToProcess = new File(
-            getPath("SuppressionXpathRegressionUnnecessaryParentheses6.java")
-        );
+@Test
+public void testSix() throws Exception {
+	final File fileToProcess = new File(
+		getPath("SuppressionXpathRegressionUnnecessaryParentheses6.java")
+		);
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(UnnecessaryParenthesesCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(UnnecessaryParenthesesCheck.class);
 
-        final String[] expectedViolation = {
-            "5:18: " + getCheckMessage(UnnecessaryParenthesesCheck.class,
-                                       UnnecessaryParenthesesCheck.MSG_LITERAL, "10"),
-        };
+	final String[] expectedViolation = {
+		"5:18: " + getCheckMessage(UnnecessaryParenthesesCheck.class,
+		                           UnnecessaryParenthesesCheck.MSG_LITERAL, "10"),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUnnecessaryParentheses6']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]"
-                    + "/SLIST/VARIABLE_DEF[./IDENT[@text='a']]"
-                    + "/ASSIGN/EXPR/PLUS/NUM_INT[@text='10']"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUnnecessaryParentheses6']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]"
+		+ "/SLIST/VARIABLE_DEF[./IDENT[@text='a']]"
+		+ "/ASSIGN/EXPR/PLUS/NUM_INT[@text='10']"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
+}
 
-    @Test
-    public void testSeven() throws Exception {
-        final File fileToProcess = new File(
-            getPath("SuppressionXpathRegressionUnnecessaryParentheses7.java")
-        );
+@Test
+public void testSeven() throws Exception {
+	final File fileToProcess = new File(
+		getPath("SuppressionXpathRegressionUnnecessaryParentheses7.java")
+		);
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(UnnecessaryParenthesesCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(UnnecessaryParenthesesCheck.class);
 
-        final String[] expectedViolation = {
-            "5:16: " + getCheckMessage(UnnecessaryParenthesesCheck.class,
-                                       UnnecessaryParenthesesCheck.MSG_RETURN),
-        };
+	final String[] expectedViolation = {
+		"5:16: " + getCheckMessage(UnnecessaryParenthesesCheck.class,
+		                           UnnecessaryParenthesesCheck.MSG_RETURN),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUnnecessaryParentheses7']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]"
-                    + "/SLIST/LITERAL_RETURN/EXPR",
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUnnecessaryParentheses7']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]"
+		+ "/SLIST/LITERAL_RETURN/EXPR",
 
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUnnecessaryParentheses7']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]"
-                    + "/SLIST/LITERAL_RETURN/EXPR/LPAREN"
-                );
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUnnecessaryParentheses7']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]"
+		+ "/SLIST/LITERAL_RETURN/EXPR/LPAREN"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
+}
 
-    @Test
-    public void testEight() throws Exception {
-        final File fileToProcess = new File(
-            getPath("SuppressionXpathRegressionUnnecessaryParentheses8.java")
-        );
+@Test
+public void testEight() throws Exception {
+	final File fileToProcess = new File(
+		getPath("SuppressionXpathRegressionUnnecessaryParentheses8.java")
+		);
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(UnnecessaryParenthesesCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(UnnecessaryParenthesesCheck.class);
 
-        final String[] expectedViolation = {
-            "5:17: " + getCheckMessage(UnnecessaryParenthesesCheck.class,
-                                       UnnecessaryParenthesesCheck.MSG_ASSIGN),
-        };
+	final String[] expectedViolation = {
+		"5:17: " + getCheckMessage(UnnecessaryParenthesesCheck.class,
+		                           UnnecessaryParenthesesCheck.MSG_ASSIGN),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUnnecessaryParentheses8']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]"
-                    + "/SLIST/VARIABLE_DEF[./IDENT[@text='c']]"
-                    + "/ASSIGN/EXPR",
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUnnecessaryParentheses8']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]"
+		+ "/SLIST/VARIABLE_DEF[./IDENT[@text='c']]"
+		+ "/ASSIGN/EXPR",
 
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUnnecessaryParentheses8']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]"
-                    + "/SLIST/VARIABLE_DEF[./IDENT[@text='c']]"
-                    + "/ASSIGN/EXPR/LPAREN"
-                );
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUnnecessaryParentheses8']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]"
+		+ "/SLIST/VARIABLE_DEF[./IDENT[@text='c']]"
+		+ "/ASSIGN/EXPR/LPAREN"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
+}
 }

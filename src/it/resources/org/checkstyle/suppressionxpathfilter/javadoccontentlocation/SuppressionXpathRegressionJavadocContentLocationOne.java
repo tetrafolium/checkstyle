@@ -2,7 +2,7 @@ package org.checkstyle.suppressionxpathfilter.javadoccontentlocation;
 
 public interface SuppressionXpathRegressionJavadocContentLocationOne {
 
-    /** Text. // warn
-     */
-    void test();
+/** Text. // warn
+ */
+void test();
 }

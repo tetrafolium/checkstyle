@@ -136,92 +136,92 @@ import com.puppycrawl.tools.checkstyle.utils.JavadocUtil;
 @StatelessCheck
 public class JavadocTagContinuationIndentationCheck extends AbstractJavadocCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "tag.continuation.indent";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "tag.continuation.indent";
 
-    /** Default tag continuation indentation. */
-    private static final int DEFAULT_INDENTATION = 4;
+/** Default tag continuation indentation. */
+private static final int DEFAULT_INDENTATION = 4;
 
-    /**
-     * Specify how many spaces to use for new indentation level.
-     */
-    private int offset = DEFAULT_INDENTATION;
+/**
+ * Specify how many spaces to use for new indentation level.
+ */
+private int offset = DEFAULT_INDENTATION;
 
-    /**
-     * Setter to specify how many spaces to use for new indentation level.
-     *
-     * @param offset custom value.
-     */
-    public void setOffset(int offset) {
-        this.offset = offset;
-    }
+/**
+ * Setter to specify how many spaces to use for new indentation level.
+ *
+ * @param offset custom value.
+ */
+public void setOffset(int offset) {
+	this.offset = offset;
+}
 
-    @Override
-    public int[] getDefaultJavadocTokens() {
-        return new int[] {JavadocTokenTypes.DESCRIPTION };
-    }
+@Override
+public int[] getDefaultJavadocTokens() {
+	return new int[] {JavadocTokenTypes.DESCRIPTION };
+}
 
-    @Override
-    public int[] getRequiredJavadocTokens() {
-        return getAcceptableJavadocTokens();
-    }
+@Override
+public int[] getRequiredJavadocTokens() {
+	return getAcceptableJavadocTokens();
+}
 
-    @Override
-    public void visitJavadocToken(DetailNode ast) {
-        if (!isInlineDescription(ast)) {
-            final List<DetailNode> textNodes = getAllNewlineNodes(ast);
-            for (DetailNode newlineNode : textNodes) {
-                final DetailNode textNode = JavadocUtil.getNextSibling(newlineNode);
-                if (textNode.getType() == JavadocTokenTypes.TEXT) {
-                    final String text = textNode.getText();
-                    if (!CommonUtil.isBlank(text.trim())
-                            && (text.length() <= offset
-                                || !text.substring(1, offset + 1).trim().isEmpty())) {
-                        log(textNode.getLineNumber(), MSG_KEY, offset);
-                    }
-                }
-            }
-        }
-    }
+@Override
+public void visitJavadocToken(DetailNode ast) {
+	if (!isInlineDescription(ast)) {
+		final List<DetailNode> textNodes = getAllNewlineNodes(ast);
+		for (DetailNode newlineNode : textNodes) {
+			final DetailNode textNode = JavadocUtil.getNextSibling(newlineNode);
+			if (textNode.getType() == JavadocTokenTypes.TEXT) {
+				final String text = textNode.getText();
+				if (!CommonUtil.isBlank(text.trim())
+				    && (text.length() <= offset
+				        || !text.substring(1, offset + 1).trim().isEmpty())) {
+					log(textNode.getLineNumber(), MSG_KEY, offset);
+				}
+			}
+		}
+	}
+}
 
-    /**
-     * Finds and collects all NEWLINE nodes inside DESCRIPTION node.
-     *
-     * @param descriptionNode DESCRIPTION node.
-     * @return List with NEWLINE nodes.
-     */
-    private static List<DetailNode> getAllNewlineNodes(DetailNode descriptionNode) {
-        final List<DetailNode> textNodes = new ArrayList<>();
-        DetailNode node = JavadocUtil.getFirstChild(descriptionNode);
-        while (JavadocUtil.getNextSibling(node) != null) {
-            if (node.getType() == JavadocTokenTypes.LEADING_ASTERISK) {
-                textNodes.add(node);
-            }
-            node = JavadocUtil.getNextSibling(node);
-        }
-        return textNodes;
-    }
+/**
+ * Finds and collects all NEWLINE nodes inside DESCRIPTION node.
+ *
+ * @param descriptionNode DESCRIPTION node.
+ * @return List with NEWLINE nodes.
+ */
+private static List<DetailNode> getAllNewlineNodes(DetailNode descriptionNode) {
+	final List<DetailNode> textNodes = new ArrayList<>();
+	DetailNode node = JavadocUtil.getFirstChild(descriptionNode);
+	while (JavadocUtil.getNextSibling(node) != null) {
+		if (node.getType() == JavadocTokenTypes.LEADING_ASTERISK) {
+			textNodes.add(node);
+		}
+		node = JavadocUtil.getNextSibling(node);
+	}
+	return textNodes;
+}
 
-    /**
-     * Checks, if description node is a description of in-line tag.
-     *
-     * @param description DESCRIPTION node.
-     * @return true, if description node is a description of in-line tag.
-     */
-    private static boolean isInlineDescription(DetailNode description) {
-        boolean isInline = false;
-        DetailNode inlineTag = description.getParent();
-        while (inlineTag != null) {
-            if (inlineTag.getType() == JavadocTokenTypes.JAVADOC_INLINE_TAG) {
-                isInline = true;
-                break;
-            }
-            inlineTag = inlineTag.getParent();
-        }
-        return isInline;
-    }
+/**
+ * Checks, if description node is a description of in-line tag.
+ *
+ * @param description DESCRIPTION node.
+ * @return true, if description node is a description of in-line tag.
+ */
+private static boolean isInlineDescription(DetailNode description) {
+	boolean isInline = false;
+	DetailNode inlineTag = description.getParent();
+	while (inlineTag != null) {
+		if (inlineTag.getType() == JavadocTokenTypes.JAVADOC_INLINE_TAG) {
+			isInline = true;
+			break;
+		}
+		inlineTag = inlineTag.getParent();
+	}
+	return isInline;
+}
 
 }

@@ -36,52 +36,52 @@ import com.puppycrawl.tools.checkstyle.xpath.XpathQueryGenerator;
  */
 public class XpathFileGeneratorAstFilter extends AutomaticBean implements TreeWalkerFilter {
 
-    /** The delimiter between xpath queries. */
-    private static final String DELIMITER = " | \n";
+/** The delimiter between xpath queries. */
+private static final String DELIMITER = " | \n";
 
-    /** Map from {@code LocalizedMessage} objects to xpath queries. */
-    private static final Map<LocalizedMessage, String> MESSAGE_QUERY_MAP = new HashMap<>();
+/** Map from {@code LocalizedMessage} objects to xpath queries. */
+private static final Map<LocalizedMessage, String> MESSAGE_QUERY_MAP = new HashMap<>();
 
-    /** The distance between tab stop position. */
-    private int tabWidth;
+/** The distance between tab stop position. */
+private int tabWidth;
 
-    /**
-     * Sets tab width.
-     *
-     * @param tabWidth the distance between tab stops
-     */
-    public void setTabWidth(int tabWidth) {
-        this.tabWidth = tabWidth;
-    }
+/**
+ * Sets tab width.
+ *
+ * @param tabWidth the distance between tab stops
+ */
+public void setTabWidth(int tabWidth) {
+	this.tabWidth = tabWidth;
+}
 
-    /**
-     * Returns xpath query corresponding to localized message of the
-     * {@code TreeWalkerAuditEvent} object which points to the same AST element as specified
-     * {@code AuditEvent} object.
-     *
-     * @param event the {@code AuditEvent} object.
-     * @return returns corresponding xpath query
-     */
-    public static String findCorrespondingXpathQuery(AuditEvent event) {
-        return MESSAGE_QUERY_MAP.get(event.getLocalizedMessage());
-    }
+/**
+ * Returns xpath query corresponding to localized message of the
+ * {@code TreeWalkerAuditEvent} object which points to the same AST element as specified
+ * {@code AuditEvent} object.
+ *
+ * @param event the {@code AuditEvent} object.
+ * @return returns corresponding xpath query
+ */
+public static String findCorrespondingXpathQuery(AuditEvent event) {
+	return MESSAGE_QUERY_MAP.get(event.getLocalizedMessage());
+}
 
-    @Override
-    protected void finishLocalSetup() {
-        MESSAGE_QUERY_MAP.clear();
-    }
+@Override
+protected void finishLocalSetup() {
+	MESSAGE_QUERY_MAP.clear();
+}
 
-    @Override
-    public boolean accept(TreeWalkerAuditEvent event) {
-        if (event.getTokenType() != 0) {
-            final XpathQueryGenerator xpathQueryGenerator =
-                new XpathQueryGenerator(event, tabWidth);
-            final List<String> xpathQueries = xpathQueryGenerator.generate();
-            if (!xpathQueries.isEmpty()) {
-                final String query = String.join(DELIMITER, xpathQueries);
-                MESSAGE_QUERY_MAP.put(event.getLocalizedMessage(), query);
-            }
-        }
-        return true;
-    }
+@Override
+public boolean accept(TreeWalkerAuditEvent event) {
+	if (event.getTokenType() != 0) {
+		final XpathQueryGenerator xpathQueryGenerator =
+			new XpathQueryGenerator(event, tabWidth);
+		final List<String> xpathQueries = xpathQueryGenerator.generate();
+		if (!xpathQueries.isEmpty()) {
+			final String query = String.join(DELIMITER, xpathQueries);
+			MESSAGE_QUERY_MAP.put(event.getLocalizedMessage(), query);
+		}
+	}
+	return true;
+}
 }

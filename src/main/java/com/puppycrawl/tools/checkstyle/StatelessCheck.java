@@ -40,6 +40,6 @@ import java.lang.annotation.Target;
 @Inherited
 public @interface StatelessCheck {
 
-    // this annotation does not have properties
+// this annotation does not have properties
 
 }

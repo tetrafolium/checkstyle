@@ -66,30 +66,30 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 @StatelessCheck
 public class EmptyStatementCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "empty.statement";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "empty.statement";
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.EMPTY_STAT};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.EMPTY_STAT};
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        log(ast, MSG_KEY);
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	log(ast, MSG_KEY);
+}
 
 }

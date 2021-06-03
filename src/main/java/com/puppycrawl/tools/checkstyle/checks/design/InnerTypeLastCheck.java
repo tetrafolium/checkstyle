@@ -77,73 +77,73 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
 @FileStatefulCheck
 public class InnerTypeLastCheck extends AbstractCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "arrangement.members.before.inner";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "arrangement.members.before.inner";
 
-    /** List of class member tokens. */
-    private static final List<Integer> CLASS_MEMBER_TOKENS = Arrays.asList(
-                TokenTypes.VARIABLE_DEF,
-                TokenTypes.METHOD_DEF,
-                TokenTypes.CTOR_DEF,
-                TokenTypes.INSTANCE_INIT,
-                TokenTypes.STATIC_INIT,
-                TokenTypes.COMPACT_CTOR_DEF
-            );
+/** List of class member tokens. */
+private static final List<Integer> CLASS_MEMBER_TOKENS = Arrays.asList(
+	TokenTypes.VARIABLE_DEF,
+	TokenTypes.METHOD_DEF,
+	TokenTypes.CTOR_DEF,
+	TokenTypes.INSTANCE_INIT,
+	TokenTypes.STATIC_INIT,
+	TokenTypes.COMPACT_CTOR_DEF
+	);
 
-    /** Meet a root class. */
-    private boolean rootClass = true;
+/** Meet a root class. */
+private boolean rootClass = true;
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {
-                   TokenTypes.CLASS_DEF,
-                   TokenTypes.INTERFACE_DEF,
-                   TokenTypes.RECORD_DEF,
-               };
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {
+		       TokenTypes.CLASS_DEF,
+		       TokenTypes.INTERFACE_DEF,
+		       TokenTypes.RECORD_DEF,
+	};
+}
 
-    @Override
-    public void beginTree(DetailAST rootAST) {
-        rootClass = true;
-    }
+@Override
+public void beginTree(DetailAST rootAST) {
+	rootClass = true;
+}
 
-    @Override
-    public void visitToken(DetailAST ast) {
-        // First root class
-        if (rootClass) {
-            rootClass = false;
-        }
-        else {
-            DetailAST nextSibling = ast.getNextSibling();
-            while (nextSibling != null) {
-                if (!ScopeUtil.isInCodeBlock(ast)
-                        && CLASS_MEMBER_TOKENS.contains(nextSibling.getType())) {
-                    log(nextSibling, MSG_KEY);
-                }
-                nextSibling = nextSibling.getNextSibling();
-            }
-        }
-    }
+@Override
+public void visitToken(DetailAST ast) {
+	// First root class
+	if (rootClass) {
+		rootClass = false;
+	}
+	else {
+		DetailAST nextSibling = ast.getNextSibling();
+		while (nextSibling != null) {
+			if (!ScopeUtil.isInCodeBlock(ast)
+			    && CLASS_MEMBER_TOKENS.contains(nextSibling.getType())) {
+				log(nextSibling, MSG_KEY);
+			}
+			nextSibling = nextSibling.getNextSibling();
+		}
+	}
+}
 
-    @Override
-    public void leaveToken(DetailAST ast) {
-        // Is this a root class
-        if (ast.getParent() == null) {
-            rootClass = true;
-        }
-    }
+@Override
+public void leaveToken(DetailAST ast) {
+	// Is this a root class
+	if (ast.getParent() == null) {
+		rootClass = true;
+	}
+}
 
 }

@@ -30,65 +30,65 @@ import com.puppycrawl.tools.checkstyle.checks.modifier.ClassMemberImpliedModifie
 
 public class XpathRegressionClassMemberImpliedModifierTest extends AbstractXpathTestSupport {
 
-    private final String checkName = ClassMemberImpliedModifierCheck.class.getSimpleName();
+private final String checkName = ClassMemberImpliedModifierCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionClassMemberImpliedModifierOne.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionClassMemberImpliedModifierOne.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(ClassMemberImpliedModifierCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(ClassMemberImpliedModifierCheck.class);
 
-        final String[] expectedViolation = {
-            "4:5: " + getCheckMessage(ClassMemberImpliedModifierCheck.class,
-                                      ClassMemberImpliedModifierCheck.MSG_KEY, "static", 0),
-        };
+	final String[] expectedViolation = {
+		"4:5: " + getCheckMessage(ClassMemberImpliedModifierCheck.class,
+		                          ClassMemberImpliedModifierCheck.MSG_KEY, "static", 0),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT["
-                    + "@text='SuppressionXpathRegressionClassMemberImpliedModifierOne']]"
-                    + "/OBJBLOCK/INTERFACE_DEF[./IDENT[@text='Foo']]",
-                    "/CLASS_DEF[./IDENT["
-                    + "@text='SuppressionXpathRegressionClassMemberImpliedModifierOne']]"
-                    + "/OBJBLOCK/INTERFACE_DEF[./IDENT[@text='Foo']]/MODIFIERS",
-                    "/CLASS_DEF[./IDENT["
-                    + "@text='SuppressionXpathRegressionClassMemberImpliedModifierOne']]"
-                    + "/OBJBLOCK/INTERFACE_DEF[./IDENT[@text='Foo']]/MODIFIERS/LITERAL_PUBLIC"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT["
+		+ "@text='SuppressionXpathRegressionClassMemberImpliedModifierOne']]"
+		+ "/OBJBLOCK/INTERFACE_DEF[./IDENT[@text='Foo']]",
+		"/CLASS_DEF[./IDENT["
+		+ "@text='SuppressionXpathRegressionClassMemberImpliedModifierOne']]"
+		+ "/OBJBLOCK/INTERFACE_DEF[./IDENT[@text='Foo']]/MODIFIERS",
+		"/CLASS_DEF[./IDENT["
+		+ "@text='SuppressionXpathRegressionClassMemberImpliedModifierOne']]"
+		+ "/OBJBLOCK/INTERFACE_DEF[./IDENT[@text='Foo']]/MODIFIERS/LITERAL_PUBLIC"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionClassMemberImpliedModifierTwo.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionClassMemberImpliedModifierTwo.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(ClassMemberImpliedModifierCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(ClassMemberImpliedModifierCheck.class);
 
-        final String[] expectedViolation = {
-            "4:5: " + getCheckMessage(ClassMemberImpliedModifierCheck.class,
-                                      ClassMemberImpliedModifierCheck.MSG_KEY, "static", "null"),
-        };
+	final String[] expectedViolation = {
+		"4:5: " + getCheckMessage(ClassMemberImpliedModifierCheck.class,
+		                          ClassMemberImpliedModifierCheck.MSG_KEY, "static", "null"),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionClassMemberImpliedModifierTwo']]"
-                    + "/OBJBLOCK/ENUM_DEF[./IDENT[@text='Count']]",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionClassMemberImpliedModifierTwo']]"
-                    + "/OBJBLOCK/ENUM_DEF[./IDENT[@text='Count']]/MODIFIERS",
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionClassMemberImpliedModifierTwo']]"
-                    + "/OBJBLOCK/ENUM_DEF[./IDENT[@text='Count']]/MODIFIERS/LITERAL_PUBLIC"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionClassMemberImpliedModifierTwo']]"
+		+ "/OBJBLOCK/ENUM_DEF[./IDENT[@text='Count']]",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionClassMemberImpliedModifierTwo']]"
+		+ "/OBJBLOCK/ENUM_DEF[./IDENT[@text='Count']]/MODIFIERS",
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionClassMemberImpliedModifierTwo']]"
+		+ "/OBJBLOCK/ENUM_DEF[./IDENT[@text='Count']]/MODIFIERS/LITERAL_PUBLIC"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 }

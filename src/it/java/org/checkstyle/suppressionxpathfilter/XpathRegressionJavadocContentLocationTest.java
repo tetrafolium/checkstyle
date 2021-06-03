@@ -30,60 +30,60 @@ import com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocContentLocationChec
 
 public class XpathRegressionJavadocContentLocationTest extends AbstractXpathTestSupport {
 
-    private final String checkName = JavadocContentLocationCheck.class.getSimpleName();
+private final String checkName = JavadocContentLocationCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionJavadocContentLocationOne.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionJavadocContentLocationOne.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(JavadocContentLocationCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(JavadocContentLocationCheck.class);
 
-        final String[] expectedViolation = {
-            "5:5: " + getCheckMessage(JavadocContentLocationCheck.class,
-                                      JavadocContentLocationCheck.MSG_JAVADOC_CONTENT_SECOND_LINE),
-        };
+	final String[] expectedViolation = {
+		"5:5: " + getCheckMessage(JavadocContentLocationCheck.class,
+		                          JavadocContentLocationCheck.MSG_JAVADOC_CONTENT_SECOND_LINE),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/INTERFACE_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocContentLocationOne']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/TYPE/BLOCK_COMMENT_BEGIN"
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/INTERFACE_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocContentLocationOne']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/TYPE/BLOCK_COMMENT_BEGIN"
 
-                );
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionJavadocContentLocationTwo.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionJavadocContentLocationTwo.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(JavadocContentLocationCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(JavadocContentLocationCheck.class);
 
-        moduleConfig.addAttribute("location", "first_line");
+	moduleConfig.addAttribute("location", "first_line");
 
-        final String[] expectedViolation = {
-            "5:16: " + getCheckMessage(JavadocContentLocationCheck.class,
-                                       JavadocContentLocationCheck.MSG_JAVADOC_CONTENT_FIRST_LINE),
-        };
+	final String[] expectedViolation = {
+		"5:16: " + getCheckMessage(JavadocContentLocationCheck.class,
+		                           JavadocContentLocationCheck.MSG_JAVADOC_CONTENT_FIRST_LINE),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/INTERFACE_DEF[./IDENT"
-                    + "[@text='SuppressionXpathRegressionJavadocContentLocationTwo']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/TYPE/BLOCK_COMMENT_BEGIN[2]"
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/INTERFACE_DEF[./IDENT"
+		+ "[@text='SuppressionXpathRegressionJavadocContentLocationTwo']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/TYPE/BLOCK_COMMENT_BEGIN[2]"
 
-                );
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
 }

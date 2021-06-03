@@ -372,43 +372,43 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  *
  */
 public final class ClassDataAbstractionCouplingCheck
-    extends AbstractClassCouplingCheck {
+	extends AbstractClassCouplingCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_KEY = "classDataAbstractionCoupling";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_KEY = "classDataAbstractionCoupling";
 
-    /** Default allowed complexity. */
-    private static final int DEFAULT_MAX = 7;
+/** Default allowed complexity. */
+private static final int DEFAULT_MAX = 7;
 
-    /** Creates bew instance of the check. */
-    public ClassDataAbstractionCouplingCheck() {
-        super(DEFAULT_MAX);
-    }
+/** Creates bew instance of the check. */
+public ClassDataAbstractionCouplingCheck() {
+	super(DEFAULT_MAX);
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {
-                   TokenTypes.PACKAGE_DEF,
-                   TokenTypes.IMPORT,
-                   TokenTypes.CLASS_DEF,
-                   TokenTypes.INTERFACE_DEF,
-                   TokenTypes.ENUM_DEF,
-                   TokenTypes.LITERAL_NEW,
-                   TokenTypes.RECORD_DEF,
-               };
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {
+		       TokenTypes.PACKAGE_DEF,
+		       TokenTypes.IMPORT,
+		       TokenTypes.CLASS_DEF,
+		       TokenTypes.INTERFACE_DEF,
+		       TokenTypes.ENUM_DEF,
+		       TokenTypes.LITERAL_NEW,
+		       TokenTypes.RECORD_DEF,
+	};
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    protected String getLogMessageId() {
-        return MSG_KEY;
-    }
+@Override
+protected String getLogMessageId() {
+	return MSG_KEY;
+}
 
 }

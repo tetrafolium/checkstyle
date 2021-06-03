@@ -30,52 +30,52 @@ import com.puppycrawl.tools.checkstyle.checks.blocks.EmptyCatchBlockCheck;
 
 public class XpathRegressionEmptyCatchBlockTest extends AbstractXpathTestSupport {
 
-    private final Class<EmptyCatchBlockCheck> clazz =
-        EmptyCatchBlockCheck.class;
+private final Class<EmptyCatchBlockCheck> clazz =
+	EmptyCatchBlockCheck.class;
 
-    @Override
-    protected String getCheckName() {
-        return clazz.getSimpleName();
-    }
+@Override
+protected String getCheckName() {
+	return clazz.getSimpleName();
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess = new File(
-            getPath("SuppressionXpathRegressionEmptyCatchBlock1.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess = new File(
+		getPath("SuppressionXpathRegressionEmptyCatchBlock1.java"));
 
-        final DefaultConfiguration moduleConfig = createModuleConfig(clazz);
+	final DefaultConfiguration moduleConfig = createModuleConfig(clazz);
 
-        final String[] expectedViolation = {
-            "8:38: " + getCheckMessage(clazz, EmptyCatchBlockCheck.MSG_KEY_CATCH_BLOCK_EMPTY),
-        };
+	final String[] expectedViolation = {
+		"8:38: " + getCheckMessage(clazz, EmptyCatchBlockCheck.MSG_KEY_CATCH_BLOCK_EMPTY),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionEmptyCatchBlock1']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='main']]"
-                    + "/SLIST/LITERAL_TRY/LITERAL_CATCH/SLIST"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionEmptyCatchBlock1']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='main']]"
+		+ "/SLIST/LITERAL_TRY/LITERAL_CATCH/SLIST"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess = new File(
-            getPath("SuppressionXpathRegressionEmptyCatchBlock2.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess = new File(
+		getPath("SuppressionXpathRegressionEmptyCatchBlock2.java"));
 
-        final DefaultConfiguration moduleConfig = createModuleConfig(clazz);
+	final DefaultConfiguration moduleConfig = createModuleConfig(clazz);
 
-        final String[] expectedViolation = {
-            "8:47: " + getCheckMessage(clazz, EmptyCatchBlockCheck.MSG_KEY_CATCH_BLOCK_EMPTY),
-        };
+	final String[] expectedViolation = {
+		"8:47: " + getCheckMessage(clazz, EmptyCatchBlockCheck.MSG_KEY_CATCH_BLOCK_EMPTY),
+	};
 
-        final List<String> expectedXpathQueries = Collections.singletonList(
-                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionEmptyCatchBlock2']]"
-                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='main']]"
-                    + "/SLIST/LITERAL_TRY/LITERAL_CATCH/SLIST"
-                );
+	final List<String> expectedXpathQueries = Collections.singletonList(
+		"/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionEmptyCatchBlock2']]"
+		+ "/OBJBLOCK/METHOD_DEF[./IDENT[@text='main']]"
+		+ "/SLIST/LITERAL_TRY/LITERAL_CATCH/SLIST"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
+}
 
 }

@@ -118,93 +118,93 @@ import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 @StatelessCheck
 public class JavadocMissingLeadingAsteriskCheck extends AbstractJavadocCheck {
 
-    /**
-     * A key is pointing to the warning message text in "messages.properties"
-     * file.
-     */
-    public static final String MSG_MISSING_ASTERISK = "javadoc.missing.asterisk";
+/**
+ * A key is pointing to the warning message text in "messages.properties"
+ * file.
+ */
+public static final String MSG_MISSING_ASTERISK = "javadoc.missing.asterisk";
 
-    @Override
-    public int[] getRequiredJavadocTokens() {
-        return new int[] {
-                   JavadocTokenTypes.NEWLINE,
-               };
-    }
+@Override
+public int[] getRequiredJavadocTokens() {
+	return new int[] {
+		       JavadocTokenTypes.NEWLINE,
+	};
+}
 
-    @Override
-    public int[] getAcceptableJavadocTokens() {
-        return getRequiredJavadocTokens();
-    }
+@Override
+public int[] getAcceptableJavadocTokens() {
+	return getRequiredJavadocTokens();
+}
 
-    @Override
-    public int[] getDefaultJavadocTokens() {
-        return getRequiredJavadocTokens();
-    }
+@Override
+public int[] getDefaultJavadocTokens() {
+	return getRequiredJavadocTokens();
+}
 
-    @Override
-    public void visitJavadocToken(DetailNode detailNode) {
-        DetailNode nextSibling = getNextNode(detailNode);
+@Override
+public void visitJavadocToken(DetailNode detailNode) {
+	DetailNode nextSibling = getNextNode(detailNode);
 
-        // Till https://github.com/checkstyle/checkstyle/issues/9005
-        // Due to bug in the Javadoc parser there may be phantom description nodes.
-        while (TokenUtil.isOfType(nextSibling.getType(),
-                                  JavadocTokenTypes.DESCRIPTION, JavadocTokenTypes.WS)) {
-            nextSibling = getNextNode(nextSibling);
-        }
+	// Till https://github.com/checkstyle/checkstyle/issues/9005
+	// Due to bug in the Javadoc parser there may be phantom description nodes.
+	while (TokenUtil.isOfType(nextSibling.getType(),
+	                          JavadocTokenTypes.DESCRIPTION, JavadocTokenTypes.WS)) {
+		nextSibling = getNextNode(nextSibling);
+	}
 
-        if (!isLeadingAsterisk(nextSibling) && !isLastLine(nextSibling)) {
-            log(nextSibling.getLineNumber(), MSG_MISSING_ASTERISK);
-        }
-    }
+	if (!isLeadingAsterisk(nextSibling) && !isLastLine(nextSibling)) {
+		log(nextSibling.getLineNumber(), MSG_MISSING_ASTERISK);
+	}
+}
 
-    /**
-     * Gets next node in the ast (sibling or parent sibling for the last node).
-     *
-     * @param detailNode the node to process
-     * @return next node.
-     */
-    private static DetailNode getNextNode(DetailNode detailNode) {
-        DetailNode node = JavadocUtil.getFirstChild(detailNode);
-        if (node == null) {
-            node = JavadocUtil.getNextSibling(detailNode);
-            if (node == null) {
-                DetailNode parent = detailNode;
-                do {
-                    parent = parent.getParent();
-                    node = JavadocUtil.getNextSibling(parent);
-                } while (node == null);
-            }
-        }
-        return node;
-    }
+/**
+ * Gets next node in the ast (sibling or parent sibling for the last node).
+ *
+ * @param detailNode the node to process
+ * @return next node.
+ */
+private static DetailNode getNextNode(DetailNode detailNode) {
+	DetailNode node = JavadocUtil.getFirstChild(detailNode);
+	if (node == null) {
+		node = JavadocUtil.getNextSibling(detailNode);
+		if (node == null) {
+			DetailNode parent = detailNode;
+			do {
+				parent = parent.getParent();
+				node = JavadocUtil.getNextSibling(parent);
+			} while (node == null);
+		}
+	}
+	return node;
+}
 
-    /**
-     * Checks whether the given node is a leading asterisk.
-     *
-     * @param detailNode the node to process
-     * @return {@code true} if the node is {@link JavadocTokenTypes#LEADING_ASTERISK}
-     */
-    private static boolean isLeadingAsterisk(DetailNode detailNode) {
-        return detailNode.getType() == JavadocTokenTypes.LEADING_ASTERISK;
-    }
+/**
+ * Checks whether the given node is a leading asterisk.
+ *
+ * @param detailNode the node to process
+ * @return {@code true} if the node is {@link JavadocTokenTypes#LEADING_ASTERISK}
+ */
+private static boolean isLeadingAsterisk(DetailNode detailNode) {
+	return detailNode.getType() == JavadocTokenTypes.LEADING_ASTERISK;
+}
 
-    /**
-     * Checks whether this node is the end of a Javadoc comment,
-     * optionally preceded by blank text.
-     *
-     * @param detailNode the node to process
-     * @return {@code true} if the node is {@link JavadocTokenTypes#EOF}
-     */
-    private static boolean isLastLine(DetailNode detailNode) {
-        final DetailNode node;
-        if (detailNode.getType() == JavadocTokenTypes.TEXT
-                && CommonUtil.isBlank(detailNode.getText())) {
-            node = getNextNode(detailNode);
-        }
-        else {
-            node = detailNode;
-        }
-        return node.getType() == JavadocTokenTypes.EOF;
-    }
+/**
+ * Checks whether this node is the end of a Javadoc comment,
+ * optionally preceded by blank text.
+ *
+ * @param detailNode the node to process
+ * @return {@code true} if the node is {@link JavadocTokenTypes#EOF}
+ */
+private static boolean isLastLine(DetailNode detailNode) {
+	final DetailNode node;
+	if (detailNode.getType() == JavadocTokenTypes.TEXT
+	    && CommonUtil.isBlank(detailNode.getText())) {
+		node = getNextNode(detailNode);
+	}
+	else {
+		node = detailNode;
+	}
+	return node.getType() == JavadocTokenTypes.EOF;
+}
 
 }

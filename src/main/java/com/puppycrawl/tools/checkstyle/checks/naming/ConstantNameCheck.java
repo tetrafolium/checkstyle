@@ -135,51 +135,51 @@ import com.puppycrawl.tools.checkstyle.utils.ScopeUtil;
  * @since 3.0
  */
 public class ConstantNameCheck
-    extends AbstractAccessControlNameCheck {
+	extends AbstractAccessControlNameCheck {
 
-    /** Creates a new {@code ConstantNameCheck} instance. */
-    public ConstantNameCheck() {
-        super("^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$");
-    }
+/** Creates a new {@code ConstantNameCheck} instance. */
+public ConstantNameCheck() {
+	super("^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$");
+}
 
-    @Override
-    public int[] getDefaultTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getDefaultTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getAcceptableTokens() {
-        return getRequiredTokens();
-    }
+@Override
+public int[] getAcceptableTokens() {
+	return getRequiredTokens();
+}
 
-    @Override
-    public int[] getRequiredTokens() {
-        return new int[] {TokenTypes.VARIABLE_DEF};
-    }
+@Override
+public int[] getRequiredTokens() {
+	return new int[] {TokenTypes.VARIABLE_DEF};
+}
 
-    @Override
-    protected final boolean mustCheckName(DetailAST ast) {
-        boolean returnValue = false;
+@Override
+protected final boolean mustCheckName(DetailAST ast) {
+	boolean returnValue = false;
 
-        final DetailAST modifiersAST =
-            ast.findFirstToken(TokenTypes.MODIFIERS);
-        final boolean isStaticFinal =
-            modifiersAST.findFirstToken(TokenTypes.LITERAL_STATIC) != null
-            && modifiersAST.findFirstToken(TokenTypes.FINAL) != null
-            || ScopeUtil.isInAnnotationBlock(ast)
-            || ScopeUtil.isInInterfaceBlock(ast);
-        if (isStaticFinal && shouldCheckInScope(modifiersAST)
-                && !ScopeUtil.isInCodeBlock(ast)) {
-            // Handle the serialVersionUID and serialPersistentFields constants
-            // which are used for Serialization. Cannot enforce rules on it. :-)
-            final DetailAST nameAST = ast.findFirstToken(TokenTypes.IDENT);
-            if (!"serialVersionUID".equals(nameAST.getText())
-                    && !"serialPersistentFields".equals(nameAST.getText())) {
-                returnValue = true;
-            }
-        }
+	final DetailAST modifiersAST =
+		ast.findFirstToken(TokenTypes.MODIFIERS);
+	final boolean isStaticFinal =
+		modifiersAST.findFirstToken(TokenTypes.LITERAL_STATIC) != null
+		&& modifiersAST.findFirstToken(TokenTypes.FINAL) != null
+		|| ScopeUtil.isInAnnotationBlock(ast)
+		|| ScopeUtil.isInInterfaceBlock(ast);
+	if (isStaticFinal && shouldCheckInScope(modifiersAST)
+	    && !ScopeUtil.isInCodeBlock(ast)) {
+		// Handle the serialVersionUID and serialPersistentFields constants
+		// which are used for Serialization. Cannot enforce rules on it. :-)
+		final DetailAST nameAST = ast.findFirstToken(TokenTypes.IDENT);
+		if (!"serialVersionUID".equals(nameAST.getText())
+		    && !"serialPersistentFields".equals(nameAST.getText())) {
+			returnValue = true;
+		}
+	}
 
-        return returnValue;
-    }
+	return returnValue;
+}
 
 }

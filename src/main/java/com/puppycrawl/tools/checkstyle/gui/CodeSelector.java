@@ -33,40 +33,40 @@ import com.puppycrawl.tools.checkstyle.api.DetailNode;
  */
 public class CodeSelector {
 
-    /** Editor. */
-    private final JTextArea editor;
-    /** Presentation model. */
-    private final CodeSelectorPresentation pModel;
+/** Editor. */
+private final JTextArea editor;
+/** Presentation model. */
+private final CodeSelectorPresentation pModel;
 
-    /**
-     * Constructor.
-     *
-     * @param node ast node.
-     * @param editor text area editor.
-     * @param lines2position list to map lines.
-     */
-    public CodeSelector(final Object node, final JTextArea editor,
-                        final List<Integer> lines2position) {
-        this.editor = editor;
-        if (node instanceof DetailAST) {
-            pModel = new CodeSelectorPresentation((DetailAST) node,
-                                                  new ArrayList<>(lines2position));
-        }
-        else {
-            pModel = new CodeSelectorPresentation((DetailNode) node,
-                                                  new ArrayList<>(lines2position));
-        }
-    }
+/**
+ * Constructor.
+ *
+ * @param node ast node.
+ * @param editor text area editor.
+ * @param lines2position list to map lines.
+ */
+public CodeSelector(final Object node, final JTextArea editor,
+                    final List<Integer> lines2position) {
+	this.editor = editor;
+	if (node instanceof DetailAST) {
+		pModel = new CodeSelectorPresentation((DetailAST) node,
+		                                      new ArrayList<>(lines2position));
+	}
+	else {
+		pModel = new CodeSelectorPresentation((DetailNode) node,
+		                                      new ArrayList<>(lines2position));
+	}
+}
 
-    /**
-     * Set selection.
-     */
-    public void select() {
-        pModel.findSelectionPositions();
-        editor.setSelectedTextColor(Color.blue);
-        editor.requestFocusInWindow();
-        editor.setCaretPosition(pModel.getSelectionStart());
-        editor.moveCaretPosition(pModel.getSelectionEnd());
-    }
+/**
+ * Set selection.
+ */
+public void select() {
+	pModel.findSelectionPositions();
+	editor.setSelectedTextColor(Color.blue);
+	editor.requestFocusInWindow();
+	editor.setCaretPosition(pModel.getSelectionStart());
+	editor.moveCaretPosition(pModel.getSelectionEnd());
+}
 
 }

@@ -30,66 +30,66 @@ import com.puppycrawl.tools.checkstyle.checks.design.InterfaceIsTypeCheck;
 
 public class XpathRegressionInterfaceIsTypeTest extends AbstractXpathTestSupport {
 
-    private final String checkName = InterfaceIsTypeCheck.class.getSimpleName();
+private final String checkName = InterfaceIsTypeCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess = new File(getPath(
-                                                "SuppressionXpathRegressionInterfaceIsType1.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess = new File(getPath(
+						    "SuppressionXpathRegressionInterfaceIsType1.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(InterfaceIsTypeCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(InterfaceIsTypeCheck.class);
 
-        final String[] expectedViolation = {
-            "3:1: " + getCheckMessage(InterfaceIsTypeCheck.class,
-                                      InterfaceIsTypeCheck.MSG_KEY),
-        };
+	final String[] expectedViolation = {
+		"3:1: " + getCheckMessage(InterfaceIsTypeCheck.class,
+		                          InterfaceIsTypeCheck.MSG_KEY),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/INTERFACE_DEF[./IDENT["
-                    + "@text='SuppressionXpathRegressionInterfaceIsType1']]",
-                    "/INTERFACE_DEF[./IDENT["
-                    + "@text='SuppressionXpathRegressionInterfaceIsType1']]/MODIFIERS",
-                    "/INTERFACE_DEF[./IDENT["
-                    + "@text='SuppressionXpathRegressionInterfaceIsType1']]"
-                    + "/MODIFIERS/LITERAL_PUBLIC"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/INTERFACE_DEF[./IDENT["
+		+ "@text='SuppressionXpathRegressionInterfaceIsType1']]",
+		"/INTERFACE_DEF[./IDENT["
+		+ "@text='SuppressionXpathRegressionInterfaceIsType1']]/MODIFIERS",
+		"/INTERFACE_DEF[./IDENT["
+		+ "@text='SuppressionXpathRegressionInterfaceIsType1']]"
+		+ "/MODIFIERS/LITERAL_PUBLIC"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 
-    @Test
-    public void testTwo() throws Exception {
-        final File fileToProcess = new File(getPath(
-                                                "SuppressionXpathRegressionInterfaceIsType2.java"));
+@Test
+public void testTwo() throws Exception {
+	final File fileToProcess = new File(getPath(
+						    "SuppressionXpathRegressionInterfaceIsType2.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(InterfaceIsTypeCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(InterfaceIsTypeCheck.class);
 
-        moduleConfig.addAttribute("allowMarkerInterfaces", "false");
+	moduleConfig.addAttribute("allowMarkerInterfaces", "false");
 
-        final String[] expectedViolation = {
-            "3:1: " + getCheckMessage(InterfaceIsTypeCheck.class,
-                                      InterfaceIsTypeCheck.MSG_KEY),
-        };
+	final String[] expectedViolation = {
+		"3:1: " + getCheckMessage(InterfaceIsTypeCheck.class,
+		                          InterfaceIsTypeCheck.MSG_KEY),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/INTERFACE_DEF[./IDENT["
-                    + "@text='SuppressionXpathRegressionInterfaceIsType2']]",
-                    "/INTERFACE_DEF[./IDENT["
-                    + "@text='SuppressionXpathRegressionInterfaceIsType2']]/MODIFIERS",
-                    "/INTERFACE_DEF[./IDENT["
-                    + "@text='SuppressionXpathRegressionInterfaceIsType2']]"
-                    + "/MODIFIERS/LITERAL_PUBLIC"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/INTERFACE_DEF[./IDENT["
+		+ "@text='SuppressionXpathRegressionInterfaceIsType2']]",
+		"/INTERFACE_DEF[./IDENT["
+		+ "@text='SuppressionXpathRegressionInterfaceIsType2']]/MODIFIERS",
+		"/INTERFACE_DEF[./IDENT["
+		+ "@text='SuppressionXpathRegressionInterfaceIsType2']]"
+		+ "/MODIFIERS/LITERAL_PUBLIC"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 }

@@ -30,33 +30,33 @@ import com.puppycrawl.tools.checkstyle.checks.design.OneTopLevelClassCheck;
 
 public class XpathRegressionOneTopLevelClassTest extends AbstractXpathTestSupport {
 
-    private final String checkName = OneTopLevelClassCheck.class.getSimpleName();
+private final String checkName = OneTopLevelClassCheck.class.getSimpleName();
 
-    @Override
-    protected String getCheckName() {
-        return checkName;
-    }
+@Override
+protected String getCheckName() {
+	return checkName;
+}
 
-    @Test
-    public void testOne() throws Exception {
-        final File fileToProcess =
-            new File(getPath("SuppressionXpathRegressionOneTopLevelClass.java"));
+@Test
+public void testOne() throws Exception {
+	final File fileToProcess =
+		new File(getPath("SuppressionXpathRegressionOneTopLevelClass.java"));
 
-        final DefaultConfiguration moduleConfig =
-            createModuleConfig(OneTopLevelClassCheck.class);
+	final DefaultConfiguration moduleConfig =
+		createModuleConfig(OneTopLevelClassCheck.class);
 
-        final String[] expectedViolation = {
-            "7:1: " + getCheckMessage(OneTopLevelClassCheck.class,
-                                      OneTopLevelClassCheck.MSG_KEY, "ViolatingSecondClass"),
-        };
+	final String[] expectedViolation = {
+		"7:1: " + getCheckMessage(OneTopLevelClassCheck.class,
+		                          OneTopLevelClassCheck.MSG_KEY, "ViolatingSecondClass"),
+	};
 
-        final List<String> expectedXpathQueries = Arrays.asList(
-                    "/CLASS_DEF[./IDENT[@text='ViolatingSecondClass']]",
-                    "/CLASS_DEF[./IDENT[@text='ViolatingSecondClass']]/MODIFIERS",
-                    "/CLASS_DEF[./IDENT[@text='ViolatingSecondClass']]/LITERAL_CLASS"
-                );
+	final List<String> expectedXpathQueries = Arrays.asList(
+		"/CLASS_DEF[./IDENT[@text='ViolatingSecondClass']]",
+		"/CLASS_DEF[./IDENT[@text='ViolatingSecondClass']]/MODIFIERS",
+		"/CLASS_DEF[./IDENT[@text='ViolatingSecondClass']]/LITERAL_CLASS"
+		);
 
-        runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                         expectedXpathQueries);
-    }
+	runVerifications(moduleConfig, fileToProcess, expectedViolation,
+	                 expectedXpathQueries);
+}
 }
