@@ -13,7 +13,7 @@ public class SuppressionXpathRegressionAvoidDoubleBraceInitializationTwo {
     }
 
     enum InnerEnum {
-        ;
+;
         {}
     }
 }
