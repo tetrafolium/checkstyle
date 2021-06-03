@@ -182,7 +182,7 @@ pitest-utils)
 
 # pitesttyle-gui)
 #   mvn -e -P$1 clean test org.pitest:pitest-maven:mutationCoverage;
-#   # post validation is skipped, we do not test gui throughly
+#   # post validation is skipped, we do not test gui thoroughly
 #   ;;
 
 *)
