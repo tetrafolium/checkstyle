@@ -142,34 +142,34 @@ public class FinalClassCheck
         final DetailAST modifiers = ast.findFirstToken(TokenTypes.MODIFIERS);
 
         switch (ast.getType()) {
-            case TokenTypes.PACKAGE_DEF:
-                packageName = extractQualifiedName(ast.getFirstChild().getNextSibling());
-                break;
+        case TokenTypes.PACKAGE_DEF:
+            packageName = extractQualifiedName(ast.getFirstChild().getNextSibling());
+            break;
 
-            case TokenTypes.CLASS_DEF:
-                registerNestedSubclassToOuterSuperClasses(ast);
+        case TokenTypes.CLASS_DEF:
+            registerNestedSubclassToOuterSuperClasses(ast);
 
-                final boolean isFinal = modifiers.findFirstToken(TokenTypes.FINAL) != null;
-                final boolean isAbstract = modifiers.findFirstToken(TokenTypes.ABSTRACT) != null;
+            final boolean isFinal = modifiers.findFirstToken(TokenTypes.FINAL) != null;
+            final boolean isAbstract = modifiers.findFirstToken(TokenTypes.ABSTRACT) != null;
 
-                final String qualifiedClassName = getQualifiedClassName(ast);
-                classes.push(new ClassDesc(qualifiedClassName, isFinal, isAbstract));
-                break;
+            final String qualifiedClassName = getQualifiedClassName(ast);
+            classes.push(new ClassDesc(qualifiedClassName, isFinal, isAbstract));
+            break;
 
-            case TokenTypes.CTOR_DEF:
-                if (!ScopeUtil.isInEnumBlock(ast) && !ScopeUtil.isInRecordBlock(ast)) {
-                    final ClassDesc desc = classes.peek();
-                    if (modifiers.findFirstToken(TokenTypes.LITERAL_PRIVATE) == null) {
-                        desc.registerNonPrivateCtor();
-                    }
-                    else {
-                        desc.registerPrivateCtor();
-                    }
+        case TokenTypes.CTOR_DEF:
+            if (!ScopeUtil.isInEnumBlock(ast) && !ScopeUtil.isInRecordBlock(ast)) {
+                final ClassDesc desc = classes.peek();
+                if (modifiers.findFirstToken(TokenTypes.LITERAL_PRIVATE) == null) {
+                    desc.registerNonPrivateCtor();
                 }
-                break;
+                else {
+                    desc.registerPrivateCtor();
+                }
+            }
+            break;
 
-            default:
-                throw new IllegalStateException(ast.toString());
+        default:
+            throw new IllegalStateException(ast.toString());
         }
     }
 
@@ -178,11 +178,11 @@ public class FinalClassCheck
         if (ast.getType() == TokenTypes.CLASS_DEF) {
             final ClassDesc desc = classes.pop();
             if (desc.isWithPrivateCtor()
-                && !desc.isDeclaredAsAbstract()
-                && !desc.isDeclaredAsFinal()
-                && !desc.isWithNonPrivateCtor()
-                && !desc.isWithNestedSubclass()
-                && !ScopeUtil.isInInterfaceOrAnnotationBlock(ast)) {
+                    && !desc.isDeclaredAsAbstract()
+                    && !desc.isDeclaredAsFinal()
+                    && !desc.isWithNonPrivateCtor()
+                    && !desc.isWithNestedSubclass()
+                    && !ScopeUtil.isInInterfaceOrAnnotationBlock(ast)) {
                 final String qualifiedName = desc.getQualifiedName();
                 final String className = getClassNameFromQualifiedName(qualifiedName);
                 log(ast, MSG_KEY, className);
@@ -213,7 +213,7 @@ public class FinalClassCheck
             for (ClassDesc classDesc : classes) {
                 final String classDescQualifiedName = classDesc.getQualifiedName();
                 if (doesNameInExtendMatchSuperClassName(classDescQualifiedName,
-                        currentAstSuperClassName)) {
+                                                        currentAstSuperClassName)) {
                     classDesc.registerNestedSubclass();
                 }
             }
@@ -246,7 +246,7 @@ public class FinalClassCheck
      * @return qualified class name(package + class name)
      */
     private static String getQualifiedClassName(String packageName, String outerClassQualifiedName,
-                                                String className) {
+            String className) {
         final String qualifiedClassName;
 
         if (outerClassQualifiedName == null) {
@@ -287,7 +287,7 @@ public class FinalClassCheck
      *         false otherwise
      */
     private static boolean doesNameInExtendMatchSuperClassName(String superClassQualifiedName,
-                                                               String superClassInExtendClause) {
+            String superClassInExtendClause) {
         String superClassNormalizedName = superClassQualifiedName;
         if (!superClassInExtendClause.contains(PACKAGE_SEPARATOR)) {
             superClassNormalizedName = getClassNameFromQualifiedName(superClassQualifiedName);
@@ -336,7 +336,7 @@ public class FinalClassCheck
          *         class declared as abstract
          */
         /* package */ ClassDesc(String qualifiedName, boolean declaredAsFinal,
-                boolean declaredAsAbstract) {
+                                boolean declaredAsAbstract) {
             this.qualifiedName = qualifiedName;
             this.declaredAsFinal = declaredAsFinal;
             this.declaredAsAbstract = declaredAsAbstract;

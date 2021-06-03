@@ -3,7 +3,7 @@ package org.checkstyle.suppressionxpathfilter.indentation;
 public class SuppressionXpathRegressionIndentationLambdaTest1 {
     void test() {
         MyLambda getA =
-        (a) -> a; // warn
+            (a) -> a; // warn
     }
 }
 

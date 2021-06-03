@@ -85,7 +85,7 @@ public class SuppressFilterElement
      * @param columns columns CSV values and ranges for column number filtering.
      */
     public SuppressFilterElement(String files, String checks,
-                           String message, String modId, String lines, String columns) {
+                                 String message, String modId, String lines, String columns) {
         filePattern = files;
         if (files == null) {
             fileRegexp = null;
@@ -135,7 +135,7 @@ public class SuppressFilterElement
      * @param columns CSV for columns
      */
     public SuppressFilterElement(Pattern files, Pattern checks, Pattern message, String moduleId,
-            String lines, String columns) {
+                                 String lines, String columns) {
         if (files == null) {
             filePattern = null;
             fileRegexp = null;
@@ -182,8 +182,8 @@ public class SuppressFilterElement
     @Override
     public boolean accept(AuditEvent event) {
         return !isFileNameAndModuleNameMatching(event)
-                || !isMessageNameMatching(event)
-                || !isLineAndColumnMatching(event);
+               || !isMessageNameMatching(event)
+               || !isLineAndColumnMatching(event);
     }
 
     /**
@@ -194,10 +194,10 @@ public class SuppressFilterElement
      */
     private boolean isFileNameAndModuleNameMatching(AuditEvent event) {
         return event.getFileName() != null
-                && (fileRegexp == null || fileRegexp.matcher(event.getFileName()).find())
-                && event.getLocalizedMessage() != null
-                && (moduleId == null || moduleId.equals(event.getModuleId()))
-                && (checkRegexp == null || checkRegexp.matcher(event.getSourceName()).find());
+               && (fileRegexp == null || fileRegexp.matcher(event.getFileName()).find())
+               && event.getLocalizedMessage() != null
+               && (moduleId == null || moduleId.equals(event.getModuleId()))
+               && (checkRegexp == null || checkRegexp.matcher(event.getSourceName()).find());
     }
 
     /**
@@ -218,14 +218,14 @@ public class SuppressFilterElement
      */
     private boolean isLineAndColumnMatching(AuditEvent event) {
         return lineFilter == null && columnFilter == null
-                || lineFilter != null && lineFilter.accept(event.getLine())
-                || columnFilter != null && columnFilter.accept(event.getColumn());
+               || lineFilter != null && lineFilter.accept(event.getLine())
+               || columnFilter != null && columnFilter.accept(event.getColumn());
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(filePattern, checkPattern, messagePattern, moduleId, linesCsv,
-                columnsCsv);
+                            columnsCsv);
     }
 
     @Override
@@ -238,11 +238,11 @@ public class SuppressFilterElement
         }
         final SuppressFilterElement suppressElement = (SuppressFilterElement) other;
         return Objects.equals(filePattern, suppressElement.filePattern)
-                && Objects.equals(checkPattern, suppressElement.checkPattern)
-                && Objects.equals(messagePattern, suppressElement.messagePattern)
-                && Objects.equals(moduleId, suppressElement.moduleId)
-                && Objects.equals(linesCsv, suppressElement.linesCsv)
-                && Objects.equals(columnsCsv, suppressElement.columnsCsv);
+               && Objects.equals(checkPattern, suppressElement.checkPattern)
+               && Objects.equals(messagePattern, suppressElement.messagePattern)
+               && Objects.equals(moduleId, suppressElement.moduleId)
+               && Objects.equals(linesCsv, suppressElement.linesCsv)
+               && Objects.equals(columnsCsv, suppressElement.columnsCsv);
     }
 
 }

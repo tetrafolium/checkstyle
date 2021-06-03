@@ -258,37 +258,37 @@ public class JavaNCSSCheck extends AbstractCheck {
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.CLASS_DEF,
-            TokenTypes.INTERFACE_DEF,
-            TokenTypes.METHOD_DEF,
-            TokenTypes.CTOR_DEF,
-            TokenTypes.INSTANCE_INIT,
-            TokenTypes.STATIC_INIT,
-            TokenTypes.PACKAGE_DEF,
-            TokenTypes.IMPORT,
-            TokenTypes.VARIABLE_DEF,
-            TokenTypes.CTOR_CALL,
-            TokenTypes.SUPER_CTOR_CALL,
-            TokenTypes.LITERAL_IF,
-            TokenTypes.LITERAL_ELSE,
-            TokenTypes.LITERAL_WHILE,
-            TokenTypes.LITERAL_DO,
-            TokenTypes.LITERAL_FOR,
-            TokenTypes.LITERAL_SWITCH,
-            TokenTypes.LITERAL_BREAK,
-            TokenTypes.LITERAL_CONTINUE,
-            TokenTypes.LITERAL_RETURN,
-            TokenTypes.LITERAL_THROW,
-            TokenTypes.LITERAL_SYNCHRONIZED,
-            TokenTypes.LITERAL_CATCH,
-            TokenTypes.LITERAL_FINALLY,
-            TokenTypes.EXPR,
-            TokenTypes.LABELED_STAT,
-            TokenTypes.LITERAL_CASE,
-            TokenTypes.LITERAL_DEFAULT,
-            TokenTypes.RECORD_DEF,
-            TokenTypes.COMPACT_CTOR_DEF,
-        };
+                   TokenTypes.CLASS_DEF,
+                   TokenTypes.INTERFACE_DEF,
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.CTOR_DEF,
+                   TokenTypes.INSTANCE_INIT,
+                   TokenTypes.STATIC_INIT,
+                   TokenTypes.PACKAGE_DEF,
+                   TokenTypes.IMPORT,
+                   TokenTypes.VARIABLE_DEF,
+                   TokenTypes.CTOR_CALL,
+                   TokenTypes.SUPER_CTOR_CALL,
+                   TokenTypes.LITERAL_IF,
+                   TokenTypes.LITERAL_ELSE,
+                   TokenTypes.LITERAL_WHILE,
+                   TokenTypes.LITERAL_DO,
+                   TokenTypes.LITERAL_FOR,
+                   TokenTypes.LITERAL_SWITCH,
+                   TokenTypes.LITERAL_BREAK,
+                   TokenTypes.LITERAL_CONTINUE,
+                   TokenTypes.LITERAL_RETURN,
+                   TokenTypes.LITERAL_THROW,
+                   TokenTypes.LITERAL_SYNCHRONIZED,
+                   TokenTypes.LITERAL_CATCH,
+                   TokenTypes.LITERAL_FINALLY,
+                   TokenTypes.EXPR,
+                   TokenTypes.LABELED_STAT,
+                   TokenTypes.LITERAL_CASE,
+                   TokenTypes.LITERAL_DEFAULT,
+                   TokenTypes.RECORD_DEF,
+                   TokenTypes.COMPACT_CTOR_DEF,
+               };
     }
 
     @Override
@@ -309,8 +309,8 @@ public class JavaNCSSCheck extends AbstractCheck {
         final int tokenType = ast.getType();
 
         if (tokenType == TokenTypes.CLASS_DEF
-            || tokenType == TokenTypes.RECORD_DEF
-            || isMethodOrCtorOrInitDefinition(tokenType)) {
+                || tokenType == TokenTypes.RECORD_DEF
+                || isMethodOrCtorOrInitDefinition(tokenType)) {
             // add a counter for this class/method
             counters.push(new Counter());
         }
@@ -444,7 +444,7 @@ public class JavaNCSSCheck extends AbstractCheck {
         final int parentType = ast.getParent().getType();
 
         if (parentType == TokenTypes.SLIST
-            || parentType == TokenTypes.OBJBLOCK) {
+                || parentType == TokenTypes.OBJBLOCK) {
             final DetailAST prevSibling = ast.getPreviousSibling();
 
             // is countable if no previous sibling is found or
@@ -452,7 +452,7 @@ public class JavaNCSSCheck extends AbstractCheck {
             // This is done because multiple assignment on one line are counted
             // as 1
             countable = prevSibling == null
-                    || prevSibling.getType() != TokenTypes.COMMA;
+                        || prevSibling.getType() != TokenTypes.COMMA;
         }
 
         return countable;
@@ -472,21 +472,21 @@ public class JavaNCSSCheck extends AbstractCheck {
         // or direct child of label,if,else,do,while,for
         final int parentType = ast.getParent().getType();
         switch (parentType) {
-            case TokenTypes.SLIST:
-            case TokenTypes.LABELED_STAT:
-            case TokenTypes.LITERAL_FOR:
-            case TokenTypes.LITERAL_DO:
-            case TokenTypes.LITERAL_WHILE:
-            case TokenTypes.LITERAL_IF:
-            case TokenTypes.LITERAL_ELSE:
-                // don't count if or loop conditions
-                final DetailAST prevSibling = ast.getPreviousSibling();
-                countable = prevSibling == null
-                    || prevSibling.getType() != TokenTypes.LPAREN;
-                break;
-            default:
-                countable = false;
-                break;
+        case TokenTypes.SLIST:
+        case TokenTypes.LABELED_STAT:
+        case TokenTypes.LITERAL_FOR:
+        case TokenTypes.LITERAL_DO:
+        case TokenTypes.LITERAL_WHILE:
+        case TokenTypes.LITERAL_IF:
+        case TokenTypes.LITERAL_ELSE:
+            // don't count if or loop conditions
+            final DetailAST prevSibling = ast.getPreviousSibling();
+            countable = prevSibling == null
+                        || prevSibling.getType() != TokenTypes.LPAREN;
+            break;
+        default:
+            countable = false;
+            break;
         }
         return countable;
     }
@@ -499,10 +499,10 @@ public class JavaNCSSCheck extends AbstractCheck {
      */
     private static boolean isMethodOrCtorOrInitDefinition(int tokenType) {
         return tokenType == TokenTypes.METHOD_DEF
-                || tokenType == TokenTypes.COMPACT_CTOR_DEF
-                || tokenType == TokenTypes.CTOR_DEF
-                || tokenType == TokenTypes.STATIC_INIT
-                || tokenType == TokenTypes.INSTANCE_INIT;
+               || tokenType == TokenTypes.COMPACT_CTOR_DEF
+               || tokenType == TokenTypes.CTOR_DEF
+               || tokenType == TokenTypes.STATIC_INIT
+               || tokenType == TokenTypes.INSTANCE_INIT;
     }
 
     /**

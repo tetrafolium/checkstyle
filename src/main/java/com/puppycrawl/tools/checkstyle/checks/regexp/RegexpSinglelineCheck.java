@@ -214,14 +214,14 @@ public class RegexpSinglelineCheck extends AbstractFileSetCheck {
     @Override
     public void beginProcessing(String charset) {
         final DetectorOptions options = DetectorOptions.newBuilder()
-            .reporter(this)
-            .compileFlags(0)
-            .format(format)
-            .message(message)
-            .minimum(minimum)
-            .maximum(maximum)
-            .ignoreCase(ignoreCase)
-            .build();
+                                        .reporter(this)
+                                        .compileFlags(0)
+                                        .format(format)
+                                        .message(message)
+                                        .minimum(minimum)
+                                        .maximum(maximum)
+                                        .ignoreCase(ignoreCase)
+                                        .build();
         detector = new SinglelineDetector(options);
     }
 

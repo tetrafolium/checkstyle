@@ -245,11 +245,11 @@ public class JavadocTypeCheck
 
     /** Pattern to match type name within angle brackets in javadoc param tag. */
     private static final Pattern TYPE_NAME_IN_JAVADOC_TAG =
-            Pattern.compile("\\s*<([^>]+)>.*");
+        Pattern.compile("\\s*<([^>]+)>.*");
 
     /** Pattern to split type name field in javadoc param tag. */
     private static final Pattern TYPE_NAME_IN_JAVADOC_TAG_SPLITTER =
-            Pattern.compile("\\s+");
+        Pattern.compile("\\s+");
 
     /** Specify the visibility scope where Javadoc comments are checked. */
     private Scope scope = Scope.PRIVATE;
@@ -346,12 +346,12 @@ public class JavadocTypeCheck
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.INTERFACE_DEF,
-            TokenTypes.CLASS_DEF,
-            TokenTypes.ENUM_DEF,
-            TokenTypes.ANNOTATION_DEF,
-            TokenTypes.RECORD_DEF,
-        };
+                   TokenTypes.INTERFACE_DEF,
+                   TokenTypes.CLASS_DEF,
+                   TokenTypes.ENUM_DEF,
+                   TokenTypes.ANNOTATION_DEF,
+                   TokenTypes.RECORD_DEF,
+               };
     }
 
     @Override
@@ -370,9 +370,9 @@ public class JavadocTypeCheck
                 if (ScopeUtil.isOuterMostType(ast)) {
                     // don't check author/version for inner classes
                     checkTag(ast, tags, JavadocTagInfo.AUTHOR.getName(),
-                            authorFormat);
+                             authorFormat);
                     checkTag(ast, tags, JavadocTagInfo.VERSION.getName(),
-                            versionFormat);
+                             versionFormat);
                 }
 
                 final List<String> typeParamNames =
@@ -415,12 +415,12 @@ public class JavadocTypeCheck
         final Scope surroundingScope = ScopeUtil.getSurroundingScope(ast);
 
         return customScope.isIn(scope)
-            && (surroundingScope == null || surroundingScope.isIn(scope))
-            && (excludeScope == null
-                || !customScope.isIn(excludeScope)
-                || surroundingScope != null
-                && !surroundingScope.isIn(excludeScope))
-            && !AnnotationUtil.containsAnnotation(ast, allowedAnnotations);
+               && (surroundingScope == null || surroundingScope.isIn(scope))
+               && (excludeScope == null
+                   || !customScope.isIn(excludeScope)
+                   || surroundingScope != null
+                   && !surroundingScope.isIn(excludeScope))
+               && !AnnotationUtil.containsAnnotation(ast, allowedAnnotations);
     }
 
     /**
@@ -431,7 +431,7 @@ public class JavadocTypeCheck
      */
     private List<JavadocTag> getJavadocTags(TextBlock textBlock) {
         final JavadocTags tags = JavadocUtil.getJavadocTags(textBlock,
-            JavadocUtil.JavadocTagType.BLOCK);
+                                 JavadocUtil.JavadocTagType.BLOCK);
         if (!allowUnknownTags) {
             for (final InvalidJavadocTag tag : tags.getInvalidTags()) {
                 log(tag.getLine(), tag.getCol(), MSG_UNKNOWN_TAG,
@@ -482,9 +482,9 @@ public class JavadocTypeCheck
                                         String recordComponentName) {
 
         final boolean found = tags
-            .stream()
-            .filter(JavadocTag::isParamTag)
-            .anyMatch(tag -> tag.getFirstArg().indexOf(recordComponentName) == 0);
+                              .stream()
+                              .filter(JavadocTag::isParamTag)
+                              .anyMatch(tag -> tag.getFirstArg().indexOf(recordComponentName) == 0);
 
         if (!found) {
             log(ast, MSG_MISSING_TAG, JavadocTagInfo.PARAM.getText()
@@ -501,14 +501,14 @@ public class JavadocTypeCheck
      * @param typeParamName the name of the type parameter
      */
     private void checkTypeParamTag(DetailAST ast,
-            List<JavadocTag> tags, String typeParamName) {
+                                   List<JavadocTag> tags, String typeParamName) {
         final String typeParamNameWithBrackets =
             OPEN_ANGLE_BRACKET + typeParamName + CLOSE_ANGLE_BRACKET;
 
         final boolean found = tags
-            .stream()
-            .filter(JavadocTag::isParamTag)
-            .anyMatch(tag -> tag.getFirstArg().indexOf(typeParamNameWithBrackets) == 0);
+                              .stream()
+                              .filter(JavadocTag::isParamTag)
+                              .anyMatch(tag -> tag.getFirstArg().indexOf(typeParamNameWithBrackets) == 0);
 
         if (!found) {
             log(ast, MSG_MISSING_TAG, JavadocTagInfo.PARAM.getText()
@@ -532,7 +532,7 @@ public class JavadocTypeCheck
             if (tag.isParamTag()) {
                 final String paramName = extractParamNameFromTag(tag);
                 final boolean found = typeParamNames.contains(paramName)
-                        || recordComponentNames.contains(paramName);
+                                      || recordComponentNames.contains(paramName);
 
                 if (!found) {
                     final String actualParamName =
@@ -555,7 +555,7 @@ public class JavadocTypeCheck
     private static String extractParamNameFromTag(JavadocTag tag) {
         final String typeParamName;
         final Matcher matchInAngleBrackets =
-                TYPE_NAME_IN_JAVADOC_TAG.matcher(tag.getFirstArg());
+            TYPE_NAME_IN_JAVADOC_TAG.matcher(tag.getFirstArg());
         if (matchInAngleBrackets.find()) {
             typeParamName = matchInAngleBrackets.group(1).trim();
         }
@@ -577,10 +577,10 @@ public class JavadocTypeCheck
 
         if (components != null) {
             TokenUtil.forEachChild(components,
-                TokenTypes.RECORD_COMPONENT_DEF, component -> {
-                    final DetailAST ident = component.findFirstToken(TokenTypes.IDENT);
-                    componentList.add(ident.getText());
-                });
+            TokenTypes.RECORD_COMPONENT_DEF, component -> {
+                final DetailAST ident = component.findFirstToken(TokenTypes.IDENT);
+                componentList.add(ident.getText());
+            });
         }
 
         return componentList;

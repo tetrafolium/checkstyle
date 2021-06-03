@@ -4,7 +4,7 @@ public class SuppressionXpathRegressionAvoidNestedBlocksVariable {
 
     void varAssign() {
         int whichIsWhich = 0;
-        { // warn
+        {   // warn
             whichIsWhich = 2;
         }
     }

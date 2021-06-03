@@ -102,8 +102,8 @@ public class IllegalTokenCheck
     @Override
     public int[] getDefaultTokens() {
         return new int[] {
-            TokenTypes.LABELED_STAT,
-        };
+                   TokenTypes.LABELED_STAT,
+               };
     }
 
     @Override
@@ -139,16 +139,16 @@ public class IllegalTokenCheck
     private static String convertToString(DetailAST ast) {
         final String tokenText;
         switch (ast.getType()) {
-            case TokenTypes.LABELED_STAT:
-                tokenText = ast.getFirstChild().getText() + ast.getText();
-                break;
-            // multiline tokens need to become singlelined
-            case TokenTypes.COMMENT_CONTENT:
-                tokenText = JavadocUtil.escapeAllControlChars(ast.getText());
-                break;
-            default:
-                tokenText = ast.getText();
-                break;
+        case TokenTypes.LABELED_STAT:
+            tokenText = ast.getFirstChild().getText() + ast.getText();
+            break;
+        // multiline tokens need to become singlelined
+        case TokenTypes.COMMENT_CONTENT:
+            tokenText = JavadocUtil.escapeAllControlChars(ast.getText());
+            break;
+        default:
+            tokenText = ast.getText();
+            break;
         }
         return tokenText;
     }

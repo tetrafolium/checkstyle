@@ -67,8 +67,8 @@ public final class ScopeUtil {
     public static Scope getSurroundingScope(DetailAST node) {
         Scope returnValue = null;
         for (DetailAST token = node.getParent();
-             token != null;
-             token = token.getParent()) {
+                token != null;
+                token = token.getParent()) {
             final int type = token.getType();
             if (TokenUtil.isTypeDeclaration(type)) {
                 final DetailAST mods =
@@ -140,13 +140,13 @@ public final class ScopeUtil {
 
         // Loop up looking for a containing interface block
         for (DetailAST token = node.getParent();
-             token != null && !returnValue;
-             token = token.getParent()) {
+                token != null && !returnValue;
+                token = token.getParent()) {
             if (token.getType() == tokenType) {
                 returnValue = true;
             }
             else if (token.getType() == TokenTypes.LITERAL_NEW
-                    || TokenUtil.isTypeDeclaration(token.getType())) {
+                     || TokenUtil.isTypeDeclaration(token.getType())) {
                 break;
             }
         }
@@ -177,14 +177,14 @@ public final class ScopeUtil {
 
         // Loop up looking for a containing interface block
         for (DetailAST token = node.getParent();
-             token != null && !returnValue;
-             token = token.getParent()) {
+                token != null && !returnValue;
+                token = token.getParent()) {
             if (token.getType() == TokenTypes.ENUM_DEF) {
                 returnValue = true;
             }
             else if (TokenUtil.isOfType(token, TokenTypes.INTERFACE_DEF,
-                TokenTypes.ANNOTATION_DEF, TokenTypes.CLASS_DEF,
-                TokenTypes.LITERAL_NEW)) {
+                                        TokenTypes.ANNOTATION_DEF, TokenTypes.CLASS_DEF,
+                                        TokenTypes.LITERAL_NEW)) {
                 break;
             }
         }
@@ -212,8 +212,8 @@ public final class ScopeUtil {
 
         // Loop up looking for a containing code block
         for (DetailAST token = node.getParent();
-             token != null;
-             token = token.getParent()) {
+                token != null;
+                token = token.getParent()) {
             if (TokenUtil.isOfType(token, tokenTypes)) {
                 returnValue = true;
                 break;
@@ -232,8 +232,8 @@ public final class ScopeUtil {
     public static boolean isOuterMostType(DetailAST node) {
         boolean returnValue = true;
         for (DetailAST parent = node.getParent();
-             parent != null;
-             parent = parent.getParent()) {
+                parent != null;
+                parent = parent.getParent()) {
             if (TokenUtil.isTypeDeclaration(parent.getType())) {
                 returnValue = false;
                 break;
@@ -257,7 +257,7 @@ public final class ScopeUtil {
         if (node.getType() == TokenTypes.VARIABLE_DEF) {
             final DetailAST parent = node.getParent();
             localVariableDef = TokenUtil.isOfType(parent, TokenTypes.SLIST,
-                                TokenTypes.FOR_INIT, TokenTypes.FOR_EACH_CLAUSE);
+                                                  TokenTypes.FOR_INIT, TokenTypes.FOR_EACH_CLAUSE);
         }
         // catch parameter?
         if (node.getType() == TokenTypes.PARAMETER_DEF) {
@@ -281,7 +281,7 @@ public final class ScopeUtil {
      */
     public static boolean isClassFieldDef(DetailAST node) {
         return node.getType() == TokenTypes.VARIABLE_DEF
-                && !isLocalVariableDef(node);
+               && !isLocalVariableDef(node);
     }
 
     /**

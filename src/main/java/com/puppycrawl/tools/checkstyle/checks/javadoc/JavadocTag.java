@@ -98,9 +98,9 @@ public class JavadocTag {
     @Override
     public String toString() {
         return "JavadocTag[tag='" + tagInfo.getName()
-                + "' lineNo=" + lineNo
-                + ", columnNo=" + columnNo
-                + ", firstArg='" + firstArg + "']";
+               + "' lineNo=" + lineNo
+               + ", columnNo=" + columnNo
+               + ", firstArg='" + firstArg + "']";
     }
 
     /**
@@ -128,7 +128,7 @@ public class JavadocTag {
      */
     public boolean isThrowsTag() {
         return tagInfo == JavadocTagInfo.THROWS
-            || tagInfo == JavadocTagInfo.EXCEPTION;
+               || tagInfo == JavadocTagInfo.EXCEPTION;
     }
 
     /**
@@ -156,11 +156,11 @@ public class JavadocTag {
      */
     public boolean canReferenceImports() {
         return tagInfo == JavadocTagInfo.SEE
-                || tagInfo == JavadocTagInfo.LINK
-                || tagInfo == JavadocTagInfo.VALUE
-                || tagInfo == JavadocTagInfo.LINKPLAIN
-                || tagInfo == JavadocTagInfo.THROWS
-                || tagInfo == JavadocTagInfo.EXCEPTION;
+               || tagInfo == JavadocTagInfo.LINK
+               || tagInfo == JavadocTagInfo.VALUE
+               || tagInfo == JavadocTagInfo.LINKPLAIN
+               || tagInfo == JavadocTagInfo.THROWS
+               || tagInfo == JavadocTagInfo.EXCEPTION;
     }
 
 }

@@ -38,61 +38,61 @@ public class XpathRegressionNoFinalizerTest extends AbstractXpathTestSupport {
     @Test
     public void testOne() throws Exception {
         final File fileToProcess = new File(
-                getPath("SuppressionXpathRegressionNoFinalizer1.java"));
+            getPath("SuppressionXpathRegressionNoFinalizer1.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(NoFinalizerCheck.class);
+            createModuleConfig(NoFinalizerCheck.class);
 
         final String[] expectedViolation = {
             "8:5: " + getCheckMessage(NoFinalizerCheck.class,
-                    NoFinalizerCheck.MSG_KEY),
+                                      NoFinalizerCheck.MSG_KEY),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoFinalizer1']]"
-                + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='finalize']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoFinalizer1']]"
-                + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='finalize']]/MODIFIERS",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoFinalizer1']]"
-                + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='finalize']]/MODIFIERS/LITERAL_PROTECTED"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoFinalizer1']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='finalize']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoFinalizer1']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='finalize']]/MODIFIERS",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoFinalizer1']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='finalize']]/MODIFIERS/LITERAL_PROTECTED"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess = new File(
-                getPath("SuppressionXpathRegressionNoFinalizer2.java"));
+            getPath("SuppressionXpathRegressionNoFinalizer2.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(NoFinalizerCheck.class);
+            createModuleConfig(NoFinalizerCheck.class);
 
         final String[] expectedViolation = {
             "10:9: " + getCheckMessage(NoFinalizerCheck.class,
-                    NoFinalizerCheck.MSG_KEY),
+                                       NoFinalizerCheck.MSG_KEY),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoFinalizer2']]"
-                + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='InnerClass']]/OBJBLOCK/"
-                + "METHOD_DEF[./IDENT[@text='finalize']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoFinalizer2']]"
-                + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='InnerClass']]/OBJBLOCK/"
-                + "METHOD_DEF[./IDENT[@text='finalize']]/MODIFIERS",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoFinalizer2']]"
-                + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='InnerClass']]/OBJBLOCK/"
-                + "METHOD_DEF[./IDENT[@text='finalize']]/MODIFIERS/"
-                + "ANNOTATION[./IDENT[@text='Override']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoFinalizer2']]"
-                + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='InnerClass']]/OBJBLOCK/"
-                + "METHOD_DEF[./IDENT[@text='finalize']]/MODIFIERS/"
-                + "ANNOTATION[./IDENT[@text='Override']]/AT"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoFinalizer2']]"
+                    + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='InnerClass']]/OBJBLOCK/"
+                    + "METHOD_DEF[./IDENT[@text='finalize']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoFinalizer2']]"
+                    + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='InnerClass']]/OBJBLOCK/"
+                    + "METHOD_DEF[./IDENT[@text='finalize']]/MODIFIERS",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoFinalizer2']]"
+                    + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='InnerClass']]/OBJBLOCK/"
+                    + "METHOD_DEF[./IDENT[@text='finalize']]/MODIFIERS/"
+                    + "ANNOTATION[./IDENT[@text='Override']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoFinalizer2']]"
+                    + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='InnerClass']]/OBJBLOCK/"
+                    + "METHOD_DEF[./IDENT[@text='finalize']]/MODIFIERS/"
+                    + "ANNOTATION[./IDENT[@text='Override']]/AT"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
 }

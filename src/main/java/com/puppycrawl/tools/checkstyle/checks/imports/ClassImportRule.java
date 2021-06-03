@@ -37,7 +37,7 @@ class ClassImportRule extends AbstractImportRule {
      *        expression.
      */
     /* package */  ClassImportRule(final boolean allow, final boolean localOnly,
-        final String className, final boolean regExp) {
+                                   final String className, final boolean regExp) {
         super(allow, localOnly, regExp);
         this.className = className;
     }

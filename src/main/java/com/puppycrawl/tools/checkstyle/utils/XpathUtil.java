@@ -123,7 +123,7 @@ public final class XpathUtil {
      * @return children list
      */
     public static List<AbstractNode> createChildren(AbstractNode root, AbstractNode parent,
-                                                    DetailAST firstChild) {
+            DetailAST firstChild) {
         DetailAST currentChild = firstChild;
         final int depth = parent.getDepth() + 1;
         final List<AbstractNode> result = new ArrayList<>();
@@ -170,23 +170,23 @@ public final class XpathUtil {
      * @throws IOException if an error occurs
      */
     public static String printXpathBranch(String xpath, File file) throws CheckstyleException,
-            IOException {
+        IOException {
         final XPathEvaluator xpathEvaluator = new XPathEvaluator(Configuration.newConfiguration());
         try {
             final RootNode rootNode = new RootNode(JavaParser.parseFile(file,
-                JavaParser.Options.WITH_COMMENTS));
+                                                   JavaParser.Options.WITH_COMMENTS));
             final XPathExpression xpathExpression = xpathEvaluator.createExpression(xpath);
             final XPathDynamicContext xpathDynamicContext =
                 xpathExpression.createDynamicContext(rootNode);
             final List<Item> matchingItems = xpathExpression.evaluate(xpathDynamicContext);
             return matchingItems.stream()
-                .map(item -> ((AbstractNode) item).getUnderlyingNode())
-                .map(AstTreeStringPrinter::printBranch)
-                .collect(Collectors.joining(DELIMITER));
+                   .map(item -> ((AbstractNode) item).getUnderlyingNode())
+                   .map(AstTreeStringPrinter::printBranch)
+                   .collect(Collectors.joining(DELIMITER));
         }
         catch (XPathException ex) {
             final String errMsg = String.format(Locale.ROOT,
-                "Error during evaluation for xpath: %s, file: %s", xpath, file.getCanonicalPath());
+                                                "Error during evaluation for xpath: %s, file: %s", xpath, file.getCanonicalPath());
             throw new CheckstyleException(errMsg, ex);
         }
     }

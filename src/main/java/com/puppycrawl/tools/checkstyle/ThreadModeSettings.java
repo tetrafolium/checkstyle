@@ -33,18 +33,18 @@ public class ThreadModeSettings implements Serializable {
 
     /** A multi thread checker module name. */
     public static final String MULTI_THREAD_CHECKER_MODULE_NAME =
-            Checker.class.getSimpleName();
+        Checker.class.getSimpleName();
 
     /** A three walker module name. */
     public static final String TREE_WALKER_MODULE_NAME = TreeWalker.class.getSimpleName();
 
     /** A multi thread three walker module name. */
     public static final String MULTI_THREAD_TREE_WALKER_MODULE_NAME =
-            TreeWalker.class.getSimpleName();
+        TreeWalker.class.getSimpleName();
 
     /** A single thread mode settings instance. */
     public static final ThreadModeSettings SINGLE_THREAD_MODE_INSTANCE =
-            new ThreadModeSettings(1, 1);
+        new ThreadModeSettings(1, 1);
 
     private static final long serialVersionUID = 1L;
 
@@ -93,11 +93,11 @@ public class ThreadModeSettings implements Serializable {
         if (checkerThreadsNumber > 1) {
             if (CHECKER_MODULE_NAME.equals(name)) {
                 throw new IllegalArgumentException(
-                        "Multi thread mode for Checker module is not implemented");
+                    "Multi thread mode for Checker module is not implemented");
             }
             if (TREE_WALKER_MODULE_NAME.equals(name)) {
                 throw new IllegalArgumentException(
-                        "Multi thread mode for TreeWalker module is not implemented");
+                    "Multi thread mode for TreeWalker module is not implemented");
             }
         }
 

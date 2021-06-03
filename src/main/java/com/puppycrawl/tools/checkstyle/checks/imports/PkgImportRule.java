@@ -41,7 +41,7 @@ class PkgImportRule extends AbstractImportRule {
      *        expression.
      */
     /* package */ PkgImportRule(final boolean allow, final boolean localOnly,
-        final String pkgName, final boolean exactMatch, final boolean regExp) {
+                                final String pkgName, final boolean exactMatch, final boolean regExp) {
         super(allow, localOnly, regExp);
         this.pkgName = pkgName;
         this.exactMatch = exactMatch;
@@ -74,7 +74,7 @@ class PkgImportRule extends AbstractImportRule {
 
             if (pkgMatch && exactMatch) {
                 pkgMatch = forImport.indexOf('.',
-                        pkgName.length() + 1) == -1;
+                                             pkgName.length() + 1) == -1;
             }
         }
 

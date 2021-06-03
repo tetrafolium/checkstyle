@@ -40,47 +40,47 @@ public class XpathRegressionWhitespaceAfterTest extends AbstractXpathTestSupport
     @Test
     public void testWhitespaceAfterTypecast() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionWhitespaceAfterTypecast.java"));
+            new File(getPath("SuppressionXpathRegressionWhitespaceAfterTypecast.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(WhitespaceAfterCheck.class);
+            createModuleConfig(WhitespaceAfterCheck.class);
 
         final String[] expectedViolation = {
             "4:25: " + getCheckMessage(WhitespaceAfterCheck.class,
-                    WhitespaceAfterCheck.MSG_WS_TYPECAST, "-"),
+                                       WhitespaceAfterCheck.MSG_WS_TYPECAST, "-"),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT["
-                + "@text='SuppressionXpathRegressionWhitespaceAfterTypecast']]/OBJBLOCK"
-                + "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR/TYPECAST/RPAREN"
-        );
+                    "/CLASS_DEF[./IDENT["
+                    + "@text='SuppressionXpathRegressionWhitespaceAfterTypecast']]/OBJBLOCK"
+                    + "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR/TYPECAST/RPAREN"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testWhitespaceAfterNotFollowed() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionWhitespaceAfterNotFollowed.java"));
+            new File(getPath("SuppressionXpathRegressionWhitespaceAfterNotFollowed.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(WhitespaceAfterCheck.class);
+            createModuleConfig(WhitespaceAfterCheck.class);
 
         final String[] expectedViolation = {
             "4:19: " + getCheckMessage(WhitespaceAfterCheck.class,
-                    WhitespaceAfterCheck.MSG_WS_NOT_FOLLOWED, ","),
+                                       WhitespaceAfterCheck.MSG_WS_NOT_FOLLOWED, ","),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT["
-                + "@text='SuppressionXpathRegressionWhitespaceAfterNotFollowed']]/OBJBLOCK"
-                + "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/ARRAY_INIT/COMMA"
-        );
+                    "/CLASS_DEF[./IDENT["
+                    + "@text='SuppressionXpathRegressionWhitespaceAfterNotFollowed']]/OBJBLOCK"
+                    + "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/ARRAY_INIT/COMMA"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
 }

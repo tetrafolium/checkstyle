@@ -5,7 +5,7 @@ public class SuppressionXpathRegressionEmptyCatchBlock2 {
 
         try {
             throw new RuntimeException();
-        } catch (RuntimeException e) /*warn*/ {
+        } catch (RuntimeException e) { /*warn*/
         }
     }
 }

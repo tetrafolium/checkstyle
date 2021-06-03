@@ -40,193 +40,193 @@ public class XpathRegressionAnnotationLocationTest extends AbstractXpathTestSupp
     @Test
     public void testClass() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionAnnotationLocationClass.java"));
+                                                "SuppressionXpathRegressionAnnotationLocationClass.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AnnotationLocationCheck.class);
+            createModuleConfig(AnnotationLocationCheck.class);
 
         final String[] expectedViolation = {
             "6:1: " + getCheckMessage(AnnotationLocationCheck.class,
-                    AnnotationLocationCheck.MSG_KEY_ANNOTATION_LOCATION_ALONE, "ClassAnnotation"),
+                                      AnnotationLocationCheck.MSG_KEY_ANNOTATION_LOCATION_ALONE, "ClassAnnotation"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationClass']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationClass']]"
-                        + "/MODIFIERS",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationClass']]/"
-                        + "MODIFIERS/ANNOTATION[./IDENT[@text='ClassAnnotation']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationClass']]/"
-                        + "MODIFIERS/ANNOTATION[./IDENT[@text='ClassAnnotation']]/AT"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationClass']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationClass']]"
+                    + "/MODIFIERS",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationClass']]/"
+                    + "MODIFIERS/ANNOTATION[./IDENT[@text='ClassAnnotation']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationClass']]/"
+                    + "MODIFIERS/ANNOTATION[./IDENT[@text='ClassAnnotation']]/AT"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testInterface() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionAnnotationLocationInterface.java"));
+                                                "SuppressionXpathRegressionAnnotationLocationInterface.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AnnotationLocationCheck.class);
+            createModuleConfig(AnnotationLocationCheck.class);
 
         final String[] expectedViolation = {
             "7:1: " + getCheckMessage(AnnotationLocationCheck.class,
-             AnnotationLocationCheck.MSG_KEY_ANNOTATION_LOCATION_ALONE,
-                    "InterfaceAnnotation"),
+                                      AnnotationLocationCheck.MSG_KEY_ANNOTATION_LOCATION_ALONE,
+                                      "InterfaceAnnotation"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-            "/INTERFACE_DEF[./IDENT[@text='SuppressionXpathRegression"
+                    "/INTERFACE_DEF[./IDENT[@text='SuppressionXpathRegression"
                     + "AnnotationLocationInterface']]",
-            "/INTERFACE_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationInterface'"
-                        + "]]/MODIFIERS",
-            "/INTERFACE_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationInterface']]"
+                    "/INTERFACE_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationInterface'"
+                    + "]]/MODIFIERS",
+                    "/INTERFACE_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationInterface']]"
                     + "/MODIFIERS/ANNOTATION[./IDENT[@text='InterfaceAnnotation']]",
-            "/INTERFACE_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationInterface']]"
+                    "/INTERFACE_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationInterface']]"
                     + "/MODIFIERS/ANNOTATION[./IDENT[@text='InterfaceAnnotation']]/AT"
-        );
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testEnum() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionAnnotationLocationEnum.java"));
+                                                "SuppressionXpathRegressionAnnotationLocationEnum.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AnnotationLocationCheck.class);
+            createModuleConfig(AnnotationLocationCheck.class);
 
         final String[] expectedViolation = {
             "6:1: " + getCheckMessage(AnnotationLocationCheck.class,
-                    AnnotationLocationCheck.MSG_KEY_ANNOTATION_LOCATION_ALONE,
-                    "EnumAnnotation"),
+                                      AnnotationLocationCheck.MSG_KEY_ANNOTATION_LOCATION_ALONE,
+                                      "EnumAnnotation"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/ENUM_DEF[./IDENT[@text='SuppressionXpathRegression"
-                        + "AnnotationLocationEnum']]",
-                "/ENUM_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationEnum']]"
-                        + "/MODIFIERS",
-                "/ENUM_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationEnum']]"
-                        + "/MODIFIERS/ANNOTATION[./IDENT[@text='EnumAnnotation']]",
-                "/ENUM_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationEnum']]"
-                        + "/MODIFIERS/ANNOTATION[./IDENT[@text='EnumAnnotation']]/AT"
-        );
+                    "/ENUM_DEF[./IDENT[@text='SuppressionXpathRegression"
+                    + "AnnotationLocationEnum']]",
+                    "/ENUM_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationEnum']]"
+                    + "/MODIFIERS",
+                    "/ENUM_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationEnum']]"
+                    + "/MODIFIERS/ANNOTATION[./IDENT[@text='EnumAnnotation']]",
+                    "/ENUM_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationEnum']]"
+                    + "/MODIFIERS/ANNOTATION[./IDENT[@text='EnumAnnotation']]/AT"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
 
     }
 
     @Test
     public void testMethod() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionAnnotationLocationMethod.java"));
+                                                "SuppressionXpathRegressionAnnotationLocationMethod.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AnnotationLocationCheck.class);
+            createModuleConfig(AnnotationLocationCheck.class);
         moduleConfig.addAttribute("tokens", "METHOD_DEF");
 
         final String[] expectedViolation = {
             "4:6: " + getCheckMessage(AnnotationLocationCheck.class,
-                    AnnotationLocationCheck.MSG_KEY_ANNOTATION_LOCATION_ALONE,
-                    "MethodAnnotation"),
+                                      AnnotationLocationCheck.MSG_KEY_ANNOTATION_LOCATION_ALONE,
+                                      "MethodAnnotation"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationMethod']]/"
-                        + "OBJBLOCK/METHOD_DEF[./IDENT[@text='foo1']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationMethod']]/"
-                        + "OBJBLOCK/METHOD_DEF[./IDENT[@text='foo1']]/MODIFIERS",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationMethod']]/"
-                        + "OBJBLOCK/METHOD_DEF[./IDENT[@text='foo1']]/MODIFIERS/"
-                        + "ANNOTATION[./IDENT[@text='MethodAnnotation']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationMethod']]/"
-                        + "OBJBLOCK/METHOD_DEF[./IDENT[@text='foo1']]/MODIFIERS/"
-                        + "ANNOTATION[./IDENT[@text='MethodAnnotation']]/AT"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationMethod']]/"
+                    + "OBJBLOCK/METHOD_DEF[./IDENT[@text='foo1']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationMethod']]/"
+                    + "OBJBLOCK/METHOD_DEF[./IDENT[@text='foo1']]/MODIFIERS",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationMethod']]/"
+                    + "OBJBLOCK/METHOD_DEF[./IDENT[@text='foo1']]/MODIFIERS/"
+                    + "ANNOTATION[./IDENT[@text='MethodAnnotation']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationMethod']]/"
+                    + "OBJBLOCK/METHOD_DEF[./IDENT[@text='foo1']]/MODIFIERS/"
+                    + "ANNOTATION[./IDENT[@text='MethodAnnotation']]/AT"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
 
     }
 
     @Test
     public void testVariable() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionAnnotationLocationVariable.java"));
+                                                "SuppressionXpathRegressionAnnotationLocationVariable.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AnnotationLocationCheck.class);
+            createModuleConfig(AnnotationLocationCheck.class);
         moduleConfig.addAttribute("tokens", "VARIABLE_DEF");
 
         final String[] expectedViolation = {
             "4:5: " + getCheckMessage(AnnotationLocationCheck.class,
-                    AnnotationLocationCheck.MSG_KEY_ANNOTATION_LOCATION_ALONE,
-                    "VariableAnnotation"),
+                                      AnnotationLocationCheck.MSG_KEY_ANNOTATION_LOCATION_ALONE,
+                                      "VariableAnnotation"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationVariable']]/"
-                        + "OBJBLOCK/VARIABLE_DEF[./IDENT[@text='b']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationVariable']]/"
-                        + "OBJBLOCK/VARIABLE_DEF[./IDENT[@text='b']]/MODIFIERS",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationVariable']]/"
-                        + "OBJBLOCK/VARIABLE_DEF[./IDENT[@text='b']]/MODIFIERS/"
-                        + "ANNOTATION[./IDENT[@text='VariableAnnotation']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationVariable']]/"
-                        + "OBJBLOCK/VARIABLE_DEF[./IDENT[@text='b']]/MODIFIERS/"
-                        + "ANNOTATION[./IDENT[@text='VariableAnnotation']]/AT"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationVariable']]/"
+                    + "OBJBLOCK/VARIABLE_DEF[./IDENT[@text='b']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationVariable']]/"
+                    + "OBJBLOCK/VARIABLE_DEF[./IDENT[@text='b']]/MODIFIERS",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationVariable']]/"
+                    + "OBJBLOCK/VARIABLE_DEF[./IDENT[@text='b']]/MODIFIERS/"
+                    + "ANNOTATION[./IDENT[@text='VariableAnnotation']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationLocationVariable']]/"
+                    + "OBJBLOCK/VARIABLE_DEF[./IDENT[@text='b']]/MODIFIERS/"
+                    + "ANNOTATION[./IDENT[@text='VariableAnnotation']]/AT"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
 
     }
 
     @Test
     public void testConstructor() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionAnnotationLocationCTOR.java"));
+                                                "SuppressionXpathRegressionAnnotationLocationCTOR.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AnnotationLocationCheck.class);
+            createModuleConfig(AnnotationLocationCheck.class);
         moduleConfig.addAttribute("tokens", "CTOR_DEF");
 
         final String[] expectedViolation = {
             "4:5: " + getCheckMessage(AnnotationLocationCheck.class,
-                    AnnotationLocationCheck.MSG_KEY_ANNOTATION_LOCATION_ALONE,
-                    "CTORAnnotation"),
+                                      AnnotationLocationCheck.MSG_KEY_ANNOTATION_LOCATION_ALONE,
+                                      "CTORAnnotation"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegression"
-                        + "AnnotationLocationCTOR']]/OBJBLOCK/CTOR_DEF"
-                        + "[./IDENT[@text='SuppressionXpathRegression"
-                        + "AnnotationLocationCTOR']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegression"
-                        + "AnnotationLocationCTOR']]/OBJBLOCK/CTOR_DEF"
-                        + "[./IDENT[@text='SuppressionXpathRegression"
-                        + "AnnotationLocationCTOR']]/MODIFIERS",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegression"
-                        + "AnnotationLocationCTOR']]/OBJBLOCK/CTOR_DEF"
-                        + "[./IDENT[@text='SuppressionXpathRegression"
-                        + "AnnotationLocationCTOR']]/"
-                        + "MODIFIERS/ANNOTATION[./IDENT[@text='CTORAnnotation']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegression"
-                        + "AnnotationLocationCTOR']]/OBJBLOCK/CTOR_DEF"
-                        + "[./IDENT[@text='SuppressionXpathRegression"
-                        + "AnnotationLocationCTOR']]/"
-                        + "MODIFIERS/ANNOTATION[./IDENT[@text='CTORAnnotation']]/AT"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegression"
+                    + "AnnotationLocationCTOR']]/OBJBLOCK/CTOR_DEF"
+                    + "[./IDENT[@text='SuppressionXpathRegression"
+                    + "AnnotationLocationCTOR']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegression"
+                    + "AnnotationLocationCTOR']]/OBJBLOCK/CTOR_DEF"
+                    + "[./IDENT[@text='SuppressionXpathRegression"
+                    + "AnnotationLocationCTOR']]/MODIFIERS",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegression"
+                    + "AnnotationLocationCTOR']]/OBJBLOCK/CTOR_DEF"
+                    + "[./IDENT[@text='SuppressionXpathRegression"
+                    + "AnnotationLocationCTOR']]/"
+                    + "MODIFIERS/ANNOTATION[./IDENT[@text='CTORAnnotation']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegression"
+                    + "AnnotationLocationCTOR']]/OBJBLOCK/CTOR_DEF"
+                    + "[./IDENT[@text='SuppressionXpathRegression"
+                    + "AnnotationLocationCTOR']]/"
+                    + "MODIFIERS/ANNOTATION[./IDENT[@text='CTORAnnotation']]/AT"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
 
     }
 

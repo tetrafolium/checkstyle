@@ -46,24 +46,24 @@ public class XpathRegressionInterfaceMemberImpliedModifierTest extends AbstractX
 
         final String[] expectedViolation = {
             "4:5: " + getCheckMessage(InterfaceMemberImpliedModifierCheck.class,
-                InterfaceMemberImpliedModifierCheck.MSG_KEY, "final"),
+                                      InterfaceMemberImpliedModifierCheck.MSG_KEY, "final"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-            "/INTERFACE_DEF[./IDENT"
-                + "[@text='SuppressionXpathRegressionInterfaceMemberImpliedModifier1']]"
-                + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='str']]",
+                    "/INTERFACE_DEF[./IDENT"
+                    + "[@text='SuppressionXpathRegressionInterfaceMemberImpliedModifier1']]"
+                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='str']]",
 
-            "/INTERFACE_DEF[./IDENT"
-                + "[@text='SuppressionXpathRegressionInterfaceMemberImpliedModifier1']]"
-                + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='str']]"
-                + "/MODIFIERS",
+                    "/INTERFACE_DEF[./IDENT"
+                    + "[@text='SuppressionXpathRegressionInterfaceMemberImpliedModifier1']]"
+                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='str']]"
+                    + "/MODIFIERS",
 
-            "/INTERFACE_DEF[./IDENT"
-                + "[@text='SuppressionXpathRegressionInterfaceMemberImpliedModifier1']]"
-                + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='str']]"
-                + "/MODIFIERS/LITERAL_PUBLIC"
-        );
+                    "/INTERFACE_DEF[./IDENT"
+                    + "[@text='SuppressionXpathRegressionInterfaceMemberImpliedModifier1']]"
+                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='str']]"
+                    + "/MODIFIERS/LITERAL_PUBLIC"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
     }
@@ -79,24 +79,24 @@ public class XpathRegressionInterfaceMemberImpliedModifierTest extends AbstractX
 
         final String[] expectedViolation = {
             "4:5: " + getCheckMessage(InterfaceMemberImpliedModifierCheck.class,
-                InterfaceMemberImpliedModifierCheck.MSG_KEY, "public"),
+                                      InterfaceMemberImpliedModifierCheck.MSG_KEY, "public"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-            "/INTERFACE_DEF[./IDENT"
-                + "[@text='SuppressionXpathRegressionInterfaceMemberImpliedModifier2']]"
-                + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='setData']]",
+                    "/INTERFACE_DEF[./IDENT"
+                    + "[@text='SuppressionXpathRegressionInterfaceMemberImpliedModifier2']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='setData']]",
 
-            "/INTERFACE_DEF[./IDENT"
-                + "[@text='SuppressionXpathRegressionInterfaceMemberImpliedModifier2']]"
-                + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='setData']]"
-                + "/MODIFIERS",
+                    "/INTERFACE_DEF[./IDENT"
+                    + "[@text='SuppressionXpathRegressionInterfaceMemberImpliedModifier2']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='setData']]"
+                    + "/MODIFIERS",
 
-            "/INTERFACE_DEF[./IDENT"
-                + "[@text='SuppressionXpathRegressionInterfaceMemberImpliedModifier2']]"
-                + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='setData']]"
-                + "/MODIFIERS/ABSTRACT"
-        );
+                    "/INTERFACE_DEF[./IDENT"
+                    + "[@text='SuppressionXpathRegressionInterfaceMemberImpliedModifier2']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='setData']]"
+                    + "/MODIFIERS/ABSTRACT"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
     }
@@ -112,24 +112,24 @@ public class XpathRegressionInterfaceMemberImpliedModifierTest extends AbstractX
 
         final String[] expectedViolation = {
             "4:5: " + getCheckMessage(InterfaceMemberImpliedModifierCheck.class,
-                InterfaceMemberImpliedModifierCheck.MSG_KEY, "static"),
+                                      InterfaceMemberImpliedModifierCheck.MSG_KEY, "static"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-            "/INTERFACE_DEF[./IDENT"
-                + "[@text='SuppressionXpathRegressionInterfaceMemberImpliedModifier3']]"
-                + "/OBJBLOCK/INTERFACE_DEF[./IDENT[@text='Data']]",
+                    "/INTERFACE_DEF[./IDENT"
+                    + "[@text='SuppressionXpathRegressionInterfaceMemberImpliedModifier3']]"
+                    + "/OBJBLOCK/INTERFACE_DEF[./IDENT[@text='Data']]",
 
-            "/INTERFACE_DEF[./IDENT"
-                + "[@text='SuppressionXpathRegressionInterfaceMemberImpliedModifier3']]"
-                + "/OBJBLOCK/INTERFACE_DEF[./IDENT[@text='Data']]"
-                + "/MODIFIERS",
+                    "/INTERFACE_DEF[./IDENT"
+                    + "[@text='SuppressionXpathRegressionInterfaceMemberImpliedModifier3']]"
+                    + "/OBJBLOCK/INTERFACE_DEF[./IDENT[@text='Data']]"
+                    + "/MODIFIERS",
 
-            "/INTERFACE_DEF[./IDENT"
-                + "[@text='SuppressionXpathRegressionInterfaceMemberImpliedModifier3']]"
-                + "/OBJBLOCK/INTERFACE_DEF[./IDENT[@text='Data']]"
-                + "/MODIFIERS/LITERAL_PUBLIC"
-        );
+                    "/INTERFACE_DEF[./IDENT"
+                    + "[@text='SuppressionXpathRegressionInterfaceMemberImpliedModifier3']]"
+                    + "/OBJBLOCK/INTERFACE_DEF[./IDENT[@text='Data']]"
+                    + "/MODIFIERS/LITERAL_PUBLIC"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
     }

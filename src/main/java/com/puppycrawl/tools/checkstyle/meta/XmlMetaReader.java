@@ -68,15 +68,15 @@ public final class XmlMetaReader {
      * @return list of module details found in the classpath satisfying the above conditions
      */
     public static List<ModuleDetails> readAllModulesIncludingThirdPartyIfAny(
-            String... thirdPartyPackages) {
+        String... thirdPartyPackages) {
         final Set<String> standardModuleFileNames =
-                new Reflections("com.puppycrawl.tools.checkstyle.meta",
-                        new ResourcesScanner()).getResources(Pattern.compile(".*\\.xml"));
+            new Reflections("com.puppycrawl.tools.checkstyle.meta",
+                            new ResourcesScanner()).getResources(Pattern.compile(".*\\.xml"));
         final Set<String> allMetadataSources = new HashSet<>(standardModuleFileNames);
         for (String packageName : thirdPartyPackages) {
             final Set<String> thirdPartyModuleFileNames =
-                    new Reflections(packageName, new ResourcesScanner())
-                            .getResources(Pattern.compile(".*checkstylemeta-.*\\.xml"));
+                new Reflections(packageName, new ResourcesScanner())
+            .getResources(Pattern.compile(".*checkstylemeta-.*\\.xml"));
             allMetadataSources.addAll(thirdPartyModuleFileNames);
         }
 
@@ -95,11 +95,11 @@ public final class XmlMetaReader {
             final ModuleDetails moduleDetails;
             try {
                 moduleDetails = read(XmlMetaReader.class.getResourceAsStream("/" + fileName),
-                        moduleType);
+                                     moduleType);
             }
             catch (ParserConfigurationException | IOException | SAXException ex) {
                 throw new IllegalStateException("Problem to read all modules including third "
-                        + "party if any. Problem detected at file: " + fileName, ex);
+                                                + "party if any. Problem detected at file: " + fileName, ex);
             }
             result.add(moduleDetails);
         }
@@ -118,7 +118,7 @@ public final class XmlMetaReader {
      * @throws SAXException if a SAX exception occurs during parsing the XML file
      */
     public static ModuleDetails read(InputStream moduleMetadataStream, ModuleType moduleType)
-            throws ParserConfigurationException, IOException, SAXException {
+    throws ParserConfigurationException, IOException, SAXException {
         final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         final DocumentBuilder builder = factory.newDocumentBuilder();
         final Document document = builder.parse(moduleMetadataStream);
@@ -157,16 +157,16 @@ public final class XmlMetaReader {
         moduleDetails.setFullQualifiedName(getAttributeValue(mod, "fully-qualified-name"));
         moduleDetails.setParent(getAttributeValue(mod, "parent"));
         moduleDetails.setDescription(getDirectChildsByTag(mod, XML_TAG_DESCRIPTION).get(0)
-                .getFirstChild().getNodeValue());
+                                     .getFirstChild().getNodeValue());
         final List<Element> properties = getDirectChildsByTag(mod, "properties");
         if (!properties.isEmpty()) {
             final List<ModulePropertyDetails> modulePropertyDetailsList =
-                    createProperties(properties.get(0));
+                createProperties(properties.get(0));
             moduleDetails.addToProperties(modulePropertyDetailsList);
         }
         final List<String> messageKeys =
-                getListContentByAttribute(mod,
-                        "message-keys", "message-key", "key");
+            getListContentByAttribute(mod,
+                                      "message-keys", "message-key", "key");
         if (messageKeys != null) {
             moduleDetails.addToViolationMessages(messageKeys);
         }
@@ -196,7 +196,7 @@ public final class XmlMetaReader {
                 propertyDetails.setValidationType(getAttributeValue(prop, validationTypeTag));
             }
             propertyDetails.setDescription(getDirectChildsByTag(prop, XML_TAG_DESCRIPTION)
-                    .get(0).getFirstChild().getNodeValue());
+                                           .get(0).getFirstChild().getNodeValue());
             result.add(propertyDetails);
         }
         return result;
@@ -212,7 +212,7 @@ public final class XmlMetaReader {
      * @return list of strings containing the XML list data
      */
     private static List<String> getListContentByAttribute(Element element, String listParent,
-                                                         String listOption, String attribute) {
+            String listOption, String attribute) {
         final List<Element> children = getDirectChildsByTag(element, listParent);
         List<String> result = null;
         if (!children.isEmpty()) {

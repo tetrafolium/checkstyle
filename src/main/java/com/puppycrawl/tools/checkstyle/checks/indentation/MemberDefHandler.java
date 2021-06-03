@@ -37,7 +37,7 @@ public class MemberDefHandler extends AbstractExpressionHandler {
      * @param parent        the parent handler
      */
     public MemberDefHandler(IndentationCheck indentCheck,
-        DetailAST ast, AbstractExpressionHandler parent) {
+                            DetailAST ast, AbstractExpressionHandler parent) {
         super(indentCheck, "member def", ast, parent);
     }
 
@@ -67,7 +67,7 @@ public class MemberDefHandler extends AbstractExpressionHandler {
     protected void checkModifiers() {
         final DetailAST modifier = getMainAst().findFirstToken(TokenTypes.MODIFIERS);
         if (isOnStartOfLine(modifier)
-            && !getIndent().isAcceptable(expandedTabsColumnNo(modifier))) {
+                && !getIndent().isAcceptable(expandedTabsColumnNo(modifier))) {
             logError(modifier, "modifier", expandedTabsColumnNo(modifier));
         }
     }
@@ -92,7 +92,7 @@ public class MemberDefHandler extends AbstractExpressionHandler {
      */
     private static boolean isArrayDeclaration(DetailAST variableDef) {
         return variableDef.findFirstToken(TokenTypes.TYPE)
-            .findFirstToken(TokenTypes.ARRAY_DECLARATOR) != null;
+               .findFirstToken(TokenTypes.ARRAY_DECLARATOR) != null;
     }
 
     /**

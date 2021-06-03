@@ -142,7 +142,7 @@ public class HideUtilityClassConstructorCheck extends AbstractCheck {
             final boolean hasPublicCtor = details.isHasPublicCtor();
             final boolean hasNonStaticMethodOrField = details.isHasNonStaticMethodOrField();
             final boolean hasNonPrivateStaticMethodOrField =
-                    details.isHasNonPrivateStaticMethodOrField();
+                details.isHasNonPrivateStaticMethodOrField();
 
             final boolean hasAccessibleCtor = hasDefaultCtor || hasPublicCtor;
 
@@ -152,7 +152,7 @@ public class HideUtilityClassConstructorCheck extends AbstractCheck {
                 ast.findFirstToken(TokenTypes.EXTENDS_CLAUSE) == null;
 
             final boolean isUtilClass = extendsJlo
-                && !hasNonStaticMethodOrField && hasNonPrivateStaticMethodOrField;
+                                        && !hasNonStaticMethodOrField && hasNonPrivateStaticMethodOrField;
 
             if (isUtilClass && hasAccessibleCtor && !hasStaticModifier) {
                 log(ast, MSG_KEY);
@@ -168,7 +168,7 @@ public class HideUtilityClassConstructorCheck extends AbstractCheck {
      */
     private static boolean isAbstract(DetailAST ast) {
         return ast.findFirstToken(TokenTypes.MODIFIERS)
-            .findFirstToken(TokenTypes.ABSTRACT) != null;
+               .findFirstToken(TokenTypes.ABSTRACT) != null;
     }
 
     /**
@@ -179,7 +179,7 @@ public class HideUtilityClassConstructorCheck extends AbstractCheck {
      */
     private static boolean isStatic(DetailAST ast) {
         return ast.findFirstToken(TokenTypes.MODIFIERS)
-            .findFirstToken(TokenTypes.LITERAL_STATIC) != null;
+               .findFirstToken(TokenTypes.LITERAL_STATIC) != null;
     }
 
     /**
@@ -265,7 +265,7 @@ public class HideUtilityClassConstructorCheck extends AbstractCheck {
 
                     if (isStatic) {
                         final boolean isPrivate =
-                                modifiers.findFirstToken(TokenTypes.LITERAL_PRIVATE) != null;
+                            modifiers.findFirstToken(TokenTypes.LITERAL_PRIVATE) != null;
 
                         if (!isPrivate) {
                             hasNonPrivateStaticMethodOrField = true;
@@ -280,7 +280,7 @@ public class HideUtilityClassConstructorCheck extends AbstractCheck {
                     final DetailAST modifiers =
                         child.findFirstToken(TokenTypes.MODIFIERS);
                     if (modifiers.findFirstToken(TokenTypes.LITERAL_PRIVATE) == null
-                        && modifiers.findFirstToken(TokenTypes.LITERAL_PROTECTED) == null) {
+                            && modifiers.findFirstToken(TokenTypes.LITERAL_PROTECTED) == null) {
                         // treat package visible as public
                         // for the purpose of this Check
                         hasPublicCtor = true;

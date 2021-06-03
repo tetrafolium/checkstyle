@@ -128,8 +128,8 @@ public class PatternVariableNameCheck extends AbstractNameCheck {
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.PATTERN_VARIABLE_DEF,
-        };
+                   TokenTypes.PATTERN_VARIABLE_DEF,
+               };
     }
 
     @Override

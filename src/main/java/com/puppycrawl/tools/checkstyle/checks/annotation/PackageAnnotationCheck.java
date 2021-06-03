@@ -93,8 +93,8 @@ public class PackageAnnotationCheck extends AbstractCheck {
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.PACKAGE_DEF,
-        };
+                   TokenTypes.PACKAGE_DEF,
+               };
     }
 
     @Override

@@ -1,7 +1,8 @@
 package org.checkstyle.suppressionxpathfilter.outertypenumber; //warn
 
 public class SuppressionXpathRegressionOuterTypeNumber {
-    int i; int j;
+    int i;
+    int j;
 }
 class InputOuterTypeNumberSimple2
 {

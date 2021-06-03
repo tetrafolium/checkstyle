@@ -160,9 +160,9 @@ public class JavadocVariableCheck
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.VARIABLE_DEF,
-            TokenTypes.ENUM_CONSTANT_DEF,
-        };
+                   TokenTypes.VARIABLE_DEF,
+                   TokenTypes.ENUM_CONSTANT_DEF,
+               };
     }
 
     /*
@@ -172,8 +172,8 @@ public class JavadocVariableCheck
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.VARIABLE_DEF,
-        };
+                   TokenTypes.VARIABLE_DEF,
+               };
     }
 
     @Override
@@ -198,7 +198,7 @@ public class JavadocVariableCheck
     private boolean isIgnored(DetailAST ast) {
         final String name = ast.findFirstToken(TokenTypes.IDENT).getText();
         return ignoreNamePattern != null && ignoreNamePattern.matcher(name).matches()
-            || "serialVersionUID".equals(name);
+               || "serialVersionUID".equals(name);
     }
 
     /**
@@ -219,9 +219,9 @@ public class JavadocVariableCheck
 
             final Scope surroundingScope = ScopeUtil.getSurroundingScope(ast);
             result = customScope.isIn(scope) && surroundingScope.isIn(scope)
-                && (excludeScope == null
-                    || !customScope.isIn(excludeScope)
-                    || !surroundingScope.isIn(excludeScope));
+                     && (excludeScope == null
+                         || !customScope.isIn(excludeScope)
+                         || !surroundingScope.isIn(excludeScope));
         }
         return result;
     }

@@ -29,7 +29,7 @@ import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
 import com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck;
 
 public class XpathRegressionAvoidStarImportTest
-        extends AbstractXpathTestSupport {
+    extends AbstractXpathTestSupport {
 
     private static final Class<AvoidStarImportCheck> CLASS =
         AvoidStarImportCheck.class;
@@ -42,19 +42,19 @@ public class XpathRegressionAvoidStarImportTest
     @Test
     public void testOne() throws Exception {
         final File fileToProcess = new File(getPath(
-            "SuppressionXpathRegressionAvoidStarImport1.java"));
+                                                "SuppressionXpathRegressionAvoidStarImport1.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(CLASS);
+            createModuleConfig(CLASS);
 
         final String[] expectedViolation = {
             "3:42: " + getCheckMessage(CLASS,
-                AvoidStarImportCheck.MSG_KEY, "javax.swing.WindowConstants.*"),
+                                       AvoidStarImportCheck.MSG_KEY, "javax.swing.WindowConstants.*"),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/STATIC_IMPORT/DOT"
-        );
+                    "/STATIC_IMPORT/DOT"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
     }
@@ -62,19 +62,19 @@ public class XpathRegressionAvoidStarImportTest
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess = new File(getPath(
-            "SuppressionXpathRegressionAvoidStarImport2.java"));
+                                                "SuppressionXpathRegressionAvoidStarImport2.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(CLASS);
+            createModuleConfig(CLASS);
 
         final String[] expectedViolation = {
             "4:15: " + getCheckMessage(CLASS,
-                AvoidStarImportCheck.MSG_KEY, "java.io.*"),
+                                       AvoidStarImportCheck.MSG_KEY, "java.io.*"),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/IMPORT/DOT"
-        );
+                    "/IMPORT/DOT"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
     }

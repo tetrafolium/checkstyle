@@ -40,48 +40,48 @@ public class XpathRegressionRequireThisTest extends AbstractXpathTestSupport {
     @Test
     public void testOne() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionRequireThisOne.java"));
+            new File(getPath("SuppressionXpathRegressionRequireThisOne.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(RequireThisCheck.class);
+            createModuleConfig(RequireThisCheck.class);
         moduleConfig.addAttribute("validateOnlyOverlapping", "false");
 
         final String[] expectedViolation = {
             "7:9: " + getCheckMessage(RequireThisCheck.class,
-                RequireThisCheck.MSG_VARIABLE, "age", ""),
+                                      RequireThisCheck.MSG_VARIABLE, "age", ""),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionRequireThisOne']]/OBJBLOCK"
-                + "/METHOD_DEF[./IDENT[@text='changeAge']]/SLIST/EXPR/ASSIGN"
-                + "/IDENT[@text='age']"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionRequireThisOne']]/OBJBLOCK"
+                    + "/METHOD_DEF[./IDENT[@text='changeAge']]/SLIST/EXPR/ASSIGN"
+                    + "/IDENT[@text='age']"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionRequireThisTwo.java"));
+            new File(getPath("SuppressionXpathRegressionRequireThisTwo.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(RequireThisCheck.class);
+            createModuleConfig(RequireThisCheck.class);
         moduleConfig.addAttribute("validateOnlyOverlapping", "false");
 
         final String[] expectedViolation = {
             "9:9: " + getCheckMessage(RequireThisCheck.class,
-                RequireThisCheck.MSG_METHOD, "method1", ""),
+                                      RequireThisCheck.MSG_METHOD, "method1", ""),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionRequireThisTwo']]/OBJBLOCK"
-                + "/METHOD_DEF[./IDENT[@text='method2']]/SLIST/EXPR"
-                + "/METHOD_CALL/IDENT[@text='method1']"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionRequireThisTwo']]/OBJBLOCK"
+                    + "/METHOD_DEF[./IDENT[@text='method2']]/SLIST/EXPR"
+                    + "/METHOD_CALL/IDENT[@text='method1']"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }

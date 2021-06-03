@@ -5,9 +5,14 @@ public class SuppressionXpathRegressionDefaultComesLastOne {
         String lang = "Java";
         int id = 0;
         switch (lang) {
-            default : id = -1; //warn
-            case "C++" : id = 1; break;
-            case "Python" : id = 2; break;
+        default :
+            id = -1; //warn
+        case "C++" :
+            id = 1;
+            break;
+        case "Python" :
+            id = 2;
+            break;
         }
     }
 }

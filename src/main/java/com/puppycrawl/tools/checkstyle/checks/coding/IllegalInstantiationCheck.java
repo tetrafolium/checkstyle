@@ -127,20 +127,20 @@ public class IllegalInstantiationCheck
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.IMPORT,
-            TokenTypes.LITERAL_NEW,
-            TokenTypes.PACKAGE_DEF,
-            TokenTypes.CLASS_DEF,
-        };
+                   TokenTypes.IMPORT,
+                   TokenTypes.LITERAL_NEW,
+                   TokenTypes.PACKAGE_DEF,
+                   TokenTypes.CLASS_DEF,
+               };
     }
 
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.IMPORT,
-            TokenTypes.LITERAL_NEW,
-            TokenTypes.PACKAGE_DEF,
-        };
+                   TokenTypes.IMPORT,
+                   TokenTypes.LITERAL_NEW,
+                   TokenTypes.PACKAGE_DEF,
+               };
     }
 
     @Override
@@ -154,20 +154,20 @@ public class IllegalInstantiationCheck
     @Override
     public void visitToken(DetailAST ast) {
         switch (ast.getType()) {
-            case TokenTypes.LITERAL_NEW:
-                processLiteralNew(ast);
-                break;
-            case TokenTypes.PACKAGE_DEF:
-                processPackageDef(ast);
-                break;
-            case TokenTypes.IMPORT:
-                processImport(ast);
-                break;
-            case TokenTypes.CLASS_DEF:
-                processClassDef(ast);
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown type " + ast);
+        case TokenTypes.LITERAL_NEW:
+            processLiteralNew(ast);
+            break;
+        case TokenTypes.PACKAGE_DEF:
+            processPackageDef(ast);
+            break;
+        case TokenTypes.IMPORT:
+            processImport(ast);
+            break;
+        case TokenTypes.CLASS_DEF:
+            processClassDef(ast);
+            break;
+        default:
+            throw new IllegalArgumentException("Unknown type " + ast);
         }
     }
 
@@ -207,9 +207,9 @@ public class IllegalInstantiationCheck
      */
     private void processPackageDef(DetailAST ast) {
         final DetailAST packageNameAST = ast.getLastChild()
-                .getPreviousSibling();
+                                         .getPreviousSibling();
         final FullIdent packageIdent =
-                FullIdent.createFullIdent(packageNameAST);
+            FullIdent.createFullIdent(packageNameAST);
         pkgName = packageIdent.getText();
     }
 
@@ -297,7 +297,7 @@ public class IllegalInstantiationCheck
             String importArg = importLineText.getText();
             if (importArg.endsWith(".*")) {
                 importArg = importArg.substring(0, importArg.length() - 1)
-                        + className;
+                            + className;
             }
             if (CommonUtil.baseClassName(importArg).equals(className)
                     && classes.contains(importArg)) {
@@ -325,10 +325,10 @@ public class IllegalInstantiationCheck
         // the test is the "no garbage" version of
         // illegal.equals(pkgName + "." + className)
         return pkgName != null
-                && className.length() == illegal.length() - pkgNameLen - 1
-                && illegal.charAt(pkgNameLen) == '.'
-                && illegal.endsWith(className)
-                && illegal.startsWith(pkgName);
+               && className.length() == illegal.length() - pkgNameLen - 1
+               && illegal.charAt(pkgNameLen) == '.'
+               && illegal.endsWith(className)
+               && illegal.startsWith(pkgName);
     }
 
     /**
@@ -342,8 +342,8 @@ public class IllegalInstantiationCheck
         boolean isStandardClass = false;
         // class from java.lang
         if (illegal.length() - JAVA_LANG.length() == className.length()
-            && illegal.endsWith(className)
-            && illegal.startsWith(JAVA_LANG)) {
+                && illegal.endsWith(className)
+                && illegal.startsWith(JAVA_LANG)) {
             // java.lang needs no import, but a class without import might
             // also come from the same file or be in the same package.
             // E.g. if a class defines an inner class "Boolean",

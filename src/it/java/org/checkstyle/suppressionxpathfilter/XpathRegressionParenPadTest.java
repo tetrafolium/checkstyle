@@ -42,91 +42,91 @@ public class XpathRegressionParenPadTest extends AbstractXpathTestSupport {
     @Test
     public void testLeftFollowed() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionParenPadLeftFollowed.java"));
+            new File(getPath("SuppressionXpathRegressionParenPadLeftFollowed.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(ParenPadCheck.class);
+            createModuleConfig(ParenPadCheck.class);
 
         final String[] expectedViolation = {
             "5:12: " + getCheckMessage(ParenPadCheck.class,
-                    AbstractParenPadCheck.MSG_WS_FOLLOWED, "("),
+                                       AbstractParenPadCheck.MSG_WS_FOLLOWED, "("),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionParenPadLeftFollowed']]"
-                + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='method']]/SLIST/LITERAL_IF/LPAREN"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionParenPadLeftFollowed']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='method']]/SLIST/LITERAL_IF/LPAREN"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testLeftNotFollowed() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionParenPadLeftNotFollowed.java"));
+            new File(getPath("SuppressionXpathRegressionParenPadLeftNotFollowed.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(ParenPadCheck.class);
+            createModuleConfig(ParenPadCheck.class);
         moduleConfig.addAttribute("option", PadOption.SPACE.toString());
 
         final String[] expectedViolation = {
             "5:12: " + getCheckMessage(ParenPadCheck.class,
-                    AbstractParenPadCheck.MSG_WS_NOT_FOLLOWED, "("),
+                                       AbstractParenPadCheck.MSG_WS_NOT_FOLLOWED, "("),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionParenPadLeftNotFollowed']]"
-                + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='method']]/SLIST/LITERAL_IF/LPAREN"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionParenPadLeftNotFollowed']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='method']]/SLIST/LITERAL_IF/LPAREN"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testRightPreceded() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionParenPadRightPreceded.java"));
+            new File(getPath("SuppressionXpathRegressionParenPadRightPreceded.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(ParenPadCheck.class);
+            createModuleConfig(ParenPadCheck.class);
 
         final String[] expectedViolation = {
             "5:19: " + getCheckMessage(ParenPadCheck.class,
-                    AbstractParenPadCheck.MSG_WS_PRECEDED, ")"),
+                                       AbstractParenPadCheck.MSG_WS_PRECEDED, ")"),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionParenPadRightPreceded']]"
-                + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='method']]/SLIST/LITERAL_IF/RPAREN"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionParenPadRightPreceded']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='method']]/SLIST/LITERAL_IF/RPAREN"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testRightNotPreceded() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionParenPadRightNotPreceded.java"));
+            new File(getPath("SuppressionXpathRegressionParenPadRightNotPreceded.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(ParenPadCheck.class);
+            createModuleConfig(ParenPadCheck.class);
         moduleConfig.addAttribute("option", PadOption.SPACE.toString());
 
         final String[] expectedViolation = {
             "5:19: " + getCheckMessage(ParenPadCheck.class,
-                    AbstractParenPadCheck.MSG_WS_NOT_PRECEDED, ")"),
+                                       AbstractParenPadCheck.MSG_WS_NOT_PRECEDED, ")"),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionParenPadRightNotPreceded']]"
-                + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='method']]/SLIST/LITERAL_IF/RPAREN"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionParenPadRightNotPreceded']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='method']]/SLIST/LITERAL_IF/RPAREN"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
 }

@@ -209,7 +209,7 @@ public class NewlineAtEndOfFileCheck
     public void setLineSeparator(String lineSeparatorParam) {
         lineSeparator =
             Enum.valueOf(LineSeparatorOption.class, lineSeparatorParam.trim()
-                .toUpperCase(Locale.ENGLISH));
+                         .toUpperCase(Locale.ENGLISH));
     }
 
     /**
@@ -243,7 +243,7 @@ public class NewlineAtEndOfFileCheck
      *         provided reader
      */
     private static boolean endsWithNewline(RandomAccessFile file, LineSeparatorOption separator)
-            throws IOException {
+    throws IOException {
         final boolean result;
         final int len = separator.length();
         if (file.length() < len) {
@@ -255,7 +255,7 @@ public class NewlineAtEndOfFileCheck
             final int readBytes = file.read(lastBytes);
             if (readBytes != len) {
                 throw new IOException("Unable to read " + len + " bytes, got "
-                        + readBytes);
+                                      + readBytes);
             }
             result = separator.matches(lastBytes);
         }

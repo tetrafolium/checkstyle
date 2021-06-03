@@ -132,7 +132,7 @@ public final class FullIdent {
     @Override
     public String toString() {
         return String.join("", elements)
-            + "[" + detailAst.getLineNo() + "x" + detailAst.getColumnNo() + "]";
+               + "[" + detailAst.getLineNo() + "x" + detailAst.getColumnNo() + "]";
     }
 
     /**

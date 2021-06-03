@@ -321,7 +321,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
                 final LocalizedMessage msg = new LocalizedMessage(1, TRANSLATION_BUNDLE,
                         WRONG_LANGUAGE_CODE_KEY, new Object[] {code}, getId(), getClass(), null);
                 final String exceptionMessage = String.format(Locale.ROOT,
-                        "%s [%s]", msg.getMessage(), TranslationCheck.class.getSimpleName());
+                                                "%s [%s]", msg.getMessage(), TranslationCheck.class.getSimpleName());
                 throw new IllegalArgumentException(exceptionMessage);
             }
         }
@@ -373,7 +373,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
      */
     private void checkExistenceOfDefaultTranslation(ResourceBundle bundle) {
         getMissingFileName(bundle, null)
-            .ifPresent(fileName -> logMissingTranslation(bundle.getPath(), fileName));
+        .ifPresent(fileName -> logMissingTranslation(bundle.getPath(), fileName));
     }
 
     /**
@@ -387,7 +387,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
     private void checkExistenceOfRequiredTranslations(ResourceBundle bundle) {
         for (String languageCode : requiredTranslations) {
             getMissingFileName(bundle, languageCode)
-                .ifPresent(fileName -> logMissingTranslation(bundle.getPath(), fileName));
+            .ifPresent(fileName -> logMissingTranslation(bundle.getPath(), fileName));
         }
     }
 
@@ -408,22 +408,22 @@ public class TranslationCheck extends AbstractFileSetCheck {
         if (languageCode == null) {
             searchForDefaultTranslation = true;
             fileNameRegexp = String.format(Locale.ROOT, REGEXP_FORMAT_TO_CHECK_DEFAULT_TRANSLATIONS,
-                    baseName, extension);
+                                           baseName, extension);
         }
         else {
             searchForDefaultTranslation = false;
             fileNameRegexp = String.format(Locale.ROOT,
-                REGEXP_FORMAT_TO_CHECK_REQUIRED_TRANSLATIONS, baseName, languageCode, extension);
+                                           REGEXP_FORMAT_TO_CHECK_REQUIRED_TRANSLATIONS, baseName, languageCode, extension);
         }
         Optional<String> missingFileName = Optional.empty();
         if (!bundle.containsFile(fileNameRegexp)) {
             if (searchForDefaultTranslation) {
                 missingFileName = Optional.of(String.format(Locale.ROOT,
-                        DEFAULT_TRANSLATION_FILE_NAME_FORMATTER, baseName, extension));
+                                              DEFAULT_TRANSLATION_FILE_NAME_FORMATTER, baseName, extension));
             }
             else {
                 missingFileName = Optional.of(String.format(Locale.ROOT,
-                        FILE_NAME_WITH_LANGUAGE_CODE_FORMATTER, baseName, languageCode, extension));
+                                              FILE_NAME_WITH_LANGUAGE_CODE_FORMATTER, baseName, languageCode, extension));
             }
         }
         return missingFileName;
@@ -452,7 +452,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
      * @return set of ResourceBundles.
      */
     private static Set<ResourceBundle> groupFilesIntoBundles(Set<File> files,
-                                                             Pattern baseNameRegexp) {
+            Pattern baseNameRegexp) {
         final Set<ResourceBundle> resourceBundles = new HashSet<>();
         for (File currentFile : files) {
             final String fileName = currentFile.getName();
@@ -483,7 +483,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
      * @return Guava's Optional of resource bundle (present if target bundle is found).
      */
     private static Optional<ResourceBundle> findBundle(Set<ResourceBundle> bundles,
-                                                       ResourceBundle targetBundle) {
+            ResourceBundle targetBundle) {
         Optional<ResourceBundle> result = Optional.empty();
         for (ResourceBundle currentBundle : bundles) {
             if (targetBundle.getBaseName().equals(currentBundle.getBaseName())
@@ -538,7 +538,7 @@ public class TranslationCheck extends AbstractFileSetCheck {
      */
     private static String getPath(String fileNameWithPath) {
         return fileNameWithPath
-            .substring(0, fileNameWithPath.lastIndexOf(File.separator));
+               .substring(0, fileNameWithPath.lastIndexOf(File.separator));
     }
 
     /**
@@ -569,11 +569,11 @@ public class TranslationCheck extends AbstractFileSetCheck {
      * @param keysThatMustExist the set of keys to compare with.
      */
     private void checkFilesForConsistencyRegardingTheirKeys(Map<File, Set<String>> fileKeys,
-                                                            Set<String> keysThatMustExist) {
+            Set<String> keysThatMustExist) {
         for (Entry<File, Set<String>> fileKey : fileKeys.entrySet()) {
             final Set<String> currentFileKeys = fileKey.getValue();
             final Set<String> missingKeys = keysThatMustExist.stream()
-                .filter(key -> !currentFileKeys.contains(key)).collect(Collectors.toSet());
+                                            .filter(key -> !currentFileKeys.contains(key)).collect(Collectors.toSet());
             if (!missingKeys.isEmpty()) {
                 final MessageDispatcher dispatcher = getMessageDispatcher();
                 final String path = fileKey.getKey().getAbsolutePath();
@@ -627,12 +627,12 @@ public class TranslationCheck extends AbstractFileSetCheck {
         }
         final LocalizedMessage message =
             new LocalizedMessage(
-                0,
-                Definitions.CHECKSTYLE_BUNDLE,
-                key,
-                args,
-                getId(),
-                getClass(), null);
+            0,
+            Definitions.CHECKSTYLE_BUNDLE,
+            key,
+            args,
+            getId(),
+            getClass(), null);
         final SortedSet<LocalizedMessage> messages = new TreeSet<>();
         messages.add(message);
         getMessageDispatcher().fireErrors(file.getPath(), messages);

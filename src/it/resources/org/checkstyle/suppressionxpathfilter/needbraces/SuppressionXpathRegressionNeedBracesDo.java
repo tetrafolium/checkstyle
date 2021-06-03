@@ -10,6 +10,7 @@ public class SuppressionXpathRegressionNeedBracesDo {
     /** Test do/while loops **/
     public void test() {
         // Invalid
-        do test(); while (condition()); // warn
+        do test();
+        while (condition()); // warn
     }
 }

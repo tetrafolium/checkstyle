@@ -84,7 +84,7 @@ public class LineColumn implements Comparable<LineColumn> {
         }
         final LineColumn lineColumn = (LineColumn) other;
         return Objects.equals(line, lineColumn.line)
-                && Objects.equals(column, lineColumn.column);
+               && Objects.equals(column, lineColumn.column);
     }
 
     @Override

@@ -3496,7 +3496,7 @@ public final class TokenTypes {
      * </pre>
      */
     public static final int SINGLE_LINE_COMMENT =
-            GeneratedJavaTokenTypes.SINGLE_LINE_COMMENT;
+        GeneratedJavaTokenTypes.SINGLE_LINE_COMMENT;
 
     /**
      * Beginning of block comment: '/*'.
@@ -3509,7 +3509,7 @@ public final class TokenTypes {
      * </pre>
      */
     public static final int BLOCK_COMMENT_BEGIN =
-            GeneratedJavaTokenTypes.BLOCK_COMMENT_BEGIN;
+        GeneratedJavaTokenTypes.BLOCK_COMMENT_BEGIN;
 
     /**
      * End of block comment: '&#42;/'.
@@ -3522,7 +3522,7 @@ public final class TokenTypes {
      * </pre>
      */
     public static final int BLOCK_COMMENT_END =
-            GeneratedJavaTokenTypes.BLOCK_COMMENT_END;
+        GeneratedJavaTokenTypes.BLOCK_COMMENT_END;
 
     /**
      * Text of single-line or block comment.
@@ -3541,7 +3541,7 @@ public final class TokenTypes {
      * </pre>
      */
     public static final int COMMENT_CONTENT =
-            GeneratedJavaTokenTypes.COMMENT_CONTENT;
+        GeneratedJavaTokenTypes.COMMENT_CONTENT;
 
     /**
      * A pattern variable definition; when conditionally matched,
@@ -3571,7 +3571,7 @@ public final class TokenTypes {
      * @since 8.35
      */
     public static final int PATTERN_VARIABLE_DEF =
-            GeneratedJavaTokenTypes.PATTERN_VARIABLE_DEF;
+        GeneratedJavaTokenTypes.PATTERN_VARIABLE_DEF;
 
     /**
      * The {@code record} keyword.  This element appears
@@ -3580,7 +3580,7 @@ public final class TokenTypes {
      * @since 8.35
      **/
     public static final int LITERAL_RECORD =
-            GeneratedJavaTokenTypes.LITERAL_record;
+        GeneratedJavaTokenTypes.LITERAL_record;
 
     /**
      * A declaration of a record specifies a name, a header, and a body.
@@ -3609,7 +3609,7 @@ public final class TokenTypes {
      * @since 8.35
      */
     public static final int RECORD_DEF =
-            GeneratedJavaTokenTypes.RECORD_DEF;
+        GeneratedJavaTokenTypes.RECORD_DEF;
 
     /**
      * Record components are a (possibly empty) list containing the components of a record, which
@@ -3648,7 +3648,7 @@ public final class TokenTypes {
      * @since 8.36
      */
     public static final int RECORD_COMPONENTS =
-            GeneratedJavaTokenTypes.RECORD_COMPONENTS;
+        GeneratedJavaTokenTypes.RECORD_COMPONENTS;
 
     /**
      * A record component is a variable that comprises the state of a record.  Record components
@@ -3689,7 +3689,7 @@ public final class TokenTypes {
      * @since 8.36
      */
     public static final int RECORD_COMPONENT_DEF =
-            GeneratedJavaTokenTypes.RECORD_COMPONENT_DEF;
+        GeneratedJavaTokenTypes.RECORD_COMPONENT_DEF;
 
     /**
      * A compact canonical constructor eliminates the list of formal parameters; they are
@@ -3725,7 +3725,7 @@ public final class TokenTypes {
      * @since 8.36
      */
     public static final int COMPACT_CTOR_DEF =
-            GeneratedJavaTokenTypes.COMPACT_CTOR_DEF;
+        GeneratedJavaTokenTypes.COMPACT_CTOR_DEF;
 
     /**
      * Beginning of a Java 14 Text Block literal,
@@ -3755,7 +3755,7 @@ public final class TokenTypes {
      * @since 8.36
      */
     public static final int TEXT_BLOCK_LITERAL_BEGIN =
-            GeneratedJavaTokenTypes.TEXT_BLOCK_LITERAL_BEGIN;
+        GeneratedJavaTokenTypes.TEXT_BLOCK_LITERAL_BEGIN;
 
     /**
      * Content of a Java 14 text block. This is a
@@ -3786,7 +3786,7 @@ public final class TokenTypes {
      * @since 8.36
      */
     public static final int TEXT_BLOCK_CONTENT =
-            GeneratedJavaTokenTypes.TEXT_BLOCK_CONTENT;
+        GeneratedJavaTokenTypes.TEXT_BLOCK_CONTENT;
 
     /**
      * End of a Java 14 text block literal, delimited by three
@@ -3816,7 +3816,7 @@ public final class TokenTypes {
      * @since 8.36
      */
     public static final int TEXT_BLOCK_LITERAL_END =
-            GeneratedJavaTokenTypes.TEXT_BLOCK_LITERAL_END;
+        GeneratedJavaTokenTypes.TEXT_BLOCK_LITERAL_END;
 
     /**
      * The {@code yield} keyword.  This element appears
@@ -3889,7 +3889,7 @@ public final class TokenTypes {
      * @since 8.36
      */
     public static final int LITERAL_YIELD =
-            GeneratedJavaTokenTypes.LITERAL_yield;
+        GeneratedJavaTokenTypes.LITERAL_yield;
 
     /**
      * Switch Expressions.
@@ -3943,7 +3943,7 @@ public final class TokenTypes {
      * @since 8.36
      */
     public static final int SWITCH_RULE =
-            GeneratedJavaTokenTypes.SWITCH_RULE;
+        GeneratedJavaTokenTypes.SWITCH_RULE;
 
     /** Prevent instantiation. */
     private TokenTypes() {

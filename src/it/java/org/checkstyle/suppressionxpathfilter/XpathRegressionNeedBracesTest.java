@@ -41,31 +41,31 @@ public class XpathRegressionNeedBracesTest extends AbstractXpathTestSupport {
     @Test
     public void testDo() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionNeedBracesDo.java"));
+                                                "SuppressionXpathRegressionNeedBracesDo.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(NeedBracesCheck.class);
+            createModuleConfig(NeedBracesCheck.class);
 
         final String[] expectedViolation = {
             "13:9: " + getCheckMessage(NeedBracesCheck.class, MSG_KEY_NEED_BRACES, "do"),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNeedBracesDo']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/SLIST/LITERAL_DO"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNeedBracesDo']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/SLIST/LITERAL_DO"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testSingleLine() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionNeedBracesSingleLine.java"));
+                                                "SuppressionXpathRegressionNeedBracesSingleLine.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(NeedBracesCheck.class);
+            createModuleConfig(NeedBracesCheck.class);
         moduleConfig.addAttribute("allowSingleLineStatement", "true");
 
         final String[] expectedViolation = {
@@ -73,21 +73,21 @@ public class XpathRegressionNeedBracesTest extends AbstractXpathTestSupport {
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNeedBracesSingleLine']]"
-                + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/SLIST/LITERAL_IF"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNeedBracesSingleLine']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/SLIST/LITERAL_IF"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testSingleLineLambda() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionNeedBracesSingleLineLambda.java"));
+                                                "SuppressionXpathRegressionNeedBracesSingleLineLambda.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(NeedBracesCheck.class);
+            createModuleConfig(NeedBracesCheck.class);
         moduleConfig.addAttribute("tokens", "LAMBDA");
         moduleConfig.addAttribute("allowSingleLineStatement", "true");
 
@@ -96,32 +96,32 @@ public class XpathRegressionNeedBracesTest extends AbstractXpathTestSupport {
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNeedBracesSingleLineLambda']]"
-                + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='r3']]/ASSIGN/LAMBDA"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNeedBracesSingleLineLambda']]"
+                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='r3']]/ASSIGN/LAMBDA"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testEmptyLoopBody() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionNeedBracesEmptyLoopBody.java"));
+                                                "SuppressionXpathRegressionNeedBracesEmptyLoopBody.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(NeedBracesCheck.class);
+            createModuleConfig(NeedBracesCheck.class);
 
         final String[] expectedViolation = {
             "9:9: " + getCheckMessage(NeedBracesCheck.class, MSG_KEY_NEED_BRACES, "while"),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNeedBracesEmptyLoopBody']]"
-                + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/SLIST/LITERAL_WHILE"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNeedBracesEmptyLoopBody']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/SLIST/LITERAL_WHILE"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }

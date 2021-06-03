@@ -144,10 +144,10 @@ public class LineLengthCheck extends AbstractFileSetCheck {
         for (int i = 0; i < fileText.size(); i++) {
             final String line = fileText.get(i);
             final int realLength = CommonUtil.lengthExpandedTabs(
-                line, line.codePointCount(0, line.length()), getTabWidth());
+                                       line, line.codePointCount(0, line.length()), getTabWidth());
 
             if (realLength > max && !IGNORE_PATTERN.matcher(line).find()
-                && !ignorePattern.matcher(line).find()) {
+                    && !ignorePattern.matcher(line).find()) {
                 log(i + 1, MSG_KEY, max, realLength);
             }
         }

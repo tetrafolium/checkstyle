@@ -44,14 +44,14 @@ public class SwitchRuleHandler extends AbstractExpressionHandler {
      * @param parent      the parent handler
      */
     public SwitchRuleHandler(IndentationCheck indentCheck,
-                       DetailAST expr, AbstractExpressionHandler parent) {
+                             DetailAST expr, AbstractExpressionHandler parent) {
         super(indentCheck, "case", expr, parent);
     }
 
     @Override
     protected IndentLevel getIndentImpl() {
         return new IndentLevel(getParent().getIndent(),
-            getIndentCheck().getCaseIndent());
+                               getIndentCheck().getCaseIndent());
     }
 
     /**
@@ -59,7 +59,7 @@ public class SwitchRuleHandler extends AbstractExpressionHandler {
      */
     private void checkCase() {
         checkChildren(getMainAst(), SWITCH_RULE_CHILDREN, getIndent(),
-            true, false);
+                      true, false);
     }
 
     @Override

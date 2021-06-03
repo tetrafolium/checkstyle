@@ -238,7 +238,7 @@ public class MatchXpathCheck extends AbstractCheck {
         if (!query.isEmpty()) {
             try {
                 final XPathEvaluator xpathEvaluator =
-                        new XPathEvaluator(Configuration.newConfiguration());
+                    new XPathEvaluator(Configuration.newConfiguration());
                 xpathExpression = xpathEvaluator.createExpression(query);
             }
             catch (XPathException ex) {
@@ -274,11 +274,11 @@ public class MatchXpathCheck extends AbstractCheck {
         try {
             final RootNode rootNode = new RootNode(rootAST);
             final XPathDynamicContext xpathDynamicContext =
-                    xpathExpression.createDynamicContext(rootNode);
+                xpathExpression.createDynamicContext(rootNode);
             final List<Item> matchingItems = xpathExpression.evaluate(xpathDynamicContext);
             return matchingItems.stream()
-                    .map(item -> ((AbstractNode) item).getUnderlyingNode())
-                    .collect(Collectors.toList());
+                   .map(item -> ((AbstractNode) item).getUnderlyingNode())
+                   .collect(Collectors.toList());
         }
         catch (XPathException ex) {
             throw new IllegalStateException("Evaluation of Xpath query failed: " + query, ex);

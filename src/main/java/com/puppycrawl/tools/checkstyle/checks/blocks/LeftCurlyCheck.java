@@ -256,31 +256,31 @@ public class LeftCurlyCheck
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.ANNOTATION_DEF,
-            TokenTypes.CLASS_DEF,
-            TokenTypes.CTOR_DEF,
-            TokenTypes.ENUM_CONSTANT_DEF,
-            TokenTypes.ENUM_DEF,
-            TokenTypes.INTERFACE_DEF,
-            TokenTypes.LAMBDA,
-            TokenTypes.LITERAL_CASE,
-            TokenTypes.LITERAL_CATCH,
-            TokenTypes.LITERAL_DEFAULT,
-            TokenTypes.LITERAL_DO,
-            TokenTypes.LITERAL_ELSE,
-            TokenTypes.LITERAL_FINALLY,
-            TokenTypes.LITERAL_FOR,
-            TokenTypes.LITERAL_IF,
-            TokenTypes.LITERAL_SWITCH,
-            TokenTypes.LITERAL_SYNCHRONIZED,
-            TokenTypes.LITERAL_TRY,
-            TokenTypes.LITERAL_WHILE,
-            TokenTypes.METHOD_DEF,
-            TokenTypes.OBJBLOCK,
-            TokenTypes.STATIC_INIT,
-            TokenTypes.RECORD_DEF,
-            TokenTypes.COMPACT_CTOR_DEF,
-        };
+                   TokenTypes.ANNOTATION_DEF,
+                   TokenTypes.CLASS_DEF,
+                   TokenTypes.CTOR_DEF,
+                   TokenTypes.ENUM_CONSTANT_DEF,
+                   TokenTypes.ENUM_DEF,
+                   TokenTypes.INTERFACE_DEF,
+                   TokenTypes.LAMBDA,
+                   TokenTypes.LITERAL_CASE,
+                   TokenTypes.LITERAL_CATCH,
+                   TokenTypes.LITERAL_DEFAULT,
+                   TokenTypes.LITERAL_DO,
+                   TokenTypes.LITERAL_ELSE,
+                   TokenTypes.LITERAL_FINALLY,
+                   TokenTypes.LITERAL_FOR,
+                   TokenTypes.LITERAL_IF,
+                   TokenTypes.LITERAL_SWITCH,
+                   TokenTypes.LITERAL_SYNCHRONIZED,
+                   TokenTypes.LITERAL_TRY,
+                   TokenTypes.LITERAL_WHILE,
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.OBJBLOCK,
+                   TokenTypes.STATIC_INIT,
+                   TokenTypes.RECORD_DEF,
+                   TokenTypes.COMPACT_CTOR_DEF,
+               };
     }
 
     @Override
@@ -302,57 +302,57 @@ public class LeftCurlyCheck
         DetailAST brace;
 
         switch (ast.getType()) {
-            case TokenTypes.CTOR_DEF:
-            case TokenTypes.METHOD_DEF:
-            case TokenTypes.COMPACT_CTOR_DEF:
-                startToken = skipModifierAnnotations(ast);
-                brace = ast.findFirstToken(TokenTypes.SLIST);
-                break;
-            case TokenTypes.INTERFACE_DEF:
-            case TokenTypes.CLASS_DEF:
-            case TokenTypes.ANNOTATION_DEF:
-            case TokenTypes.ENUM_DEF:
-            case TokenTypes.ENUM_CONSTANT_DEF:
-            case TokenTypes.RECORD_DEF:
-                startToken = skipModifierAnnotations(ast);
-                final DetailAST objBlock = ast.findFirstToken(TokenTypes.OBJBLOCK);
-                brace = objBlock;
+        case TokenTypes.CTOR_DEF:
+        case TokenTypes.METHOD_DEF:
+        case TokenTypes.COMPACT_CTOR_DEF:
+            startToken = skipModifierAnnotations(ast);
+            brace = ast.findFirstToken(TokenTypes.SLIST);
+            break;
+        case TokenTypes.INTERFACE_DEF:
+        case TokenTypes.CLASS_DEF:
+        case TokenTypes.ANNOTATION_DEF:
+        case TokenTypes.ENUM_DEF:
+        case TokenTypes.ENUM_CONSTANT_DEF:
+        case TokenTypes.RECORD_DEF:
+            startToken = skipModifierAnnotations(ast);
+            final DetailAST objBlock = ast.findFirstToken(TokenTypes.OBJBLOCK);
+            brace = objBlock;
 
-                if (objBlock != null) {
-                    brace = objBlock.getFirstChild();
-                }
-                break;
-            case TokenTypes.LITERAL_WHILE:
-            case TokenTypes.LITERAL_CATCH:
-            case TokenTypes.LITERAL_SYNCHRONIZED:
-            case TokenTypes.LITERAL_FOR:
-            case TokenTypes.LITERAL_TRY:
-            case TokenTypes.LITERAL_FINALLY:
-            case TokenTypes.LITERAL_DO:
-            case TokenTypes.LITERAL_IF:
-            case TokenTypes.STATIC_INIT:
-            case TokenTypes.LAMBDA:
-                startToken = ast;
-                brace = ast.findFirstToken(TokenTypes.SLIST);
-                break;
-            case TokenTypes.LITERAL_ELSE:
-                startToken = ast;
-                brace = getBraceAsFirstChild(ast);
-                break;
-            case TokenTypes.LITERAL_CASE:
-            case TokenTypes.LITERAL_DEFAULT:
-                startToken = ast;
-                brace = getBraceFromSwitchMember(ast);
-                break;
-            default:
-                // ATTENTION! We have default here, but we expect case TokenTypes.METHOD_DEF,
-                // TokenTypes.LITERAL_FOR, TokenTypes.LITERAL_WHILE, TokenTypes.LITERAL_DO only.
-                // It has been done to improve coverage to 100%. I couldn't replace it with
-                // if-else-if block because code was ugly and didn't pass pmd check.
+            if (objBlock != null) {
+                brace = objBlock.getFirstChild();
+            }
+            break;
+        case TokenTypes.LITERAL_WHILE:
+        case TokenTypes.LITERAL_CATCH:
+        case TokenTypes.LITERAL_SYNCHRONIZED:
+        case TokenTypes.LITERAL_FOR:
+        case TokenTypes.LITERAL_TRY:
+        case TokenTypes.LITERAL_FINALLY:
+        case TokenTypes.LITERAL_DO:
+        case TokenTypes.LITERAL_IF:
+        case TokenTypes.STATIC_INIT:
+        case TokenTypes.LAMBDA:
+            startToken = ast;
+            brace = ast.findFirstToken(TokenTypes.SLIST);
+            break;
+        case TokenTypes.LITERAL_ELSE:
+            startToken = ast;
+            brace = getBraceAsFirstChild(ast);
+            break;
+        case TokenTypes.LITERAL_CASE:
+        case TokenTypes.LITERAL_DEFAULT:
+            startToken = ast;
+            brace = getBraceFromSwitchMember(ast);
+            break;
+        default:
+            // ATTENTION! We have default here, but we expect case TokenTypes.METHOD_DEF,
+            // TokenTypes.LITERAL_FOR, TokenTypes.LITERAL_WHILE, TokenTypes.LITERAL_DO only.
+            // It has been done to improve coverage to 100%. I couldn't replace it with
+            // if-else-if block because code was ugly and didn't pass pmd check.
 
-                startToken = ast;
-                brace = ast.findFirstToken(TokenTypes.LCURLY);
-                break;
+            startToken = ast;
+            brace = ast.findFirstToken(TokenTypes.LCURLY);
+            break;
         }
 
         if (brace != null) {
@@ -432,7 +432,7 @@ public class LeftCurlyCheck
     private static DetailAST findLastAnnotation(DetailAST modifiers) {
         DetailAST annotation = modifiers.findFirstToken(TokenTypes.ANNOTATION);
         while (annotation != null && annotation.getNextSibling() != null
-               && annotation.getNextSibling().getType() == TokenTypes.ANNOTATION) {
+                && annotation.getNextSibling().getType() == TokenTypes.ANNOTATION) {
             annotation = annotation.getNextSibling();
         }
         return annotation;
@@ -523,8 +523,8 @@ public class LeftCurlyCheck
             }
         }
         return nextToken == null
-                || nextToken.getType() == TokenTypes.RCURLY
-                || !TokenUtil.areOnSameLine(leftCurly, nextToken);
+               || nextToken.getType() == TokenTypes.RCURLY
+               || !TokenUtil.areOnSameLine(leftCurly, nextToken);
     }
 
 }

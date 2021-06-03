@@ -136,7 +136,7 @@ public class SuppressWarningsHolder
      * file parsed.
      */
     private static final ThreadLocal<List<Entry>> ENTRIES =
-            ThreadLocal.withInitial(LinkedList::new);
+        ThreadLocal.withInitial(LinkedList::new);
 
     /**
      * Compiled pattern used to match whitespace in text block content.
@@ -206,7 +206,7 @@ public class SuppressWarningsHolder
             final int index = sourceAlias.indexOf('=');
             if (index > 0) {
                 registerAlias(sourceAlias.substring(0, index), sourceAlias
-                    .substring(index + 1));
+                              .substring(index + 1));
             }
             else if (!sourceAlias.isEmpty()) {
                 throw new IllegalArgumentException(
@@ -235,9 +235,9 @@ public class SuppressWarningsHolder
             final boolean beforeEnd = isSuppressedBeforeEventEnd(line, column, entry);
             final boolean nameMatches =
                 ALL_WARNING_MATCHING_ID.equals(entry.getCheckName())
-                    || entry.getCheckName().equalsIgnoreCase(checkAlias);
+                || entry.getCheckName().equalsIgnoreCase(checkAlias);
             final boolean idMatches = event.getModuleId() != null
-                && event.getModuleId().equals(entry.getCheckName());
+                                      && event.getModuleId().equals(entry.getCheckName());
             if (afterStart && beforeEnd && (nameMatches || idMatches)) {
                 suppressed = true;
                 break;
@@ -258,8 +258,8 @@ public class SuppressWarningsHolder
      */
     private static boolean isSuppressedAfterEventStart(int line, int column, Entry entry) {
         return entry.getFirstLine() < line
-            || entry.getFirstLine() == line
-            && (column == 0 || entry.getFirstColumn() <= column);
+               || entry.getFirstLine() == line
+               && (column == 0 || entry.getFirstColumn() <= column);
     }
 
     /**
@@ -274,8 +274,8 @@ public class SuppressWarningsHolder
      */
     private static boolean isSuppressedBeforeEventEnd(int line, int column, Entry entry) {
         return entry.getLastLine() > line
-            || entry.getLastLine() == line && entry
-                .getLastColumn() >= column;
+               || entry.getLastLine() == line && entry
+               .getLastColumn() >= column;
     }
 
     @Override
@@ -333,7 +333,7 @@ public class SuppressWarningsHolder
                     // strip off the checkstyle-only prefix if present
                     checkName = removeCheckstylePrefixIfExists(checkName);
                     entries.add(new Entry(checkName, firstLine, firstColumn,
-                            lastLine, lastColumn));
+                                          lastLine, lastColumn));
                 }
             }
         }
@@ -368,24 +368,24 @@ public class SuppressWarningsHolder
             final DetailAST nextAST = lparenAST.getNextSibling();
             final int nextType = nextAST.getType();
             switch (nextType) {
-                case TokenTypes.EXPR:
-                case TokenTypes.ANNOTATION_ARRAY_INIT:
-                    values = getAnnotationValues(nextAST);
-                    break;
+            case TokenTypes.EXPR:
+            case TokenTypes.ANNOTATION_ARRAY_INIT:
+                values = getAnnotationValues(nextAST);
+                break;
 
-                case TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR:
-                    // expected children: IDENT ASSIGN ( EXPR |
-                    // ANNOTATION_ARRAY_INIT )
-                    values = getAnnotationValues(getNthChild(nextAST, 2));
-                    break;
+            case TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR:
+                // expected children: IDENT ASSIGN ( EXPR |
+                // ANNOTATION_ARRAY_INIT )
+                values = getAnnotationValues(getNthChild(nextAST, 2));
+                break;
 
-                case TokenTypes.RPAREN:
-                    // no value present (not valid Java)
-                    break;
+            case TokenTypes.RPAREN:
+                // no value present (not valid Java)
+                break;
 
-                default:
-                    // unknown annotation value type (new syntax?)
-                    throw new IllegalArgumentException("Unexpected AST: " + nextAST);
+            default:
+                // unknown annotation value type (new syntax?)
+                throw new IllegalArgumentException("Unexpected AST: " + nextAST);
             }
         }
         return values;
@@ -411,15 +411,15 @@ public class SuppressWarningsHolder
         final DetailAST targetAST;
         final DetailAST parentAST = ast.getParent();
         switch (parentAST.getType()) {
-            case TokenTypes.MODIFIERS:
-            case TokenTypes.ANNOTATIONS:
-            case TokenTypes.ANNOTATION:
-            case TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR:
-                targetAST = parentAST.getParent();
-                break;
-            default:
-                // unexpected container type
-                throw new IllegalArgumentException("Unexpected container AST: " + parentAST);
+        case TokenTypes.MODIFIERS:
+        case TokenTypes.ANNOTATIONS:
+        case TokenTypes.ANNOTATION:
+        case TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR:
+            targetAST = parentAST.getParent();
+            break;
+        default:
+            // unexpected container type
+            throw new IllegalArgumentException("Unexpected container AST: " + parentAST);
         }
         return targetAST;
     }
@@ -456,7 +456,7 @@ public class SuppressWarningsHolder
         }
         else {
             identifier = getIdentifier(ast.getFirstChild()) + "."
-                + getIdentifier(ast.getLastChild());
+                         + getIdentifier(ast.getLastChild());
         }
         return identifier;
     }
@@ -474,23 +474,23 @@ public class SuppressWarningsHolder
         String expr = "";
 
         switch (firstChild.getType()) {
-            case TokenTypes.STRING_LITERAL:
-                // NOTE: escaped characters are not unescaped
-                final String quotedText = firstChild.getText();
-                expr = quotedText.substring(1, quotedText.length() - 1);
-                break;
-            case TokenTypes.IDENT:
-                expr = firstChild.getText();
-                break;
-            case TokenTypes.DOT:
-                expr = firstChild.getLastChild().getText();
-                break;
-            case TokenTypes.TEXT_BLOCK_LITERAL_BEGIN:
-                final String textBlockContent = firstChild.getFirstChild().getText();
-                expr = getContentWithoutPrecedingWhitespace(textBlockContent);
-                break;
-            default:
-                // annotations with complex expressions cannot suppress warnings
+        case TokenTypes.STRING_LITERAL:
+            // NOTE: escaped characters are not unescaped
+            final String quotedText = firstChild.getText();
+            expr = quotedText.substring(1, quotedText.length() - 1);
+            break;
+        case TokenTypes.IDENT:
+            expr = firstChild.getText();
+            break;
+        case TokenTypes.DOT:
+            expr = firstChild.getLastChild().getText();
+            break;
+        case TokenTypes.TEXT_BLOCK_LITERAL_BEGIN:
+            final String textBlockContent = firstChild.getFirstChild().getText();
+            expr = getContentWithoutPrecedingWhitespace(textBlockContent);
+            break;
+        default:
+            // annotations with complex expressions cannot suppress warnings
         }
         return expr;
     }
@@ -506,15 +506,15 @@ public class SuppressWarningsHolder
     private static List<String> getAnnotationValues(DetailAST ast) {
         final List<String> annotationValues;
         switch (ast.getType()) {
-            case TokenTypes.EXPR:
-                annotationValues = Collections.singletonList(getStringExpr(ast));
-                break;
-            case TokenTypes.ANNOTATION_ARRAY_INIT:
-                annotationValues = findAllExpressionsInChildren(ast);
-                break;
-            default:
-                throw new IllegalArgumentException(
-                        "Expression or annotation array initializer AST expected: " + ast);
+        case TokenTypes.EXPR:
+            annotationValues = Collections.singletonList(getStringExpr(ast));
+            break;
+        case TokenTypes.ANNOTATION_ARRAY_INIT:
+            annotationValues = findAllExpressionsInChildren(ast);
+            break;
+        default:
+            throw new IllegalArgumentException(
+                "Expression or annotation array initializer AST expected: " + ast);
         }
         return annotationValues;
     }
@@ -579,7 +579,7 @@ public class SuppressWarningsHolder
          * @param lastColumn the last column of the suppression region
          */
         /* package */ Entry(String checkName, int firstLine, int firstColumn,
-            int lastLine, int lastColumn) {
+                            int lastLine, int lastColumn) {
             this.checkName = checkName;
             this.firstLine = firstLine;
             this.firstColumn = firstColumn;

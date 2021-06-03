@@ -217,8 +217,8 @@ public final class ThrowsCountCheck extends AbstractCheck {
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.LITERAL_THROWS,
-        };
+                   TokenTypes.LITERAL_THROWS,
+               };
     }
 
     @Override

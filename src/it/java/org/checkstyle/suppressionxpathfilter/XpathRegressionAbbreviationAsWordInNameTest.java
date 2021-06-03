@@ -40,210 +40,210 @@ public class XpathRegressionAbbreviationAsWordInNameTest extends AbstractXpathTe
     @Test
     public void testAnnotation() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionAbbreviationAsWordInNameAnnotation.java"));
+                                                "SuppressionXpathRegressionAbbreviationAsWordInNameAnnotation.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AbbreviationAsWordInNameCheck.class);
+            createModuleConfig(AbbreviationAsWordInNameCheck.class);
 
         final String[] expectedViolation = {
             "5:16: " + getCheckMessage(AbbreviationAsWordInNameCheck.class,
-                AbbreviationAsWordInNameCheck.MSG_KEY, "ANNOTATION", 4),
+                                       AbbreviationAsWordInNameCheck.MSG_KEY, "ANNOTATION", 4),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/CLASS_DEF[./IDENT["
+                    "/CLASS_DEF[./IDENT["
                     + "@text='SuppressionXpathRegressionAbbreviationAsWordInNameAnnotation']]"
                     + "/OBJBLOCK/ANNOTATION_DEF/IDENT[@text='ANNOTATION']"
-        );
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testAnnotationField() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionAbbreviationAsWordInNameAnnotationField.java"));
+                                                "SuppressionXpathRegressionAbbreviationAsWordInNameAnnotationField.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AbbreviationAsWordInNameCheck.class);
+            createModuleConfig(AbbreviationAsWordInNameCheck.class);
 
         final String[] expectedViolation = {
             "5:12: " + getCheckMessage(AbbreviationAsWordInNameCheck.class,
-                AbbreviationAsWordInNameCheck.MSG_KEY, "ANNOTATION_FIELD", 4),
+                                       AbbreviationAsWordInNameCheck.MSG_KEY, "ANNOTATION_FIELD", 4),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/ANNOTATION_DEF[./IDENT["
+                    "/ANNOTATION_DEF[./IDENT["
                     + "@text='SuppressionXpathRegressionAbbreviationAsWordInNameAnnotationField']]"
                     + "/OBJBLOCK/ANNOTATION_FIELD_DEF/IDENT[@text='ANNOTATION_FIELD']"
-        );
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testClass() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionAbbreviationAsWordInNameClass.java"));
+                                                "SuppressionXpathRegressionAbbreviationAsWordInNameClass.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AbbreviationAsWordInNameCheck.class);
+            createModuleConfig(AbbreviationAsWordInNameCheck.class);
 
         final String[] expectedViolation = {
             "5:11: " + getCheckMessage(AbbreviationAsWordInNameCheck.class,
-                AbbreviationAsWordInNameCheck.MSG_KEY, "CLASS", 4),
+                                       AbbreviationAsWordInNameCheck.MSG_KEY, "CLASS", 4),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/CLASS_DEF[./IDENT["
+                    "/CLASS_DEF[./IDENT["
                     + "@text='SuppressionXpathRegressionAbbreviationAsWordInNameClass']]"
                     + "/OBJBLOCK/CLASS_DEF/IDENT[@text='CLASS']"
-        );
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testEnum() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionAbbreviationAsWordInNameEnum.java"));
+                                                "SuppressionXpathRegressionAbbreviationAsWordInNameEnum.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AbbreviationAsWordInNameCheck.class);
+            createModuleConfig(AbbreviationAsWordInNameCheck.class);
 
         final String[] expectedViolation = {
             "5:10: " + getCheckMessage(AbbreviationAsWordInNameCheck.class,
-                AbbreviationAsWordInNameCheck.MSG_KEY, "ENUMERATION", 4),
+                                       AbbreviationAsWordInNameCheck.MSG_KEY, "ENUMERATION", 4),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/CLASS_DEF[./IDENT["
+                    "/CLASS_DEF[./IDENT["
                     + "@text='SuppressionXpathRegressionAbbreviationAsWordInNameEnum']]"
                     + "/OBJBLOCK/ENUM_DEF/IDENT[@text='ENUMERATION']"
-        );
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testField() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionAbbreviationAsWordInNameField.java"));
+                                                "SuppressionXpathRegressionAbbreviationAsWordInNameField.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AbbreviationAsWordInNameCheck.class);
+            createModuleConfig(AbbreviationAsWordInNameCheck.class);
 
         final String[] expectedViolation = {
             "5:9: " + getCheckMessage(AbbreviationAsWordInNameCheck.class,
-                AbbreviationAsWordInNameCheck.MSG_KEY, "FIELD", 4),
+                                      AbbreviationAsWordInNameCheck.MSG_KEY, "FIELD", 4),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/CLASS_DEF[./IDENT["
+                    "/CLASS_DEF[./IDENT["
                     + "@text='SuppressionXpathRegressionAbbreviationAsWordInNameField']]"
                     + "/OBJBLOCK/VARIABLE_DEF/IDENT[@text='FIELD']"
-        );
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testInterface() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionAbbreviationAsWordInNameInterface.java"));
+                                                "SuppressionXpathRegressionAbbreviationAsWordInNameInterface.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AbbreviationAsWordInNameCheck.class);
+            createModuleConfig(AbbreviationAsWordInNameCheck.class);
 
         final String[] expectedViolation = {
             "5:15: " + getCheckMessage(AbbreviationAsWordInNameCheck.class,
-                AbbreviationAsWordInNameCheck.MSG_KEY, "INTERFACE", 4),
+                                       AbbreviationAsWordInNameCheck.MSG_KEY, "INTERFACE", 4),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/CLASS_DEF[./IDENT["
+                    "/CLASS_DEF[./IDENT["
                     + "@text='SuppressionXpathRegressionAbbreviationAsWordInNameInterface']]"
                     + "/OBJBLOCK/INTERFACE_DEF/IDENT[@text='INTERFACE']"
-        );
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testMethod() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionAbbreviationAsWordInNameMethod.java"));
+                                                "SuppressionXpathRegressionAbbreviationAsWordInNameMethod.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AbbreviationAsWordInNameCheck.class);
+            createModuleConfig(AbbreviationAsWordInNameCheck.class);
 
         final String[] expectedViolation = {
             "5:10: " + getCheckMessage(AbbreviationAsWordInNameCheck.class,
-                AbbreviationAsWordInNameCheck.MSG_KEY, "METHOD", 4),
+                                       AbbreviationAsWordInNameCheck.MSG_KEY, "METHOD", 4),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/INTERFACE_DEF[./IDENT["
+                    "/INTERFACE_DEF[./IDENT["
                     + "@text='SuppressionXpathRegressionAbbreviationAsWordInNameMethod']]"
                     + "/OBJBLOCK/METHOD_DEF/IDENT[@text='METHOD']"
-        );
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testParameter() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionAbbreviationAsWordInNameParameter.java"));
+                                                "SuppressionXpathRegressionAbbreviationAsWordInNameParameter.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AbbreviationAsWordInNameCheck.class);
+            createModuleConfig(AbbreviationAsWordInNameCheck.class);
 
         final String[] expectedViolation = {
             "5:21: " + getCheckMessage(AbbreviationAsWordInNameCheck.class,
-                AbbreviationAsWordInNameCheck.MSG_KEY, "PARAMETER", 4),
+                                       AbbreviationAsWordInNameCheck.MSG_KEY, "PARAMETER", 4),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/INTERFACE_DEF[./IDENT["
+                    "/INTERFACE_DEF[./IDENT["
                     + "@text='SuppressionXpathRegressionAbbreviationAsWordInNameParameter']]"
                     + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='method']]"
                     + "/PARAMETERS/PARAMETER_DEF/IDENT[@text='PARAMETER']"
-        );
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testVariable() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionAbbreviationAsWordInNameVariable.java"));
+                                                "SuppressionXpathRegressionAbbreviationAsWordInNameVariable.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AbbreviationAsWordInNameCheck.class);
+            createModuleConfig(AbbreviationAsWordInNameCheck.class);
 
         final String[] expectedViolation = {
             "6:13: " + getCheckMessage(AbbreviationAsWordInNameCheck.class,
-                AbbreviationAsWordInNameCheck.MSG_KEY, "VARIABLE", 4),
+                                       AbbreviationAsWordInNameCheck.MSG_KEY, "VARIABLE", 4),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/CLASS_DEF[./IDENT["
+                    "/CLASS_DEF[./IDENT["
                     + "@text='SuppressionXpathRegressionAbbreviationAsWordInNameVariable']]"
                     + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='method']]"
                     + "/SLIST/VARIABLE_DEF/IDENT[@text='VARIABLE']"
-        );
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
 }

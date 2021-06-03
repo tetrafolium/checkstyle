@@ -40,67 +40,67 @@ public class XpathRegressionMethodParamPadTest extends AbstractXpathTestSupport 
     @Test
     public void testOne() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionMethodParamPadOne.java"));
+            new File(getPath("SuppressionXpathRegressionMethodParamPadOne.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(MethodParamPadCheck.class);
+            createModuleConfig(MethodParamPadCheck.class);
 
         final String[] expectedViolation = {
             "4:37: " + getCheckMessage(MethodParamPadCheck.class,
-                MethodParamPadCheck.MSG_WS_PRECEDED, "("),
+                                       MethodParamPadCheck.MSG_WS_PRECEDED, "("),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodParamPadOne']]/OBJBLOCK"
-                + "/METHOD_DEF[./IDENT[@text='InputMethodParamPad']]/LPAREN"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodParamPadOne']]/OBJBLOCK"
+                    + "/METHOD_DEF[./IDENT[@text='InputMethodParamPad']]/LPAREN"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionMethodParamPadTwo.java"));
+            new File(getPath("SuppressionXpathRegressionMethodParamPadTwo.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(MethodParamPadCheck.class);
+            createModuleConfig(MethodParamPadCheck.class);
 
         final String[] expectedViolation = {
             "5:13: " + getCheckMessage(MethodParamPadCheck.class,
-                MethodParamPadCheck.MSG_LINE_PREVIOUS, "("),
+                                       MethodParamPadCheck.MSG_LINE_PREVIOUS, "("),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodParamPadTwo']]/OBJBLOCK"
-                + "/METHOD_DEF[./IDENT[@text='sayHello']]/LPAREN"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodParamPadTwo']]/OBJBLOCK"
+                    + "/METHOD_DEF[./IDENT[@text='sayHello']]/LPAREN"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testThree() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionMethodParamPadThree.java"));
+            new File(getPath("SuppressionXpathRegressionMethodParamPadThree.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(MethodParamPadCheck.class);
+            createModuleConfig(MethodParamPadCheck.class);
         moduleConfig.addAttribute("option", "space");
 
         final String[] expectedViolation = {
             "4:25: " + getCheckMessage(MethodParamPadCheck.class,
-                MethodParamPadCheck.MSG_WS_NOT_PRECEDED, "("),
+                                       MethodParamPadCheck.MSG_WS_NOT_PRECEDED, "("),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodParamPadThree']]/OBJBLOCK"
-                + "/METHOD_DEF[./IDENT[@text='sayHello']]/LPAREN"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodParamPadThree']]/OBJBLOCK"
+                    + "/METHOD_DEF[./IDENT[@text='sayHello']]/LPAREN"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }

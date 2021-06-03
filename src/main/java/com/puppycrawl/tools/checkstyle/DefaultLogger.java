@@ -95,7 +95,7 @@ public class DefaultLogger extends AutomaticBean implements AuditListener {
                          OutputStream errorStream,
                          OutputStreamOptions errorStreamOptions) {
         this(infoStream, infoStreamOptions, errorStream, errorStreamOptions,
-                new AuditEventDefaultFormatter());
+             new AuditEventDefaultFormatter());
     }
 
     /**
@@ -160,9 +160,9 @@ public class DefaultLogger extends AutomaticBean implements AuditListener {
     public void addException(AuditEvent event, Throwable throwable) {
         synchronized (errorWriter) {
             final LocalizedMessage addExceptionMessage = new LocalizedMessage(1,
-                Definitions.CHECKSTYLE_BUNDLE, ADD_EXCEPTION_MESSAGE,
-                new String[] {event.getFileName()}, null,
-                LocalizedMessage.class, null);
+                    Definitions.CHECKSTYLE_BUNDLE, ADD_EXCEPTION_MESSAGE,
+                    new String[] {event.getFileName()}, null,
+                    LocalizedMessage.class, null);
             errorWriter.println(addExceptionMessage.getMessage());
             throwable.printStackTrace(errorWriter);
         }
@@ -171,8 +171,8 @@ public class DefaultLogger extends AutomaticBean implements AuditListener {
     @Override
     public void auditStarted(AuditEvent event) {
         final LocalizedMessage auditStartMessage = new LocalizedMessage(1,
-            Definitions.CHECKSTYLE_BUNDLE, AUDIT_STARTED_MESSAGE, null, null,
-            LocalizedMessage.class, null);
+                Definitions.CHECKSTYLE_BUNDLE, AUDIT_STARTED_MESSAGE, null, null,
+                LocalizedMessage.class, null);
         infoWriter.println(auditStartMessage.getMessage());
         infoWriter.flush();
     }
@@ -180,8 +180,8 @@ public class DefaultLogger extends AutomaticBean implements AuditListener {
     @Override
     public void auditFinished(AuditEvent event) {
         final LocalizedMessage auditFinishMessage = new LocalizedMessage(1,
-            Definitions.CHECKSTYLE_BUNDLE, AUDIT_FINISHED_MESSAGE, null, null,
-            LocalizedMessage.class, null);
+                Definitions.CHECKSTYLE_BUNDLE, AUDIT_FINISHED_MESSAGE, null, null,
+                LocalizedMessage.class, null);
         infoWriter.println(auditFinishMessage.getMessage());
         closeStreams();
     }

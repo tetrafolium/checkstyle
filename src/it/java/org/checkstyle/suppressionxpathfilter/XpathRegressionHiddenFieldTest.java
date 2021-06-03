@@ -40,46 +40,46 @@ public class XpathRegressionHiddenFieldTest extends AbstractXpathTestSupport {
     @Test
     public void testOne() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionHiddenFieldOne.java"));
+            new File(getPath("SuppressionXpathRegressionHiddenFieldOne.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(HiddenFieldCheck.class);
+            createModuleConfig(HiddenFieldCheck.class);
 
         final String[] expectedViolation = {
             "10:34: " + getCheckMessage(HiddenFieldCheck.class,
-                HiddenFieldCheck.MSG_KEY, "value"),
+                                        HiddenFieldCheck.MSG_KEY, "value"),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionHiddenFieldOne']]/OBJBLOCK"
-                + "/INSTANCE_INIT/SLIST/EXPR/METHOD_CALL/ELIST/LAMBDA/PARAMETERS"
-                + "/PARAMETER_DEF/IDENT[@text='value']"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionHiddenFieldOne']]/OBJBLOCK"
+                    + "/INSTANCE_INIT/SLIST/EXPR/METHOD_CALL/ELIST/LAMBDA/PARAMETERS"
+                    + "/PARAMETER_DEF/IDENT[@text='value']"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionHiddenFieldTwo.java"));
+            new File(getPath("SuppressionXpathRegressionHiddenFieldTwo.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(HiddenFieldCheck.class);
+            createModuleConfig(HiddenFieldCheck.class);
 
         final String[] expectedViolation = {
             "8:45: " + getCheckMessage(HiddenFieldCheck.class,
-                HiddenFieldCheck.MSG_KEY, "other"),
+                                       HiddenFieldCheck.MSG_KEY, "other"),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionHiddenFieldTwo']]/OBJBLOCK"
-                + "/METHOD_DEF[./IDENT[@text='method']]/PARAMETERS/PARAMETER_DEF"
-                + "/IDENT[@text='other']"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionHiddenFieldTwo']]/OBJBLOCK"
+                    + "/METHOD_DEF[./IDENT[@text='method']]/PARAMETERS/PARAMETER_DEF"
+                    + "/IDENT[@text='other']"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }

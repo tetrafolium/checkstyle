@@ -413,7 +413,7 @@ import com.puppycrawl.tools.checkstyle.api.AutomaticBean;
  * @since 8.18
  */
 public class SuppressionXpathSingleFilter extends AutomaticBean implements
-        TreeWalkerFilter {
+    TreeWalkerFilter {
     /**
      * XpathFilterElement instance.
      */

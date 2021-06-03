@@ -31,7 +31,7 @@ import com.puppycrawl.tools.checkstyle.checks.coding.OverloadMethodsDeclarationO
 public class XpathRegressionOverloadMethodsDeclarationOrderTest extends AbstractXpathTestSupport {
 
     private final Class<OverloadMethodsDeclarationOrderCheck> clazz =
-            OverloadMethodsDeclarationOrderCheck.class;
+        OverloadMethodsDeclarationOrderCheck.class;
 
     @Override
     protected String getCheckName() {
@@ -41,27 +41,27 @@ public class XpathRegressionOverloadMethodsDeclarationOrderTest extends Abstract
     @Test
     public void testOne() throws Exception {
         final File fileToProcess = new File(
-                getPath("SuppressionXpathRegressionOverloadMethodsDeclarationOrder1.java"));
+            getPath("SuppressionXpathRegressionOverloadMethodsDeclarationOrder1.java"));
 
         final DefaultConfiguration moduleConfig = createModuleConfig(clazz);
 
         final String[] expectedViolation = {
             "14:5: " + getCheckMessage(clazz,
-                        OverloadMethodsDeclarationOrderCheck.MSG_KEY, "5"),
+                                       OverloadMethodsDeclarationOrderCheck.MSG_KEY, "5"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT"
-                        + "[@text='SuppressionXpathRegressionOverloadMethodsDeclarationOrder1']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='overloadMethod']]",
-                "/CLASS_DEF[./IDENT"
-                        + "[@text='SuppressionXpathRegressionOverloadMethodsDeclarationOrder1']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='overloadMethod']]/MODIFIERS",
-                "/CLASS_DEF[./IDENT"
-                        + "[@text='SuppressionXpathRegressionOverloadMethodsDeclarationOrder1']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='overloadMethod']]"
-                        + "/MODIFIERS/LITERAL_PUBLIC"
-        );
+                    "/CLASS_DEF[./IDENT"
+                    + "[@text='SuppressionXpathRegressionOverloadMethodsDeclarationOrder1']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='overloadMethod']]",
+                    "/CLASS_DEF[./IDENT"
+                    + "[@text='SuppressionXpathRegressionOverloadMethodsDeclarationOrder1']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='overloadMethod']]/MODIFIERS",
+                    "/CLASS_DEF[./IDENT"
+                    + "[@text='SuppressionXpathRegressionOverloadMethodsDeclarationOrder1']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='overloadMethod']]"
+                    + "/MODIFIERS/LITERAL_PUBLIC"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
     }
@@ -69,33 +69,33 @@ public class XpathRegressionOverloadMethodsDeclarationOrderTest extends Abstract
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess = new File(
-                getPath("SuppressionXpathRegressionOverloadMethodsDeclarationOrder2.java"));
+            getPath("SuppressionXpathRegressionOverloadMethodsDeclarationOrder2.java"));
 
         final DefaultConfiguration moduleConfig = createModuleConfig(clazz);
 
         final String[] expectedViolation = {
             "30:9: " + getCheckMessage(clazz,
-                    OverloadMethodsDeclarationOrderCheck.MSG_KEY, "21"),
+                                       OverloadMethodsDeclarationOrderCheck.MSG_KEY, "21"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text="
-                        + "'SuppressionXpathRegressionOverloadMethodsDeclarationOrder2']]"
-                        + "/OBJBLOCK/CLASS_DEF[./IDENT[@text="
-                        + "'MySuppressionXpathRegressionOverloadMethodsDeclarationOrder2']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='overloadMethod']]",
-                "/CLASS_DEF[./IDENT[@text="
-                        + "'SuppressionXpathRegressionOverloadMethodsDeclarationOrder2']]"
-                        + "/OBJBLOCK/CLASS_DEF[./IDENT[@text="
-                        + "'MySuppressionXpathRegressionOverloadMethodsDeclarationOrder2']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='overloadMethod']]/MODIFIERS",
-                "/CLASS_DEF[./IDENT[@text="
-                        + "'SuppressionXpathRegressionOverloadMethodsDeclarationOrder2']]"
-                        + "/OBJBLOCK/CLASS_DEF[./IDENT[@text="
-                        + "'MySuppressionXpathRegressionOverloadMethodsDeclarationOrder2']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='overloadMethod']]"
-                        + "/MODIFIERS/LITERAL_PUBLIC"
-        );
+                    "/CLASS_DEF[./IDENT[@text="
+                    + "'SuppressionXpathRegressionOverloadMethodsDeclarationOrder2']]"
+                    + "/OBJBLOCK/CLASS_DEF[./IDENT[@text="
+                    + "'MySuppressionXpathRegressionOverloadMethodsDeclarationOrder2']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='overloadMethod']]",
+                    "/CLASS_DEF[./IDENT[@text="
+                    + "'SuppressionXpathRegressionOverloadMethodsDeclarationOrder2']]"
+                    + "/OBJBLOCK/CLASS_DEF[./IDENT[@text="
+                    + "'MySuppressionXpathRegressionOverloadMethodsDeclarationOrder2']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='overloadMethod']]/MODIFIERS",
+                    "/CLASS_DEF[./IDENT[@text="
+                    + "'SuppressionXpathRegressionOverloadMethodsDeclarationOrder2']]"
+                    + "/OBJBLOCK/CLASS_DEF[./IDENT[@text="
+                    + "'MySuppressionXpathRegressionOverloadMethodsDeclarationOrder2']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='overloadMethod']]"
+                    + "/MODIFIERS/LITERAL_PUBLIC"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
     }

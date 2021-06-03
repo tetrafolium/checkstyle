@@ -91,13 +91,13 @@ public final class DetailNodeTreeStringPrinter {
      */
     private static String getParseErrorMessage(ParseErrorMessage parseErrorMessage) {
         final LocalizedMessage lmessage = new LocalizedMessage(
-                parseErrorMessage.getLineNumber(),
-                "com.puppycrawl.tools.checkstyle.checks.javadoc.messages",
-                parseErrorMessage.getMessageKey(),
-                parseErrorMessage.getMessageArguments(),
-                "",
-                DetailNodeTreeStringPrinter.class,
-                null);
+            parseErrorMessage.getLineNumber(),
+            "com.puppycrawl.tools.checkstyle.checks.javadoc.messages",
+            parseErrorMessage.getMessageKey(),
+            parseErrorMessage.getMessageArguments(),
+            "",
+            DetailNodeTreeStringPrinter.class,
+            null);
         return "[ERROR:" + parseErrorMessage.getLineNumber() + "] " + lmessage.getMessage();
     }
 
@@ -120,11 +120,11 @@ public final class DetailNodeTreeStringPrinter {
                 messageBuilder.append(prefix);
             }
             messageBuilder.append(getIndentation(node))
-                    .append(JavadocUtil.getTokenName(node.getType())).append(" -> ")
-                    .append(JavadocUtil.escapeAllControlChars(node.getText())).append(" [")
-                    .append(node.getLineNumber()).append(':').append(node.getColumnNumber())
-                    .append(']').append(LINE_SEPARATOR)
-                    .append(printTree(JavadocUtil.getFirstChild(node), rootPrefix, prefix));
+            .append(JavadocUtil.getTokenName(node.getType())).append(" -> ")
+            .append(JavadocUtil.escapeAllControlChars(node.getText())).append(" [")
+            .append(node.getLineNumber()).append(':').append(node.getColumnNumber())
+            .append(']').append(LINE_SEPARATOR)
+            .append(printTree(JavadocUtil.getFirstChild(node), rootPrefix, prefix));
             node = JavadocUtil.getNextSibling(node);
         }
         return messageBuilder.toString();
@@ -173,7 +173,7 @@ public final class DetailNodeTreeStringPrinter {
      */
     private static DetailNode parseFile(File file) throws IOException {
         final FileText text = new FileText(file.getAbsoluteFile(),
-            System.getProperty("file.encoding", StandardCharsets.UTF_8.name()));
+                                           System.getProperty("file.encoding", StandardCharsets.UTF_8.name()));
         return parseJavadocAsDetailNode(text.getFullText().toString());
     }
 

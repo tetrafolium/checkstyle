@@ -42,10 +42,10 @@ public final class BlockCommentPosition {
      */
     public static boolean isOnType(DetailAST blockComment) {
         return isOnClass(blockComment)
-                || isOnInterface(blockComment)
-                || isOnEnum(blockComment)
-                || isOnAnnotationDef(blockComment)
-                || isOnRecord(blockComment);
+               || isOnInterface(blockComment)
+               || isOnEnum(blockComment)
+               || isOnAnnotationDef(blockComment)
+               || isOnRecord(blockComment);
     }
 
     /**
@@ -56,8 +56,8 @@ public final class BlockCommentPosition {
      */
     public static boolean isOnClass(DetailAST blockComment) {
         return isOnPlainToken(blockComment, TokenTypes.CLASS_DEF, TokenTypes.LITERAL_CLASS)
-                || isOnTokenWithModifiers(blockComment, TokenTypes.CLASS_DEF)
-                || isOnTokenWithAnnotation(blockComment, TokenTypes.CLASS_DEF);
+               || isOnTokenWithModifiers(blockComment, TokenTypes.CLASS_DEF)
+               || isOnTokenWithAnnotation(blockComment, TokenTypes.CLASS_DEF);
     }
 
     /**
@@ -68,8 +68,8 @@ public final class BlockCommentPosition {
      */
     public static boolean isOnRecord(DetailAST blockComment) {
         return isOnPlainToken(blockComment, TokenTypes.RECORD_DEF, TokenTypes.LITERAL_RECORD)
-            || isOnTokenWithModifiers(blockComment, TokenTypes.RECORD_DEF)
-            || isOnTokenWithAnnotation(blockComment, TokenTypes.RECORD_DEF);
+               || isOnTokenWithModifiers(blockComment, TokenTypes.RECORD_DEF)
+               || isOnTokenWithAnnotation(blockComment, TokenTypes.RECORD_DEF);
     }
 
     /**
@@ -103,8 +103,8 @@ public final class BlockCommentPosition {
      */
     public static boolean isOnInterface(DetailAST blockComment) {
         return isOnPlainToken(blockComment, TokenTypes.INTERFACE_DEF, TokenTypes.LITERAL_INTERFACE)
-                || isOnTokenWithModifiers(blockComment, TokenTypes.INTERFACE_DEF)
-                || isOnTokenWithAnnotation(blockComment, TokenTypes.INTERFACE_DEF);
+               || isOnTokenWithModifiers(blockComment, TokenTypes.INTERFACE_DEF)
+               || isOnTokenWithAnnotation(blockComment, TokenTypes.INTERFACE_DEF);
     }
 
     /**
@@ -115,8 +115,8 @@ public final class BlockCommentPosition {
      */
     public static boolean isOnEnum(DetailAST blockComment) {
         return isOnPlainToken(blockComment, TokenTypes.ENUM_DEF, TokenTypes.ENUM)
-                || isOnTokenWithModifiers(blockComment, TokenTypes.ENUM_DEF)
-                || isOnTokenWithAnnotation(blockComment, TokenTypes.ENUM_DEF);
+               || isOnTokenWithModifiers(blockComment, TokenTypes.ENUM_DEF)
+               || isOnTokenWithAnnotation(blockComment, TokenTypes.ENUM_DEF);
     }
 
     /**
@@ -127,8 +127,8 @@ public final class BlockCommentPosition {
      */
     public static boolean isOnAnnotationDef(DetailAST blockComment) {
         return isOnPlainToken(blockComment, TokenTypes.ANNOTATION_DEF, TokenTypes.AT)
-                || isOnTokenWithModifiers(blockComment, TokenTypes.ANNOTATION_DEF)
-                || isOnTokenWithAnnotation(blockComment, TokenTypes.ANNOTATION_DEF);
+               || isOnTokenWithModifiers(blockComment, TokenTypes.ANNOTATION_DEF)
+               || isOnTokenWithAnnotation(blockComment, TokenTypes.ANNOTATION_DEF);
     }
 
     /**
@@ -140,11 +140,11 @@ public final class BlockCommentPosition {
      */
     public static boolean isOnMember(DetailAST blockComment) {
         return isOnMethod(blockComment)
-                || isOnField(blockComment)
-                || isOnConstructor(blockComment)
-                || isOnEnumConstant(blockComment)
-                || isOnAnnotationField(blockComment)
-                || isOnCompactConstructor(blockComment);
+               || isOnField(blockComment)
+               || isOnConstructor(blockComment)
+               || isOnEnumConstant(blockComment)
+               || isOnAnnotationField(blockComment)
+               || isOnCompactConstructor(blockComment);
     }
 
     /**
@@ -155,8 +155,8 @@ public final class BlockCommentPosition {
      */
     public static boolean isOnMethod(DetailAST blockComment) {
         return isOnPlainClassMember(blockComment, TokenTypes.METHOD_DEF)
-                || isOnTokenWithModifiers(blockComment, TokenTypes.METHOD_DEF)
-                || isOnTokenWithAnnotation(blockComment, TokenTypes.METHOD_DEF);
+               || isOnTokenWithModifiers(blockComment, TokenTypes.METHOD_DEF)
+               || isOnTokenWithAnnotation(blockComment, TokenTypes.METHOD_DEF);
     }
 
     /**
@@ -167,12 +167,12 @@ public final class BlockCommentPosition {
      */
     public static boolean isOnField(DetailAST blockComment) {
         return isOnPlainClassMember(blockComment, TokenTypes.VARIABLE_DEF)
-                || isOnTokenWithModifiers(blockComment, TokenTypes.VARIABLE_DEF)
-                    && blockComment.getParent().getParent().getParent()
-                        .getType() == TokenTypes.OBJBLOCK
-                || isOnTokenWithAnnotation(blockComment, TokenTypes.VARIABLE_DEF)
-                    && blockComment.getParent().getParent().getParent()
-                        .getParent().getType() == TokenTypes.OBJBLOCK;
+               || isOnTokenWithModifiers(blockComment, TokenTypes.VARIABLE_DEF)
+               && blockComment.getParent().getParent().getParent()
+               .getType() == TokenTypes.OBJBLOCK
+               || isOnTokenWithAnnotation(blockComment, TokenTypes.VARIABLE_DEF)
+               && blockComment.getParent().getParent().getParent()
+               .getParent().getType() == TokenTypes.OBJBLOCK;
     }
 
     /**
@@ -183,8 +183,8 @@ public final class BlockCommentPosition {
      */
     public static boolean isOnConstructor(DetailAST blockComment) {
         return isOnPlainToken(blockComment, TokenTypes.CTOR_DEF, TokenTypes.IDENT)
-                || isOnTokenWithModifiers(blockComment, TokenTypes.CTOR_DEF)
-                || isOnTokenWithAnnotation(blockComment, TokenTypes.CTOR_DEF);
+               || isOnTokenWithModifiers(blockComment, TokenTypes.CTOR_DEF)
+               || isOnTokenWithAnnotation(blockComment, TokenTypes.CTOR_DEF);
     }
 
     /**
@@ -196,7 +196,7 @@ public final class BlockCommentPosition {
      */
     public static boolean isOnCompactConstructor(DetailAST blockComment) {
         return isOnTokenWithModifiers(blockComment, TokenTypes.COMPACT_CTOR_DEF)
-                || isOnTokenWithAnnotation(blockComment, TokenTypes.COMPACT_CTOR_DEF);
+               || isOnTokenWithAnnotation(blockComment, TokenTypes.COMPACT_CTOR_DEF);
     }
 
     /**
@@ -216,7 +216,7 @@ public final class BlockCommentPosition {
                 }
             }
             else if (parent.getType() == TokenTypes.ANNOTATION
-                    && parent.getParent().getParent().getType() == TokenTypes.ENUM_CONSTANT_DEF) {
+                     && parent.getParent().getParent().getType() == TokenTypes.ENUM_CONSTANT_DEF) {
                 result = true;
             }
         }
@@ -231,8 +231,8 @@ public final class BlockCommentPosition {
      */
     public static boolean isOnAnnotationField(DetailAST blockComment) {
         return isOnPlainClassMember(blockComment, TokenTypes.ANNOTATION_FIELD_DEF)
-                || isOnTokenWithModifiers(blockComment, TokenTypes.ANNOTATION_FIELD_DEF)
-                || isOnTokenWithAnnotation(blockComment, TokenTypes.ANNOTATION_FIELD_DEF);
+               || isOnTokenWithModifiers(blockComment, TokenTypes.ANNOTATION_FIELD_DEF)
+               || isOnTokenWithAnnotation(blockComment, TokenTypes.ANNOTATION_FIELD_DEF);
     }
 
     /**
@@ -244,11 +244,11 @@ public final class BlockCommentPosition {
      * @return true if block comment is on specified token without modifiers
      */
     private static boolean isOnPlainToken(DetailAST blockComment,
-            int parentTokenType, int nextTokenType) {
+                                          int parentTokenType, int nextTokenType) {
         return blockComment.getParent() != null
-                && blockComment.getParent().getType() == parentTokenType
-                && !getPrevSiblingSkipComments(blockComment).hasChildren()
-                && getNextSiblingSkipComments(blockComment).getType() == nextTokenType;
+               && blockComment.getParent().getType() == parentTokenType
+               && !getPrevSiblingSkipComments(blockComment).hasChildren()
+               && getNextSiblingSkipComments(blockComment).getType() == nextTokenType;
     }
 
     /**
@@ -260,9 +260,9 @@ public final class BlockCommentPosition {
      */
     private static boolean isOnTokenWithModifiers(DetailAST blockComment, int tokenType) {
         return blockComment.getParent() != null
-                && blockComment.getParent().getType() == TokenTypes.MODIFIERS
-                && blockComment.getParent().getParent().getType() == tokenType
-                && getPrevSiblingSkipComments(blockComment) == null;
+               && blockComment.getParent().getType() == TokenTypes.MODIFIERS
+               && blockComment.getParent().getParent().getType() == tokenType
+               && getPrevSiblingSkipComments(blockComment) == null;
     }
 
     /**
@@ -274,10 +274,10 @@ public final class BlockCommentPosition {
      */
     private static boolean isOnTokenWithAnnotation(DetailAST blockComment, int tokenType) {
         return blockComment.getParent() != null
-                && blockComment.getParent().getType() == TokenTypes.ANNOTATION
-                && getPrevSiblingSkipComments(blockComment.getParent()) == null
-                && blockComment.getParent().getParent().getParent().getType() == tokenType
-                && getPrevSiblingSkipComments(blockComment) == null;
+               && blockComment.getParent().getType() == TokenTypes.ANNOTATION
+               && getPrevSiblingSkipComments(blockComment.getParent()) == null
+               && blockComment.getParent().getParent().getParent().getType() == tokenType
+               && getPrevSiblingSkipComments(blockComment) == null;
     }
 
     /**
@@ -291,16 +291,16 @@ public final class BlockCommentPosition {
         DetailAST parent = blockComment.getParent();
         // type could be in fully qualified form, so we go up to Type token
         while (parent != null && (parent.getType() == TokenTypes.DOT
-                || parent.getType() == TokenTypes.ARRAY_DECLARATOR)) {
+                                  || parent.getType() == TokenTypes.ARRAY_DECLARATOR)) {
             parent = parent.getParent();
         }
         return parent != null
-                && (parent.getType() == TokenTypes.TYPE
-                    || parent.getType() == TokenTypes.TYPE_PARAMETERS)
-                && parent.getParent().getType() == memberType
-                // previous parent sibling is always TokenTypes.MODIFIERS
-                && !parent.getPreviousSibling().hasChildren()
-                && parent.getParent().getParent().getType() == TokenTypes.OBJBLOCK;
+               && (parent.getType() == TokenTypes.TYPE
+                   || parent.getType() == TokenTypes.TYPE_PARAMETERS)
+               && parent.getParent().getType() == memberType
+               // previous parent sibling is always TokenTypes.MODIFIERS
+               && !parent.getPreviousSibling().hasChildren()
+               && parent.getParent().getParent().getType() == TokenTypes.OBJBLOCK;
     }
 
     /**
@@ -328,7 +328,7 @@ public final class BlockCommentPosition {
         DetailAST result = node.getPreviousSibling();
         while (result != null
                 && (result.getType() == TokenTypes.SINGLE_LINE_COMMENT
-                || result.getType() == TokenTypes.BLOCK_COMMENT_BEGIN)) {
+                    || result.getType() == TokenTypes.BLOCK_COMMENT_BEGIN)) {
             result = result.getPreviousSibling();
         }
         return result;

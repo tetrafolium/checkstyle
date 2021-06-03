@@ -171,7 +171,7 @@ public final class LocalizedMessage
                             Class<?> sourceClass,
                             String customMessage) {
         this(lineNo, columnNo, columnNo, tokenType, bundle, key, args, severityLevel, moduleId,
-                sourceClass, customMessage);
+             sourceClass, customMessage);
     }
 
     /**
@@ -199,7 +199,7 @@ public final class LocalizedMessage
                             Class<?> sourceClass,
                             String customMessage) {
         this(lineNo, columnNo, 0, bundle, key, args, severityLevel, moduleId, sourceClass,
-                customMessage);
+             customMessage);
     }
 
     /**
@@ -225,7 +225,7 @@ public final class LocalizedMessage
                             Class<?> sourceClass,
                             String customMessage) {
         this(lineNo,
-                columnNo,
+             columnNo,
              bundle,
              key,
              args,
@@ -258,7 +258,7 @@ public final class LocalizedMessage
                             Class<?> sourceClass,
                             String customMessage) {
         this(lineNo, 0, bundle, key, args, severityLevel, moduleId,
-                sourceClass, customMessage);
+             sourceClass, customMessage);
     }
 
     /**
@@ -282,7 +282,7 @@ public final class LocalizedMessage
         Class<?> sourceClass,
         String customMessage) {
         this(lineNo, 0, bundle, key, args, DEFAULT_SEVERITY, moduleId,
-                sourceClass, customMessage);
+             sourceClass, customMessage);
     }
 
     /**
@@ -395,22 +395,22 @@ public final class LocalizedMessage
         }
         final LocalizedMessage localizedMessage = (LocalizedMessage) object;
         return Objects.equals(lineNo, localizedMessage.lineNo)
-                && Objects.equals(columnNo, localizedMessage.columnNo)
-                && Objects.equals(columnCharIndex, localizedMessage.columnCharIndex)
-                && Objects.equals(tokenType, localizedMessage.tokenType)
-                && Objects.equals(severityLevel, localizedMessage.severityLevel)
-                && Objects.equals(moduleId, localizedMessage.moduleId)
-                && Objects.equals(key, localizedMessage.key)
-                && Objects.equals(bundle, localizedMessage.bundle)
-                && Objects.equals(sourceClass, localizedMessage.sourceClass)
-                && Objects.equals(customMessage, localizedMessage.customMessage)
-                && Arrays.equals(args, localizedMessage.args);
+               && Objects.equals(columnNo, localizedMessage.columnNo)
+               && Objects.equals(columnCharIndex, localizedMessage.columnCharIndex)
+               && Objects.equals(tokenType, localizedMessage.tokenType)
+               && Objects.equals(severityLevel, localizedMessage.severityLevel)
+               && Objects.equals(moduleId, localizedMessage.moduleId)
+               && Objects.equals(key, localizedMessage.key)
+               && Objects.equals(bundle, localizedMessage.bundle)
+               && Objects.equals(sourceClass, localizedMessage.sourceClass)
+               && Objects.equals(customMessage, localizedMessage.customMessage)
+               && Arrays.equals(args, localizedMessage.args);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(lineNo, columnNo, columnCharIndex, tokenType, severityLevel, moduleId,
-                key, bundle, sourceClass, customMessage, Arrays.hashCode(args));
+                            key, bundle, sourceClass, customMessage, Arrays.hashCode(args));
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -516,7 +516,7 @@ public final class LocalizedMessage
 
         @Override
         public ResourceBundle newBundle(String baseName, Locale locale, String format,
-                 ClassLoader loader, boolean reload) throws IOException {
+                                        ClassLoader loader, boolean reload) throws IOException {
             // The below is a copy of the default implementation.
             final String bundleName = toBundleName(baseName, locale);
             final String resourceName = toResourceName(bundleName, "properties");
@@ -527,7 +527,7 @@ public final class LocalizedMessage
                 if (connection != null) {
                     connection.setUseCaches(!reload);
                     try (Reader streamReader = new InputStreamReader(connection.getInputStream(),
-                            StandardCharsets.UTF_8.name())) {
+                                StandardCharsets.UTF_8.name())) {
                         // Only this line is changed to make it read property files as UTF-8.
                         resourceBundle = new PropertyResourceBundle(streamReader);
                     }

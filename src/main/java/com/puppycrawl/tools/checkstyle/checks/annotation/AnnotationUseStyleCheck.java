@@ -333,7 +333,7 @@ public final class AnnotationUseStyleCheck extends AbstractCheck {
      * for annotation use.
      */
     private static final String ANNOTATION_ELEMENT_SINGLE_NAME =
-            "value";
+        "value";
 
     /**
      * Define the annotation element styles.
@@ -388,7 +388,7 @@ public final class AnnotationUseStyleCheck extends AbstractCheck {
      * @throws IllegalArgumentException when unable to parse value
      */
     private static <T extends Enum<T>> T getOption(final Class<T> enumClass,
-        final String value) {
+            final String value) {
         try {
             return Enum.valueOf(enumClass, value.trim().toUpperCase(Locale.ENGLISH));
         }
@@ -405,8 +405,8 @@ public final class AnnotationUseStyleCheck extends AbstractCheck {
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.ANNOTATION,
-        };
+                   TokenTypes.ANNOTATION,
+               };
     }
 
     @Override
@@ -430,18 +430,18 @@ public final class AnnotationUseStyleCheck extends AbstractCheck {
      */
     private void checkStyleType(final DetailAST annotation) {
         switch (elementStyle) {
-            case COMPACT_NO_ARRAY:
-                checkCompactNoArrayStyle(annotation);
-                break;
-            case COMPACT:
-                checkCompactStyle(annotation);
-                break;
-            case EXPANDED:
-                checkExpandedStyle(annotation);
-                break;
-            case IGNORE:
-            default:
-                break;
+        case COMPACT_NO_ARRAY:
+            checkCompactNoArrayStyle(annotation);
+            break;
+        case COMPACT:
+            checkCompactStyle(annotation);
+            break;
+        case EXPANDED:
+            checkExpandedStyle(annotation);
+            break;
+        case IGNORE:
+        default:
+            break;
         }
     }
 
@@ -485,8 +485,8 @@ public final class AnnotationUseStyleCheck extends AbstractCheck {
                 TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR);
 
         if (valuePairCount == 1
-            && ANNOTATION_ELEMENT_SINGLE_NAME.equals(
-                valuePair.getFirstChild().getText())) {
+                && ANNOTATION_ELEMENT_SINGLE_NAME.equals(
+                    valuePair.getFirstChild().getText())) {
             log(annotation, MSG_KEY_ANNOTATION_INCORRECT_STYLE,
                 ElementStyleOption.COMPACT);
         }
@@ -503,7 +503,7 @@ public final class AnnotationUseStyleCheck extends AbstractCheck {
 
         // in compact style with one value
         if (arrayInit != null
-            && arrayInit.getChildCount(TokenTypes.EXPR) == 1) {
+                && arrayInit.getChildCount(TokenTypes.EXPR) == 1) {
             log(annotation, MSG_KEY_ANNOTATION_INCORRECT_STYLE,
                 ElementStyleOption.COMPACT_NO_ARRAY);
         }
@@ -514,7 +514,7 @@ public final class AnnotationUseStyleCheck extends AbstractCheck {
                 final DetailAST nestedArrayInit =
                     ast.findFirstToken(TokenTypes.ANNOTATION_ARRAY_INIT);
                 if (nestedArrayInit != null
-                    && nestedArrayInit.getChildCount(TokenTypes.EXPR) == 1) {
+                        && nestedArrayInit.getChildCount(TokenTypes.EXPR) == 1) {
                     log(annotation, MSG_KEY_ANNOTATION_INCORRECT_STYLE,
                         ElementStyleOption.COMPACT_NO_ARRAY);
                 }

@@ -77,7 +77,7 @@ public enum JavadocTagInfo {
         public boolean isValidOn(final DetailAST ast) {
             final int astType = ast.getType();
             return astType == TokenTypes.PACKAGE_DEF
-                || TokenUtil.isTypeDeclaration(astType);
+            || TokenUtil.isTypeDeclaration(astType);
         }
 
     },
@@ -91,7 +91,7 @@ public enum JavadocTagInfo {
         public boolean isValidOn(final DetailAST ast) {
             final int astType = ast.getType();
             return Arrays.binarySearch(DEF_TOKEN_TYPES, astType) >= 0
-                && !ScopeUtil.isLocalVariableDef(ast);
+                   && !ScopeUtil.isLocalVariableDef(ast);
         }
 
     },
@@ -105,7 +105,7 @@ public enum JavadocTagInfo {
         public boolean isValidOn(final DetailAST ast) {
             final int astType = ast.getType();
             return Arrays.binarySearch(DEF_TOKEN_TYPES, astType) >= 0
-                && !ScopeUtil.isLocalVariableDef(ast);
+                   && !ScopeUtil.isLocalVariableDef(ast);
         }
 
     },
@@ -119,7 +119,7 @@ public enum JavadocTagInfo {
         public boolean isValidOn(final DetailAST ast) {
             final int astType = ast.getType();
             return Arrays.binarySearch(DEF_TOKEN_TYPES_DEPRECATED, astType) >= 0
-                && !ScopeUtil.isLocalVariableDef(ast);
+                   && !ScopeUtil.isLocalVariableDef(ast);
         }
 
     },
@@ -147,10 +147,10 @@ public enum JavadocTagInfo {
             final int astType = ast.getType();
 
             return astType == TokenTypes.METHOD_DEF
-                && ast.findFirstToken(TokenTypes.MODIFIERS)
-                    .findFirstToken(TokenTypes.LITERAL_STATIC) == null
-                && ScopeUtil.getScopeFromMods(ast
-                    .findFirstToken(TokenTypes.MODIFIERS)) != Scope.PRIVATE;
+                   && ast.findFirstToken(TokenTypes.MODIFIERS)
+                   .findFirstToken(TokenTypes.LITERAL_STATIC) == null
+                   && ScopeUtil.getScopeFromMods(ast
+                                                 .findFirstToken(TokenTypes.MODIFIERS)) != Scope.PRIVATE;
         }
 
     },
@@ -164,7 +164,7 @@ public enum JavadocTagInfo {
         public boolean isValidOn(final DetailAST ast) {
             final int astType = ast.getType();
             return Arrays.binarySearch(DEF_TOKEN_TYPES, astType) >= 0
-                && !ScopeUtil.isLocalVariableDef(ast);
+                   && !ScopeUtil.isLocalVariableDef(ast);
         }
 
     },
@@ -178,7 +178,7 @@ public enum JavadocTagInfo {
         public boolean isValidOn(final DetailAST ast) {
             final int astType = ast.getType();
             return Arrays.binarySearch(DEF_TOKEN_TYPES, astType) >= 0
-                && !ScopeUtil.isLocalVariableDef(ast);
+                   && !ScopeUtil.isLocalVariableDef(ast);
         }
 
     },
@@ -192,7 +192,7 @@ public enum JavadocTagInfo {
         public boolean isValidOn(final DetailAST ast) {
             final int astType = ast.getType();
             return Arrays.binarySearch(DEF_TOKEN_TYPES, astType) >= 0
-                && !ScopeUtil.isLocalVariableDef(ast);
+                   && !ScopeUtil.isLocalVariableDef(ast);
         }
 
     },
@@ -206,9 +206,9 @@ public enum JavadocTagInfo {
         public boolean isValidOn(final DetailAST ast) {
             final int astType = ast.getType();
             return astType == TokenTypes.CLASS_DEF
-                || astType == TokenTypes.INTERFACE_DEF
-                || astType == TokenTypes.METHOD_DEF
-                || astType == TokenTypes.CTOR_DEF;
+                   || astType == TokenTypes.INTERFACE_DEF
+                   || astType == TokenTypes.METHOD_DEF
+                   || astType == TokenTypes.CTOR_DEF;
         }
 
     },
@@ -224,7 +224,7 @@ public enum JavadocTagInfo {
             final DetailAST returnType = ast.findFirstToken(TokenTypes.TYPE);
 
             return astType == TokenTypes.METHOD_DEF
-                && returnType.getFirstChild().getType() != TokenTypes.LITERAL_VOID;
+                   && returnType.getFirstChild().getType() != TokenTypes.LITERAL_VOID;
         }
 
     },
@@ -238,7 +238,7 @@ public enum JavadocTagInfo {
         public boolean isValidOn(final DetailAST ast) {
             final int astType = ast.getType();
             return Arrays.binarySearch(DEF_TOKEN_TYPES, astType) >= 0
-                && !ScopeUtil.isLocalVariableDef(ast);
+                   && !ScopeUtil.isLocalVariableDef(ast);
         }
 
     },
@@ -253,7 +253,7 @@ public enum JavadocTagInfo {
             final int astType = ast.getType();
 
             return astType == TokenTypes.VARIABLE_DEF
-                && !ScopeUtil.isLocalVariableDef(ast);
+                   && !ScopeUtil.isLocalVariableDef(ast);
         }
 
     },
@@ -270,12 +270,12 @@ public enum JavadocTagInfo {
             final String methodName = methodNameAst.getText();
 
             return astType == TokenTypes.METHOD_DEF
-                && ("writeObject".equals(methodName)
-                    || "readObject".equals(methodName)
-                    || "writeExternal".equals(methodName)
-                    || "readExternal".equals(methodName)
-                    || "writeReplace".equals(methodName)
-                    || "readResolve".equals(methodName));
+                   && ("writeObject".equals(methodName)
+                       || "readObject".equals(methodName)
+                       || "writeExternal".equals(methodName)
+                       || "readExternal".equals(methodName)
+                       || "writeReplace".equals(methodName)
+                       || "readResolve".equals(methodName));
         }
 
     },
@@ -291,8 +291,8 @@ public enum JavadocTagInfo {
             final DetailAST varType = ast.findFirstToken(TokenTypes.TYPE);
 
             return astType == TokenTypes.VARIABLE_DEF
-                && varType.getFirstChild().getType() == TokenTypes.ARRAY_DECLARATOR
-                && "ObjectStreamField".equals(varType.getFirstChild().getText());
+                   && varType.getFirstChild().getType() == TokenTypes.ARRAY_DECLARATOR
+                   && "ObjectStreamField".equals(varType.getFirstChild().getText());
         }
 
     },
@@ -306,7 +306,7 @@ public enum JavadocTagInfo {
         public boolean isValidOn(final DetailAST ast) {
             final int astType = ast.getType();
             return Arrays.binarySearch(DEF_TOKEN_TYPES, astType) >= 0
-                && !ScopeUtil.isLocalVariableDef(ast);
+                   && !ScopeUtil.isLocalVariableDef(ast);
         }
 
     },
@@ -320,7 +320,7 @@ public enum JavadocTagInfo {
         public boolean isValidOn(final DetailAST ast) {
             final int astType = ast.getType();
             return astType == TokenTypes.METHOD_DEF
-                || astType == TokenTypes.CTOR_DEF;
+                   || astType == TokenTypes.CTOR_DEF;
         }
 
     },
@@ -334,7 +334,7 @@ public enum JavadocTagInfo {
         public boolean isValidOn(final DetailAST ast) {
             final int astType = ast.getType();
             return Arrays.binarySearch(DEF_TOKEN_TYPES, astType) >= 0
-                && !ScopeUtil.isLocalVariableDef(ast);
+                   && !ScopeUtil.isLocalVariableDef(ast);
         }
 
     },
@@ -348,7 +348,7 @@ public enum JavadocTagInfo {
         public boolean isValidOn(final DetailAST ast) {
             final int astType = ast.getType();
             return astType == TokenTypes.PACKAGE_DEF
-                || TokenUtil.isTypeDeclaration(astType);
+                   || TokenUtil.isTypeDeclaration(astType);
         }
 
     };
@@ -385,9 +385,9 @@ public enum JavadocTagInfo {
 
     static {
         TEXT_TO_TAG = Collections.unmodifiableMap(Arrays.stream(values())
-            .collect(Collectors.toMap(JavadocTagInfo::getText, Function.identity())));
+                .collect(Collectors.toMap(JavadocTagInfo::getText, Function.identity())));
         NAME_TO_TAG = Collections.unmodifiableMap(Arrays.stream(values())
-            .collect(Collectors.toMap(JavadocTagInfo::getName, Function.identity())));
+                .collect(Collectors.toMap(JavadocTagInfo::getName, Function.identity())));
 
         // Arrays sorting for binary search
         Arrays.sort(DEF_TOKEN_TYPES);
@@ -409,7 +409,7 @@ public enum JavadocTagInfo {
      * @param type the type of tag
      */
     JavadocTagInfo(final String text, final String name,
-        final Type type) {
+                   final Type type) {
         this.text = text;
         this.name = name;
         this.type = type;
@@ -475,7 +475,7 @@ public enum JavadocTagInfo {
 
         if (tag == null) {
             throw new IllegalArgumentException("the text [" + text
-                + "] is not a valid Javadoc tag text");
+                                               + "] is not a valid Javadoc tag text");
         }
 
         return tag;
@@ -499,7 +499,7 @@ public enum JavadocTagInfo {
 
         if (tag == null) {
             throw new IllegalArgumentException("the name [" + name
-                + "] is not a valid Javadoc tag name");
+                                               + "] is not a valid Javadoc tag name");
         }
 
         return tag;
@@ -518,7 +518,7 @@ public enum JavadocTagInfo {
     @Override
     public String toString() {
         return "text [" + text + "] name [" + name
-            + "] type [" + type + "]";
+               + "] type [" + type + "]";
     }
 
     /**

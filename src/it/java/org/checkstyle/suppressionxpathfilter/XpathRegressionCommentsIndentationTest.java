@@ -40,196 +40,196 @@ public class XpathRegressionCommentsIndentationTest extends AbstractXpathTestSup
     @Test
     public void testSingleLine() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionCommentsIndentation"
-                                        + "SingleLine.java"));
+            new File(getPath("SuppressionXpathRegressionCommentsIndentation"
+                             + "SingleLine.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(CommentsIndentationCheck.class);
+            createModuleConfig(CommentsIndentationCheck.class);
 
         final String[] expectedViolation = {
             "5:9: " + getCheckMessage(CommentsIndentationCheck.class,
-                "comments.indentation.single", 4, 8, 4),
+                                      "comments.indentation.single", 4, 8, 4),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT"
-                + "[@text='SuppressionXpathRegressionCommentsIndentationSingleLine']]"
-                + "/OBJBLOCK/SINGLE_LINE_COMMENT"
-        );
+                    "/CLASS_DEF[./IDENT"
+                    + "[@text='SuppressionXpathRegressionCommentsIndentationSingleLine']]"
+                    + "/OBJBLOCK/SINGLE_LINE_COMMENT"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testBlock() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionCommentsIndentation"
-                                        + "Block.java"));
+            new File(getPath("SuppressionXpathRegressionCommentsIndentation"
+                             + "Block.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(CommentsIndentationCheck.class);
+            createModuleConfig(CommentsIndentationCheck.class);
 
         final String[] expectedViolation = {
             "4:11: " + getCheckMessage(CommentsIndentationCheck.class,
-                "comments.indentation.block", 7, 10, 4),
+                                       "comments.indentation.block", 7, 10, 4),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT"
-                + "[@text='SuppressionXpathRegressionCommentsIndentationBlock']]"
-                + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='f']]/TYPE/BLOCK_COMMENT_BEGIN"
-        );
+                    "/CLASS_DEF[./IDENT"
+                    + "[@text='SuppressionXpathRegressionCommentsIndentationBlock']]"
+                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='f']]/TYPE/BLOCK_COMMENT_BEGIN"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testSeparator() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionCommentsIndentation"
-                                        + "Separator.java"));
+            new File(getPath("SuppressionXpathRegressionCommentsIndentation"
+                             + "Separator.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(CommentsIndentationCheck.class);
+            createModuleConfig(CommentsIndentationCheck.class);
 
         final String[] expectedViolation = {
             "8:13: " + getCheckMessage(CommentsIndentationCheck.class,
-                "comments.indentation.single", 10, 12, 4),
+                                       "comments.indentation.single", 10, 12, 4),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT"
-                + "[@text='SuppressionXpathRegressionCommentsIndentationSeparator']]"
-                + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]/MODIFIERS/SINGLE_LINE_COMMENT"
-        );
+                    "/CLASS_DEF[./IDENT"
+                    + "[@text='SuppressionXpathRegressionCommentsIndentationSeparator']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]/MODIFIERS/SINGLE_LINE_COMMENT"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testDistributedStatement() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionCommentsIndentation"
-                                        + "DistributedStatement.java"));
+            new File(getPath("SuppressionXpathRegressionCommentsIndentation"
+                             + "DistributedStatement.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(CommentsIndentationCheck.class);
+            createModuleConfig(CommentsIndentationCheck.class);
 
         final String[] expectedViolation = {
             "10:25: " + getCheckMessage(CommentsIndentationCheck.class,
-                "comments.indentation.single", 8, 24, 8),
+                                        "comments.indentation.single", 8, 24, 8),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT"
-                + "[@text='SuppressionXpathRegressionCommentsIndentationDistributedStatement']]"
-                + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]/SLIST/SINGLE_LINE_COMMENT"
-        );
+                    "/CLASS_DEF[./IDENT"
+                    + "[@text='SuppressionXpathRegressionCommentsIndentationDistributedStatement']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]/SLIST/SINGLE_LINE_COMMENT"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testSingleLineBlock() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionCommentsIndentation"
-                                        + "SingleLineBlock.java"));
+            new File(getPath("SuppressionXpathRegressionCommentsIndentation"
+                             + "SingleLineBlock.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(CommentsIndentationCheck.class);
+            createModuleConfig(CommentsIndentationCheck.class);
 
         final String[] expectedViolation = {
             "6:1: " + getCheckMessage(CommentsIndentationCheck.class,
-                "comments.indentation.single", 7, 0, 4),
+                                      "comments.indentation.single", 7, 0, 4),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT"
-                + "[@text='SuppressionXpathRegressionCommentsIndentationSingleLineBlock']]"
-                + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]/SLIST/SINGLE_LINE_COMMENT[2]"
-        );
+                    "/CLASS_DEF[./IDENT"
+                    + "[@text='SuppressionXpathRegressionCommentsIndentationSingleLineBlock']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]/SLIST/SINGLE_LINE_COMMENT[2]"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testNonEmptyCase() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionCommentsIndentation"
-                                        + "NonEmptyCase.java"));
+            new File(getPath("SuppressionXpathRegressionCommentsIndentation"
+                             + "NonEmptyCase.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(CommentsIndentationCheck.class);
+            createModuleConfig(CommentsIndentationCheck.class);
 
         final String[] expectedViolation = {
             "10:20: " + getCheckMessage(CommentsIndentationCheck.class,
-                "comments.indentation.single", "9, 11", 19, "16, 12"),
+                                        "comments.indentation.single", "9, 11", 19, "16, 12"),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT"
-                + "[@text='SuppressionXpathRegressionCommentsIndentationNonEmptyCase']]"
-                + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]/SLIST/LITERAL_SWITCH/"
-                + "CASE_GROUP/SINGLE_LINE_COMMENT"
-        );
+                    "/CLASS_DEF[./IDENT"
+                    + "[@text='SuppressionXpathRegressionCommentsIndentationNonEmptyCase']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]/SLIST/LITERAL_SWITCH/"
+                    + "CASE_GROUP/SINGLE_LINE_COMMENT"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testEmptyCase() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionCommentsIndentation"
-                                        + "EmptyCase.java"));
+            new File(getPath("SuppressionXpathRegressionCommentsIndentation"
+                             + "EmptyCase.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(CommentsIndentationCheck.class);
+            createModuleConfig(CommentsIndentationCheck.class);
 
         final String[] expectedViolation = {
             "9:1: " + getCheckMessage(CommentsIndentationCheck.class,
-                "comments.indentation.single", "8, 10", 0, "12, 12"),
+                                      "comments.indentation.single", "8, 10", 0, "12, 12"),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT"
-                + "[@text='SuppressionXpathRegressionCommentsIndentationEmptyCase']]"
-                + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]/SLIST/LITERAL_SWITCH/"
-                + "CASE_GROUP/SINGLE_LINE_COMMENT"
-        );
+                    "/CLASS_DEF[./IDENT"
+                    + "[@text='SuppressionXpathRegressionCommentsIndentationEmptyCase']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]/SLIST/LITERAL_SWITCH/"
+                    + "CASE_GROUP/SINGLE_LINE_COMMENT"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testWithinBlockStatement() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionCommentsIndentation"
-                                        + "WithinBlockStatement.java"));
+            new File(getPath("SuppressionXpathRegressionCommentsIndentation"
+                             + "WithinBlockStatement.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(CommentsIndentationCheck.class);
+            createModuleConfig(CommentsIndentationCheck.class);
 
         final String[] expectedViolation = {
             "6:9: " + getCheckMessage(CommentsIndentationCheck.class,
-                "comments.indentation.single", 7, 8, 12),
+                                      "comments.indentation.single", 7, 8, 12),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT"
-                + "[@text='SuppressionXpathRegressionCommentsIndentationWithinBlockStatement']]"
-                + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]/SLIST/VARIABLE_DEF"
-                + "[./IDENT[@text='s']]/ASSIGN/EXPR/PLUS[./STRING_LITERAL[@text='O']]"
-                + "/SINGLE_LINE_COMMENT"
-        );
+                    "/CLASS_DEF[./IDENT"
+                    + "[@text='SuppressionXpathRegressionCommentsIndentationWithinBlockStatement']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]/SLIST/VARIABLE_DEF"
+                    + "[./IDENT[@text='s']]/ASSIGN/EXPR/PLUS[./STRING_LITERAL[@text='O']]"
+                    + "/SINGLE_LINE_COMMENT"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }

@@ -116,9 +116,9 @@ public class RequireEmptyLineBeforeBlockTagGroupCheck extends AbstractJavadocChe
      * </pre>
      */
     private static final List<Integer> ONLY_TAG_VARIATION_1 = Arrays.asList(
-            JavadocTokenTypes.WS,
-            JavadocTokenTypes.LEADING_ASTERISK,
-            JavadocTokenTypes.NEWLINE);
+                JavadocTokenTypes.WS,
+                JavadocTokenTypes.LEADING_ASTERISK,
+                JavadocTokenTypes.NEWLINE);
 
     /**
      * Case when no space separates the tag and the asterisk like in the below example.
@@ -128,8 +128,8 @@ public class RequireEmptyLineBeforeBlockTagGroupCheck extends AbstractJavadocChe
      * </pre>
      */
     private static final List<Integer> ONLY_TAG_VARIATION_2 = Arrays.asList(
-            JavadocTokenTypes.LEADING_ASTERISK,
-            JavadocTokenTypes.NEWLINE);
+                JavadocTokenTypes.LEADING_ASTERISK,
+                JavadocTokenTypes.NEWLINE);
 
     /**
      * Returns only javadoc tags so visitJavadocToken only receives javadoc tags.
@@ -139,8 +139,8 @@ public class RequireEmptyLineBeforeBlockTagGroupCheck extends AbstractJavadocChe
     @Override
     public int[] getDefaultJavadocTokens() {
         return new int[] {
-            JavadocTokenTypes.JAVADOC_TAG,
-        };
+                   JavadocTokenTypes.JAVADOC_TAG,
+               };
     }
 
     @Override
@@ -161,8 +161,8 @@ public class RequireEmptyLineBeforeBlockTagGroupCheck extends AbstractJavadocChe
                 && !isOnlyTagInWholeJavadoc(tagNode)
                 && hasInsufficientConsecutiveNewlines(tagNode)) {
             log(tagNode.getLineNumber(),
-                    MSG_JAVADOC_TAG_LINE_BEFORE,
-                    tagNode.getChildren()[0].getText());
+                MSG_JAVADOC_TAG_LINE_BEFORE,
+                tagNode.getChildren()[0].getText());
         }
     }
 
@@ -226,7 +226,7 @@ public class RequireEmptyLineBeforeBlockTagGroupCheck extends AbstractJavadocChe
             currentNode = JavadocUtil.getPreviousSibling(currentNode);
         }
         return ONLY_TAG_VARIATION_1.equals(previousNodeTypes)
-                || ONLY_TAG_VARIATION_2.equals(previousNodeTypes);
+               || ONLY_TAG_VARIATION_2.equals(previousNodeTypes);
     }
 
     /**

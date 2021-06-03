@@ -210,9 +210,9 @@ public class MultipleStringLiteralsCheck extends AbstractCheck {
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.STRING_LITERAL,
-            TokenTypes.TEXT_BLOCK_CONTENT,
-        };
+                   TokenTypes.STRING_LITERAL,
+                   TokenTypes.TEXT_BLOCK_CONTENT,
+               };
     }
 
     @Override
@@ -246,8 +246,8 @@ public class MultipleStringLiteralsCheck extends AbstractCheck {
     private boolean isInIgnoreOccurrenceContext(DetailAST ast) {
         boolean isInIgnoreOccurrenceContext = false;
         for (DetailAST token = ast;
-             token.getParent() != null;
-             token = token.getParent()) {
+                token.getParent() != null;
+                token = token.getParent()) {
             final int type = token.getType();
             if (ignoreOccurrenceContext.get(type)) {
                 isInIgnoreOccurrenceContext = true;

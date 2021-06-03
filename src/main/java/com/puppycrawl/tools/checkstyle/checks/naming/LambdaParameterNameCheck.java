@@ -109,8 +109,8 @@ public class LambdaParameterNameCheck extends AbstractNameCheck {
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.LAMBDA,
-        };
+                   TokenTypes.LAMBDA,
+               };
     }
 
     @Override

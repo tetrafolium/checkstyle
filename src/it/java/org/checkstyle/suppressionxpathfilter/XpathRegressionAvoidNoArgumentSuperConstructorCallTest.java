@@ -29,7 +29,7 @@ import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
 import com.puppycrawl.tools.checkstyle.checks.coding.AvoidNoArgumentSuperConstructorCallCheck;
 
 public class XpathRegressionAvoidNoArgumentSuperConstructorCallTest
-        extends AbstractXpathTestSupport {
+    extends AbstractXpathTestSupport {
 
     private static final Class<AvoidNoArgumentSuperConstructorCallCheck> CLASS =
         AvoidNoArgumentSuperConstructorCallCheck.class;
@@ -42,23 +42,23 @@ public class XpathRegressionAvoidNoArgumentSuperConstructorCallTest
     @Test
     public void testDefault() throws Exception {
         final File fileToProcess = new File(getPath(
-            "SuppressionXpathRegressionAvoidNoArgumentSuperConstructorCall.java"));
+                                                "SuppressionXpathRegressionAvoidNoArgumentSuperConstructorCall.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(CLASS);
+            createModuleConfig(CLASS);
 
         final String[] expectedViolation = {
             "5:9: " + getCheckMessage(CLASS,
-                AvoidNoArgumentSuperConstructorCallCheck.MSG_CTOR),
+                                      AvoidNoArgumentSuperConstructorCallCheck.MSG_CTOR),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/CLASS_DEF[./IDENT"
+                    "/CLASS_DEF[./IDENT"
                     + "[@text='SuppressionXpathRegressionAvoidNoArgumentSuperConstructorCall']]"
                     + "/OBJBLOCK/CTOR_DEF[./IDENT["
                     + "@text='SuppressionXpathRegressionAvoidNoArgumentSuperConstructorCall']]"
                     + "/SLIST/SUPER_CTOR_CALL"
-        );
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
     }
@@ -66,25 +66,25 @@ public class XpathRegressionAvoidNoArgumentSuperConstructorCallTest
     @Test
     public void testInnerClass() throws Exception {
         final File fileToProcess = new File(getPath(
-            "SuppressionXpathRegressionAvoidNoArgumentSuperConstructorCallInnerClass.java"
-        ));
+                                                "SuppressionXpathRegressionAvoidNoArgumentSuperConstructorCallInnerClass.java"
+                                            ));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(CLASS);
+            createModuleConfig(CLASS);
 
         final String[] expectedViolation = {
             "7:17: " + getCheckMessage(CLASS,
-                AvoidNoArgumentSuperConstructorCallCheck.MSG_CTOR),
+                                       AvoidNoArgumentSuperConstructorCallCheck.MSG_CTOR),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text="
-                + "'SuppressionXpathRegressionAvoidNoArgumentSuperConstructorCallInnerClass']]"
-                + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]"
-                + "/SLIST/CLASS_DEF[./IDENT[@text='Inner']]"
-                + "/OBJBLOCK/CTOR_DEF[./IDENT[@text='Inner']]"
-                + "/SLIST/SUPER_CTOR_CALL"
-        );
+                    "/CLASS_DEF[./IDENT[@text="
+                    + "'SuppressionXpathRegressionAvoidNoArgumentSuperConstructorCallInnerClass']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]"
+                    + "/SLIST/CLASS_DEF[./IDENT[@text='Inner']]"
+                    + "/OBJBLOCK/CTOR_DEF[./IDENT[@text='Inner']]"
+                    + "/SLIST/SUPER_CTOR_CALL"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
     }

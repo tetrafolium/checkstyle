@@ -40,19 +40,19 @@ public class XpathRegressionJavadocStyleTest extends AbstractXpathTestSupport {
     @Test
     public void testOne() throws Exception {
         final File fileToProcess = new File(getPath("SuppressionXpathRegression"
-                + File.separator + "package-info.java"));
+                                            + File.separator + "package-info.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(JavadocStyleCheck.class);
+            createModuleConfig(JavadocStyleCheck.class);
 
         final String[] expectedViolation = {
             "1:1: " + getCheckMessage(JavadocStyleCheck.class,
-                JavadocStyleCheck.MSG_JAVADOC_MISSING),
+                                      JavadocStyleCheck.MSG_JAVADOC_MISSING),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList("/PACKAGE_DEF");
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }

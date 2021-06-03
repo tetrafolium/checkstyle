@@ -194,7 +194,7 @@ public final class FileText {
      * @throws FileNotFoundException when inputFile does not exists
      */
     private static String readFile(final File inputFile, final CharsetDecoder decoder)
-            throws IOException {
+    throws IOException {
         if (!inputFile.exists()) {
             throw new FileNotFoundException(inputFile.getPath() + " (No such file or directory)");
         }

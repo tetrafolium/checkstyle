@@ -134,10 +134,10 @@ public class LocalFinalVariableNameCheck
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.VARIABLE_DEF,
-            TokenTypes.PARAMETER_DEF,
-            TokenTypes.RESOURCE,
-        };
+                   TokenTypes.VARIABLE_DEF,
+                   TokenTypes.PARAMETER_DEF,
+                   TokenTypes.RESOURCE,
+               };
     }
 
     @Override
@@ -150,7 +150,7 @@ public class LocalFinalVariableNameCheck
         final DetailAST modifiersAST =
             ast.findFirstToken(TokenTypes.MODIFIERS);
         final boolean isFinal = ast.getType() == TokenTypes.RESOURCE
-            || modifiersAST.findFirstToken(TokenTypes.FINAL) != null;
+                                || modifiersAST.findFirstToken(TokenTypes.FINAL) != null;
         return isFinal && ScopeUtil.isLocalVariableDef(ast);
     }
 

@@ -40,44 +40,44 @@ public class XpathRegressionExplicitInitializationTest extends AbstractXpathTest
     @Test
     public void testOne() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionExplicitInitializationOne.java"));
+            new File(getPath("SuppressionXpathRegressionExplicitInitializationOne.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(ExplicitInitializationCheck.class);
+            createModuleConfig(ExplicitInitializationCheck.class);
 
         final String[] expectedViolation = {
             "4:17: " + getCheckMessage(ExplicitInitializationCheck.class,
-                ExplicitInitializationCheck.MSG_KEY, "a", 0),
+                                       ExplicitInitializationCheck.MSG_KEY, "a", 0),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionExplicitInitializationOne']]"
-                        + "/OBJBLOCK/VARIABLE_DEF/IDENT[@text='a']"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionExplicitInitializationOne']]"
+                    + "/OBJBLOCK/VARIABLE_DEF/IDENT[@text='a']"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionExplicitInitializationTwo.java"));
+            new File(getPath("SuppressionXpathRegressionExplicitInitializationTwo.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(ExplicitInitializationCheck.class);
+            createModuleConfig(ExplicitInitializationCheck.class);
 
         final String[] expectedViolation = {
             "6:20: " + getCheckMessage(ExplicitInitializationCheck.class,
-                ExplicitInitializationCheck.MSG_KEY, "bar", "null"),
+                                       ExplicitInitializationCheck.MSG_KEY, "bar", "null"),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionExplicitInitializationTwo']]"
-                        + "/OBJBLOCK/VARIABLE_DEF/IDENT[@text='bar']"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionExplicitInitializationTwo']]"
+                    + "/OBJBLOCK/VARIABLE_DEF/IDENT[@text='bar']"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }

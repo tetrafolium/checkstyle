@@ -2,7 +2,7 @@ package org.checkstyle.suppressionxpathfilter.overloadmethodsdeclarationorder;
 
 public class SuppressionXpathRegressionOverloadMethodsDeclarationOrder2 {
     private SuppressionXpathRegressionOverloadMethodsDeclarationOrder2 anonymous
-            = new MySuppressionXpathRegressionOverloadMethodsDeclarationOrder2();
+        = new MySuppressionXpathRegressionOverloadMethodsDeclarationOrder2();
 
     public SuppressionXpathRegressionOverloadMethodsDeclarationOrder2 getAnonymous() {
         return anonymous;
@@ -13,7 +13,7 @@ public class SuppressionXpathRegressionOverloadMethodsDeclarationOrder2 {
     }
 
     private static class MySuppressionXpathRegressionOverloadMethodsDeclarationOrder2
-            extends SuppressionXpathRegressionOverloadMethodsDeclarationOrder2 {
+        extends SuppressionXpathRegressionOverloadMethodsDeclarationOrder2 {
         public void overloadMethod(int i) {
             //do stuff
         }

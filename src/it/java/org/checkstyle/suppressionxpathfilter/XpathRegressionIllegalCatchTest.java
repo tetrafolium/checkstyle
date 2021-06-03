@@ -40,46 +40,46 @@ public class XpathRegressionIllegalCatchTest extends AbstractXpathTestSupport {
     @Test
     public void testOne() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionIllegalCatchOne.java"));
+            new File(getPath("SuppressionXpathRegressionIllegalCatchOne.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(IllegalCatchCheck.class);
+            createModuleConfig(IllegalCatchCheck.class);
 
         final String[] expectedViolation = {
             "6:11: " + getCheckMessage(IllegalCatchCheck.class,
-                IllegalCatchCheck.MSG_KEY, "RuntimeException"),
+                                       IllegalCatchCheck.MSG_KEY, "RuntimeException"),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionIllegalCatchOne']]/OBJBLOCK"
-                + "/METHOD_DEF[./IDENT[@text='fun']]/SLIST"
-                + "/LITERAL_TRY/LITERAL_CATCH"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionIllegalCatchOne']]/OBJBLOCK"
+                    + "/METHOD_DEF[./IDENT[@text='fun']]/SLIST"
+                    + "/LITERAL_TRY/LITERAL_CATCH"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionIllegalCatchTwo.java"));
+            new File(getPath("SuppressionXpathRegressionIllegalCatchTwo.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(IllegalCatchCheck.class);
+            createModuleConfig(IllegalCatchCheck.class);
 
         final String[] expectedViolation = {
             "16:11: " + getCheckMessage(IllegalCatchCheck.class,
-                IllegalCatchCheck.MSG_KEY, "java.lang.RuntimeException"),
+                                        IllegalCatchCheck.MSG_KEY, "java.lang.RuntimeException"),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionIllegalCatchTwo']]/OBJBLOCK"
-                + "/METHOD_DEF[./IDENT[@text='methodTwo']]/SLIST"
-                + "/LITERAL_TRY/LITERAL_CATCH"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionIllegalCatchTwo']]/OBJBLOCK"
+                    + "/METHOD_DEF[./IDENT[@text='methodTwo']]/SLIST"
+                    + "/LITERAL_TRY/LITERAL_CATCH"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }

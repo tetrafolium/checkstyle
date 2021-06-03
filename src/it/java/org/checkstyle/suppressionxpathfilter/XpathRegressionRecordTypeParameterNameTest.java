@@ -41,52 +41,52 @@ public class XpathRegressionRecordTypeParameterNameTest extends AbstractXpathTes
     @Test
     public void testOne() throws Exception {
         final File fileToProcess = new File(getNonCompilablePath(
-                "SuppressionXpathRegressionRecordTypeParameterName1.java"));
+                                                "SuppressionXpathRegressionRecordTypeParameterName1.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(RecordTypeParameterNameCheck.class);
+            createModuleConfig(RecordTypeParameterNameCheck.class);
 
         final String pattern = "^[A-Z]$";
 
         final String[] expectedViolation = {
             "7:15: " + getCheckMessage(RecordTypeParameterNameCheck.class,
-                    AbstractNameCheck.MSG_INVALID_PATTERN, "foo", pattern),
+                                       AbstractNameCheck.MSG_INVALID_PATTERN, "foo", pattern),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-            "/RECORD_DEF[./IDENT[@text='Other']]/"
+                    "/RECORD_DEF[./IDENT[@text='Other']]/"
                     + "TYPE_PARAMETERS/TYPE_PARAMETER[./IDENT[@text='foo']]",
-            "/RECORD_DEF[./IDENT[@text='Other']]/TYPE_PARAMETERS/"
+                    "/RECORD_DEF[./IDENT[@text='Other']]/TYPE_PARAMETERS/"
                     + "TYPE_PARAMETER/IDENT[@text='foo']"
-        );
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess = new File(getNonCompilablePath(
-                "SuppressionXpathRegressionRecordTypeParameterName2.java"));
+                                                "SuppressionXpathRegressionRecordTypeParameterName2.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(RecordTypeParameterNameCheck.class);
+            createModuleConfig(RecordTypeParameterNameCheck.class);
 
         final String pattern = "^[A-Z]$";
 
         final String[] expectedViolation = {
             "4:44: " + getCheckMessage(RecordTypeParameterNameCheck.class,
-                    AbstractNameCheck.MSG_INVALID_PATTERN, "t", pattern),
+                                       AbstractNameCheck.MSG_INVALID_PATTERN, "t", pattern),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-            "/RECORD_DEF[./IDENT[@text='InputRecordTypeParameterName']]"
+                    "/RECORD_DEF[./IDENT[@text='InputRecordTypeParameterName']]"
                     + "/TYPE_PARAMETERS/TYPE_PARAMETER[./IDENT[@text='t']]",
-            "/RECORD_DEF[./IDENT[@text='InputRecordTypeParameterName']]"
+                    "/RECORD_DEF[./IDENT[@text='InputRecordTypeParameterName']]"
                     + "/TYPE_PARAMETERS/TYPE_PARAMETER/IDENT[@text='t']"
                 );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }

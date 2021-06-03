@@ -9,7 +9,7 @@ public class SuppressionXpathRegressionIndentationElseWithoutCurly {
         if (true)
             exp();
         else
-        exp(); // warn
+            exp(); // warn
     }
     void exp() {}
 }

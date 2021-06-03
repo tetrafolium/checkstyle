@@ -103,9 +103,9 @@ public class JavadocMissingWhitespaceAfterAsteriskCheck extends AbstractJavadocC
     @Override
     public int[] getDefaultJavadocTokens() {
         return new int[] {
-            JavadocTokenTypes.JAVADOC,
-            JavadocTokenTypes.LEADING_ASTERISK,
-        };
+                   JavadocTokenTypes.JAVADOC,
+                   JavadocTokenTypes.LEADING_ASTERISK,
+               };
     }
 
     @Override

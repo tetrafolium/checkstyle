@@ -79,7 +79,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  */
 @StatelessCheck
 public class SimplifyBooleanExpressionCheck
-        extends AbstractCheck {
+    extends AbstractCheck {
 
     /**
      * A key is pointing to the warning message text in "messages.properties"
@@ -106,15 +106,15 @@ public class SimplifyBooleanExpressionCheck
     public void visitToken(DetailAST ast) {
         final DetailAST parent = ast.getParent();
         switch (parent.getType()) {
-            case TokenTypes.NOT_EQUAL:
-            case TokenTypes.EQUAL:
-            case TokenTypes.LNOT:
-            case TokenTypes.LOR:
-            case TokenTypes.LAND:
-                log(parent, MSG_KEY);
-                break;
-            default:
-                break;
+        case TokenTypes.NOT_EQUAL:
+        case TokenTypes.EQUAL:
+        case TokenTypes.LNOT:
+        case TokenTypes.LOR:
+        case TokenTypes.LAND:
+            log(parent, MSG_KEY);
+            break;
+        default:
+            break;
         }
     }
 

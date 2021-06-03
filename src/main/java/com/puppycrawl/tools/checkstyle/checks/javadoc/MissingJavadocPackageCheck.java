@@ -119,7 +119,7 @@ public class MissingJavadocPackageCheck extends AbstractCheck {
      */
     private static boolean hasJavadoc(DetailAST ast) {
         final boolean hasJavadocBefore = ast.getPreviousSibling() != null
-            && isJavadoc(ast.getPreviousSibling());
+                                         && isJavadoc(ast.getPreviousSibling());
         return hasJavadocBefore || hasJavadocAboveAnnotation(ast);
     }
 
@@ -131,12 +131,12 @@ public class MissingJavadocPackageCheck extends AbstractCheck {
      */
     private static boolean hasJavadocAboveAnnotation(DetailAST ast) {
         final Optional<DetailAST> firstAnnotationChild = Optional.of(ast.getFirstChild())
-            .map(DetailAST::getFirstChild)
-            .map(DetailAST::getFirstChild);
+                .map(DetailAST::getFirstChild)
+                .map(DetailAST::getFirstChild);
         boolean result = false;
         if (firstAnnotationChild.isPresent()) {
             for (DetailAST child = firstAnnotationChild.get(); child != null;
-                 child = child.getNextSibling()) {
+                    child = child.getNextSibling()) {
                 if (isJavadoc(child)) {
                     result = true;
                     break;

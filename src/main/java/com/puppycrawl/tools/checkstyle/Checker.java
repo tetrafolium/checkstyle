@@ -71,7 +71,7 @@ public class Checker extends AutomaticBean implements MessageDispatcher, RootMod
 
     /** Maintains error count. */
     private final SeverityLevelCounter counter = new SeverityLevelCounter(
-            SeverityLevel.ERROR);
+        SeverityLevel.ERROR);
 
     /** Vector of listeners. */
     private final List<AuditListener> listeners = new ArrayList<>();
@@ -81,7 +81,7 @@ public class Checker extends AutomaticBean implements MessageDispatcher, RootMod
 
     /** The audit event before execution file filters. */
     private final BeforeExecutionFileFilterSet beforeExecutionFileFilters =
-            new BeforeExecutionFileFilterSet();
+        new BeforeExecutionFileFilterSet();
 
     /** The audit event filters. */
     private final FilterSet filters = new FilterSet();
@@ -216,8 +216,8 @@ public class Checker extends AutomaticBean implements MessageDispatcher, RootMod
         }
 
         final List<File> targetFiles = files.stream()
-                .filter(file -> CommonUtil.matchesFileExtension(file, fileExtensions))
-                .collect(Collectors.toList());
+                                       .filter(file -> CommonUtil.matchesFileExtension(file, fileExtensions))
+                                       .collect(Collectors.toList());
         processFiles(targetFiles);
 
         // Finish up
@@ -242,17 +242,17 @@ public class Checker extends AutomaticBean implements MessageDispatcher, RootMod
     private Set<String> getExternalResourceLocations() {
         final Set<String> externalResources = new HashSet<>();
         fileSetChecks.stream().filter(check -> check instanceof ExternalResourceHolder)
-            .forEach(check -> {
-                final Set<String> locations =
-                    ((ExternalResourceHolder) check).getExternalResourceLocations();
-                externalResources.addAll(locations);
-            });
+        .forEach(check -> {
+            final Set<String> locations =
+            ((ExternalResourceHolder) check).getExternalResourceLocations();
+            externalResources.addAll(locations);
+        });
         filters.getFilters().stream().filter(filter -> filter instanceof ExternalResourceHolder)
-            .forEach(filter -> {
-                final Set<String> locations =
-                    ((ExternalResourceHolder) filter).getExternalResourceLocations();
-                externalResources.addAll(locations);
-            });
+        .forEach(filter -> {
+            final Set<String> locations =
+            ((ExternalResourceHolder) filter).getExternalResourceLocations();
+            externalResources.addAll(locations);
+        });
         return externalResources;
     }
 
@@ -308,7 +308,7 @@ public class Checker extends AutomaticBean implements MessageDispatcher, RootMod
 
                 // We need to catch all exceptions to put a reason failure (file name) in exception
                 throw new CheckstyleException("Exception was thrown while processing "
-                        + file.getPath(), ex);
+                                              + file.getPath(), ex);
             }
             catch (Error error) {
                 if (fileName != null && cacheFile != null) {
@@ -340,8 +340,8 @@ public class Checker extends AutomaticBean implements MessageDispatcher, RootMod
         catch (final IOException ioe) {
             log.debug("IOException occurred.", ioe);
             fileMessages.add(new LocalizedMessage(1,
-                    Definitions.CHECKSTYLE_BUNDLE, EXCEPTION_MSG,
-                    new String[] {ioe.getMessage()}, null, getClass(), null));
+                                                  Definitions.CHECKSTYLE_BUNDLE, EXCEPTION_MSG,
+                                                  new String[] {ioe.getMessage()}, null, getClass(), null));
         }
         // -@cs[IllegalCatch] There is no other way to obey haltOnException field
         catch (Exception ex) {
@@ -357,9 +357,9 @@ public class Checker extends AutomaticBean implements MessageDispatcher, RootMod
             ex.printStackTrace(pw);
 
             fileMessages.add(new LocalizedMessage(1,
-                    Definitions.CHECKSTYLE_BUNDLE, EXCEPTION_MSG,
-                    new String[] {sw.getBuffer().toString()},
-                    null, getClass(), null));
+                                                  Definitions.CHECKSTYLE_BUNDLE, EXCEPTION_MSG,
+                                                  new String[] {sw.getBuffer().toString()},
+                                                  null, getClass(), null));
         }
         return fileMessages;
     }
@@ -438,12 +438,12 @@ public class Checker extends AutomaticBean implements MessageDispatcher, RootMod
         if (moduleFactory == null) {
             if (moduleClassLoader == null) {
                 throw new CheckstyleException(
-                        "if no custom moduleFactory is set, "
-                                + "moduleClassLoader must be specified");
+                    "if no custom moduleFactory is set, "
+                    + "moduleClassLoader must be specified");
             }
 
             final Set<String> packageNames = PackageNamesLoader
-                    .getPackageNames(moduleClassLoader);
+                                             .getPackageNames(moduleClassLoader);
             moduleFactory = new PackageObjectFactory(packageNames,
                     moduleClassLoader);
         }
@@ -464,7 +464,7 @@ public class Checker extends AutomaticBean implements MessageDispatcher, RootMod
      */
     @Override
     protected void setupChild(Configuration childConf)
-            throws CheckstyleException {
+    throws CheckstyleException {
         final String name = childConf.getName();
         final Object child;
 
@@ -479,7 +479,7 @@ public class Checker extends AutomaticBean implements MessageDispatcher, RootMod
         }
         catch (final CheckstyleException ex) {
             throw new CheckstyleException("cannot initialize module " + name
-                    + " - " + ex.getMessage(), ex);
+                                          + " - " + ex.getMessage(), ex);
         }
         if (child instanceof FileSetCheck) {
             final FileSetCheck fsc = (FileSetCheck) child;
@@ -500,7 +500,7 @@ public class Checker extends AutomaticBean implements MessageDispatcher, RootMod
         }
         else {
             throw new CheckstyleException(name
-                    + " is not allowed as a child in Checker");
+                                          + " is not allowed as a child in Checker");
         }
     }
 
@@ -613,7 +613,7 @@ public class Checker extends AutomaticBean implements MessageDispatcher, RootMod
      * @throws UnsupportedEncodingException if charset is unsupported.
      */
     public void setCharset(String charset)
-            throws UnsupportedEncodingException {
+    throws UnsupportedEncodingException {
         if (!Charset.isSupported(charset)) {
             final String message = "unsupported charset: '" + charset + "'";
             throw new UnsupportedEncodingException(message);

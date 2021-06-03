@@ -194,7 +194,7 @@ public class ExplicitInitializationCheck extends AbstractCheck {
         final DetailAST ident = ast.findFirstToken(TokenTypes.IDENT);
         final DetailAST assign = ast.findFirstToken(TokenTypes.ASSIGN);
         final DetailAST exprStart =
-                assign.getFirstChild().getFirstChild();
+            assign.getFirstChild().getFirstChild();
         final DetailAST type = ast.findFirstToken(TokenTypes.TYPE);
         final int primitiveType = type.getFirstChild().getType();
         if (primitiveType == TokenTypes.LITERAL_BOOLEAN
@@ -218,7 +218,7 @@ public class ExplicitInitializationCheck extends AbstractCheck {
      */
     private static boolean isZeroChar(DetailAST exprStart) {
         return isZero(exprStart)
-            || "'\\0'".equals(exprStart.getText());
+               || "'\\0'".equals(exprStart.getText());
     }
 
     /**
@@ -253,11 +253,11 @@ public class ExplicitInitializationCheck extends AbstractCheck {
      */
     private static boolean isNumericType(int type) {
         return type == TokenTypes.LITERAL_BYTE
-                || type == TokenTypes.LITERAL_SHORT
-                || type == TokenTypes.LITERAL_INT
-                || type == TokenTypes.LITERAL_FLOAT
-                || type == TokenTypes.LITERAL_LONG
-                || type == TokenTypes.LITERAL_DOUBLE;
+               || type == TokenTypes.LITERAL_SHORT
+               || type == TokenTypes.LITERAL_INT
+               || type == TokenTypes.LITERAL_FLOAT
+               || type == TokenTypes.LITERAL_LONG
+               || type == TokenTypes.LITERAL_DOUBLE;
     }
 
     /**
@@ -270,15 +270,15 @@ public class ExplicitInitializationCheck extends AbstractCheck {
         final int type = expr.getType();
         final boolean isZero;
         switch (type) {
-            case TokenTypes.NUM_FLOAT:
-            case TokenTypes.NUM_DOUBLE:
-            case TokenTypes.NUM_INT:
-            case TokenTypes.NUM_LONG:
-                final String text = expr.getText();
-                isZero = Double.compare(CheckUtil.parseDouble(text, type), 0.0) == 0;
-                break;
-            default:
-                isZero = false;
+        case TokenTypes.NUM_FLOAT:
+        case TokenTypes.NUM_DOUBLE:
+        case TokenTypes.NUM_INT:
+        case TokenTypes.NUM_LONG:
+            final String text = expr.getText();
+            isZero = Double.compare(CheckUtil.parseDouble(text, type), 0.0) == 0;
+            break;
+        default:
+            isZero = false;
         }
         return isZero;
     }

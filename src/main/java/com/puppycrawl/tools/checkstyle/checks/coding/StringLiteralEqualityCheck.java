@@ -113,7 +113,7 @@ public class StringLiteralEqualityCheck extends AbstractCheck {
     public void visitToken(DetailAST ast) {
         final boolean hasStringLiteralChild =
             ast.findFirstToken(TokenTypes.STRING_LITERAL) != null
-                || ast.findFirstToken(TokenTypes.TEXT_BLOCK_LITERAL_BEGIN) != null;
+            || ast.findFirstToken(TokenTypes.TEXT_BLOCK_LITERAL_BEGIN) != null;
 
         if (hasStringLiteralChild) {
             log(ast, MSG_KEY, ast.getText());

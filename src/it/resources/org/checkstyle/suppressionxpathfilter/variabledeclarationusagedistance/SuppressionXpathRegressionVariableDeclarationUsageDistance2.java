@@ -27,10 +27,10 @@ public class SuppressionXpathRegressionVariableDeclarationUsageDistance2 {
         int b = 2;
         {
             a = a
-                    + b
-                    - 5
-                    + 2
-                    * a;
+                + b
+                - 5
+                + 2
+                * a;
             count = b; // DECLARATION OF VARIABLE 'count' SHOULD BE HERE (distance = 2)
         }
     }

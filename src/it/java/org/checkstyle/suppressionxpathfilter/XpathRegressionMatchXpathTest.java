@@ -41,10 +41,10 @@ public class XpathRegressionMatchXpathTest extends AbstractXpathTestSupport {
     @Test
     public void testOne() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionMatchXpathOne.java"));
+            new File(getPath("SuppressionXpathRegressionMatchXpathOne.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(MatchXpathCheck.class);
+            createModuleConfig(MatchXpathCheck.class);
         moduleConfig.addAttribute("query", "//METHOD_DEF[./IDENT[@text='test']]");
 
         final String[] expectedViolation = {
@@ -52,39 +52,39 @@ public class XpathRegressionMatchXpathTest extends AbstractXpathTestSupport {
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMatchXpathOne']]"
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMatchXpathOne']]"
                     + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]",
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMatchXpathOne']]"
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMatchXpathOne']]"
                     + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/MODIFIERS",
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMatchXpathOne']]"
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMatchXpathOne']]"
                     + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/MODIFIERS/LITERAL_PUBLIC"
-        );
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionMatchXpathTwo.java"));
+            new File(getPath("SuppressionXpathRegressionMatchXpathTwo.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(MatchXpathCheck.class);
+            createModuleConfig(MatchXpathCheck.class);
         moduleConfig.addAttribute("query", "//LITERAL_THROWS[./IDENT[@text='Throwable' or "
-                + "@text='RuntimeException' or ends-with(@text, 'Error')]]");
+                                  + "@text='RuntimeException' or ends-with(@text, 'Error')]]");
 
         final String[] expectedViolation = {
             "4:25: " + getCheckMessage(MatchXpathCheck.class, MatchXpathCheck.MSG_KEY),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMatchXpathTwo']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='func1']]"
-                        + "/LITERAL_THROWS[./IDENT[@text='RuntimeException']]"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMatchXpathTwo']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='func1']]"
+                    + "/LITERAL_THROWS[./IDENT[@text='RuntimeException']]"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }

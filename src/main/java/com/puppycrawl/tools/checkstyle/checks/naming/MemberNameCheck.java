@@ -171,8 +171,8 @@ public class MemberNameCheck
         final boolean isStatic = modifiersAST.findFirstToken(TokenTypes.LITERAL_STATIC) != null;
 
         return !isStatic && !ScopeUtil.isInInterfaceOrAnnotationBlock(ast)
-            && !ScopeUtil.isLocalVariableDef(ast)
-                && shouldCheckInScope(modifiersAST);
+               && !ScopeUtil.isLocalVariableDef(ast)
+               && shouldCheckInScope(modifiersAST);
     }
 
 }

@@ -193,11 +193,11 @@ public final class OneStatementPerLineCheck extends AbstractCheck {
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.SEMI,
-            TokenTypes.FOR_INIT,
-            TokenTypes.FOR_ITERATOR,
-            TokenTypes.LAMBDA,
-        };
+                   TokenTypes.SEMI,
+                   TokenTypes.FOR_INIT,
+                   TokenTypes.FOR_ITERATOR,
+                   TokenTypes.LAMBDA,
+               };
     }
 
     @Override
@@ -212,42 +212,42 @@ public final class OneStatementPerLineCheck extends AbstractCheck {
     @Override
     public void visitToken(DetailAST ast) {
         switch (ast.getType()) {
-            case TokenTypes.SEMI:
-                checkIfSemicolonIsInDifferentLineThanPrevious(ast);
-                break;
-            case TokenTypes.FOR_ITERATOR:
-                forStatementEnd = ast.getLineNo();
-                break;
-            case TokenTypes.LAMBDA:
-                isInLambda = true;
-                countOfSemiInLambda.push(0);
-                break;
-            default:
-                inForHeader = true;
-                break;
+        case TokenTypes.SEMI:
+            checkIfSemicolonIsInDifferentLineThanPrevious(ast);
+            break;
+        case TokenTypes.FOR_ITERATOR:
+            forStatementEnd = ast.getLineNo();
+            break;
+        case TokenTypes.LAMBDA:
+            isInLambda = true;
+            countOfSemiInLambda.push(0);
+            break;
+        default:
+            inForHeader = true;
+            break;
         }
     }
 
     @Override
     public void leaveToken(DetailAST ast) {
         switch (ast.getType()) {
-            case TokenTypes.SEMI:
-                lastStatementEnd = ast.getLineNo();
-                forStatementEnd = -1;
-                lambdaStatementEnd = -1;
-                break;
-            case TokenTypes.FOR_ITERATOR:
-                inForHeader = false;
-                break;
-            case TokenTypes.LAMBDA:
-                countOfSemiInLambda.pop();
-                if (countOfSemiInLambda.isEmpty()) {
-                    isInLambda = false;
-                }
-                lambdaStatementEnd = ast.getLineNo();
-                break;
-            default:
-                break;
+        case TokenTypes.SEMI:
+            lastStatementEnd = ast.getLineNo();
+            forStatementEnd = -1;
+            lambdaStatementEnd = -1;
+            break;
+        case TokenTypes.FOR_ITERATOR:
+            inForHeader = false;
+            break;
+        case TokenTypes.LAMBDA:
+            countOfSemiInLambda.pop();
+            if (countOfSemiInLambda.isEmpty()) {
+                isInLambda = false;
+            }
+            lambdaStatementEnd = ast.getLineNo();
+            break;
+        default:
+            break;
         }
     }
 
@@ -259,8 +259,8 @@ public final class OneStatementPerLineCheck extends AbstractCheck {
     private void checkIfSemicolonIsInDifferentLineThanPrevious(DetailAST ast) {
         DetailAST currentStatement = ast;
         final boolean hasResourcesPrevSibling =
-                currentStatement.getPreviousSibling() != null
-                        && currentStatement.getPreviousSibling().getType() == TokenTypes.RESOURCES;
+            currentStatement.getPreviousSibling() != null
+            && currentStatement.getPreviousSibling().getType() == TokenTypes.RESOURCES;
         if (!hasResourcesPrevSibling && isMultilineStatement(currentStatement)) {
             currentStatement = ast.getPreviousSibling();
         }
@@ -271,7 +271,7 @@ public final class OneStatementPerLineCheck extends AbstractCheck {
             checkResourceVariable(ast);
         }
         else if (!inForHeader && isOnTheSameLine(currentStatement, lastStatementEnd,
-                forStatementEnd, lambdaStatementEnd)) {
+                 forStatementEnd, lambdaStatementEnd)) {
             log(ast, MSG_KEY);
         }
     }
@@ -282,16 +282,16 @@ public final class OneStatementPerLineCheck extends AbstractCheck {
         countOfSemiInLambda.push(countOfSemiInCurrentLambda);
         if (!inForHeader && countOfSemiInCurrentLambda > 1
                 && isOnTheSameLine(currentStatement,
-                lastStatementEnd, forStatementEnd,
-                lambdaStatementEnd)) {
+                                   lastStatementEnd, forStatementEnd,
+                                   lambdaStatementEnd)) {
             log(ast, MSG_KEY);
         }
     }
 
     private static boolean isResource(DetailAST ast) {
         return ast != null
-            && (ast.getType() == TokenTypes.RESOURCES
-                 || ast.getType() == TokenTypes.RESOURCE_SPECIFICATION);
+               && (ast.getType() == TokenTypes.RESOURCES
+                   || ast.getType() == TokenTypes.RESOURCE_SPECIFICATION);
     }
 
     private void checkResourceVariable(DetailAST currentStatement) {
@@ -301,7 +301,7 @@ public final class OneStatementPerLineCheck extends AbstractCheck {
                 lastVariableResourceStatementEnd = currentStatement.getLineNo();
             }
             if (nextNode.findFirstToken(TokenTypes.ASSIGN) != null
-                && nextNode.getLineNo() == lastVariableResourceStatementEnd) {
+                    && nextNode.getLineNo() == lastVariableResourceStatementEnd) {
                 log(currentStatement, MSG_KEY);
             }
         }
@@ -321,7 +321,7 @@ public final class OneStatementPerLineCheck extends AbstractCheck {
     private static boolean isOnTheSameLine(DetailAST ast, int lastStatementEnd,
                                            int forStatementEnd, int lambdaStatementEnd) {
         return lastStatementEnd == ast.getLineNo() && forStatementEnd != ast.getLineNo()
-                && lambdaStatementEnd != ast.getLineNo();
+               && lambdaStatementEnd != ast.getLineNo();
     }
 
     /**
@@ -338,7 +338,7 @@ public final class OneStatementPerLineCheck extends AbstractCheck {
         else {
             final DetailAST prevSibling = ast.getPreviousSibling();
             multiline = !TokenUtil.areOnSameLine(prevSibling, ast)
-                    && ast.getParent() != null;
+                        && ast.getParent() != null;
         }
         return multiline;
     }

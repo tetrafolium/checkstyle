@@ -54,10 +54,10 @@ public final class MetadataGeneratorUtil {
         final Checker checker = new Checker();
         checker.setModuleClassLoader(Checker.class.getClassLoader());
         final DefaultConfiguration scraperCheckConfig =
-                        new DefaultConfiguration(JavadocMetadataScraper.class.getName());
+            new DefaultConfiguration(JavadocMetadataScraper.class.getName());
         final DefaultConfiguration defaultConfiguration = new DefaultConfiguration("configuration");
         final DefaultConfiguration treeWalkerConfig =
-                new DefaultConfiguration(TreeWalker.class.getName());
+            new DefaultConfiguration(TreeWalker.class.getName());
         defaultConfiguration.addAttribute("charset", StandardCharsets.UTF_8.name());
         defaultConfiguration.addChild(treeWalkerConfig);
         treeWalkerConfig.addChild(scraperCheckConfig);
@@ -74,7 +74,7 @@ public final class MetadataGeneratorUtil {
      * @throws IOException ioException
      */
     private static void dumpMetadata(Checker checker, String path) throws CheckstyleException,
-            IOException {
+        IOException {
         final List<File> validFiles = new ArrayList<>();
         if (path.endsWith(".java")) {
             validFiles.add(new File(path));
@@ -83,15 +83,15 @@ public final class MetadataGeneratorUtil {
             final List<String> moduleFolders = Arrays.asList("checks", "filters", "filefilters");
             for (String folder : moduleFolders) {
                 try (Stream<Path> files = Files.walk(Paths.get(path
-                        + "/" + folder))) {
+                                                         + "/" + folder))) {
                     validFiles.addAll(
-                            files.map(Path::toFile)
-                            .filter(file -> {
-                                return file.getName().endsWith("SuppressWarningsHolder.java")
-                                        || file.getName().endsWith("Check.java")
-                                        || file.getName().endsWith("Filter.java");
-                            })
-                            .collect(Collectors.toList()));
+                        files.map(Path::toFile)
+                    .filter(file -> {
+                        return file.getName().endsWith("SuppressWarningsHolder.java")
+                        || file.getName().endsWith("Check.java")
+                        || file.getName().endsWith("Filter.java");
+                    })
+                    .collect(Collectors.toList()));
                 }
             }
         }
@@ -106,7 +106,7 @@ public final class MetadataGeneratorUtil {
      */
     public static List<String> fetchAllTokens() {
         return Arrays.stream(TokenUtil.getAllTokenIds())
-                .mapToObj(TokenUtil::getTokenName)
-                .collect(Collectors.toList());
+               .mapToObj(TokenUtil::getTokenName)
+               .collect(Collectors.toList());
     }
 }

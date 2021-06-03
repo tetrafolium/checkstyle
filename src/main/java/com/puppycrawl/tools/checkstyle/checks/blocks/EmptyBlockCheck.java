@@ -202,39 +202,39 @@ public class EmptyBlockCheck
     @Override
     public int[] getDefaultTokens() {
         return new int[] {
-            TokenTypes.LITERAL_WHILE,
-            TokenTypes.LITERAL_TRY,
-            TokenTypes.LITERAL_FINALLY,
-            TokenTypes.LITERAL_DO,
-            TokenTypes.LITERAL_IF,
-            TokenTypes.LITERAL_ELSE,
-            TokenTypes.LITERAL_FOR,
-            TokenTypes.INSTANCE_INIT,
-            TokenTypes.STATIC_INIT,
-            TokenTypes.LITERAL_SWITCH,
-            TokenTypes.LITERAL_SYNCHRONIZED,
-        };
+                   TokenTypes.LITERAL_WHILE,
+                   TokenTypes.LITERAL_TRY,
+                   TokenTypes.LITERAL_FINALLY,
+                   TokenTypes.LITERAL_DO,
+                   TokenTypes.LITERAL_IF,
+                   TokenTypes.LITERAL_ELSE,
+                   TokenTypes.LITERAL_FOR,
+                   TokenTypes.INSTANCE_INIT,
+                   TokenTypes.STATIC_INIT,
+                   TokenTypes.LITERAL_SWITCH,
+                   TokenTypes.LITERAL_SYNCHRONIZED,
+               };
     }
 
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.LITERAL_WHILE,
-            TokenTypes.LITERAL_TRY,
-            TokenTypes.LITERAL_CATCH,
-            TokenTypes.LITERAL_FINALLY,
-            TokenTypes.LITERAL_DO,
-            TokenTypes.LITERAL_IF,
-            TokenTypes.LITERAL_ELSE,
-            TokenTypes.LITERAL_FOR,
-            TokenTypes.INSTANCE_INIT,
-            TokenTypes.STATIC_INIT,
-            TokenTypes.LITERAL_SWITCH,
-            TokenTypes.LITERAL_SYNCHRONIZED,
-            TokenTypes.LITERAL_CASE,
-            TokenTypes.LITERAL_DEFAULT,
-            TokenTypes.ARRAY_INIT,
-        };
+                   TokenTypes.LITERAL_WHILE,
+                   TokenTypes.LITERAL_TRY,
+                   TokenTypes.LITERAL_CATCH,
+                   TokenTypes.LITERAL_FINALLY,
+                   TokenTypes.LITERAL_DO,
+                   TokenTypes.LITERAL_IF,
+                   TokenTypes.LITERAL_ELSE,
+                   TokenTypes.LITERAL_FOR,
+                   TokenTypes.INSTANCE_INIT,
+                   TokenTypes.STATIC_INIT,
+                   TokenTypes.LITERAL_SWITCH,
+                   TokenTypes.LITERAL_SYNCHRONIZED,
+                   TokenTypes.LITERAL_CASE,
+                   TokenTypes.LITERAL_DEFAULT,
+                   TokenTypes.ARRAY_INIT,
+               };
     }
 
     @Override
@@ -251,7 +251,7 @@ public class EmptyBlockCheck
                 if (leftCurly.getType() == TokenTypes.LCURLY) {
                     final DetailAST nextSibling = leftCurly.getNextSibling();
                     emptyBlock = nextSibling.getType() != TokenTypes.CASE_GROUP
-                            && nextSibling.getType() != TokenTypes.SWITCH_RULE;
+                                 && nextSibling.getType() != TokenTypes.SWITCH_RULE;
                 }
                 else {
                     emptyBlock = leftCurly.getChildCount() <= 1;
@@ -295,7 +295,7 @@ public class EmptyBlockCheck
         if (slistLineNo == rcurlyLineNo) {
             // Handle braces on the same line
             final String txt = lines[slistLineNo - 1]
-                    .substring(slistColNo + 1, rcurlyColNo);
+                               .substring(slistColNo + 1, rcurlyColNo);
             if (!CommonUtil.isBlank(txt)) {
                 returnValue = true;
             }
@@ -305,7 +305,7 @@ public class EmptyBlockCheck
             final String lastLine = lines[rcurlyLineNo - 1].substring(0, rcurlyColNo);
             // check if all lines are also only whitespace
             returnValue = !(CommonUtil.isBlank(firstLine) && CommonUtil.isBlank(lastLine))
-                    || !checkIsAllLinesAreWhitespace(lines, slistLineNo, rcurlyLineNo);
+                          || !checkIsAllLinesAreWhitespace(lines, slistLineNo, rcurlyLineNo);
         }
         return returnValue;
     }

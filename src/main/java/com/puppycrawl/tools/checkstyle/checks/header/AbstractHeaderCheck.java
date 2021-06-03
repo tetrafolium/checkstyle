@@ -99,7 +99,7 @@ public abstract class AbstractHeaderCheck extends AbstractFileSetCheck
         if (uri == null) {
             throw new CheckstyleException(
                 "property 'headerFile' is missing or invalid in module "
-                    + getConfiguration().getName());
+                + getConfiguration().getName());
         }
 
         headerFile = uri;
@@ -113,12 +113,12 @@ public abstract class AbstractHeaderCheck extends AbstractFileSetCheck
     private void loadHeaderFile() throws CheckstyleException {
         checkHeaderNotInitialized();
         try (Reader headerReader = new InputStreamReader(new BufferedInputStream(
-                    headerFile.toURL().openStream()), charset)) {
+                        headerFile.toURL().openStream()), charset)) {
             loadHeader(headerReader);
         }
         catch (final IOException ex) {
             throw new CheckstyleException(
-                    "unable to load header file " + headerFile, ex);
+                "unable to load header file " + headerFile, ex);
         }
     }
 
@@ -130,8 +130,8 @@ public abstract class AbstractHeaderCheck extends AbstractFileSetCheck
     private void checkHeaderNotInitialized() {
         if (!readerLines.isEmpty()) {
             throw new IllegalArgumentException(
-                    "header has already been set - "
-                    + "set either header or headerFile, not both");
+                "header has already been set - "
+                + "set either header or headerFile, not both");
         }
     }
 
@@ -147,7 +147,7 @@ public abstract class AbstractHeaderCheck extends AbstractFileSetCheck
             checkHeaderNotInitialized();
 
             final String headerExpandedNewLines = ESCAPED_LINE_FEED_PATTERN
-                    .matcher(header).replaceAll("\n");
+                                                  .matcher(header).replaceAll("\n");
 
             try (Reader headerReader = new StringReader(headerExpandedNewLines)) {
                 loadHeader(headerReader);

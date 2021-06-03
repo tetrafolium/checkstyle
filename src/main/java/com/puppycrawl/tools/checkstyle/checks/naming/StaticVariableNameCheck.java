@@ -154,9 +154,9 @@ public class StaticVariableNameCheck
         final boolean isFinal = modifiersAST.findFirstToken(TokenTypes.FINAL) != null;
 
         return isStatic
-                && !isFinal
-                && shouldCheckInScope(modifiersAST)
-                && !ScopeUtil.isInInterfaceOrAnnotationBlock(ast);
+               && !isFinal
+               && shouldCheckInScope(modifiersAST)
+               && !ScopeUtil.isInInterfaceOrAnnotationBlock(ast);
     }
 
 }

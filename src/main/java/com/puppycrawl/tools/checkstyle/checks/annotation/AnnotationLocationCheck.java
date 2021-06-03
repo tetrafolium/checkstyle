@@ -288,35 +288,35 @@ public class AnnotationLocationCheck extends AbstractCheck {
     @Override
     public int[] getDefaultTokens() {
         return new int[] {
-            TokenTypes.CLASS_DEF,
-            TokenTypes.INTERFACE_DEF,
-            TokenTypes.PACKAGE_DEF,
-            TokenTypes.ENUM_CONSTANT_DEF,
-            TokenTypes.ENUM_DEF,
-            TokenTypes.METHOD_DEF,
-            TokenTypes.CTOR_DEF,
-            TokenTypes.VARIABLE_DEF,
-            TokenTypes.RECORD_DEF,
-            TokenTypes.COMPACT_CTOR_DEF,
-        };
+                   TokenTypes.CLASS_DEF,
+                   TokenTypes.INTERFACE_DEF,
+                   TokenTypes.PACKAGE_DEF,
+                   TokenTypes.ENUM_CONSTANT_DEF,
+                   TokenTypes.ENUM_DEF,
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.CTOR_DEF,
+                   TokenTypes.VARIABLE_DEF,
+                   TokenTypes.RECORD_DEF,
+                   TokenTypes.COMPACT_CTOR_DEF,
+               };
     }
 
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.CLASS_DEF,
-            TokenTypes.INTERFACE_DEF,
-            TokenTypes.PACKAGE_DEF,
-            TokenTypes.ENUM_CONSTANT_DEF,
-            TokenTypes.ENUM_DEF,
-            TokenTypes.METHOD_DEF,
-            TokenTypes.CTOR_DEF,
-            TokenTypes.VARIABLE_DEF,
-            TokenTypes.ANNOTATION_DEF,
-            TokenTypes.ANNOTATION_FIELD_DEF,
-            TokenTypes.RECORD_DEF,
-            TokenTypes.COMPACT_CTOR_DEF,
-        };
+                   TokenTypes.CLASS_DEF,
+                   TokenTypes.INTERFACE_DEF,
+                   TokenTypes.PACKAGE_DEF,
+                   TokenTypes.ENUM_CONSTANT_DEF,
+                   TokenTypes.ENUM_DEF,
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.CTOR_DEF,
+                   TokenTypes.VARIABLE_DEF,
+                   TokenTypes.ANNOTATION_DEF,
+                   TokenTypes.ANNOTATION_FIELD_DEF,
+                   TokenTypes.RECORD_DEF,
+                   TokenTypes.COMPACT_CTOR_DEF,
+               };
     }
 
     @Override
@@ -364,7 +364,7 @@ public class AnnotationLocationCheck extends AbstractCheck {
 
             if (!isCorrectLocation(annotation, hasParameters)) {
                 log(annotation,
-                        MSG_KEY_ANNOTATION_LOCATION_ALONE, getAnnotationName(annotation));
+                    MSG_KEY_ANNOTATION_LOCATION_ALONE, getAnnotationName(annotation));
             }
             else if (annotation.getColumnNo() != correctIndentation && !hasNodeBefore(annotation)) {
                 log(annotation, MSG_KEY_ANNOTATION_LOCATION,
@@ -383,7 +383,7 @@ public class AnnotationLocationCheck extends AbstractCheck {
     private static boolean isParameterized(DetailAST annotation) {
         return TokenUtil.findFirstTokenByPredicate(annotation, ast -> {
             return ast.getType() == TokenTypes.EXPR
-                || ast.getType() == TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR;
+            || ast.getType() == TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR;
         }).isPresent();
     }
 
@@ -426,8 +426,8 @@ public class AnnotationLocationCheck extends AbstractCheck {
             allowingCondition = allowSamelineSingleParameterlessAnnotation;
         }
         return allowSamelineMultipleAnnotations
-            || allowingCondition && !hasNodeBefore(annotation)
-            || !hasNodeBeside(annotation);
+               || allowingCondition && !hasNodeBefore(annotation)
+               || !hasNodeBeside(annotation);
     }
 
     /**

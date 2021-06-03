@@ -42,7 +42,7 @@ public class ArrayInitHandler extends BlockParentHandler {
      * @param parent        the parent handler
      */
     public ArrayInitHandler(IndentationCheck indentCheck,
-        DetailAST ast, AbstractExpressionHandler parent) {
+                            DetailAST ast, AbstractExpressionHandler parent) {
         super(indentCheck, "array initialization", ast, parent);
     }
 
@@ -76,7 +76,7 @@ public class ArrayInitHandler extends BlockParentHandler {
     protected IndentLevel curlyIndent() {
         final IndentLevel level = new IndentLevel(getIndent(), getBraceAdjustment());
         return IndentLevel.addAcceptable(level, level.getLastIndentLevel()
-                + getLineWrappingIndentation());
+                                         + getLineWrappingIndentation());
     }
 
     @Override
@@ -98,7 +98,7 @@ public class ArrayInitHandler extends BlockParentHandler {
     protected IndentLevel getChildrenExpectedIndent() {
         IndentLevel expectedIndent =
             new IndentLevel(getIndent(), getIndentCheck().getArrayInitIndent(),
-                    getIndentCheck().getLineWrappingIndentation());
+                            getIndentCheck().getLineWrappingIndentation());
 
         final int firstLine = getFirstLine(getListChild());
         final int lcurlyPos = expandedTabsColumnNo(getLeftCurly());
@@ -107,7 +107,7 @@ public class ArrayInitHandler extends BlockParentHandler {
 
         if (firstChildPos != NOT_EXIST) {
             expectedIndent = IndentLevel.addAcceptable(expectedIndent, firstChildPos, lcurlyPos
-                    + getLineWrappingIndentation());
+                             + getLineWrappingIndentation());
         }
         return expectedIndent;
     }
@@ -129,7 +129,7 @@ public class ArrayInitHandler extends BlockParentHandler {
         final String line = getIndentCheck().getLines()[lineNo - 1];
         final int lineLength = line.length();
         while (realColumnNo < lineLength
-               && Character.isWhitespace(line.charAt(realColumnNo))) {
+                && Character.isWhitespace(line.charAt(realColumnNo))) {
             realColumnNo++;
         }
 

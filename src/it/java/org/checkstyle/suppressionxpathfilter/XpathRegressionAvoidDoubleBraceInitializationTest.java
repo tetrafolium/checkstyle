@@ -50,13 +50,13 @@ public class XpathRegressionAvoidDoubleBraceInitializationTest extends AbstractX
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAvoidDoubleBraceInitialization']]"
-                + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='list']]/ASSIGN/EXPR/"
-                + "LITERAL_NEW[./IDENT[@text='ArrayList']]/OBJBLOCK",
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAvoidDoubleBraceInitialization']]"
-                + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='list']]/ASSIGN/EXPR/"
-                + "LITERAL_NEW[./IDENT[@text='ArrayList']]/OBJBLOCK/LCURLY"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAvoidDoubleBraceInitialization']]"
+                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='list']]/ASSIGN/EXPR/"
+                    + "LITERAL_NEW[./IDENT[@text='ArrayList']]/OBJBLOCK",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAvoidDoubleBraceInitialization']]"
+                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='list']]/ASSIGN/EXPR/"
+                    + "LITERAL_NEW[./IDENT[@text='ArrayList']]/OBJBLOCK/LCURLY"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
     }
@@ -73,17 +73,17 @@ public class XpathRegressionAvoidDoubleBraceInitializationTest extends AbstractX
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-            "/CLASS_DEF[./IDENT[@text="
+                    "/CLASS_DEF[./IDENT[@text="
                     + "'SuppressionXpathRegressionAvoidDoubleBraceInitializationTwo']]"
-                + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]"
-                + "/SLIST/EXPR/LITERAL_NEW[./IDENT[@text='HashSet']]"
-                + "/OBJBLOCK",
-            "/CLASS_DEF[./IDENT[@text="
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]"
+                    + "/SLIST/EXPR/LITERAL_NEW[./IDENT[@text='HashSet']]"
+                    + "/OBJBLOCK",
+                    "/CLASS_DEF[./IDENT[@text="
                     + "'SuppressionXpathRegressionAvoidDoubleBraceInitializationTwo']]"
-                + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]"
-                + "/SLIST/EXPR/LITERAL_NEW[./IDENT[@text='HashSet']]"
-                + "/OBJBLOCK/LCURLY"
-        );
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]"
+                    + "/SLIST/EXPR/LITERAL_NEW[./IDENT[@text='HashSet']]"
+                    + "/OBJBLOCK/LCURLY"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
     }

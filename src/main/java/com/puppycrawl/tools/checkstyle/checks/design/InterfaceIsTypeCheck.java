@@ -104,7 +104,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  */
 @StatelessCheck
 public final class InterfaceIsTypeCheck
-        extends AbstractCheck {
+    extends AbstractCheck {
 
     /**
      * A key is pointing to the warning message text in "messages.properties"
@@ -133,13 +133,13 @@ public final class InterfaceIsTypeCheck
     @Override
     public void visitToken(DetailAST ast) {
         final DetailAST objBlock =
-                ast.findFirstToken(TokenTypes.OBJBLOCK);
+            ast.findFirstToken(TokenTypes.OBJBLOCK);
         final DetailAST methodDef =
-                objBlock.findFirstToken(TokenTypes.METHOD_DEF);
+            objBlock.findFirstToken(TokenTypes.METHOD_DEF);
         final DetailAST variableDef =
-                objBlock.findFirstToken(TokenTypes.VARIABLE_DEF);
+            objBlock.findFirstToken(TokenTypes.VARIABLE_DEF);
         final boolean methodRequired =
-                !allowMarkerInterfaces || variableDef != null;
+            !allowMarkerInterfaces || variableDef != null;
 
         if (methodDef == null && methodRequired) {
             log(ast, MSG_KEY);

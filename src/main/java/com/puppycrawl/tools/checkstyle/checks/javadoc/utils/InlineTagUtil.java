@@ -36,11 +36,11 @@ public final class InlineTagUtil {
      * Inline tag pattern.
      */
     private static final Pattern INLINE_TAG_PATTERN = Pattern.compile(
-            "\\{@(\\p{Alpha}+)\\b(.*?)}", Pattern.DOTALL);
+                "\\{@(\\p{Alpha}+)\\b(.*?)}", Pattern.DOTALL);
 
     /** Pattern to recognize leading "*" characters in Javadoc. */
     private static final Pattern JAVADOC_PREFIX_PATTERN = Pattern.compile(
-        "^\\s*\\*", Pattern.MULTILINE);
+                "^\\s*\\*", Pattern.MULTILINE);
 
     /** Pattern matching whitespace, used by {@link InlineTagUtil#collapseWhitespace(String)}. */
     private static final Pattern WHITESPACE_PATTERN = Pattern.compile("\\s+");
@@ -90,8 +90,8 @@ public final class InlineTagUtil {
 
             final int startIndex = inlineTagMatcher.start(1);
             final LineColumn position = getLineColumnOfIndex(commentText,
-                // correct start index offset
-                startIndex - 1);
+                                        // correct start index offset
+                                        startIndex - 1);
 
             tags.add(new TagInfo(tagName, tagValue, position));
         }

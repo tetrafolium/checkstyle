@@ -7,11 +7,11 @@ interface MyLambdaInterface {
 public class SuppressionXpathRegressionIndentationLambdaTest2 {
     void test() {
         MyLambdaInterface div = (a, b)
-            -> {
-                if(b != 0) {
-                    return a/b;
-                }
-              return 0; // warn
+        -> {
+            if(b != 0) {
+                return a/b;
+            }
+            return 0; // warn
         };
     }
 }

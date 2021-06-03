@@ -148,7 +148,7 @@ public class DefaultComesLastCheck extends AbstractCheck {
      * file.
      */
     public static final String MSG_KEY_SKIP_IF_LAST_AND_SHARED_WITH_CASE =
-            "default.comes.last.in.casegroup";
+        "default.comes.last.in.casegroup";
 
     /** Control whether to allow {@code default} along with {@code case} if they are not last. */
     private boolean skipIfLastAndSharedWithCase;
@@ -166,8 +166,8 @@ public class DefaultComesLastCheck extends AbstractCheck {
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.LITERAL_DEFAULT,
-        };
+                   TokenTypes.LITERAL_DEFAULT,
+               };
     }
 
     /**
@@ -192,15 +192,15 @@ public class DefaultComesLastCheck extends AbstractCheck {
                 log(ast, MSG_KEY_SKIP_IF_LAST_AND_SHARED_WITH_CASE);
             }
             else if (ast.getPreviousSibling() == null
-                && Objects.nonNull(findNextSibling(defaultGroupAST,
-                                                   TokenTypes.CASE_GROUP))) {
+                     && Objects.nonNull(findNextSibling(defaultGroupAST,
+                                        TokenTypes.CASE_GROUP))) {
                 log(ast, MSG_KEY);
             }
         }
         else if (Objects.nonNull(findNextSibling(defaultGroupAST,
-                                            TokenTypes.CASE_GROUP))
-                    || Objects.nonNull(findNextSibling(defaultGroupAST,
-                                            TokenTypes.SWITCH_RULE))) {
+                                 TokenTypes.CASE_GROUP))
+                 || Objects.nonNull(findNextSibling(defaultGroupAST,
+                                    TokenTypes.SWITCH_RULE))) {
             log(ast, MSG_KEY);
         }
     }

@@ -29,7 +29,7 @@ import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
 import com.puppycrawl.tools.checkstyle.checks.coding.UnnecessarySemicolonAfterOuterTypeDeclarationCheck;
 
 public class XpathRegressionUnnecessarySemicolonAfterOuterTypeDeclarationTest
-        extends AbstractXpathTestSupport {
+    extends AbstractXpathTestSupport {
 
     private static final Class<UnnecessarySemicolonAfterOuterTypeDeclarationCheck> CLASS =
         UnnecessarySemicolonAfterOuterTypeDeclarationCheck.class;
@@ -42,11 +42,11 @@ public class XpathRegressionUnnecessarySemicolonAfterOuterTypeDeclarationTest
     @Test
     public void testOne() throws Exception {
         final File fileToProcess = new File(getPath(
-            "SuppressionXpathRegressionUnnecessarySemicolonAfterOuterTypeDeclaration.java"));
+                                                "SuppressionXpathRegressionUnnecessarySemicolonAfterOuterTypeDeclaration.java"));
         final DefaultConfiguration moduleConfig = createModuleConfig(CLASS);
         final String[] expectedViolation = {
             "5:2: " + getCheckMessage(CLASS,
-                UnnecessarySemicolonAfterOuterTypeDeclarationCheck.MSG_SEMI),
+                                      UnnecessarySemicolonAfterOuterTypeDeclarationCheck.MSG_SEMI),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList("/SEMI");
@@ -57,12 +57,12 @@ public class XpathRegressionUnnecessarySemicolonAfterOuterTypeDeclarationTest
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess = new File(getPath(
-            "SuppressionXpathRegressionUnnecessarySemicolonAfterOuterTypeDeclarationInnerTypes"
-                    + ".java"));
+                                                "SuppressionXpathRegressionUnnecessarySemicolonAfterOuterTypeDeclarationInnerTypes"
+                                                + ".java"));
         final DefaultConfiguration moduleConfig = createModuleConfig(CLASS);
         final String[] expectedViolation = {
             "21:2: " + getCheckMessage(CLASS,
-                UnnecessarySemicolonAfterOuterTypeDeclarationCheck.MSG_SEMI),
+                                       UnnecessarySemicolonAfterOuterTypeDeclarationCheck.MSG_SEMI),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList("/SEMI");

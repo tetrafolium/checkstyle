@@ -37,7 +37,7 @@ public class CatchHandler extends BlockParentHandler {
      * @param parent        the parent handler
      */
     public CatchHandler(IndentationCheck indentCheck,
-        DetailAST ast, AbstractExpressionHandler parent) {
+                        DetailAST ast, AbstractExpressionHandler parent) {
         super(indentCheck, "catch", ast, parent);
     }
 
@@ -46,7 +46,7 @@ public class CatchHandler extends BlockParentHandler {
      */
     private void checkCondExpr() {
         final DetailAST condAst = getMainAst().findFirstToken(TokenTypes.LPAREN)
-            .getNextSibling();
+                                  .getNextSibling();
         checkExpressionSubtree(condAst, getIndent(), true, true);
     }
 

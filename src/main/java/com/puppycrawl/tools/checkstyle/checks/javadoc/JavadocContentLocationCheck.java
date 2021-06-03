@@ -171,8 +171,8 @@ public class JavadocContentLocationCheck extends AbstractCheck {
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.BLOCK_COMMENT_BEGIN,
-        };
+                   TokenTypes.BLOCK_COMMENT_BEGIN,
+               };
     }
 
     @Override

@@ -184,41 +184,41 @@ public final class BooleanExpressionComplexityCheck extends AbstractCheck {
     @Override
     public int[] getDefaultTokens() {
         return new int[] {
-            TokenTypes.CTOR_DEF,
-            TokenTypes.METHOD_DEF,
-            TokenTypes.EXPR,
-            TokenTypes.LAND,
-            TokenTypes.BAND,
-            TokenTypes.LOR,
-            TokenTypes.BOR,
-            TokenTypes.BXOR,
-            TokenTypes.COMPACT_CTOR_DEF,
-        };
+                   TokenTypes.CTOR_DEF,
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.EXPR,
+                   TokenTypes.LAND,
+                   TokenTypes.BAND,
+                   TokenTypes.LOR,
+                   TokenTypes.BOR,
+                   TokenTypes.BXOR,
+                   TokenTypes.COMPACT_CTOR_DEF,
+               };
     }
 
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.CTOR_DEF,
-            TokenTypes.METHOD_DEF,
-            TokenTypes.EXPR,
-            TokenTypes.COMPACT_CTOR_DEF,
-        };
+                   TokenTypes.CTOR_DEF,
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.EXPR,
+                   TokenTypes.COMPACT_CTOR_DEF,
+               };
     }
 
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.CTOR_DEF,
-            TokenTypes.METHOD_DEF,
-            TokenTypes.EXPR,
-            TokenTypes.LAND,
-            TokenTypes.BAND,
-            TokenTypes.LOR,
-            TokenTypes.BOR,
-            TokenTypes.BXOR,
-            TokenTypes.COMPACT_CTOR_DEF,
-        };
+                   TokenTypes.CTOR_DEF,
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.EXPR,
+                   TokenTypes.LAND,
+                   TokenTypes.BAND,
+                   TokenTypes.LOR,
+                   TokenTypes.BOR,
+                   TokenTypes.BXOR,
+                   TokenTypes.COMPACT_CTOR_DEF,
+               };
     }
 
     /**
@@ -233,31 +233,31 @@ public final class BooleanExpressionComplexityCheck extends AbstractCheck {
     @Override
     public void visitToken(DetailAST ast) {
         switch (ast.getType()) {
-            case TokenTypes.CTOR_DEF:
-            case TokenTypes.METHOD_DEF:
-            case TokenTypes.COMPACT_CTOR_DEF:
-                visitMethodDef(ast);
-                break;
-            case TokenTypes.EXPR:
-                visitExpr();
-                break;
-            case TokenTypes.BOR:
-                if (!isPipeOperator(ast) && !isPassedInParameter(ast)) {
-                    context.visitBooleanOperator();
-                }
-                break;
-            case TokenTypes.BAND:
-            case TokenTypes.BXOR:
-                if (!isPassedInParameter(ast)) {
-                    context.visitBooleanOperator();
-                }
-                break;
-            case TokenTypes.LAND:
-            case TokenTypes.LOR:
+        case TokenTypes.CTOR_DEF:
+        case TokenTypes.METHOD_DEF:
+        case TokenTypes.COMPACT_CTOR_DEF:
+            visitMethodDef(ast);
+            break;
+        case TokenTypes.EXPR:
+            visitExpr();
+            break;
+        case TokenTypes.BOR:
+            if (!isPipeOperator(ast) && !isPassedInParameter(ast)) {
                 context.visitBooleanOperator();
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown type: " + ast);
+            }
+            break;
+        case TokenTypes.BAND:
+        case TokenTypes.BXOR:
+            if (!isPassedInParameter(ast)) {
+                context.visitBooleanOperator();
+            }
+            break;
+        case TokenTypes.LAND:
+        case TokenTypes.LOR:
+            context.visitBooleanOperator();
+            break;
+        default:
+            throw new IllegalArgumentException("Unknown type: " + ast);
         }
     }
 
@@ -287,16 +287,16 @@ public final class BooleanExpressionComplexityCheck extends AbstractCheck {
     @Override
     public void leaveToken(DetailAST ast) {
         switch (ast.getType()) {
-            case TokenTypes.CTOR_DEF:
-            case TokenTypes.METHOD_DEF:
-            case TokenTypes.COMPACT_CTOR_DEF:
-                leaveMethodDef();
-                break;
-            case TokenTypes.EXPR:
-                leaveExpr(ast);
-                break;
-            default:
-                // Do nothing
+        case TokenTypes.CTOR_DEF:
+        case TokenTypes.METHOD_DEF:
+        case TokenTypes.COMPACT_CTOR_DEF:
+            leaveMethodDef();
+            break;
+        case TokenTypes.EXPR:
+            leaveExpr(ast);
+            break;
+        default:
+            // Do nothing
         }
     }
 

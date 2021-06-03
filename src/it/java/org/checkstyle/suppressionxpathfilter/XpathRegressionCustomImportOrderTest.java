@@ -40,140 +40,140 @@ public class XpathRegressionCustomImportOrderTest extends AbstractXpathTestSuppo
     @Test
     public void testOne() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionCustomImportOrderOne.java"));
+            new File(getPath("SuppressionXpathRegressionCustomImportOrderOne.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(CustomImportOrderCheck.class);
+            createModuleConfig(CustomImportOrderCheck.class);
         moduleConfig.addAttribute("customImportOrderRules", "STATIC###STANDARD_JAVA_PACKAGE");
         moduleConfig.addAttribute("sortImportsInGroupAlphabetically", "true");
 
         final String[] expectedViolation = {
             "4:1: " + getCheckMessage(CustomImportOrderCheck.class,
-                        CustomImportOrderCheck.MSG_LEX, "java.lang.Math.PI",
-                        "java.util.Arrays.sort"),
+                                      CustomImportOrderCheck.MSG_LEX, "java.lang.Math.PI",
+                                      "java.util.Arrays.sort"),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/STATIC_IMPORT[./DOT/IDENT[@text='PI']]"
-        );
+                    "/STATIC_IMPORT[./DOT/IDENT[@text='PI']]"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionCustomImportOrderTwo.java"));
+            new File(getPath("SuppressionXpathRegressionCustomImportOrderTwo.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(CustomImportOrderCheck.class);
+            createModuleConfig(CustomImportOrderCheck.class);
         moduleConfig.addAttribute("customImportOrderRules", "STATIC###STANDARD_JAVA_PACKAGE");
 
         final String[] expectedViolation = {
             "5:1: " + getCheckMessage(CustomImportOrderCheck.class,
-                        CustomImportOrderCheck.MSG_LINE_SEPARATOR, "java.io.File"),
+                                      CustomImportOrderCheck.MSG_LINE_SEPARATOR, "java.io.File"),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/IMPORT[./DOT/IDENT[@text='File']]"
-        );
+                    "/IMPORT[./DOT/IDENT[@text='File']]"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testThree() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionCustomImportOrderThree.java"));
+            new File(getPath("SuppressionXpathRegressionCustomImportOrderThree.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(CustomImportOrderCheck.class);
+            createModuleConfig(CustomImportOrderCheck.class);
         moduleConfig.addAttribute("customImportOrderRules", "STATIC###STANDARD_JAVA_PACKAGE");
 
         final String[] expectedViolation = {
             "5:1: " + getCheckMessage(CustomImportOrderCheck.class,
-                        CustomImportOrderCheck.MSG_SEPARATED_IN_GROUP, "java.lang.Math.PI"),
+                                      CustomImportOrderCheck.MSG_SEPARATED_IN_GROUP, "java.lang.Math.PI"),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/STATIC_IMPORT[./DOT/IDENT[@text='PI']]"
-        );
+                    "/STATIC_IMPORT[./DOT/IDENT[@text='PI']]"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testFour() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionCustomImportOrderFour.java"));
+            new File(getPath("SuppressionXpathRegressionCustomImportOrderFour.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(CustomImportOrderCheck.class);
+            createModuleConfig(CustomImportOrderCheck.class);
         moduleConfig.addAttribute("customImportOrderRules", "STATIC###STANDARD_JAVA_PACKAGE");
 
         final String[] expectedViolation = {
             "5:1: " + getCheckMessage(CustomImportOrderCheck.class,
-                        CustomImportOrderCheck.MSG_NONGROUP_IMPORT,
-                        "com.puppycrawl.tools.checkstyle.api.DetailAST"),
+                                      CustomImportOrderCheck.MSG_NONGROUP_IMPORT,
+                                      "com.puppycrawl.tools.checkstyle.api.DetailAST"),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/IMPORT[./DOT/IDENT[@text='DetailAST']]"
-        );
+                    "/IMPORT[./DOT/IDENT[@text='DetailAST']]"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testFive() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionCustomImportOrderFive.java"));
+            new File(getPath("SuppressionXpathRegressionCustomImportOrderFive.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(CustomImportOrderCheck.class);
+            createModuleConfig(CustomImportOrderCheck.class);
         moduleConfig.addAttribute("customImportOrderRules", "STATIC###STANDARD_JAVA_PACKAGE");
 
         final String[] expectedViolation = {
             "7:1: " + getCheckMessage(CustomImportOrderCheck.class,
-                        CustomImportOrderCheck.MSG_NONGROUP_EXPECTED, "STATIC",
-                        "java.lang.Math.PI"),
+                                      CustomImportOrderCheck.MSG_NONGROUP_EXPECTED, "STATIC",
+                                      "java.lang.Math.PI"),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/STATIC_IMPORT[./DOT/IDENT[@text='PI']]"
-        );
+                    "/STATIC_IMPORT[./DOT/IDENT[@text='PI']]"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testSix() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionCustomImportOrderSix.java"));
+            new File(getPath("SuppressionXpathRegressionCustomImportOrderSix.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(CustomImportOrderCheck.class);
+            createModuleConfig(CustomImportOrderCheck.class);
         moduleConfig.addAttribute("customImportOrderRules",
-            "STATIC###STANDARD_JAVA_PACKAGE###THIRD_PARTY_PACKAGE");
+                                  "STATIC###STANDARD_JAVA_PACKAGE###THIRD_PARTY_PACKAGE");
 
         final String[] expectedViolation = {
             "6:1: " + getCheckMessage(CustomImportOrderCheck.class,
-                        CustomImportOrderCheck.MSG_ORDER, "THIRD_PARTY_PACKAGE",
-                        "STANDARD_JAVA_PACKAGE",
-                        "com.puppycrawl.tools.checkstyle.api.DetailAST"),
+                                      CustomImportOrderCheck.MSG_ORDER, "THIRD_PARTY_PACKAGE",
+                                      "STANDARD_JAVA_PACKAGE",
+                                      "com.puppycrawl.tools.checkstyle.api.DetailAST"),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/IMPORT[./DOT/IDENT[@text='DetailAST']]"
-        );
+                    "/IMPORT[./DOT/IDENT[@text='DetailAST']]"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
 }

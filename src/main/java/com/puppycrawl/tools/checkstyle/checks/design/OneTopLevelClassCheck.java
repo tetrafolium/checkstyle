@@ -139,7 +139,7 @@ public class OneTopLevelClassCheck extends AbstractCheck {
                 else if (!isPublic(currentNode)) {
                     // extra non-public type, log immediately
                     final String typeName = currentNode
-                        .findFirstToken(TokenTypes.IDENT).getText();
+                                            .findFirstToken(TokenTypes.IDENT).getText();
                     log(currentNode, MSG_KEY, typeName);
                 }
             }
@@ -149,7 +149,7 @@ public class OneTopLevelClassCheck extends AbstractCheck {
         // if there was a public type and first type is non-public, log it
         if (publicTypeFound && !isPublic(firstType)) {
             final String typeName = firstType
-                .findFirstToken(TokenTypes.IDENT).getText();
+                                    .findFirstToken(TokenTypes.IDENT).getText();
             log(firstType, MSG_KEY, typeName);
         }
     }
@@ -172,7 +172,7 @@ public class OneTopLevelClassCheck extends AbstractCheck {
      */
     private static boolean isPublic(DetailAST typeDef) {
         final DetailAST modifiers =
-                typeDef.findFirstToken(TokenTypes.MODIFIERS);
+            typeDef.findFirstToken(TokenTypes.MODIFIERS);
         return modifiers.findFirstToken(TokenTypes.LITERAL_PUBLIC) != null;
     }
 

@@ -140,10 +140,10 @@ public class ModifierOrderCheck
             if (error != null) {
                 if (error.getType() == TokenTypes.ANNOTATION) {
                     log(error,
-                            MSG_ANNOTATION_ORDER,
-                             error.getFirstChild().getText()
-                             + error.getFirstChild().getNextSibling()
-                                .getText());
+                        MSG_ANNOTATION_ORDER,
+                        error.getFirstChild().getText()
+                        + error.getFirstChild().getNextSibling()
+                        .getText());
                 }
                 else {
                     log(error, MSG_MODIFIER_ORDER, error.getText());
@@ -183,7 +183,7 @@ public class ModifierOrderCheck
                 }
 
                 while (index < JLS_ORDER.length
-                       && !JLS_ORDER[index].equals(modifier.getText())) {
+                        && !JLS_ORDER[index].equals(modifier.getText())) {
                     index++;
                 }
 

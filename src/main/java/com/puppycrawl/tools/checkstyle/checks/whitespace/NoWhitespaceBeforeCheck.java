@@ -177,29 +177,29 @@ public class NoWhitespaceBeforeCheck
     @Override
     public int[] getDefaultTokens() {
         return new int[] {
-            TokenTypes.COMMA,
-            TokenTypes.SEMI,
-            TokenTypes.POST_INC,
-            TokenTypes.POST_DEC,
-            TokenTypes.ELLIPSIS,
-            TokenTypes.LABELED_STAT,
-        };
+                   TokenTypes.COMMA,
+                   TokenTypes.SEMI,
+                   TokenTypes.POST_INC,
+                   TokenTypes.POST_DEC,
+                   TokenTypes.ELLIPSIS,
+                   TokenTypes.LABELED_STAT,
+               };
     }
 
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.COMMA,
-            TokenTypes.SEMI,
-            TokenTypes.POST_INC,
-            TokenTypes.POST_DEC,
-            TokenTypes.DOT,
-            TokenTypes.GENERIC_START,
-            TokenTypes.GENERIC_END,
-            TokenTypes.ELLIPSIS,
-            TokenTypes.LABELED_STAT,
-            TokenTypes.METHOD_REF,
-        };
+                   TokenTypes.COMMA,
+                   TokenTypes.SEMI,
+                   TokenTypes.POST_INC,
+                   TokenTypes.POST_DEC,
+                   TokenTypes.DOT,
+                   TokenTypes.GENERIC_START,
+                   TokenTypes.GENERIC_END,
+                   TokenTypes.ELLIPSIS,
+                   TokenTypes.LABELED_STAT,
+                   TokenTypes.METHOD_REF,
+               };
     }
 
     @Override
@@ -239,7 +239,7 @@ public class NoWhitespaceBeforeCheck
         final DetailAST sibling = semicolonAst.getPreviousSibling();
         if (sibling != null
                 && (sibling.getType() == TokenTypes.FOR_INIT
-                        || sibling.getType() == TokenTypes.FOR_CONDITION)
+                    || sibling.getType() == TokenTypes.FOR_CONDITION)
                 && !sibling.hasChildren()) {
             result = true;
         }
