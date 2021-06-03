@@ -85,13 +85,13 @@ public class InnerTypeLastCheck extends AbstractCheck {
 
     /** List of class member tokens. */
     private static final List<Integer> CLASS_MEMBER_TOKENS = Arrays.asList(
-            TokenTypes.VARIABLE_DEF,
-            TokenTypes.METHOD_DEF,
-            TokenTypes.CTOR_DEF,
-            TokenTypes.INSTANCE_INIT,
-            TokenTypes.STATIC_INIT,
-            TokenTypes.COMPACT_CTOR_DEF
-    );
+                TokenTypes.VARIABLE_DEF,
+                TokenTypes.METHOD_DEF,
+                TokenTypes.CTOR_DEF,
+                TokenTypes.INSTANCE_INIT,
+                TokenTypes.STATIC_INIT,
+                TokenTypes.COMPACT_CTOR_DEF
+            );
 
     /** Meet a root class. */
     private boolean rootClass = true;
@@ -109,10 +109,10 @@ public class InnerTypeLastCheck extends AbstractCheck {
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.CLASS_DEF,
-            TokenTypes.INTERFACE_DEF,
-            TokenTypes.RECORD_DEF,
-        };
+                   TokenTypes.CLASS_DEF,
+                   TokenTypes.INTERFACE_DEF,
+                   TokenTypes.RECORD_DEF,
+               };
     }
 
     @Override
@@ -130,7 +130,7 @@ public class InnerTypeLastCheck extends AbstractCheck {
             DetailAST nextSibling = ast.getNextSibling();
             while (nextSibling != null) {
                 if (!ScopeUtil.isInCodeBlock(ast)
-                    && CLASS_MEMBER_TOKENS.contains(nextSibling.getType())) {
+                        && CLASS_MEMBER_TOKENS.contains(nextSibling.getType())) {
                     log(nextSibling, MSG_KEY);
                 }
                 nextSibling = nextSibling.getNextSibling();

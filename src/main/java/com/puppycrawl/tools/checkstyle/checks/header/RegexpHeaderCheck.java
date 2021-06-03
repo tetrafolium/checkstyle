@@ -273,7 +273,7 @@ public class RegexpHeaderCheck extends AbstractHeaderCheck {
                 while (!isMatch && isMultiLine(headerLineNo)) {
                     headerLineNo++;
                     isMatch = headerLineNo == headerSize
-                            || isMatch(line, headerLineNo);
+                              || isMatch(line, headerLineNo);
                 }
                 if (!isMatch) {
                     log(index + 1, MSG_HEADER_MISMATCH, getHeaderLine(headerLineNo));
@@ -356,9 +356,9 @@ public class RegexpHeaderCheck extends AbstractHeaderCheck {
             }
             catch (final PatternSyntaxException ex) {
                 throw new IllegalArgumentException("line "
-                        + (headerRegexps.size() + 1)
-                        + " in header specification"
-                        + " is not a regular expression", ex);
+                                                   + (headerRegexps.size() + 1)
+                                                   + " in header specification"
+                                                   + " is not a regular expression", ex);
             }
         }
     }

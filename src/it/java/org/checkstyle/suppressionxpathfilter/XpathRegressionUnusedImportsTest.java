@@ -40,42 +40,42 @@ public class XpathRegressionUnusedImportsTest extends AbstractXpathTestSupport {
     @Test
     public void testOne() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionUnusedImportsOne.java"));
+            new File(getPath("SuppressionXpathRegressionUnusedImportsOne.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(UnusedImportsCheck.class);
+            createModuleConfig(UnusedImportsCheck.class);
 
         final String[] expectedViolation = {
             "3:8: " + getCheckMessage(UnusedImportsCheck.class,
-                    UnusedImportsCheck.MSG_KEY, "java.util.List"),
+                                      UnusedImportsCheck.MSG_KEY, "java.util.List"),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/IMPORT/DOT[./IDENT[@text='List']]/DOT/IDENT[@text='java']");
+                    "/IMPORT/DOT[./IDENT[@text='List']]/DOT/IDENT[@text='java']");
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionUnusedImportsTwo.java"));
+            new File(getPath("SuppressionXpathRegressionUnusedImportsTwo.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(UnusedImportsCheck.class);
+            createModuleConfig(UnusedImportsCheck.class);
 
         final String[] expectedViolation = {
             "3:15: " + getCheckMessage(UnusedImportsCheck.class,
-                    UnusedImportsCheck.MSG_KEY, "java.util.Map.Entry"),
+                                       UnusedImportsCheck.MSG_KEY, "java.util.Map.Entry"),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/STATIC_IMPORT/DOT[./IDENT[@text='Entry']]/DOT[./IDENT[@text='Map']]"
-                        + "/DOT/IDENT[@text='java']");
+                    "/STATIC_IMPORT/DOT[./IDENT[@text='Entry']]/DOT[./IDENT[@text='Map']]"
+                    + "/DOT/IDENT[@text='java']");
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
 }

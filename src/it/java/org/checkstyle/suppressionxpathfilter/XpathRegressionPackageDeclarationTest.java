@@ -41,45 +41,45 @@ public class XpathRegressionPackageDeclarationTest extends AbstractXpathTestSupp
     @Test
     public void test1() throws Exception {
         final File fileToProcess =
-                new File(getNonCompilablePath("SuppressionXpathRegression1.java"));
+            new File(getNonCompilablePath("SuppressionXpathRegression1.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(PackageDeclarationCheck.class);
+            createModuleConfig(PackageDeclarationCheck.class);
 
         final String[] expectedViolation = {
             "2:1: " + getCheckMessage(PackageDeclarationCheck.class,
-                    PackageDeclarationCheck.MSG_KEY_MISMATCH),
+                                      PackageDeclarationCheck.MSG_KEY_MISMATCH),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/PACKAGE_DEF"
-        );
+                    "/PACKAGE_DEF"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void test2() throws Exception {
         final File fileToProcess =
-                new File(getNonCompilablePath("SuppressionXpathRegression2.java"));
+            new File(getNonCompilablePath("SuppressionXpathRegression2.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(PackageDeclarationCheck.class);
+            createModuleConfig(PackageDeclarationCheck.class);
 
         final String[] expectedViolation = {
             "3:1: " + getCheckMessage(PackageDeclarationCheck.class,
-                    PackageDeclarationCheck.MSG_KEY_MISSING),
+                                      PackageDeclarationCheck.MSG_KEY_MISSING),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegression2']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegression2']]/MODIFIERS",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegression2']]/MODIFIERS/LITERAL_PUBLIC"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegression2']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegression2']]/MODIFIERS",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegression2']]/MODIFIERS/LITERAL_PUBLIC"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
 }

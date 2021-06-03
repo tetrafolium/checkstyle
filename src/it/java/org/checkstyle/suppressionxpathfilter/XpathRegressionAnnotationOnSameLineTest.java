@@ -40,107 +40,107 @@ public class XpathRegressionAnnotationOnSameLineTest extends AbstractXpathTestSu
     @Test
     public void testOne() throws Exception {
         final File fileToProcess =
-                new File(getPath(
-                        "SuppressionXpathRegressionAnnotationOnSameLineOne.java"));
+            new File(getPath(
+                         "SuppressionXpathRegressionAnnotationOnSameLineOne.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AnnotationOnSameLineCheck.class);
+            createModuleConfig(AnnotationOnSameLineCheck.class);
 
         moduleConfig.addAttribute("tokens",
-                "CLASS_DEF, INTERFACE_DEF, ENUM_DEF, METHOD_DEF, "
-                + "CTOR_DEF, VARIABLE_DEF, PARAMETER_DEF, ANNOTATION_DEF, TYPECAST, "
-                + "LITERAL_THROWS, IMPLEMENTS_CLAUSE, TYPE_ARGUMENT, LITERAL_NEW, DOT, "
-                + "ANNOTATION_FIELD_DEF");
+                                  "CLASS_DEF, INTERFACE_DEF, ENUM_DEF, METHOD_DEF, "
+                                  + "CTOR_DEF, VARIABLE_DEF, PARAMETER_DEF, ANNOTATION_DEF, TYPECAST, "
+                                  + "LITERAL_THROWS, IMPLEMENTS_CLAUSE, TYPE_ARGUMENT, LITERAL_NEW, DOT, "
+                                  + "ANNOTATION_FIELD_DEF");
 
         final String[] expectedViolation = {
             "6:5: " + getCheckMessage(AnnotationOnSameLineCheck.class,
-                     AnnotationOnSameLineCheck.MSG_KEY_ANNOTATION_ON_SAME_LINE,
-                     "Deprecated"),
+                                      AnnotationOnSameLineCheck.MSG_KEY_ANNOTATION_ON_SAME_LINE,
+                                      "Deprecated"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationOnSameLineOne']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='getX']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationOnSameLineOne']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='getX']]/MODIFIERS",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationOnSameLineOne']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='getX']]/MODIFIERS"
-                        + "/ANNOTATION[./IDENT[@text='Deprecated']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationOnSameLineOne']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='getX']]"
-                        + "/MODIFIERS/ANNOTATION[./IDENT[@text='Deprecated']]/AT"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationOnSameLineOne']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='getX']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationOnSameLineOne']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='getX']]/MODIFIERS",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationOnSameLineOne']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='getX']]/MODIFIERS"
+                    + "/ANNOTATION[./IDENT[@text='Deprecated']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationOnSameLineOne']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='getX']]"
+                    + "/MODIFIERS/ANNOTATION[./IDENT[@text='Deprecated']]/AT"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess =
-                new File(getPath(
-                        "SuppressionXpathRegressionAnnotationOnSameLineTwo.java"));
+            new File(getPath(
+                         "SuppressionXpathRegressionAnnotationOnSameLineTwo.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AnnotationOnSameLineCheck.class);
+            createModuleConfig(AnnotationOnSameLineCheck.class);
 
         final String[] expectedViolation = {
             "7:5: " + getCheckMessage(AnnotationOnSameLineCheck.class,
-                    AnnotationOnSameLineCheck.MSG_KEY_ANNOTATION_ON_SAME_LINE,
-                    "Deprecated"),
+                                      AnnotationOnSameLineCheck.MSG_KEY_ANNOTATION_ON_SAME_LINE,
+                                      "Deprecated"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationOnSameLineTwo']]"
-                        + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='names']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationOnSameLineTwo']]"
-                        + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='names']]/MODIFIERS",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationOnSameLineTwo']]"
-                        + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='names']]/MODIFIERS"
-                        + "/ANNOTATION[./IDENT[@text='Deprecated']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationOnSameLineTwo']]"
-                        + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='names']]/MODIFIERS"
-                        + "/ANNOTATION[./IDENT[@text='Deprecated']]/AT"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationOnSameLineTwo']]"
+                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='names']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationOnSameLineTwo']]"
+                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='names']]/MODIFIERS",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationOnSameLineTwo']]"
+                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='names']]/MODIFIERS"
+                    + "/ANNOTATION[./IDENT[@text='Deprecated']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationOnSameLineTwo']]"
+                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='names']]/MODIFIERS"
+                    + "/ANNOTATION[./IDENT[@text='Deprecated']]/AT"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testThree() throws Exception {
         final File fileToProcess =
-                new File(getPath(
-                        "SuppressionXpathRegressionAnnotationOnSameLineThree.java"));
+            new File(getPath(
+                         "SuppressionXpathRegressionAnnotationOnSameLineThree.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AnnotationOnSameLineCheck.class);
+            createModuleConfig(AnnotationOnSameLineCheck.class);
         moduleConfig.addAttribute("tokens", "CLASS_DEF, INTERFACE_DEF, ENUM_DEF, METHOD_DEF, "
-                + "CTOR_DEF, VARIABLE_DEF, PARAMETER_DEF, ANNOTATION_DEF, TYPECAST, "
-                + "LITERAL_THROWS, IMPLEMENTS_CLAUSE, TYPE_ARGUMENT, LITERAL_NEW, DOT, "
-                + "ANNOTATION_FIELD_DEF");
+                                  + "CTOR_DEF, VARIABLE_DEF, PARAMETER_DEF, ANNOTATION_DEF, TYPECAST, "
+                                  + "LITERAL_THROWS, IMPLEMENTS_CLAUSE, TYPE_ARGUMENT, LITERAL_NEW, DOT, "
+                                  + "ANNOTATION_FIELD_DEF");
 
         final String[] expectedViolation = {
             "3:1: " + getCheckMessage(AnnotationOnSameLineCheck.class,
-                    AnnotationOnSameLineCheck.MSG_KEY_ANNOTATION_ON_SAME_LINE,
-                    "Deprecated"),
+                                      AnnotationOnSameLineCheck.MSG_KEY_ANNOTATION_ON_SAME_LINE,
+                                      "Deprecated"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/INTERFACE_DEF["
-                        + "./IDENT[@text='SuppressionXpathRegressionAnnotationOnSameLineThree']]",
-                "/INTERFACE_DEF["
-                        + "./IDENT[@text='SuppressionXpathRegressionAnnotationOnSameLineThree']]"
-                        + "/MODIFIERS",
-                "/INTERFACE_DEF["
-                        + "./IDENT[@text='SuppressionXpathRegressionAnnotationOnSameLineThree']]"
-                        + "/MODIFIERS/ANNOTATION[./IDENT[@text='Deprecated']]",
-                "/INTERFACE_DEF["
-                        + "./IDENT[@text='SuppressionXpathRegressionAnnotationOnSameLineThree']]"
-                        + "/MODIFIERS/ANNOTATION[./IDENT[@text='Deprecated']]/AT"
-        );
+                    "/INTERFACE_DEF["
+                    + "./IDENT[@text='SuppressionXpathRegressionAnnotationOnSameLineThree']]",
+                    "/INTERFACE_DEF["
+                    + "./IDENT[@text='SuppressionXpathRegressionAnnotationOnSameLineThree']]"
+                    + "/MODIFIERS",
+                    "/INTERFACE_DEF["
+                    + "./IDENT[@text='SuppressionXpathRegressionAnnotationOnSameLineThree']]"
+                    + "/MODIFIERS/ANNOTATION[./IDENT[@text='Deprecated']]",
+                    "/INTERFACE_DEF["
+                    + "./IDENT[@text='SuppressionXpathRegressionAnnotationOnSameLineThree']]"
+                    + "/MODIFIERS/ANNOTATION[./IDENT[@text='Deprecated']]/AT"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }

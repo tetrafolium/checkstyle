@@ -44,76 +44,76 @@ public class XpathRegressionJavadocTypeTest extends AbstractXpathTestSupport {
     @Test
     public void testOne() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionJavadocTypeOne.java"));
+            new File(getPath("SuppressionXpathRegressionJavadocTypeOne.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(JavadocTypeCheck.class);
+            createModuleConfig(JavadocTypeCheck.class);
 
         moduleConfig.addAttribute("authorFormat", "\\S");
 
         final String[] expectedViolation = {
             "6:1: " + getCheckMessage(JavadocTypeCheck.class,
-                MSG_MISSING_TAG, "@author"),
+                                      MSG_MISSING_TAG, "@author"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeOne']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeOne']]"
-                        + "/MODIFIERS",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeOne']]"
-                        + "/MODIFIERS/LITERAL_PUBLIC");
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeOne']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeOne']]"
+                    + "/MODIFIERS",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeOne']]"
+                    + "/MODIFIERS/LITERAL_PUBLIC");
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionJavadocTypeTwo.java"));
+            new File(getPath("SuppressionXpathRegressionJavadocTypeTwo.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(JavadocTypeCheck.class);
+            createModuleConfig(JavadocTypeCheck.class);
 
         moduleConfig.addAttribute("authorFormat", "foo");
 
         final String[] expectedViolation = {
             "7:1: " + getCheckMessage(JavadocTypeCheck.class,
-                MSG_TAG_FORMAT, "@author", "foo"),
+                                      MSG_TAG_FORMAT, "@author", "foo"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeTwo']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeTwo']]"
-                        + "/MODIFIERS",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeTwo']]"
-                        + "/MODIFIERS/LITERAL_PUBLIC");
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeTwo']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeTwo']]"
+                    + "/MODIFIERS",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeTwo']]"
+                    + "/MODIFIERS/LITERAL_PUBLIC");
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testThree() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionJavadocTypeThree.java"));
+            new File(getPath("SuppressionXpathRegressionJavadocTypeThree.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(JavadocTypeCheck.class);
+            createModuleConfig(JavadocTypeCheck.class);
 
         final String[] expectedViolation = {
             "8:1: " + getCheckMessage(JavadocTypeCheck.class,
-                MSG_MISSING_TAG, JavadocTagInfo.PARAM.getText() + " <C>"),
+                                      MSG_MISSING_TAG, JavadocTagInfo.PARAM.getText() + " <C>"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeThree']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeThree']]"
-                        + "/MODIFIERS",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeThree']]"
-                        + "/MODIFIERS/LITERAL_PUBLIC");
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeThree']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeThree']]"
+                    + "/MODIFIERS",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocTypeThree']]"
+                    + "/MODIFIERS/LITERAL_PUBLIC");
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }

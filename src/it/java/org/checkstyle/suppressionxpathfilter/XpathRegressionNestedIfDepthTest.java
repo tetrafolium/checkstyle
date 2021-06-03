@@ -40,24 +40,24 @@ public class XpathRegressionNestedIfDepthTest extends AbstractXpathTestSupport {
     @Test
     public void testCorrect() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionNestedIfDepth.java"));
+            new File(getPath("SuppressionXpathRegressionNestedIfDepth.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(NestedIfDepthCheck.class);
+            createModuleConfig(NestedIfDepthCheck.class);
 
         final String[] expectedViolation = {
             "10:17: " + getCheckMessage(NestedIfDepthCheck.class,
-                 NestedIfDepthCheck.MSG_KEY, 2, 1),
+                                        NestedIfDepthCheck.MSG_KEY, 2, 1),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNestedIfDepth']]/OBJBLOCK"
-                + "/METHOD_DEF[./IDENT[@text='test']]/SLIST/LITERAL_IF"
-                + "/SLIST/LITERAL_IF/SLIST/LITERAL_IF"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNestedIfDepth']]/OBJBLOCK"
+                    + "/METHOD_DEF[./IDENT[@text='test']]/SLIST/LITERAL_IF"
+                    + "/SLIST/LITERAL_IF/SLIST/LITERAL_IF"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
@@ -71,20 +71,20 @@ public class XpathRegressionNestedIfDepthTest extends AbstractXpathTestSupport {
 
         final String[] expectedViolation = {
             "12:25: " + getCheckMessage(NestedIfDepthCheck.class,
-                NestedIfDepthCheck.MSG_KEY, 4, 3),
+                                        NestedIfDepthCheck.MSG_KEY, 4, 3),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNestedIfDepthMax']]"
-                + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]"
-                + "/SLIST/LITERAL_IF/"
-                + "SLIST/LITERAL_IF/"
-                + "SLIST/LITERAL_IF/"
-                + "SLIST/LITERAL_IF/"
-                + "SLIST/LITERAL_IF"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNestedIfDepthMax']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]"
+                    + "/SLIST/LITERAL_IF/"
+                    + "SLIST/LITERAL_IF/"
+                    + "SLIST/LITERAL_IF/"
+                    + "SLIST/LITERAL_IF/"
+                    + "SLIST/LITERAL_IF"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-            expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }

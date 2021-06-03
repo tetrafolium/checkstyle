@@ -455,11 +455,11 @@ public class SuppressWithPlainTextCommentFilter extends AutomaticBean implements
         Suppression suppression = null;
         if (onCommentMatcher.find()) {
             suppression = new Suppression(onCommentMatcher.group(0),
-                lineNo + 1, onCommentMatcher.start(), SuppressionType.ON, this);
+                                          lineNo + 1, onCommentMatcher.start(), SuppressionType.ON, this);
         }
         if (offCommentMatcher.find()) {
             suppression = new Suppression(offCommentMatcher.group(0),
-                lineNo + 1, offCommentMatcher.start(), SuppressionType.OFF, this);
+                                          lineNo + 1, offCommentMatcher.start(), SuppressionType.OFF, this);
         }
 
         return Optional.ofNullable(suppression);
@@ -475,13 +475,13 @@ public class SuppressWithPlainTextCommentFilter extends AutomaticBean implements
      * @return {@link Suppression} instance.
      */
     private static Suppression getNearestSuppression(List<Suppression> suppressions,
-                                                     AuditEvent event) {
+            AuditEvent event) {
         return suppressions
-            .stream()
-            .filter(suppression -> suppression.isMatch(event))
-            .reduce((first, second) -> second)
-            .filter(suppression -> suppression.suppressionType != SuppressionType.ON)
-            .orElse(null);
+               .stream()
+               .filter(suppression -> suppression.isMatch(event))
+               .reduce((first, second) -> second)
+               .filter(suppression -> suppression.suppressionType != SuppressionType.ON)
+               .orElse(null);
     }
 
     /** Enum which represents the type of the suppression. */
@@ -547,14 +547,14 @@ public class SuppressWithPlainTextCommentFilter extends AutomaticBean implements
             String format = "";
             try {
                 format = CommonUtil.fillTemplateWithStringsByRegexp(
-                        filter.checkFormat, text, commentFormat);
+                             filter.checkFormat, text, commentFormat);
                 eventSourceRegexp = Pattern.compile(format);
                 if (filter.messageFormat == null) {
                     eventMessageRegexp = null;
                 }
                 else {
                     format = CommonUtil.fillTemplateWithStringsByRegexp(
-                            filter.messageFormat, text, commentFormat);
+                                 filter.messageFormat, text, commentFormat);
                     eventMessageRegexp = Pattern.compile(format);
                 }
                 if (filter.idFormat == null) {
@@ -562,7 +562,7 @@ public class SuppressWithPlainTextCommentFilter extends AutomaticBean implements
                 }
                 else {
                     format = CommonUtil.fillTemplateWithStringsByRegexp(
-                            filter.idFormat, text, commentFormat);
+                                 filter.idFormat, text, commentFormat);
                     eventIdRegexp = Pattern.compile(format);
                 }
             }
@@ -588,19 +588,19 @@ public class SuppressWithPlainTextCommentFilter extends AutomaticBean implements
             }
             final Suppression suppression = (Suppression) other;
             return Objects.equals(lineNo, suppression.lineNo)
-                    && Objects.equals(columnNo, suppression.columnNo)
-                    && Objects.equals(suppressionType, suppression.suppressionType)
-                    && Objects.equals(text, suppression.text)
-                    && Objects.equals(eventSourceRegexp, suppression.eventSourceRegexp)
-                    && Objects.equals(eventMessageRegexp, suppression.eventMessageRegexp)
-                    && Objects.equals(eventIdRegexp, suppression.eventIdRegexp);
+                   && Objects.equals(columnNo, suppression.columnNo)
+                   && Objects.equals(suppressionType, suppression.suppressionType)
+                   && Objects.equals(text, suppression.text)
+                   && Objects.equals(eventSourceRegexp, suppression.eventSourceRegexp)
+                   && Objects.equals(eventMessageRegexp, suppression.eventMessageRegexp)
+                   && Objects.equals(eventIdRegexp, suppression.eventIdRegexp);
         }
 
         @Override
         public int hashCode() {
             return Objects.hash(
-                text, lineNo, columnNo, suppressionType, eventSourceRegexp, eventMessageRegexp,
-                eventIdRegexp);
+                       text, lineNo, columnNo, suppressionType, eventSourceRegexp, eventMessageRegexp,
+                       eventIdRegexp);
         }
 
         /**
@@ -611,9 +611,9 @@ public class SuppressWithPlainTextCommentFilter extends AutomaticBean implements
          */
         private boolean isMatch(AuditEvent event) {
             return isInScopeOfSuppression(event)
-                    && isCheckMatch(event)
-                    && isIdMatch(event)
-                    && isMessageMatch(event);
+                   && isCheckMatch(event)
+                   && isIdMatch(event)
+                   && isMessageMatch(event);
         }
 
         /**

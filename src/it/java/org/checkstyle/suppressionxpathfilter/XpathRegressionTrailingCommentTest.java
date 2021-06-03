@@ -39,44 +39,44 @@ public class XpathRegressionTrailingCommentTest extends AbstractXpathTestSupport
     @Test
     public void testOne() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionTrailingComment1.java"));
+                                                "SuppressionXpathRegressionTrailingComment1.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(TrailingCommentCheck.class);
+            createModuleConfig(TrailingCommentCheck.class);
 
         final String[] expectedViolation = {
             "4:12: " + getCheckMessage(TrailingCommentCheck.class,
-                        TrailingCommentCheck.MSG_KEY),
+                                       TrailingCommentCheck.MSG_KEY),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionTrailingComment1']]"
-                        + "/OBJBLOCK/SINGLE_LINE_COMMENT"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionTrailingComment1']]"
+                    + "/OBJBLOCK/SINGLE_LINE_COMMENT"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionTrailingComment2.java"));
+                                                "SuppressionXpathRegressionTrailingComment2.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(TrailingCommentCheck.class);
+            createModuleConfig(TrailingCommentCheck.class);
 
         final String[] expectedViolation = {
             "4:40: " + getCheckMessage(TrailingCommentCheck.class,
-                        TrailingCommentCheck.MSG_KEY),
+                                       TrailingCommentCheck.MSG_KEY),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionTrailingComment2']]"
-                        + "/OBJBLOCK/SINGLE_LINE_COMMENT"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionTrailingComment2']]"
+                    + "/OBJBLOCK/SINGLE_LINE_COMMENT"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }

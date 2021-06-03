@@ -41,7 +41,7 @@ public class XpathRegressionIllegalIdentifierNameTest extends AbstractXpathTestS
     @Test
     public void testOne() throws Exception {
         final File fileToProcess = new File(getNonCompilablePath(
-            "SuppressionXpathRegressionIllegalIdentifierNameTestOne.java"));
+                                                "SuppressionXpathRegressionIllegalIdentifierNameTestOne.java"));
 
         final DefaultConfiguration moduleConfig =
             createModuleConfig(IllegalIdentifierNameCheck.class);
@@ -50,22 +50,22 @@ public class XpathRegressionIllegalIdentifierNameTest extends AbstractXpathTestS
 
         final String[] expectedViolation = {
             "10:20: " + getCheckMessage(IllegalIdentifierNameCheck.class,
-                AbstractNameCheck.MSG_INVALID_PATTERN, "yield", format),
-            };
+                                        AbstractNameCheck.MSG_INVALID_PATTERN, "yield", format),
+        };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/RECORD_DEF[./IDENT[@text='SuppressionXpathRegressionIllegalIdentifierNameTestOne'"
-                + "]]/RECORD_COMPONENTS/RECORD_COMPONENT_DEF/IDENT[@text='yield']"
-        );
+                    "/RECORD_DEF[./IDENT[@text='SuppressionXpathRegressionIllegalIdentifierNameTestOne'"
+                    + "]]/RECORD_COMPONENTS/RECORD_COMPONENT_DEF/IDENT[@text='yield']"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-            expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess = new File(getNonCompilablePath(
-            "SuppressionXpathRegressionIllegalIdentifierNameTestTwo.java"));
+                                                "SuppressionXpathRegressionIllegalIdentifierNameTestTwo.java"));
 
         final DefaultConfiguration moduleConfig =
             createModuleConfig(IllegalIdentifierNameCheck.class);
@@ -74,16 +74,16 @@ public class XpathRegressionIllegalIdentifierNameTest extends AbstractXpathTestS
 
         final String[] expectedViolation = {
             "9:17: " + getCheckMessage(IllegalIdentifierNameCheck.class,
-                AbstractNameCheck.MSG_INVALID_PATTERN, "yield", format),
-            };
+                                       AbstractNameCheck.MSG_INVALID_PATTERN, "yield", format),
+        };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionIllegalIdentifierNameTestTwo']"
-                + "]/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]/PARAMETERS/PARAMETER_DEF"
-                + "/IDENT[@text='yield']"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionIllegalIdentifierNameTestTwo']"
+                    + "]/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]/PARAMETERS/PARAMETER_DEF"
+                    + "/IDENT[@text='yield']"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-            expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }

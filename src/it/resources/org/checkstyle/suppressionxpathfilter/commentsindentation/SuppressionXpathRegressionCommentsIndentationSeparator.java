@@ -5,7 +5,7 @@ public class SuppressionXpathRegressionCommentsIndentationSeparator {
         int n;
     }
 
-            /////////////// Comment separator // warn
+    /////////////// Comment separator // warn
 
     public void foo() {
     }

@@ -195,7 +195,7 @@ public class AvoidStaticImportCheck
             if (classOrStaticMember.startsWith(excludeMinusDotStar)
                     && !classOrStaticMember.equals(excludeMinusDotStar)) {
                 final String member = classOrStaticMember.substring(
-                        excludeMinusDotStar.length() + 1);
+                                          excludeMinusDotStar.length() + 1);
                 // if it contains a dot then it is not a member but a package
                 if (member.indexOf('.') == -1) {
                     result = true;

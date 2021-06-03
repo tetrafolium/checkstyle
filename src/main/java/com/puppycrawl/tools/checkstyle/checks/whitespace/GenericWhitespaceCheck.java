@@ -172,16 +172,16 @@ public class GenericWhitespaceCheck extends AbstractCheck {
     @Override
     public void visitToken(DetailAST ast) {
         switch (ast.getType()) {
-            case TokenTypes.GENERIC_START:
-                processStart(ast);
-                depth++;
-                break;
-            case TokenTypes.GENERIC_END:
-                processEnd(ast);
-                depth--;
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown type " + ast);
+        case TokenTypes.GENERIC_START:
+            processStart(ast);
+            depth++;
+            break;
+        case TokenTypes.GENERIC_END:
+            processEnd(ast);
+            depth--;
+            break;
+        default:
+            throw new IllegalArgumentException("Unknown type " + ast);
         }
     }
 
@@ -230,7 +230,7 @@ public class GenericWhitespaceCheck extends AbstractCheck {
         //
         final int indexOfAmp = line.indexOf('&', after);
         if (indexOfAmp >= 1
-            && containsWhitespaceBetween(after, indexOfAmp, line)) {
+                && containsWhitespaceBetween(after, indexOfAmp, line)) {
             if (indexOfAmp - after == 0) {
                 log(ast, MSG_WS_NOT_PRECEDED, "&");
             }
@@ -271,8 +271,8 @@ public class GenericWhitespaceCheck extends AbstractCheck {
     private static boolean isGenericBeforeCtor(DetailAST ast) {
         final DetailAST parent = ast.getParent();
         return parent.getParent().getType() == TokenTypes.LITERAL_NEW
-                && (parent.getNextSibling().getType() == TokenTypes.IDENT
-                    || parent.getNextSibling().getType() == TokenTypes.DOT);
+               && (parent.getNextSibling().getType() == TokenTypes.IDENT
+                   || parent.getNextSibling().getType() == TokenTypes.DOT);
     }
 
     /**
@@ -283,8 +283,8 @@ public class GenericWhitespaceCheck extends AbstractCheck {
      */
     private static boolean isGenericBeforeMethod(DetailAST ast) {
         return ast.getParent().getParent().getType() == TokenTypes.DOT
-                && ast.getParent().getParent().getParent().getType() == TokenTypes.METHOD_CALL
-                || isAfterMethodReference(ast);
+               && ast.getParent().getParent().getParent().getType() == TokenTypes.METHOD_CALL
+               || isAfterMethodReference(ast);
     }
 
     /**
@@ -328,7 +328,7 @@ public class GenericWhitespaceCheck extends AbstractCheck {
             }
             // Whitespace not required
             else if (Character.isWhitespace(line.charAt(before))
-                && !containsWhitespaceBefore(before, line)) {
+                     && !containsWhitespaceBefore(before, line)) {
                 log(ast, MSG_WS_PRECEDED, OPEN_ANGLE_BRACKET);
             }
         }
@@ -379,10 +379,10 @@ public class GenericWhitespaceCheck extends AbstractCheck {
      */
     private static boolean isCharacterValidAfterGenericEnd(char charAfter) {
         return charAfter == '(' || charAfter == ')'
-            || charAfter == ',' || charAfter == '['
-            || charAfter == '.' || charAfter == ':'
-            || charAfter == ';'
-            || Character.isWhitespace(charAfter);
+               || charAfter == ',' || charAfter == '['
+               || charAfter == '.' || charAfter == ':'
+               || charAfter == ';'
+               || Character.isWhitespace(charAfter);
     }
 
 }

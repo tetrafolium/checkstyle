@@ -40,55 +40,55 @@ public class XpathRegressionRecordComponentNumberTest extends AbstractXpathTestS
     @Test
     public void testOne() throws Exception {
         final File fileToProcess = new File(getNonCompilablePath(
-                "SuppressionXpathRecordComponentNumber1.java"));
+                                                "SuppressionXpathRecordComponentNumber1.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(RecordComponentNumberCheck.class);
+            createModuleConfig(RecordComponentNumberCheck.class);
 
         final String[] expectedViolation = {
             "8:1: " + getCheckMessage(RecordComponentNumberCheck.class,
-                    RecordComponentNumberCheck.MSG_KEY,
-                    15, 8),
+                                      RecordComponentNumberCheck.MSG_KEY,
+                                      15, 8),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-            "/RECORD_DEF[./IDENT[@text='SuppressionXpathRecordComponentNumber1']]",
-            "/RECORD_DEF[./IDENT[@text='SuppressionXpathRecordComponentNumber1']]"
+                    "/RECORD_DEF[./IDENT[@text='SuppressionXpathRecordComponentNumber1']]",
+                    "/RECORD_DEF[./IDENT[@text='SuppressionXpathRecordComponentNumber1']]"
                     + "/MODIFIERS",
-            "/RECORD_DEF[./IDENT[@text='SuppressionXpathRecordComponentNumber1']]"
+                    "/RECORD_DEF[./IDENT[@text='SuppressionXpathRecordComponentNumber1']]"
                     + "/MODIFIERS/LITERAL_PUBLIC"
-        );
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess = new File(getNonCompilablePath(
-                "SuppressionXpathRecordComponentNumber2.java"));
+                                                "SuppressionXpathRecordComponentNumber2.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(RecordComponentNumberCheck.class);
+            createModuleConfig(RecordComponentNumberCheck.class);
         moduleConfig.addAttribute("max", "1");
 
         final String[] expectedViolation = {
             "9:5: " + getCheckMessage(RecordComponentNumberCheck.class,
-                    RecordComponentNumberCheck.MSG_KEY,
-                    2, 1),
+                                      RecordComponentNumberCheck.MSG_KEY,
+                                      2, 1),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRecordComponentNumber2']]"
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRecordComponentNumber2']]"
                     + "/OBJBLOCK/RECORD_DEF[./IDENT[@text='MyRecord']]",
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRecordComponentNumber2']]"
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRecordComponentNumber2']]"
                     + "/OBJBLOCK/RECORD_DEF[./IDENT[@text='MyRecord']]/MODIFIERS",
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRecordComponentNumber2']]"
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRecordComponentNumber2']]"
                     + "/OBJBLOCK/RECORD_DEF[./IDENT[@text='MyRecord']]/MODIFIERS"
                     + "/LITERAL_PUBLIC"
-        );
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }

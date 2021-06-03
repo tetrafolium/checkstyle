@@ -41,50 +41,50 @@ public class XpathRegressionArrayTrailingCommaTest extends AbstractXpathTestSupp
     @Test
     public void testOne() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionArrayTrailingCommaOne.java"));
+            new File(getPath("SuppressionXpathRegressionArrayTrailingCommaOne.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(ArrayTrailingCommaCheck.class);
+            createModuleConfig(ArrayTrailingCommaCheck.class);
 
         final String[] expectedViolation = {
             "16:9: " + getCheckMessage(ArrayTrailingCommaCheck.class,
-                ArrayTrailingCommaCheck.MSG_KEY),
+                                       ArrayTrailingCommaCheck.MSG_KEY),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionArrayTrailingCommaOne']]"
-                + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='a2']]/ASSIGN/EXPR/LITERAL_NEW"
-                + "/ARRAY_INIT/EXPR[./NUM_INT[@text='3']]",
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionArrayTrailingCommaOne']]"
-                + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='a2']]/ASSIGN/EXPR/LITERAL_NEW"
-                + "/ARRAY_INIT/EXPR/NUM_INT[@text='3']"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionArrayTrailingCommaOne']]"
+                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='a2']]/ASSIGN/EXPR/LITERAL_NEW"
+                    + "/ARRAY_INIT/EXPR[./NUM_INT[@text='3']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionArrayTrailingCommaOne']]"
+                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='a2']]/ASSIGN/EXPR/LITERAL_NEW"
+                    + "/ARRAY_INIT/EXPR/NUM_INT[@text='3']"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionArrayTrailingCommaTwo.java"));
+            new File(getPath("SuppressionXpathRegressionArrayTrailingCommaTwo.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(ArrayTrailingCommaCheck.class);
+            createModuleConfig(ArrayTrailingCommaCheck.class);
 
         final String[] expectedViolation = {
             "17:9: " + getCheckMessage(ArrayTrailingCommaCheck.class,
-                ArrayTrailingCommaCheck.MSG_KEY),
+                                       ArrayTrailingCommaCheck.MSG_KEY),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionArrayTrailingCommaTwo']]"
-                + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='d2']]/ASSIGN/EXPR/LITERAL_NEW"
-                + "/ARRAY_INIT/ARRAY_INIT[./EXPR/NUM_INT[@text='5']]"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionArrayTrailingCommaTwo']]"
+                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='d2']]/ASSIGN/EXPR/LITERAL_NEW"
+                    + "/ARRAY_INIT/ARRAY_INIT[./EXPR/NUM_INT[@text='5']]"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
 }

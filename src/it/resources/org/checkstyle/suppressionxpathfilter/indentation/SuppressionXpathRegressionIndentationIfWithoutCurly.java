@@ -3,9 +3,9 @@ package org.checkstyle.suppressionxpathfilter.indentation;
 public class SuppressionXpathRegressionIndentationIfWithoutCurly {
     void test() {
         if (true)
-                e();
+            e();
         if (true)
-        e(); // warn
+            e(); // warn
     }
     void e() {};
 }

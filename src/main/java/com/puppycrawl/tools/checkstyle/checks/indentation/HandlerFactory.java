@@ -99,12 +99,12 @@ public class HandlerFactory {
      */
     private <T> void register(int type, Class<T> handlerClass) {
         final Constructor<T> ctor = CommonUtil.getConstructor(handlerClass,
-                IndentationCheck.class,
-                // current AST
-                DetailAST.class,
-                // parent
-                AbstractExpressionHandler.class
-        );
+                                    IndentationCheck.class,
+                                    // current AST
+                                    DetailAST.class,
+                                    // parent
+                                    AbstractExpressionHandler.class
+                                                             );
         typeHandlers.put(type, ctor);
     }
 
@@ -146,7 +146,7 @@ public class HandlerFactory {
      * @return the ExpressionHandler for ast
      */
     public AbstractExpressionHandler getHandler(IndentationCheck indentCheck,
-        DetailAST ast, AbstractExpressionHandler parent) {
+            DetailAST ast, AbstractExpressionHandler parent) {
         final AbstractExpressionHandler resultHandler;
         final AbstractExpressionHandler handler =
             createdHandlers.get(ast);
@@ -159,7 +159,7 @@ public class HandlerFactory {
         else {
             final Constructor<?> handlerCtor = typeHandlers.get(ast.getType());
             resultHandler = (AbstractExpressionHandler) CommonUtil.invokeConstructor(
-                handlerCtor, indentCheck, ast, parent);
+                                handlerCtor, indentCheck, ast, parent);
         }
         return resultHandler;
     }
@@ -174,7 +174,7 @@ public class HandlerFactory {
      * @return new instance.
      */
     private AbstractExpressionHandler createMethodCallHandler(IndentationCheck indentCheck,
-        DetailAST ast, AbstractExpressionHandler parent) {
+            DetailAST ast, AbstractExpressionHandler parent) {
         DetailAST astNode = ast.getFirstChild();
         while (astNode.getType() == TokenTypes.DOT) {
             astNode = astNode.getFirstChild();

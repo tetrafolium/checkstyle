@@ -176,7 +176,7 @@ public class RecordComponentNumberCheck extends AbstractCheck {
      */
     public void setAccessModifiers(AccessModifierOption... accessModifiers) {
         this.accessModifiers =
-                Arrays.copyOf(accessModifiers, accessModifiers.length);
+            Arrays.copyOf(accessModifiers, accessModifiers.length);
     }
 
     @Override
@@ -187,8 +187,8 @@ public class RecordComponentNumberCheck extends AbstractCheck {
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.RECORD_DEF,
-        };
+                   TokenTypes.RECORD_DEF,
+               };
     }
 
     @Override
@@ -223,8 +223,8 @@ public class RecordComponentNumberCheck extends AbstractCheck {
     private static int countComponents(DetailAST recordComponents) {
         final AtomicInteger count = new AtomicInteger(0);
         TokenUtil.forEachChild(recordComponents,
-            TokenTypes.RECORD_COMPONENT_DEF,
-            node -> count.getAndIncrement());
+                               TokenTypes.RECORD_COMPONENT_DEF,
+                               node -> count.getAndIncrement());
         return count.get();
     }
 
@@ -236,6 +236,6 @@ public class RecordComponentNumberCheck extends AbstractCheck {
      */
     private boolean matchAccessModifiers(final AccessModifierOption accessModifier) {
         return Arrays.stream(accessModifiers)
-                .anyMatch(modifier -> modifier == accessModifier);
+               .anyMatch(modifier -> modifier == accessModifier);
     }
 }

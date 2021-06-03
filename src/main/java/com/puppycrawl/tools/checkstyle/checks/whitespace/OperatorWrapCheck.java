@@ -229,72 +229,72 @@ public class OperatorWrapCheck
     @Override
     public int[] getDefaultTokens() {
         return new int[] {
-            TokenTypes.QUESTION,          // '?'
-            TokenTypes.COLON,             // ':' (not reported for a case)
-            TokenTypes.EQUAL,             // "=="
-            TokenTypes.NOT_EQUAL,         // "!="
-            TokenTypes.DIV,               // '/'
-            TokenTypes.PLUS,              // '+' (unary plus is UNARY_PLUS)
-            TokenTypes.MINUS,             // '-' (unary minus is UNARY_MINUS)
-            TokenTypes.STAR,              // '*'
-            TokenTypes.MOD,               // '%'
-            TokenTypes.SR,                // ">>"
-            TokenTypes.BSR,               // ">>>"
-            TokenTypes.GE,                // ">="
-            TokenTypes.GT,                // ">"
-            TokenTypes.SL,                // "<<"
-            TokenTypes.LE,                // "<="
-            TokenTypes.LT,                // '<'
-            TokenTypes.BXOR,              // '^'
-            TokenTypes.BOR,               // '|'
-            TokenTypes.LOR,               // "||"
-            TokenTypes.BAND,              // '&'
-            TokenTypes.LAND,              // "&&"
-            TokenTypes.TYPE_EXTENSION_AND,
-            TokenTypes.LITERAL_INSTANCEOF,
-        };
+                   TokenTypes.QUESTION,          // '?'
+                   TokenTypes.COLON,             // ':' (not reported for a case)
+                   TokenTypes.EQUAL,             // "=="
+                   TokenTypes.NOT_EQUAL,         // "!="
+                   TokenTypes.DIV,               // '/'
+                   TokenTypes.PLUS,              // '+' (unary plus is UNARY_PLUS)
+                   TokenTypes.MINUS,             // '-' (unary minus is UNARY_MINUS)
+                   TokenTypes.STAR,              // '*'
+                   TokenTypes.MOD,               // '%'
+                   TokenTypes.SR,                // ">>"
+                   TokenTypes.BSR,               // ">>>"
+                   TokenTypes.GE,                // ">="
+                   TokenTypes.GT,                // ">"
+                   TokenTypes.SL,                // "<<"
+                   TokenTypes.LE,                // "<="
+                   TokenTypes.LT,                // '<'
+                   TokenTypes.BXOR,              // '^'
+                   TokenTypes.BOR,               // '|'
+                   TokenTypes.LOR,               // "||"
+                   TokenTypes.BAND,              // '&'
+                   TokenTypes.LAND,              // "&&"
+                   TokenTypes.TYPE_EXTENSION_AND,
+                   TokenTypes.LITERAL_INSTANCEOF,
+               };
     }
 
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.QUESTION,          // '?'
-            TokenTypes.COLON,             // ':' (not reported for a case)
-            TokenTypes.EQUAL,             // "=="
-            TokenTypes.NOT_EQUAL,         // "!="
-            TokenTypes.DIV,               // '/'
-            TokenTypes.PLUS,              // '+' (unary plus is UNARY_PLUS)
-            TokenTypes.MINUS,             // '-' (unary minus is UNARY_MINUS)
-            TokenTypes.STAR,              // '*'
-            TokenTypes.MOD,               // '%'
-            TokenTypes.SR,                // ">>"
-            TokenTypes.BSR,               // ">>>"
-            TokenTypes.GE,                // ">="
-            TokenTypes.GT,                // ">"
-            TokenTypes.SL,                // "<<"
-            TokenTypes.LE,                // "<="
-            TokenTypes.LT,                // '<'
-            TokenTypes.BXOR,              // '^'
-            TokenTypes.BOR,               // '|'
-            TokenTypes.LOR,               // "||"
-            TokenTypes.BAND,              // '&'
-            TokenTypes.LAND,              // "&&"
-            TokenTypes.LITERAL_INSTANCEOF,
-            TokenTypes.TYPE_EXTENSION_AND,
-            TokenTypes.ASSIGN,            // '='
-            TokenTypes.DIV_ASSIGN,        // "/="
-            TokenTypes.PLUS_ASSIGN,       // "+="
-            TokenTypes.MINUS_ASSIGN,      // "-="
-            TokenTypes.STAR_ASSIGN,       // "*="
-            TokenTypes.MOD_ASSIGN,        // "%="
-            TokenTypes.SR_ASSIGN,         // ">>="
-            TokenTypes.BSR_ASSIGN,        // ">>>="
-            TokenTypes.SL_ASSIGN,         // "<<="
-            TokenTypes.BXOR_ASSIGN,       // "^="
-            TokenTypes.BOR_ASSIGN,        // "|="
-            TokenTypes.BAND_ASSIGN,       // "&="
-            TokenTypes.METHOD_REF,        // "::"
-        };
+                   TokenTypes.QUESTION,          // '?'
+                   TokenTypes.COLON,             // ':' (not reported for a case)
+                   TokenTypes.EQUAL,             // "=="
+                   TokenTypes.NOT_EQUAL,         // "!="
+                   TokenTypes.DIV,               // '/'
+                   TokenTypes.PLUS,              // '+' (unary plus is UNARY_PLUS)
+                   TokenTypes.MINUS,             // '-' (unary minus is UNARY_MINUS)
+                   TokenTypes.STAR,              // '*'
+                   TokenTypes.MOD,               // '%'
+                   TokenTypes.SR,                // ">>"
+                   TokenTypes.BSR,               // ">>>"
+                   TokenTypes.GE,                // ">="
+                   TokenTypes.GT,                // ">"
+                   TokenTypes.SL,                // "<<"
+                   TokenTypes.LE,                // "<="
+                   TokenTypes.LT,                // '<'
+                   TokenTypes.BXOR,              // '^'
+                   TokenTypes.BOR,               // '|'
+                   TokenTypes.LOR,               // "||"
+                   TokenTypes.BAND,              // '&'
+                   TokenTypes.LAND,              // "&&"
+                   TokenTypes.LITERAL_INSTANCEOF,
+                   TokenTypes.TYPE_EXTENSION_AND,
+                   TokenTypes.ASSIGN,            // '='
+                   TokenTypes.DIV_ASSIGN,        // "/="
+                   TokenTypes.PLUS_ASSIGN,       // "+="
+                   TokenTypes.MINUS_ASSIGN,      // "-="
+                   TokenTypes.STAR_ASSIGN,       // "*="
+                   TokenTypes.MOD_ASSIGN,        // "%="
+                   TokenTypes.SR_ASSIGN,         // ">>="
+                   TokenTypes.BSR_ASSIGN,        // ">>>="
+                   TokenTypes.SL_ASSIGN,         // "<<="
+                   TokenTypes.BXOR_ASSIGN,       // "^="
+                   TokenTypes.BOR_ASSIGN,        // "|="
+                   TokenTypes.BAND_ASSIGN,       // "&="
+                   TokenTypes.METHOD_REF,        // "::"
+               };
     }
 
     @Override
@@ -343,7 +343,7 @@ public class OperatorWrapCheck
      */
     private static boolean isNewLineModeViolation(DetailAST ast) {
         return TokenUtil.areOnSameLine(ast, getLeftNode(ast))
-                && !TokenUtil.areOnSameLine(ast, getRightNode(ast));
+               && !TokenUtil.areOnSameLine(ast, getRightNode(ast));
     }
 
     /**
@@ -364,7 +364,7 @@ public class OperatorWrapCheck
      */
     private static boolean isColonFromLabel(DetailAST node) {
         return TokenUtil.isOfType(node.getParent(), TokenTypes.LABELED_STAT,
-            TokenTypes.LITERAL_CASE, TokenTypes.LITERAL_DEFAULT);
+                                  TokenTypes.LITERAL_CASE, TokenTypes.LITERAL_DEFAULT);
     }
 
     /**

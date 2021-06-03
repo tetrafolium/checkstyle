@@ -155,7 +155,7 @@ public final class ConfigurationLoader {
     private ConfigurationLoader(final PropertyResolver overrideProps,
                                 final boolean omitIgnoredModules,
                                 final ThreadModeSettings threadModeSettings)
-            throws ParserConfigurationException, SAXException {
+    throws ParserConfigurationException, SAXException {
         saxHandler = new InternalLoader();
         overridePropsResolver = overrideProps;
         this.omitIgnoredModules = omitIgnoredModules;
@@ -194,7 +194,7 @@ public final class ConfigurationLoader {
      * @throws SAXException if an error occurs
      */
     private void parseInputSource(InputSource source)
-            throws IOException, SAXException {
+    throws IOException, SAXException {
         saxHandler.parseInputSource(source);
     }
 
@@ -222,9 +222,9 @@ public final class ConfigurationLoader {
      */
     public static Configuration loadConfiguration(String config,
             PropertyResolver overridePropsResolver, ThreadModeSettings threadModeSettings)
-            throws CheckstyleException {
+    throws CheckstyleException {
         return loadConfiguration(config, overridePropsResolver,
-                IgnoredModulesOptions.EXECUTE, threadModeSettings);
+                                 IgnoredModulesOptions.EXECUTE, threadModeSettings);
     }
 
     /**
@@ -238,11 +238,11 @@ public final class ConfigurationLoader {
      * @throws CheckstyleException if an error occurs
      */
     public static Configuration loadConfiguration(String config,
-                                                  PropertyResolver overridePropsResolver,
-                                                  IgnoredModulesOptions ignoredModulesOptions)
-            throws CheckstyleException {
+            PropertyResolver overridePropsResolver,
+            IgnoredModulesOptions ignoredModulesOptions)
+    throws CheckstyleException {
         return loadConfiguration(config, overridePropsResolver, ignoredModulesOptions,
-                ThreadModeSettings.SINGLE_THREAD_MODE_INSTANCE);
+                                 ThreadModeSettings.SINGLE_THREAD_MODE_INSTANCE);
     }
 
     /**
@@ -257,15 +257,15 @@ public final class ConfigurationLoader {
      * @throws CheckstyleException if an error occurs
      */
     public static Configuration loadConfiguration(String config,
-                                                  PropertyResolver overridePropsResolver,
-                                                  IgnoredModulesOptions ignoredModulesOptions,
-                                                  ThreadModeSettings threadModeSettings)
-            throws CheckstyleException {
+            PropertyResolver overridePropsResolver,
+            IgnoredModulesOptions ignoredModulesOptions,
+            ThreadModeSettings threadModeSettings)
+    throws CheckstyleException {
         // figure out if this is a File or a URL
         final URI uri = CommonUtil.getUriByFilename(config);
         final InputSource source = new InputSource(uri.toString());
         return loadConfiguration(source, overridePropsResolver,
-                ignoredModulesOptions, threadModeSettings);
+                                 ignoredModulesOptions, threadModeSettings);
     }
 
     /**
@@ -281,11 +281,11 @@ public final class ConfigurationLoader {
      * @throws CheckstyleException if an error occurs
      */
     public static Configuration loadConfiguration(InputSource configSource,
-                                                  PropertyResolver overridePropsResolver,
-                                                  IgnoredModulesOptions ignoredModulesOptions)
-            throws CheckstyleException {
+            PropertyResolver overridePropsResolver,
+            IgnoredModulesOptions ignoredModulesOptions)
+    throws CheckstyleException {
         return loadConfiguration(configSource, overridePropsResolver,
-                ignoredModulesOptions, ThreadModeSettings.SINGLE_THREAD_MODE_INSTANCE);
+                                 ignoredModulesOptions, ThreadModeSettings.SINGLE_THREAD_MODE_INSTANCE);
     }
 
     /**
@@ -303,22 +303,22 @@ public final class ConfigurationLoader {
      * @noinspection WeakerAccess
      */
     public static Configuration loadConfiguration(InputSource configSource,
-                                                  PropertyResolver overridePropsResolver,
-                                                  IgnoredModulesOptions ignoredModulesOptions,
-                                                  ThreadModeSettings threadModeSettings)
-            throws CheckstyleException {
+            PropertyResolver overridePropsResolver,
+            IgnoredModulesOptions ignoredModulesOptions,
+            ThreadModeSettings threadModeSettings)
+    throws CheckstyleException {
         try {
             final boolean omitIgnoreModules = ignoredModulesOptions == IgnoredModulesOptions.OMIT;
             final ConfigurationLoader loader =
-                    new ConfigurationLoader(overridePropsResolver,
-                            omitIgnoreModules, threadModeSettings);
+                new ConfigurationLoader(overridePropsResolver,
+                                        omitIgnoreModules, threadModeSettings);
             loader.parseInputSource(configSource);
             return loader.configuration;
         }
         catch (final SAXParseException ex) {
             final String message = String.format(Locale.ROOT, SAX_PARSE_EXCEPTION_FORMAT,
-                    UNABLE_TO_PARSE_EXCEPTION_PREFIX,
-                    ex.getMessage(), ex.getLineNumber(), ex.getColumnNumber());
+                                                 UNABLE_TO_PARSE_EXCEPTION_PREFIX,
+                                                 ex.getMessage(), ex.getLineNumber(), ex.getColumnNumber());
             throw new CheckstyleException(message, ex);
         }
         catch (final ParserConfigurationException | IOException | SAXException ex) {
@@ -350,8 +350,8 @@ public final class ConfigurationLoader {
      * @noinspection MethodWithMultipleReturnPoints, MethodOnlyUsedFromInnerClass
      */
     private static String replaceProperties(
-            String value, PropertyResolver props, String defaultValue)
-            throws CheckstyleException {
+        String value, PropertyResolver props, String defaultValue)
+    throws CheckstyleException {
         if (value == null) {
             return null;
         }
@@ -404,9 +404,9 @@ public final class ConfigurationLoader {
      *                           {@code }}
      */
     private static void parsePropertyString(String value,
-                                           List<String> fragments,
-                                           List<String> propertyRefs)
-            throws CheckstyleException {
+                                            List<String> fragments,
+                                            List<String> propertyRefs)
+    throws CheckstyleException {
         int prev = 0;
         // search for the next instance of $ from the 'prev' position
         int pos = value.indexOf(DOLLAR_SIGN, prev);
@@ -426,7 +426,7 @@ public final class ConfigurationLoader {
                 final int endName = value.indexOf('}', pos);
                 if (endName == -1) {
                     throw new CheckstyleException("Syntax error in property: "
-                                                    + value);
+                                                  + value);
                 }
                 final String propertyName = value.substring(pos + 2, endName);
                 fragments.add(null);
@@ -488,7 +488,7 @@ public final class ConfigurationLoader {
          * @throws ParserConfigurationException if an error occurs
          */
         /* package */ InternalLoader()
-                throws SAXException, ParserConfigurationException {
+        throws SAXException, ParserConfigurationException {
             super(createIdToResourceNameMap());
         }
 
@@ -497,7 +497,7 @@ public final class ConfigurationLoader {
                                  String localName,
                                  String qName,
                                  Attributes attributes)
-                throws SAXException {
+        throws SAXException {
             if (qName.equals(MODULE)) {
                 // create configuration
                 final String originalName = attributes.getValue(NAME);
@@ -523,7 +523,7 @@ public final class ConfigurationLoader {
                 final String value;
                 try {
                     value = replaceProperties(attributes.getValue(VALUE),
-                        overridePropsResolver, attributes.getValue(DEFAULT));
+                                              overridePropsResolver, attributes.getValue(DEFAULT));
                 }
                 catch (final CheckstyleException ex) {
                     // -@cs[IllegalInstantiation] SAXException is in the overridden method signature
@@ -571,15 +571,15 @@ public final class ConfigurationLoader {
                         // -@cs[IllegalInstantiation] SAXException is in the overridden
                         // method signature
                         throw new SAXException(
-                                "Problem during accessing '" + SEVERITY + "' attribute for "
-                                        + recentModule.getName(), ex);
+                            "Problem during accessing '" + SEVERITY + "' attribute for "
+                            + recentModule.getName(), ex);
                     }
                 }
 
                 // omit this module if these should be omitted and the module
                 // has the severity 'ignore'
                 final boolean omitModule = omitIgnoredModules
-                    && level == SeverityLevel.IGNORE;
+                                           && level == SeverityLevel.IGNORE;
 
                 if (omitModule && !configStack.isEmpty()) {
                     final DefaultConfiguration parentModule =
@@ -599,7 +599,7 @@ public final class ConfigurationLoader {
         private boolean containsAttribute(Configuration module, String attributeName) {
             final String[] names = module.getAttributeNames();
             final Optional<String> result = Arrays.stream(names)
-                    .filter(name -> name.equals(attributeName)).findFirst();
+                                            .filter(name -> name.equals(attributeName)).findFirst();
             return result.isPresent();
         }
 

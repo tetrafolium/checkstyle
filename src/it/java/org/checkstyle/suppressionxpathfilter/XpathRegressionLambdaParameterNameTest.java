@@ -42,70 +42,70 @@ public class XpathRegressionLambdaParameterNameTest extends AbstractXpathTestSup
     @Test
     public void testOne() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionLambdaParameterName1.java"));
+            new File(getPath("SuppressionXpathRegressionLambdaParameterName1.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(LambdaParameterNameCheck.class);
+            createModuleConfig(LambdaParameterNameCheck.class);
         final String defaultPattern = "^[a-z][a-zA-Z0-9]*$";
 
         final String[] expectedViolation = {
             "7:44: " + getCheckMessage(LambdaParameterNameCheck.class,
-                    AbstractNameCheck.MSG_INVALID_PATTERN, "S", defaultPattern),
+                                       AbstractNameCheck.MSG_INVALID_PATTERN, "S", defaultPattern),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-               "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionLambdaParameterName1']]"
-                       + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/SLIST/VARIABLE_DEF["
-                       + "./IDENT[@text='trimmer']]/ASSIGN/LAMBDA/IDENT[@text='S']"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionLambdaParameterName1']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/SLIST/VARIABLE_DEF["
+                    + "./IDENT[@text='trimmer']]/ASSIGN/LAMBDA/IDENT[@text='S']"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionLambdaParameterName2.java"));
+            new File(getPath("SuppressionXpathRegressionLambdaParameterName2.java"));
 
         final String nonDefaultPattern = "^_[a-zA-Z0-9]*$";
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(LambdaParameterNameCheck.class);
+            createModuleConfig(LambdaParameterNameCheck.class);
         moduleConfig.addAttribute("format", nonDefaultPattern);
 
         final String[] expectedViolation = {
             "7:45: " + getCheckMessage(LambdaParameterNameCheck.class,
-                    AbstractNameCheck.MSG_INVALID_PATTERN, "s", nonDefaultPattern),
+                                       AbstractNameCheck.MSG_INVALID_PATTERN, "s", nonDefaultPattern),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionLambdaParameterName2']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/SLIST/"
-                        + "VARIABLE_DEF[./IDENT[@text='trimmer']]/ASSIGN/LAMBDA/PARAMETERS",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionLambdaParameterName2']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/SLIST/"
+                    + "VARIABLE_DEF[./IDENT[@text='trimmer']]/ASSIGN/LAMBDA/PARAMETERS",
 
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionLambdaParameterName2']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/SLIST/"
-                        + "VARIABLE_DEF[./IDENT[@text='trimmer']]/ASSIGN/LAMBDA/PARAMETERS"
-                        + "/PARAMETER_DEF[./IDENT[@text='s']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionLambdaParameterName2']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/SLIST/"
+                    + "VARIABLE_DEF[./IDENT[@text='trimmer']]/ASSIGN/LAMBDA/PARAMETERS"
+                    + "/PARAMETER_DEF[./IDENT[@text='s']]",
 
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionLambdaParameterName2']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/SLIST"
-                        + "/VARIABLE_DEF[./IDENT[@text='trimmer']]/ASSIGN/LAMBDA/PARAMETERS"
-                        + "/PARAMETER_DEF[./IDENT[@text='s']]/MODIFIERS",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionLambdaParameterName2']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/SLIST"
+                    + "/VARIABLE_DEF[./IDENT[@text='trimmer']]/ASSIGN/LAMBDA/PARAMETERS"
+                    + "/PARAMETER_DEF[./IDENT[@text='s']]/MODIFIERS",
 
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionLambdaParameterName2']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/SLIST/"
-                        + "VARIABLE_DEF[./IDENT[@text='trimmer']]/ASSIGN/LAMBDA/PARAMETERS"
-                        + "/PARAMETER_DEF[./IDENT[@text='s']]/TYPE",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionLambdaParameterName2']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/SLIST/"
+                    + "VARIABLE_DEF[./IDENT[@text='trimmer']]/ASSIGN/LAMBDA/PARAMETERS"
+                    + "/PARAMETER_DEF[./IDENT[@text='s']]/TYPE",
 
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionLambdaParameterName2']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/SLIST/"
-                        + "VARIABLE_DEF[./IDENT[@text='trimmer']]/ASSIGN/LAMBDA/PARAMETERS"
-                        + "/PARAMETER_DEF/IDENT[@text='s']"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionLambdaParameterName2']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/SLIST/"
+                    + "VARIABLE_DEF[./IDENT[@text='trimmer']]/ASSIGN/LAMBDA/PARAMETERS"
+                    + "/PARAMETER_DEF/IDENT[@text='s']"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }

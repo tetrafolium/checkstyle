@@ -45,7 +45,7 @@ public class CaseHandler extends AbstractExpressionHandler {
      * @param parent        the parent handler
      */
     public CaseHandler(IndentationCheck indentCheck,
-        DetailAST expr, AbstractExpressionHandler parent) {
+                       DetailAST expr, AbstractExpressionHandler parent) {
         super(indentCheck, "case", expr, parent);
     }
 

@@ -5,9 +5,9 @@ public class SuppressionXpathRegressionCommentsIndentationEmptyCase {
 
     public void foo() {
         switch(n) {
-            case 1:
+        case 1:
 // Comment // warn
-            default:
+        default:
         }
     }
 }

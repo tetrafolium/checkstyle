@@ -68,7 +68,7 @@ public final class XmlMetaWriter {
      * @throws ParserConfigurationException if a parser configuration exception occurs
      */
     public static void write(ModuleDetails moduleDetails) throws TransformerException,
-            ParserConfigurationException {
+        ParserConfigurationException {
         final DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         final DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         final Document doc = dBuilder.newDocument();
@@ -84,7 +84,7 @@ public final class XmlMetaWriter {
 
         checkModule.setAttribute(XML_TAG_NAME, moduleDetails.getName());
         checkModule.setAttribute("fully-qualified-name",
-                moduleDetails.getFullQualifiedName());
+                                 moduleDetails.getFullQualifiedName());
         checkModule.setAttribute("parent", moduleDetails.getParent());
 
         final Element desc = doc.createElement(XML_TAG_DESCRIPTION);
@@ -113,7 +113,7 @@ public final class XmlMetaWriter {
      * @param doc document object
      */
     private static void createPropertySection(ModuleDetails moduleDetails, Element checkModule,
-                                              Document doc) {
+            Document doc) {
         if (!moduleDetails.getProperties().isEmpty()) {
             final Element properties = doc.createElement("properties");
             checkModule.appendChild(properties);
@@ -124,15 +124,15 @@ public final class XmlMetaWriter {
                 property.setAttribute("type", modulePropertyDetails.getType());
                 if (modulePropertyDetails.getDefaultValue() != null) {
                     property.setAttribute("default-value",
-                            modulePropertyDetails.getDefaultValue());
+                                          modulePropertyDetails.getDefaultValue());
                 }
                 if (modulePropertyDetails.getValidationType() != null) {
                     property.setAttribute("validation-type",
-                            modulePropertyDetails.getValidationType());
+                                          modulePropertyDetails.getValidationType());
                 }
                 final Element propertyDesc = doc.createElement(XML_TAG_DESCRIPTION);
                 propertyDesc.appendChild(doc.createCDATASection(
-                        modulePropertyDetails.getDescription()));
+                                             modulePropertyDetails.getDescription()));
                 property.appendChild(propertyDesc);
             }
         }
@@ -146,7 +146,7 @@ public final class XmlMetaWriter {
      * @throws TransformerException if a transformer exception occurs
      */
     private static void writeToFile(Document document, ModuleDetails moduleDetails)
-            throws TransformerException {
+    throws TransformerException {
         String fileSeparator = DEFAULT_FILE_SEPARATOR;
         if (System.getProperty("os.name").toLowerCase(Locale.ENGLISH).contains("win")) {
             fileSeparator = "\\" + fileSeparator;
@@ -156,15 +156,15 @@ public final class XmlMetaWriter {
         final String rootOutputPath = System.getProperty("user.dir") + "/src/main/resources";
         if (moduleDetails.getFullQualifiedName().startsWith("com.puppycrawl.tools.checkstyle")) {
             final String moduleFilePath = FILEPATH_CONVERSION
-                    .matcher(moduleDetails.getFullQualifiedName())
-                    .replaceAll(fileSeparator);
+                                          .matcher(moduleDetails.getFullQualifiedName())
+                                          .replaceAll(fileSeparator);
             final String checkstyleString = "checkstyle";
             final int indexOfCheckstyle =
-                    moduleFilePath.indexOf(checkstyleString) + checkstyleString.length();
+                moduleFilePath.indexOf(checkstyleString) + checkstyleString.length();
 
             modifiedPath = rootOutputPath + DEFAULT_FILE_SEPARATOR
-                    + moduleFilePath.substring(0, indexOfCheckstyle) + "/meta/"
-                    + moduleFilePath.substring(indexOfCheckstyle + 1) + xmlExtension;
+                           + moduleFilePath.substring(0, indexOfCheckstyle) + "/meta/"
+                           + moduleFilePath.substring(indexOfCheckstyle + 1) + xmlExtension;
         }
         else {
             String moduleName = moduleDetails.getName();

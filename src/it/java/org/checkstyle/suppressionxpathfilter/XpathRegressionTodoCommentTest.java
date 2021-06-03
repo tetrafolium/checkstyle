@@ -41,10 +41,10 @@ public class XpathRegressionTodoCommentTest extends AbstractXpathTestSupport {
     @Test
     public void testOne() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionTodoCommentOne.java"));
+            new File(getPath("SuppressionXpathRegressionTodoCommentOne.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(TodoCommentCheck.class);
+            createModuleConfig(TodoCommentCheck.class);
         moduleConfig.addAttribute("format", "FIXME:");
 
         final String[] expectedViolation = {
@@ -52,21 +52,21 @@ public class XpathRegressionTodoCommentTest extends AbstractXpathTestSupport {
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/CLASS_DEF[./IDENT[@text="
-                        + "'SuppressionXpathRegressionTodoCommentOne']]/OBJBLOCK/"
-                        + "SINGLE_LINE_COMMENT/COMMENT_CONTENT");
+                    "/CLASS_DEF[./IDENT[@text="
+                    + "'SuppressionXpathRegressionTodoCommentOne']]/OBJBLOCK/"
+                    + "SINGLE_LINE_COMMENT/COMMENT_CONTENT");
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionTodoCommentTwo.java"));
+            new File(getPath("SuppressionXpathRegressionTodoCommentTwo.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(TodoCommentCheck.class);
+            createModuleConfig(TodoCommentCheck.class);
         moduleConfig.addAttribute("format", "FIXME:");
 
         final String[] expectedViolation = {
@@ -74,11 +74,11 @@ public class XpathRegressionTodoCommentTest extends AbstractXpathTestSupport {
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/CLASS_DEF[./IDENT[@text="
-                        + "'SuppressionXpathRegressionTodoCommentTwo']]/"
-                        + "OBJBLOCK/BLOCK_COMMENT_BEGIN/COMMENT_CONTENT");
+                    "/CLASS_DEF[./IDENT[@text="
+                    + "'SuppressionXpathRegressionTodoCommentTwo']]/"
+                    + "OBJBLOCK/BLOCK_COMMENT_BEGIN/COMMENT_CONTENT");
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }

@@ -44,7 +44,7 @@ public class LabelHandler extends AbstractExpressionHandler {
      * @param parent        the parent handler
      */
     public LabelHandler(IndentationCheck indentCheck,
-        DetailAST expr, AbstractExpressionHandler parent) {
+                        DetailAST expr, AbstractExpressionHandler parent) {
         super(indentCheck, "label", expr, parent);
     }
 

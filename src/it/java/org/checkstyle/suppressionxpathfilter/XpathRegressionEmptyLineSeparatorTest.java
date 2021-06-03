@@ -39,21 +39,21 @@ public class XpathRegressionEmptyLineSeparatorTest extends AbstractXpathTestSupp
     @Test
     public void testOne() throws Exception {
         final File fileToProcess = new File(
-                getPath("SuppressionXpathRegressionEmptyLineSeparator1.java")
+            getPath("SuppressionXpathRegressionEmptyLineSeparator1.java")
         );
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(EmptyLineSeparatorCheck.class);
+            createModuleConfig(EmptyLineSeparatorCheck.class);
         moduleConfig.addAttribute("tokens", "PACKAGE_DEF");
 
         final String[] expectedViolation = {
             "4:1: " + getCheckMessage(EmptyLineSeparatorCheck.class,
-                    EmptyLineSeparatorCheck.MSG_SHOULD_BE_SEPARATED, "package"),
+                                      EmptyLineSeparatorCheck.MSG_SHOULD_BE_SEPARATED, "package"),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/PACKAGE_DEF"
-        );
+                    "/PACKAGE_DEF"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
     }
@@ -61,21 +61,21 @@ public class XpathRegressionEmptyLineSeparatorTest extends AbstractXpathTestSupp
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess = new File(
-                getPath("SuppressionXpathRegressionEmptyLineSeparator2.java")
+            getPath("SuppressionXpathRegressionEmptyLineSeparator2.java")
         );
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(EmptyLineSeparatorCheck.class);
+            createModuleConfig(EmptyLineSeparatorCheck.class);
         moduleConfig.addAttribute("allowMultipleEmptyLines", "false");
 
         final String[] expectedViolation = {
             "6:1: " + getCheckMessage(EmptyLineSeparatorCheck.class,
-                    EmptyLineSeparatorCheck.MSG_MULTIPLE_LINES, "package"),
+                                      EmptyLineSeparatorCheck.MSG_MULTIPLE_LINES, "package"),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/PACKAGE_DEF"
-        );
+                    "/PACKAGE_DEF"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
     }
@@ -83,30 +83,30 @@ public class XpathRegressionEmptyLineSeparatorTest extends AbstractXpathTestSupp
     @Test
     public void testThree() throws Exception {
         final File fileToProcess = new File(
-                getPath("SuppressionXpathRegressionEmptyLineSeparator3.java")
+            getPath("SuppressionXpathRegressionEmptyLineSeparator3.java")
         );
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(EmptyLineSeparatorCheck.class);
+            createModuleConfig(EmptyLineSeparatorCheck.class);
         moduleConfig.addAttribute("tokens", "METHOD_DEF");
 
         final String[] expectedViolation = {
             "9:5: " + getCheckMessage(EmptyLineSeparatorCheck.class,
-                    EmptyLineSeparatorCheck.MSG_SHOULD_BE_SEPARATED, "METHOD_DEF"),
+                                      EmptyLineSeparatorCheck.MSG_SHOULD_BE_SEPARATED, "METHOD_DEF"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionEmptyLineSeparator3']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo1']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionEmptyLineSeparator3']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo1']]",
 
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionEmptyLineSeparator3']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo1']]"
-                        + "/MODIFIERS",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionEmptyLineSeparator3']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo1']]"
+                    + "/MODIFIERS",
 
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionEmptyLineSeparator3']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo1']]"
-                        + "/MODIFIERS/LITERAL_PUBLIC"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionEmptyLineSeparator3']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo1']]"
+                    + "/MODIFIERS/LITERAL_PUBLIC"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
     }
@@ -114,30 +114,30 @@ public class XpathRegressionEmptyLineSeparatorTest extends AbstractXpathTestSupp
     @Test
     public void testFour() throws Exception {
         final File fileToProcess = new File(
-                getPath("SuppressionXpathRegressionEmptyLineSeparator4.java")
+            getPath("SuppressionXpathRegressionEmptyLineSeparator4.java")
         );
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(EmptyLineSeparatorCheck.class);
+            createModuleConfig(EmptyLineSeparatorCheck.class);
         moduleConfig.addAttribute("allowMultipleEmptyLines", "false");
 
         final String[] expectedViolation = {
             "12:5: " + getCheckMessage(EmptyLineSeparatorCheck.class,
-                    EmptyLineSeparatorCheck.MSG_MULTIPLE_LINES_AFTER, "METHOD_DEF"),
+                                       EmptyLineSeparatorCheck.MSG_MULTIPLE_LINES_AFTER, "METHOD_DEF"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionEmptyLineSeparator4']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo1']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionEmptyLineSeparator4']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo1']]",
 
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionEmptyLineSeparator4']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo1']]"
-                        + "/MODIFIERS",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionEmptyLineSeparator4']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo1']]"
+                    + "/MODIFIERS",
 
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionEmptyLineSeparator4']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo1']]"
-                        + "/MODIFIERS/LITERAL_PUBLIC"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionEmptyLineSeparator4']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo1']]"
+                    + "/MODIFIERS/LITERAL_PUBLIC"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
     }

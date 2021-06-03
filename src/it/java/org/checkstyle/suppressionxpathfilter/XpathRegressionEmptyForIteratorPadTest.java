@@ -41,54 +41,54 @@ public class XpathRegressionEmptyForIteratorPadTest extends AbstractXpathTestSup
     @Test
     public void testFollowed() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionEmptyForIteratorPadFollowed.java"));
+            new File(getPath("SuppressionXpathRegressionEmptyForIteratorPadFollowed.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(EmptyForIteratorPadCheck.class);
+            createModuleConfig(EmptyForIteratorPadCheck.class);
 
         final String[] expectedViolation = {
             "5:34: " + getCheckMessage(EmptyForIteratorPadCheck.class,
-                    EmptyForIteratorPadCheck.MSG_WS_FOLLOWED, ";"),
+                                       EmptyForIteratorPadCheck.MSG_WS_FOLLOWED, ";"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-            "/CLASS_DEF[./IDENT["
-                + "@text='SuppressionXpathRegressionEmptyForIteratorPadFollowed']]/OBJBLOCK"
-                + "/METHOD_DEF[./IDENT[@text='method']]/SLIST/LITERAL_FOR/FOR_ITERATOR",
-            "/CLASS_DEF[./IDENT["
-                + "@text='SuppressionXpathRegressionEmptyForIteratorPadFollowed']]/OBJBLOCK"
-                + "/METHOD_DEF[./IDENT[@text='method']]/SLIST/LITERAL_FOR/RPAREN"
-        );
+                    "/CLASS_DEF[./IDENT["
+                    + "@text='SuppressionXpathRegressionEmptyForIteratorPadFollowed']]/OBJBLOCK"
+                    + "/METHOD_DEF[./IDENT[@text='method']]/SLIST/LITERAL_FOR/FOR_ITERATOR",
+                    "/CLASS_DEF[./IDENT["
+                    + "@text='SuppressionXpathRegressionEmptyForIteratorPadFollowed']]/OBJBLOCK"
+                    + "/METHOD_DEF[./IDENT[@text='method']]/SLIST/LITERAL_FOR/RPAREN"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testNotFollowed() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionEmptyForIteratorPadNotFollowed.java"));
+            new File(getPath("SuppressionXpathRegressionEmptyForIteratorPadNotFollowed.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(EmptyForIteratorPadCheck.class);
+            createModuleConfig(EmptyForIteratorPadCheck.class);
         moduleConfig.addAttribute("option", PadOption.SPACE.toString());
 
         final String[] expectedViolation = {
             "5:33: " + getCheckMessage(EmptyForIteratorPadCheck.class,
-                    EmptyForIteratorPadCheck.MSG_WS_NOT_FOLLOWED, ";"),
+                                       EmptyForIteratorPadCheck.MSG_WS_NOT_FOLLOWED, ";"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-            "/CLASS_DEF[./IDENT["
-                + "@text='SuppressionXpathRegressionEmptyForIteratorPadNotFollowed']]/OBJBLOCK"
-                + "/METHOD_DEF[./IDENT[@text='method']]/SLIST/LITERAL_FOR/FOR_ITERATOR",
-            "/CLASS_DEF[./IDENT["
-                + "@text='SuppressionXpathRegressionEmptyForIteratorPadNotFollowed']]/OBJBLOCK"
-                + "/METHOD_DEF[./IDENT[@text='method']]/SLIST/LITERAL_FOR/RPAREN"
-        );
+                    "/CLASS_DEF[./IDENT["
+                    + "@text='SuppressionXpathRegressionEmptyForIteratorPadNotFollowed']]/OBJBLOCK"
+                    + "/METHOD_DEF[./IDENT[@text='method']]/SLIST/LITERAL_FOR/FOR_ITERATOR",
+                    "/CLASS_DEF[./IDENT["
+                    + "@text='SuppressionXpathRegressionEmptyForIteratorPadNotFollowed']]/OBJBLOCK"
+                    + "/METHOD_DEF[./IDENT[@text='method']]/SLIST/LITERAL_FOR/RPAREN"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
 }

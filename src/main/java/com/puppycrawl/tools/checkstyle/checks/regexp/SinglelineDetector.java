@@ -75,7 +75,7 @@ class SinglelineDetector {
         if (currentMatches < options.getMinimum()) {
             if (options.getMessage().isEmpty()) {
                 options.getReporter().log(1, MSG_REGEXP_MINIMUM,
-                        options.getMinimum(), options.getFormat());
+                                          options.getMinimum(), options.getFormat());
             }
             else {
                 options.getReporter().log(1, options.getMessage());
@@ -99,7 +99,7 @@ class SinglelineDetector {
      * @param startPosition the position to start searching from.
      */
     private void checkLine(int lineNo, String line, Matcher matcher,
-            int startPosition) {
+                           int startPosition) {
         final boolean foundMatch = matcher.find(startPosition);
         if (foundMatch) {
             // match is found, check for intersection with comment
@@ -118,7 +118,7 @@ class SinglelineDetector {
                 if (currentMatches > options.getMaximum()) {
                     if (options.getMessage().isEmpty()) {
                         options.getReporter().log(lineNo, MSG_REGEXP_EXCEEDED,
-                                matcher.pattern().toString());
+                                                  matcher.pattern().toString());
                     }
                     else {
                         options.getReporter().log(lineNo, options.getMessage());

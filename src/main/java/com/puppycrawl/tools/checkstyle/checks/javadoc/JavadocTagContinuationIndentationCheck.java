@@ -179,7 +179,7 @@ public class JavadocTagContinuationIndentationCheck extends AbstractJavadocCheck
                     final String text = textNode.getText();
                     if (!CommonUtil.isBlank(text.trim())
                             && (text.length() <= offset
-                                    || !text.substring(1, offset + 1).trim().isEmpty())) {
+                                || !text.substring(1, offset + 1).trim().isEmpty())) {
                         log(textNode.getLineNumber(), MSG_KEY, offset);
                     }
                 }

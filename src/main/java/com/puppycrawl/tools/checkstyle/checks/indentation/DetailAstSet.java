@@ -136,7 +136,7 @@ public class DetailAstSet {
             indentCheck.getLine(ast.getLineNo() - 1);
 
         return CommonUtil.lengthExpandedTabs(line, ast.getColumnNo(),
-            indentCheck.getIndentationTabWidth());
+                                             indentCheck.getIndentationTabWidth());
     }
 
 }

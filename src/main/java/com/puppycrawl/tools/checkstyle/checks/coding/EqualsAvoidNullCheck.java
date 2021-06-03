@@ -143,27 +143,27 @@ public class EqualsAvoidNullCheck extends AbstractCheck {
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.METHOD_CALL,
-            TokenTypes.CLASS_DEF,
-            TokenTypes.METHOD_DEF,
-            TokenTypes.LITERAL_FOR,
-            TokenTypes.LITERAL_CATCH,
-            TokenTypes.LITERAL_TRY,
-            TokenTypes.LITERAL_SWITCH,
-            TokenTypes.VARIABLE_DEF,
-            TokenTypes.PARAMETER_DEF,
-            TokenTypes.CTOR_DEF,
-            TokenTypes.SLIST,
-            TokenTypes.OBJBLOCK,
-            TokenTypes.ENUM_DEF,
-            TokenTypes.ENUM_CONSTANT_DEF,
-            TokenTypes.LITERAL_NEW,
-            TokenTypes.LAMBDA,
-            TokenTypes.PATTERN_VARIABLE_DEF,
-            TokenTypes.RECORD_DEF,
-            TokenTypes.COMPACT_CTOR_DEF,
-            TokenTypes.RECORD_COMPONENT_DEF,
-        };
+                   TokenTypes.METHOD_CALL,
+                   TokenTypes.CLASS_DEF,
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.LITERAL_FOR,
+                   TokenTypes.LITERAL_CATCH,
+                   TokenTypes.LITERAL_TRY,
+                   TokenTypes.LITERAL_SWITCH,
+                   TokenTypes.VARIABLE_DEF,
+                   TokenTypes.PARAMETER_DEF,
+                   TokenTypes.CTOR_DEF,
+                   TokenTypes.SLIST,
+                   TokenTypes.OBJBLOCK,
+                   TokenTypes.ENUM_DEF,
+                   TokenTypes.ENUM_CONSTANT_DEF,
+                   TokenTypes.LITERAL_NEW,
+                   TokenTypes.LAMBDA,
+                   TokenTypes.PATTERN_VARIABLE_DEF,
+                   TokenTypes.RECORD_DEF,
+                   TokenTypes.COMPACT_CTOR_DEF,
+                   TokenTypes.RECORD_COMPONENT_DEF,
+               };
     }
 
     /**
@@ -184,56 +184,56 @@ public class EqualsAvoidNullCheck extends AbstractCheck {
     @Override
     public void visitToken(final DetailAST ast) {
         switch (ast.getType()) {
-            case TokenTypes.VARIABLE_DEF:
-            case TokenTypes.PARAMETER_DEF:
-            case TokenTypes.PATTERN_VARIABLE_DEF:
-            case TokenTypes.RECORD_COMPONENT_DEF:
-                currentFrame.addField(ast);
-                break;
-            case TokenTypes.METHOD_CALL:
-                processMethodCall(ast);
-                break;
-            case TokenTypes.SLIST:
-                processSlist(ast);
-                break;
-            case TokenTypes.LITERAL_NEW:
-                processLiteralNew(ast);
-                break;
-            case TokenTypes.OBJBLOCK:
-                final int parentType = ast.getParent().getType();
-                if (!astTypeIsClassOrEnumOrRecordDef(parentType)) {
-                    processFrame(ast);
-                }
-                break;
-            default:
+        case TokenTypes.VARIABLE_DEF:
+        case TokenTypes.PARAMETER_DEF:
+        case TokenTypes.PATTERN_VARIABLE_DEF:
+        case TokenTypes.RECORD_COMPONENT_DEF:
+            currentFrame.addField(ast);
+            break;
+        case TokenTypes.METHOD_CALL:
+            processMethodCall(ast);
+            break;
+        case TokenTypes.SLIST:
+            processSlist(ast);
+            break;
+        case TokenTypes.LITERAL_NEW:
+            processLiteralNew(ast);
+            break;
+        case TokenTypes.OBJBLOCK:
+            final int parentType = ast.getParent().getType();
+            if (!astTypeIsClassOrEnumOrRecordDef(parentType)) {
                 processFrame(ast);
+            }
+            break;
+        default:
+            processFrame(ast);
         }
     }
 
     @Override
     public void leaveToken(DetailAST ast) {
         switch (ast.getType()) {
-            case TokenTypes.SLIST:
-                leaveSlist(ast);
-                break;
-            case TokenTypes.LITERAL_NEW:
-                leaveLiteralNew(ast);
-                break;
-            case TokenTypes.OBJBLOCK:
-                final int parentType = ast.getParent().getType();
-                if (!astTypeIsClassOrEnumOrRecordDef(parentType)) {
-                    currentFrame = currentFrame.getParent();
-                }
-                break;
-            case TokenTypes.VARIABLE_DEF:
-            case TokenTypes.PARAMETER_DEF:
-            case TokenTypes.RECORD_COMPONENT_DEF:
-            case TokenTypes.METHOD_CALL:
-            case TokenTypes.PATTERN_VARIABLE_DEF:
-                break;
-            default:
+        case TokenTypes.SLIST:
+            leaveSlist(ast);
+            break;
+        case TokenTypes.LITERAL_NEW:
+            leaveLiteralNew(ast);
+            break;
+        case TokenTypes.OBJBLOCK:
+            final int parentType = ast.getParent().getType();
+            if (!astTypeIsClassOrEnumOrRecordDef(parentType)) {
                 currentFrame = currentFrame.getParent();
-                break;
+            }
+            break;
+        case TokenTypes.VARIABLE_DEF:
+        case TokenTypes.PARAMETER_DEF:
+        case TokenTypes.RECORD_COMPONENT_DEF:
+        case TokenTypes.METHOD_CALL:
+        case TokenTypes.PATTERN_VARIABLE_DEF:
+            break;
+        default:
+            currentFrame = currentFrame.getParent();
+            break;
         }
     }
 
@@ -392,14 +392,14 @@ public class EqualsAvoidNullCheck extends AbstractCheck {
             while (child != null
                     && !argIsNotNull) {
                 argIsNotNull = child.getType() == TokenTypes.STRING_LITERAL
-                        || child.getType() == TokenTypes.TEXT_BLOCK_LITERAL_BEGIN
-                        || child.getType() == TokenTypes.IDENT;
+                               || child.getType() == TokenTypes.TEXT_BLOCK_LITERAL_BEGIN
+                               || child.getType() == TokenTypes.IDENT;
                 child = child.getNextSibling();
             }
         }
         else {
             argIsNotNull = arg.getType() == TokenTypes.STRING_LITERAL
-                    || arg.getType() == TokenTypes.TEXT_BLOCK_LITERAL_BEGIN;
+                           || arg.getType() == TokenTypes.TEXT_BLOCK_LITERAL_BEGIN;
         }
 
         return argIsNotNull;
@@ -460,7 +460,7 @@ public class EqualsAvoidNullCheck extends AbstractCheck {
             final DetailAST field = frame.findField(name);
             if (field != null
                     && (frame.isClassOrEnumOrRecordDef()
-                            || checkLineNo(field, objCalledOn))) {
+                        || checkLineNo(field, objCalledOn))) {
                 result = STRING.equals(getFieldType(field));
                 break;
             }
@@ -543,7 +543,7 @@ public class EqualsAvoidNullCheck extends AbstractCheck {
     private static String getFieldType(DetailAST field) {
         String fieldType = null;
         final DetailAST identAst = field.findFirstToken(TokenTypes.TYPE)
-                .findFirstToken(TokenTypes.IDENT);
+                                   .findFirstToken(TokenTypes.IDENT);
         if (identAst != null) {
             fieldType = identAst.getText();
         }
@@ -558,8 +558,8 @@ public class EqualsAvoidNullCheck extends AbstractCheck {
      */
     private static boolean astTypeIsClassOrEnumOrRecordDef(int tokenType) {
         return tokenType == TokenTypes.CLASS_DEF
-                || tokenType == TokenTypes.RECORD_DEF
-                || tokenType == TokenTypes.ENUM_DEF;
+               || tokenType == TokenTypes.RECORD_DEF
+               || tokenType == TokenTypes.ENUM_DEF;
     }
 
     /**

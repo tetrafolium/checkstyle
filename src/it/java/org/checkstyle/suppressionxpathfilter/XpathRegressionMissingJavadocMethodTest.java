@@ -47,24 +47,24 @@ public class XpathRegressionMissingJavadocMethodTest extends AbstractXpathTestSu
 
         final String[] expectedViolation = {
             "4:5: " + getCheckMessage(MissingJavadocMethodCheck.class,
-                MissingJavadocMethodCheck.MSG_JAVADOC_MISSING),
+                                      MissingJavadocMethodCheck.MSG_JAVADOC_MISSING),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMissingJavadocMethod1']]"
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMissingJavadocMethod1']]"
                     + "/OBJBLOCK/CTOR_DEF[."
                     + "/IDENT[@text='SuppressionXpathRegressionMissingJavadocMethod1']]",
 
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMissingJavadocMethod1']]"
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMissingJavadocMethod1']]"
                     + "/OBJBLOCK/CTOR_DEF[."
                     + "/IDENT[@text='SuppressionXpathRegressionMissingJavadocMethod1']]"
                     + "/MODIFIERS",
 
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMissingJavadocMethod1']]"
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMissingJavadocMethod1']]"
                     + "/OBJBLOCK/CTOR_DEF[."
                     + "/IDENT[@text='SuppressionXpathRegressionMissingJavadocMethod1']]"
                     + "/MODIFIERS/LITERAL_PUBLIC"
-        );
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
     }
@@ -81,21 +81,21 @@ public class XpathRegressionMissingJavadocMethodTest extends AbstractXpathTestSu
 
         final String[] expectedViolation = {
             "4:5: " + getCheckMessage(MissingJavadocMethodCheck.class,
-                MissingJavadocMethodCheck.MSG_JAVADOC_MISSING),
+                                      MissingJavadocMethodCheck.MSG_JAVADOC_MISSING),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMissingJavadocMethod2']]"
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMissingJavadocMethod2']]"
                     + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]",
 
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMissingJavadocMethod2']]"
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMissingJavadocMethod2']]"
                     + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]"
                     + "/MODIFIERS",
 
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMissingJavadocMethod2']]"
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMissingJavadocMethod2']]"
                     + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]"
                     + "/MODIFIERS/LITERAL_PUBLIC"
-        );
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
     }

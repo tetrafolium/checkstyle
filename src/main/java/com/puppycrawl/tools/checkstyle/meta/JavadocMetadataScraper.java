@@ -61,21 +61,21 @@ public class JavadocMetadataScraper extends AbstractJavadocCheck {
 
     /** Regular expression for property validation type location in class-level javadocs. */
     private static final Pattern VALIDATION_TYPE_TAG =
-            Pattern.compile("\\s.*Validation type is\\s.*");
+        Pattern.compile("\\s.*Validation type is\\s.*");
 
     /** Regular expression for property default value location in class-level javadocs. */
     private static final Pattern DEFAULT_VALUE_TAG = Pattern.compile("\\s*Default value is:*.*");
 
     /** Regular expression for check example location in class-level javadocs. */
     private static final Pattern EXAMPLES_TAG =
-            Pattern.compile("\\s*To configure the (default )?check.*");
+        Pattern.compile("\\s*To configure the (default )?check.*");
 
     /** Regular expression for module parent location in class-level javadocs. */
     private static final Pattern PARENT_TAG = Pattern.compile("\\s*Parent is\\s*");
 
     /** Regular expression for module violation messages location in class-level javadocs. */
     private static final Pattern VIOLATION_MESSAGES_TAG =
-            Pattern.compile("\\s*Violation Message Keys:\\s*");
+        Pattern.compile("\\s*Violation Message Keys:\\s*");
 
     /** Regular expression for detecting ANTLR tokens(for e.g. CLASS_DEF). */
     private static final Pattern TOKEN_TEXT_PATTERN = Pattern.compile("([A-Z]+_*)+[A-Z]+");
@@ -85,7 +85,7 @@ public class JavadocMetadataScraper extends AbstractJavadocCheck {
 
     /** Regular expression for file separator corresponding to the host OS. */
     private static final Pattern FILE_SEPARATOR_PATTERN =
-            Pattern.compile(Pattern.quote(System.getProperty("file.separator")));
+        Pattern.compile(Pattern.quote(System.getProperty("file.separator")));
 
     /** Regular expression for quotes. */
     private static final Pattern QUOTE_PATTERN = Pattern.compile("\"");
@@ -98,11 +98,11 @@ public class JavadocMetadataScraper extends AbstractJavadocCheck {
      * metadata files.
      */
     private static final Set<String> PROPERTIES_TO_NOT_WRITE = Collections.unmodifiableSet(
-            new HashSet<>(Arrays.asList(
-                    "null",
-                    "the charset property of the parent <a href=https://checkstyle.org/"
-                        + "config.html#Checker>Checker</a> module"
-    )));
+                new HashSet<>(Arrays.asList(
+                                  "null",
+                                  "the charset property of the parent <a href=https://checkstyle.org/"
+                                  + "config.html#Checker>Checker</a> module"
+                              )));
 
     /** ModuleDetails instance for each module AST traversal. */
     private ModuleDetails moduleDetails;
@@ -144,11 +144,11 @@ public class JavadocMetadataScraper extends AbstractJavadocCheck {
     @Override
     public int[] getDefaultJavadocTokens() {
         return new int[] {
-            JavadocTokenTypes.JAVADOC,
-            JavadocTokenTypes.PARAGRAPH,
-            JavadocTokenTypes.LI,
-            JavadocTokenTypes.SINCE_LITERAL,
-        };
+                   JavadocTokenTypes.JAVADOC,
+                   JavadocTokenTypes.PARAGRAPH,
+                   JavadocTokenTypes.LI,
+                   JavadocTokenTypes.SINCE_LITERAL,
+               };
     }
 
     @Override
@@ -209,7 +209,7 @@ public class JavadocMetadataScraper extends AbstractJavadocCheck {
                 }
                 catch (TransformerException | ParserConfigurationException ex) {
                     throw new IllegalStateException("Failed to write metadata into XML file for "
-                            + "module: " + getModuleSimpleName(), ex);
+                                                    + "module: " + getModuleSimpleName(), ex);
                 }
             }
         }
@@ -231,7 +231,7 @@ public class JavadocMetadataScraper extends AbstractJavadocCheck {
                 scrapingViolationMessageList = true;
             }
             else if (exampleSectionStartIdx == -1
-                    && isExamplesText(ast)) {
+                     && isExamplesText(ast)) {
                 exampleSectionStartIdx = getParentIndexOf(ast);
             }
         }
@@ -263,13 +263,13 @@ public class JavadocMetadataScraper extends AbstractJavadocCheck {
             final DetailNode propertyNameTag = propertyNameNode.get();
 
             final Optional<DetailNode> propertyTypeNode =
-                    getFirstChildOfMatchingText(nodeLi, TYPE_TAG);
+                getFirstChildOfMatchingText(nodeLi, TYPE_TAG);
             if (propertyTypeNode.isPresent()) {
                 final DetailNode propertyType = propertyTypeNode.get();
                 final String propertyDesc = DESC_CLEAN.matcher(
-                        constructSubTreeText(nodeLi, propertyNameTag.getIndex() + 1,
-                                propertyType.getIndex() - 1))
-                        .replaceAll(Matcher.quoteReplacement(""));
+                                                constructSubTreeText(nodeLi, propertyNameTag.getIndex() + 1,
+                                                        propertyType.getIndex() - 1))
+                                            .replaceAll(Matcher.quoteReplacement(""));
 
                 modulePropertyDetails.setDescription(propertyDesc.trim());
             }
@@ -287,7 +287,7 @@ public class JavadocMetadataScraper extends AbstractJavadocCheck {
         if (validationTypeNodeOpt.isPresent()) {
             final DetailNode validationTypeNode = validationTypeNodeOpt.get();
             modulePropertyDetails.setValidationType(getTagTextFromProperty(nodeLi,
-                    validationTypeNode));
+                                                    validationTypeNode));
         }
 
         final String defaultValue = getPropertyDefaultText(nodeLi);
@@ -306,7 +306,7 @@ public class JavadocMetadataScraper extends AbstractJavadocCheck {
      */
     private static String getTagTextFromProperty(DetailNode nodeLi, DetailNode propertyMeta) {
         final Optional<DetailNode> tagNodeOpt = getFirstChildOfType(nodeLi,
-                JavadocTokenTypes.JAVADOC_INLINE_TAG, propertyMeta.getIndex() + 1);
+                                                JavadocTokenTypes.JAVADOC_INLINE_TAG, propertyMeta.getIndex() + 1);
         DetailNode tagNode = null;
         if (tagNodeOpt.isPresent()) {
             tagNode = tagNodeOpt.get();
@@ -339,7 +339,7 @@ public class JavadocMetadataScraper extends AbstractJavadocCheck {
      * @return constructed text of subtree
      */
     private static String constructSubTreeText(DetailNode node, int childLeftLimit,
-                                               int childRightLimit) {
+            int childRightLimit) {
         final StringBuilder result = new StringBuilder(1024);
         DetailNode detailNode = node;
 
@@ -362,7 +362,7 @@ public class JavadocMetadataScraper extends AbstractJavadocCheck {
             for (DetailNode child : detailNode.getChildren()) {
                 if (child.getParent().equals(node)
                         && (child.getIndex() < childLeftLimit
-                        || child.getIndex() > childRightLimit)) {
+                            || child.getIndex() > childRightLimit)) {
                     continue;
                 }
                 if (!visited.contains(child)) {
@@ -414,7 +414,7 @@ public class JavadocMetadataScraper extends AbstractJavadocCheck {
             }
             if (propertyDefaultValueTag == null) {
                 final String tokenText = constructSubTreeText(nodeLi,
-                        defaultValueNode.getIndex(), nodeLi.getChildren().length);
+                                         defaultValueNode.getIndex(), nodeLi.getChildren().length);
                 result = cleanDefaultTokensText(tokenText);
             }
             else {
@@ -432,7 +432,7 @@ public class JavadocMetadataScraper extends AbstractJavadocCheck {
      */
     private static String getViolationMessages(DetailNode nodeLi) {
         final Optional<DetailNode> resultNode = getFirstChildOfType(nodeLi,
-                JavadocTokenTypes.JAVADOC_INLINE_TAG, 0);
+                                                JavadocTokenTypes.JAVADOC_INLINE_TAG, 0);
         return resultNode.map(JavadocMetadataScraper::getTextFromTag).orElse("");
     }
 
@@ -456,10 +456,10 @@ public class JavadocMetadataScraper extends AbstractJavadocCheck {
      * @return the first child satisfying the conditions
      */
     private static Optional<DetailNode> getFirstChildOfType(DetailNode node, int tokenType,
-                                                            int offset) {
+            int offset) {
         return Arrays.stream(node.getChildren())
-                .filter(child -> child.getIndex() >= offset && child.getType() == tokenType)
-                .findFirst();
+               .filter(child -> child.getIndex() >= offset && child.getType() == tokenType)
+               .findFirst();
     }
 
     /**
@@ -470,9 +470,9 @@ public class JavadocMetadataScraper extends AbstractJavadocCheck {
      */
     private static String getText(DetailNode parentNode) {
         return Arrays.stream(parentNode.getChildren())
-                .filter(child -> child.getType() == JavadocTokenTypes.TEXT)
-                .map(node -> QUOTE_PATTERN.matcher(node.getText().trim()).replaceAll(""))
-                .collect(Collectors.joining(" "));
+               .filter(child -> child.getType() == JavadocTokenTypes.TEXT)
+               .map(node -> QUOTE_PATTERN.matcher(node.getText().trim()).replaceAll(""))
+               .collect(Collectors.joining(" "));
     }
 
     /**
@@ -483,10 +483,10 @@ public class JavadocMetadataScraper extends AbstractJavadocCheck {
      * @return the first child node matching the condition
      */
     private static Optional<DetailNode> getFirstChildOfMatchingText(DetailNode node,
-                                                                    Pattern pattern) {
+            Pattern pattern) {
         return Arrays.stream(node.getChildren())
-                .filter(child -> pattern.matcher(child.getText()).matches())
-                .findFirst();
+               .filter(child -> pattern.matcher(child.getText()).matches())
+               .findFirst();
     }
 
     /**
@@ -534,11 +534,11 @@ public class JavadocMetadataScraper extends AbstractJavadocCheck {
     private static String getParentText(DetailNode nodeParagraph) {
         String result = null;
         final Optional<DetailNode> resultNode = getFirstChildOfType(nodeParagraph,
-                JavadocTokenTypes.TEXT, 0);
+                                                JavadocTokenTypes.TEXT, 0);
         if (resultNode.isPresent()
                 && PARENT_TAG.matcher(resultNode.get().getText()).matches()) {
             final Optional<DetailNode> childNode = getFirstChildOfType(nodeParagraph,
-                    JavadocTokenTypes.JAVADOC_INLINE_TAG, 0);
+                                                   JavadocTokenTypes.JAVADOC_INLINE_TAG, 0);
             if (childNode.isPresent()) {
                 result = getTextFromTag(childNode.get());
             }
@@ -616,12 +616,12 @@ public class JavadocMetadataScraper extends AbstractJavadocCheck {
     public boolean isTopLevelClassJavadoc() {
         final DetailAST parent = getParent(getBlockCommentAst());
         final Optional<DetailAST> className = TokenUtil
-                .findFirstTokenByPredicate(parent, child -> {
-                    return parent.getType() == TokenTypes.CLASS_DEF
-                            && child.getType() == TokenTypes.IDENT;
-                });
+        .findFirstTokenByPredicate(parent, child -> {
+            return parent.getType() == TokenTypes.CLASS_DEF
+            && child.getType() == TokenTypes.IDENT;
+        });
         return className.isPresent()
-                && getModuleSimpleName().equals(className.get().getText());
+               && getModuleSimpleName().equals(className.get().getText());
     }
 
     /**
@@ -633,7 +633,7 @@ public class JavadocMetadataScraper extends AbstractJavadocCheck {
     private static boolean isExamplesText(DetailNode ast) {
         final Optional<DetailNode> resultNode = getFirstChildOfType(ast, JavadocTokenTypes.TEXT, 0);
         return resultNode.isPresent()
-                && EXAMPLES_TAG.matcher(resultNode.get().getText()).matches();
+               && EXAMPLES_TAG.matcher(resultNode.get().getText()).matches();
     }
 
     /**
@@ -644,9 +644,9 @@ public class JavadocMetadataScraper extends AbstractJavadocCheck {
      */
     private static boolean isPropertyList(DetailNode nodeLi) {
         final Optional<DetailNode> firstTextChildToken =
-                getFirstChildOfType(nodeLi, JavadocTokenTypes.TEXT, 0);
+            getFirstChildOfType(nodeLi, JavadocTokenTypes.TEXT, 0);
         return firstTextChildToken.isPresent()
-                && PROPERTY_TAG.matcher(firstTextChildToken.get().getText()).matches();
+               && PROPERTY_TAG.matcher(firstTextChildToken.get().getText()).matches();
     }
 
     /**
@@ -658,9 +658,9 @@ public class JavadocMetadataScraper extends AbstractJavadocCheck {
      */
     private static boolean isViolationMessagesText(DetailNode nodeParagraph) {
         final Optional<DetailNode> resultNode = getFirstChildOfType(nodeParagraph,
-                JavadocTokenTypes.TEXT, 0);
+                                                JavadocTokenTypes.TEXT, 0);
         return resultNode.isPresent()
-                && VIOLATION_MESSAGES_TAG.matcher(resultNode.get().getText()).matches();
+               && VIOLATION_MESSAGES_TAG.matcher(resultNode.get().getText()).matches();
     }
 
     /**
@@ -672,8 +672,8 @@ public class JavadocMetadataScraper extends AbstractJavadocCheck {
      */
     private static boolean isParentText(DetailNode nodeParagraph) {
         final Optional<DetailNode> resultNode = getFirstChildOfType(nodeParagraph,
-                JavadocTokenTypes.TEXT, 0);
+                                                JavadocTokenTypes.TEXT, 0);
         return resultNode.isPresent()
-                && PARENT_TAG.matcher(resultNode.get().getText()).matches();
+               && PARENT_TAG.matcher(resultNode.get().getText()).matches();
     }
 }

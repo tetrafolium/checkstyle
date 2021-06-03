@@ -45,13 +45,13 @@ public class ClassDefHandler extends BlockParentHandler {
     @Override
     protected DetailAST getLeftCurly() {
         return getMainAst().findFirstToken(TokenTypes.OBJBLOCK)
-            .findFirstToken(TokenTypes.LCURLY);
+               .findFirstToken(TokenTypes.LCURLY);
     }
 
     @Override
     protected DetailAST getRightCurly() {
         return getMainAst().findFirstToken(TokenTypes.OBJBLOCK)
-            .findFirstToken(TokenTypes.RCURLY);
+               .findFirstToken(TokenTypes.RCURLY);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class ClassDefHandler extends BlockParentHandler {
             final DetailAST atAst = getMainAst().findFirstToken(TokenTypes.AT);
             if (isOnStartOfLine(atAst)) {
                 checkWrappingIndentation(getMainAst(), getListChild(), 0,
-                        getIndent().getFirstIndentLevel(), false);
+                                         getIndent().getFirstIndentLevel(), false);
             }
         }
         else {
@@ -96,13 +96,13 @@ public class ClassDefHandler extends BlockParentHandler {
     @Override
     protected int[] getCheckedChildren() {
         return new int[] {
-            TokenTypes.EXPR,
-            TokenTypes.OBJBLOCK,
-            TokenTypes.LITERAL_BREAK,
-            TokenTypes.LITERAL_RETURN,
-            TokenTypes.LITERAL_THROW,
-            TokenTypes.LITERAL_CONTINUE,
-        };
+                   TokenTypes.EXPR,
+                   TokenTypes.OBJBLOCK,
+                   TokenTypes.LITERAL_BREAK,
+                   TokenTypes.LITERAL_RETURN,
+                   TokenTypes.LITERAL_THROW,
+                   TokenTypes.LITERAL_CONTINUE,
+               };
     }
 
     /**

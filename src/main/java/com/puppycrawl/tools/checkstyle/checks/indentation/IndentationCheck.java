@@ -529,7 +529,7 @@ public class IndentationCheck extends AbstractCheck {
     @Override
     public void visitToken(DetailAST ast) {
         final AbstractExpressionHandler handler = handlerFactory.getHandler(this, ast,
-            handlers.peek());
+                handlers.peek());
         handlers.push(handler);
         handler.checkIndentation();
     }

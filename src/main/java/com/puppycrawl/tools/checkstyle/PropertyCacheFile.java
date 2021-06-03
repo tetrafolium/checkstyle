@@ -270,7 +270,7 @@ public final class PropertyCacheFile {
                 final byte[] content = loadExternalResource(location);
                 final String contentHashSum = getHashCodeBasedOnObjectContent(content);
                 resources.add(new ExternalResource(EXTERNAL_RESOURCE_KEY_PREFIX + location,
-                        contentHashSum));
+                                                   contentHashSum));
             }
             catch (CheckstyleException | IOException ex) {
                 // if exception happened (configuration resource was not found, connection is not
@@ -279,7 +279,7 @@ public final class PropertyCacheFile {
                 // and/or the configuration is changed.
                 final String contentHashSum = getHashCodeBasedOnObjectContent(ex);
                 resources.add(new ExternalResource(EXTERNAL_RESOURCE_KEY_PREFIX + location,
-                        contentHashSum));
+                                                   contentHashSum));
             }
         }
         return resources;
@@ -294,7 +294,7 @@ public final class PropertyCacheFile {
      * @throws CheckstyleException if error while loading occurs.
      */
     private static byte[] loadExternalResource(String location)
-            throws IOException, CheckstyleException {
+    throws IOException, CheckstyleException {
         final URI uri = CommonUtil.getUriByFilename(location);
 
         try (InputStream is = uri.toURL().openStream()) {
@@ -363,7 +363,7 @@ public final class PropertyCacheFile {
      */
     private void fillCacheWithExternalResources(Set<ExternalResource> externalResources) {
         externalResources
-            .forEach(resource -> details.setProperty(resource.location, resource.contentHashSum));
+        .forEach(resource -> details.setProperty(resource.location, resource.contentHashSum));
     }
 
     /**

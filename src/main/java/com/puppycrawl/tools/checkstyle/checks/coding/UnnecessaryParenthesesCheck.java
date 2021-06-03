@@ -262,61 +262,61 @@ public class UnnecessaryParenthesesCheck extends AbstractCheck {
     @Override
     public int[] getDefaultTokens() {
         return new int[] {
-            TokenTypes.EXPR,
-            TokenTypes.IDENT,
-            TokenTypes.NUM_DOUBLE,
-            TokenTypes.NUM_FLOAT,
-            TokenTypes.NUM_INT,
-            TokenTypes.NUM_LONG,
-            TokenTypes.STRING_LITERAL,
-            TokenTypes.LITERAL_NULL,
-            TokenTypes.LITERAL_FALSE,
-            TokenTypes.LITERAL_TRUE,
-            TokenTypes.ASSIGN,
-            TokenTypes.BAND_ASSIGN,
-            TokenTypes.BOR_ASSIGN,
-            TokenTypes.BSR_ASSIGN,
-            TokenTypes.BXOR_ASSIGN,
-            TokenTypes.DIV_ASSIGN,
-            TokenTypes.MINUS_ASSIGN,
-            TokenTypes.MOD_ASSIGN,
-            TokenTypes.PLUS_ASSIGN,
-            TokenTypes.SL_ASSIGN,
-            TokenTypes.SR_ASSIGN,
-            TokenTypes.STAR_ASSIGN,
-            TokenTypes.LAMBDA,
-            TokenTypes.TEXT_BLOCK_LITERAL_BEGIN,
-        };
+                   TokenTypes.EXPR,
+                   TokenTypes.IDENT,
+                   TokenTypes.NUM_DOUBLE,
+                   TokenTypes.NUM_FLOAT,
+                   TokenTypes.NUM_INT,
+                   TokenTypes.NUM_LONG,
+                   TokenTypes.STRING_LITERAL,
+                   TokenTypes.LITERAL_NULL,
+                   TokenTypes.LITERAL_FALSE,
+                   TokenTypes.LITERAL_TRUE,
+                   TokenTypes.ASSIGN,
+                   TokenTypes.BAND_ASSIGN,
+                   TokenTypes.BOR_ASSIGN,
+                   TokenTypes.BSR_ASSIGN,
+                   TokenTypes.BXOR_ASSIGN,
+                   TokenTypes.DIV_ASSIGN,
+                   TokenTypes.MINUS_ASSIGN,
+                   TokenTypes.MOD_ASSIGN,
+                   TokenTypes.PLUS_ASSIGN,
+                   TokenTypes.SL_ASSIGN,
+                   TokenTypes.SR_ASSIGN,
+                   TokenTypes.STAR_ASSIGN,
+                   TokenTypes.LAMBDA,
+                   TokenTypes.TEXT_BLOCK_LITERAL_BEGIN,
+               };
     }
 
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.EXPR,
-            TokenTypes.IDENT,
-            TokenTypes.NUM_DOUBLE,
-            TokenTypes.NUM_FLOAT,
-            TokenTypes.NUM_INT,
-            TokenTypes.NUM_LONG,
-            TokenTypes.STRING_LITERAL,
-            TokenTypes.LITERAL_NULL,
-            TokenTypes.LITERAL_FALSE,
-            TokenTypes.LITERAL_TRUE,
-            TokenTypes.ASSIGN,
-            TokenTypes.BAND_ASSIGN,
-            TokenTypes.BOR_ASSIGN,
-            TokenTypes.BSR_ASSIGN,
-            TokenTypes.BXOR_ASSIGN,
-            TokenTypes.DIV_ASSIGN,
-            TokenTypes.MINUS_ASSIGN,
-            TokenTypes.MOD_ASSIGN,
-            TokenTypes.PLUS_ASSIGN,
-            TokenTypes.SL_ASSIGN,
-            TokenTypes.SR_ASSIGN,
-            TokenTypes.STAR_ASSIGN,
-            TokenTypes.LAMBDA,
-            TokenTypes.TEXT_BLOCK_LITERAL_BEGIN,
-        };
+                   TokenTypes.EXPR,
+                   TokenTypes.IDENT,
+                   TokenTypes.NUM_DOUBLE,
+                   TokenTypes.NUM_FLOAT,
+                   TokenTypes.NUM_INT,
+                   TokenTypes.NUM_LONG,
+                   TokenTypes.STRING_LITERAL,
+                   TokenTypes.LITERAL_NULL,
+                   TokenTypes.LITERAL_FALSE,
+                   TokenTypes.LITERAL_TRUE,
+                   TokenTypes.ASSIGN,
+                   TokenTypes.BAND_ASSIGN,
+                   TokenTypes.BOR_ASSIGN,
+                   TokenTypes.BSR_ASSIGN,
+                   TokenTypes.BXOR_ASSIGN,
+                   TokenTypes.DIV_ASSIGN,
+                   TokenTypes.MINUS_ASSIGN,
+                   TokenTypes.MOD_ASSIGN,
+                   TokenTypes.PLUS_ASSIGN,
+                   TokenTypes.SL_ASSIGN,
+                   TokenTypes.SR_ASSIGN,
+                   TokenTypes.STAR_ASSIGN,
+                   TokenTypes.LAMBDA,
+                   TokenTypes.TEXT_BLOCK_LITERAL_BEGIN,
+               };
     }
 
     @Override
@@ -335,7 +335,7 @@ public class UnnecessaryParenthesesCheck extends AbstractCheck {
             log(ast, MSG_LAMBDA, ast.getText());
         }
         else if (type != TokenTypes.ASSIGN
-            || parent.getType() != TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR) {
+                 || parent.getType() != TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR) {
             final boolean surrounded = isSurrounded(ast);
             // An identifier surrounded by parentheses.
             if (surrounded && type == TokenTypes.IDENT) {
@@ -353,9 +353,9 @@ public class UnnecessaryParenthesesCheck extends AbstractCheck {
                     // Strip newline control characters to keep message as single line, add
                     // quotes to make string consistent with STRING_LITERAL
                     final String logString = QUOTE
-                        + NEWLINE.matcher(
-                            ast.getFirstChild().getText()).replaceAll("\\\\n")
-                        + QUOTE;
+                                             + NEWLINE.matcher(
+                                                 ast.getFirstChild().getText()).replaceAll("\\\\n")
+                                             + QUOTE;
                     log(ast, MSG_STRING, chopString(logString));
                 }
                 else {
@@ -380,7 +380,7 @@ public class UnnecessaryParenthesesCheck extends AbstractCheck {
 
         // shouldn't process assign in annotation pairs
         if (type != TokenTypes.ASSIGN
-            || parent.getType() != TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR) {
+                || parent.getType() != TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR) {
             // An expression is surrounded by parentheses.
             if (type == TokenTypes.EXPR) {
                 // If 'parentToSkip' == 'ast', then we've already logged a

@@ -108,7 +108,7 @@ public class UniquePropertiesCheck extends AbstractFileSetCheck {
         }
         catch (IOException ex) {
             log(1, MSG_IO_EXCEPTION_KEY, file.getPath(),
-                    ex.getLocalizedMessage());
+                ex.getLocalizedMessage());
         }
 
         for (Entry<String, AtomicInteger> duplication : properties
@@ -160,7 +160,7 @@ public class UniquePropertiesCheck extends AbstractFileSetCheck {
      */
     private static Pattern getKeyPattern(String keyName) {
         final String keyPatternString = "^" + SPACE_PATTERN.matcher(keyName)
-                .replaceAll(Matcher.quoteReplacement("\\\\ ")) + "[\\s:=].*$";
+                                        .replaceAll(Matcher.quoteReplacement("\\\\ ")) + "[\\s:=].*$";
         return Pattern.compile(keyPatternString);
     }
 
@@ -190,7 +190,7 @@ public class UniquePropertiesCheck extends AbstractFileSetCheck {
                 final String keyString = (String) key;
 
                 duplicatedKeys.computeIfAbsent(keyString, empty -> new AtomicInteger(0))
-                        .incrementAndGet();
+                .incrementAndGet();
             }
             return oldValue;
         }

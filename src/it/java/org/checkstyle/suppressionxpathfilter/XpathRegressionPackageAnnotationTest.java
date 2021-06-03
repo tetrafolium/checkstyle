@@ -40,40 +40,40 @@ public class XpathRegressionPackageAnnotationTest extends AbstractXpathTestSuppo
     @Test
     public void testOne() throws Exception {
         final File fileToProcess =
-                new File(getNonCompilablePath(
-                        "SuppressionXpathRegressionPackageAnnotationOne.java"));
+            new File(getNonCompilablePath(
+                         "SuppressionXpathRegressionPackageAnnotationOne.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(PackageAnnotationCheck.class);
+            createModuleConfig(PackageAnnotationCheck.class);
 
         final String[] expectedViolation = {
             "4:1: " + getCheckMessage(PackageAnnotationCheck.class,
-                PackageAnnotationCheck.MSG_KEY),
+                                      PackageAnnotationCheck.MSG_KEY),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList("/PACKAGE_DEF");
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess =
-                new File(getNonCompilablePath(
-                        "SuppressionXpathRegressionPackageAnnotationTwo.java"));
+            new File(getNonCompilablePath(
+                         "SuppressionXpathRegressionPackageAnnotationTwo.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(PackageAnnotationCheck.class);
+            createModuleConfig(PackageAnnotationCheck.class);
 
         final String[] expectedViolation = {
             "4:1: " + getCheckMessage(PackageAnnotationCheck.class,
-                PackageAnnotationCheck.MSG_KEY),
+                                      PackageAnnotationCheck.MSG_KEY),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList("/PACKAGE_DEF");
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }

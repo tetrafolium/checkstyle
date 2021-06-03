@@ -90,14 +90,14 @@ public class RecordTypeParameterNameCheck extends AbstractNameCheck {
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.TYPE_PARAMETER,
-        };
+                   TokenTypes.TYPE_PARAMETER,
+               };
     }
 
     @Override
     protected final boolean mustCheckName(DetailAST ast) {
         final DetailAST location =
-                ast.getParent().getParent();
+            ast.getParent().getParent();
         return location.getType() == TokenTypes.RECORD_DEF;
     }
 

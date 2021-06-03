@@ -73,11 +73,11 @@ public class PackageObjectFactory implements ModuleFactory {
 
     /** Exception message when it is unable to create a class instance. */
     public static final String UNABLE_TO_INSTANTIATE_EXCEPTION_MESSAGE =
-            "PackageObjectFactory.unableToInstantiateExceptionMessage";
+        "PackageObjectFactory.unableToInstantiateExceptionMessage";
 
     /** Exception message when there is ambiguous module name in config file. */
     public static final String AMBIGUOUS_MODULE_NAME_EXCEPTION_MESSAGE =
-            "PackageObjectFactory.ambiguousModuleNameExceptionMessage";
+        "PackageObjectFactory.ambiguousModuleNameExceptionMessage";
 
     /** Suffix of checks. */
     public static final String CHECK_SUFFIX = "Check";
@@ -134,7 +134,7 @@ public class PackageObjectFactory implements ModuleFactory {
      * @throws IllegalArgumentException if moduleClassLoader is null or packageNames contains null
      */
     public PackageObjectFactory(Set<String> packageNames, ClassLoader moduleClassLoader,
-            ModuleLoadOption moduleLoadOption) {
+                                ModuleLoadOption moduleLoadOption) {
         if (moduleClassLoader == null) {
             throw new IllegalArgumentException(NULL_LOADER_MESSAGE);
         }
@@ -189,7 +189,7 @@ public class PackageObjectFactory implements ModuleFactory {
             if (instance == null) {
                 if (thirdPartyNameToFullModuleNames == null) {
                     thirdPartyNameToFullModuleNames =
-                            generateThirdPartyNameToFullModuleName(moduleClassLoader);
+                        generateThirdPartyNameToFullModuleName(moduleClassLoader);
                 }
                 instance = createObjectFromMap(name, thirdPartyNameToFullModuleNames);
             }
@@ -206,12 +206,12 @@ public class PackageObjectFactory implements ModuleFactory {
             if (!name.contains(PACKAGE_SEPARATOR)) {
                 final String nameCheck = name + CHECK_SUFFIX;
                 attemptedNames = joinPackageNamesWithClassName(name, packages)
-                        + STRING_SEPARATOR + nameCheck + STRING_SEPARATOR
-                        + joinPackageNamesWithClassName(nameCheck, packages);
+                                 + STRING_SEPARATOR + nameCheck + STRING_SEPARATOR
+                                 + joinPackageNamesWithClassName(nameCheck, packages);
             }
             final LocalizedMessage exceptionMessage = new LocalizedMessage(1,
-                Definitions.CHECKSTYLE_BUNDLE, UNABLE_TO_INSTANTIATE_EXCEPTION_MESSAGE,
-                new String[] {name, attemptedNames}, null, getClass(), null);
+                    Definitions.CHECKSTYLE_BUNDLE, UNABLE_TO_INSTANTIATE_EXCEPTION_MESSAGE,
+                    new String[] {name, attemptedNames}, null, getClass(), null);
             throw new CheckstyleException(exceptionMessage.getMessage());
         }
         return instance;
@@ -229,7 +229,7 @@ public class PackageObjectFactory implements ModuleFactory {
         Object instance = null;
         if (fullModuleName == null) {
             final String fullCheckModuleName =
-                    NAME_TO_FULL_MODULE_NAME.get(name + CHECK_SUFFIX);
+                NAME_TO_FULL_MODULE_NAME.get(name + CHECK_SUFFIX);
             if (fullCheckModuleName != null) {
                 instance = createObject(fullCheckModuleName);
             }
@@ -249,7 +249,7 @@ public class PackageObjectFactory implements ModuleFactory {
      * @throws CheckstyleException if the class fails to instantiate or there are ambiguous classes.
      */
     private Object createObjectFromMap(String name, Map<String, Set<String>> map)
-            throws CheckstyleException {
+    throws CheckstyleException {
         final Set<String> fullModuleNames = map.get(name);
         Object instance = null;
         if (fullModuleNames == null) {
@@ -276,15 +276,15 @@ public class PackageObjectFactory implements ModuleFactory {
      *      element in {@code fullModuleName}
      */
     private Object createObjectFromFullModuleNames(String name, Set<String> fullModuleNames)
-            throws CheckstyleException {
+    throws CheckstyleException {
         final Object returnValue;
         if (fullModuleNames.size() == 1) {
             returnValue = createObject(fullModuleNames.iterator().next());
         }
         else {
             final String optionalNames = fullModuleNames.stream()
-                    .sorted()
-                    .collect(Collectors.joining(STRING_SEPARATOR));
+                                         .sorted()
+                                         .collect(Collectors.joining(STRING_SEPARATOR));
             final LocalizedMessage exceptionMessage = new LocalizedMessage(1,
                     Definitions.CHECKSTYLE_BUNDLE, AMBIGUOUS_MODULE_NAME_EXCEPTION_MESSAGE,
                     new String[] {name, optionalNames}, null, getClass(), null);
@@ -305,8 +305,8 @@ public class PackageObjectFactory implements ModuleFactory {
         Map<String, Set<String>> returnValue;
         try {
             returnValue = ModuleReflectionUtil.getCheckstyleModules(packages, loader).stream()
-                .collect(Collectors.groupingBy(Class::getSimpleName,
-                    Collectors.mapping(Class::getCanonicalName, Collectors.toSet())));
+                          .collect(Collectors.groupingBy(Class::getSimpleName,
+                                   Collectors.mapping(Class::getCanonicalName, Collectors.toSet())));
         }
         catch (IOException ignore) {
             returnValue = Collections.emptyMap();
@@ -322,12 +322,12 @@ public class PackageObjectFactory implements ModuleFactory {
      */
     public static String getShortFromFullModuleNames(String fullName) {
         return NAME_TO_FULL_MODULE_NAME
-                .entrySet()
-                .stream()
-                .filter(entry -> entry.getValue().equals(fullName))
-                .map(Entry::getKey)
-                .findFirst()
-                .orElse(fullName);
+               .entrySet()
+               .stream()
+               .filter(entry -> entry.getValue().equals(fullName))
+               .map(Entry::getKey)
+               .findFirst()
+               .orElse(fullName);
     }
 
     /**
@@ -339,8 +339,8 @@ public class PackageObjectFactory implements ModuleFactory {
      */
     private static String joinPackageNamesWithClassName(String className, Set<String> packages) {
         return packages.stream().collect(
-            Collectors.joining(PACKAGE_SEPARATOR + className + STRING_SEPARATOR, "",
-                    PACKAGE_SEPARATOR + className));
+                   Collectors.joining(PACKAGE_SEPARATOR + className + STRING_SEPARATOR, "",
+                                      PACKAGE_SEPARATOR + className));
     }
 
     /**
@@ -384,9 +384,9 @@ public class PackageObjectFactory implements ModuleFactory {
      */
     private Object createModuleByTryInEachPackage(String name) throws CheckstyleException {
         final List<String> possibleNames = packages.stream()
-            .map(packageName -> packageName + PACKAGE_SEPARATOR + name)
-            .flatMap(className -> Stream.of(className, className + CHECK_SUFFIX))
-            .collect(Collectors.toList());
+                                           .map(packageName -> packageName + PACKAGE_SEPARATOR + name)
+                                           .flatMap(className -> Stream.of(className, className + CHECK_SUFFIX))
+                                           .collect(Collectors.toList());
         Object instance = null;
         for (String possibleName : possibleNames) {
             instance = createObject(possibleName);
@@ -426,19 +426,19 @@ public class PackageObjectFactory implements ModuleFactory {
      */
     private static void fillChecksFromAnnotationPackage() {
         NAME_TO_FULL_MODULE_NAME.put("AnnotationLocationCheck",
-                BASE_PACKAGE + ".checks.annotation.AnnotationLocationCheck");
+                                     BASE_PACKAGE + ".checks.annotation.AnnotationLocationCheck");
         NAME_TO_FULL_MODULE_NAME.put("AnnotationOnSameLineCheck",
-                BASE_PACKAGE + ".checks.annotation.AnnotationOnSameLineCheck");
+                                     BASE_PACKAGE + ".checks.annotation.AnnotationOnSameLineCheck");
         NAME_TO_FULL_MODULE_NAME.put("AnnotationUseStyleCheck",
-                BASE_PACKAGE + ".checks.annotation.AnnotationUseStyleCheck");
+                                     BASE_PACKAGE + ".checks.annotation.AnnotationUseStyleCheck");
         NAME_TO_FULL_MODULE_NAME.put("MissingDeprecatedCheck",
-                BASE_PACKAGE + ".checks.annotation.MissingDeprecatedCheck");
+                                     BASE_PACKAGE + ".checks.annotation.MissingDeprecatedCheck");
         NAME_TO_FULL_MODULE_NAME.put("MissingOverrideCheck",
-                BASE_PACKAGE + ".checks.annotation.MissingOverrideCheck");
+                                     BASE_PACKAGE + ".checks.annotation.MissingOverrideCheck");
         NAME_TO_FULL_MODULE_NAME.put("PackageAnnotationCheck",
-                BASE_PACKAGE + ".checks.annotation.PackageAnnotationCheck");
+                                     BASE_PACKAGE + ".checks.annotation.PackageAnnotationCheck");
         NAME_TO_FULL_MODULE_NAME.put("SuppressWarningsCheck",
-                BASE_PACKAGE + ".checks.annotation.SuppressWarningsCheck");
+                                     BASE_PACKAGE + ".checks.annotation.SuppressWarningsCheck");
     }
 
     /**
@@ -446,17 +446,17 @@ public class PackageObjectFactory implements ModuleFactory {
      */
     private static void fillChecksFromBlocksPackage() {
         NAME_TO_FULL_MODULE_NAME.put("AvoidNestedBlocksCheck",
-                BASE_PACKAGE + ".checks.blocks.AvoidNestedBlocksCheck");
+                                     BASE_PACKAGE + ".checks.blocks.AvoidNestedBlocksCheck");
         NAME_TO_FULL_MODULE_NAME.put("EmptyBlockCheck",
-                BASE_PACKAGE + ".checks.blocks.EmptyBlockCheck");
+                                     BASE_PACKAGE + ".checks.blocks.EmptyBlockCheck");
         NAME_TO_FULL_MODULE_NAME.put("EmptyCatchBlockCheck",
-                BASE_PACKAGE + ".checks.blocks.EmptyCatchBlockCheck");
+                                     BASE_PACKAGE + ".checks.blocks.EmptyCatchBlockCheck");
         NAME_TO_FULL_MODULE_NAME.put("LeftCurlyCheck",
-                BASE_PACKAGE + ".checks.blocks.LeftCurlyCheck");
+                                     BASE_PACKAGE + ".checks.blocks.LeftCurlyCheck");
         NAME_TO_FULL_MODULE_NAME.put("NeedBracesCheck",
-                BASE_PACKAGE + ".checks.blocks.NeedBracesCheck");
+                                     BASE_PACKAGE + ".checks.blocks.NeedBracesCheck");
         NAME_TO_FULL_MODULE_NAME.put("RightCurlyCheck",
-                BASE_PACKAGE + ".checks.blocks.RightCurlyCheck");
+                                     BASE_PACKAGE + ".checks.blocks.RightCurlyCheck");
     }
 
     /**
@@ -466,111 +466,111 @@ public class PackageObjectFactory implements ModuleFactory {
     // -@cs[JavaNCSS] splitting this method is not reasonable.
     private static void fillChecksFromCodingPackage() {
         NAME_TO_FULL_MODULE_NAME.put("ArrayTrailingCommaCheck",
-                BASE_PACKAGE + ".checks.coding.ArrayTrailingCommaCheck");
+                                     BASE_PACKAGE + ".checks.coding.ArrayTrailingCommaCheck");
         NAME_TO_FULL_MODULE_NAME.put("AvoidDoubleBraceInitializationCheck",
-                BASE_PACKAGE + ".checks.coding.AvoidDoubleBraceInitializationCheck");
+                                     BASE_PACKAGE + ".checks.coding.AvoidDoubleBraceInitializationCheck");
         NAME_TO_FULL_MODULE_NAME.put("AvoidInlineConditionalsCheck",
-                BASE_PACKAGE + ".checks.coding.AvoidInlineConditionalsCheck");
+                                     BASE_PACKAGE + ".checks.coding.AvoidInlineConditionalsCheck");
         NAME_TO_FULL_MODULE_NAME.put("AvoidNoArgumentSuperConstructorCallCheck",
-                BASE_PACKAGE + ".checks.coding.AvoidNoArgumentSuperConstructorCallCheck");
+                                     BASE_PACKAGE + ".checks.coding.AvoidNoArgumentSuperConstructorCallCheck");
         NAME_TO_FULL_MODULE_NAME.put("CovariantEqualsCheck",
-                BASE_PACKAGE + ".checks.coding.CovariantEqualsCheck");
+                                     BASE_PACKAGE + ".checks.coding.CovariantEqualsCheck");
         NAME_TO_FULL_MODULE_NAME.put("DeclarationOrderCheck",
-                BASE_PACKAGE + ".checks.coding.DeclarationOrderCheck");
+                                     BASE_PACKAGE + ".checks.coding.DeclarationOrderCheck");
         NAME_TO_FULL_MODULE_NAME.put("DefaultComesLastCheck",
-                BASE_PACKAGE + ".checks.coding.DefaultComesLastCheck");
+                                     BASE_PACKAGE + ".checks.coding.DefaultComesLastCheck");
         NAME_TO_FULL_MODULE_NAME.put("EmptyStatementCheck",
-                BASE_PACKAGE + ".checks.coding.EmptyStatementCheck");
+                                     BASE_PACKAGE + ".checks.coding.EmptyStatementCheck");
         NAME_TO_FULL_MODULE_NAME.put("EqualsAvoidNullCheck",
-                BASE_PACKAGE + ".checks.coding.EqualsAvoidNullCheck");
+                                     BASE_PACKAGE + ".checks.coding.EqualsAvoidNullCheck");
         NAME_TO_FULL_MODULE_NAME.put("EqualsHashCodeCheck",
-                BASE_PACKAGE + ".checks.coding.EqualsHashCodeCheck");
+                                     BASE_PACKAGE + ".checks.coding.EqualsHashCodeCheck");
         NAME_TO_FULL_MODULE_NAME.put("ExplicitInitializationCheck",
-                BASE_PACKAGE + ".checks.coding.ExplicitInitializationCheck");
+                                     BASE_PACKAGE + ".checks.coding.ExplicitInitializationCheck");
         NAME_TO_FULL_MODULE_NAME.put("FallThroughCheck",
-                BASE_PACKAGE + ".checks.coding.FallThroughCheck");
+                                     BASE_PACKAGE + ".checks.coding.FallThroughCheck");
         NAME_TO_FULL_MODULE_NAME.put("FinalLocalVariableCheck",
-                BASE_PACKAGE + ".checks.coding.FinalLocalVariableCheck");
+                                     BASE_PACKAGE + ".checks.coding.FinalLocalVariableCheck");
         NAME_TO_FULL_MODULE_NAME.put("HiddenFieldCheck",
-                BASE_PACKAGE + ".checks.coding.HiddenFieldCheck");
+                                     BASE_PACKAGE + ".checks.coding.HiddenFieldCheck");
         NAME_TO_FULL_MODULE_NAME.put("IllegalCatchCheck",
-                BASE_PACKAGE + ".checks.coding.IllegalCatchCheck");
+                                     BASE_PACKAGE + ".checks.coding.IllegalCatchCheck");
         NAME_TO_FULL_MODULE_NAME.put("IllegalInstantiationCheck",
-                BASE_PACKAGE + ".checks.coding.IllegalInstantiationCheck");
+                                     BASE_PACKAGE + ".checks.coding.IllegalInstantiationCheck");
         NAME_TO_FULL_MODULE_NAME.put("IllegalThrowsCheck",
-                BASE_PACKAGE + ".checks.coding.IllegalThrowsCheck");
+                                     BASE_PACKAGE + ".checks.coding.IllegalThrowsCheck");
         NAME_TO_FULL_MODULE_NAME.put("IllegalTokenCheck",
-                BASE_PACKAGE + ".checks.coding.IllegalTokenCheck");
+                                     BASE_PACKAGE + ".checks.coding.IllegalTokenCheck");
         NAME_TO_FULL_MODULE_NAME.put("IllegalTokenTextCheck",
-                BASE_PACKAGE + ".checks.coding.IllegalTokenTextCheck");
+                                     BASE_PACKAGE + ".checks.coding.IllegalTokenTextCheck");
         NAME_TO_FULL_MODULE_NAME.put("IllegalTypeCheck",
-                BASE_PACKAGE + ".checks.coding.IllegalTypeCheck");
+                                     BASE_PACKAGE + ".checks.coding.IllegalTypeCheck");
         NAME_TO_FULL_MODULE_NAME.put("InnerAssignmentCheck",
-                BASE_PACKAGE + ".checks.coding.InnerAssignmentCheck");
+                                     BASE_PACKAGE + ".checks.coding.InnerAssignmentCheck");
         NAME_TO_FULL_MODULE_NAME.put("MagicNumberCheck",
-                BASE_PACKAGE + ".checks.coding.MagicNumberCheck");
+                                     BASE_PACKAGE + ".checks.coding.MagicNumberCheck");
         NAME_TO_FULL_MODULE_NAME.put("MissingCtorCheck",
-                BASE_PACKAGE + ".checks.coding.MissingCtorCheck");
+                                     BASE_PACKAGE + ".checks.coding.MissingCtorCheck");
         NAME_TO_FULL_MODULE_NAME.put("MissingSwitchDefaultCheck",
-                BASE_PACKAGE + ".checks.coding.MissingSwitchDefaultCheck");
+                                     BASE_PACKAGE + ".checks.coding.MissingSwitchDefaultCheck");
         NAME_TO_FULL_MODULE_NAME.put("ModifiedControlVariableCheck",
-                BASE_PACKAGE + ".checks.coding.ModifiedControlVariableCheck");
+                                     BASE_PACKAGE + ".checks.coding.ModifiedControlVariableCheck");
         NAME_TO_FULL_MODULE_NAME.put("MultipleStringLiteralsCheck",
-                BASE_PACKAGE + ".checks.coding.MultipleStringLiteralsCheck");
+                                     BASE_PACKAGE + ".checks.coding.MultipleStringLiteralsCheck");
         NAME_TO_FULL_MODULE_NAME.put("MultipleVariableDeclarationsCheck",
-                BASE_PACKAGE + ".checks.coding.MultipleVariableDeclarationsCheck");
+                                     BASE_PACKAGE + ".checks.coding.MultipleVariableDeclarationsCheck");
         NAME_TO_FULL_MODULE_NAME.put("NestedForDepthCheck",
-                BASE_PACKAGE + ".checks.coding.NestedForDepthCheck");
+                                     BASE_PACKAGE + ".checks.coding.NestedForDepthCheck");
         NAME_TO_FULL_MODULE_NAME.put("NestedIfDepthCheck",
-                BASE_PACKAGE + ".checks.coding.NestedIfDepthCheck");
+                                     BASE_PACKAGE + ".checks.coding.NestedIfDepthCheck");
         NAME_TO_FULL_MODULE_NAME.put("NestedTryDepthCheck",
-                BASE_PACKAGE + ".checks.coding.NestedTryDepthCheck");
+                                     BASE_PACKAGE + ".checks.coding.NestedTryDepthCheck");
         NAME_TO_FULL_MODULE_NAME.put("NoCloneCheck",
-                BASE_PACKAGE + ".checks.coding.NoCloneCheck");
+                                     BASE_PACKAGE + ".checks.coding.NoCloneCheck");
         NAME_TO_FULL_MODULE_NAME.put("NoEnumTrailingCommaCheck",
-                BASE_PACKAGE + ".checks.coding.NoEnumTrailingCommaCheck");
+                                     BASE_PACKAGE + ".checks.coding.NoEnumTrailingCommaCheck");
         NAME_TO_FULL_MODULE_NAME.put("NoFinalizerCheck",
-                BASE_PACKAGE + ".checks.coding.NoFinalizerCheck");
+                                     BASE_PACKAGE + ".checks.coding.NoFinalizerCheck");
         NAME_TO_FULL_MODULE_NAME.put("OneStatementPerLineCheck",
-                BASE_PACKAGE + ".checks.coding.OneStatementPerLineCheck");
+                                     BASE_PACKAGE + ".checks.coding.OneStatementPerLineCheck");
         NAME_TO_FULL_MODULE_NAME.put("OverloadMethodsDeclarationOrderCheck",
-                BASE_PACKAGE + ".checks.coding.OverloadMethodsDeclarationOrderCheck");
+                                     BASE_PACKAGE + ".checks.coding.OverloadMethodsDeclarationOrderCheck");
         NAME_TO_FULL_MODULE_NAME.put("PackageDeclarationCheck",
-                BASE_PACKAGE + ".checks.coding.PackageDeclarationCheck");
+                                     BASE_PACKAGE + ".checks.coding.PackageDeclarationCheck");
         NAME_TO_FULL_MODULE_NAME.put("ParameterAssignmentCheck",
-                BASE_PACKAGE + ".checks.coding.ParameterAssignmentCheck");
+                                     BASE_PACKAGE + ".checks.coding.ParameterAssignmentCheck");
         NAME_TO_FULL_MODULE_NAME.put("RequireThisCheck",
-                BASE_PACKAGE + ".checks.coding.RequireThisCheck");
+                                     BASE_PACKAGE + ".checks.coding.RequireThisCheck");
         NAME_TO_FULL_MODULE_NAME.put("ReturnCountCheck",
-                BASE_PACKAGE + ".checks.coding.ReturnCountCheck");
+                                     BASE_PACKAGE + ".checks.coding.ReturnCountCheck");
         NAME_TO_FULL_MODULE_NAME.put("SimplifyBooleanExpressionCheck",
-                BASE_PACKAGE + ".checks.coding.SimplifyBooleanExpressionCheck");
+                                     BASE_PACKAGE + ".checks.coding.SimplifyBooleanExpressionCheck");
         NAME_TO_FULL_MODULE_NAME.put("SimplifyBooleanReturnCheck",
-                BASE_PACKAGE + ".checks.coding.SimplifyBooleanReturnCheck");
+                                     BASE_PACKAGE + ".checks.coding.SimplifyBooleanReturnCheck");
         NAME_TO_FULL_MODULE_NAME.put("StringLiteralEqualityCheck",
-                BASE_PACKAGE + ".checks.coding.StringLiteralEqualityCheck");
+                                     BASE_PACKAGE + ".checks.coding.StringLiteralEqualityCheck");
         NAME_TO_FULL_MODULE_NAME.put("SuperCloneCheck",
-                BASE_PACKAGE + ".checks.coding.SuperCloneCheck");
+                                     BASE_PACKAGE + ".checks.coding.SuperCloneCheck");
         NAME_TO_FULL_MODULE_NAME.put("SuperFinalizeCheck",
-                BASE_PACKAGE + ".checks.coding.SuperFinalizeCheck");
+                                     BASE_PACKAGE + ".checks.coding.SuperFinalizeCheck");
         NAME_TO_FULL_MODULE_NAME.put("UnnecessaryParenthesesCheck",
-                BASE_PACKAGE + ".checks.coding.UnnecessaryParenthesesCheck");
+                                     BASE_PACKAGE + ".checks.coding.UnnecessaryParenthesesCheck");
         NAME_TO_FULL_MODULE_NAME.put("UnnecessarySemicolonAfterOuterTypeDeclarationCheck",
-                BASE_PACKAGE
-                        + ".checks.coding.UnnecessarySemicolonAfterOuterTypeDeclarationCheck");
+                                     BASE_PACKAGE
+                                     + ".checks.coding.UnnecessarySemicolonAfterOuterTypeDeclarationCheck");
         NAME_TO_FULL_MODULE_NAME.put("UnnecessarySemicolonAfterTypeMemberDeclarationCheck",
-                BASE_PACKAGE
-                    + ".checks.coding.UnnecessarySemicolonAfterTypeMemberDeclarationCheck");
+                                     BASE_PACKAGE
+                                     + ".checks.coding.UnnecessarySemicolonAfterTypeMemberDeclarationCheck");
         NAME_TO_FULL_MODULE_NAME.put("UnnecessarySemicolonInEnumerationCheck",
-                BASE_PACKAGE + ".checks.coding.UnnecessarySemicolonInEnumerationCheck");
+                                     BASE_PACKAGE + ".checks.coding.UnnecessarySemicolonInEnumerationCheck");
         NAME_TO_FULL_MODULE_NAME.put("UnnecessarySemicolonInTryWithResourcesCheck",
-                BASE_PACKAGE + ".checks.coding.UnnecessarySemicolonInTryWithResourcesCheck");
+                                     BASE_PACKAGE + ".checks.coding.UnnecessarySemicolonInTryWithResourcesCheck");
         NAME_TO_FULL_MODULE_NAME.put("VariableDeclarationUsageDistanceCheck",
-                BASE_PACKAGE + ".checks.coding.VariableDeclarationUsageDistanceCheck");
+                                     BASE_PACKAGE + ".checks.coding.VariableDeclarationUsageDistanceCheck");
         NAME_TO_FULL_MODULE_NAME.put("NoArrayTrailingCommaCheck",
-                BASE_PACKAGE + ".checks.coding.NoArrayTrailingCommaCheck");
+                                     BASE_PACKAGE + ".checks.coding.NoArrayTrailingCommaCheck");
         NAME_TO_FULL_MODULE_NAME.put("MatchXpathCheck",
-                BASE_PACKAGE + ".checks.coding.MatchXpathCheck");
+                                     BASE_PACKAGE + ".checks.coding.MatchXpathCheck");
     }
 
     /**
@@ -578,23 +578,23 @@ public class PackageObjectFactory implements ModuleFactory {
      */
     private static void fillChecksFromDesignPackage() {
         NAME_TO_FULL_MODULE_NAME.put("DesignForExtensionCheck",
-                BASE_PACKAGE + ".checks.design.DesignForExtensionCheck");
+                                     BASE_PACKAGE + ".checks.design.DesignForExtensionCheck");
         NAME_TO_FULL_MODULE_NAME.put("FinalClassCheck",
-                BASE_PACKAGE + ".checks.design.FinalClassCheck");
+                                     BASE_PACKAGE + ".checks.design.FinalClassCheck");
         NAME_TO_FULL_MODULE_NAME.put("HideUtilityClassConstructorCheck",
-                BASE_PACKAGE + ".checks.design.HideUtilityClassConstructorCheck");
+                                     BASE_PACKAGE + ".checks.design.HideUtilityClassConstructorCheck");
         NAME_TO_FULL_MODULE_NAME.put("InnerTypeLastCheck",
-                BASE_PACKAGE + ".checks.design.InnerTypeLastCheck");
+                                     BASE_PACKAGE + ".checks.design.InnerTypeLastCheck");
         NAME_TO_FULL_MODULE_NAME.put("InterfaceIsTypeCheck",
-                BASE_PACKAGE + ".checks.design.InterfaceIsTypeCheck");
+                                     BASE_PACKAGE + ".checks.design.InterfaceIsTypeCheck");
         NAME_TO_FULL_MODULE_NAME.put("MutableExceptionCheck",
-                BASE_PACKAGE + ".checks.design.MutableExceptionCheck");
+                                     BASE_PACKAGE + ".checks.design.MutableExceptionCheck");
         NAME_TO_FULL_MODULE_NAME.put("OneTopLevelClassCheck",
-                BASE_PACKAGE + ".checks.design.OneTopLevelClassCheck");
+                                     BASE_PACKAGE + ".checks.design.OneTopLevelClassCheck");
         NAME_TO_FULL_MODULE_NAME.put("ThrowsCountCheck",
-                BASE_PACKAGE + ".checks.design.ThrowsCountCheck");
+                                     BASE_PACKAGE + ".checks.design.ThrowsCountCheck");
         NAME_TO_FULL_MODULE_NAME.put("VisibilityModifierCheck",
-                BASE_PACKAGE + ".checks.design.VisibilityModifierCheck");
+                                     BASE_PACKAGE + ".checks.design.VisibilityModifierCheck");
     }
 
     /**
@@ -602,9 +602,9 @@ public class PackageObjectFactory implements ModuleFactory {
      */
     private static void fillChecksFromHeaderPackage() {
         NAME_TO_FULL_MODULE_NAME.put("HeaderCheck",
-                BASE_PACKAGE + ".checks.header.HeaderCheck");
+                                     BASE_PACKAGE + ".checks.header.HeaderCheck");
         NAME_TO_FULL_MODULE_NAME.put("RegexpHeaderCheck",
-                BASE_PACKAGE + ".checks.header.RegexpHeaderCheck");
+                                     BASE_PACKAGE + ".checks.header.RegexpHeaderCheck");
     }
 
     /**
@@ -612,21 +612,21 @@ public class PackageObjectFactory implements ModuleFactory {
      */
     private static void fillChecksFromImportsPackage() {
         NAME_TO_FULL_MODULE_NAME.put("AvoidStarImportCheck",
-                BASE_PACKAGE + ".checks.imports.AvoidStarImportCheck");
+                                     BASE_PACKAGE + ".checks.imports.AvoidStarImportCheck");
         NAME_TO_FULL_MODULE_NAME.put("AvoidStaticImportCheck",
-                BASE_PACKAGE + ".checks.imports.AvoidStaticImportCheck");
+                                     BASE_PACKAGE + ".checks.imports.AvoidStaticImportCheck");
         NAME_TO_FULL_MODULE_NAME.put("CustomImportOrderCheck",
-                BASE_PACKAGE + ".checks.imports.CustomImportOrderCheck");
+                                     BASE_PACKAGE + ".checks.imports.CustomImportOrderCheck");
         NAME_TO_FULL_MODULE_NAME.put("IllegalImportCheck",
-                BASE_PACKAGE + ".checks.imports.IllegalImportCheck");
+                                     BASE_PACKAGE + ".checks.imports.IllegalImportCheck");
         NAME_TO_FULL_MODULE_NAME.put("ImportControlCheck",
-                BASE_PACKAGE + ".checks.imports.ImportControlCheck");
+                                     BASE_PACKAGE + ".checks.imports.ImportControlCheck");
         NAME_TO_FULL_MODULE_NAME.put("ImportOrderCheck",
-                BASE_PACKAGE + ".checks.imports.ImportOrderCheck");
+                                     BASE_PACKAGE + ".checks.imports.ImportOrderCheck");
         NAME_TO_FULL_MODULE_NAME.put("RedundantImportCheck",
-                BASE_PACKAGE + ".checks.imports.RedundantImportCheck");
+                                     BASE_PACKAGE + ".checks.imports.RedundantImportCheck");
         NAME_TO_FULL_MODULE_NAME.put("UnusedImportsCheck",
-                BASE_PACKAGE + ".checks.imports.UnusedImportsCheck");
+                                     BASE_PACKAGE + ".checks.imports.UnusedImportsCheck");
     }
 
     /**
@@ -634,9 +634,9 @@ public class PackageObjectFactory implements ModuleFactory {
      */
     private static void fillChecksFromIndentationPackage() {
         NAME_TO_FULL_MODULE_NAME.put("CommentsIndentationCheck",
-                BASE_PACKAGE + ".checks.indentation.CommentsIndentationCheck");
+                                     BASE_PACKAGE + ".checks.indentation.CommentsIndentationCheck");
         NAME_TO_FULL_MODULE_NAME.put("IndentationCheck",
-                BASE_PACKAGE + ".checks.indentation.IndentationCheck");
+                                     BASE_PACKAGE + ".checks.indentation.IndentationCheck");
     }
 
     /**
@@ -644,47 +644,47 @@ public class PackageObjectFactory implements ModuleFactory {
      */
     private static void fillChecksFromJavadocPackage() {
         NAME_TO_FULL_MODULE_NAME.put("AtclauseOrderCheck",
-                BASE_PACKAGE + ".checks.javadoc.AtclauseOrderCheck");
+                                     BASE_PACKAGE + ".checks.javadoc.AtclauseOrderCheck");
         NAME_TO_FULL_MODULE_NAME.put("InvalidJavadocPositionCheck",
-                BASE_PACKAGE + ".checks.javadoc.InvalidJavadocPositionCheck");
+                                     BASE_PACKAGE + ".checks.javadoc.InvalidJavadocPositionCheck");
         NAME_TO_FULL_MODULE_NAME.put("JavadocBlockTagLocationCheck",
-                BASE_PACKAGE + ".checks.javadoc.JavadocBlockTagLocationCheck");
+                                     BASE_PACKAGE + ".checks.javadoc.JavadocBlockTagLocationCheck");
         NAME_TO_FULL_MODULE_NAME.put("JavadocContentLocationCheck",
-                BASE_PACKAGE + ".checks.javadoc.JavadocContentLocationCheck");
+                                     BASE_PACKAGE + ".checks.javadoc.JavadocContentLocationCheck");
         NAME_TO_FULL_MODULE_NAME.put("JavadocMethodCheck",
-                BASE_PACKAGE + ".checks.javadoc.JavadocMethodCheck");
+                                     BASE_PACKAGE + ".checks.javadoc.JavadocMethodCheck");
         NAME_TO_FULL_MODULE_NAME.put("JavadocMissingLeadingAsteriskCheck",
-                BASE_PACKAGE + ".checks.javadoc.JavadocMissingLeadingAsteriskCheck");
+                                     BASE_PACKAGE + ".checks.javadoc.JavadocMissingLeadingAsteriskCheck");
         NAME_TO_FULL_MODULE_NAME.put("JavadocMissingWhitespaceAfterAsteriskCheck",
-                BASE_PACKAGE + ".checks.javadoc.JavadocMissingWhitespaceAfterAsteriskCheck");
+                                     BASE_PACKAGE + ".checks.javadoc.JavadocMissingWhitespaceAfterAsteriskCheck");
         NAME_TO_FULL_MODULE_NAME.put("JavadocPackageCheck",
-                BASE_PACKAGE + ".checks.javadoc.JavadocPackageCheck");
+                                     BASE_PACKAGE + ".checks.javadoc.JavadocPackageCheck");
         NAME_TO_FULL_MODULE_NAME.put("JavadocParagraphCheck",
-                BASE_PACKAGE + ".checks.javadoc.JavadocParagraphCheck");
+                                     BASE_PACKAGE + ".checks.javadoc.JavadocParagraphCheck");
         NAME_TO_FULL_MODULE_NAME.put("JavadocStyleCheck",
-                BASE_PACKAGE + ".checks.javadoc.JavadocStyleCheck");
+                                     BASE_PACKAGE + ".checks.javadoc.JavadocStyleCheck");
         NAME_TO_FULL_MODULE_NAME.put("JavadocTagContinuationIndentationCheck",
-                BASE_PACKAGE + ".checks.javadoc.JavadocTagContinuationIndentationCheck");
+                                     BASE_PACKAGE + ".checks.javadoc.JavadocTagContinuationIndentationCheck");
         NAME_TO_FULL_MODULE_NAME.put("JavadocTypeCheck",
-                BASE_PACKAGE + ".checks.javadoc.JavadocTypeCheck");
+                                     BASE_PACKAGE + ".checks.javadoc.JavadocTypeCheck");
         NAME_TO_FULL_MODULE_NAME.put("JavadocVariableCheck",
-                BASE_PACKAGE + ".checks.javadoc.JavadocVariableCheck");
+                                     BASE_PACKAGE + ".checks.javadoc.JavadocVariableCheck");
         NAME_TO_FULL_MODULE_NAME.put("MissingJavadocMethodCheck",
-                BASE_PACKAGE + ".checks.javadoc.MissingJavadocMethodCheck");
+                                     BASE_PACKAGE + ".checks.javadoc.MissingJavadocMethodCheck");
         NAME_TO_FULL_MODULE_NAME.put("MissingJavadocPackageCheck",
-                BASE_PACKAGE + ".checks.javadoc.MissingJavadocPackageCheck");
+                                     BASE_PACKAGE + ".checks.javadoc.MissingJavadocPackageCheck");
         NAME_TO_FULL_MODULE_NAME.put("MissingJavadocTypeCheck",
-                BASE_PACKAGE + ".checks.javadoc.MissingJavadocTypeCheck");
+                                     BASE_PACKAGE + ".checks.javadoc.MissingJavadocTypeCheck");
         NAME_TO_FULL_MODULE_NAME.put("NonEmptyAtclauseDescriptionCheck",
-                BASE_PACKAGE + ".checks.javadoc.NonEmptyAtclauseDescriptionCheck");
+                                     BASE_PACKAGE + ".checks.javadoc.NonEmptyAtclauseDescriptionCheck");
         NAME_TO_FULL_MODULE_NAME.put("RequireEmptyLineBeforeBlockTagGroupCheck",
-                BASE_PACKAGE + ".checks.javadoc.RequireEmptyLineBeforeBlockTagGroupCheck");
+                                     BASE_PACKAGE + ".checks.javadoc.RequireEmptyLineBeforeBlockTagGroupCheck");
         NAME_TO_FULL_MODULE_NAME.put("SingleLineJavadocCheck",
-                BASE_PACKAGE + ".checks.javadoc.SingleLineJavadocCheck");
+                                     BASE_PACKAGE + ".checks.javadoc.SingleLineJavadocCheck");
         NAME_TO_FULL_MODULE_NAME.put("SummaryJavadocCheck",
-                BASE_PACKAGE + ".checks.javadoc.SummaryJavadocCheck");
+                                     BASE_PACKAGE + ".checks.javadoc.SummaryJavadocCheck");
         NAME_TO_FULL_MODULE_NAME.put("WriteTagCheck",
-                BASE_PACKAGE + ".checks.javadoc.WriteTagCheck");
+                                     BASE_PACKAGE + ".checks.javadoc.WriteTagCheck");
     }
 
     /**
@@ -692,17 +692,17 @@ public class PackageObjectFactory implements ModuleFactory {
      */
     private static void fillChecksFromMetricsPackage() {
         NAME_TO_FULL_MODULE_NAME.put("BooleanExpressionComplexityCheck",
-                BASE_PACKAGE + ".checks.metrics.BooleanExpressionComplexityCheck");
+                                     BASE_PACKAGE + ".checks.metrics.BooleanExpressionComplexityCheck");
         NAME_TO_FULL_MODULE_NAME.put("ClassDataAbstractionCouplingCheck",
-                BASE_PACKAGE + ".checks.metrics.ClassDataAbstractionCouplingCheck");
+                                     BASE_PACKAGE + ".checks.metrics.ClassDataAbstractionCouplingCheck");
         NAME_TO_FULL_MODULE_NAME.put("ClassFanOutComplexityCheck",
-                BASE_PACKAGE + ".checks.metrics.ClassFanOutComplexityCheck");
+                                     BASE_PACKAGE + ".checks.metrics.ClassFanOutComplexityCheck");
         NAME_TO_FULL_MODULE_NAME.put("CyclomaticComplexityCheck",
-                BASE_PACKAGE + ".checks.metrics.CyclomaticComplexityCheck");
+                                     BASE_PACKAGE + ".checks.metrics.CyclomaticComplexityCheck");
         NAME_TO_FULL_MODULE_NAME.put("JavaNCSSCheck",
-                BASE_PACKAGE + ".checks.metrics.JavaNCSSCheck");
+                                     BASE_PACKAGE + ".checks.metrics.JavaNCSSCheck");
         NAME_TO_FULL_MODULE_NAME.put("NPathComplexityCheck",
-                BASE_PACKAGE + ".checks.metrics.NPathComplexityCheck");
+                                     BASE_PACKAGE + ".checks.metrics.NPathComplexityCheck");
     }
 
     /**
@@ -710,13 +710,13 @@ public class PackageObjectFactory implements ModuleFactory {
      */
     private static void fillChecksFromModifierPackage() {
         NAME_TO_FULL_MODULE_NAME.put("ClassMemberImpliedModifierCheck",
-            BASE_PACKAGE + ".checks.modifier.ClassMemberImpliedModifierCheck");
+                                     BASE_PACKAGE + ".checks.modifier.ClassMemberImpliedModifierCheck");
         NAME_TO_FULL_MODULE_NAME.put("InterfaceMemberImpliedModifierCheck",
-            BASE_PACKAGE + ".checks.modifier.InterfaceMemberImpliedModifierCheck");
+                                     BASE_PACKAGE + ".checks.modifier.InterfaceMemberImpliedModifierCheck");
         NAME_TO_FULL_MODULE_NAME.put("ModifierOrderCheck",
-                BASE_PACKAGE + ".checks.modifier.ModifierOrderCheck");
+                                     BASE_PACKAGE + ".checks.modifier.ModifierOrderCheck");
         NAME_TO_FULL_MODULE_NAME.put("RedundantModifierCheck",
-                BASE_PACKAGE + ".checks.modifier.RedundantModifierCheck");
+                                     BASE_PACKAGE + ".checks.modifier.RedundantModifierCheck");
     }
 
     /**
@@ -724,43 +724,43 @@ public class PackageObjectFactory implements ModuleFactory {
      */
     private static void fillChecksFromNamingPackage() {
         NAME_TO_FULL_MODULE_NAME.put("AbbreviationAsWordInNameCheck",
-                BASE_PACKAGE + ".checks.naming.AbbreviationAsWordInNameCheck");
+                                     BASE_PACKAGE + ".checks.naming.AbbreviationAsWordInNameCheck");
         NAME_TO_FULL_MODULE_NAME.put("AbstractClassNameCheck",
-                BASE_PACKAGE + ".checks.naming.AbstractClassNameCheck");
+                                     BASE_PACKAGE + ".checks.naming.AbstractClassNameCheck");
         NAME_TO_FULL_MODULE_NAME.put("CatchParameterNameCheck",
-                BASE_PACKAGE + ".checks.naming.CatchParameterNameCheck");
+                                     BASE_PACKAGE + ".checks.naming.CatchParameterNameCheck");
         NAME_TO_FULL_MODULE_NAME.put("ClassTypeParameterNameCheck",
-                BASE_PACKAGE + ".checks.naming.ClassTypeParameterNameCheck");
+                                     BASE_PACKAGE + ".checks.naming.ClassTypeParameterNameCheck");
         NAME_TO_FULL_MODULE_NAME.put("RecordTypeParameterNameCheck",
-                BASE_PACKAGE + ".checks.naming.RecordTypeParameterNameCheck");
+                                     BASE_PACKAGE + ".checks.naming.RecordTypeParameterNameCheck");
         NAME_TO_FULL_MODULE_NAME.put("ConstantNameCheck",
-                BASE_PACKAGE + ".checks.naming.ConstantNameCheck");
+                                     BASE_PACKAGE + ".checks.naming.ConstantNameCheck");
         NAME_TO_FULL_MODULE_NAME.put("InterfaceTypeParameterNameCheck",
-                BASE_PACKAGE + ".checks.naming.InterfaceTypeParameterNameCheck");
+                                     BASE_PACKAGE + ".checks.naming.InterfaceTypeParameterNameCheck");
         NAME_TO_FULL_MODULE_NAME.put("LambdaParameterNameCheck",
-                BASE_PACKAGE + ".checks.naming.LambdaParameterNameCheck");
+                                     BASE_PACKAGE + ".checks.naming.LambdaParameterNameCheck");
         NAME_TO_FULL_MODULE_NAME.put("LocalFinalVariableNameCheck",
-                BASE_PACKAGE + ".checks.naming.LocalFinalVariableNameCheck");
+                                     BASE_PACKAGE + ".checks.naming.LocalFinalVariableNameCheck");
         NAME_TO_FULL_MODULE_NAME.put("LocalVariableNameCheck",
-                BASE_PACKAGE + ".checks.naming.LocalVariableNameCheck");
+                                     BASE_PACKAGE + ".checks.naming.LocalVariableNameCheck");
         NAME_TO_FULL_MODULE_NAME.put("MemberNameCheck",
-                BASE_PACKAGE + ".checks.naming.MemberNameCheck");
+                                     BASE_PACKAGE + ".checks.naming.MemberNameCheck");
         NAME_TO_FULL_MODULE_NAME.put("MethodNameCheck",
-                BASE_PACKAGE + ".checks.naming.MethodNameCheck");
+                                     BASE_PACKAGE + ".checks.naming.MethodNameCheck");
         NAME_TO_FULL_MODULE_NAME.put("MethodTypeParameterNameCheck",
-                BASE_PACKAGE + ".checks.naming.MethodTypeParameterNameCheck");
+                                     BASE_PACKAGE + ".checks.naming.MethodTypeParameterNameCheck");
         NAME_TO_FULL_MODULE_NAME.put("PackageNameCheck",
-                BASE_PACKAGE + ".checks.naming.PackageNameCheck");
+                                     BASE_PACKAGE + ".checks.naming.PackageNameCheck");
         NAME_TO_FULL_MODULE_NAME.put("ParameterNameCheck",
-                BASE_PACKAGE + ".checks.naming.ParameterNameCheck");
+                                     BASE_PACKAGE + ".checks.naming.ParameterNameCheck");
         NAME_TO_FULL_MODULE_NAME.put("StaticVariableNameCheck",
-                BASE_PACKAGE + ".checks.naming.StaticVariableNameCheck");
+                                     BASE_PACKAGE + ".checks.naming.StaticVariableNameCheck");
         NAME_TO_FULL_MODULE_NAME.put("TypeNameCheck",
-                BASE_PACKAGE + ".checks.naming.TypeNameCheck");
+                                     BASE_PACKAGE + ".checks.naming.TypeNameCheck");
         NAME_TO_FULL_MODULE_NAME.put("PatternVariableNameCheck",
-                BASE_PACKAGE + ".checks.naming.PatternVariableNameCheck");
+                                     BASE_PACKAGE + ".checks.naming.PatternVariableNameCheck");
         NAME_TO_FULL_MODULE_NAME.put("IllegalIdentifierNameCheck",
-            BASE_PACKAGE + ".checks.naming.IllegalIdentifierNameCheck");
+                                     BASE_PACKAGE + ".checks.naming.IllegalIdentifierNameCheck");
     }
 
     /**
@@ -768,15 +768,15 @@ public class PackageObjectFactory implements ModuleFactory {
      */
     private static void fillChecksFromRegexpPackage() {
         NAME_TO_FULL_MODULE_NAME.put("RegexpCheck",
-                BASE_PACKAGE + ".checks.regexp.RegexpCheck");
+                                     BASE_PACKAGE + ".checks.regexp.RegexpCheck");
         NAME_TO_FULL_MODULE_NAME.put("RegexpMultilineCheck",
-                BASE_PACKAGE + ".checks.regexp.RegexpMultilineCheck");
+                                     BASE_PACKAGE + ".checks.regexp.RegexpMultilineCheck");
         NAME_TO_FULL_MODULE_NAME.put("RegexpOnFilenameCheck",
-                BASE_PACKAGE + ".checks.regexp.RegexpOnFilenameCheck");
+                                     BASE_PACKAGE + ".checks.regexp.RegexpOnFilenameCheck");
         NAME_TO_FULL_MODULE_NAME.put("RegexpSinglelineCheck",
-                BASE_PACKAGE + ".checks.regexp.RegexpSinglelineCheck");
+                                     BASE_PACKAGE + ".checks.regexp.RegexpSinglelineCheck");
         NAME_TO_FULL_MODULE_NAME.put("RegexpSinglelineJavaCheck",
-                BASE_PACKAGE + ".checks.regexp.RegexpSinglelineJavaCheck");
+                                     BASE_PACKAGE + ".checks.regexp.RegexpSinglelineJavaCheck");
     }
 
     /**
@@ -784,25 +784,25 @@ public class PackageObjectFactory implements ModuleFactory {
      */
     private static void fillChecksFromSizesPackage() {
         NAME_TO_FULL_MODULE_NAME.put("AnonInnerLengthCheck",
-                BASE_PACKAGE + ".checks.sizes.AnonInnerLengthCheck");
+                                     BASE_PACKAGE + ".checks.sizes.AnonInnerLengthCheck");
         NAME_TO_FULL_MODULE_NAME.put("ExecutableStatementCountCheck",
-                BASE_PACKAGE + ".checks.sizes.ExecutableStatementCountCheck");
+                                     BASE_PACKAGE + ".checks.sizes.ExecutableStatementCountCheck");
         NAME_TO_FULL_MODULE_NAME.put("FileLengthCheck",
-                BASE_PACKAGE + ".checks.sizes.FileLengthCheck");
+                                     BASE_PACKAGE + ".checks.sizes.FileLengthCheck");
         NAME_TO_FULL_MODULE_NAME.put("LambdaBodyLengthCheck",
-                BASE_PACKAGE + ".checks.sizes.LambdaBodyLengthCheck");
+                                     BASE_PACKAGE + ".checks.sizes.LambdaBodyLengthCheck");
         NAME_TO_FULL_MODULE_NAME.put("LineLengthCheck",
-                BASE_PACKAGE + ".checks.sizes.LineLengthCheck");
+                                     BASE_PACKAGE + ".checks.sizes.LineLengthCheck");
         NAME_TO_FULL_MODULE_NAME.put("MethodCountCheck",
-                BASE_PACKAGE + ".checks.sizes.MethodCountCheck");
+                                     BASE_PACKAGE + ".checks.sizes.MethodCountCheck");
         NAME_TO_FULL_MODULE_NAME.put("MethodLengthCheck",
-                BASE_PACKAGE + ".checks.sizes.MethodLengthCheck");
+                                     BASE_PACKAGE + ".checks.sizes.MethodLengthCheck");
         NAME_TO_FULL_MODULE_NAME.put("OuterTypeNumberCheck",
-                BASE_PACKAGE + ".checks.sizes.OuterTypeNumberCheck");
+                                     BASE_PACKAGE + ".checks.sizes.OuterTypeNumberCheck");
         NAME_TO_FULL_MODULE_NAME.put("ParameterNumberCheck",
-                BASE_PACKAGE + ".checks.sizes.ParameterNumberCheck");
+                                     BASE_PACKAGE + ".checks.sizes.ParameterNumberCheck");
         NAME_TO_FULL_MODULE_NAME.put("RecordComponentNumberCheck",
-                BASE_PACKAGE + ".checks.sizes.RecordComponentNumberCheck");
+                                     BASE_PACKAGE + ".checks.sizes.RecordComponentNumberCheck");
     }
 
     /**
@@ -810,37 +810,37 @@ public class PackageObjectFactory implements ModuleFactory {
      */
     private static void fillChecksFromWhitespacePackage() {
         NAME_TO_FULL_MODULE_NAME.put("EmptyForInitializerPadCheck",
-                BASE_PACKAGE + ".checks.whitespace.EmptyForInitializerPadCheck");
+                                     BASE_PACKAGE + ".checks.whitespace.EmptyForInitializerPadCheck");
         NAME_TO_FULL_MODULE_NAME.put("EmptyForIteratorPadCheck",
-                BASE_PACKAGE + ".checks.whitespace.EmptyForIteratorPadCheck");
+                                     BASE_PACKAGE + ".checks.whitespace.EmptyForIteratorPadCheck");
         NAME_TO_FULL_MODULE_NAME.put("EmptyLineSeparatorCheck",
-                BASE_PACKAGE + ".checks.whitespace.EmptyLineSeparatorCheck");
+                                     BASE_PACKAGE + ".checks.whitespace.EmptyLineSeparatorCheck");
         NAME_TO_FULL_MODULE_NAME.put("FileTabCharacterCheck",
-                BASE_PACKAGE + ".checks.whitespace.FileTabCharacterCheck");
+                                     BASE_PACKAGE + ".checks.whitespace.FileTabCharacterCheck");
         NAME_TO_FULL_MODULE_NAME.put("GenericWhitespaceCheck",
-                BASE_PACKAGE + ".checks.whitespace.GenericWhitespaceCheck");
+                                     BASE_PACKAGE + ".checks.whitespace.GenericWhitespaceCheck");
         NAME_TO_FULL_MODULE_NAME.put("MethodParamPadCheck",
-                BASE_PACKAGE + ".checks.whitespace.MethodParamPadCheck");
+                                     BASE_PACKAGE + ".checks.whitespace.MethodParamPadCheck");
         NAME_TO_FULL_MODULE_NAME.put("NoLineWrapCheck",
-                BASE_PACKAGE + ".checks.whitespace.NoLineWrapCheck");
+                                     BASE_PACKAGE + ".checks.whitespace.NoLineWrapCheck");
         NAME_TO_FULL_MODULE_NAME.put("NoWhitespaceAfterCheck",
-                BASE_PACKAGE + ".checks.whitespace.NoWhitespaceAfterCheck");
+                                     BASE_PACKAGE + ".checks.whitespace.NoWhitespaceAfterCheck");
         NAME_TO_FULL_MODULE_NAME.put("NoWhitespaceBeforeCheck",
-                BASE_PACKAGE + ".checks.whitespace.NoWhitespaceBeforeCheck");
+                                     BASE_PACKAGE + ".checks.whitespace.NoWhitespaceBeforeCheck");
         NAME_TO_FULL_MODULE_NAME.put("OperatorWrapCheck",
-                BASE_PACKAGE + ".checks.whitespace.OperatorWrapCheck");
+                                     BASE_PACKAGE + ".checks.whitespace.OperatorWrapCheck");
         NAME_TO_FULL_MODULE_NAME.put("ParenPadCheck",
-                BASE_PACKAGE + ".checks.whitespace.ParenPadCheck");
+                                     BASE_PACKAGE + ".checks.whitespace.ParenPadCheck");
         NAME_TO_FULL_MODULE_NAME.put("SeparatorWrapCheck",
-                BASE_PACKAGE + ".checks.whitespace.SeparatorWrapCheck");
+                                     BASE_PACKAGE + ".checks.whitespace.SeparatorWrapCheck");
         NAME_TO_FULL_MODULE_NAME.put("SingleSpaceSeparatorCheck",
-                BASE_PACKAGE + ".checks.whitespace.SingleSpaceSeparatorCheck");
+                                     BASE_PACKAGE + ".checks.whitespace.SingleSpaceSeparatorCheck");
         NAME_TO_FULL_MODULE_NAME.put("TypecastParenPadCheck",
-                BASE_PACKAGE + ".checks.whitespace.TypecastParenPadCheck");
+                                     BASE_PACKAGE + ".checks.whitespace.TypecastParenPadCheck");
         NAME_TO_FULL_MODULE_NAME.put("WhitespaceAfterCheck",
-                BASE_PACKAGE + ".checks.whitespace.WhitespaceAfterCheck");
+                                     BASE_PACKAGE + ".checks.whitespace.WhitespaceAfterCheck");
         NAME_TO_FULL_MODULE_NAME.put("WhitespaceAroundCheck",
-                BASE_PACKAGE + ".checks.whitespace.WhitespaceAroundCheck");
+                                     BASE_PACKAGE + ".checks.whitespace.WhitespaceAroundCheck");
     }
 
     /**
@@ -848,35 +848,35 @@ public class PackageObjectFactory implements ModuleFactory {
      */
     private static void fillModulesFromChecksPackage() {
         NAME_TO_FULL_MODULE_NAME.put("ArrayTypeStyleCheck",
-                BASE_PACKAGE + ".checks.ArrayTypeStyleCheck");
+                                     BASE_PACKAGE + ".checks.ArrayTypeStyleCheck");
         NAME_TO_FULL_MODULE_NAME.put("AvoidEscapedUnicodeCharactersCheck",
-                BASE_PACKAGE + ".checks.AvoidEscapedUnicodeCharactersCheck");
+                                     BASE_PACKAGE + ".checks.AvoidEscapedUnicodeCharactersCheck");
         NAME_TO_FULL_MODULE_NAME.put("DescendantTokenCheck",
-                BASE_PACKAGE + ".checks.DescendantTokenCheck");
+                                     BASE_PACKAGE + ".checks.DescendantTokenCheck");
         NAME_TO_FULL_MODULE_NAME.put("FinalParametersCheck",
-                BASE_PACKAGE + ".checks.FinalParametersCheck");
+                                     BASE_PACKAGE + ".checks.FinalParametersCheck");
         NAME_TO_FULL_MODULE_NAME.put("NewlineAtEndOfFileCheck",
-                BASE_PACKAGE + ".checks.NewlineAtEndOfFileCheck");
+                                     BASE_PACKAGE + ".checks.NewlineAtEndOfFileCheck");
         NAME_TO_FULL_MODULE_NAME.put("NoCodeInFileCheck",
-                BASE_PACKAGE + ".checks.NoCodeInFileCheck");
+                                     BASE_PACKAGE + ".checks.NoCodeInFileCheck");
         NAME_TO_FULL_MODULE_NAME.put("OuterTypeFilenameCheck",
-                BASE_PACKAGE + ".checks.OuterTypeFilenameCheck");
+                                     BASE_PACKAGE + ".checks.OuterTypeFilenameCheck");
         NAME_TO_FULL_MODULE_NAME.put("OrderedPropertiesCheck",
-                BASE_PACKAGE + ".checks.OrderedPropertiesCheck");
+                                     BASE_PACKAGE + ".checks.OrderedPropertiesCheck");
         NAME_TO_FULL_MODULE_NAME.put("SuppressWarningsHolder",
-                BASE_PACKAGE + ".checks.SuppressWarningsHolder");
+                                     BASE_PACKAGE + ".checks.SuppressWarningsHolder");
         NAME_TO_FULL_MODULE_NAME.put("TodoCommentCheck",
-                BASE_PACKAGE + ".checks.TodoCommentCheck");
+                                     BASE_PACKAGE + ".checks.TodoCommentCheck");
         NAME_TO_FULL_MODULE_NAME.put("TrailingCommentCheck",
-                BASE_PACKAGE + ".checks.TrailingCommentCheck");
+                                     BASE_PACKAGE + ".checks.TrailingCommentCheck");
         NAME_TO_FULL_MODULE_NAME.put("TranslationCheck",
-                BASE_PACKAGE + ".checks.TranslationCheck");
+                                     BASE_PACKAGE + ".checks.TranslationCheck");
         NAME_TO_FULL_MODULE_NAME.put("UncommentedMainCheck",
-                BASE_PACKAGE + ".checks.UncommentedMainCheck");
+                                     BASE_PACKAGE + ".checks.UncommentedMainCheck");
         NAME_TO_FULL_MODULE_NAME.put("UniquePropertiesCheck",
-                BASE_PACKAGE + ".checks.UniquePropertiesCheck");
+                                     BASE_PACKAGE + ".checks.UniquePropertiesCheck");
         NAME_TO_FULL_MODULE_NAME.put("UpperEllCheck",
-                BASE_PACKAGE + ".checks.UpperEllCheck");
+                                     BASE_PACKAGE + ".checks.UpperEllCheck");
     }
 
     /**
@@ -884,7 +884,7 @@ public class PackageObjectFactory implements ModuleFactory {
      */
     private static void fillModulesFromFilefiltersPackage() {
         NAME_TO_FULL_MODULE_NAME.put("BeforeExecutionExclusionFileFilter",
-                BASE_PACKAGE + ".filefilters.BeforeExecutionExclusionFileFilter");
+                                     BASE_PACKAGE + ".filefilters.BeforeExecutionExclusionFileFilter");
     }
 
     /**
@@ -892,23 +892,23 @@ public class PackageObjectFactory implements ModuleFactory {
      */
     private static void fillModulesFromFiltersPackage() {
         NAME_TO_FULL_MODULE_NAME.put("SeverityMatchFilter",
-                BASE_PACKAGE + ".filters.SeverityMatchFilter");
+                                     BASE_PACKAGE + ".filters.SeverityMatchFilter");
         NAME_TO_FULL_MODULE_NAME.put("SuppressWithPlainTextCommentFilter",
-            BASE_PACKAGE + ".filters.SuppressWithPlainTextCommentFilter");
+                                     BASE_PACKAGE + ".filters.SuppressWithPlainTextCommentFilter");
         NAME_TO_FULL_MODULE_NAME.put("SuppressionCommentFilter",
-                BASE_PACKAGE + ".filters.SuppressionCommentFilter");
+                                     BASE_PACKAGE + ".filters.SuppressionCommentFilter");
         NAME_TO_FULL_MODULE_NAME.put("SuppressionFilter",
-                BASE_PACKAGE + ".filters.SuppressionFilter");
+                                     BASE_PACKAGE + ".filters.SuppressionFilter");
         NAME_TO_FULL_MODULE_NAME.put("SuppressionSingleFilter",
-                BASE_PACKAGE + ".filters.SuppressionSingleFilter");
+                                     BASE_PACKAGE + ".filters.SuppressionSingleFilter");
         NAME_TO_FULL_MODULE_NAME.put("SuppressionXpathFilter",
-                BASE_PACKAGE + ".filters.SuppressionXpathFilter");
+                                     BASE_PACKAGE + ".filters.SuppressionXpathFilter");
         NAME_TO_FULL_MODULE_NAME.put("SuppressionXpathSingleFilter",
-                BASE_PACKAGE + ".filters.SuppressionXpathSingleFilter");
+                                     BASE_PACKAGE + ".filters.SuppressionXpathSingleFilter");
         NAME_TO_FULL_MODULE_NAME.put("SuppressWarningsFilter",
-                BASE_PACKAGE + ".filters.SuppressWarningsFilter");
+                                     BASE_PACKAGE + ".filters.SuppressWarningsFilter");
         NAME_TO_FULL_MODULE_NAME.put("SuppressWithNearbyCommentFilter",
-                BASE_PACKAGE + ".filters.SuppressWithNearbyCommentFilter");
+                                     BASE_PACKAGE + ".filters.SuppressWithNearbyCommentFilter");
     }
 
     /**

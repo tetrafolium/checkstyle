@@ -40,50 +40,50 @@ public class XpathRegressionNestedForDepthTest extends AbstractXpathTestSupport 
     @Test
     public void testCorrect() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionNestedForDepth.java"));
+            new File(getPath("SuppressionXpathRegressionNestedForDepth.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(NestedForDepthCheck.class);
+            createModuleConfig(NestedForDepthCheck.class);
 
         final String[] expectedViolation = {
             "7:17: " + getCheckMessage(NestedForDepthCheck.class,
-                NestedForDepthCheck.MSG_KEY, 2, 1),
+                                       NestedForDepthCheck.MSG_KEY, 2, 1),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNestedForDepth']]/OBJBLOCK"
-                + "/METHOD_DEF[./IDENT[@text='test']]/SLIST/LITERAL_FOR"
-                + "/SLIST/LITERAL_FOR/SLIST/LITERAL_FOR"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNestedForDepth']]/OBJBLOCK"
+                    + "/METHOD_DEF[./IDENT[@text='test']]/SLIST/LITERAL_FOR"
+                    + "/SLIST/LITERAL_FOR/SLIST/LITERAL_FOR"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testMax() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionNestedForDepthMax.java"));
+            new File(getPath("SuppressionXpathRegressionNestedForDepthMax.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(NestedForDepthCheck.class);
+            createModuleConfig(NestedForDepthCheck.class);
         moduleConfig.addAttribute("max", "2");
 
         final String[] expectedViolation = {
             "8:21: " + getCheckMessage(NestedForDepthCheck.class,
-                NestedForDepthCheck.MSG_KEY, 3, 2),
+                                       NestedForDepthCheck.MSG_KEY, 3, 2),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNestedForDepthMax']]"
-                + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]"
-                + "/SLIST/LITERAL_FOR/"
-                + "SLIST/LITERAL_FOR/"
-                + "SLIST/LITERAL_FOR/"
-                + "SLIST/LITERAL_FOR"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNestedForDepthMax']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]"
+                    + "/SLIST/LITERAL_FOR/"
+                    + "SLIST/LITERAL_FOR/"
+                    + "SLIST/LITERAL_FOR/"
+                    + "SLIST/LITERAL_FOR"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }

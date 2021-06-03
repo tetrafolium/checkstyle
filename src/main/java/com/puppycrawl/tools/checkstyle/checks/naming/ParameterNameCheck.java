@@ -272,7 +272,7 @@ public class ParameterNameCheck extends AbstractNameCheck {
      */
     private boolean matchAccessModifiers(final AccessModifierOption accessModifier) {
         return Arrays.stream(accessModifiers)
-                .anyMatch(modifier -> modifier == accessModifier);
+               .anyMatch(modifier -> modifier == accessModifier);
     }
 
     /**

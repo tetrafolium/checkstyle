@@ -171,8 +171,8 @@ public class ParseTreeTableModel implements TreeModel {
      * @see EventListenerList
      */
     private void fireTreeStructureChanged(Object source, Object[] path,
-                                  int[] childIndices,
-                                  Object... children) {
+                                          int[] childIndices,
+                                          Object... children) {
         // Guaranteed to return a non-null array
         final Object[] listeners = listenerList.getListenerList();
         TreeModelEvent event = null;
@@ -183,7 +183,7 @@ public class ParseTreeTableModel implements TreeModel {
                 // Lazily create the event:
                 if (event == null) {
                     event = new TreeModelEvent(source, path,
-                        childIndices, children);
+                                               childIndices, children);
                 }
                 ((TreeModelListener) listeners[i + 1]).treeStructureChanged(event);
             }

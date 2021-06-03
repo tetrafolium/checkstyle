@@ -127,8 +127,8 @@ public class JavadocMissingLeadingAsteriskCheck extends AbstractJavadocCheck {
     @Override
     public int[] getRequiredJavadocTokens() {
         return new int[] {
-            JavadocTokenTypes.NEWLINE,
-        };
+                   JavadocTokenTypes.NEWLINE,
+               };
     }
 
     @Override
@@ -148,7 +148,7 @@ public class JavadocMissingLeadingAsteriskCheck extends AbstractJavadocCheck {
         // Till https://github.com/checkstyle/checkstyle/issues/9005
         // Due to bug in the Javadoc parser there may be phantom description nodes.
         while (TokenUtil.isOfType(nextSibling.getType(),
-                JavadocTokenTypes.DESCRIPTION, JavadocTokenTypes.WS)) {
+                                  JavadocTokenTypes.DESCRIPTION, JavadocTokenTypes.WS)) {
             nextSibling = getNextNode(nextSibling);
         }
 

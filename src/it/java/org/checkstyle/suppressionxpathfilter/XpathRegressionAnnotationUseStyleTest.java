@@ -41,35 +41,35 @@ public class XpathRegressionAnnotationUseStyleTest extends AbstractXpathTestSupp
     @Test
     public void testOne() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionAnnotationUseStyleOne.java"));
+                                                "SuppressionXpathRegressionAnnotationUseStyleOne.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AnnotationUseStyleCheck.class);
+            createModuleConfig(AnnotationUseStyleCheck.class);
 
         final String[] expectedViolation = {
             "4:1: " + getCheckMessage(AnnotationUseStyleCheck.class,
-                    AnnotationUseStyleCheck.MSG_KEY_ANNOTATION_INCORRECT_STYLE,
-                    "COMPACT_NO_ARRAY"),
+                                      AnnotationUseStyleCheck.MSG_KEY_ANNOTATION_INCORRECT_STYLE,
+                                      "COMPACT_NO_ARRAY"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleOne']]"
-                        + "/MODIFIERS/ANNOTATION[./IDENT[@text='SuppressWarnings']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleOne']]"
-                        + "/MODIFIERS/ANNOTATION[./IDENT[@text='SuppressWarnings']]/AT"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleOne']]"
+                    + "/MODIFIERS/ANNOTATION[./IDENT[@text='SuppressWarnings']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleOne']]"
+                    + "/MODIFIERS/ANNOTATION[./IDENT[@text='SuppressWarnings']]/AT"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionAnnotationUseStyleTwo.java"));
+                                                "SuppressionXpathRegressionAnnotationUseStyleTwo.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AnnotationUseStyleCheck.class);
+            createModuleConfig(AnnotationUseStyleCheck.class);
 
         moduleConfig.addAttribute("closingParens", "ALWAYS");
         moduleConfig.addAttribute("elementStyle", "ignore");
@@ -77,63 +77,63 @@ public class XpathRegressionAnnotationUseStyleTest extends AbstractXpathTestSupp
 
         final String[] expectedViolation = {
             "3:1: " + getCheckMessage(AnnotationUseStyleCheck.class,
-                    AnnotationUseStyleCheck.MSG_KEY_ANNOTATION_PARENS_MISSING),
+                                      AnnotationUseStyleCheck.MSG_KEY_ANNOTATION_PARENS_MISSING),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleTwo']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleTwo']]"
-                        + "/MODIFIERS",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleTwo']]"
-                        + "/MODIFIERS/ANNOTATION[./IDENT[@text='Deprecated']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleTwo']]"
-                        + "/MODIFIERS/ANNOTATION[./IDENT[@text='Deprecated']]/AT"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleTwo']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleTwo']]"
+                    + "/MODIFIERS",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleTwo']]"
+                    + "/MODIFIERS/ANNOTATION[./IDENT[@text='Deprecated']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleTwo']]"
+                    + "/MODIFIERS/ANNOTATION[./IDENT[@text='Deprecated']]/AT"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testThree() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionAnnotationUseStyleThree.java"));
+                                                "SuppressionXpathRegressionAnnotationUseStyleThree.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AnnotationUseStyleCheck.class);
+            createModuleConfig(AnnotationUseStyleCheck.class);
 
         moduleConfig.addAttribute("trailingArrayComma", "ignore");
 
         final String[] expectedViolation = {
             "4:5: " + getCheckMessage(AnnotationUseStyleCheck.class,
-                    AnnotationUseStyleCheck.MSG_KEY_ANNOTATION_INCORRECT_STYLE,
-                    "COMPACT_NO_ARRAY"),
+                                      AnnotationUseStyleCheck.MSG_KEY_ANNOTATION_INCORRECT_STYLE,
+                                      "COMPACT_NO_ARRAY"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleThree']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleThree']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]/MODIFIERS",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleThree']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]/MODIFIERS"
-                        + "/ANNOTATION[./IDENT[@text='SuppressWarnings']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleThree']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]/MODIFIERS"
-                        + "/ANNOTATION[./IDENT[@text='SuppressWarnings']]/AT"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleThree']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleThree']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]/MODIFIERS",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleThree']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]/MODIFIERS"
+                    + "/ANNOTATION[./IDENT[@text='SuppressWarnings']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleThree']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='foo']]/MODIFIERS"
+                    + "/ANNOTATION[./IDENT[@text='SuppressWarnings']]/AT"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testFour() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionAnnotationUseStyleFour.java"));
+                                                "SuppressionXpathRegressionAnnotationUseStyleFour.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AnnotationUseStyleCheck.class);
+            createModuleConfig(AnnotationUseStyleCheck.class);
 
         moduleConfig.addAttribute("closingParens", "ignore");
         moduleConfig.addAttribute("elementStyle", "ignore");
@@ -141,26 +141,26 @@ public class XpathRegressionAnnotationUseStyleTest extends AbstractXpathTestSupp
 
         final String[] expectedViolation = {
             "3:20: " + getCheckMessage(AnnotationUseStyleCheck.class,
-                    AnnotationUseStyleCheck.MSG_KEY_ANNOTATION_TRAILING_COMMA_MISSING),
+                                       AnnotationUseStyleCheck.MSG_KEY_ANNOTATION_TRAILING_COMMA_MISSING),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleFour']]"
-                        + "/MODIFIERS/ANNOTATION[./IDENT[@text='SuppressWarnings']]"
-                        + "/ANNOTATION_ARRAY_INIT/RCURLY"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleFour']]"
+                    + "/MODIFIERS/ANNOTATION[./IDENT[@text='SuppressWarnings']]"
+                    + "/ANNOTATION_ARRAY_INIT/RCURLY"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testFive() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionAnnotationUseStyleFive.java"));
+                                                "SuppressionXpathRegressionAnnotationUseStyleFive.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AnnotationUseStyleCheck.class);
+            createModuleConfig(AnnotationUseStyleCheck.class);
 
         moduleConfig.addAttribute("closingParens", "ignore");
         moduleConfig.addAttribute("elementStyle", "COMPACT");
@@ -168,31 +168,31 @@ public class XpathRegressionAnnotationUseStyleTest extends AbstractXpathTestSupp
 
         final String[] expectedViolation = {
             "3:1: " + getCheckMessage(AnnotationUseStyleCheck.class,
-                    AnnotationUseStyleCheck.MSG_KEY_ANNOTATION_INCORRECT_STYLE,
-                    "COMPACT"),
+                                      AnnotationUseStyleCheck.MSG_KEY_ANNOTATION_INCORRECT_STYLE,
+                                      "COMPACT"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleFive']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleFive']]"
-                         + "/MODIFIERS",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleFive']]"
-                        + "/MODIFIERS/ANNOTATION[./IDENT[@text='SuppressWarnings']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleFive']]"
-                        + "/MODIFIERS/ANNOTATION[./IDENT[@text='SuppressWarnings']]/AT"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleFive']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleFive']]"
+                    + "/MODIFIERS",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleFive']]"
+                    + "/MODIFIERS/ANNOTATION[./IDENT[@text='SuppressWarnings']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleFive']]"
+                    + "/MODIFIERS/ANNOTATION[./IDENT[@text='SuppressWarnings']]/AT"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testSix() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionAnnotationUseStyleSix.java"));
+                                                "SuppressionXpathRegressionAnnotationUseStyleSix.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AnnotationUseStyleCheck.class);
+            createModuleConfig(AnnotationUseStyleCheck.class);
 
         moduleConfig.addAttribute("closingParens", "ignore");
         moduleConfig.addAttribute("elementStyle", "EXPANDED");
@@ -200,56 +200,56 @@ public class XpathRegressionAnnotationUseStyleTest extends AbstractXpathTestSupp
 
         final String[] expectedViolation = {
             "3:1: " + getCheckMessage(AnnotationUseStyleCheck.class,
-                    AnnotationUseStyleCheck.MSG_KEY_ANNOTATION_INCORRECT_STYLE,
-                    "EXPANDED"),
+                                      AnnotationUseStyleCheck.MSG_KEY_ANNOTATION_INCORRECT_STYLE,
+                                      "EXPANDED"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleSix']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleSix']]"
-                        + "/MODIFIERS",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleSix']]"
-                        + "/MODIFIERS/ANNOTATION[./IDENT[@text='SuppressWarnings']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleSix']]"
-                        + "/MODIFIERS/ANNOTATION[./IDENT[@text='SuppressWarnings']]/AT"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleSix']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleSix']]"
+                    + "/MODIFIERS",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleSix']]"
+                    + "/MODIFIERS/ANNOTATION[./IDENT[@text='SuppressWarnings']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleSix']]"
+                    + "/MODIFIERS/ANNOTATION[./IDENT[@text='SuppressWarnings']]/AT"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testSeven() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionAnnotationUseStyleSeven.java"));
+                                                "SuppressionXpathRegressionAnnotationUseStyleSeven.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AnnotationUseStyleCheck.class);
+            createModuleConfig(AnnotationUseStyleCheck.class);
 
         final String[] expectedViolation = {
             "4:1: " + getCheckMessage(AnnotationUseStyleCheck.class,
-                    AnnotationUseStyleCheck.MSG_KEY_ANNOTATION_INCORRECT_STYLE,
-                    "COMPACT_NO_ARRAY"),
+                                      AnnotationUseStyleCheck.MSG_KEY_ANNOTATION_INCORRECT_STYLE,
+                                      "COMPACT_NO_ARRAY"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleSeven']]"
-                        + "/MODIFIERS/ANNOTATION[./IDENT[@text='SuppressWarnings']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleSeven']]"
-                        + "/MODIFIERS/ANNOTATION[./IDENT[@text='SuppressWarnings']]/AT"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleSeven']]"
+                    + "/MODIFIERS/ANNOTATION[./IDENT[@text='SuppressWarnings']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleSeven']]"
+                    + "/MODIFIERS/ANNOTATION[./IDENT[@text='SuppressWarnings']]/AT"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testEight() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionAnnotationUseStyleEight.java"));
+                                                "SuppressionXpathRegressionAnnotationUseStyleEight.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AnnotationUseStyleCheck.class);
+            createModuleConfig(AnnotationUseStyleCheck.class);
 
         moduleConfig.addAttribute("closingParens", "ignore");
         moduleConfig.addAttribute("elementStyle", "ignore");
@@ -257,16 +257,16 @@ public class XpathRegressionAnnotationUseStyleTest extends AbstractXpathTestSupp
 
         final String[] expectedViolation = {
             "3:31: " + getCheckMessage(AnnotationUseStyleCheck.class,
-                    AnnotationUseStyleCheck.MSG_KEY_ANNOTATION_TRAILING_COMMA_PRESENT),
+                                       AnnotationUseStyleCheck.MSG_KEY_ANNOTATION_TRAILING_COMMA_PRESENT),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleEight']]"
-                        + "/MODIFIERS/ANNOTATION[./IDENT[@text='SuppressWarnings']]"
-                        + "/ANNOTATION_ARRAY_INIT/COMMA"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionAnnotationUseStyleEight']]"
+                    + "/MODIFIERS/ANNOTATION[./IDENT[@text='SuppressWarnings']]"
+                    + "/ANNOTATION_ARRAY_INIT/COMMA"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }

@@ -40,52 +40,52 @@ public class XpathRegressionDeclarationOrderTest extends AbstractXpathTestSuppor
     @Test
     public void testOne() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionDeclarationOrderOne.java"));
+            new File(getPath("SuppressionXpathRegressionDeclarationOrderOne.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(DeclarationOrderCheck.class);
+            createModuleConfig(DeclarationOrderCheck.class);
 
         final String[] expectedViolation = {
             "5:5: " + getCheckMessage(DeclarationOrderCheck.class,
-                DeclarationOrderCheck.MSG_ACCESS),
+                                      DeclarationOrderCheck.MSG_ACCESS),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionDeclarationOrderOne']]"
-                        + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='name']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionDeclarationOrderOne']]"
-                        + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='name']]/MODIFIERS",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionDeclarationOrderOne']]"
-                        + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='name']]/MODIFIERS/LITERAL_PUBLIC"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionDeclarationOrderOne']]"
+                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='name']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionDeclarationOrderOne']]"
+                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='name']]/MODIFIERS",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionDeclarationOrderOne']]"
+                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='name']]/MODIFIERS/LITERAL_PUBLIC"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionDeclarationOrderTwo.java"));
+            new File(getPath("SuppressionXpathRegressionDeclarationOrderTwo.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(DeclarationOrderCheck.class);
+            createModuleConfig(DeclarationOrderCheck.class);
 
         final String[] expectedViolation = {
             "5:5: " + getCheckMessage(DeclarationOrderCheck.class,
-                DeclarationOrderCheck.MSG_STATIC),
+                                      DeclarationOrderCheck.MSG_STATIC),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionDeclarationOrderTwo']]"
-                        + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='MAX']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionDeclarationOrderTwo']]"
-                        + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='MAX']]/MODIFIERS",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionDeclarationOrderTwo']]"
-                        + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='MAX']]/MODIFIERS/LITERAL_PUBLIC"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionDeclarationOrderTwo']]"
+                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='MAX']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionDeclarationOrderTwo']]"
+                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='MAX']]/MODIFIERS",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionDeclarationOrderTwo']]"
+                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='MAX']]/MODIFIERS/LITERAL_PUBLIC"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }

@@ -52,7 +52,7 @@ public class LambdaHandler extends AbstractExpressionHandler {
         IndentLevel childIndent = getIndent();
         if (isLambdaCorrectlyIndented) {
             childIndent = IndentLevel.addAcceptable(childIndent, getLineStart(getMainAst()),
-                    getLineStart(getMainAst().getFirstChild()));
+                                                    getLineStart(getMainAst().getFirstChild()));
         }
 
         return childIndent;
@@ -97,7 +97,7 @@ public class LambdaHandler extends AbstractExpressionHandler {
         final boolean isSwitchRuleLambda = firstChild == null;
 
         if (!isSwitchRuleLambda
-            && getLineStart(firstChild) == expandedTabsColumnNo(firstChild)) {
+                && getLineStart(firstChild) == expandedTabsColumnNo(firstChild)) {
             final int firstChildColumnNo = expandedTabsColumnNo(firstChild);
             final IndentLevel level = getIndent();
 
@@ -117,7 +117,7 @@ public class LambdaHandler extends AbstractExpressionHandler {
 
     private boolean isNonAcceptableIndent(int astColumnNo, IndentLevel level) {
         return astColumnNo < level.getFirstIndentLevel()
-            || getIndentCheck().isForceStrictCondition()
+               || getIndentCheck().isForceStrictCondition()
                && !level.isAcceptable(astColumnNo);
     }
 
@@ -141,11 +141,11 @@ public class LambdaHandler extends AbstractExpressionHandler {
             final int previousLineStart = getLineStart(previousSibling);
 
             level = new IndentLevel(new IndentLevel(previousLineStart),
-                    getIndentCheck().getLineWrappingIndentation());
+                                    getIndentCheck().getLineWrappingIndentation());
         }
         else {
             level = new IndentLevel(getIndent(),
-                getIndentCheck().getLineWrappingIndentation());
+                                    getIndentCheck().getLineWrappingIndentation());
         }
 
         if (isNonAcceptableIndent(mainAstColumnNo, level)) {

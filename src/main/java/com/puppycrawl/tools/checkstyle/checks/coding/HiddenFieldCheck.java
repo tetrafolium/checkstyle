@@ -244,26 +244,26 @@ public class HiddenFieldCheck
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.VARIABLE_DEF,
-            TokenTypes.PARAMETER_DEF,
-            TokenTypes.CLASS_DEF,
-            TokenTypes.ENUM_DEF,
-            TokenTypes.ENUM_CONSTANT_DEF,
-            TokenTypes.PATTERN_VARIABLE_DEF,
-            TokenTypes.LAMBDA,
-            TokenTypes.RECORD_DEF,
-            TokenTypes.RECORD_COMPONENT_DEF,
-        };
+                   TokenTypes.VARIABLE_DEF,
+                   TokenTypes.PARAMETER_DEF,
+                   TokenTypes.CLASS_DEF,
+                   TokenTypes.ENUM_DEF,
+                   TokenTypes.ENUM_CONSTANT_DEF,
+                   TokenTypes.PATTERN_VARIABLE_DEF,
+                   TokenTypes.LAMBDA,
+                   TokenTypes.RECORD_DEF,
+                   TokenTypes.RECORD_COMPONENT_DEF,
+               };
     }
 
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.CLASS_DEF,
-            TokenTypes.ENUM_DEF,
-            TokenTypes.ENUM_CONSTANT_DEF,
-            TokenTypes.RECORD_DEF,
-        };
+                   TokenTypes.CLASS_DEF,
+                   TokenTypes.ENUM_DEF,
+                   TokenTypes.ENUM_CONSTANT_DEF,
+                   TokenTypes.RECORD_DEF,
+               };
     }
 
     @Override
@@ -275,17 +275,17 @@ public class HiddenFieldCheck
     public void visitToken(DetailAST ast) {
         final int type = ast.getType();
         switch (type) {
-            case TokenTypes.VARIABLE_DEF:
-            case TokenTypes.PARAMETER_DEF:
-            case TokenTypes.PATTERN_VARIABLE_DEF:
-            case TokenTypes.RECORD_COMPONENT_DEF:
-                processVariable(ast);
-                break;
-            case TokenTypes.LAMBDA:
-                processLambda(ast);
-                break;
-            default:
-                visitOtherTokens(ast, type);
+        case TokenTypes.VARIABLE_DEF:
+        case TokenTypes.PARAMETER_DEF:
+        case TokenTypes.PATTERN_VARIABLE_DEF:
+        case TokenTypes.RECORD_COMPONENT_DEF:
+            processVariable(ast);
+            break;
+        case TokenTypes.LAMBDA:
+            processLambda(ast);
+            break;
+        default:
+            visitOtherTokens(ast, type);
         }
     }
 
@@ -303,7 +303,7 @@ public class HiddenFieldCheck
                 && firstChild.getType() == TokenTypes.IDENT) {
             final String untypedLambdaParameterName = firstChild.getText();
             if (frame.containsStaticField(untypedLambdaParameterName)
-                || isInstanceField(firstChild, untypedLambdaParameterName)) {
+                    || isInstanceField(firstChild, untypedLambdaParameterName)) {
                 log(firstChild, MSG_KEY, untypedLambdaParameterName);
             }
         }
@@ -324,8 +324,8 @@ public class HiddenFieldCheck
         // check.
         final DetailAST typeMods = ast.findFirstToken(TokenTypes.MODIFIERS);
         final boolean isStaticInnerType =
-                typeMods != null
-                        && typeMods.findFirstToken(TokenTypes.LITERAL_STATIC) != null;
+            typeMods != null
+            && typeMods.findFirstToken(TokenTypes.LITERAL_STATIC) != null;
         final String frameName;
 
         if (type == TokenTypes.CLASS_DEF
@@ -364,10 +364,10 @@ public class HiddenFieldCheck
 
             // For each record component definition, we will add it to this frame.
             TokenUtil.forEachChild(recordComponents,
-                TokenTypes.RECORD_COMPONENT_DEF, node -> {
-                    final String name = node.findFirstToken(TokenTypes.IDENT).getText();
-                    newFrame.addInstanceField(name);
-                });
+            TokenTypes.RECORD_COMPONENT_DEF, node -> {
+                final String name = node.findFirstToken(TokenTypes.IDENT).getText();
+                newFrame.addInstanceField(name);
+            });
         }
         // push container
         frame = newFrame;
@@ -376,9 +376,9 @@ public class HiddenFieldCheck
     @Override
     public void leaveToken(DetailAST ast) {
         if (ast.getType() == TokenTypes.CLASS_DEF
-            || ast.getType() == TokenTypes.ENUM_DEF
-            || ast.getType() == TokenTypes.ENUM_CONSTANT_DEF
-            || ast.getType() == TokenTypes.RECORD_DEF) {
+                || ast.getType() == TokenTypes.ENUM_DEF
+                || ast.getType() == TokenTypes.ENUM_CONSTANT_DEF
+                || ast.getType() == TokenTypes.RECORD_DEF) {
             // pop
             frame = frame.getParent();
         }
@@ -393,10 +393,10 @@ public class HiddenFieldCheck
      */
     private void processVariable(DetailAST ast) {
         if (!ScopeUtil.isInInterfaceOrAnnotationBlock(ast)
-            && !CheckUtil.isReceiverParameter(ast)
-            && (ScopeUtil.isLocalVariableDef(ast)
-                || ast.getType() == TokenTypes.PARAMETER_DEF
-                || ast.getType() == TokenTypes.PATTERN_VARIABLE_DEF)) {
+                && !CheckUtil.isReceiverParameter(ast)
+                && (ScopeUtil.isLocalVariableDef(ast)
+                    || ast.getType() == TokenTypes.PARAMETER_DEF
+                    || ast.getType() == TokenTypes.PATTERN_VARIABLE_DEF)) {
             // local variable or parameter. Does it shadow a field?
             final DetailAST nameAST = ast.findFirstToken(TokenTypes.IDENT);
             final String name = nameAST.getText();
@@ -418,8 +418,8 @@ public class HiddenFieldCheck
      */
     private boolean isIgnoredParam(DetailAST ast, String name) {
         return isIgnoredSetterParam(ast, name)
-            || isIgnoredConstructorParam(ast)
-            || isIgnoredParamOfAbstractMethod(ast);
+               || isIgnoredConstructorParam(ast)
+               || isIgnoredParamOfAbstractMethod(ast);
     }
 
     /**
@@ -459,8 +459,8 @@ public class HiddenFieldCheck
                 inStatic = true;
             }
             else if (parent.getType() == TokenTypes.METHOD_DEF
-                        && !ScopeUtil.isInScope(parent, Scope.ANONINNER)
-                        || parent.getType() == TokenTypes.VARIABLE_DEF) {
+                     && !ScopeUtil.isInScope(parent, Scope.ANONINNER)
+                     || parent.getType() == TokenTypes.VARIABLE_DEF) {
                 final DetailAST mods =
                     parent.findFirstToken(TokenTypes.MODIFIERS);
                 inStatic = mods.findFirstToken(TokenTypes.LITERAL_STATIC) != null;
@@ -493,8 +493,8 @@ public class HiddenFieldCheck
             final DetailAST parametersAST = ast.getParent();
             final DetailAST methodAST = parametersAST.getParent();
             if (parametersAST.getChildCount() == 1
-                && methodAST.getType() == TokenTypes.METHOD_DEF
-                && isSetterMethod(methodAST, name)) {
+                    && methodAST.getType() == TokenTypes.METHOD_DEF
+                    && isSetterMethod(methodAST, name)) {
                 isIgnoredSetterParam = true;
             }
         }
@@ -714,9 +714,9 @@ public class HiddenFieldCheck
          */
         public boolean containsInstanceField(String field) {
             return instanceFields.contains(field)
-                    || parent != null
-                    && !staticType
-                    && parent.containsInstanceField(field);
+                   || parent != null
+                   && !staticType
+                   && parent.containsInstanceField(field);
         }
 
         /**
@@ -727,8 +727,8 @@ public class HiddenFieldCheck
          */
         public boolean containsStaticField(String field) {
             return staticFields.contains(field)
-                    || parent != null
-                    && parent.containsStaticField(field);
+                   || parent != null
+                   && parent.containsStaticField(field);
         }
 
         /**

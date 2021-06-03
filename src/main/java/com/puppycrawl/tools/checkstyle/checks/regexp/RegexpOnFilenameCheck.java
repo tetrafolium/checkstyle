@@ -369,7 +369,7 @@ public class RegexpOnFilenameCheck extends AbstractFileSetCheck {
         }
         catch (IOException ex) {
             throw new CheckstyleException("unable to create canonical path names for "
-                    + file.getAbsolutePath(), ex);
+                                          + file.getAbsolutePath(), ex);
         }
     }
 

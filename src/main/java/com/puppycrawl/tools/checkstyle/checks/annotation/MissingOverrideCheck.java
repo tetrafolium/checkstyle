@@ -190,7 +190,7 @@ public final class MissingOverrideCheck extends AbstractCheck {
 
     /** Compiled regexp to match Javadoc tags with no argument and {}. */
     private static final Pattern MATCH_INHERIT_DOC =
-            CommonUtil.createPattern("\\{\\s*@(inheritDoc)\\s*\\}");
+        CommonUtil.createPattern("\\{\\s*@(inheritDoc)\\s*\\}");
 
     /**
      * Enable java 5 compatibility mode.
@@ -219,7 +219,7 @@ public final class MissingOverrideCheck extends AbstractCheck {
     @Override
     public int[] getRequiredTokens() {
         return new int[]
-        {TokenTypes.METHOD_DEF, };
+               {TokenTypes.METHOD_DEF, };
     }
 
     // -@cs[CyclomaticComplexity] Too complex to break apart.
@@ -240,16 +240,16 @@ public final class MissingOverrideCheck extends AbstractCheck {
                 final DetailAST defOrNew = ast.getParent().getParent();
 
                 if (defOrNew.findFirstToken(TokenTypes.EXTENDS_CLAUSE) != null
-                    || defOrNew.findFirstToken(TokenTypes.IMPLEMENTS_CLAUSE) != null
-                    || defOrNew.getType() == TokenTypes.LITERAL_NEW) {
+                        || defOrNew.findFirstToken(TokenTypes.IMPLEMENTS_CLAUSE) != null
+                        || defOrNew.getType() == TokenTypes.LITERAL_NEW) {
                     check = false;
                 }
             }
 
             if (check
-                && containsTag
-                && !AnnotationUtil.containsAnnotation(ast, OVERRIDE)
-                && !AnnotationUtil.containsAnnotation(ast, FQ_OVERRIDE)) {
+                    && containsTag
+                    && !AnnotationUtil.containsAnnotation(ast, OVERRIDE)
+                    && !AnnotationUtil.containsAnnotation(ast, FQ_OVERRIDE)) {
                 log(ast, MSG_KEY_ANNOTATION_MISSING_OVERRIDE);
             }
         }

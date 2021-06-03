@@ -40,56 +40,56 @@ public class XpathRegressionInterfaceIsTypeTest extends AbstractXpathTestSupport
     @Test
     public void testOne() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionInterfaceIsType1.java"));
+                                                "SuppressionXpathRegressionInterfaceIsType1.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(InterfaceIsTypeCheck.class);
+            createModuleConfig(InterfaceIsTypeCheck.class);
 
         final String[] expectedViolation = {
             "3:1: " + getCheckMessage(InterfaceIsTypeCheck.class,
-                    InterfaceIsTypeCheck.MSG_KEY),
+                                      InterfaceIsTypeCheck.MSG_KEY),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/INTERFACE_DEF[./IDENT["
+                    "/INTERFACE_DEF[./IDENT["
                     + "@text='SuppressionXpathRegressionInterfaceIsType1']]",
-                "/INTERFACE_DEF[./IDENT["
+                    "/INTERFACE_DEF[./IDENT["
                     + "@text='SuppressionXpathRegressionInterfaceIsType1']]/MODIFIERS",
-                "/INTERFACE_DEF[./IDENT["
+                    "/INTERFACE_DEF[./IDENT["
                     + "@text='SuppressionXpathRegressionInterfaceIsType1']]"
                     + "/MODIFIERS/LITERAL_PUBLIC"
-        );
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionInterfaceIsType2.java"));
+                                                "SuppressionXpathRegressionInterfaceIsType2.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(InterfaceIsTypeCheck.class);
+            createModuleConfig(InterfaceIsTypeCheck.class);
 
         moduleConfig.addAttribute("allowMarkerInterfaces", "false");
 
         final String[] expectedViolation = {
             "3:1: " + getCheckMessage(InterfaceIsTypeCheck.class,
-                    InterfaceIsTypeCheck.MSG_KEY),
+                                      InterfaceIsTypeCheck.MSG_KEY),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/INTERFACE_DEF[./IDENT["
+                    "/INTERFACE_DEF[./IDENT["
                     + "@text='SuppressionXpathRegressionInterfaceIsType2']]",
-                "/INTERFACE_DEF[./IDENT["
+                    "/INTERFACE_DEF[./IDENT["
                     + "@text='SuppressionXpathRegressionInterfaceIsType2']]/MODIFIERS",
-                "/INTERFACE_DEF[./IDENT["
+                    "/INTERFACE_DEF[./IDENT["
                     + "@text='SuppressionXpathRegressionInterfaceIsType2']]"
                     + "/MODIFIERS/LITERAL_PUBLIC"
-        );
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }

@@ -5,6 +5,6 @@ import java.io.Reader;
 
 public class SuppressionXpathRegressionUnnecessarySemicolonInTryWithResourcesNoBrace {
     void test() throws Exception {
-        try(Reader good = new PipedReader();){} // warn
+        try(Reader good = new PipedReader();) {} // warn
     }
 }

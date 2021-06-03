@@ -184,19 +184,19 @@ public class SuppressWarningsCheck extends AbstractCheck {
     @Override
     public final int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.CLASS_DEF,
-            TokenTypes.INTERFACE_DEF,
-            TokenTypes.ENUM_DEF,
-            TokenTypes.ANNOTATION_DEF,
-            TokenTypes.ANNOTATION_FIELD_DEF,
-            TokenTypes.ENUM_CONSTANT_DEF,
-            TokenTypes.PARAMETER_DEF,
-            TokenTypes.VARIABLE_DEF,
-            TokenTypes.METHOD_DEF,
-            TokenTypes.CTOR_DEF,
-            TokenTypes.COMPACT_CTOR_DEF,
-            TokenTypes.RECORD_DEF,
-        };
+                   TokenTypes.CLASS_DEF,
+                   TokenTypes.INTERFACE_DEF,
+                   TokenTypes.ENUM_DEF,
+                   TokenTypes.ANNOTATION_DEF,
+                   TokenTypes.ANNOTATION_FIELD_DEF,
+                   TokenTypes.ENUM_CONSTANT_DEF,
+                   TokenTypes.PARAMETER_DEF,
+                   TokenTypes.VARIABLE_DEF,
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.CTOR_DEF,
+                   TokenTypes.COMPACT_CTOR_DEF,
+                   TokenTypes.RECORD_DEF,
+               };
     }
 
     @Override
@@ -213,7 +213,7 @@ public class SuppressWarningsCheck extends AbstractCheck {
                 findWarningsHolder(annotation);
 
             final DetailAST token =
-                    warningHolder.findFirstToken(TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR);
+                warningHolder.findFirstToken(TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR);
             DetailAST warning;
 
             if (token == null) {
@@ -234,30 +234,30 @@ public class SuppressWarningsCheck extends AbstractCheck {
                     if (warning.getType() == TokenTypes.EXPR) {
                         final DetailAST fChild = warning.getFirstChild();
                         switch (fChild.getType()) {
-                            // typical case
-                            case TokenTypes.STRING_LITERAL:
-                                final String warningText =
-                                    removeQuotes(warning.getFirstChild().getText());
-                                logMatch(warning, warningText);
-                                break;
-                            // conditional case
-                            // ex:
-                            // @SuppressWarnings((false) ? (true) ? "unchecked" : "foo" : "unused")
-                            case TokenTypes.QUESTION:
-                                walkConditional(fChild);
-                                break;
-                            // param in constant case
-                            // ex: public static final String UNCHECKED = "unchecked";
-                            // @SuppressWarnings(UNCHECKED)
-                            // or
-                            // @SuppressWarnings(SomeClass.UNCHECKED)
-                            case TokenTypes.IDENT:
-                            case TokenTypes.DOT:
-                                break;
-                            default:
-                                // Known limitation: cases like @SuppressWarnings("un" + "used") or
-                                // @SuppressWarnings((String) "unused") are not properly supported,
-                                // but they should not cause exceptions.
+                        // typical case
+                        case TokenTypes.STRING_LITERAL:
+                            final String warningText =
+                                removeQuotes(warning.getFirstChild().getText());
+                            logMatch(warning, warningText);
+                            break;
+                        // conditional case
+                        // ex:
+                        // @SuppressWarnings((false) ? (true) ? "unchecked" : "foo" : "unused")
+                        case TokenTypes.QUESTION:
+                            walkConditional(fChild);
+                            break;
+                        // param in constant case
+                        // ex: public static final String UNCHECKED = "unchecked";
+                        // @SuppressWarnings(UNCHECKED)
+                        // or
+                        // @SuppressWarnings(SomeClass.UNCHECKED)
+                        case TokenTypes.IDENT:
+                        case TokenTypes.DOT:
+                            break;
+                        default:
+                            // Known limitation: cases like @SuppressWarnings("un" + "used") or
+                            // @SuppressWarnings((String) "unused") are not properly supported,
+                            // but they should not cause exceptions.
                         }
                     }
                     warning = warning.getNextSibling();
@@ -294,7 +294,7 @@ public class SuppressWarningsCheck extends AbstractCheck {
         final Matcher matcher = format.matcher(warningText);
         if (matcher.matches()) {
             log(ast,
-                    MSG_KEY_SUPPRESSED_WARNING_NOT_ALLOWED, warningText);
+                MSG_KEY_SUPPRESSED_WARNING_NOT_ALLOWED, warningText);
         }
     }
 
@@ -311,11 +311,11 @@ public class SuppressWarningsCheck extends AbstractCheck {
 
         if (annValuePair == null) {
             annArrayInit =
-                    annotation.findFirstToken(TokenTypes.ANNOTATION_ARRAY_INIT);
+                annotation.findFirstToken(TokenTypes.ANNOTATION_ARRAY_INIT);
         }
         else {
             annArrayInit =
-                    annValuePair.findFirstToken(TokenTypes.ANNOTATION_ARRAY_INIT);
+                annValuePair.findFirstToken(TokenTypes.ANNOTATION_ARRAY_INIT);
         }
 
         DetailAST warningsHolder = annotation;
@@ -357,7 +357,7 @@ public class SuppressWarningsCheck extends AbstractCheck {
         }
         else {
             final String warningText =
-                    removeQuotes(cond.getText());
+                removeQuotes(cond.getText());
             logMatch(cond, warningText);
         }
     }

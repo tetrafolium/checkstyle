@@ -203,26 +203,26 @@ public class NeedBracesCheck extends AbstractCheck {
     @Override
     public int[] getDefaultTokens() {
         return new int[] {
-            TokenTypes.LITERAL_DO,
-            TokenTypes.LITERAL_ELSE,
-            TokenTypes.LITERAL_FOR,
-            TokenTypes.LITERAL_IF,
-            TokenTypes.LITERAL_WHILE,
-        };
+                   TokenTypes.LITERAL_DO,
+                   TokenTypes.LITERAL_ELSE,
+                   TokenTypes.LITERAL_FOR,
+                   TokenTypes.LITERAL_IF,
+                   TokenTypes.LITERAL_WHILE,
+               };
     }
 
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.LITERAL_DO,
-            TokenTypes.LITERAL_ELSE,
-            TokenTypes.LITERAL_FOR,
-            TokenTypes.LITERAL_IF,
-            TokenTypes.LITERAL_WHILE,
-            TokenTypes.LITERAL_CASE,
-            TokenTypes.LITERAL_DEFAULT,
-            TokenTypes.LAMBDA,
-        };
+                   TokenTypes.LITERAL_DO,
+                   TokenTypes.LITERAL_ELSE,
+                   TokenTypes.LITERAL_FOR,
+                   TokenTypes.LITERAL_IF,
+                   TokenTypes.LITERAL_WHILE,
+                   TokenTypes.LITERAL_CASE,
+                   TokenTypes.LITERAL_DEFAULT,
+                   TokenTypes.LAMBDA,
+               };
     }
 
     @Override
@@ -258,24 +258,24 @@ public class NeedBracesCheck extends AbstractCheck {
     private boolean isBracesNeeded(DetailAST ast) {
         final boolean result;
         switch (ast.getType()) {
-            case TokenTypes.LITERAL_FOR:
-            case TokenTypes.LITERAL_WHILE:
-                result = !isEmptyLoopBodyAllowed(ast);
-                break;
-            case TokenTypes.LITERAL_CASE:
-            case TokenTypes.LITERAL_DEFAULT:
-                result = hasUnbracedStatements(ast)
-                    && !isSwitchLabeledExpression(ast);
-                break;
-            case TokenTypes.LITERAL_ELSE:
-                result = ast.findFirstToken(TokenTypes.LITERAL_IF) == null;
-                break;
-            case TokenTypes.LAMBDA:
-                result = !isInSwitchRule(ast);
-                break;
-            default:
-                result = true;
-                break;
+        case TokenTypes.LITERAL_FOR:
+        case TokenTypes.LITERAL_WHILE:
+            result = !isEmptyLoopBodyAllowed(ast);
+            break;
+        case TokenTypes.LITERAL_CASE:
+        case TokenTypes.LITERAL_DEFAULT:
+            result = hasUnbracedStatements(ast)
+                     && !isSwitchLabeledExpression(ast);
+            break;
+        case TokenTypes.LITERAL_ELSE:
+            result = ast.findFirstToken(TokenTypes.LITERAL_IF) == null;
+            break;
+        case TokenTypes.LAMBDA:
+            result = !isInSwitchRule(ast);
+            break;
+        default:
+            result = true;
+            break;
         }
         return result;
     }
@@ -305,8 +305,8 @@ public class NeedBracesCheck extends AbstractCheck {
             result = parent.getLastChild().getType() != TokenTypes.SLIST;
         }
         else if (nextSibling != null
-            && nextSibling.getType() == TokenTypes.SLIST
-            && nextSibling.getFirstChild().getType() != TokenTypes.SLIST) {
+                 && nextSibling.getType() == TokenTypes.SLIST
+                 && nextSibling.getFirstChild().getType() != TokenTypes.SLIST) {
             result = true;
         }
         return result;
@@ -342,29 +342,29 @@ public class NeedBracesCheck extends AbstractCheck {
         final boolean result;
 
         switch (statement.getType()) {
-            case TokenTypes.LITERAL_IF:
-                result = isSingleLineIf(statement);
-                break;
-            case TokenTypes.LITERAL_FOR:
-                result = isSingleLineFor(statement);
-                break;
-            case TokenTypes.LITERAL_DO:
-                result = isSingleLineDoWhile(statement);
-                break;
-            case TokenTypes.LITERAL_WHILE:
-                result = isSingleLineWhile(statement);
-                break;
-            case TokenTypes.LAMBDA:
-                result = !isInSwitchRule(statement)
-                    && isSingleLineLambda(statement);
-                break;
-            case TokenTypes.LITERAL_CASE:
-            case TokenTypes.LITERAL_DEFAULT:
-                result = isSingleLineSwitchMember(statement);
-                break;
-            default:
-                result = isSingleLineElse(statement);
-                break;
+        case TokenTypes.LITERAL_IF:
+            result = isSingleLineIf(statement);
+            break;
+        case TokenTypes.LITERAL_FOR:
+            result = isSingleLineFor(statement);
+            break;
+        case TokenTypes.LITERAL_DO:
+            result = isSingleLineDoWhile(statement);
+            break;
+        case TokenTypes.LITERAL_WHILE:
+            result = isSingleLineWhile(statement);
+            break;
+        case TokenTypes.LAMBDA:
+            result = !isInSwitchRule(statement)
+                     && isSingleLineLambda(statement);
+            break;
+        case TokenTypes.LITERAL_CASE:
+        case TokenTypes.LITERAL_DEFAULT:
+            result = isSingleLineSwitchMember(statement);
+            break;
+        default:
+            result = isSingleLineElse(statement);
+            break;
         }
 
         return result;
@@ -531,7 +531,7 @@ public class NeedBracesCheck extends AbstractCheck {
     private static boolean switchRuleHasSingleExpression(DetailAST switchRule) {
         final DetailAST possibleExpression = switchRule.findFirstToken(TokenTypes.EXPR);
         return possibleExpression != null
-                && possibleExpression.getFirstChild().getFirstChild() == null;
+               && possibleExpression.getFirstChild().getFirstChild() == null;
     }
 
     /**
@@ -572,10 +572,10 @@ public class NeedBracesCheck extends AbstractCheck {
      */
     private static boolean isSingleLineCaseGroup(DetailAST ast) {
         return Optional.of(ast)
-            .map(DetailAST::getNextSibling)
-            .map(DetailAST::getLastChild)
-            .map(lastToken -> TokenUtil.areOnSameLine(ast, lastToken))
-            .orElse(true);
+               .map(DetailAST::getNextSibling)
+               .map(DetailAST::getLastChild)
+               .map(lastToken -> TokenUtil.areOnSameLine(ast, lastToken))
+               .orElse(true);
     }
 
     /**

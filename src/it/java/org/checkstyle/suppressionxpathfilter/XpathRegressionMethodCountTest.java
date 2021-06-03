@@ -47,18 +47,18 @@ public class XpathRegressionMethodCountTest extends AbstractXpathTestSupport {
 
         final String[] expectedViolation = {
             "3:1: " + getCheckMessage(MethodCountCheck.class,
-                MethodCountCheck.MSG_MANY_METHODS, 2, 1),
+                                      MethodCountCheck.MSG_MANY_METHODS, 2, 1),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodCount1']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodCount1']]",
 
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodCount1']]"
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodCount1']]"
                     + "/MODIFIERS",
 
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodCount1']]"
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodCount1']]"
                     + "/LITERAL_CLASS"
-        );
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
     }
@@ -75,18 +75,18 @@ public class XpathRegressionMethodCountTest extends AbstractXpathTestSupport {
 
         final String[] expectedViolation = {
             "3:1: " + getCheckMessage(MethodCountCheck.class,
-                MethodCountCheck.MSG_PRIVATE_METHODS, 2, 1),
+                                      MethodCountCheck.MSG_PRIVATE_METHODS, 2, 1),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodCount2']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodCount2']]",
 
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodCount2']]"
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodCount2']]"
                     + "/MODIFIERS",
 
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodCount2']]"
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodCount2']]"
                     + "/LITERAL_CLASS"
-        );
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
     }
@@ -103,18 +103,18 @@ public class XpathRegressionMethodCountTest extends AbstractXpathTestSupport {
 
         final String[] expectedViolation = {
             "3:1: " + getCheckMessage(MethodCountCheck.class,
-                MethodCountCheck.MSG_PACKAGE_METHODS, 2, 1),
+                                      MethodCountCheck.MSG_PACKAGE_METHODS, 2, 1),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodCount1']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodCount1']]",
 
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodCount1']]"
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodCount1']]"
                     + "/MODIFIERS",
 
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodCount1']]"
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodCount1']]"
                     + "/LITERAL_CLASS"
-        );
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
     }
@@ -131,18 +131,18 @@ public class XpathRegressionMethodCountTest extends AbstractXpathTestSupport {
 
         final String[] expectedViolation = {
             "3:1: " + getCheckMessage(MethodCountCheck.class,
-                MethodCountCheck.MSG_PROTECTED_METHODS, 2, 1),
+                                      MethodCountCheck.MSG_PROTECTED_METHODS, 2, 1),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodCount3']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodCount3']]",
 
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodCount3']]"
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodCount3']]"
                     + "/MODIFIERS",
 
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodCount3']]"
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodCount3']]"
                     + "/LITERAL_CLASS"
-        );
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
     }
@@ -159,18 +159,18 @@ public class XpathRegressionMethodCountTest extends AbstractXpathTestSupport {
 
         final String[] expectedViolation = {
             "3:1: " + getCheckMessage(MethodCountCheck.class,
-                MethodCountCheck.MSG_PUBLIC_METHODS, 2, 1),
+                                      MethodCountCheck.MSG_PUBLIC_METHODS, 2, 1),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodCount4']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodCount4']]",
 
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodCount4']]"
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodCount4']]"
                     + "/MODIFIERS",
 
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodCount4']]"
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionMethodCount4']]"
                     + "/LITERAL_CLASS"
-        );
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation, expectedXpathQueries);
     }

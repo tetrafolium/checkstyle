@@ -293,8 +293,8 @@ public class CheckstyleAntTask extends Task {
                     && fileSets.isEmpty()
                     && paths.isEmpty()) {
                 throw new BuildException(
-                        "Must specify at least one of 'file' or nested 'fileset' or 'path'.",
-                        getLocation());
+                    "Must specify at least one of 'file' or nested 'fileset' or 'path'.",
+                    getLocation());
             }
             if (config == null) {
                 throw new BuildException("Must specify 'config'.", getLocation());
@@ -345,7 +345,7 @@ public class CheckstyleAntTask extends Task {
      * @param checkstyleVersion Checkstyle compile version
      */
     private void processFiles(RootModule rootModule, final SeverityLevelCounter warningCounter,
-            final String checkstyleVersion) {
+                              final String checkstyleVersion) {
         final long startTime = System.currentTimeMillis();
         final List<File> files = getFilesToCheck();
         final long endTime = System.currentTimeMillis();
@@ -353,9 +353,9 @@ public class CheckstyleAntTask extends Task {
             Project.MSG_VERBOSE);
 
         log("Running Checkstyle "
-                + Objects.toString(checkstyleVersion, "")
-                + " on " + files.size()
-                + " files", Project.MSG_INFO);
+            + Objects.toString(checkstyleVersion, "")
+            + " on " + files.size()
+            + " files", Project.MSG_INFO);
         log("Using configuration " + config, Project.MSG_VERBOSE);
 
         final int numErrs;
@@ -376,8 +376,8 @@ public class CheckstyleAntTask extends Task {
         // Handle the return status
         if (!okStatus) {
             final String failureMsg =
-                    "Got " + numErrs + " errors and " + numWarnings
-                            + " warnings.";
+                "Got " + numErrs + " errors and " + numWarnings
+                + " warnings.";
             if (failureProperty != null) {
                 getProject().setProperty(failureProperty, failureMsg);
             }
@@ -398,7 +398,7 @@ public class CheckstyleAntTask extends Task {
         try {
             final Properties props = createOverridingProperties();
             final ThreadModeSettings threadModeSettings =
-                    ThreadModeSettings.SINGLE_THREAD_MODE_INSTANCE;
+                ThreadModeSettings.SINGLE_THREAD_MODE_INSTANCE;
             final ConfigurationLoader.IgnoredModulesOptions ignoredModulesOptions;
             if (executeIgnoredModules) {
                 ignoredModulesOptions = ConfigurationLoader.IgnoredModulesOptions.EXECUTE;
@@ -408,13 +408,13 @@ public class CheckstyleAntTask extends Task {
             }
 
             final Configuration configuration = ConfigurationLoader.loadConfiguration(config,
-                    new PropertiesExpander(props), ignoredModulesOptions, threadModeSettings);
+                                                new PropertiesExpander(props), ignoredModulesOptions, threadModeSettings);
 
             final ClassLoader moduleClassLoader =
                 Checker.class.getClassLoader();
 
             final ModuleFactory factory = new PackageObjectFactory(
-                    Checker.class.getPackage().getName() + ".", moduleClassLoader);
+                Checker.class.getPackage().getName() + ".", moduleClassLoader);
 
             rootModule = (RootModule) factory.createModule(configuration.getName());
             rootModule.setModuleClassLoader(moduleClassLoader);
@@ -422,7 +422,7 @@ public class CheckstyleAntTask extends Task {
         }
         catch (final CheckstyleException ex) {
             throw new BuildException(String.format(Locale.ROOT, "Unable to create Root Module: "
-                    + "config {%s}, classpath {%s}.", config, classpath), ex);
+                                                   + "config {%s}, classpath {%s}.", config, classpath), ex);
         }
         return rootModule;
     }
@@ -443,7 +443,7 @@ public class CheckstyleAntTask extends Task {
             }
             catch (final IOException ex) {
                 throw new BuildException("Error loading Properties file '"
-                        + properties + "'", ex, getLocation());
+                                         + properties + "'", ex, getLocation());
             }
         }
 
@@ -478,7 +478,7 @@ public class CheckstyleAntTask extends Task {
                 final OutputStream debug = new LogOutputStream(this, Project.MSG_DEBUG);
                 final OutputStream err = new LogOutputStream(this, Project.MSG_ERR);
                 listeners[0] = new DefaultLogger(debug, AutomaticBean.OutputStreamOptions.CLOSE,
-                        err, AutomaticBean.OutputStreamOptions.CLOSE);
+                                                 err, AutomaticBean.OutputStreamOptions.CLOSE);
             }
             else {
                 for (int i = 0; i < formatterCount; i++) {
@@ -489,7 +489,7 @@ public class CheckstyleAntTask extends Task {
         }
         catch (IOException ex) {
             throw new BuildException(String.format(Locale.ROOT, "Unable to create listeners: "
-                    + "formatters {%s}.", formatters), ex);
+                                                   + "formatters {%s}.", formatters), ex);
         }
         return listeners;
     }
@@ -564,7 +564,7 @@ public class CheckstyleAntTask extends Task {
 
         if (concreteFilesCount > 0) {
             log(String.format(Locale.ROOT, "%d) Adding %d files from path %s",
-                pathIndex, concreteFilesCount, path), Project.MSG_VERBOSE);
+                              pathIndex, concreteFilesCount, path), Project.MSG_VERBOSE);
         }
 
         return allFiles;
@@ -599,12 +599,12 @@ public class CheckstyleAntTask extends Task {
     private List<File> retrieveAllScannedFiles(DirectoryScanner scanner, int logIndex) {
         final String[] fileNames = scanner.getIncludedFiles();
         log(String.format(Locale.ROOT, "%d) Adding %d files from directory %s",
-            logIndex, fileNames.length, scanner.getBasedir()), Project.MSG_VERBOSE);
+                          logIndex, fileNames.length, scanner.getBasedir()), Project.MSG_VERBOSE);
 
         return Arrays.stream(fileNames)
-            .map(name -> scanner.getBasedir() + File.separator + name)
-            .map(File::new)
-            .collect(Collectors.toList());
+               .map(name -> scanner.getBasedir() + File.separator + name)
+               .map(File::new)
+               .collect(Collectors.toList());
     }
 
     /**
@@ -688,21 +688,21 @@ public class CheckstyleAntTask extends Task {
          * @throws IOException if an error occurs
          */
         private AuditListener createDefaultLogger(Task task)
-                throws IOException {
+        throws IOException {
             final AuditListener defaultLogger;
             if (toFile == null || !useFile) {
                 defaultLogger = new DefaultLogger(
                     new LogOutputStream(task, Project.MSG_DEBUG),
-                        AutomaticBean.OutputStreamOptions.CLOSE,
-                        new LogOutputStream(task, Project.MSG_ERR),
-                        AutomaticBean.OutputStreamOptions.CLOSE
+                    AutomaticBean.OutputStreamOptions.CLOSE,
+                    new LogOutputStream(task, Project.MSG_ERR),
+                    AutomaticBean.OutputStreamOptions.CLOSE
                 );
             }
             else {
                 final OutputStream infoStream = Files.newOutputStream(toFile.toPath());
                 defaultLogger =
-                        new DefaultLogger(infoStream, AutomaticBean.OutputStreamOptions.CLOSE,
-                                infoStream, AutomaticBean.OutputStreamOptions.NONE);
+                    new DefaultLogger(infoStream, AutomaticBean.OutputStreamOptions.CLOSE,
+                                      infoStream, AutomaticBean.OutputStreamOptions.NONE);
             }
             return defaultLogger;
         }
@@ -718,11 +718,11 @@ public class CheckstyleAntTask extends Task {
             final AuditListener xmlLogger;
             if (toFile == null || !useFile) {
                 xmlLogger = new XMLLogger(new LogOutputStream(task, Project.MSG_INFO),
-                        AutomaticBean.OutputStreamOptions.CLOSE);
+                                          AutomaticBean.OutputStreamOptions.CLOSE);
             }
             else {
                 xmlLogger = new XMLLogger(Files.newOutputStream(toFile.toPath()),
-                        AutomaticBean.OutputStreamOptions.CLOSE);
+                                          AutomaticBean.OutputStreamOptions.CLOSE);
             }
             return xmlLogger;
         }

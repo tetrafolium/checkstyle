@@ -188,8 +188,8 @@ public class SingleSpaceSeparatorCheck extends AbstractCheck {
 
             if (columnNo >= minSecondWhitespaceColumnNo
                     && !isTextSeparatedCorrectlyFromPrevious(
-                            getLine(currentNode.getLineNo() - 1),
-                            columnNo)) {
+                        getLine(currentNode.getLineNo() - 1),
+                        columnNo)) {
                 log(currentNode, MSG_KEY);
             }
             if (currentNode.hasChildren()) {
@@ -223,9 +223,9 @@ public class SingleSpaceSeparatorCheck extends AbstractCheck {
      */
     private boolean isTextSeparatedCorrectlyFromPrevious(String line, int columnNo) {
         return isSingleSpace(line, columnNo)
-                || !isWhitespace(line, columnNo)
-                || isFirstInLine(line, columnNo)
-                || !validateComments && isBlockCommentEnd(line, columnNo);
+               || !isWhitespace(line, columnNo)
+               || isFirstInLine(line, columnNo)
+               || !validateComments && isBlockCommentEnd(line, columnNo);
     }
 
     /**

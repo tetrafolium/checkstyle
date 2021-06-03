@@ -117,15 +117,15 @@ public class RedundantImportCheck
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.IMPORT, TokenTypes.STATIC_IMPORT, TokenTypes.PACKAGE_DEF,
-        };
+                   TokenTypes.IMPORT, TokenTypes.STATIC_IMPORT, TokenTypes.PACKAGE_DEF,
+               };
     }
 
     @Override
     public void visitToken(DetailAST ast) {
         if (ast.getType() == TokenTypes.PACKAGE_DEF) {
             pkgName = FullIdent.createFullIdent(
-                    ast.getLastChild().getPreviousSibling()).getText();
+                          ast.getLastChild().getPreviousSibling()).getText();
         }
         else if (ast.getType() == TokenTypes.IMPORT) {
             final FullIdent imp = FullIdent.createFullIdentBelow(ast);
@@ -139,7 +139,7 @@ public class RedundantImportCheck
             }
             // Check for a duplicate import
             imports.stream().filter(full -> imp.getText().equals(full.getText()))
-                .forEach(full -> log(ast, MSG_DUPLICATE, full.getLineNo(), imp.getText()));
+            .forEach(full -> log(ast, MSG_DUPLICATE, full.getLineNo(), imp.getText()));
 
             imports.add(imp);
         }
@@ -149,7 +149,7 @@ public class RedundantImportCheck
                 FullIdent.createFullIdent(
                     ast.getLastChild().getPreviousSibling());
             staticImports.stream().filter(full -> imp.getText().equals(full.getText()))
-                .forEach(full -> log(ast, MSG_DUPLICATE, full.getLineNo(), imp.getText()));
+            .forEach(full -> log(ast, MSG_DUPLICATE, full.getLineNo(), imp.getText()));
 
             staticImports.add(imp);
         }

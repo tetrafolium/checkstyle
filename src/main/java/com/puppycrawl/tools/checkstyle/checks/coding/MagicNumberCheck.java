@@ -338,11 +338,11 @@ public class MagicNumberCheck extends AbstractCheck {
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.NUM_DOUBLE,
-            TokenTypes.NUM_FLOAT,
-            TokenTypes.NUM_INT,
-            TokenTypes.NUM_LONG,
-        };
+                   TokenTypes.NUM_DOUBLE,
+                   TokenTypes.NUM_FLOAT,
+                   TokenTypes.NUM_INT,
+                   TokenTypes.NUM_LONG,
+               };
     }
 
     @Override
@@ -465,8 +465,8 @@ public class MagicNumberCheck extends AbstractCheck {
             text = "+" + text;
         }
         log(reportAST,
-                MSG_KEY,
-                text);
+            MSG_KEY,
+            text);
     }
 
     /**
@@ -540,8 +540,8 @@ public class MagicNumberCheck extends AbstractCheck {
         // contains variable declaration
         // and it is directly inside class or record declaration
         return varDefAST != null
-                && (varDefAST.getParent().getParent().getType() == TokenTypes.CLASS_DEF
-                || varDefAST.getParent().getParent().getType() == TokenTypes.RECORD_DEF);
+               && (varDefAST.getParent().getParent().getType() == TokenTypes.CLASS_DEF
+                   || varDefAST.getParent().getParent().getType() == TokenTypes.RECORD_DEF);
     }
 
     /**

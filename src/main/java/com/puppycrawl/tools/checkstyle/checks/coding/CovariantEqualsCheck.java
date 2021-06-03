@@ -162,11 +162,11 @@ public class CovariantEqualsCheck extends AbstractCheck {
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.CLASS_DEF,
-            TokenTypes.LITERAL_NEW,
-            TokenTypes.ENUM_DEF,
-            TokenTypes.RECORD_DEF,
-        };
+                   TokenTypes.CLASS_DEF,
+                   TokenTypes.LITERAL_NEW,
+                   TokenTypes.ENUM_DEF,
+                   TokenTypes.RECORD_DEF,
+               };
     }
 
     @Override
@@ -199,7 +199,7 @@ public class CovariantEqualsCheck extends AbstractCheck {
             if (!hasEqualsObject) {
                 for (DetailAST equalsAST : equalsMethods) {
                     final DetailAST nameNode = equalsAST
-                            .findFirstToken(TokenTypes.IDENT);
+                                               .findFirstToken(TokenTypes.IDENT);
                     log(nameNode, MSG_KEY);
                 }
             }

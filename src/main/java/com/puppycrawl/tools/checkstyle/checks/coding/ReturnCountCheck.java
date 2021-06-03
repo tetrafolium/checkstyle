@@ -183,11 +183,11 @@ public final class ReturnCountCheck extends AbstractCheck {
     @Override
     public int[] getDefaultTokens() {
         return new int[] {
-            TokenTypes.CTOR_DEF,
-            TokenTypes.METHOD_DEF,
-            TokenTypes.LAMBDA,
-            TokenTypes.LITERAL_RETURN,
-        };
+                   TokenTypes.CTOR_DEF,
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.LAMBDA,
+                   TokenTypes.LITERAL_RETURN,
+               };
     }
 
     @Override
@@ -198,11 +198,11 @@ public final class ReturnCountCheck extends AbstractCheck {
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.CTOR_DEF,
-            TokenTypes.METHOD_DEF,
-            TokenTypes.LAMBDA,
-            TokenTypes.LITERAL_RETURN,
-        };
+                   TokenTypes.CTOR_DEF,
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.LAMBDA,
+                   TokenTypes.LITERAL_RETURN,
+               };
     }
 
     /**
@@ -243,34 +243,34 @@ public final class ReturnCountCheck extends AbstractCheck {
     @Override
     public void visitToken(DetailAST ast) {
         switch (ast.getType()) {
-            case TokenTypes.CTOR_DEF:
-            case TokenTypes.METHOD_DEF:
-                visitMethodDef(ast);
-                break;
-            case TokenTypes.LAMBDA:
-                visitLambda();
-                break;
-            case TokenTypes.LITERAL_RETURN:
-                visitReturn(ast);
-                break;
-            default:
-                throw new IllegalStateException(ast.toString());
+        case TokenTypes.CTOR_DEF:
+        case TokenTypes.METHOD_DEF:
+            visitMethodDef(ast);
+            break;
+        case TokenTypes.LAMBDA:
+            visitLambda();
+            break;
+        case TokenTypes.LITERAL_RETURN:
+            visitReturn(ast);
+            break;
+        default:
+            throw new IllegalStateException(ast.toString());
         }
     }
 
     @Override
     public void leaveToken(DetailAST ast) {
         switch (ast.getType()) {
-            case TokenTypes.CTOR_DEF:
-            case TokenTypes.METHOD_DEF:
-            case TokenTypes.LAMBDA:
-                leave(ast);
-                break;
-            case TokenTypes.LITERAL_RETURN:
-                // Do nothing
-                break;
-            default:
-                throw new IllegalStateException(ast.toString());
+        case TokenTypes.CTOR_DEF:
+        case TokenTypes.METHOD_DEF:
+        case TokenTypes.LAMBDA:
+            leave(ast);
+            break;
+        case TokenTypes.LITERAL_RETURN:
+            // Do nothing
+            break;
+        default:
+            throw new IllegalStateException(ast.toString());
         }
     }
 

@@ -38,57 +38,57 @@ public class XpathRegressionArrayTypeStyleTest extends AbstractXpathTestSupport 
     @Test
     public void testVariable() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionArrayTypeStyleVariable.java"));
+            new File(getPath("SuppressionXpathRegressionArrayTypeStyleVariable.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(ArrayTypeStyleCheck.class);
+            createModuleConfig(ArrayTypeStyleCheck.class);
 
         final String[] expectedViolation = {
             "4:19: " + getCheckMessage(ArrayTypeStyleCheck.class, ArrayTypeStyleCheck.MSG_KEY),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionArrayTypeStyleVariable']]"
-                        + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='strings']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionArrayTypeStyleVariable']]"
-                        + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='strings']]/MODIFIERS",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionArrayTypeStyleVariable']]"
-                        + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='strings']]/TYPE",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionArrayTypeStyleVariable']]"
-                        + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='strings']]/TYPE"
-                        + "/ARRAY_DECLARATOR[./IDENT[@text='String']]"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionArrayTypeStyleVariable']]"
+                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='strings']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionArrayTypeStyleVariable']]"
+                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='strings']]/MODIFIERS",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionArrayTypeStyleVariable']]"
+                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='strings']]/TYPE",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionArrayTypeStyleVariable']]"
+                    + "/OBJBLOCK/VARIABLE_DEF[./IDENT[@text='strings']]/TYPE"
+                    + "/ARRAY_DECLARATOR[./IDENT[@text='String']]"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testMethodDef() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionArrayTypeStyleMethodDef.java"));
+            new File(getPath("SuppressionXpathRegressionArrayTypeStyleMethodDef.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(ArrayTypeStyleCheck.class);
+            createModuleConfig(ArrayTypeStyleCheck.class);
 
         final String[] expectedViolation = {
             "4:19: " + getCheckMessage(ArrayTypeStyleCheck.class, ArrayTypeStyleCheck.MSG_KEY),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionArrayTypeStyleMethodDef']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='getData']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionArrayTypeStyleMethodDef']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='getData']]/MODIFIERS",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionArrayTypeStyleMethodDef']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='getData']]/TYPE",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionArrayTypeStyleMethodDef']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='getData']]/TYPE/ARRAY_DECLARATOR"
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionArrayTypeStyleMethodDef']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='getData']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionArrayTypeStyleMethodDef']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='getData']]/MODIFIERS",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionArrayTypeStyleMethodDef']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='getData']]/TYPE",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionArrayTypeStyleMethodDef']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='getData']]/TYPE/ARRAY_DECLARATOR"
 
-        );
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
 }

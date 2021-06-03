@@ -193,9 +193,9 @@ public class TrailingCommentCheck extends AbstractCheck {
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.SINGLE_LINE_COMMENT,
-            TokenTypes.BLOCK_COMMENT_BEGIN,
-        };
+                   TokenTypes.SINGLE_LINE_COMMENT,
+                   TokenTypes.BLOCK_COMMENT_BEGIN,
+               };
     }
 
     @Override
@@ -233,12 +233,12 @@ public class TrailingCommentCheck extends AbstractCheck {
                 // do not check comment which doesn't end line
                 if (comment.getText().length == 1
                         && !CommonUtil.isBlank(line
-                            .substring(comment.getEndColNo() + 1))) {
+                                               .substring(comment.getEndColNo() + 1))) {
                     continue;
                 }
             }
             if (!format.matcher(lineBefore).find()
-                && !isLegalComment(comment)) {
+                    && !isLegalComment(comment)) {
                 illegalLines.put(lineNo, comment.getStartColNo());
             }
         }

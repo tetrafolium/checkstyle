@@ -183,14 +183,14 @@ public class RegexpMultilineCheck extends AbstractFileSetCheck {
     @Override
     public void beginProcessing(String charset) {
         final DetectorOptions options = DetectorOptions.newBuilder()
-            .reporter(this)
-            .compileFlags(getRegexCompileFlags())
-            .format(format)
-            .message(message)
-            .minimum(minimum)
-            .maximum(maximum)
-            .ignoreCase(ignoreCase)
-            .build();
+                                        .reporter(this)
+                                        .compileFlags(getRegexCompileFlags())
+                                        .format(format)
+                                        .message(message)
+                                        .minimum(minimum)
+                                        .maximum(maximum)
+                                        .ignoreCase(ignoreCase)
+                                        .build();
         detector = new MultilineDetector(options);
     }
 

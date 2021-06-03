@@ -42,9 +42,9 @@ class CommentSuppressor implements MatchSuppressor {
 
     @Override
     public boolean shouldSuppress(int startLineNo, int startColNo,
-            int endLineNo, int endColNo) {
+                                  int endLineNo, int endColNo) {
         return currentContents
-                .hasIntersectionWithComment(startLineNo, startColNo, endLineNo, endColNo);
+               .hasIntersectionWithComment(startLineNo, startColNo, endLineNo, endColNo);
     }
 
 }

@@ -30,13 +30,13 @@ public final class Definitions {
 
     /** Name of resource bundle for Checkstyle. */
     public static final String CHECKSTYLE_BUNDLE =
-            "com.puppycrawl.tools.checkstyle.messages";
+        "com.puppycrawl.tools.checkstyle.messages";
 
     /** Name of modules which are not checks, but are internal modules. */
     public static final Set<String> INTERNAL_MODULES = Collections.unmodifiableSet(
-            new HashSet<>(Collections.singletonList(
-                    "com.puppycrawl.tools.checkstyle.meta.JavadocMetadataScraper"
-    )));
+                new HashSet<>(Collections.singletonList(
+                                  "com.puppycrawl.tools.checkstyle.meta.JavadocMetadataScraper"
+                              )));
 
     /**
      * Do no allow {@code Definitions} instances to be created.

@@ -107,8 +107,8 @@ public final class UnnecessarySemicolonInEnumerationCheck extends AbstractCheck 
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.ENUM_DEF,
-        };
+                   TokenTypes.ENUM_DEF,
+               };
     }
 
     @Override

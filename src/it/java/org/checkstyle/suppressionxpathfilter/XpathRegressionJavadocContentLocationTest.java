@@ -40,50 +40,50 @@ public class XpathRegressionJavadocContentLocationTest extends AbstractXpathTest
     @Test
     public void testOne() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionJavadocContentLocationOne.java"));
+            new File(getPath("SuppressionXpathRegressionJavadocContentLocationOne.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(JavadocContentLocationCheck.class);
+            createModuleConfig(JavadocContentLocationCheck.class);
 
         final String[] expectedViolation = {
             "5:5: " + getCheckMessage(JavadocContentLocationCheck.class,
-                    JavadocContentLocationCheck.MSG_JAVADOC_CONTENT_SECOND_LINE),
+                                      JavadocContentLocationCheck.MSG_JAVADOC_CONTENT_SECOND_LINE),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/INTERFACE_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocContentLocationOne']]"
-                + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/TYPE/BLOCK_COMMENT_BEGIN"
+                    "/INTERFACE_DEF[./IDENT[@text='SuppressionXpathRegressionJavadocContentLocationOne']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/TYPE/BLOCK_COMMENT_BEGIN"
 
-        );
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionJavadocContentLocationTwo.java"));
+            new File(getPath("SuppressionXpathRegressionJavadocContentLocationTwo.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(JavadocContentLocationCheck.class);
+            createModuleConfig(JavadocContentLocationCheck.class);
 
         moduleConfig.addAttribute("location", "first_line");
 
         final String[] expectedViolation = {
             "5:16: " + getCheckMessage(JavadocContentLocationCheck.class,
-                    JavadocContentLocationCheck.MSG_JAVADOC_CONTENT_FIRST_LINE),
+                                       JavadocContentLocationCheck.MSG_JAVADOC_CONTENT_FIRST_LINE),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/INTERFACE_DEF[./IDENT"
+                    "/INTERFACE_DEF[./IDENT"
                     + "[@text='SuppressionXpathRegressionJavadocContentLocationTwo']]"
                     + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='test']]/TYPE/BLOCK_COMMENT_BEGIN[2]"
 
-        );
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
 }

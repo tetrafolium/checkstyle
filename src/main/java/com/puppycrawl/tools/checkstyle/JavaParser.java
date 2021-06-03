@@ -79,14 +79,14 @@ public final class JavaParser {
      * @throws CheckstyleException if the contents is not a valid Java source
      */
     public static DetailAST parse(FileContents contents)
-            throws CheckstyleException {
+    throws CheckstyleException {
         final String fullText = contents.getText().getFullText().toString();
         final Reader reader = new StringReader(fullText);
         final GeneratedJavaLexer lexer = new GeneratedJavaLexer(reader);
         lexer.setCommentListener(contents);
 
         final GeneratedTextBlockLexer textBlockLexer =
-                new GeneratedTextBlockLexer(lexer.getInputState());
+            new GeneratedTextBlockLexer(lexer.getInputState());
 
         final String tokenObjectClass = "antlr.CommonHiddenStreamToken";
         lexer.setTokenObjectClass(tokenObjectClass);
@@ -115,8 +115,8 @@ public final class JavaParser {
         }
         catch (RecognitionException | TokenStreamException | IllegalStateException ex) {
             final String exceptionMsg = String.format(Locale.ROOT,
-                "%s occurred while parsing file %s.",
-                ex.getClass().getSimpleName(), contents.getFileName());
+                                        "%s occurred while parsing file %s.",
+                                        ex.getClass().getSimpleName(), contents.getFileName());
             throw new CheckstyleException(exceptionMsg, ex);
         }
 
@@ -132,7 +132,7 @@ public final class JavaParser {
      * @throws CheckstyleException if the text is not a valid Java source
      */
     public static DetailAST parseFileText(FileText text, Options options)
-            throws CheckstyleException {
+    throws CheckstyleException {
         final FileContents contents = new FileContents(text);
         DetailAST ast = parse(contents);
         if (options == Options.WITH_COMMENTS) {
@@ -151,9 +151,9 @@ public final class JavaParser {
      * @throws CheckstyleException if the file is not a valid Java source file
      */
     public static DetailAST parseFile(File file, Options options)
-            throws IOException, CheckstyleException {
+    throws IOException, CheckstyleException {
         final FileText text = new FileText(file.getAbsoluteFile(),
-            StandardCharsets.UTF_8.name());
+                                           StandardCharsets.UTF_8.name());
         return parseFileText(text, options);
     }
 
@@ -174,11 +174,11 @@ public final class JavaParser {
             lastNode = curNode;
 
             CommonHiddenStreamToken tokenBefore = ((CommonASTWithHiddenTokens) curNode)
-                    .getHiddenBefore();
+                                                  .getHiddenBefore();
             DetailAST currentSibling = curNode;
             while (tokenBefore != null) {
                 final DetailAST newCommentNode =
-                         createCommentAstFromToken(tokenBefore);
+                    createCommentAstFromToken(tokenBefore);
 
                 ((DetailAstImpl) currentSibling).addPreviousSibling(newCommentNode);
 
@@ -199,11 +199,11 @@ public final class JavaParser {
         }
         if (lastNode != null) {
             CommonHiddenStreamToken tokenAfter = ((CommonASTWithHiddenTokens) lastNode)
-                    .getHiddenAfter();
+                                                 .getHiddenAfter();
             DetailAST currentSibling = lastNode;
             while (tokenAfter != null) {
                 final DetailAST newCommentNode =
-                        createCommentAstFromToken(tokenAfter);
+                    createCommentAstFromToken(tokenAfter);
 
                 ((DetailAstImpl) currentSibling).addNextSibling(newCommentNode);
 

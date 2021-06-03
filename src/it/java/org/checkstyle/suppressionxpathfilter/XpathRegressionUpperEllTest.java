@@ -40,26 +40,26 @@ public class XpathRegressionUpperEllTest extends AbstractXpathTestSupport {
     @Test
     public void testUpperEll() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionUpperEll.java"));
+            new File(getPath("SuppressionXpathRegressionUpperEll.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(UpperEllCheck.class);
+            createModuleConfig(UpperEllCheck.class);
 
         final String[] expectedViolation = {
             "4:16: " + getCheckMessage(UpperEllCheck.class,
-                    UpperEllCheck.MSG_KEY),
+                                       UpperEllCheck.MSG_KEY),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUpperEll']]/OBJBLOCK"
-                + "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR[./NUM_LONG[@text='0l']]",
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUpperEll']]/OBJBLOCK"
-                + "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR"
-                + "/NUM_LONG[@text='0l']"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUpperEll']]/OBJBLOCK"
+                    + "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR[./NUM_LONG[@text='0l']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionUpperEll']]/OBJBLOCK"
+                    + "/VARIABLE_DEF[./IDENT[@text='bad']]/ASSIGN/EXPR"
+                    + "/NUM_LONG[@text='0l']"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
 }

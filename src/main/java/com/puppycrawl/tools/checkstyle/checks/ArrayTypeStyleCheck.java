@@ -142,7 +142,7 @@ public class ArrayTypeStyleCheck extends AbstractCheck {
             if (variableAST != null) {
                 final boolean isMethod = typeAST.getParent().getType() == TokenTypes.METHOD_DEF;
                 final boolean isJavaStyle = variableAST.getLineNo() > ast.getLineNo()
-                    || variableAST.getColumnNo() - ast.getColumnNo() > -1;
+                                            || variableAST.getColumnNo() - ast.getColumnNo() > -1;
 
                 // force all methods to be Java style (see note in top Javadoc)
                 final boolean isMethodViolation = isMethod && !isJavaStyle;

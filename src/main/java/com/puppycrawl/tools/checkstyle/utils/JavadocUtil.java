@@ -96,9 +96,9 @@ public final class JavadocUtil {
     public static JavadocTags getJavadocTags(TextBlock textBlock,
             JavadocTagType tagType) {
         final boolean getBlockTags = tagType == JavadocTagType.ALL
-                                         || tagType == JavadocTagType.BLOCK;
+                                     || tagType == JavadocTagType.BLOCK;
         final boolean getInlineTags = tagType == JavadocTagType.ALL
-                                          || tagType == JavadocTagType.INLINE;
+                                      || tagType == JavadocTagType.INLINE;
 
         final List<TagInfo> tags = new ArrayList<>();
 
@@ -355,7 +355,7 @@ public final class JavadocUtil {
         final String javadocTagName;
         if (javadocTagSection.getType() == JavadocTokenTypes.JAVADOC_INLINE_TAG) {
             javadocTagName = getNextSibling(
-                    getFirstChild(javadocTagSection)).getText();
+                                 getFirstChild(javadocTagSection)).getText();
         }
         else {
             javadocTagName = getFirstChild(javadocTagSection).getText();
@@ -410,9 +410,9 @@ public final class JavadocUtil {
             }
         }
         return sibling == null
-            && (BlockCommentPosition.isOnType(blockComment)
-                || BlockCommentPosition.isOnMember(blockComment)
-                || BlockCommentPosition.isOnPackage(blockComment));
+               && (BlockCommentPosition.isOnType(blockComment)
+                   || BlockCommentPosition.isOnMember(blockComment)
+                   || BlockCommentPosition.isOnPackage(blockComment));
     }
 
 }

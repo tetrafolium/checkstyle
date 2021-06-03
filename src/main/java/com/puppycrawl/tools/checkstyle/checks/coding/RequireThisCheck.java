@@ -258,46 +258,46 @@ public class RequireThisCheck extends AbstractCheck {
 
     /** Set of all declaration tokens. */
     private static final Set<Integer> DECLARATION_TOKENS = Collections.unmodifiableSet(
-        Arrays.stream(new Integer[] {
-            TokenTypes.VARIABLE_DEF,
-            TokenTypes.CTOR_DEF,
-            TokenTypes.METHOD_DEF,
-            TokenTypes.CLASS_DEF,
-            TokenTypes.ENUM_DEF,
-            TokenTypes.ANNOTATION_DEF,
-            TokenTypes.INTERFACE_DEF,
-            TokenTypes.PARAMETER_DEF,
-            TokenTypes.TYPE_ARGUMENT,
-            TokenTypes.RECORD_DEF,
-            TokenTypes.RECORD_COMPONENT_DEF,
-        }).collect(Collectors.toSet()));
+                Arrays.stream(new Integer[] {
+                                  TokenTypes.VARIABLE_DEF,
+                                  TokenTypes.CTOR_DEF,
+                                  TokenTypes.METHOD_DEF,
+                                  TokenTypes.CLASS_DEF,
+                                  TokenTypes.ENUM_DEF,
+                                  TokenTypes.ANNOTATION_DEF,
+                                  TokenTypes.INTERFACE_DEF,
+                                  TokenTypes.PARAMETER_DEF,
+                                  TokenTypes.TYPE_ARGUMENT,
+                                  TokenTypes.RECORD_DEF,
+                                  TokenTypes.RECORD_COMPONENT_DEF,
+                              }).collect(Collectors.toSet()));
     /** Set of all assign tokens. */
     private static final Set<Integer> ASSIGN_TOKENS = Collections.unmodifiableSet(
-        Arrays.stream(new Integer[] {
-            TokenTypes.ASSIGN,
-            TokenTypes.PLUS_ASSIGN,
-            TokenTypes.STAR_ASSIGN,
-            TokenTypes.DIV_ASSIGN,
-            TokenTypes.MOD_ASSIGN,
-            TokenTypes.SR_ASSIGN,
-            TokenTypes.BSR_ASSIGN,
-            TokenTypes.SL_ASSIGN,
-            TokenTypes.BAND_ASSIGN,
-            TokenTypes.BXOR_ASSIGN,
-        }).collect(Collectors.toSet()));
+                Arrays.stream(new Integer[] {
+                                  TokenTypes.ASSIGN,
+                                  TokenTypes.PLUS_ASSIGN,
+                                  TokenTypes.STAR_ASSIGN,
+                                  TokenTypes.DIV_ASSIGN,
+                                  TokenTypes.MOD_ASSIGN,
+                                  TokenTypes.SR_ASSIGN,
+                                  TokenTypes.BSR_ASSIGN,
+                                  TokenTypes.SL_ASSIGN,
+                                  TokenTypes.BAND_ASSIGN,
+                                  TokenTypes.BXOR_ASSIGN,
+                              }).collect(Collectors.toSet()));
     /** Set of all compound assign tokens. */
     private static final Set<Integer> COMPOUND_ASSIGN_TOKENS = Collections.unmodifiableSet(
-        Arrays.stream(new Integer[] {
-            TokenTypes.PLUS_ASSIGN,
-            TokenTypes.STAR_ASSIGN,
-            TokenTypes.DIV_ASSIGN,
-            TokenTypes.MOD_ASSIGN,
-            TokenTypes.SR_ASSIGN,
-            TokenTypes.BSR_ASSIGN,
-            TokenTypes.SL_ASSIGN,
-            TokenTypes.BAND_ASSIGN,
-            TokenTypes.BXOR_ASSIGN,
-        }).collect(Collectors.toSet()));
+                Arrays.stream(new Integer[] {
+                                  TokenTypes.PLUS_ASSIGN,
+                                  TokenTypes.STAR_ASSIGN,
+                                  TokenTypes.DIV_ASSIGN,
+                                  TokenTypes.MOD_ASSIGN,
+                                  TokenTypes.SR_ASSIGN,
+                                  TokenTypes.BSR_ASSIGN,
+                                  TokenTypes.SL_ASSIGN,
+                                  TokenTypes.BAND_ASSIGN,
+                                  TokenTypes.BXOR_ASSIGN,
+                              }).collect(Collectors.toSet()));
 
     /** Frame for the currently processed AST. */
     private final Deque<AbstractFrame> current = new ArrayDeque<>();
@@ -347,18 +347,18 @@ public class RequireThisCheck extends AbstractCheck {
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.CLASS_DEF,
-            TokenTypes.INTERFACE_DEF,
-            TokenTypes.ENUM_DEF,
-            TokenTypes.ANNOTATION_DEF,
-            TokenTypes.CTOR_DEF,
-            TokenTypes.METHOD_DEF,
-            TokenTypes.LITERAL_FOR,
-            TokenTypes.SLIST,
-            TokenTypes.IDENT,
-            TokenTypes.RECORD_DEF,
-            TokenTypes.COMPACT_CTOR_DEF,
-        };
+                   TokenTypes.CLASS_DEF,
+                   TokenTypes.INTERFACE_DEF,
+                   TokenTypes.ENUM_DEF,
+                   TokenTypes.ANNOTATION_DEF,
+                   TokenTypes.CTOR_DEF,
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.LITERAL_FOR,
+                   TokenTypes.SLIST,
+                   TokenTypes.IDENT,
+                   TokenTypes.RECORD_DEF,
+                   TokenTypes.COMPACT_CTOR_DEF,
+               };
     }
 
     @Override
@@ -390,41 +390,41 @@ public class RequireThisCheck extends AbstractCheck {
     @Override
     public void visitToken(DetailAST ast) {
         switch (ast.getType()) {
-            case TokenTypes.IDENT:
-                processIdent(ast);
-                break;
-            case TokenTypes.CLASS_DEF:
-            case TokenTypes.INTERFACE_DEF:
-            case TokenTypes.ENUM_DEF:
-            case TokenTypes.ANNOTATION_DEF:
-            case TokenTypes.SLIST:
-            case TokenTypes.METHOD_DEF:
-            case TokenTypes.CTOR_DEF:
-            case TokenTypes.LITERAL_FOR:
-            case TokenTypes.RECORD_DEF:
-                current.push(frames.get(ast));
-                break;
-            default:
-                // do nothing
+        case TokenTypes.IDENT:
+            processIdent(ast);
+            break;
+        case TokenTypes.CLASS_DEF:
+        case TokenTypes.INTERFACE_DEF:
+        case TokenTypes.ENUM_DEF:
+        case TokenTypes.ANNOTATION_DEF:
+        case TokenTypes.SLIST:
+        case TokenTypes.METHOD_DEF:
+        case TokenTypes.CTOR_DEF:
+        case TokenTypes.LITERAL_FOR:
+        case TokenTypes.RECORD_DEF:
+            current.push(frames.get(ast));
+            break;
+        default:
+            // do nothing
         }
     }
 
     @Override
     public void leaveToken(DetailAST ast) {
         switch (ast.getType()) {
-            case TokenTypes.CLASS_DEF:
-            case TokenTypes.INTERFACE_DEF:
-            case TokenTypes.ENUM_DEF:
-            case TokenTypes.ANNOTATION_DEF:
-            case TokenTypes.SLIST:
-            case TokenTypes.METHOD_DEF:
-            case TokenTypes.CTOR_DEF:
-            case TokenTypes.LITERAL_FOR:
-            case TokenTypes.RECORD_DEF:
-                current.pop();
-                break;
-            default:
-                // do nothing
+        case TokenTypes.CLASS_DEF:
+        case TokenTypes.INTERFACE_DEF:
+        case TokenTypes.ENUM_DEF:
+        case TokenTypes.ANNOTATION_DEF:
+        case TokenTypes.SLIST:
+        case TokenTypes.METHOD_DEF:
+        case TokenTypes.CTOR_DEF:
+        case TokenTypes.LITERAL_FOR:
+        case TokenTypes.RECORD_DEF:
+            current.pop();
+            break;
+        default:
+            // do nothing
         }
     }
 
@@ -438,32 +438,32 @@ public class RequireThisCheck extends AbstractCheck {
         int parentType = ast.getParent().getType();
         if (parentType == TokenTypes.EXPR
                 && ast.getParent().getParent().getParent().getType()
-                    == TokenTypes.ANNOTATION_FIELD_DEF) {
+                == TokenTypes.ANNOTATION_FIELD_DEF) {
             parentType = TokenTypes.ANNOTATION_FIELD_DEF;
         }
         switch (parentType) {
-            case TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR:
-            case TokenTypes.ANNOTATION:
-            case TokenTypes.ANNOTATION_FIELD_DEF:
-                // no need to check annotations content
-                break;
-            case TokenTypes.METHOD_CALL:
-                if (checkMethods) {
-                    final AbstractFrame frame = getMethodWithoutThis(ast);
-                    if (frame != null) {
-                        logViolation(MSG_METHOD, ast, frame);
-                    }
+        case TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR:
+        case TokenTypes.ANNOTATION:
+        case TokenTypes.ANNOTATION_FIELD_DEF:
+            // no need to check annotations content
+            break;
+        case TokenTypes.METHOD_CALL:
+            if (checkMethods) {
+                final AbstractFrame frame = getMethodWithoutThis(ast);
+                if (frame != null) {
+                    logViolation(MSG_METHOD, ast, frame);
                 }
-                break;
-            default:
-                if (checkFields) {
-                    final AbstractFrame frame = getFieldWithoutThis(ast, parentType);
-                    final boolean canUseThis = !isInCompactConstructor(ast);
-                    if (frame != null && canUseThis) {
-                        logViolation(MSG_VARIABLE, ast, frame);
-                    }
+            }
+            break;
+        default:
+            if (checkFields) {
+                final AbstractFrame frame = getFieldWithoutThis(ast, parentType);
+                final boolean canUseThis = !isInCompactConstructor(ast);
+                if (frame != null && canUseThis) {
+                    logViolation(MSG_VARIABLE, ast, frame);
                 }
-                break;
+            }
+            break;
         }
     }
 
@@ -495,7 +495,7 @@ public class RequireThisCheck extends AbstractCheck {
     private AbstractFrame getFieldWithoutThis(DetailAST ast, int parentType) {
         final boolean importOrPackage = ScopeUtil.getSurroundingScope(ast) == null;
         final boolean typeName = parentType == TokenTypes.TYPE
-                || parentType == TokenTypes.LITERAL_NEW;
+                                 || parentType == TokenTypes.LITERAL_NEW;
         AbstractFrame frame = null;
 
         if (!importOrPackage
@@ -540,70 +540,70 @@ public class RequireThisCheck extends AbstractCheck {
     private static void collectDeclarations(Deque<AbstractFrame> frameStack, DetailAST ast) {
         final AbstractFrame frame = frameStack.peek();
         switch (ast.getType()) {
-            case TokenTypes.VARIABLE_DEF:
-                collectVariableDeclarations(ast, frame);
-                break;
-            case TokenTypes.RECORD_COMPONENT_DEF:
-                final DetailAST componentIdent = ast.findFirstToken(TokenTypes.IDENT);
-                ((ClassFrame) frame).addInstanceMember(componentIdent);
-                break;
-            case TokenTypes.PARAMETER_DEF:
-                if (!CheckUtil.isReceiverParameter(ast)
-                        && !isLambdaParameter(ast)
-                        && ast.getParent().getType() != TokenTypes.LITERAL_CATCH) {
-                    final DetailAST parameterIdent = ast.findFirstToken(TokenTypes.IDENT);
-                    frame.addIdent(parameterIdent);
-                }
-                break;
-            case TokenTypes.CLASS_DEF:
-            case TokenTypes.INTERFACE_DEF:
-            case TokenTypes.ENUM_DEF:
-            case TokenTypes.ANNOTATION_DEF:
-            case TokenTypes.RECORD_DEF:
-                final DetailAST classFrameNameIdent = ast.findFirstToken(TokenTypes.IDENT);
-                frameStack.addFirst(new ClassFrame(frame, classFrameNameIdent));
-                break;
-            case TokenTypes.SLIST:
-                frameStack.addFirst(new BlockFrame(frame, ast));
-                break;
-            case TokenTypes.METHOD_DEF:
-                final DetailAST methodFrameNameIdent = ast.findFirstToken(TokenTypes.IDENT);
-                final DetailAST mods = ast.findFirstToken(TokenTypes.MODIFIERS);
-                if (mods.findFirstToken(TokenTypes.LITERAL_STATIC) == null) {
-                    ((ClassFrame) frame).addInstanceMethod(methodFrameNameIdent);
-                }
-                else {
-                    ((ClassFrame) frame).addStaticMethod(methodFrameNameIdent);
-                }
-                frameStack.addFirst(new MethodFrame(frame, methodFrameNameIdent));
-                break;
-            case TokenTypes.CTOR_DEF:
-            case TokenTypes.COMPACT_CTOR_DEF:
-                final DetailAST ctorFrameNameIdent = ast.findFirstToken(TokenTypes.IDENT);
-                frameStack.addFirst(new ConstructorFrame(frame, ctorFrameNameIdent));
-                break;
-            case TokenTypes.ENUM_CONSTANT_DEF:
-                final DetailAST ident = ast.findFirstToken(TokenTypes.IDENT);
-                ((ClassFrame) frame).addStaticMember(ident);
-                break;
-            case TokenTypes.LITERAL_CATCH:
-                final AbstractFrame catchFrame = new CatchFrame(frame, ast);
-                catchFrame.addIdent(ast.findFirstToken(TokenTypes.PARAMETER_DEF).findFirstToken(
-                        TokenTypes.IDENT));
-                frameStack.addFirst(catchFrame);
-                break;
-            case TokenTypes.LITERAL_FOR:
-                final AbstractFrame forFrame = new ForFrame(frame, ast);
-                frameStack.addFirst(forFrame);
-                break;
-            case TokenTypes.LITERAL_NEW:
-                if (isAnonymousClassDef(ast)) {
-                    frameStack.addFirst(new AnonymousClassFrame(frame,
-                            ast.getFirstChild().toString()));
-                }
-                break;
-            default:
-                // do nothing
+        case TokenTypes.VARIABLE_DEF:
+            collectVariableDeclarations(ast, frame);
+            break;
+        case TokenTypes.RECORD_COMPONENT_DEF:
+            final DetailAST componentIdent = ast.findFirstToken(TokenTypes.IDENT);
+            ((ClassFrame) frame).addInstanceMember(componentIdent);
+            break;
+        case TokenTypes.PARAMETER_DEF:
+            if (!CheckUtil.isReceiverParameter(ast)
+                    && !isLambdaParameter(ast)
+                    && ast.getParent().getType() != TokenTypes.LITERAL_CATCH) {
+                final DetailAST parameterIdent = ast.findFirstToken(TokenTypes.IDENT);
+                frame.addIdent(parameterIdent);
+            }
+            break;
+        case TokenTypes.CLASS_DEF:
+        case TokenTypes.INTERFACE_DEF:
+        case TokenTypes.ENUM_DEF:
+        case TokenTypes.ANNOTATION_DEF:
+        case TokenTypes.RECORD_DEF:
+            final DetailAST classFrameNameIdent = ast.findFirstToken(TokenTypes.IDENT);
+            frameStack.addFirst(new ClassFrame(frame, classFrameNameIdent));
+            break;
+        case TokenTypes.SLIST:
+            frameStack.addFirst(new BlockFrame(frame, ast));
+            break;
+        case TokenTypes.METHOD_DEF:
+            final DetailAST methodFrameNameIdent = ast.findFirstToken(TokenTypes.IDENT);
+            final DetailAST mods = ast.findFirstToken(TokenTypes.MODIFIERS);
+            if (mods.findFirstToken(TokenTypes.LITERAL_STATIC) == null) {
+                ((ClassFrame) frame).addInstanceMethod(methodFrameNameIdent);
+            }
+            else {
+                ((ClassFrame) frame).addStaticMethod(methodFrameNameIdent);
+            }
+            frameStack.addFirst(new MethodFrame(frame, methodFrameNameIdent));
+            break;
+        case TokenTypes.CTOR_DEF:
+        case TokenTypes.COMPACT_CTOR_DEF:
+            final DetailAST ctorFrameNameIdent = ast.findFirstToken(TokenTypes.IDENT);
+            frameStack.addFirst(new ConstructorFrame(frame, ctorFrameNameIdent));
+            break;
+        case TokenTypes.ENUM_CONSTANT_DEF:
+            final DetailAST ident = ast.findFirstToken(TokenTypes.IDENT);
+            ((ClassFrame) frame).addStaticMember(ident);
+            break;
+        case TokenTypes.LITERAL_CATCH:
+            final AbstractFrame catchFrame = new CatchFrame(frame, ast);
+            catchFrame.addIdent(ast.findFirstToken(TokenTypes.PARAMETER_DEF).findFirstToken(
+                                    TokenTypes.IDENT));
+            frameStack.addFirst(catchFrame);
+            break;
+        case TokenTypes.LITERAL_FOR:
+            final AbstractFrame forFrame = new ForFrame(frame, ast);
+            frameStack.addFirst(forFrame);
+            break;
+        case TokenTypes.LITERAL_NEW:
+            if (isAnonymousClassDef(ast)) {
+                frameStack.addFirst(new AnonymousClassFrame(frame,
+                                    ast.getFirstChild().toString()));
+            }
+            break;
+        default:
+            // do nothing
         }
     }
 
@@ -617,7 +617,7 @@ public class RequireThisCheck extends AbstractCheck {
         final DetailAST ident = ast.findFirstToken(TokenTypes.IDENT);
         if (frame.getType() == FrameType.CLASS_FRAME) {
             final DetailAST mods =
-                    ast.findFirstToken(TokenTypes.MODIFIERS);
+                ast.findFirstToken(TokenTypes.MODIFIERS);
             if (ScopeUtil.isInInterfaceBlock(ast)
                     || mods.findFirstToken(TokenTypes.LITERAL_STATIC) != null) {
                 ((ClassFrame) frame).addStaticMember(ident);
@@ -639,26 +639,26 @@ public class RequireThisCheck extends AbstractCheck {
      */
     private void endCollectingDeclarations(Queue<AbstractFrame> frameStack, DetailAST ast) {
         switch (ast.getType()) {
-            case TokenTypes.CLASS_DEF:
-            case TokenTypes.INTERFACE_DEF:
-            case TokenTypes.ENUM_DEF:
-            case TokenTypes.ANNOTATION_DEF:
-            case TokenTypes.SLIST:
-            case TokenTypes.METHOD_DEF:
-            case TokenTypes.CTOR_DEF:
-            case TokenTypes.LITERAL_CATCH:
-            case TokenTypes.LITERAL_FOR:
-            case TokenTypes.RECORD_DEF:
-            case TokenTypes.COMPACT_CTOR_DEF:
+        case TokenTypes.CLASS_DEF:
+        case TokenTypes.INTERFACE_DEF:
+        case TokenTypes.ENUM_DEF:
+        case TokenTypes.ANNOTATION_DEF:
+        case TokenTypes.SLIST:
+        case TokenTypes.METHOD_DEF:
+        case TokenTypes.CTOR_DEF:
+        case TokenTypes.LITERAL_CATCH:
+        case TokenTypes.LITERAL_FOR:
+        case TokenTypes.RECORD_DEF:
+        case TokenTypes.COMPACT_CTOR_DEF:
+            frames.put(ast, frameStack.poll());
+            break;
+        case TokenTypes.LITERAL_NEW:
+            if (isAnonymousClassDef(ast)) {
                 frames.put(ast, frameStack.poll());
-                break;
-            case TokenTypes.LITERAL_NEW:
-                if (isAnonymousClassDef(ast)) {
-                    frames.put(ast, frameStack.poll());
-                }
-                break;
-            default:
-                // do nothing
+            }
+            break;
+        default:
+            // do nothing
         }
     }
 
@@ -671,7 +671,7 @@ public class RequireThisCheck extends AbstractCheck {
     private static boolean isAnonymousClassDef(DetailAST ast) {
         final DetailAST lastChild = ast.getLastChild();
         return lastChild != null
-            && lastChild.getType() == TokenTypes.OBJBLOCK;
+               && lastChild.getType() == TokenTypes.OBJBLOCK;
     }
 
     /**
@@ -718,11 +718,11 @@ public class RequireThisCheck extends AbstractCheck {
             frameWhereViolationIsFound = findFrame(ast, true);
         }
         else if (variableDeclarationFrameType == FrameType.BLOCK_FRAME
-                    && isOverlappingByLocalVariable(ast)
-                    && canAssignValueToClassField(ast)
-                    && !isUserDefinedArrangementOfThis(variableDeclarationFrame, ast)
-                    && !isReturnedVariable(variableDeclarationFrame, ast)
-                    && canBeReferencedFromStaticContext(ast)) {
+                 && isOverlappingByLocalVariable(ast)
+                 && canAssignValueToClassField(ast)
+                 && !isUserDefinedArrangementOfThis(variableDeclarationFrame, ast)
+                 && !isReturnedVariable(variableDeclarationFrame, ast)
+                 && canBeReferencedFromStaticContext(ast)) {
             frameWhereViolationIsFound = findFrame(ast, true);
         }
         return frameWhereViolationIsFound;
@@ -736,7 +736,7 @@ public class RequireThisCheck extends AbstractCheck {
      */
     private static boolean isInExpression(DetailAST ast) {
         return TokenTypes.DOT == ast.getParent().getType()
-                || TokenTypes.METHOD_REF == ast.getParent().getType();
+               || TokenTypes.METHOD_REF == ast.getParent().getType();
     }
 
     /**
@@ -748,7 +748,7 @@ public class RequireThisCheck extends AbstractCheck {
      *         or block on his own.
      */
     private static boolean isUserDefinedArrangementOfThis(AbstractFrame currentFrame,
-                                                          DetailAST ident) {
+            DetailAST ident) {
         final DetailAST blockFrameNameIdent = currentFrame.getFrameNameIdent();
         final DetailAST definitionToken = blockFrameNameIdent.getParent();
         final DetailAST blockStartToken = definitionToken.findFirstToken(TokenTypes.SLIST);
@@ -758,7 +758,7 @@ public class RequireThisCheck extends AbstractCheck {
 
         final Set<DetailAST> variableUsagesInsideBlock =
             getAllTokensWhichAreEqualToCurrent(definitionToken, ident,
-                blockEndToken.getLineNo());
+                                               blockEndToken.getLineNo());
 
         for (DetailAST variableUsage : variableUsagesInsideBlock) {
             final DetailAST prevSibling = variableUsage.getPreviousSibling();
@@ -786,7 +786,7 @@ public class RequireThisCheck extends AbstractCheck {
         }
         else {
             final Set<DetailAST> rcurlyTokens = getAllTokensOfType(blockNameIdent,
-                    TokenTypes.RCURLY);
+                                                TokenTypes.RCURLY);
             for (DetailAST currentRcurly : rcurlyTokens) {
                 final DetailAST parent = currentRcurly.getParent();
                 if (TokenUtil.areOnSameLine(blockStartToken, parent)) {
@@ -811,7 +811,7 @@ public class RequireThisCheck extends AbstractCheck {
         final DetailAST blockEndToken = getBlockEndToken(blockFrameNameIdent, blockStartToken);
 
         final Set<DetailAST> returnsInsideBlock = getAllTokensOfType(definitionToken,
-            TokenTypes.LITERAL_RETURN, blockEndToken.getLineNo());
+                TokenTypes.LITERAL_RETURN, blockEndToken.getLineNo());
 
         boolean returnedVariable = false;
         for (DetailAST returnToken : returnsInsideBlock) {
@@ -876,14 +876,14 @@ public class RequireThisCheck extends AbstractCheck {
                 if (codeBlockDefinition != null) {
                     final DetailAST modifiers = codeBlockDefinition.getFirstChild();
                     staticContext = codeBlockDefinition.getType() == TokenTypes.STATIC_INIT
-                        || modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) != null;
+                                    || modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) != null;
                 }
             }
             else {
                 final DetailAST frameNameIdent = variableDeclarationFrame.getFrameNameIdent();
                 final DetailAST definitionToken = frameNameIdent.getParent();
                 staticContext = definitionToken.findFirstToken(TokenTypes.MODIFIERS)
-                        .findFirstToken(TokenTypes.LITERAL_STATIC) != null;
+                                .findFirstToken(TokenTypes.LITERAL_STATIC) != null;
             }
         }
         return !staticContext;
@@ -899,9 +899,9 @@ public class RequireThisCheck extends AbstractCheck {
     private static DetailAST getCodeBlockDefinitionToken(DetailAST ident) {
         DetailAST parent = ident.getParent();
         while (parent != null
-               && parent.getType() != TokenTypes.METHOD_DEF
-               && parent.getType() != TokenTypes.CTOR_DEF
-               && parent.getType() != TokenTypes.STATIC_INIT) {
+                && parent.getType() != TokenTypes.METHOD_DEF
+                && parent.getType() != TokenTypes.CTOR_DEF
+                && parent.getType() != TokenTypes.STATIC_INIT) {
             parent = parent.getParent();
         }
         return parent;
@@ -1025,7 +1025,7 @@ public class RequireThisCheck extends AbstractCheck {
      *         line number is lower or equal to the end line number.
      */
     private static Set<DetailAST> getAllTokensOfType(DetailAST ast, int tokenType,
-                                                     int endLineNumber) {
+            int endLineNumber) {
         DetailAST vertex = ast;
         final Set<DetailAST> result = new HashSet<>();
         final Deque<DetailAST> stack = new ArrayDeque<>();
@@ -1035,7 +1035,7 @@ public class RequireThisCheck extends AbstractCheck {
             }
             while (vertex != null) {
                 if (tokenType == vertex.getType()
-                    && vertex.getLineNo() <= endLineNumber) {
+                        && vertex.getLineNo() <= endLineNumber) {
                     result.add(vertex);
                 }
                 if (vertex.getNextSibling() != null) {
@@ -1058,7 +1058,7 @@ public class RequireThisCheck extends AbstractCheck {
      *         and which line number is lower or equal to the end line number.
      */
     private static Set<DetailAST> getAllTokensWhichAreEqualToCurrent(DetailAST ast, DetailAST token,
-                                                                     int endLineNumber) {
+            int endLineNumber) {
         DetailAST vertex = ast;
         final Set<DetailAST> result = new HashSet<>();
         final Deque<DetailAST> stack = new ArrayDeque<>();
@@ -1144,7 +1144,7 @@ public class RequireThisCheck extends AbstractCheck {
      * @return AbstractFrame containing declaration or null.
      */
     private static AbstractFrame findFrame(AbstractFrame frame, DetailAST name,
-            boolean lookForMethod) {
+                                           boolean lookForMethod) {
         return frame.getIfContains(name, lookForMethod);
     }
 
@@ -1218,10 +1218,10 @@ public class RequireThisCheck extends AbstractCheck {
             }
             else {
                 isLambdaParameter = TokenUtil.findFirstTokenByPredicate(lambdaParameters,
-                    paramDef -> {
-                        final DetailAST param = paramDef.findFirstToken(TokenTypes.IDENT);
-                        return param != null && param.getText().equals(ast.getText());
-                    }).isPresent();
+                paramDef -> {
+                    final DetailAST param = paramDef.findFirstToken(TokenTypes.IDENT);
+                    return param != null && param.getText().equals(ast.getText());
+                }).isPresent();
             }
         }
         return isLambdaParameter;
@@ -1331,7 +1331,7 @@ public class RequireThisCheck extends AbstractCheck {
             final AbstractFrame frame;
 
             if (!lookForMethod
-                && containsFieldOrVariable(nameToFind)) {
+                    && containsFieldOrVariable(nameToFind)) {
                 frame = this;
             }
             else {
@@ -1370,7 +1370,7 @@ public class RequireThisCheck extends AbstractCheck {
         protected boolean isProperDefinition(DetailAST ident, DetailAST ast) {
             final String nameToFind = ident.getText();
             return nameToFind.equals(ast.getText())
-                && CheckUtil.isBeforeInSource(ast, ident);
+                   && CheckUtil.isBeforeInSource(ast, ident);
         }
     }
 
@@ -1542,7 +1542,7 @@ public class RequireThisCheck extends AbstractCheck {
         @Override
         protected boolean containsFieldOrVariable(DetailAST nameToFind) {
             return containsFieldOrVariableDef(instanceMembers, nameToFind)
-                    || containsFieldOrVariableDef(staticMembers, nameToFind);
+                   || containsFieldOrVariableDef(staticMembers, nameToFind);
         }
 
         @Override
@@ -1556,7 +1556,7 @@ public class RequireThisCheck extends AbstractCheck {
             AbstractFrame frame = null;
 
             if (lookForMethod && containsMethod(nameToFind)
-                || containsFieldOrVariable(nameToFind)) {
+                    || containsFieldOrVariable(nameToFind)) {
                 frame = this;
             }
             else if (getParent() != null) {
@@ -1573,7 +1573,7 @@ public class RequireThisCheck extends AbstractCheck {
          */
         private boolean containsMethod(DetailAST methodToFind) {
             return containsMethodDef(instanceMethods, methodToFind)
-                || containsMethodDef(staticMethods, methodToFind);
+                   || containsMethodDef(staticMethods, methodToFind);
         }
 
         /**

@@ -1,5 +1,5 @@
 package org.checkstyle.suppressionxpathfilter // warn
-        .nolinewrap;
+.nolinewrap;
 
 public class SuppressionXpathRegressionNoLineWrap1 {
 }

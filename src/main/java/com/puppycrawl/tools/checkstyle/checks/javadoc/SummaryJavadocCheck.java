@@ -173,16 +173,16 @@ public class SummaryJavadocCheck extends AbstractJavadocCheck {
      * This regexp is used to convert multiline javadoc to single line without stars.
      */
     private static final Pattern JAVADOC_MULTILINE_TO_SINGLELINE_PATTERN =
-            Pattern.compile("\n[ ]+(\\*)|^[ ]+(\\*)");
+        Pattern.compile("\n[ ]+(\\*)|^[ ]+(\\*)");
 
     /** Period literal. */
     private static final String PERIOD = ".";
 
     /** Set of allowed Tokens tags in summary java doc. */
     private static final Set<Integer> ALLOWED_TYPES = Collections.unmodifiableSet(
-            new HashSet<>(Arrays.asList(JavadocTokenTypes.TEXT,
-                    JavadocTokenTypes.WS))
-    );
+                new HashSet<>(Arrays.asList(JavadocTokenTypes.TEXT,
+                                            JavadocTokenTypes.WS))
+            );
 
     /** Specify the regexp for forbidden summary fragments. */
     private Pattern forbiddenSummaryFragments = CommonUtil.createPattern("^$");
@@ -211,8 +211,8 @@ public class SummaryJavadocCheck extends AbstractJavadocCheck {
     @Override
     public int[] getDefaultJavadocTokens() {
         return new int[] {
-            JavadocTokenTypes.JAVADOC,
-        };
+                   JavadocTokenTypes.JAVADOC,
+               };
     }
 
     @Override
@@ -258,7 +258,7 @@ public class SummaryJavadocCheck extends AbstractJavadocCheck {
                 found = true;
             }
             else if (child.getType() != JavadocTokenTypes.LEADING_ASTERISK
-                    && !CommonUtil.isBlank(child.getText())) {
+                     && !CommonUtil.isBlank(child.getText())) {
                 break;
             }
         }
@@ -280,9 +280,9 @@ public class SummaryJavadocCheck extends AbstractJavadocCheck {
                 result.append(child.getText());
             }
             else if (child.getType() == JavadocTokenTypes.HTML_ELEMENT
-                    && CommonUtil.isBlank(result.toString().trim())) {
+                     && CommonUtil.isBlank(result.toString().trim())) {
                 result.append(getStringInsideTag(result.toString(),
-                        child.getChildren()[0].getChildren()[0]));
+                                                 child.getChildren()[0].getChildren()[0]));
             }
             else if (child.getType() == JavadocTokenTypes.JAVADOC_TAG) {
                 flag = false;
@@ -349,7 +349,7 @@ public class SummaryJavadocCheck extends AbstractJavadocCheck {
      */
     private boolean containsForbiddenFragment(String firstSentence) {
         final String javadocText = JAVADOC_MULTILINE_TO_SINGLELINE_PATTERN
-                .matcher(firstSentence).replaceAll(" ").trim();
+                                   .matcher(firstSentence).replaceAll(" ").trim();
         return forbiddenSummaryFragments.matcher(trimExcessWhitespaces(javadocText)).find();
     }
 

@@ -37,7 +37,7 @@ public class WhileHandler extends BlockParentHandler {
      * @param parent        the parent handler
      */
     public WhileHandler(IndentationCheck indentCheck,
-        DetailAST ast, AbstractExpressionHandler parent) {
+                        DetailAST ast, AbstractExpressionHandler parent) {
         super(indentCheck, "while", ast, parent);
     }
 

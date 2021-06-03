@@ -47,7 +47,7 @@ class IntRangeFilterElement implements IntFilterElement {
     @Override
     public boolean accept(int intValue) {
         return lowerBound.compareTo(intValue) <= 0
-            && upperBound.compareTo(intValue) >= 0;
+               && upperBound.compareTo(intValue) >= 0;
     }
 
     @Override
@@ -65,7 +65,7 @@ class IntRangeFilterElement implements IntFilterElement {
         }
         final IntRangeFilterElement intRangeFilter = (IntRangeFilterElement) other;
         return Objects.equals(lowerBound, intRangeFilter.lowerBound)
-                && Objects.equals(upperBound, intRangeFilter.upperBound);
+               && Objects.equals(upperBound, intRangeFilter.upperBound);
     }
 
 }

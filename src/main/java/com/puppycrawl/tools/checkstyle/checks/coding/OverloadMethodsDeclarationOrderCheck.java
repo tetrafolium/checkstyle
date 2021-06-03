@@ -96,8 +96,8 @@ public class OverloadMethodsDeclarationOrderCheck extends AbstractCheck {
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.OBJBLOCK,
-        };
+                   TokenTypes.OBJBLOCK,
+               };
     }
 
     @Override
@@ -134,14 +134,14 @@ public class OverloadMethodsDeclarationOrderCheck extends AbstractCheck {
             if (currentToken.getType() == TokenTypes.METHOD_DEF) {
                 currentIndex++;
                 final String methodName =
-                        currentToken.findFirstToken(TokenTypes.IDENT).getText();
+                    currentToken.findFirstToken(TokenTypes.IDENT).getText();
                 if (methodIndexMap.containsKey(methodName)) {
                     final int previousIndex = methodIndexMap.get(methodName);
                     if (currentIndex - previousIndex > allowedDistance) {
                         final int previousLineWithOverloadMethod =
-                                methodLineNumberMap.get(methodName);
+                            methodLineNumberMap.get(methodName);
                         log(currentToken, MSG_KEY,
-                                previousLineWithOverloadMethod);
+                            previousLineWithOverloadMethod);
                     }
                 }
                 methodIndexMap.put(methodName, currentIndex);

@@ -234,7 +234,8 @@ public class DesignForExtensionCheck extends AbstractCheck {
      * Specify annotations which allow the check to skip the method from validation.
      */
     private Set<String> ignoredAnnotations = Arrays.stream(new String[] {"Test", "Before", "After",
-        "BeforeClass", "AfterClass", }).collect(Collectors.toSet());
+            "BeforeClass", "AfterClass",
+                                                                        }).collect(Collectors.toSet());
 
     /**
      * Setter to specify annotations which allow the check to skip the method from validation.
@@ -293,7 +294,7 @@ public class DesignForExtensionCheck extends AbstractCheck {
      */
     private static boolean hasJavadocComment(DetailAST methodDef) {
         return hasJavadocCommentOnToken(methodDef, TokenTypes.MODIFIERS)
-                || hasJavadocCommentOnToken(methodDef, TokenTypes.TYPE);
+               || hasJavadocCommentOnToken(methodDef, TokenTypes.TYPE);
     }
 
     /**
@@ -363,7 +364,7 @@ public class DesignForExtensionCheck extends AbstractCheck {
         final DetailAST methodImplCloseBrace = methodImplOpenBrace.getLastChild();
         final Predicate<DetailAST> predicate = currentNode -> {
             return currentNode != methodImplCloseBrace
-                && !TokenUtil.isCommentType(currentNode.getType());
+            && !TokenUtil.isCommentType(currentNode.getType());
         };
         final Optional<DetailAST> methodBody =
             TokenUtil.findFirstTokenByPredicate(methodImplOpenBrace, predicate);
@@ -384,11 +385,11 @@ public class DesignForExtensionCheck extends AbstractCheck {
     private static boolean canBeOverridden(DetailAST methodDef) {
         final DetailAST modifiers = methodDef.findFirstToken(TokenTypes.MODIFIERS);
         return ScopeUtil.getSurroundingScope(methodDef).isIn(Scope.PROTECTED)
-            && !ScopeUtil.isInInterfaceOrAnnotationBlock(methodDef)
-            && modifiers.findFirstToken(TokenTypes.LITERAL_PRIVATE) == null
-            && modifiers.findFirstToken(TokenTypes.ABSTRACT) == null
-            && modifiers.findFirstToken(TokenTypes.FINAL) == null
-            && modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) == null;
+               && !ScopeUtil.isInInterfaceOrAnnotationBlock(methodDef)
+               && modifiers.findFirstToken(TokenTypes.LITERAL_PRIVATE) == null
+               && modifiers.findFirstToken(TokenTypes.ABSTRACT) == null
+               && modifiers.findFirstToken(TokenTypes.FINAL) == null
+               && modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) == null;
     }
 
     /**
@@ -401,10 +402,10 @@ public class DesignForExtensionCheck extends AbstractCheck {
     private static boolean hasIgnoredAnnotation(DetailAST methodDef, Set<String> annotations) {
         final DetailAST modifiers = methodDef.findFirstToken(TokenTypes.MODIFIERS);
         final Optional<DetailAST> annotation = TokenUtil.findFirstTokenByPredicate(modifiers,
-            currentToken -> {
-                return currentToken.getType() == TokenTypes.ANNOTATION
-                    && annotations.contains(getAnnotationName(currentToken));
-            });
+        currentToken -> {
+            return currentToken.getType() == TokenTypes.ANNOTATION
+            && annotations.contains(getAnnotationName(currentToken));
+        });
         return annotation.isPresent();
     }
 
@@ -436,7 +437,7 @@ public class DesignForExtensionCheck extends AbstractCheck {
     private static DetailAST getNearestClassOrEnumDefinition(DetailAST ast) {
         DetailAST searchAST = ast;
         while (searchAST.getType() != TokenTypes.CLASS_DEF
-               && searchAST.getType() != TokenTypes.ENUM_DEF) {
+                && searchAST.getType() != TokenTypes.ENUM_DEF) {
             searchAST = searchAST.getParent();
         }
         return searchAST;
@@ -451,8 +452,8 @@ public class DesignForExtensionCheck extends AbstractCheck {
     private static boolean canBeSubclassed(DetailAST classDef) {
         final DetailAST modifiers = classDef.findFirstToken(TokenTypes.MODIFIERS);
         return classDef.getType() != TokenTypes.ENUM_DEF
-            && modifiers.findFirstToken(TokenTypes.FINAL) == null
-            && hasDefaultOrExplicitNonPrivateCtor(classDef);
+               && modifiers.findFirstToken(TokenTypes.FINAL) == null
+               && hasDefaultOrExplicitNonPrivateCtor(classDef);
     }
 
     /**
@@ -475,7 +476,7 @@ public class DesignForExtensionCheck extends AbstractCheck {
                 hasDefaultConstructor = false;
 
                 final DetailAST ctorMods =
-                        candidate.findFirstToken(TokenTypes.MODIFIERS);
+                    candidate.findFirstToken(TokenTypes.MODIFIERS);
                 if (ctorMods.findFirstToken(TokenTypes.LITERAL_PRIVATE) == null) {
                     hasExplicitNonPrivateCtor = true;
                     break;

@@ -39,81 +39,81 @@ public class XpathRegressionAvoidInlineConditionalsTest extends AbstractXpathTes
     @Test
     public void testInlineConditionalsVariableDef() throws Exception {
         final File fileToProcess = new File(
-                getPath("SuppressionXpathRegressionAvoidInlineConditionalsVariableDef.java"));
+            getPath("SuppressionXpathRegressionAvoidInlineConditionalsVariableDef.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AvoidInlineConditionalsCheck.class);
+            createModuleConfig(AvoidInlineConditionalsCheck.class);
 
         final String[] expectedViolation = {
             "5:50: " + getCheckMessage(AvoidInlineConditionalsCheck.class,
-                AvoidInlineConditionalsCheck.MSG_KEY),
+                                       AvoidInlineConditionalsCheck.MSG_KEY),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='"
-                        + "SuppressionXpathRegressionAvoidInlineConditionalsVariableDef']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='substring']]/SLIST"
-                        + "/VARIABLE_DEF[./IDENT[@text='b']]/ASSIGN/EXPR",
-                "/CLASS_DEF[./IDENT[@text='"
-                        + "SuppressionXpathRegressionAvoidInlineConditionalsVariableDef']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='substring']]/SLIST"
-                        + "/VARIABLE_DEF[./IDENT[@text='b']]/ASSIGN/EXPR/QUESTION"
-        );
+                    "/CLASS_DEF[./IDENT[@text='"
+                    + "SuppressionXpathRegressionAvoidInlineConditionalsVariableDef']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='substring']]/SLIST"
+                    + "/VARIABLE_DEF[./IDENT[@text='b']]/ASSIGN/EXPR",
+                    "/CLASS_DEF[./IDENT[@text='"
+                    + "SuppressionXpathRegressionAvoidInlineConditionalsVariableDef']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='substring']]/SLIST"
+                    + "/VARIABLE_DEF[./IDENT[@text='b']]/ASSIGN/EXPR/QUESTION"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testInlineConditionalsAssign() throws Exception {
         final File fileToProcess = new File(
-                getPath("SuppressionXpathRegressionAvoidInlineConditionalsAssign.java"));
+            getPath("SuppressionXpathRegressionAvoidInlineConditionalsAssign.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AvoidInlineConditionalsCheck.class);
+            createModuleConfig(AvoidInlineConditionalsCheck.class);
 
         final String[] expectedViolation = {
             "7:43: " + getCheckMessage(AvoidInlineConditionalsCheck.class,
-                AvoidInlineConditionalsCheck.MSG_KEY),
+                                       AvoidInlineConditionalsCheck.MSG_KEY),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-                "/CLASS_DEF[./IDENT[@text='"
-                        + "SuppressionXpathRegressionAvoidInlineConditionalsAssign']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='setB']]/SLIST"
-                        + "/EXPR/ASSIGN[./IDENT[@text='b']]/QUESTION"
-        );
+                    "/CLASS_DEF[./IDENT[@text='"
+                    + "SuppressionXpathRegressionAvoidInlineConditionalsAssign']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='setB']]/SLIST"
+                    + "/EXPR/ASSIGN[./IDENT[@text='b']]/QUESTION"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testInlineConditionalsAssert() throws Exception {
         final File fileToProcess = new File(
-                getPath("SuppressionXpathRegressionAvoidInlineConditionalsAssert.java"));
+            getPath("SuppressionXpathRegressionAvoidInlineConditionalsAssert.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(AvoidInlineConditionalsCheck.class);
+            createModuleConfig(AvoidInlineConditionalsCheck.class);
 
         final String[] expectedViolation = {
             "8:31: " + getCheckMessage(AvoidInlineConditionalsCheck.class,
-                AvoidInlineConditionalsCheck.MSG_KEY),
+                                       AvoidInlineConditionalsCheck.MSG_KEY),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='"
-                        + "SuppressionXpathRegressionAvoidInlineConditionalsAssert']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='assertA']]/SLIST"
-                        + "/LITERAL_ASSERT/EXPR[./QUESTION/METHOD_CALL/DOT/IDENT[@text='a']]",
-                "/CLASS_DEF[./IDENT[@text='"
-                        + "SuppressionXpathRegressionAvoidInlineConditionalsAssert']]"
-                        + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='assertA']]/SLIST"
-                        + "/LITERAL_ASSERT/EXPR/QUESTION"
-        );
+                    "/CLASS_DEF[./IDENT[@text='"
+                    + "SuppressionXpathRegressionAvoidInlineConditionalsAssert']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='assertA']]/SLIST"
+                    + "/LITERAL_ASSERT/EXPR[./QUESTION/METHOD_CALL/DOT/IDENT[@text='a']]",
+                    "/CLASS_DEF[./IDENT[@text='"
+                    + "SuppressionXpathRegressionAvoidInlineConditionalsAssert']]"
+                    + "/OBJBLOCK/METHOD_DEF[./IDENT[@text='assertA']]/SLIST"
+                    + "/LITERAL_ASSERT/EXPR/QUESTION"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
 }

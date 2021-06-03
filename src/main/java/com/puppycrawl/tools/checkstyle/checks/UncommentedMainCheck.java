@@ -170,11 +170,11 @@ public class UncommentedMainCheck
     @Override
     public int[] getRequiredTokens() {
         return new int[] {
-            TokenTypes.METHOD_DEF,
-            TokenTypes.CLASS_DEF,
-            TokenTypes.PACKAGE_DEF,
-            TokenTypes.RECORD_DEF,
-        };
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.CLASS_DEF,
+                   TokenTypes.PACKAGE_DEF,
+                   TokenTypes.RECORD_DEF,
+               };
     }
 
     @Override
@@ -194,18 +194,18 @@ public class UncommentedMainCheck
     @Override
     public void visitToken(DetailAST ast) {
         switch (ast.getType()) {
-            case TokenTypes.PACKAGE_DEF:
-                visitPackageDef(ast);
-                break;
-            case TokenTypes.RECORD_DEF:
-            case TokenTypes.CLASS_DEF:
-                visitClassOrRecordDef(ast);
-                break;
-            case TokenTypes.METHOD_DEF:
-                visitMethodDef(ast);
-                break;
-            default:
-                throw new IllegalStateException(ast.toString());
+        case TokenTypes.PACKAGE_DEF:
+            visitPackageDef(ast);
+            break;
+        case TokenTypes.RECORD_DEF:
+        case TokenTypes.CLASS_DEF:
+            visitClassOrRecordDef(ast);
+            break;
+        case TokenTypes.METHOD_DEF:
+            visitMethodDef(ast);
+            break;
+        default:
+            throw new IllegalStateException(ast.toString());
         }
     }
 
@@ -216,7 +216,7 @@ public class UncommentedMainCheck
      */
     private void visitPackageDef(DetailAST packageDef) {
         packageName = FullIdent.createFullIdent(packageDef.getLastChild()
-                .getPreviousSibling());
+                                                .getPreviousSibling());
     }
 
     /**
@@ -283,7 +283,7 @@ public class UncommentedMainCheck
             method.findFirstToken(TokenTypes.MODIFIERS);
 
         return modifiers.findFirstToken(TokenTypes.LITERAL_PUBLIC) != null
-            && modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) != null;
+               && modifiers.findFirstToken(TokenTypes.LITERAL_STATIC) != null;
     }
 
     /**
@@ -311,9 +311,9 @@ public class UncommentedMainCheck
         if (params.getChildCount() == 1) {
             final DetailAST parameterType = params.getFirstChild().findFirstToken(TokenTypes.TYPE);
             final Optional<DetailAST> arrayDecl = Optional.ofNullable(
-                parameterType.findFirstToken(TokenTypes.ARRAY_DECLARATOR));
+                    parameterType.findFirstToken(TokenTypes.ARRAY_DECLARATOR));
             final Optional<DetailAST> varargs = Optional.ofNullable(
-                params.getFirstChild().findFirstToken(TokenTypes.ELLIPSIS));
+                                                    params.getFirstChild().findFirstToken(TokenTypes.ELLIPSIS));
 
             if (arrayDecl.isPresent()) {
                 checkPassed = isStringType(arrayDecl.get().getFirstChild());
@@ -334,7 +334,7 @@ public class UncommentedMainCheck
     private static boolean isStringType(DetailAST typeAst) {
         final FullIdent type = FullIdent.createFullIdent(typeAst);
         return "String".equals(type.getText())
-            || "java.lang.String".equals(type.getText());
+               || "java.lang.String".equals(type.getText());
     }
 
 }

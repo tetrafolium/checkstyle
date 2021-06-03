@@ -265,36 +265,36 @@ public class RightCurlyCheck extends AbstractCheck {
     @Override
     public int[] getDefaultTokens() {
         return new int[] {
-            TokenTypes.LITERAL_TRY,
-            TokenTypes.LITERAL_CATCH,
-            TokenTypes.LITERAL_FINALLY,
-            TokenTypes.LITERAL_IF,
-            TokenTypes.LITERAL_ELSE,
-        };
+                   TokenTypes.LITERAL_TRY,
+                   TokenTypes.LITERAL_CATCH,
+                   TokenTypes.LITERAL_FINALLY,
+                   TokenTypes.LITERAL_IF,
+                   TokenTypes.LITERAL_ELSE,
+               };
     }
 
     @Override
     public int[] getAcceptableTokens() {
         return new int[] {
-            TokenTypes.LITERAL_TRY,
-            TokenTypes.LITERAL_CATCH,
-            TokenTypes.LITERAL_FINALLY,
-            TokenTypes.LITERAL_IF,
-            TokenTypes.LITERAL_ELSE,
-            TokenTypes.CLASS_DEF,
-            TokenTypes.METHOD_DEF,
-            TokenTypes.CTOR_DEF,
-            TokenTypes.LITERAL_FOR,
-            TokenTypes.LITERAL_WHILE,
-            TokenTypes.LITERAL_DO,
-            TokenTypes.STATIC_INIT,
-            TokenTypes.INSTANCE_INIT,
-            TokenTypes.ANNOTATION_DEF,
-            TokenTypes.ENUM_DEF,
-            TokenTypes.INTERFACE_DEF,
-            TokenTypes.RECORD_DEF,
-            TokenTypes.COMPACT_CTOR_DEF,
-        };
+                   TokenTypes.LITERAL_TRY,
+                   TokenTypes.LITERAL_CATCH,
+                   TokenTypes.LITERAL_FINALLY,
+                   TokenTypes.LITERAL_IF,
+                   TokenTypes.LITERAL_ELSE,
+                   TokenTypes.CLASS_DEF,
+                   TokenTypes.METHOD_DEF,
+                   TokenTypes.CTOR_DEF,
+                   TokenTypes.LITERAL_FOR,
+                   TokenTypes.LITERAL_WHILE,
+                   TokenTypes.LITERAL_DO,
+                   TokenTypes.STATIC_INIT,
+                   TokenTypes.INSTANCE_INIT,
+                   TokenTypes.ANNOTATION_DEF,
+                   TokenTypes.ENUM_DEF,
+                   TokenTypes.INTERFACE_DEF,
+                   TokenTypes.RECORD_DEF,
+                   TokenTypes.COMPACT_CTOR_DEF,
+               };
     }
 
     @Override
@@ -344,10 +344,10 @@ public class RightCurlyCheck extends AbstractCheck {
      * @return true if a right curly should have a line break before.
      */
     private static boolean shouldHaveLineBreakBefore(RightCurlyOption bracePolicy,
-                                                     Details details) {
+            Details details) {
         return bracePolicy == RightCurlyOption.SAME
-                && !hasLineBreakBefore(details.rcurly)
-                && !TokenUtil.areOnSameLine(details.lcurly, details.rcurly);
+               && !hasLineBreakBefore(details.rcurly)
+               && !TokenUtil.areOnSameLine(details.lcurly, details.rcurly);
     }
 
     /**
@@ -359,8 +359,8 @@ public class RightCurlyCheck extends AbstractCheck {
      */
     private static boolean shouldBeOnSameLine(RightCurlyOption bracePolicy, Details details) {
         return bracePolicy == RightCurlyOption.SAME
-                && !details.shouldCheckLastRcurly
-                && !TokenUtil.areOnSameLine(details.rcurly, details.nextToken);
+               && !details.shouldCheckLastRcurly
+               && !TokenUtil.areOnSameLine(details.rcurly, details.nextToken);
     }
 
     /**
@@ -372,13 +372,13 @@ public class RightCurlyCheck extends AbstractCheck {
      * @return true if a right curly should be alone on a line.
      */
     private static boolean shouldBeAloneOnLine(RightCurlyOption bracePolicy,
-                                               Details details,
-                                               String targetSrcLine) {
+            Details details,
+            String targetSrcLine) {
         return bracePolicy == RightCurlyOption.ALONE
-                    && shouldBeAloneOnLineWithAloneOption(details, targetSrcLine)
-                || (bracePolicy == RightCurlyOption.ALONE_OR_SINGLELINE
-                    || details.shouldCheckLastRcurly)
-                    && shouldBeAloneOnLineWithNotAloneOption(details, targetSrcLine);
+               && shouldBeAloneOnLineWithAloneOption(details, targetSrcLine)
+               || (bracePolicy == RightCurlyOption.ALONE_OR_SINGLELINE
+                   || details.shouldCheckLastRcurly)
+               && shouldBeAloneOnLineWithNotAloneOption(details, targetSrcLine);
     }
 
     /**
@@ -389,7 +389,7 @@ public class RightCurlyCheck extends AbstractCheck {
      * @return true, if right curly should be alone on line when ALONE option is used.
      */
     private static boolean shouldBeAloneOnLineWithAloneOption(Details details,
-                                                              String targetSrcLine) {
+            String targetSrcLine) {
         return !isAloneOnLine(details, targetSrcLine);
     }
 
@@ -402,9 +402,9 @@ public class RightCurlyCheck extends AbstractCheck {
      *         when ALONE_OR_SINGLELINE or SAME option is used.
      */
     private static boolean shouldBeAloneOnLineWithNotAloneOption(Details details,
-                                                                 String targetSrcLine) {
+            String targetSrcLine) {
         return shouldBeAloneOnLineWithAloneOption(details, targetSrcLine)
-                && !isBlockAloneOnSingleLine(details);
+               && !isBlockAloneOnSingleLine(details);
     }
 
     /**
@@ -418,7 +418,7 @@ public class RightCurlyCheck extends AbstractCheck {
         final DetailAST rcurly = details.rcurly;
         final DetailAST nextToken = details.nextToken;
         return (!TokenUtil.areOnSameLine(rcurly, nextToken) || skipDoubleBraceInstInit(details))
-                && CommonUtil.hasWhitespaceBefore(details.rcurly.getColumnNo(), targetSrcLine);
+               && CommonUtil.hasWhitespaceBefore(details.rcurly.getColumnNo(), targetSrcLine);
     }
 
     /**
@@ -443,8 +443,8 @@ public class RightCurlyCheck extends AbstractCheck {
         final DetailAST rcurly = details.rcurly;
         final DetailAST tokenAfterNextToken = Details.getNextToken(details.nextToken);
         return rcurly.getParent().getParent().getType() == TokenTypes.INSTANCE_INIT
-                && details.nextToken.getType() == TokenTypes.RCURLY
-                && rcurly.getLineNo() != Details.getNextToken(tokenAfterNextToken).getLineNo();
+               && details.nextToken.getType() == TokenTypes.RCURLY
+               && rcurly.getLineNo() != Details.getNextToken(tokenAfterNextToken).getLineNo();
     }
 
     /**
@@ -465,8 +465,8 @@ public class RightCurlyCheck extends AbstractCheck {
             nextToken = Details.getNextToken(doWhileSemi);
         }
         return TokenUtil.areOnSameLine(rcurly, lcurly)
-                && (!TokenUtil.areOnSameLine(rcurly, nextToken)
-                || isRightcurlyFollowedBySemicolon(details));
+               && (!TokenUtil.areOnSameLine(rcurly, nextToken)
+                   || isRightcurlyFollowedBySemicolon(details));
     }
 
     /**
@@ -543,23 +543,23 @@ public class RightCurlyCheck extends AbstractCheck {
         private static Details getDetails(DetailAST ast) {
             final Details details;
             switch (ast.getType()) {
-                case TokenTypes.LITERAL_TRY:
-                case TokenTypes.LITERAL_CATCH:
-                case TokenTypes.LITERAL_FINALLY:
-                    details = getDetailsForTryCatchFinally(ast);
-                    break;
-                case TokenTypes.LITERAL_IF:
-                case TokenTypes.LITERAL_ELSE:
-                    details = getDetailsForIfElse(ast);
-                    break;
-                case TokenTypes.LITERAL_DO:
-                case TokenTypes.LITERAL_WHILE:
-                case TokenTypes.LITERAL_FOR:
-                    details = getDetailsForLoops(ast);
-                    break;
-                default:
-                    details = getDetailsForOthers(ast);
-                    break;
+            case TokenTypes.LITERAL_TRY:
+            case TokenTypes.LITERAL_CATCH:
+            case TokenTypes.LITERAL_FINALLY:
+                details = getDetailsForTryCatchFinally(ast);
+                break;
+            case TokenTypes.LITERAL_IF:
+            case TokenTypes.LITERAL_ELSE:
+                details = getDetailsForIfElse(ast);
+                break;
+            case TokenTypes.LITERAL_DO:
+            case TokenTypes.LITERAL_WHILE:
+            case TokenTypes.LITERAL_FOR:
+                details = getDetailsForLoops(ast);
+                break;
+            default:
+                details = getDetailsForOthers(ast);
+                break;
             }
             return details;
         }

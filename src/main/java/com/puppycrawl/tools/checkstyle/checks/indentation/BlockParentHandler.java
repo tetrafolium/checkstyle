@@ -70,7 +70,7 @@ public class BlockParentHandler extends AbstractExpressionHandler {
      * @noinspection WeakerAccess
      */
     public BlockParentHandler(IndentationCheck indentCheck,
-        String name, DetailAST ast, AbstractExpressionHandler parent) {
+                              String name, DetailAST ast, AbstractExpressionHandler parent) {
         super(indentCheck, name, ast, parent);
     }
 
@@ -156,7 +156,7 @@ public class BlockParentHandler extends AbstractExpressionHandler {
         final DetailAST lcurly = getLeftCurly();
         IndentLevel expIndentLevel = new IndentLevel(getIndent(), getBraceAdjustment());
         if (!isOnStartOfLine(lcurly)
-            || lcurly.getParent().getType() == TokenTypes.INSTANCE_INIT) {
+                || lcurly.getParent().getType() == TokenTypes.INSTANCE_INIT) {
             expIndentLevel = new IndentLevel(getIndent(), 0);
         }
 
@@ -260,13 +260,13 @@ public class BlockParentHandler extends AbstractExpressionHandler {
                 // All the other block elements will follow strict discrete indentation levels.
                 final boolean doesAnnotationArrayInitFollowsStrictCond =
                     !TokenUtil.isOfType(listChild, TokenTypes.ANNOTATION_ARRAY_INIT)
-                        || getIndentCheck().isForceStrictCondition();
+                    || getIndentCheck().isForceStrictCondition();
 
                 checkChildren(listChild,
-                        getCheckedChildren(),
-                        getChildrenExpectedIndent(),
-                        doesAnnotationArrayInitFollowsStrictCond,
-                        canChildrenBeNested());
+                              getCheckedChildren(),
+                              getChildrenExpectedIndent(),
+                              doesAnnotationArrayInitFollowsStrictCond,
+                              canChildrenBeNested());
             }
         }
     }
@@ -284,17 +284,17 @@ public class BlockParentHandler extends AbstractExpressionHandler {
         if (getIndent().isMultiLevel() && hasCurlies()) {
             if (isOnStartOfLine(getLeftCurly())) {
                 indentLevel = new IndentLevel(expandedTabsColumnNo(getLeftCurly())
-                        + getBasicOffset());
+                                              + getBasicOffset());
             }
             else if (isOnStartOfLine(getRightCurly())) {
                 final IndentLevel level = new IndentLevel(curlyIndent(), getBasicOffset());
                 indentLevel = IndentLevel.addAcceptable(level, level.getFirstIndentLevel()
-                        + getLineWrappingIndent());
+                                                        + getLineWrappingIndent());
             }
         }
         if (hasCurlies() && isOnStartOfLine(getLeftCurly())) {
             indentLevel = IndentLevel.addAcceptable(indentLevel,
-                    curlyIndent().getFirstIndentLevel() + getBasicOffset());
+                                                    curlyIndent().getFirstIndentLevel() + getBasicOffset());
         }
         return indentLevel;
     }

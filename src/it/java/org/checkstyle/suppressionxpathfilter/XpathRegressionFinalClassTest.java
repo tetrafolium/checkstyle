@@ -39,56 +39,56 @@ public class XpathRegressionFinalClassTest extends AbstractXpathTestSupport {
     @Test
     public void testOne() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionFinalClass1.java"));
+                                                "SuppressionXpathRegressionFinalClass1.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(FinalClassCheck.class);
+            createModuleConfig(FinalClassCheck.class);
 
         final String[] expectedViolation = {
             "3:1: " + getCheckMessage(FinalClassCheck.class,
-                    FinalClassCheck.MSG_KEY, "SuppressionXpathRegressionFinalClass1"),
+                                      FinalClassCheck.MSG_KEY, "SuppressionXpathRegressionFinalClass1"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT["
-                        + "@text='SuppressionXpathRegressionFinalClass1']]",
-                "/CLASS_DEF[./IDENT["
-                        + "@text='SuppressionXpathRegressionFinalClass1']]/MODIFIERS",
-                "/CLASS_DEF[./IDENT["
-                        + "@text='SuppressionXpathRegressionFinalClass1']]/MODIFIERS/LITERAL_PUBLIC"
-        );
+                    "/CLASS_DEF[./IDENT["
+                    + "@text='SuppressionXpathRegressionFinalClass1']]",
+                    "/CLASS_DEF[./IDENT["
+                    + "@text='SuppressionXpathRegressionFinalClass1']]/MODIFIERS",
+                    "/CLASS_DEF[./IDENT["
+                    + "@text='SuppressionXpathRegressionFinalClass1']]/MODIFIERS/LITERAL_PUBLIC"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess = new File(getPath(
-                "SuppressionXpathRegressionFinalClass2.java"));
+                                                "SuppressionXpathRegressionFinalClass2.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(FinalClassCheck.class);
+            createModuleConfig(FinalClassCheck.class);
 
         final String[] expectedViolation = {
             "4:5: " + getCheckMessage(FinalClassCheck.class,
-                    FinalClassCheck.MSG_KEY, "Test"),
+                                      FinalClassCheck.MSG_KEY, "Test"),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT["
-                        + "@text='SuppressionXpathRegressionFinalClass2']]"
-                        + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='Test']]",
-                "/CLASS_DEF[./IDENT["
-                        + "@text='SuppressionXpathRegressionFinalClass2']]"
-                        + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='Test']]/MODIFIERS",
-                "/CLASS_DEF[./IDENT["
-                        + "@text='SuppressionXpathRegressionFinalClass2']]"
-                        + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='Test']]/LITERAL_CLASS"
-        );
+                    "/CLASS_DEF[./IDENT["
+                    + "@text='SuppressionXpathRegressionFinalClass2']]"
+                    + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='Test']]",
+                    "/CLASS_DEF[./IDENT["
+                    + "@text='SuppressionXpathRegressionFinalClass2']]"
+                    + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='Test']]/MODIFIERS",
+                    "/CLASS_DEF[./IDENT["
+                    + "@text='SuppressionXpathRegressionFinalClass2']]"
+                    + "/OBJBLOCK/CLASS_DEF[./IDENT[@text='Test']]/LITERAL_CLASS"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }
 

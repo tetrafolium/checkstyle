@@ -116,7 +116,7 @@ public class CodeSelectorPresentation {
      */
     private void findSelectionPositions(DetailNode detailNode) {
         selectionStart = lines2position.get(detailNode.getLineNumber())
-                            + detailNode.getColumnNumber();
+                         + detailNode.getColumnNumber();
 
         selectionEnd = findLastPosition(detailNode);
     }
@@ -134,7 +134,7 @@ public class CodeSelectorPresentation {
         }
         else {
             lastPosition = lines2position.get(astNode.getLineNo()) + astNode.getColumnNo()
-                    + astNode.getText().length();
+                           + astNode.getText().length();
         }
         return lastPosition;
     }
@@ -149,11 +149,11 @@ public class CodeSelectorPresentation {
         final int lastPosition;
         if (detailNode.getChildren().length == 0) {
             lastPosition = lines2position.get(detailNode.getLineNumber())
-                    + detailNode.getColumnNumber() + detailNode.getText().length();
+                           + detailNode.getColumnNumber() + detailNode.getText().length();
         }
         else {
             final DetailNode lastChild =
-                    detailNode.getChildren()[detailNode.getChildren().length - 1];
+                detailNode.getChildren()[detailNode.getChildren().length - 1];
             lastPosition = findLastPosition(lastChild);
         }
         return lastPosition;

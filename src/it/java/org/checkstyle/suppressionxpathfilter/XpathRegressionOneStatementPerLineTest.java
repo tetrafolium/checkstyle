@@ -40,44 +40,44 @@ public class XpathRegressionOneStatementPerLineTest extends AbstractXpathTestSup
     @Test
     public void testOne() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionOneStatementPerLineOne.java"));
+            new File(getPath("SuppressionXpathRegressionOneStatementPerLineOne.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(OneStatementPerLineCheck.class);
+            createModuleConfig(OneStatementPerLineCheck.class);
 
         final String[] expectedViolation = {
             "4:17: " + getCheckMessage(OneStatementPerLineCheck.class,
-                OneStatementPerLineCheck.MSG_KEY),
+                                       OneStatementPerLineCheck.MSG_KEY),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionOneStatementPerLineOne']]/OBJBLOCK"
-                + "/VARIABLE_DEF[./IDENT[@text='j']]/SEMI"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionOneStatementPerLineOne']]/OBJBLOCK"
+                    + "/VARIABLE_DEF[./IDENT[@text='j']]/SEMI"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionOneStatementPerLineTwo.java"));
+            new File(getPath("SuppressionXpathRegressionOneStatementPerLineTwo.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(OneStatementPerLineCheck.class);
+            createModuleConfig(OneStatementPerLineCheck.class);
 
         final String[] expectedViolation = {
             "9:39: " + getCheckMessage(OneStatementPerLineCheck.class,
-                OneStatementPerLineCheck.MSG_KEY),
+                                       OneStatementPerLineCheck.MSG_KEY),
         };
 
         final List<String> expectedXpathQueries = Collections.singletonList(
-            "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionOneStatementPerLineTwo']]/OBJBLOCK"
-                + "/METHOD_DEF[./IDENT[@text='foo5']]/SLIST/LITERAL_FOR/SLIST/SEMI[2]"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionOneStatementPerLineTwo']]/OBJBLOCK"
+                    + "/METHOD_DEF[./IDENT[@text='foo5']]/SLIST/LITERAL_FOR/SLIST/SEMI[2]"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }

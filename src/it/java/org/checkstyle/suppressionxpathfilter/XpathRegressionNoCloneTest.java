@@ -40,53 +40,53 @@ public class XpathRegressionNoCloneTest extends AbstractXpathTestSupport {
     @Test
     public void testOne() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionNoCloneOne.java"));
+            new File(getPath("SuppressionXpathRegressionNoCloneOne.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(NoCloneCheck.class);
+            createModuleConfig(NoCloneCheck.class);
 
         final String[] expectedViolation = {
             "5:5: " + getCheckMessage(NoCloneCheck.class, NoCloneCheck.MSG_KEY),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoCloneOne']]/OBJBLOCK"
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoCloneOne']]/OBJBLOCK"
                     + "/METHOD_DEF[./IDENT[@text='clone']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoCloneOne']]/OBJBLOCK"
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoCloneOne']]/OBJBLOCK"
                     + "/METHOD_DEF[./IDENT[@text='clone']]/MODIFIERS",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoCloneOne']]/OBJBLOCK"
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoCloneOne']]/OBJBLOCK"
                     + "/METHOD_DEF[./IDENT[@text='clone']]/MODIFIERS/LITERAL_PUBLIC"
-        );
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 
     @Test
     public void testTwo() throws Exception {
         final File fileToProcess =
-                new File(getPath("SuppressionXpathRegressionNoCloneTwo.java"));
+            new File(getPath("SuppressionXpathRegressionNoCloneTwo.java"));
 
         final DefaultConfiguration moduleConfig =
-                createModuleConfig(NoCloneCheck.class);
+            createModuleConfig(NoCloneCheck.class);
 
         final String[] expectedViolation = {
             "6:5: " + getCheckMessage(NoCloneCheck.class, NoCloneCheck.MSG_KEY),
         };
 
         final List<String> expectedXpathQueries = Arrays.asList(
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoCloneTwo']]/OBJBLOCK"
-                        + "/CLASS_DEF[./IDENT[@text='InnerClass']]/OBJBLOCK"
-                        + "/METHOD_DEF[./IDENT[@text='clone']]",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoCloneTwo']]/OBJBLOCK"
-                        + "/CLASS_DEF[./IDENT[@text='InnerClass']]/OBJBLOCK/"
-                        + "METHOD_DEF[./IDENT[@text='clone']]/MODIFIERS",
-                "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoCloneTwo']]/OBJBLOCK"
-                        + "/CLASS_DEF[./IDENT[@text='InnerClass']]/OBJBLOCK"
-                        + "/METHOD_DEF[./IDENT[@text='clone']]/MODIFIERS/LITERAL_PUBLIC"
-        );
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoCloneTwo']]/OBJBLOCK"
+                    + "/CLASS_DEF[./IDENT[@text='InnerClass']]/OBJBLOCK"
+                    + "/METHOD_DEF[./IDENT[@text='clone']]",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoCloneTwo']]/OBJBLOCK"
+                    + "/CLASS_DEF[./IDENT[@text='InnerClass']]/OBJBLOCK/"
+                    + "METHOD_DEF[./IDENT[@text='clone']]/MODIFIERS",
+                    "/CLASS_DEF[./IDENT[@text='SuppressionXpathRegressionNoCloneTwo']]/OBJBLOCK"
+                    + "/CLASS_DEF[./IDENT[@text='InnerClass']]/OBJBLOCK"
+                    + "/METHOD_DEF[./IDENT[@text='clone']]/MODIFIERS/LITERAL_PUBLIC"
+                );
 
         runVerifications(moduleConfig, fileToProcess, expectedViolation,
-                expectedXpathQueries);
+                         expectedXpathQueries);
     }
 }

@@ -6,7 +6,7 @@ public class SuppressionXpathRegressionCommentsIndentationDistributedStatement {
     public void foo() {
         String s = "";
         int n = s
-                    .length();
-                        // Comment // warn
+                .length();
+        // Comment // warn
     }
 }

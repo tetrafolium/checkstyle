@@ -121,19 +121,19 @@ public class ParseTreeTablePresentation {
         final Class<?> columnClass;
 
         switch (column) {
-            case 0:
-                columnClass = ParseTreeTableModel.class;
-                break;
-            case 1:
-            case 4:
-                columnClass = String.class;
-                break;
-            case 2:
-            case 3:
-                columnClass = Integer.class;
-                break;
-            default:
-                throw new IllegalStateException(UNKNOWN_COLUMN_MSG);
+        case 0:
+            columnClass = ParseTreeTableModel.class;
+            break;
+        case 1:
+        case 4:
+            columnClass = String.class;
+            break;
+        case 2:
+        case 3:
+            columnClass = Integer.class;
+            break;
+        default:
+            throw new IllegalStateException(UNKNOWN_COLUMN_MSG);
         }
         return columnClass;
     }
@@ -309,24 +309,24 @@ public class ParseTreeTablePresentation {
         final Object value;
 
         switch (column) {
-            case 0:
-                // first column is tree model. no value needed
-                value = null;
-                break;
-            case 1:
-                value = JavadocUtil.getTokenName(node.getType());
-                break;
-            case 2:
-                value = node.getLineNumber();
-                break;
-            case 3:
-                value = node.getColumnNumber();
-                break;
-            case 4:
-                value = node.getText();
-                break;
-            default:
-                throw new IllegalStateException(UNKNOWN_COLUMN_MSG);
+        case 0:
+            // first column is tree model. no value needed
+            value = null;
+            break;
+        case 1:
+            value = JavadocUtil.getTokenName(node.getType());
+            break;
+        case 2:
+            value = node.getLineNumber();
+            break;
+        case 3:
+            value = node.getColumnNumber();
+            break;
+        case 4:
+            value = node.getText();
+            break;
+        default:
+            throw new IllegalStateException(UNKNOWN_COLUMN_MSG);
         }
         return value;
     }
@@ -342,24 +342,24 @@ public class ParseTreeTablePresentation {
         final Object value;
 
         switch (column) {
-            case 0:
-                // first column is tree model. no value needed
-                value = null;
-                break;
-            case 1:
-                value = TokenUtil.getTokenName(ast.getType());
-                break;
-            case 2:
-                value = ast.getLineNo();
-                break;
-            case 3:
-                value = ast.getColumnNo();
-                break;
-            case 4:
-                value = ast.getText();
-                break;
-            default:
-                throw new IllegalStateException(UNKNOWN_COLUMN_MSG);
+        case 0:
+            // first column is tree model. no value needed
+            value = null;
+            break;
+        case 1:
+            value = TokenUtil.getTokenName(ast.getType());
+            break;
+        case 2:
+            value = ast.getLineNo();
+            break;
+        case 3:
+            value = ast.getColumnNo();
+            break;
+        case 4:
+            value = ast.getText();
+            break;
+        default:
+            throw new IllegalStateException(UNKNOWN_COLUMN_MSG);
         }
         return value;
     }
