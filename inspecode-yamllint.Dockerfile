@@ -17,9 +17,6 @@ ENV REPOPATH="github.com/tetrafolium/checkstyle" \
 ENV REPODIR="${GOPATH}/src/${REPOPATH}" \
     TOOLDIR="${GOPATH}/src/${TOOLPATH}"
 
-### Get inspecode-tasks tool ...
-RUN go get -u "${TOOLPATH}" || true
-
 ARG OUTDIR
 ENV OUTDIR="${OUTDIR:-"/.reports"}"
 
@@ -27,9 +24,18 @@ RUN mkdir -p "${REPODIR}" "${OUTDIR}"
 COPY . "${REPODIR}"
 WORKDIR "${REPODIR}"
 
+### Put symlink refers submodule-path at origin-path
+RUN ln -s "${REPODIR}/$(basename "${TOOLPATH}")" "${TOOLDIR}"
+
+RUN ( ls -ld "${REPODIR}/inspecode-tasks/" && ls -la "${REPODIR}/inspecode-tasks/" ) || true
+RUN ( ls -ld "${TOOLDIR}/" && ls -lLa "${TOOLDIR}/" ) || true
+
 ### Run yamllint ...
 RUN yamllint -f parsable . > "${OUTDIR}/yamllint.issues" || true
 RUN ls -la "${OUTDIR}"
+
+RUN ( ls -ld "${REPODIR}/inspecode-tasks/" && ls -la "${REPODIR}/inspecode-tasks/" ) || true
+RUN ( ls -ld "${TOOLDIR}/" && ls -lLa "${TOOLDIR}/" ) || true
 
 RUN echo "<<< yamllint.issues ---"; cat -v "${OUTDIR}/yamllint.issues"; echo "--- yamllint.issues >>>"
 
